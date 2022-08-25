@@ -242,11 +242,11 @@
         "stable": "stable_2"
       },
       "locked": {
-        "lastModified": 1661447779,
-        "narHash": "sha256-J3+gFXbSzRiyROS01+jycpwmJQ2ElJKRE/SoQk335qk=",
+        "lastModified": 1661453539,
+        "narHash": "sha256-gTqg3+/EQDUBcApgn5Lf5Ybu9yGHkqJBvqp80g8VKrE=",
         "ref": "main",
-        "rev": "b1377c8cd7e0eedaec8002f8a12c82205e532a1f",
-        "revCount": 23,
+        "rev": "d0f828c31429f9ceaeef469a7c2834aa59523b09",
+        "revCount": 24,
         "type": "git",
         "url": "ssh://gitea@git.tapenet.org:2222/qbit/xin-secrets.git"
       },
