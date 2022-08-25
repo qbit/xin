@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+
+. ./common.sh
+
+while getopts "r" arg; do
+	case $arg in
+	r)
+		REBOOT=1
+		;;
+	esac
+done
+
+start
+
+trap finish EXIT INT HUP
+
+for i in $(ls hosts); do
+	host=$(resolveAlias $i)
+	echo -n "===> $i: "
+	if tsAlive $host; then
+		if ${SSH} root@$host 'check-restart' >/dev/null 2>&1; then
+			echo -e "\tOK"
+		else
+			if [ ! -z $REBOOT ]; then
+				if isRunHost $i; then
+					echo -e "\tskipping runhost..."
+				else
+					echo -e "\trebooting..."
+					${SSH} root@$host 'reboot' >/dev/null 2>&1
+				fi
+			else
+				echo -e "\tREBOOT"
+			fi
+		fi
+	else
+		echo -e "\tDOWN"
+	fi
+done

@@ -1,0 +1,1751 @@
+From owner-gameoftrees+M2377@openbsd.org Fri Jul  1 15:32:58 2022
+Return-Path: <owner-gameoftrees+M2377@openbsd.org>
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	 by sloti51n17 (Cyrus 3.7.0-alpha0-713-g1f035dc716-fm-20220617.001-g1f035dc7) with LMTPA;
+	 Fri, 01 Jul 2022 17:32:58 -0400
+X-Cyrus-Session-Id: sloti51n17-1656711178-2859225-2-6045727934994432308
+X-Sieve: CMU Sieve 3.0
+X-Spam-known-sender: no
+X-Spam-sender-reputation: 500 (none)
+X-Spam-score: 0.0
+X-Spam-hits: BAYES_50 0.8, DCC_REPUT_70_89 0.1, HEADER_FROM_DIFFERENT_DOMAINS 0.25,
+  MAILING_LIST_MULTI -1, ME_HAS_VSSU 0.001, ME_SENDERREP_NEUTRAL 0.001,
+  RCVD_IN_DNSWL_MED -2.3, SPF_HELO_NONE 0.001, SPF_PASS -0.001,
+  T_SCC_BODY_TEXT_LINE -0.01, LANGUAGES en, BAYES_USED user,
+  SA_VERSION 3.4.6
+X-Spam-source: IP='199.185.178.25', Host='mail.openbsd.org', Country='CA',
+  FromHeader='com', MailFrom='org'
+X-Spam-charsets: plain='us-ascii'
+X-Resolved-to: qbit@fastmail.com
+X-Delivered-to: aaron@bolddaemon.com
+X-Mail-from: owner-gameoftrees+M2377@openbsd.org
+Received: from mx4 ([10.202.2.203])
+  by compute4.internal (LMTPProxy); Fri, 01 Jul 2022 17:32:58 -0400
+Received: from mx4.messagingengine.com (localhost [127.0.0.1])
+	by mailmx.nyi.internal (Postfix) with ESMTP id 4F9E51F2015B
+	for <aaron@bolddaemon.com>; Fri,  1 Jul 2022 17:32:57 -0400 (EDT)
+Received: from mx4.messagingengine.com (localhost [127.0.0.1])
+    by mx4.messagingengine.com (Authentication Milter) with ESMTP
+    id 1E136C19FFD;
+    Fri, 1 Jul 2022 17:32:57 -0400
+ARC-Seal: i=1; a=rsa-sha256; cv=none; d=messagingengine.com; s=fm2; t=
+    1656711177; b=MECs9vhH51TZw6R0i0ZmSqoUz/9WJw3n0hR1h0RQXJNTCEIzOk
+    uAp9CC7hiENzB20jLY/XdRv8uquFgcsi/WGyB0Doh0COt6ZFqSSR3gXxUtcqq8sY
+    Zp/gm5EcdmlxKgrj6VGUB9R2DxyMSKSaKDntt9THmvAgyQBwfMoMzgCO+8tDMtJ1
+    /JxK+pVO8/j66X3qJ9DfklfDMlC/FukJXcvZmrfH3+c544A+h3+jHE5itknD5D8B
+    ju4qFSEqAs4OVC/qO9uSUCCPxaVH0IvPPhQJVTbo1kkaiTA9+XDsrd6OZvuBsqEB
+    yjPeFsDb98chOTF8jP3qwK4WC2TheFpbBFLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=
+    messagingengine.com; h=date:from:to:subject:message-id
+    :references:mime-version:content-type:in-reply-to:list-help
+    :list-id:list-owner:list-post:list-subscribe:list-unsubscribe
+    :sender; s=fm2; t=1656711177; bh=Eo9QrjLTSve5/c6ZYTKt8UqZNUWrN8y
+    Pr0Y92XB6bLY=; b=g2yT9DM8+qgIbu8pi1s2kp05tmhUGLr+bHYoAJnfv1o1A/6
+    Y47l+aJoSAoorAGUtUhQl8AcYMvMOXdL2GI1Uq8Ft3F3pBoysvCuM+22EDkkHmKx
+    aUQ1zBCNjFaUuJHAryNIlO0DOK+hipWozGji26qBG3j9NumkQ0gAqhjh8Y0QZgOc
+    YY+ncg5c+1hNKEkzbP76rgHQJz1ajTYggXi/s4L8479i9Joq6IIuuUZcvQFwefqN
+    N37CiCMfJb6kviCHpEsAUFibZvCQYOC4ayxHyNfZxFARuQfFk47wRRdQFbZ034Jq
+    u6dgeeBJha9HM5MVH0mpkxk8srtAIu8pnTbOLKw==
+ARC-Authentication-Results: i=1; mx4.messagingengine.com;
+    x-csa=none;
+    x-me-sender=none;
+    x-ptr=pass smtp.helo=mail.openbsd.org policy.ptr=mail.openbsd.org;
+    bimi=skipped (DMARC did not pass);
+    arc=none (no signatures found);
+    dkim=none (no signatures found);
+    dmarc=fail policy.published-domain-policy=quarantine
+    policy.applied-disposition=none
+    policy.evaluated-disposition=quarantine
+    policy.override-reason=trusted_forwarder policy.arc-aware-result=fail
+    (p=quarantine,has-list-id=yes,d=none,d.eval=quarantine,override=trusted_forwarder,arc_aware_result=fail)
+    policy.policy-from=p header.from=zettaport.com;
+    iprev=pass smtp.remote-ip=199.185.178.25 (mail.openbsd.org);
+    spf=pass smtp.mailfrom=owner-gameoftrees+M2377@openbsd.org
+    smtp.helo=mail.openbsd.org
+X-ME-Authentication-Results: mx4.messagingengine.com;
+    x-aligned-from=fail;
+    x-return-mx=pass header.domain=zettaport.com policy.is_org=yes
+      (MX Records found: europa.zettaport.com);
+    x-return-mx=pass smtp.domain=openbsd.org policy.is_org=yes
+      (MX Records found: mail.openbsd.org);
+    x-tls=pass smtp.version=TLSv1.3 smtp.cipher=TLS_AES_256_GCM_SHA384
+      smtp.bits=256/256;
+    x-vs=clean score=0 state=0
+Authentication-Results: mx4.messagingengine.com;
+    x-csa=none;
+    x-me-sender=none;
+    x-ptr=pass smtp.helo=mail.openbsd.org policy.ptr=mail.openbsd.org
+Authentication-Results: mx4.messagingengine.com;
+    bimi=skipped (DMARC did not pass)
+Authentication-Results: mx4.messagingengine.com;
+    arc=none (no signatures found)
+Authentication-Results: mx4.messagingengine.com;
+    dkim=none (no signatures found);
+    dmarc=fail policy.published-domain-policy=quarantine
+      policy.applied-disposition=none
+      policy.evaluated-disposition=quarantine
+      policy.override-reason=trusted_forwarder policy.arc-aware-result=fail
+      (p=quarantine,has-list-id=yes,d=none,d.eval=quarantine,override=trusted_forwarder,arc_aware_result=fail)
+      policy.policy-from=p header.from=zettaport.com;
+    iprev=pass smtp.remote-ip=199.185.178.25 (mail.openbsd.org);
+    spf=pass smtp.mailfrom=owner-gameoftrees+M2377@openbsd.org
+      smtp.helo=mail.openbsd.org
+X-ME-VSSU: VW5zdWI9bWFpbHRvOm1ham9yZG9tb0BvcGVuYnNkLm9yZz9ib2R5PXVuc3ViJTIwZ2FtZW
+    9mdHJlZXM
+X-ME-VSCause: gggruggvucftvghtrhhoucdtuddrgedvfedrudehfedgudeifecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    fukfhfgggtuggjfeejvddutdfjphhssehttddttddttddvnecuhfhrohhmpeflohhshhcu
+    tfhitghkmhgrrhcuoehophgvnhgsshguodhlihhsthhsseiivghtthgrphhorhhtrdgtoh
+    hmqeenucggtffrrghtthgvrhhnpefgvdeghfdtiedvteekjeeugfevgfdtgeffleelleff
+    leevgeejheetffekkeejfeenucffohhmrghinhepfihtrdhgohhtnecukfhppeduleelrd
+    dukeehrddujeekrddvhedpudegledrvdekrddvfedvrddvgedunecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehinhgvthepudelledrudekhedrudejkedrvdehpdhhvg
+    hlohepmhgrihhlrdhophgvnhgsshgurdhorhhgpdhmrghilhhfrhhomhepoehofihnvghr
+    qdhgrghmvghofhhtrhgvvghsodfovdefjeejsehophgvnhgsshgurdhorhhgqe
+X-ME-VSScore: 0
+X-ME-VSCategory: clean
+X-ME-CSA: none
+Received-SPF: pass
+    (openbsd.org: 199.185.178.25 is authorized to use 'owner-gameoftrees+M2377@openbsd.org' in 'mfrom' identity (mechanism 'mx' matched))
+    receiver=mx4.messagingengine.com;
+    identity=mailfrom;
+    envelope-from="owner-gameoftrees+M2377@openbsd.org";
+    helo=mail.openbsd.org;
+    client-ip=199.185.178.25
+Received: from mail.openbsd.org (mail.openbsd.org [199.185.178.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx4.messagingengine.com (Postfix) with ESMTPS
+	for <aaron@bolddaemon.com>; Fri,  1 Jul 2022 17:32:56 -0400 (EDT)
+Received: from openbsd.org (localhost [127.0.0.1])
+	by mail.openbsd.org (OpenSMTPD) with ESMTP id 12cabdb7;
+	Fri, 1 Jul 2022 15:32:47 -0600 (MDT)
+Received: from europa.zettaport.com (europa.zettaport.com [149.28.232.241])
+	by mail.openbsd.org (OpenSMTPD) with ESMTPS id 9cf59a50 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	for <gameoftrees@openbsd.org>;
+	Fri, 1 Jul 2022 15:32:20 -0600 (MDT)
+Received: 
+	by europa.zettaport.com (OpenSMTPD) with ESMTPSA id 774f76fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <gameoftrees@openbsd.org>;
+	Fri, 1 Jul 2022 21:32:19 +0000 (UTC)
+Received: from localhost (mail.i.zettaport.com [local])
+	by mail.i.zettaport.com (OpenSMTPD) with ESMTPA id 869f35b9
+	for <gameoftrees@openbsd.org>;
+	Fri, 1 Jul 2022 17:32:15 -0400 (EDT)
+Date: Fri, 1 Jul 2022 17:32:15 -0400
+From: Josh Rickmar <openbsd+lists@zettaport.com>
+To: gameoftrees@openbsd.org
+Subject: Re: Tag signing with SSH signatures
+Message-ID: <Yr9n3wZDLshUoYto@mail.i.zettaport.com>
+References: <Yr2K8in0HfARLTf7@mail.i.zettaport.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yr2K8in0HfARLTf7@mail.i.zettaport.com>
+List-Help: <mailto:majordomo@openbsd.org?body=help>
+List-ID: <gameoftrees.openbsd.org>
+List-Owner: <mailto:owner-gameoftrees@openbsd.org>
+List-Post: <mailto:gameoftrees@openbsd.org>
+List-Subscribe: <mailto:majordomo@openbsd.org?body=sub%20gameoftrees>
+List-Unsubscribe: <mailto:majordomo@openbsd.org?body=unsub%20gameoftrees>
+X-Loop: gameoftrees@openbsd.org
+Precedence: list
+Sender: owner-gameoftrees@openbsd.org
+
+Updated diff with improvements and suggestions from stsp@ and tracey@
+as well as a regress test.
+
+diff refs/heads/main refs/heads/ssh_sigs
+commit - 917d79a766c47414055c6901624816a41f13597b
+commit + bccbae8a0342ccf5043ac731e3b2c17135aabc02
+blob - 8dfd844f3da472b6ed040a62acaf85403cbc07ea
+blob + 1b45b53a4efff9977dcd3c2e2e33c499adc94533
+--- got/Makefile
++++ got/Makefile
+@@ -13,7 +13,7 @@ SRCS=		got.c blame.c commit_graph.c delta.c diff.c \
+ 		diff_myers.c diff_output.c diff_output_plain.c \
+ 		diff_output_unidiff.c diff_output_edscript.c \
+ 		diff_patience.c send.c deltify.c pack_create.c dial.c \
+-		bloom.c murmurhash2.c ratelimit.c patch.c
++		bloom.c murmurhash2.c ratelimit.c patch.c sigs.c date.c
+ 
+ MAN =		${PROG}.1 got-worktree.5 git-repository.5 got.conf.5
+ 
+blob - 5f7f00007937a048564e685aac0a8c6b9e98adab
+blob + 92561637b53431f406c97459c28b0ff81903a35d
+--- got/got.c
++++ got/got.c
+@@ -58,6 +58,8 @@
+ #include "got_gotconfig.h"
+ #include "got_dial.h"
+ #include "got_patch.h"
++#include "got_sigs.h"
++#include "got_date.h"
+ 
+ #ifndef nitems
+ #define nitems(_a)	(sizeof((_a)) / sizeof((_a)[0]))
+@@ -687,6 +689,76 @@ get_author(char **author, struct got_repository *repo,
+ }
+ 
+ static const struct got_error *
++get_allowed_signers(char **allowed_signers, struct got_repository *repo,
++    struct got_worktree *worktree)
++{
++	const char *got_allowed_signers = NULL;
++	const struct got_gotconfig *worktree_conf = NULL, *repo_conf = NULL;
++
++	*allowed_signers = NULL;
++
++	if (worktree)
++		worktree_conf = got_worktree_get_gotconfig(worktree);
++	repo_conf = got_repo_get_gotconfig(repo);
++
++	/*
++	 * Priority of potential author information sources, from most
++	 * significant to least significant:
++	 * 1) work tree's .got/got.conf file
++	 * 2) repository's got.conf file
++	 */
++
++	if (worktree_conf)
++		got_allowed_signers = got_gotconfig_get_allowed_signers_file(
++		    worktree_conf);
++	if (got_allowed_signers == NULL)
++		got_allowed_signers = got_gotconfig_get_allowed_signers_file(
++		    repo_conf);
++
++	if (got_allowed_signers) {
++		*allowed_signers = strdup(got_allowed_signers);
++		if (*allowed_signers == NULL)
++			return got_error_from_errno("strdup");
++	}
++	return NULL;
++}
++
++static const struct got_error *
++get_revoked_signers(char **revoked_signers, struct got_repository *repo,
++    struct got_worktree *worktree)
++{
++	const char *got_revoked_signers = NULL;
++	const struct got_gotconfig *worktree_conf = NULL, *repo_conf = NULL;
++
++	*revoked_signers = NULL;
++
++	if (worktree)
++		worktree_conf = got_worktree_get_gotconfig(worktree);
++	repo_conf = got_repo_get_gotconfig(repo);
++
++	/*
++	 * Priority of potential author information sources, from most
++	 * significant to least significant:
++	 * 1) work tree's .got/got.conf file
++	 * 2) repository's got.conf file
++	 */
++
++	if (worktree_conf)
++		got_revoked_signers = got_gotconfig_get_revoked_signers_file(
++		    worktree_conf);
++	if (got_revoked_signers == NULL)
++		got_revoked_signers = got_gotconfig_get_revoked_signers_file(
++		    repo_conf);
++
++	if (got_revoked_signers) {
++		*revoked_signers = strdup(got_revoked_signers);
++		if (*revoked_signers == NULL)
++			return got_error_from_errno("strdup");
++	}
++	return NULL;
++}
++
++static const struct got_error *
+ get_gitconfig_path(char **gitconfig_path)
+ {
+ 	const char *homedir = getenv("HOME");
+@@ -6837,7 +6909,8 @@ usage_tag(void)
+ {
+ 	fprintf(stderr,
+ 	    "usage: %s tag [-c commit] [-r repository] [-l] "
+-	        "[-m message] name\n", getprogname());
++	        "[-m message] [-s signer_id] name\n",
++	        getprogname());
+ 	exit(1);
+ }
+ 
+@@ -6917,12 +6990,14 @@ get_tag_refname(char **refname, const char *tag_name)
+ }
+ 
+ static const struct got_error *
+-list_tags(struct got_repository *repo, const char *tag_name)
++list_tags(struct got_repository *repo, const char *tag_name, int verify_tags,
++    const char *allowed_signers, const char *revoked_signers, int verbosity)
+ {
+ 	static const struct got_error *err = NULL;
+ 	struct got_reflist_head refs;
+ 	struct got_reflist_entry *re;
+ 	char *wanted_refname = NULL;
++	int bad_sigs = 0;
+ 
+ 	TAILQ_INIT(&refs);
+ 
+@@ -6946,7 +7021,8 @@ list_tags(struct got_repository *repo, const char *tag
+ 		const char *refname;
+ 		char *refstr, *tagmsg0, *tagmsg, *line, *id_str, *datestr;
+ 		char datebuf[26];
+-		const char *tagger;
++		const char *tagger, *ssh_sig = NULL;
++		char *sig_msg = NULL;
+ 		time_t tagger_time;
+ 		struct got_object_id *id;
+ 		struct got_tag_object *tag;
+@@ -6962,8 +7038,6 @@ list_tags(struct got_repository *repo, const char *tag
+ 			err = got_error_from_errno("got_ref_to_str");
+ 			break;
+ 		}
+-		printf("%stag %s %s\n", GOT_COMMIT_SEP_STR, refname, refstr);
+-		free(refstr);
+ 
+ 		err = got_ref_resolve(&id, repo, re->ref);
+ 		if (err)
+@@ -6996,6 +7070,22 @@ list_tags(struct got_repository *repo, const char *tag
+ 			if (err)
+ 				break;
+ 		}
++
++		if (verify_tags) {
++			ssh_sig = got_sigs_get_tagmsg_ssh_signature(
++			    got_object_tag_get_message(tag));
++			if (ssh_sig && allowed_signers == NULL) {
++				err = got_error_msg(
++				    GOT_ERR_VERIFY_TAG_SIGNATURE,
++				    "SSH signature verification requires "
++				        "setting allowed_signers in "
++				        "got.conf(5)");
++				break;
++			}
++		}
++
++		printf("%stag %s %s\n", GOT_COMMIT_SEP_STR, refname, refstr);
++		free(refstr);
+ 		printf("from: %s\n", tagger);
+ 		datestr = get_datestr(&tagger_time, datebuf);
+ 		if (datestr)
+@@ -7025,6 +7115,19 @@ list_tags(struct got_repository *repo, const char *tag
+ 			}
+ 		}
+ 		free(id_str);
++
++		if (ssh_sig) {
++			err = got_sigs_verify_tag_ssh(&sig_msg, tag, ssh_sig,
++				allowed_signers, revoked_signers, verbosity);
++			if (err && err->code == GOT_ERR_BAD_TAG_SIGNATURE)
++				bad_sigs = 1;
++			else if (err)
++				break;
++			printf("signature: %s", sig_msg);
++			free(sig_msg);
++			sig_msg = NULL;
++		}
++
+ 		if (commit) {
+ 			err = got_object_commit_get_logmsg(&tagmsg0, commit);
+ 			if (err)
+@@ -7050,6 +7153,9 @@ list_tags(struct got_repository *repo, const char *tag
+ done:
+ 	got_ref_list_free(&refs);
+ 	free(wanted_refname);
++
++	if (err == NULL && bad_sigs)
++		err = got_error(GOT_ERR_BAD_TAG_SIGNATURE);
+ 	return err;
+ }
+ 
+@@ -7098,9 +7204,6 @@ done:
+ 	if (fd != -1 && close(fd) == -1 && err == NULL)
+ 		err = got_error_from_errno2("close", *tagmsg_path);
+ 
+-	/* Editor is done; we can now apply unveil(2) */
+-	if (err == NULL)
+-		err = apply_unveil(repo_path, 0, NULL);
+ 	if (err) {
+ 		free(*tagmsg);
+ 		*tagmsg = NULL;
+@@ -7110,7 +7213,8 @@ done:
+ 
+ static const struct got_error *
+ add_tag(struct got_repository *repo, const char *tagger,
+-    const char *tag_name, const char *commit_arg, const char *tagmsg_arg)
++    const char *tag_name, const char *commit_arg, const char *tagmsg_arg,
++    const char *key_file, int verbosity)
+ {
+ 	const struct got_error *err = NULL;
+ 	struct got_object_id *commit_id = NULL, *tag_id = NULL;
+@@ -7166,10 +7270,18 @@ add_tag(struct got_repository *repo, const char *tagge
+ 				preserve_tagmsg = 1;
+ 			goto done;
+ 		}
++		/* Editor is done; we can now apply unveil(2) */
++		err = got_sigs_apply_unveil();
++		if (err)
++			goto done;
++		err = apply_unveil(got_repo_get_path(repo), 0, NULL);
++		if (err)
++			goto done;
+ 	}
+ 
+ 	err = got_object_tag_create(&tag_id, tag_name, commit_id,
+-	    tagger, time(NULL), tagmsg ? tagmsg : tagmsg_arg, repo);
++	    tagger, time(NULL), tagmsg ? tagmsg : tagmsg_arg, key_file, repo,
++	    verbosity);
+ 	if (err) {
+ 		if (tagmsg_path)
+ 			preserve_tagmsg = 1;
+@@ -7223,11 +7335,13 @@ cmd_tag(int argc, char *argv[])
+ 	struct got_worktree *worktree = NULL;
+ 	char *cwd = NULL, *repo_path = NULL, *commit_id_str = NULL;
+ 	char *gitconfig_path = NULL, *tagger = NULL;
++	char *allowed_signers = NULL, *revoked_signers = NULL;
+ 	const char *tag_name = NULL, *commit_id_arg = NULL, *tagmsg = NULL;
+-	int ch, do_list = 0;
++	int ch, do_list = 0, verify_tags = 0, verbosity = 0;
++	const char *signer_id = NULL;
+ 	int *pack_fds = NULL;
+ 
+-	while ((ch = getopt(argc, argv, "c:m:r:l")) != -1) {
++	while ((ch = getopt(argc, argv, "c:m:r:ls:Vv")) != -1) {
+ 		switch (ch) {
+ 		case 'c':
+ 			commit_id_arg = optarg;
+@@ -7245,6 +7359,18 @@ cmd_tag(int argc, char *argv[])
+ 		case 'l':
+ 			do_list = 1;
+ 			break;
++		case 's':
++			signer_id = optarg;
++			break;
++		case 'V':
++			verify_tags = 1;
++			break;
++		case 'v':
++			if (verbosity < 0)
++				verbosity = 0;
++			else if (verbosity < 3)
++				verbosity++;
++			break;
+ 		default:
+ 			usage_tag();
+ 			/* NOTREACHED */
+@@ -7305,26 +7431,40 @@ cmd_tag(int argc, char *argv[])
+ 		}
+ 	}
+ 
+-	if (do_list) {
++	if (do_list || verify_tags) {
++		error = got_repo_open(&repo, repo_path, NULL, pack_fds);
++		if (error != NULL)
++			goto done;
++		error = get_allowed_signers(&allowed_signers, repo, worktree);
++		if (error)
++			goto done;
++		error = get_revoked_signers(&revoked_signers, repo, worktree);
++		if (error)
++			goto done;
+ 		if (worktree) {
+ 			/* Release work tree lock. */
+ 			got_worktree_close(worktree);
+ 			worktree = NULL;
+ 		}
+-		error = got_repo_open(&repo, repo_path, NULL, pack_fds);
+-		if (error != NULL)
+-			goto done;
+ 
++		/*
++		 * Remove "cpath" promise unless needed for signature tmpfile
++		 * creation.
++		 */
++		if (verify_tags)
++		 	got_sigs_apply_unveil();
++		else {
+ #ifndef PROFILE
+-		/* Remove "cpath" promise. */
+-		if (pledge("stdio rpath wpath flock proc exec sendfd unveil",
+-		    NULL) == -1)
+-			err(1, "pledge");
++			if (pledge("stdio rpath wpath flock proc exec sendfd "
++			    "unveil", NULL) == -1)
++				err(1, "pledge");
+ #endif
++		}
+ 		error = apply_unveil(got_repo_get_path(repo), 1, NULL);
+ 		if (error)
+ 			goto done;
+-		error = list_tags(repo, tag_name);
++		error = list_tags(repo, tag_name, verify_tags, allowed_signers,
++		    revoked_signers, verbosity);
+ 	} else {
+ 		error = get_gitconfig_path(&gitconfig_path);
+ 		if (error)
+@@ -7344,6 +7484,11 @@ cmd_tag(int argc, char *argv[])
+ 		}
+ 
+ 		if (tagmsg) {
++			if (signer_id) {
++				error = got_sigs_apply_unveil();
++				if (error)
++					goto done;
++			}
+ 			error = apply_unveil(got_repo_get_path(repo), 0, NULL);
+ 			if (error)
+ 				goto done;
+@@ -7368,7 +7513,8 @@ cmd_tag(int argc, char *argv[])
+ 		}
+ 
+ 		error = add_tag(repo, tagger, tag_name,
+-		    commit_id_str ? commit_id_str : commit_id_arg, tagmsg);
++		    commit_id_str ? commit_id_str : commit_id_arg, tagmsg,
++		    signer_id, verbosity);
+ 	}
+ done:
+ 	if (repo) {
+@@ -7389,6 +7535,8 @@ done:
+ 	free(gitconfig_path);
+ 	free(commit_id_str);
+ 	free(tagger);
++	free(allowed_signers);
++	free(revoked_signers);
+ 	return error;
+ }
+ 
+@@ -12418,22 +12566,6 @@ cat_tree(struct got_object_id *id, struct got_reposito
+ 	return err;
+ }
+ 
+-static void
+-format_gmtoff(char *buf, size_t sz, time_t gmtoff)
+-{
+-	long long h, m;
+-	char sign = '+';
+-
+-	if (gmtoff < 0) {
+-		sign = '-';
+-		gmtoff = -gmtoff;
+-	}
+-
+-	h = (long long)gmtoff / 3600;
+-	m = ((long long)gmtoff - h*3600) / 60;
+-	snprintf(buf, sz, "%c%02lld%02lld", sign, h, m);
+-}
+-
+ static const struct got_error *
+ cat_commit(struct got_object_id *id, struct got_repository *repo, FILE *outfile)
+ {
+@@ -12465,14 +12597,14 @@ cat_commit(struct got_object_id *id, struct got_reposi
+ 		fprintf(outfile, "%s%s\n", GOT_COMMIT_LABEL_PARENT, pid_str);
+ 		free(pid_str);
+ 	}
+-	format_gmtoff(gmtoff, sizeof(gmtoff),
++	got_date_format_gmtoff(gmtoff, sizeof(gmtoff),
+ 	    got_object_commit_get_author_gmtoff(commit));
+ 	fprintf(outfile, "%s%s %lld %s\n", GOT_COMMIT_LABEL_AUTHOR,
+ 	    got_object_commit_get_author(commit),
+ 	    (long long)got_object_commit_get_author_time(commit),
+ 	    gmtoff);
+ 
+-	format_gmtoff(gmtoff, sizeof(gmtoff),
++	got_date_format_gmtoff(gmtoff, sizeof(gmtoff),
+ 	    got_object_commit_get_committer_gmtoff(commit));
+ 	fprintf(outfile, "%s%s %lld %s\n", GOT_COMMIT_LABEL_COMMITTER,
+ 	    got_object_commit_get_author(commit),
+@@ -12531,7 +12663,7 @@ cat_tag(struct got_object_id *id, struct got_repositor
+ 	fprintf(outfile, "%s%s\n", GOT_TAG_LABEL_TAG,
+ 	    got_object_tag_get_name(tag));
+ 
+-	format_gmtoff(gmtoff, sizeof(gmtoff),
++	got_date_format_gmtoff(gmtoff, sizeof(gmtoff),
+ 	    got_object_tag_get_tagger_gmtoff(tag));
+ 	fprintf(outfile, "%s%s %lld %s\n", GOT_TAG_LABEL_TAGGER,
+ 	    got_object_tag_get_tagger(tag),
+blob - 781133bbc9837ad999231c521ae9da3239c0232b
+blob + bf9729a9216142455edfd253fb05cd98c0b4b1f1
+--- gotadmin/Makefile
++++ gotadmin/Makefile
+@@ -8,7 +8,8 @@ SRCS=		gotadmin.c \
+ 		inflate.c lockfile.c object.c object_cache.c object_create.c \
+ 		object_idset.c object_parse.c opentemp.c pack.c pack_create.c \
+ 		path.c privsep.c reference.c repository.c repository_admin.c \
+-		worktree_open.c sha1.c bloom.c murmurhash2.c ratelimit.c
++		worktree_open.c sha1.c bloom.c murmurhash2.c ratelimit.c \
++		sigs.c buf.c date.c
+ MAN =		${PROG}.1
+ 
+ CPPFLAGS = -I${.CURDIR}/../include -I${.CURDIR}/../lib
+blob - aa54a17419d407bb09bbc7b00af392c74aa8801f
+blob + 948b9b8fc5270878f0eb2aa61a579197663e4827
+--- gotweb/Makefile
++++ gotweb/Makefile
+@@ -15,7 +15,7 @@ SRCS =		gotweb.c parse.y blame.c commit_graph.c delta.
+ 		diff_main.c diff_atomize_text.c diff_myers.c diff_output.c \
+ 		diff_output_plain.c diff_output_unidiff.c \
+ 		diff_output_edscript.c diff_patience.c \
+-		bloom.c murmurhash2.c
++		bloom.c murmurhash2.c sigs.c date.c
+ MAN =		${PROG}.conf.5 ${PROG}.8
+ 
+ CPPFLAGS +=	-I${.CURDIR}/../include -I${.CURDIR}/../lib -I${.CURDIR} \
+blob - /dev/null
+blob + b005c2c948e0b4b35147550b1b23fef240ddf8b4 (mode 644)
+--- /dev/null
++++ include/got_date.h
+@@ -0,0 +1,18 @@
++/*
++ * Copyright (c) 2022 Josh Rickmar <jrick@zettaport.com>
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++void
++got_date_format_gmtoff(char *, size_t, time_t);
+blob - 22a9264b9f8d0c0b20b48895dd8ea59708e61d48
+blob + 4bfaed588e2d81e1b0578a939dd96553de6bc11b
+--- include/got_error.h
++++ include/got_error.h
+@@ -169,6 +169,8 @@
+ #define GOT_ERR_PATCH_FAILED	151
+ #define GOT_ERR_FILEIDX_DUP_ENTRY 152
+ #define GOT_ERR_PIN_PACK	153
++#define GOT_ERR_BAD_TAG_SIGNATURE 154
++#define GOT_ERR_VERIFY_TAG_SIGNATURE 155
+ 
+ struct got_error {
+         int code;
+blob - 3dbe5d7d43cf45ec0e7997d43f266c3ce0c9fcbe
+blob + 26e15d93b91bc42ee028fa8ecf60a8d1ac4dfdc9
+--- include/got_gotconfig.h
++++ include/got_gotconfig.h
+@@ -29,3 +29,19 @@ const char *got_gotconfig_get_author(const struct got_
+  */
+ void got_gotconfig_get_remotes(int *, const struct got_remote_repo **,
+     const struct got_gotconfig *);
++
++/*
++ * Obtain the filename of the allowed signers file.
++ * Returns NULL if no configuration file is found or no allowed signers file
++ * is configured.
++ */
++const char *
++got_gotconfig_get_allowed_signers_file(const struct got_gotconfig *);
++
++/*
++ * Obtain the filename of the revoked signers file.
++ * Returns NULL if no configuration file is found or no revoked signers file
++ * is configured.
++ */
++const char *
++got_gotconfig_get_revoked_signers_file(const struct got_gotconfig *);
+blob - a8d0318ceaa7152627e8c8718ba039f8517bc3e4
+blob + 1cd6f349912d3e03ebbdccfd4beeeb54663af7fb
+--- include/got_object.h
++++ include/got_object.h
+@@ -351,4 +351,4 @@ const struct got_error *got_object_commit_add_parent(s
+ /* Create a new tag object in the repository. */
+ const struct got_error *got_object_tag_create(struct got_object_id **,
+     const char *, struct got_object_id *, const char *,
+-    time_t, const char *, struct got_repository *);
++    time_t, const char *, const char *, struct got_repository *, int verbosity);
+blob - /dev/null
+blob + 204a6265963d6dcbf4d6f3de13f4bdbafaafc6fa (mode 644)
+--- /dev/null
++++ include/got_sigs.h
+@@ -0,0 +1,28 @@
++/*
++ * Copyright (c) 2022 Josh Rickmar <jrick@zettaport.com>
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++const struct got_error *
++got_sigs_apply_unveil(void);
++
++const struct got_error *
++got_sigs_sign_tag_ssh(pid_t *, int *, int *, const char *, int);
++
++const char *
++got_sigs_get_tagmsg_ssh_signature(const char *);
++
++const struct got_error *
++got_sigs_verify_tag_ssh(char **, struct got_tag_object *, const char *,
++    const char *, const char *, int);
+blob - /dev/null
+blob + 815b291ce868d18136ce8f45fa2f890b6f6c08f9 (mode 644)
+--- /dev/null
++++ lib/date.c
+@@ -0,0 +1,35 @@
++/*
++ * Copyright (c) 2022 Josh Rickmar <jrick@zettaport.com>
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++#include <stdio.h>
++
++#include "got_date.h"
++
++void
++got_date_format_gmtoff(char *buf, size_t sz, time_t gmtoff)
++{
++	long long h, m;
++	char sign = '+';
++
++	if (gmtoff < 0) {
++		sign = '-';
++		gmtoff = -gmtoff;
++	}
++
++	h = (long long)gmtoff / 3600;
++	m = ((long long)gmtoff - h*3600) / 60;
++	snprintf(buf, sz, "%c%02lld%02lld", sign, h, m);
++}
+blob - 3ffd653ef429fab490d06ba6a953185254e7c117
+blob + 3c092e61bab70845c184eb10f359eb6df3ee01ce
+--- lib/error.c
++++ lib/error.c
+@@ -217,6 +217,8 @@ static const struct got_error got_errors[] = {
+ 	{ GOT_ERR_PATCH_FAILED, "patch failed to apply" },
+ 	{ GOT_ERR_FILEIDX_DUP_ENTRY, "duplicate file index entry" },
+ 	{ GOT_ERR_PIN_PACK, "could not pin pack file" },
++	{ GOT_ERR_BAD_TAG_SIGNATURE, "invalid tag signature" },
++	{ GOT_ERR_VERIFY_TAG_SIGNATURE, "cannot verify signature" },
+ };
+ 
+ static struct got_custom_error {
+blob - 5e02aa1efeff0dd226e617da410a4663d8376d9a
+blob + 39337ed4d9cbe7dfa5939b3f4dcb38793ccddfbd
+--- lib/got_lib_gotconfig.h
++++ lib/got_lib_gotconfig.h
+@@ -20,6 +20,8 @@ struct got_gotconfig {
+ 	char *author;
+ 	int nremotes;
+ 	struct got_remote_repo *remotes;
++	char *allowed_signers_file;
++	char *revoked_signers_file;
+ };
+ 
+ const struct got_error *got_gotconfig_read(struct got_gotconfig **,
+blob - 6ffe646e98676cf9a0d19fe3ad27f3e63ab04fcc
+blob + dac4ab973b68243e262fd1ae6482fffb6dc2bc57
+--- lib/got_lib_privsep.h
++++ lib/got_lib_privsep.h
+@@ -172,6 +172,8 @@ enum got_imsg_type {
+ 	/* Messages related to gotconfig files. */
+ 	GOT_IMSG_GOTCONFIG_PARSE_REQUEST,
+ 	GOT_IMSG_GOTCONFIG_AUTHOR_REQUEST,
++	GOT_IMSG_GOTCONFIG_ALLOWEDSIGNERS_REQUEST,
++	GOT_IMSG_GOTCONFIG_REVOKEDSIGNERS_REQUEST,
+ 	GOT_IMSG_GOTCONFIG_REMOTES_REQUEST,
+ 	GOT_IMSG_GOTCONFIG_INT_VAL,
+ 	GOT_IMSG_GOTCONFIG_STR_VAL,
+@@ -760,6 +762,10 @@ const struct got_error *got_privsep_recv_gitconfig_rem
+ const struct got_error *got_privsep_send_gotconfig_parse_req(struct imsgbuf *,
+     int);
+ const struct got_error *got_privsep_send_gotconfig_author_req(struct imsgbuf *);
++const struct got_error *got_privsep_send_gotconfig_allowed_signers_req(
++    struct imsgbuf *);
++const struct got_error *got_privsep_send_gotconfig_revoked_signers_req(
++    struct imsgbuf *);
+ const struct got_error *got_privsep_send_gotconfig_remotes_req(
+     struct imsgbuf *);
+ const struct got_error *got_privsep_recv_gotconfig_str(char **,
+blob - 5b602c9f5513aee64b98ca608535d5b85280ec42
+blob + 7fae8306f7aa444e25b71f0a95f8f151ec324a7f
+--- lib/gotconfig.c
++++ lib/gotconfig.c
+@@ -101,6 +101,24 @@ got_gotconfig_read(struct got_gotconfig **conf, const 
+ 	if (err)
+ 		goto done;
+ 
++	err = got_privsep_send_gotconfig_allowed_signers_req(ibuf);
++	if (err)
++		goto done;
++
++	err = got_privsep_recv_gotconfig_str(&(*conf)->allowed_signers_file,
++	    ibuf);
++	if (err)
++		goto done;
++
++	err = got_privsep_send_gotconfig_revoked_signers_req(ibuf);
++	if (err)
++		goto done;
++
++	err = got_privsep_recv_gotconfig_str(&(*conf)->revoked_signers_file,
++	    ibuf);
++	if (err)
++		goto done;
++
+ 	err = got_privsep_send_gotconfig_remotes_req(ibuf);
+ 	if (err)
+ 		goto done;
+@@ -158,3 +176,15 @@ got_gotconfig_get_remotes(int *nremotes, const struct 
+ 	*nremotes = conf->nremotes;
+ 	*remotes = conf->remotes;
+ }
++
++const char *
++got_gotconfig_get_allowed_signers_file(const struct got_gotconfig *conf)
++{
++	return conf->allowed_signers_file;
++}
++
++const char *
++got_gotconfig_get_revoked_signers_file(const struct got_gotconfig *conf)
++{
++	return conf->revoked_signers_file;
++}
+blob - 5036de1b9a6b491a1fc7c0358a03dcd9574f6cf3
+blob + 8f33d6ba0309e1d8f43ef3b0c35b661bd6045211
+--- lib/object_create.c
++++ lib/object_create.c
+@@ -17,6 +17,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/queue.h>
++#include <sys/wait.h>
+ 
+ #include <ctype.h>
+ #include <errno.h>
+@@ -35,6 +36,7 @@
+ #include "got_repository.h"
+ #include "got_opentemp.h"
+ #include "got_path.h"
++#include "got_sigs.h"
+ 
+ #include "got_lib_sha1.h"
+ #include "got_lib_deflate.h"
+@@ -45,6 +47,8 @@
+ 
+ #include "got_lib_object_create.h"
+ 
++#include "buf.h"
++
+ #ifndef nitems
+ #define nitems(_a) (sizeof(_a) / sizeof((_a)[0]))
+ #endif
+@@ -608,19 +612,21 @@ done:
+ const struct got_error *
+ got_object_tag_create(struct got_object_id **id,
+     const char *tag_name, struct got_object_id *object_id, const char *tagger,
+-    time_t tagger_time, const char *tagmsg, struct got_repository *repo)
++    time_t tagger_time, const char *tagmsg, const char *key_file,
++    struct got_repository *repo, int verbosity)
+ {
+ 	const struct got_error *err = NULL;
+ 	SHA1_CTX sha1_ctx;
+ 	char *header = NULL;
+ 	char *tag_str = NULL, *tagger_str = NULL;
+ 	char *id_str = NULL, *obj_str = NULL, *type_str = NULL;
+-	size_t headerlen, len = 0, n;
++	size_t headerlen, len = 0, sig_len = 0, n;
+ 	FILE *tagfile = NULL;
+ 	off_t tagsize = 0;
+ 	char *msg0 = NULL, *msg;
+ 	const char *obj_type_str;
+ 	int obj_type;
++	BUF *buf = NULL;
+ 
+ 	*id = NULL;
+ 
+@@ -681,9 +687,79 @@ got_object_tag_create(struct got_object_id **id,
+ 	while (isspace((unsigned char)msg[0]))
+ 		msg++;
+ 
++	if (key_file) {
++		FILE *out;
++		pid_t pid;
++		size_t len;
++		int in_fd, out_fd;
++		int status;
++
++		err = buf_alloc(&buf, 0);
++		if (err)
++			goto done;
++
++		/* signed message */
++		err = buf_puts(&len, buf, obj_str);
++		if (err)
++			goto done;
++		err = buf_puts(&len, buf, type_str);
++		if (err)
++			goto done;
++		err = buf_puts(&len, buf, tag_str);
++		if (err)
++			goto done;
++		err = buf_puts(&len, buf, tagger_str);
++		if (err)
++			goto done;
++		err = buf_putc(buf, '\n');
++		if (err)
++			goto done;
++		err = buf_puts(&len, buf, msg);
++		if (err)
++			goto done;
++		err = buf_putc(buf, '\n');
++		if (err)
++			goto done;
++
++		err = got_sigs_sign_tag_ssh(&pid, &in_fd, &out_fd, key_file,
++		    verbosity);
++		if (err)
++			goto done;
++		if (buf_write_fd(buf, in_fd) == -1) {
++			err = got_error_from_errno("write");
++			goto done;
++		}
++		if (close(in_fd) == -1) {
++			err = got_error_from_errno("close");
++			goto done;
++		}
++
++		if (waitpid(pid, &status, 0) == -1) {
++			err = got_error_from_errno("waitpid");
++			goto done;
++		}
++
++		out = fdopen(out_fd, "r");
++		if (out == NULL) {
++			err = got_error_from_errno("fdopen");
++			goto done;
++		}
++		buf_empty(buf);
++		err = buf_load(&buf, out);
++		if (err)
++			goto done;
++		sig_len = buf_len(buf) + 1;
++		err = buf_putc(buf, '\0');
++		if (err)
++			goto done;
++		if (close(out_fd) == -1) {
++			err = got_error_from_errno("close");
++			goto done;
++		}
++	}
++
+ 	len = strlen(obj_str) + strlen(type_str) + strlen(tag_str) +
+-	    strlen(tagger_str) + 1 + strlen(msg) + 1;
+-
++	    strlen(tagger_str) + 1 + strlen(msg) + 1 + sig_len;
+ 	if (asprintf(&header, "%s %zd", GOT_OBJ_LABEL_TAG, len) == -1) {
+ 		err = got_error_from_errno("asprintf");
+ 		goto done;
+@@ -764,6 +840,17 @@ got_object_tag_create(struct got_object_id **id,
+ 	}
+ 	tagsize += n;
+ 
++	if (key_file && buf_len(buf) > 0) {
++		len = buf_len(buf);
++		SHA1Update(&sha1_ctx, buf_get(buf), len);
++		n = fwrite(buf_get(buf), 1, len, tagfile);
++		if (n != len) {
++			err = got_ferror(tagfile, GOT_ERR_IO);
++			goto done;
++		}
++		tagsize += n;
++	}
++
+ 	*id = malloc(sizeof(**id));
+ 	if (*id == NULL) {
+ 		err = got_error_from_errno("malloc");
+@@ -783,6 +870,8 @@ done:
+ 	free(header);
+ 	free(obj_str);
+ 	free(tagger_str);
++	if (buf)
++		buf_release(buf);
+ 	if (tagfile && fclose(tagfile) == EOF && err == NULL)
+ 		err = got_error_from_errno("fclose");
+ 	if (err) {
+blob - c0bdac7221a79c5ec97d1728e862406152d51eb9
+blob + 07acf70c2c9103549d8dd9f40e6a173d0bb20401
+--- lib/privsep.c
++++ lib/privsep.c
+@@ -2365,6 +2365,28 @@ got_privsep_send_gotconfig_author_req(struct imsgbuf *
+ }
+ 
+ const struct got_error *
++got_privsep_send_gotconfig_allowed_signers_req(struct imsgbuf *ibuf)
++{
++	if (imsg_compose(ibuf,
++	    GOT_IMSG_GOTCONFIG_ALLOWEDSIGNERS_REQUEST, 0, 0, -1, NULL, 0) == -1)
++		return got_error_from_errno("imsg_compose "
++		    "GOTCONFIG_ALLOWEDSIGNERS_REQUEST");
++
++	return flush_imsg(ibuf);
++}
++
++const struct got_error *
++got_privsep_send_gotconfig_revoked_signers_req(struct imsgbuf *ibuf)
++{
++	if (imsg_compose(ibuf,
++	    GOT_IMSG_GOTCONFIG_REVOKEDSIGNERS_REQUEST, 0, 0, -1, NULL, 0) == -1)
++		return got_error_from_errno("imsg_compose "
++		    "GOTCONFIG_REVOKEDSIGNERS_REQUEST");
++
++	return flush_imsg(ibuf);
++}
++
++const struct got_error *
+ got_privsep_send_gotconfig_remotes_req(struct imsgbuf *ibuf)
+ {
+ 	if (imsg_compose(ibuf,
+blob - /dev/null
+blob + 0b04e3f959ed7aab07534ee9bb5cb4a63e0dd93f (mode 644)
+--- /dev/null
++++ lib/sigs.c
+@@ -0,0 +1,407 @@
++/*
++ * Copyright (c) 2022 Josh Rickmar <jrick@zettaport.com>
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <sys/socket.h>
++#include <sys/queue.h>
++#include <sys/wait.h>
++
++#include <stdlib.h>
++#include <stdio.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <string.h>
++#include <err.h>
++#include <assert.h>
++#include <sha1.h>
++
++#include "got_error.h"
++#include "got_date.h"
++#include "got_object.h"
++#include "got_opentemp.h"
++
++#include "got_sigs.h"
++
++#include "buf.h"
++
++#ifndef MIN
++#define	MIN(_a,_b) ((_a) < (_b) ? (_a) : (_b))
++#endif
++
++#ifndef nitems
++#define nitems(_a)	(sizeof((_a)) / sizeof((_a)[0]))
++#endif
++
++#ifndef GOT_TAG_PATH_SSH_KEYGEN
++#define GOT_TAG_PATH_SSH_KEYGEN	"/usr/bin/ssh-keygen"
++#endif
++
++#ifndef GOT_TAG_PATH_SIGNIFY
++#define GOT_TAG_PATH_SIGNIFY "/usr/bin/signify"
++#endif
++
++const struct got_error *
++got_sigs_apply_unveil()
++{
++	if (unveil(GOT_TAG_PATH_SSH_KEYGEN, "x") != 0) {
++		return got_error_from_errno2("unveil",
++		    GOT_TAG_PATH_SSH_KEYGEN);
++	}
++	if (unveil(GOT_TAG_PATH_SIGNIFY, "x") != 0) {
++		return got_error_from_errno2("unveil",
++		    GOT_TAG_PATH_SIGNIFY);
++	}
++
++	return NULL;
++}
++
++const struct got_error *
++got_sigs_sign_tag_ssh(pid_t *newpid, int *in_fd, int *out_fd,
++    const char* key_file, int verbosity)
++{
++	const struct got_error *error = NULL;
++	int pid, in_pfd[2], out_pfd[2];
++	const char* argv[11];
++	int i = 0, j;
++
++	*newpid = -1;
++	*in_fd = -1;
++	*out_fd = -1;
++
++	argv[i++] = GOT_TAG_PATH_SSH_KEYGEN;
++	argv[i++] = "-Y";
++	argv[i++] = "sign";
++	argv[i++] = "-f";
++	argv[i++] = key_file;
++	argv[i++] = "-n";
++	argv[i++] = "git";
++	if (verbosity <= 0) {
++		argv[i++] = "-q";
++	} else {
++		/* ssh(1) allows up to 3 "-v" options. */
++		for (j = 0; j < MIN(3, verbosity); j++)
++			argv[i++] = "-v";
++	}
++	argv[i++] = NULL;
++	assert(i <= nitems(argv));
++
++	if (pipe2(in_pfd, 0) == -1)
++		return got_error_from_errno("pipe2");
++	if (pipe2(out_pfd, 0) == -1)
++		return got_error_from_errno("pipe2");
++
++	pid = fork();
++	if (pid == -1) {
++		error = got_error_from_errno("fork");
++		close(in_pfd[0]);
++		close(in_pfd[1]);
++		close(out_pfd[0]);
++		close(out_pfd[1]);
++		return error;
++	} else if (pid == 0) {
++		if (close(in_pfd[1]) == -1)
++			err(1, "close");
++		if (close(out_pfd[1]) == -1)
++			err(1, "close");
++		if (dup2(in_pfd[0], 0) == -1)
++			err(1, "dup2");
++		if (dup2(out_pfd[0], 1) == -1)
++			err(1, "dup2");
++		if (execv(GOT_TAG_PATH_SSH_KEYGEN, (char **const)argv) == -1)
++			err(1, "execv");
++		abort(); /* not reached */
++	}
++	if (close(in_pfd[0]) == -1)
++		return got_error_from_errno("close");
++	if (close(out_pfd[0]) == -1)
++		return got_error_from_errno("close");
++	*newpid = pid;
++	*in_fd = in_pfd[1];
++	*out_fd = out_pfd[1];
++	return NULL;
++}
++
++static char *
++signer_identity(const char *tagger)
++{
++	char *lt, *gt;
++
++	lt = strstr(tagger, " <");
++	gt = strrchr(tagger, '>');
++	if (lt && gt && lt+1 < gt)
++		return strndup(lt+2, gt-lt-2);
++	return NULL;
++}
++
++static const char* BEGIN_SSH_SIG = "-----BEGIN SSH SIGNATURE-----\n";
++static const char* END_SSH_SIG = "-----END SSH SIGNATURE-----\n";
++
++const char *
++got_sigs_get_tagmsg_ssh_signature(const char *tagmsg)
++{
++	const char *s = tagmsg, *begin = NULL, *end = NULL;
++
++	while ((s = strstr(s, BEGIN_SSH_SIG)) != NULL) {
++		begin = s;
++		s += strlen(BEGIN_SSH_SIG);
++	}
++	if (begin)
++		end = strstr(begin+strlen(BEGIN_SSH_SIG), END_SSH_SIG);
++	if (end == NULL)
++		return NULL;
++	return (end[strlen(END_SSH_SIG)] == '\0') ? begin : NULL;
++}
++
++static const struct got_error *
++got_tag_write_signed_data(BUF *buf, struct got_tag_object *tag,
++    const char *start_sig)
++{
++	const struct got_error *err = NULL;
++	struct got_object_id *id;
++	char *id_str = NULL;
++	char *tagger = NULL;
++	const char *tagmsg;
++	char gmtoff[6];
++	size_t len;
++
++	id = got_object_tag_get_object_id(tag);
++	err = got_object_id_str(&id_str, id);
++	if (err)
++		goto done;
++
++	const char *type_label = NULL;
++	switch (got_object_tag_get_object_type(tag)) {
++	case GOT_OBJ_TYPE_BLOB:
++		type_label = GOT_OBJ_LABEL_BLOB;
++		break;
++	case GOT_OBJ_TYPE_TREE:
++		type_label = GOT_OBJ_LABEL_TREE;
++		break;
++	case GOT_OBJ_TYPE_COMMIT:
++		type_label = GOT_OBJ_LABEL_COMMIT;
++		break;
++	case GOT_OBJ_TYPE_TAG:
++		type_label = GOT_OBJ_LABEL_TAG;
++		break;
++	default:
++		break;
++	}
++	got_date_format_gmtoff(gmtoff, sizeof(gmtoff),
++	    got_object_tag_get_tagger_gmtoff(tag));
++	if (asprintf(&tagger, "%s %lld %s", got_object_tag_get_tagger(tag),
++	    got_object_tag_get_tagger_time(tag), gmtoff) == -1) {
++		err = got_error_from_errno("asprintf");
++		goto done;
++	}
++
++	err = buf_puts(&len, buf, GOT_TAG_LABEL_OBJECT);
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, id_str);
++	if (err)
++		goto done;
++	err = buf_putc(buf, '\n');
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, GOT_TAG_LABEL_TYPE);
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, type_label);
++	if (err)
++		goto done;
++	err = buf_putc(buf, '\n');
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, GOT_TAG_LABEL_TAG);
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, got_object_tag_get_name(tag));
++	if (err)
++		goto done;
++	err = buf_putc(buf, '\n');
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, GOT_TAG_LABEL_TAGGER);
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, tagger);
++	if (err)
++		goto done;
++	err = buf_puts(&len, buf, "\n");
++	if (err)
++		goto done;
++	tagmsg = got_object_tag_get_message(tag);
++	err = buf_append(&len, buf, tagmsg, start_sig-tagmsg);
++	if (err)
++		goto done;
++
++done:
++	free(id_str);
++	free(tagger);
++	return err;
++}
++
++const struct got_error *
++got_sigs_verify_tag_ssh(char **msg, struct got_tag_object *tag,
++    const char *start_sig, const char* allowed_signers, const char* revoked,
++    int verbosity)
++{
++	const struct got_error *error = NULL;
++	const char* argv[17];
++	int pid, status, in_pfd[2], out_pfd[2];
++	char* parsed_identity = NULL;
++	const char *identity;
++	char* tmppath = NULL;
++	FILE *tmpsig, *out = NULL;
++	BUF *buf;
++	int i = 0, j;
++
++	*msg = NULL;
++
++	error = got_opentemp_named(&tmppath, &tmpsig,
++	    GOT_TMPDIR_STR "/got-tagsig");
++	if (error)
++		goto done;
++
++	identity = got_object_tag_get_tagger(tag);
++	parsed_identity = signer_identity(identity);
++	if (parsed_identity != NULL)
++		identity = parsed_identity;
++
++	if (fputs(start_sig, tmpsig) == EOF) {
++		error = got_error_from_errno("fputs");
++		goto done;
++	}
++	if (fflush(tmpsig) == EOF) {
++		error = got_error_from_errno("fflush");
++		goto done;
++	}
++
++	error = buf_alloc(&buf, 0);
++	if (error)
++		goto done;
++	error = got_tag_write_signed_data(buf, tag, start_sig);
++	if (error)
++		goto done;
++
++	argv[i++] = GOT_TAG_PATH_SSH_KEYGEN;
++	argv[i++] = "-Y";
++	argv[i++] = "verify";
++	argv[i++] = "-f";
++	argv[i++] = allowed_signers;
++	argv[i++] = "-I";
++	argv[i++] = identity;
++	argv[i++] = "-n";
++	argv[i++] = "git";
++	argv[i++] = "-s";
++	argv[i++] = tmppath;
++	if (revoked) {
++		argv[i++] = "-r";
++		argv[i++] = revoked;
++	}
++	if (verbosity > 0) {
++		/* ssh(1) allows up to 3 "-v" options. */
++		for (j = 0; j < MIN(3, verbosity); j++)
++			argv[i++] = "-v";
++	}
++	argv[i++] = NULL;
++	assert(i <= nitems(argv));
++
++	if (pipe2(in_pfd, 0) == -1) {
++		error = got_error_from_errno("pipe2");
++		goto done;
++	}
++	if (pipe2(out_pfd, 0) == -1) {
++		error = got_error_from_errno("pipe2");
++		goto done;
++	}
++
++	pid = fork();
++	if (pid == -1) {
++		error = got_error_from_errno("fork");
++		close(in_pfd[0]);
++		close(in_pfd[1]);
++		close(out_pfd[0]);
++		close(out_pfd[1]);
++		return error;
++	} else if (pid == 0) {
++		if (close(in_pfd[1]) == -1)
++			err(1, "close");
++		if (close(out_pfd[1]) == -1)
++			err(1, "close");
++		if (dup2(in_pfd[0], 0) == -1)
++			err(1, "dup2");
++		if (dup2(out_pfd[0], 1) == -1)
++			err(1, "dup2");
++		if (execv(GOT_TAG_PATH_SSH_KEYGEN, (char **const)argv) == -1)
++			err(1, "execv");
++		abort(); /* not reached */
++	}
++	if (close(in_pfd[0]) == -1) {
++		error = got_error_from_errno("close");
++		goto done;
++	}
++	if (close(out_pfd[0]) == -1) {
++		error = got_error_from_errno("close");
++		goto done;
++	}
++	if (buf_write_fd(buf, in_pfd[1]) == -1) {
++		error = got_error_from_errno("write");
++		goto done;
++	}
++	if (close(in_pfd[1]) == -1) {
++		error = got_error_from_errno("close");
++		goto done;
++	}
++	if (waitpid(pid, &status, 0) == -1) {
++		error = got_error_from_errno("waitpid");
++		goto done;
++	}
++	if (!WIFEXITED(status)) {
++		error = got_error(GOT_ERR_BAD_TAG_SIGNATURE);
++		goto done;
++	}
++
++	out = fdopen(out_pfd[1], "r");
++	if (out == NULL) {
++		error = got_error_from_errno("fdopen");
++		goto done;
++	}
++	error = buf_load(&buf, out);
++	if (error)
++		goto done;
++	error = buf_putc(buf, '\0');
++	if (error)
++		goto done;
++	if (close(out_pfd[1]) == -1) {
++		error = got_error_from_errno("close");
++		goto done;
++	}
++	out = NULL;
++	*msg = buf_get(buf);
++	if (WEXITSTATUS(status) != 0)
++		error = got_error(GOT_ERR_BAD_TAG_SIGNATURE);
++
++done:
++	free(parsed_identity);
++	free(tmppath);
++	if (tmpsig && fclose(tmpsig) == EOF && error == NULL)
++		error = got_error_from_errno("fclose");
++	if (out && fclose(out) == EOF && error == NULL)
++		error = got_error_from_errno("fclose");
++	return error;
++}
+blob - aa2c97552358174249a7361aba78c785626d6b7f
+blob + be0d93073a8d7779e487b6a2d12bad1e6c9721d4
+--- libexec/got-read-gotconfig/got-read-gotconfig.c
++++ libexec/got-read-gotconfig/got-read-gotconfig.c
+@@ -548,6 +548,24 @@ main(int argc, char *argv[])
+ 			err = send_gotconfig_str(&ibuf,
+ 			    gotconfig->author ?  gotconfig->author : "");
+ 			break;
++		case GOT_IMSG_GOTCONFIG_ALLOWEDSIGNERS_REQUEST:
++			if (gotconfig == NULL) {
++				err = got_error(GOT_ERR_PRIVSEP_MSG);
++				break;
++			}
++			err = send_gotconfig_str(&ibuf,
++			    gotconfig->allowed_signers_file ?
++			        gotconfig->allowed_signers_file : "");
++			break;
++		case GOT_IMSG_GOTCONFIG_REVOKEDSIGNERS_REQUEST:
++			if (gotconfig == NULL) {
++				err = got_error(GOT_ERR_PRIVSEP_MSG);
++				break;
++			}
++			err = send_gotconfig_str(&ibuf,
++			    gotconfig->revoked_signers_file ?
++			        gotconfig->revoked_signers_file : "");
++			break;
+ 		case GOT_IMSG_GOTCONFIG_REMOTES_REQUEST:
+ 			if (gotconfig == NULL) {
+ 				err = got_error(GOT_ERR_PRIVSEP_MSG);
+blob - 1ce499222101a45de399bd433825c767df869d91
+blob + 504e691250732f7b2baee47695fc1794127b2adb
+--- libexec/got-read-gotconfig/gotconfig.h
++++ libexec/got-read-gotconfig/gotconfig.h
+@@ -1,4 +1,5 @@
+ /*
++ * Copyright (c) 2022 Josh Rickmar <jrick@zettaport.com>
+  * Copyright (c) 2020, 2021 Tracey Emery <tracey@openbsd.org>
+  * Copyright (c) 2020 Stefan Sperling <stsp@openbsd.org>
+  *
+@@ -66,6 +67,8 @@ struct gotconfig {
+ 	char	*author;
+ 	struct gotconfig_remote_repo_list remotes;
+ 	int nremotes;
++	char	*allowed_signers_file;
++	char	*revoked_signers_file;
+ };
+ 
+ /*
+blob - b9a0bd38cabe5d893cbbb04c482578a895a094ed
+blob + 85fc623c3bd3ebda367919af6ac405ae817a88fc
+--- libexec/got-read-gotconfig/parse.y
++++ libexec/got-read-gotconfig/parse.y
+@@ -99,7 +99,8 @@ typedef struct {
+ 
+ %token	ERROR
+ %token	REMOTE REPOSITORY SERVER PORT PROTOCOL MIRROR_REFERENCES BRANCH
+-%token	AUTHOR FETCH_ALL_BRANCHES REFERENCE FETCH SEND
++%token	AUTHOR ALLOWED_SIGNERS REVOKED_SIGNERS FETCH_ALL_BRANCHES REFERENCE
++%token	FETCH SEND
+ %token	<v.string>	STRING
+ %token	<v.number>	NUMBER
+ %type	<v.number>	boolean portplain
+@@ -113,6 +114,7 @@ grammar		: /* empty */
+ 		| grammar '\n'
+ 		| grammar author '\n'
+ 		| grammar remote '\n'
++		| grammar allowed_signers '\n'
+ 		;
+ boolean		: STRING {
+ 			if (strcasecmp($1, "true") == 0 ||
+@@ -306,6 +308,14 @@ author		: AUTHOR STRING {
+ 			gotconfig.author = $2;
+ 		}
+ 		;
++allowed_signers	: ALLOWED_SIGNERS STRING {
++			gotconfig.allowed_signers_file = $2;
++		}
++		;
++revoked_signers	: REVOKED_SIGNERS STRING {
++			gotconfig.revoked_signers_file = $2;
++		}
++		;
+ optnl		: '\n' optnl
+ 		| /* empty */
+ 		;
+@@ -354,6 +364,7 @@ lookup(char *s)
+ {
+ 	/* This has to be sorted always. */
+ 	static const struct keywords keywords[] = {
++		{"allowed_signers",	ALLOWED_SIGNERS},
+ 		{"author",		AUTHOR},
+ 		{"branch",		BRANCH},
+ 		{"fetch",		FETCH},
+@@ -364,6 +375,7 @@ lookup(char *s)
+ 		{"reference",		REFERENCE},
+ 		{"remote",		REMOTE},
+ 		{"repository",		REPOSITORY},
++		{"revoked_signers",	REVOKED_SIGNERS},
+ 		{"send",		SEND},
+ 		{"server",		SERVER},
+ 	};
+@@ -791,6 +803,8 @@ gotconfig_free(struct gotconfig *conf)
+ 	struct gotconfig_remote_repo *remote;
+ 
+ 	free(conf->author);
++	free(conf->allowed_signers_file);
++	free(conf->revoked_signers_file);
+ 	while (!TAILQ_EMPTY(&conf->remotes)) {
+ 		remote = TAILQ_FIRST(&conf->remotes);
+ 		TAILQ_REMOVE(&conf->remotes, remote, entry);
+blob - 53325e40ea937187e8814d7b18dd3a6a2f5c40f5
+blob + b39af2be74c1e13b37e5bb89219e62eed8046e23
+--- regress/cmdline/tag.sh
++++ regress/cmdline/tag.sh
+@@ -257,7 +257,168 @@ test_tag_list_lightweight() {
+ 	test_done "$testroot" "$ret"
+ }
+ 
++test_tag_create_ssh_signed() {
++	local testroot=`test_init tag_create`
++	local commit_id=`git_show_head $testroot/repo`
++	local tag=1.0.0
++	local tag2=2.0.0
++
++	ssh-keygen -q -N '' -t ed25519 -f $testroot/id_ed25519
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		echo "ssh-keygen failed unexpectedly"
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++	touch $testroot/allowed_signers
++	echo "allowed_signers \"$testroot/allowed_signers\"" > \
++		$testroot/repo/.git/got.conf
++
++	# Create a signed tag based on repository's HEAD reference
++	got tag -s $testroot/id_ed25519 -m 'test' -r $testroot/repo -c HEAD \
++		$tag > $testroot/stdout
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		echo "got tag command failed unexpectedly"
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++
++	tag_id=`got ref -r $testroot/repo -l \
++		| grep "^refs/tags/$tag" | tr -d ' ' | cut -d: -f2`
++	echo "Created tag $tag_id" > $testroot/stdout.expected
++	cmp -s $testroot/stdout $testroot/stdout.expected
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		diff -u $testroot/stdout.expected $testroot/stdout
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++
++	# Ensure validation fails when the key is not allowed
++	echo "signature: Could not verify signature." > \
++		$testroot/stdout.expected
++	VERIFY_STDOUT=$(got tag -r $testroot/repo -V $tag 2> $testroot/stderr)
++	ret=$?
++	echo "$VERIFY_STDOUT" | grep '^signature: ' > $testroot/stdout
++	if [ $ret -eq 0 ]; then
++		diff -u $testroot/stdout.expected $testroot/stdout
++		test_done "$testroot" "1"
++		return 1
++	fi
++
++	GOOD_SIG='Good "git" signature for flan_hacker@openbsd.org with ED25519 key SHA256:'
++
++	# Validate the signature with the key allowed
++	echo -n 'flan_hacker@openbsd.org ' > $testroot/allowed_signers
++	cat $testroot/id_ed25519.pub >> $testroot/allowed_signers
++	GOT_STDOUT=$(got tag -r $testroot/repo -V $tag 2> $testroot/stderr)
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		echo "got tag command failed unexpectedly"
++		diff -u $testroot/stdout.expected $testroot/stdout
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++	
++	if ! echo "$GOT_STDOUT" | grep -q "^signature: $GOOD_SIG"; then
++		echo "got tag command failed to validate signature"
++		test_done "$testroot" "1"
++		return 1
++	fi
++
++	# Ensure that Git recognizes and verifies the tag Got has created
++	(cd $testroot/repo && git checkout -q $tag)
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		echo "git checkout command failed unexpectedly"
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++	(cd $testroot/repo && git config --local gpg.ssh.allowedSignersFile \
++		$testroot/allowed_signers)
++	GIT_STDERR=$(cd $testroot/repo && git tag -v $tag 2>&1 1>/dev/null)
++	if ! echo "$GIT_STDERR" | grep -q "^$GOOD_SIG"; then
++		echo "git tag command failed to validate signature"
++		test_done "$testroot" "1"
++		return 1
++	fi
++
++	# Ensure Got recognizes the new tag
++	got checkout -c $tag $testroot/repo $testroot/wt >/dev/null
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		echo "got checkout command failed unexpectedly"
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++
++	# Create a tag based on implied worktree HEAD ref
++	(cd $testroot/wt && got tag -m 'test' $tag2 > $testroot/stdout)
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++
++	tag_id2=`got ref -r $testroot/repo -l \
++		| grep "^refs/tags/$tag2" | tr -d ' ' | cut -d: -f2`
++	echo "Created tag $tag_id2" > $testroot/stdout.expected
++	cmp -s $testroot/stdout $testroot/stdout.expected
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		diff -u $testroot/stdout.expected $testroot/stdout
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++
++	(cd $testroot/repo && git checkout -q $tag2)
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		echo "git checkout command failed unexpectedly"
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++
++	# Attempt to create a tag pointing at a non-commit
++	local tree_id=`git_show_tree $testroot/repo`
++	(cd $testroot/wt && got tag -m 'test' -c $tree_id foobar \
++		2> $testroot/stderr)
++	ret=$?
++	if [ $ret -eq 0 ]; then
++		echo "git tag command succeeded unexpectedly"
++		test_done "$testroot" "1"
++		return 1
++	fi
++
++	echo "got: commit $tree_id: object not found" \
++		> $testroot/stderr.expected
++	cmp -s $testroot/stderr $testroot/stderr.expected
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		diff -u $testroot/stderr.expected $testroot/stderr
++		test_done "$testroot" "$ret"
++		return 1
++	fi
++
++	got ref -r $testroot/repo -l > $testroot/stdout
++	echo "HEAD: $commit_id" > $testroot/stdout.expected
++	echo -n "refs/got/worktree/base-" >> $testroot/stdout.expected
++	cat $testroot/wt/.got/uuid | tr -d '\n' >> $testroot/stdout.expected
++	echo ": $commit_id" >> $testroot/stdout.expected
++	echo "refs/heads/master: $commit_id" >> $testroot/stdout.expected
++	echo "refs/tags/$tag: $tag_id" >> $testroot/stdout.expected
++	echo "refs/tags/$tag2: $tag_id2" >> $testroot/stdout.expected
++	cmp -s $testroot/stdout $testroot/stdout.expected
++	ret=$?
++	if [ $ret -ne 0 ]; then
++		diff -u $testroot/stdout.expected $testroot/stdout
++	fi
++	test_done "$testroot" "$ret"
++}
++
+ test_parseargs "$@"
+ run_test test_tag_create
+ run_test test_tag_list
+ run_test test_tag_list_lightweight
++run_test test_tag_create_ssh_signed
+blob - 0215869fd1a3678fe92c416a609faf3e875f0a34
+blob + f835a2398bf16bf81771722cceeaea81aaa9423b
+--- regress/fetch/Makefile
++++ regress/fetch/Makefile
+@@ -4,7 +4,8 @@ PROG = fetch_test
+ SRCS = error.c privsep.c reference.c sha1.c object.c object_parse.c path.c \
+ 	opentemp.c repository.c lockfile.c object_cache.c pack.c inflate.c \
+ 	deflate.c delta.c delta_cache.c object_idset.c object_create.c \
+-	fetch.c gotconfig.c dial.c fetch_test.c bloom.c murmurhash2.c
++	fetch.c gotconfig.c dial.c fetch_test.c bloom.c murmurhash2.c sigs.c \
++	buf.c date.c
+ 
+ CPPFLAGS = -I${.CURDIR}/../../include -I${.CURDIR}/../../lib
+ LDADD = -lutil -lz -lm
+blob - ba79d5e787ada9939dea4f62aae062cea501f845
+blob + 7379d7e77fb9e190eb44211cdf722939696a6cbe
+--- tog/Makefile
++++ tog/Makefile
+@@ -12,7 +12,7 @@ SRCS=		tog.c blame.c commit_graph.c delta.c diff.c \
+ 		gotconfig.c diff_main.c diff_atomize_text.c \
+ 		diff_myers.c diff_output.c diff_output_plain.c \
+ 		diff_output_unidiff.c diff_output_edscript.c \
+-		diff_patience.c bloom.c murmurhash2.c
++		diff_patience.c bloom.c murmurhash2.c sigs.c date.c
+ MAN =		${PROG}.1
+ 
+ CPPFLAGS = -I${.CURDIR}/../include -I${.CURDIR}/../lib
+
