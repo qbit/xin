@@ -1,6 +1,5 @@
 { config, pkgs, lib, modulesPath, ... }:
-let
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+let myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
 in {
   _module.args.isUnstable = true;
 
