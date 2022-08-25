@@ -1,0 +1,112 @@
+#!/usr/bin/env sh
+
+. ./common.sh
+
+trap error INT TERM
+
+rebuild() {
+	host="$(resolveAlias $1)"
+	skip_check=$2
+
+	msg "Rebuilding: ${host}"
+
+	#if [ "$host" = "$(uname -n)" ]; then
+	#	# Don't use ssh for the machine we are running on. Assume it's a manager machine and needs to
+	#	# be bootstrapped.
+	#	if [ "$(nixos-version --json | jq -r .configurationRevision)" = "$CurrentVersion" ] && [ $skip_check = false ]; then
+	#		msg "Up-to-date: ${host}"
+	#		return 0
+	#	else
+	#		sudo nixos-rebuild --flake .#${1} switch
+	#	fi
+	#	return 0
+	#fi
+
+	if ! tsAlive $host; then
+		msg "can't reach ${host}.. skipping.."
+		return
+	fi
+
+	hostVersion=$(${SSH} root@${host} 'nixos-version --json | jq -r .configurationRevision')
+	if [ $? != 0 ]; then
+		return $?
+	fi
+
+	if [ "$hostVersion" = "$CurrentVersion" ] && [ $skip_check = false ]; then
+		msg "Up-to-date: ${host}"
+		return 0
+	fi
+
+	nixos-rebuild --flake .#${1} --build-host root@${host} --target-host root@${host} switch
+	return $?
+}
+
+if [ "$1" = "install" ]; then
+	host="$(resolveAlias $2)"
+
+	start
+
+	if [ ! -d hosts/${host} ]; then
+		msg "No config found for $host"
+		exit 1
+	fi
+
+	set -eu
+	mkdir -p .gcroots
+	out=$(nix build -o .gcroots/${host} --json .#nixosConfigurations.${host}.config.system.build.toplevel | jq -r '.[0].outputs.out')
+
+	nix copy -s --to "ssh://root@${host}" "$out"
+	nix copy -s --derivation --to "ssh://root@${host}" "$out"
+
+	${SSH} "root@${host}" nix build --profile /nix/var/nix/profiles/system "$out"
+	${SSH} "root@${host}" nix shell -vv "$out" -c switch-to-configuration "$@"
+	exit 0
+fi
+
+if [ "$1" = "update" ]; then
+	can_sign=0
+	for i in $(ssh-add -L | awk '{print $NF}'); do
+		grep -q $i .allowed_signers && can_sign=1
+	done
+
+	if [ $can_sign = 1 ]; then
+		nix flake update --commit-lock-file
+		exit
+	else
+		echo "Can't find signing key."
+		exit 1
+	fi
+fi
+
+if [ "$1" = "installer" ]; then
+	nix build .#nixosConfigurations.isoInstall.config.system.build.isoImage
+	exit $?
+fi
+
+start
+
+if [ "$1" = "diff" ]; then
+	set -x
+	host="$(resolveAlias $2)"
+	mkdir -p .gcroots
+	out=$(nix build -o .gcroots/${host} --json .#nixosConfigurations.${2}.config.system.build.toplevel | jq -r '.[0].outputs.out')
+	nix copy -s --to "ssh://root@$host" "$out"
+	nix copy -s --derivation --to "ssh://root@$host" "$out"
+	${SSH} "root@$host" "nix-store -qd /run/current-system $out | xargs nix-diff --color=always" | less
+	exit $?
+fi
+
+ret=0
+if [ ${#@} = 1 ]; then
+	rebuild $1 true || ret=1
+else
+	for host in $(ls hosts); do
+		rebuild $host false || ret=1
+	done
+fi
+
+if [ $ret = 0 ]; then
+	finish
+else
+	msg "WARNING: Management key retained!"
+fi

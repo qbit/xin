@@ -1,0 +1,4 @@
+.gcroots/
+.direnv
+result
+.DS_Store
