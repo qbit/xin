@@ -18,6 +18,7 @@ in {
     ./configs/zsh.nix
     ./dbuild
     ./gui
+    ./pkgs
     #./overlays
     ./services
     ./system/nix-config.nix
@@ -97,8 +98,6 @@ in {
     boot.cleanTmpDir = true;
 
     environment.systemPackages = with pkgs; [
-      (callPackage ./pkgs/got.nix { inherit isUnstable; })
-
       age
       apg
       bind
