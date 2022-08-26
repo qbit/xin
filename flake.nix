@@ -147,7 +147,7 @@
             xin-secrets.nixosModules.sops
             (import "${sshKnownHosts}")
 
-            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
           ];
         };
       };
