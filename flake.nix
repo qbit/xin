@@ -68,16 +68,16 @@
             PS1='\u@\h:\w; '
           '';
           nativeBuildInputs = with pkgs; [
-            tree
+            git
             go
             jq
-            statix
-            sops
             nix-diff
             nixfmt
-            git
+            sops
             ssh-to-age
             ssh-to-pgp
+            statix
+            tree
           ];
         };
       buildSys = sys: sysBase: extraMods: name:

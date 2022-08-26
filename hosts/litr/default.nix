@@ -59,7 +59,6 @@ in {
     aircrack-ng
     apg
     barrier
-    barrier
     firefox
     fzf
     gnome.gnome-keyring
