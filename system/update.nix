@@ -15,7 +15,7 @@ with lib; {
     (mkIf config.autoUpdate.enable {
       system.autoUpgrade = {
         enable = true;
-        allowReboot = false;
+        allowReboot = mkDefault false;
         flake = "github:qbit/xin";
         dates = "*-*-* *:03:00";
       };
