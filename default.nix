@@ -109,11 +109,12 @@ in {
       minisign
       mosh
       nix-diff
-      nix-top
       nixfmt
       nix-index
+      nix-top
       pass
       rbw
+      taskwarrior
       tmux
     ];
 
