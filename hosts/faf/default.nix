@@ -107,6 +107,7 @@ in {
     };
   };
 
+  system.autoUpgrade.allowReboot = true;
   system.stateVersion = "21.11"; # Did you read the comment?
 }
 

@@ -735,6 +735,7 @@ in {
 
   programs.zsh.enable = true;
 
+  system.autoUpgrade.allowReboot = true;
   system.stateVersion = "20.03";
 }
 

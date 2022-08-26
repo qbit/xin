@@ -193,5 +193,6 @@ in {
     nix-top
   ];
 
+  system.autoUpgrade.allowReboot = true;
   system.stateVersion = "21.11";
 }
