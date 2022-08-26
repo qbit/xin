@@ -125,6 +125,13 @@ in {
   };
 
   services = {
+    taskserver = {
+      enable = true;
+      fqdn = "tasks.suah.dev";
+      listenHost = "::";
+      organisations."bolddaemon".users = [ "qbit" ];
+      openFirewall = true;
+    };
     cron = {
       enable = true;
       systemCronJobs = [
