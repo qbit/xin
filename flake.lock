@@ -242,18 +242,18 @@
         "stable": "stable_2"
       },
       "locked": {
-        "lastModified": 1661453539,
-        "narHash": "sha256-gTqg3+/EQDUBcApgn5Lf5Ybu9yGHkqJBvqp80g8VKrE=",
+        "lastModified": 1661480432,
+        "narHash": "sha256-Z+o84wE3O+mTKtGBAAeVa5J+UcFNDRYytYe38ReVe84=",
         "ref": "main",
-        "rev": "d0f828c31429f9ceaeef469a7c2834aa59523b09",
-        "revCount": 24,
+        "rev": "34c3214c299f839b014a4aed735557feb4640383",
+        "revCount": 26,
         "type": "git",
-        "url": "ssh://gitea@git.tapenet.org:2222/qbit/xin-secrets.git"
+        "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
       "original": {
         "ref": "main",
         "type": "git",
-        "url": "ssh://gitea@git.tapenet.org:2222/qbit/xin-secrets.git"
+        "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       }
     }
   },

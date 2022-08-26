@@ -3,8 +3,7 @@
 
   inputs = {
     xin-secrets = {
-      url =
-        "git+ssh://gitea@git.tapenet.org:2222/qbit/xin-secrets.git?ref=main";
+      url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
     };
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     stable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
