@@ -1,6 +1,8 @@
 { config, pkgs, lib, isUnstable, ... }:
 with pkgs;
 let
+  restic = pkgs.writeScriptBin "restic"
+    (import ../../bins/restic.nix { inherit pkgs; });
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
   mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
@@ -148,7 +150,8 @@ in {
           environmentFile = "${config.sops.secrets.restic_env_file.path}";
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
-          paths = [ pgBackupDir "/var/lib/synapse/media_store" "/var/www" ];
+          paths =
+            [ pgBackupDir "/var/lib/synapse/media_store" "/var/www" "/home" ];
 
           timerConfig = { OnCalendar = "00:05"; };
 
