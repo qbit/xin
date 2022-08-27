@@ -1,4 +1,4 @@
-{ lib, buildGo118Module, fetchFromGitHub, isUnstable, ... }:
+{ lib, buildGo119Module, fetchFromGitHub, isUnstable, ... }:
 
 let
   vendorHash = if isUnstable then
@@ -7,7 +7,7 @@ let
     "sha256-d8YeLD/BQAB6IC4jvBke9EIKAe+7/MnPgVYztqjU5c4=";
 
 in with lib;
-buildGo118Module rec {
+buildGo119Module rec {
   pname = "mcchunkie";
   version = "1.0.8";
 
