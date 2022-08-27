@@ -10,18 +10,6 @@ rebuild() {
 
 	msg "Rebuilding: ${host}"
 
-	#if [ "$host" = "$(uname -n)" ]; then
-	#	# Don't use ssh for the machine we are running on. Assume it's a manager machine and needs to
-	#	# be bootstrapped.
-	#	if [ "$(nixos-version --json | jq -r .configurationRevision)" = "$CurrentVersion" ] && [ $skip_check = false ]; then
-	#		msg "Up-to-date: ${host}"
-	#		return 0
-	#	else
-	#		sudo nixos-rebuild --flake .#${1} switch
-	#	fi
-	#	return 0
-	#fi
-
 	if ! tsAlive $host; then
 		msg "can't reach ${host}.. skipping.."
 		return
@@ -40,6 +28,17 @@ rebuild() {
 	nixos-rebuild --flake .#${1} --build-host root@${host} --target-host root@${host} switch
 	return $?
 }
+
+if [ "$1" = "status" ]; then
+	start
+	for h in $(ls hosts); do
+		host="$(resolveAlias $h)"
+		echo -n "==> $h: "
+		host_data="$(${SSH} root@${host} 'nixos-version --json')"
+		echo -e "\t\t$(echo $host_data | jq -r .nixosVersion)\t$(echo $host_data | jq -r .configurationRevision)"
+	done
+	exit 0
+fi
 
 if [ "$1" = "install" ]; then
 	host="$(resolveAlias $2)"
