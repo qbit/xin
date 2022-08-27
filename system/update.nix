@@ -17,7 +17,7 @@ with lib; {
         enable = true;
         allowReboot = mkDefault false;
         flake = "github:qbit/xin";
-        dates = "*-*-* *:03:00";
+        dates = "*-*-* *:05:00";
       };
     })
     {
