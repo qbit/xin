@@ -117,7 +117,7 @@
           "${nixos-hardware}/common/pc/laptop/ssd"
         ] "europa";
         box = buildSys "x86_64-linux" stable [ ] "box";
-        h = buildSys "x86_64-linux" stable [ ] "h";
+        h = buildSys "x86_64-linux" unstable [ ] "h";
         faf = buildSys "x86_64-linux" stable [ ] "faf";
         litr = buildSys "x86_64-linux" unstable [ ] "litr";
         #nerm = buildSys "x86_64-linux" unstable [ ] "nerm";

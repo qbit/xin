@@ -2,7 +2,7 @@
 
 let
   vendorHash = if isUnstable then
-    ""
+    "sha256-1zBZREClt8jy0TUXJ1FuBEAJEPQoUcl4DZZ6U2LtRzg="
   else
     "sha256-NIAJKq7TiMessqaohkdHy+j/vBKvMsiPgmnaiNAsGeE=";
 
