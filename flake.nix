@@ -6,6 +6,7 @@
       url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
     };
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     stable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
@@ -44,7 +45,7 @@
     };
   };
 
-  outputs = { self, unstable, stable, nixos-hardware, sshKnownHosts, microca
+  outputs = { self, unstable, unstableSmall, stable, nixos-hardware, sshKnownHosts, microca
     , mcchunkie, gqrss, darwin, xin-secrets, ... }@flakes:
     let
       hostBase = {
@@ -117,7 +118,7 @@
           "${nixos-hardware}/common/pc/laptop/ssd"
         ] "europa";
         box = buildSys "x86_64-linux" stable [ ] "box";
-        h = buildSys "x86_64-linux" unstable [ ] "h";
+        h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         faf = buildSys "x86_64-linux" stable [ ] "faf";
         litr = buildSys "x86_64-linux" unstable [ ] "litr";
         #nerm = buildSys "x86_64-linux" unstable [ ] "nerm";
