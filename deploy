@@ -31,6 +31,7 @@ rebuild() {
 
 if [ "$1" = "status" ]; then
 	start
+	msg "Currently at: $(git rev-parse HEAD)"
 	for h in $(ls hosts); do
 		host="$(resolveAlias $h)"
 		if ! tsAlive $host; then
