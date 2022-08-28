@@ -5,7 +5,7 @@ AgentKeys="$(ssh-add -L | awk '{print $2}')"
 RunHost="$(uname -n)"
 
 msg() {
-	echo "===> $@"
+	echo -e "===> $@"
 }
 
 resolveAlias() {

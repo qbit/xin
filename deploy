@@ -31,7 +31,8 @@ rebuild() {
 
 if [ "$1" = "status" ]; then
 	start
-	msg "Currently at: $(git rev-parse HEAD)"
+	rev=$(git rev-parse HEAD)
+	msg "Currently at: ${rev}\t($(git log --format=%B -n 1 $rev | head -n1))"
 	for h in $(ls hosts); do
 		host="$(resolveAlias $h)"
 		if ! tsAlive $host; then
@@ -40,7 +41,9 @@ if [ "$1" = "status" ]; then
 		fi
 		echo -n "===> $h: "
 		host_data="$(${SSH} root@${host} 'nixos-version --json')"
-		echo -e "\t\t$(echo $host_data | jq -r .nixosVersion)\t$(echo $host_data | jq -r .configurationRevision)"
+		remote_rev=$(echo $host_data | jq -r .configurationRevision)
+		remote_ver=$(echo $host_data | jq -r .nixosVersion)
+		echo -e "\t\t${remote_ver}\t${remote_rev}\t($(git log --format=%B -n 1 $remote_rev | head -n1))"
 	done
 	finish
 	exit 0
