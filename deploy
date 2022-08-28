@@ -42,6 +42,7 @@ if [ "$1" = "status" ]; then
 		host_data="$(${SSH} root@${host} 'nixos-version --json')"
 		echo -e "\t\t$(echo $host_data | jq -r .nixosVersion)\t$(echo $host_data | jq -r .configurationRevision)"
 	done
+	finish
 	exit 0
 fi
 
