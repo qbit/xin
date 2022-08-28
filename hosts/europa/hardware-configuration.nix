@@ -58,6 +58,7 @@
   };
 
   swapDevices = [ ];
+  # needed for hibernate
   #swapDevices =
   #  [{ device = "/dev/disk/by-uuid/6e56876e-bd04-4fbb-9ff7-5202cbf5eaa4"; }];
 

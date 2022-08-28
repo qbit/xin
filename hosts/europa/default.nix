@@ -44,11 +44,8 @@ in {
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxPackages;
-    kernelParams = [ "boot.shell_on_fail" "nvme.noacpi=1" ];
+    kernelParams = [ "boot.shell_on_fail" ];
     kernelModules = [ "kvm-intel" ];
-    extraModprobeConfig = ''
-      options snd-hda-intel model=dell-headset-multi
-    '';
   };
 
   programs.zsh.shellAliases = {
@@ -132,7 +129,6 @@ in {
       enable = true;
       client.enable = true;
     };
-    #blueman.enable = true;
     cron = {
       enable = true;
       systemCronJobs = [
@@ -145,6 +141,7 @@ in {
     #  lidSwitch = "suspend-then-hibernate";
     #  lidSwitchExternalPower = "lock";
     #};
+    fstrim.enable = true;
     tlp = {
       enable = false;
       settings = {
@@ -162,7 +159,6 @@ in {
 
     udev.extraRules = ''
       SUBSYSTEM=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="5bf0", GROUP="users", TAG+="uaccess"
-      SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0xa0e0", ATTR{power/control}="on"
     '';
   };
 
