@@ -33,7 +33,11 @@ if [ "$1" = "status" ]; then
 	start
 	for h in $(ls hosts); do
 		host="$(resolveAlias $h)"
-		echo -n "==> $h: "
+		if ! tsAlive $host; then
+			msg "can't reach ${host}.. skipping.."
+			continue
+		fi
+		echo -n "===> $h: "
 		host_data="$(${SSH} root@${host} 'nixos-version --json')"
 		echo -e "\t\t$(echo $host_data | jq -r .nixosVersion)\t$(echo $host_data | jq -r .configurationRevision)"
 	done
