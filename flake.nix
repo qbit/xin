@@ -45,8 +45,9 @@
     };
   };
 
-  outputs = { self, unstable, unstableSmall, stable, nixos-hardware, sshKnownHosts, microca
-    , mcchunkie, gqrss, darwin, xin-secrets, ... }@flakes:
+  outputs = { self, unstable, unstableSmall, stable, nixos-hardware
+    , sshKnownHosts, microca, mcchunkie, gqrss, darwin, xin-secrets, ...
+    }@flakes:
     let
       hostBase = {
         overlays = [ flakes.emacs-overlay.overlay ];
@@ -112,11 +113,7 @@
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable [
-          "${nixos-hardware}/common/cpu/intel"
-          "${nixos-hardware}/common/pc/laptop"
-          "${nixos-hardware}/common/pc/laptop/ssd"
-        ] "europa";
+        europa = buildSys "x86_64-linux" unstable [ ] "europa";
         box = buildSys "x86_64-linux" stable [ ] "box";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         faf = buildSys "x86_64-linux" stable [ ] "faf";
