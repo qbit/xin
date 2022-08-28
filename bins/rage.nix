@@ -1,6 +1,11 @@
 { pkgs }:
 
-let oathPkg = pkgs.oath-toolkit or pkgs.oathToolkit;
+let
+  oathPkg = pkgs.oath-toolkit or pkgs.oathToolkit;
+  clip = if pkgs.system == "darwin-aarch64" then
+    "pbcopy"
+  else
+    "${pkgs.xclip}/bin/xclip";
 in ''
   #!/usr/bin/env sh
 
@@ -59,10 +64,10 @@ in ''
               ;;
       cp)
               if [ -f $2 ]; then
-                      ${pkgs.age}/bin/age -i $identity -d $2 | ${pkgs.xclip}/bin/xclip
+                      ${pkgs.age}/bin/age -i $identity -d $2 | ${clip}
               else
                       F=$(list | grep $2)
-                      ${pkgs.age}/bin/age -i $identity -d "$F" | ${pkgs.xclip}/bin/xclip
+                      ${pkgs.age}/bin/age -i $identity -d "$F" | ${clip}
               fi
               ;;
       otp)
@@ -75,11 +80,11 @@ in ''
               ;;
       push)
               cd $rage_dir
-              git push
+              ${pkgs.git}/bin/git push
               ;;
       sync)
               cd $rage_dir
-              git sync
+              ${pkgs.git-sync}/bin/git-sync
               ;;
       default)
               list
