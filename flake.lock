@@ -38,6 +38,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "emacs-overlay",
+        "rev": "0bb59bd04ff65270b34434edde00654f43a0dec8",
         "type": "github"
       }
     },
