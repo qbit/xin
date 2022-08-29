@@ -51,6 +51,8 @@ fi
 
 if [ "$1" = "install" ]; then
 	host="$(resolveAlias $2)"
+	shift
+	shift
 
 	start
 
@@ -94,7 +96,6 @@ fi
 start
 
 if [ "$1" = "diff" ]; then
-	set -x
 	host="$(resolveAlias $2)"
 	mkdir -p .gcroots
 	out=$(nix build -o .gcroots/${host} --json .#nixosConfigurations.${2}.config.system.build.toplevel | jq -r '.[0].outputs.out')
