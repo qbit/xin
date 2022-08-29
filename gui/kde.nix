@@ -22,7 +22,6 @@ with lib; {
       plasma5Packages.akonadi-mime
       libsForQt5.bismuth
       kdeconnect
-      kmail
       plasma-pass
     ];
   };
