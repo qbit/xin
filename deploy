@@ -43,7 +43,11 @@ if [ "$1" = "status" ]; then
 		host_data="$(${SSH} root@${host} 'nixos-version --json')"
 		remote_rev=$(echo $host_data | jq -r .configurationRevision)
 		remote_ver=$(echo $host_data | jq -r .nixosVersion)
-		echo -e "\t\t${remote_ver}\t${remote_rev}\t($(git log --format=%B -n 1 $remote_rev | head -n1))"
+		rev_msg="DIRTY"
+		if [ "$remote_rev" != "DIRTY" ]; then
+			rev_msg=$(git log --format=%B -n1 $remote_rev | head -n1)
+		fi
+		echo -e "\t\t${remote_ver}\t${remote_rev}\t(${rev_msg})"
 	done
 	finish
 	exit 0
