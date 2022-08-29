@@ -34,6 +34,13 @@ in {
   preDNS.enable = false;
   networking = {
     hostName = "stan";
+
+    hosts = {
+      "172.16.30.253" = [ "proxmox-02.vm.calyptix.local" ];
+      "127.0.0.1" = [ "borg.calyptix.dev" "localhost" ];
+      "192.168.122.133" = [ "arst.arst" "vm" ];
+    };
+
     networkmanager.enable = true;
     firewall = {
       allowedTCPPorts = [ 22 ];
@@ -72,7 +79,7 @@ in {
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     packages = with pkgs; [ ];
-  };
+  } // userBase;
 
   nixpkgs.config.allowUnfree = true;
 
