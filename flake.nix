@@ -4,6 +4,7 @@
   inputs = {
     xin-secrets = {
       url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
+      inputs.nixpkgs.follows = "stable";
     };
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
@@ -114,13 +115,13 @@
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable [ ] "europa";
         box = buildSys "x86_64-linux" stable [ ] "box";
-        h = buildSys "x86_64-linux" unstableSmall [ ] "h";
+        europa = buildSys "x86_64-linux" unstable [ ] "europa";
         faf = buildSys "x86_64-linux" stable [ ] "faf";
-        litr = buildSys "x86_64-linux" unstable [ ] "litr";
-        #nerm = buildSys "x86_64-linux" unstable [ ] "nerm";
         hass = buildSys "x86_64-linux" stable [ ] "hass";
+        h = buildSys "x86_64-linux" unstableSmall [ ] "h";
+        litr = buildSys "x86_64-linux" unstable [ ] "litr";
+        stan = buildSys "x86_64-linux" stable [ ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
