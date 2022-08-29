@@ -121,7 +121,9 @@
         hass = buildSys "x86_64-linux" stable [ ] "hass";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         litr = buildSys "x86_64-linux" unstable [ ] "litr";
-        stan = buildSys "x86_64-linux" stable [ ] "stan";
+        stan = buildSys "x86_64-linux" stable [
+          nixos-hardware.nixosModules.framework
+        ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
