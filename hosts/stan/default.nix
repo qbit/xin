@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 let
   pubKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIITjFpmWZVWixv2i9902R+g5B8umVhaqmjYEKs2nF3Lu qbit@tal.tapenet.org"
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIA7khawMK6P0fXjhXXPEUTA2rF2tYB2VhzseZA/EQ/OtAAAAC3NzaDpncmVhdGVy qbit@litr.bold.daemon"
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB1cBO17AFcS2NtIT+rIxR2Fhdu3HD4de4+IsFyKKuGQAAAACnNzaDpsZXNzZXI= qbit@litr.bold.daemon"
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0= hosts@secretive.plq.local"
@@ -44,11 +43,12 @@ in {
 
   i18n.defaultLocale = "en_US.utf8";
 
-  pantheon.enable = true;
+  kde.enable = true;
+  defaultUsers.enable = false;
 
   sops.secrets = {
     tskey = {
-      sopsFile = config.xin-secrets.litr.secrets;
+      sopsFile = config.xin-secrets.stan.secrets;
       owner = "root";
       mode = "400";
     };
@@ -65,10 +65,12 @@ in {
     };
   };
 
+  users.users.root = userBase;
   users.users.abieber = {
     isNormalUser = true;
     description = "Aaron Bieber";
-    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     packages = with pkgs; [ ];
   };
 
@@ -99,13 +101,6 @@ in {
   programs = {
     dconf.enable = true;
     zsh.enable = true;
-  };
-
-  users.users.root = userBase;
-  users.users.abieber = userBase // {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
   };
 
   services = {
