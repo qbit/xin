@@ -36,7 +36,7 @@ in {
       startAgent = true;
       agentTimeout = "100m";
       extraConfig = ''
-        VerifyHostKeyDNS		yes
+        VerifyHostKeyDNS	yes
         AddKeysToAgent		confirm 90m
         CanonicalizeHostname	always
 
