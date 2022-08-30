@@ -29,6 +29,12 @@ in {
       group = "wheel";
       mode = "400";
     };
+    peerix_private_key = {
+      sopsFile = config.xin-secrets.europa.peerix;
+      owner = "peerix";
+      group = "wheel";
+      mode = "400";
+    };
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -116,6 +122,11 @@ in {
       allowedTCPPorts = [ 22 ];
       checkReversePath = "loose";
     };
+  };
+
+  tsPeerix = {
+    enable = true;
+    privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
   };
 
   programs.steam.enable = true;

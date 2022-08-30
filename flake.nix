@@ -17,7 +17,7 @@
 
     emacs-overlay = {
       url =
-        "github:nix-community/emacs-overlay/0bb59bd04ff65270b34434edde00654f43a0dec8";
+        "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "stable";
     };
 
@@ -45,14 +45,23 @@
       url = "github:qbit/gqrss";
       flake = false;
     };
+
+    peerix = {
+      url = "github:cid-chan/peerix";
+      inputs.nixpkgs.follows = "stable";
+    };
   };
 
   outputs = { self, unstable, unstableSmall, stable, nixos-hardware
-    , sshKnownHosts, microca, mcchunkie, gqrss, darwin, xin-secrets, ...
+    , sshKnownHosts, microca, mcchunkie, gqrss, darwin, xin-secrets, peerix, ...
     }@flakes:
     let
       hostBase = {
-        overlays = [ flakes.emacs-overlay.overlay ];
+        overlays = [
+          flakes.emacs-overlay.overlay
+          flakes.peerix.overlay
+
+        ];
         modules = [
           # Common config stuffs
           (import (./default.nix))
@@ -63,7 +72,7 @@
         ];
       };
 
-      overlays = [ flakes.emacs-overlay.overlay ];
+      overlays = [ flakes.emacs-overlay.overlay flakes.peerix.overlay ];
 
       buildVer = { system.configurationRevision = self.rev or "DIRTY"; };
       buildShell = pkgs:
@@ -116,13 +125,16 @@
 
       nixosConfigurations = {
         box = buildSys "x86_64-linux" stable [ ] "box";
-        europa = buildSys "x86_64-linux" unstable [ ] "europa";
+        europa = buildSys "x86_64-linux" unstable [ peerix.nixosModules.peerix ]
+          "europa";
         faf = buildSys "x86_64-linux" stable [ ] "faf";
         hass = buildSys "x86_64-linux" stable [ ] "hass";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         litr = buildSys "x86_64-linux" unstable [ ] "litr";
         stan = buildSys "x86_64-linux" stable [
           nixos-hardware.nixosModules.framework
+          peerix.nixosModules.peerix
+
         ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
