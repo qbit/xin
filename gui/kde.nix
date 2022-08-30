@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
-let inherit (pkgs.libsForQt5) callPackage; in {
+let inherit (pkgs.libsForQt5) callPackage;
+in {
   options = { kde = { enable = lib.mkEnableOption "Enable KDE desktop."; }; };
 
   config = lib.mkIf config.kde.enable {
