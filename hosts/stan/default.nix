@@ -8,6 +8,7 @@ let
   ];
 
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
+  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
 in {
   _module.args.isUnstable = false;
   imports = [ ./hardware-configuration.nix ];
@@ -111,6 +112,11 @@ in {
   };
 
   services = {
+    emacs = {
+      enable = false;
+      package = myEmacs;
+      install = true;
+    };
     printing.enable = true;
     fwupd.enable = true;
     unifi.enable = true;
