@@ -18,9 +18,7 @@ with lib; {
   };
 
   config = mkIf config.tsPeerix.enable {
-    users.groups.peerix = {
-      name = "peerix";
-    };
+    users.groups.peerix = { name = "peerix"; };
     users.users.peerix = {
       name = "peerix";
       group = "peerix";
