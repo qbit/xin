@@ -194,11 +194,14 @@ in {
     nix-index
     nix-review
     nix-top
+    nmap
     rofi
     signal-desktop
+    tcpdump
     thunderbird
     tidal-hifi
     tigervnc
+    unzip
     virt-manager
     yt-dlp
   ];
