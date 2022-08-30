@@ -60,6 +60,12 @@ in {
       owner = "root";
       mode = "400";
     };
+    peerix_private_key = {
+      sopsFile = config.xin-secrets.stan.peerix;
+      owner = "peerix";
+      group = "peerix";
+      mode = "400";
+    };
   };
 
   systemd.services = {
@@ -109,6 +115,11 @@ in {
   programs = {
     dconf.enable = true;
     zsh.enable = true;
+  };
+
+  tsPeerix = {
+    enable = true;
+    privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
   };
 
   services = {

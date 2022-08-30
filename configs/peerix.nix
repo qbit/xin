@@ -1,7 +1,7 @@
 { config, lib, ... }:
 with lib; {
   options = {
-    peerix = {
+    tsPeerix = {
       enable = mkOption {
         description = "Enable peerix";
         default = false;
@@ -17,18 +17,28 @@ with lib; {
     };
   };
 
-  config = mkIf config.peerix.enable {
+  config = mkIf config.tsPeerix.enable {
+    users.groups.peerix = {
+      name = "peerix";
+    };
+    users.users.peerix = {
+      name = "peerix";
+      group = "peerix";
+      isSystemUser = true;
+    };
     services = {
       peerix = {
         enable = true;
-        openFirewall = false; # UDP/12304
-        privateKeyFile = "${config.peerix.privateKeyFile}";
-        publicKeyFile = ../../configs/peerix.pubs;
+        openFirewall = false;
+        user = "peerix";
+        privateKeyFile = "${config.tsPeerix.privateKeyFile}";
+        publicKeyFile = ./peerix.pubs;
       };
     };
     networking.firewall.interfaces = {
       "tailscale0" = {
-        allowedUDPPorts = 12304;
+        allowedUDPPorts = [ 12304 ];
+        allowedTCPPorts = [ 12304 ];
       };
     };
   };

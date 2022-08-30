@@ -12,6 +12,7 @@ in {
     ./configs/gitmux.nix
     ./configs/git.nix
     ./configs/neovim.nix
+    ./configs/peerix.nix
     ./configs/manager.nix
     ./configs/tmux.nix
     ./configs/net-overlay.nix
