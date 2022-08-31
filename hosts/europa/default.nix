@@ -127,6 +127,7 @@ in {
   tsPeerix = {
     enable = true;
     privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
+    interfaces = [ "tailscale0" "enp43s0" ];
   };
 
   programs.steam.enable = true;
