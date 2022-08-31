@@ -106,6 +106,7 @@ in {
     obs-studio
     openvpn
     sshfs
+    tcpdump
     virt-manager
     wireshark
     zig
