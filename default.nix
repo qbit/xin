@@ -53,7 +53,7 @@ in {
         sopsFile = config.xin-secrets.deploy;
         owner = "root";
         group = "wheel";
-        mode = "440";
+        mode = "400";
       };
     };
 
