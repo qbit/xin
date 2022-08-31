@@ -108,6 +108,7 @@ in {
     sshfs
     virt-manager
     wireshark
+    zig
   ];
 
   virtualisation.libvirtd.enable = true;
