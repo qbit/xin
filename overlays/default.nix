@@ -21,7 +21,6 @@
 
         checkPhase = ''
           runHook preCheck
-          ls -lart
           ./zig2 test --cache-dir "$TMPDIR" -I $src/test $src/test/behavior.zig
           runHook postCheck
         '';
