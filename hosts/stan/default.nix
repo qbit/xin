@@ -53,6 +53,8 @@ in {
 
   kde.enable = true;
   defaultUsers.enable = false;
+  jetbrains.enable = true;
+  sshFidoAgent.enable = true;
 
   sops.secrets = {
     tskey = {
