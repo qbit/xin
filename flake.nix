@@ -129,7 +129,6 @@
         faf = buildSys "x86_64-linux" stable [ ] "faf";
         hass = buildSys "x86_64-linux" stable [ ] "hass";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
-        litr = buildSys "x86_64-linux" unstable [ ] "litr";
         stan = buildSys "x86_64-linux" stable [
           nixos-hardware.nixosModules.framework
           peerix.nixosModules.peerix
