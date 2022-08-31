@@ -29,6 +29,9 @@ with lib; {
       group = "peerix";
       isSystemUser = true;
     };
+
+    nix.settings.allowed-users = [ "peerix" ];
+
     services = {
       peerix = {
         enable = true;
@@ -38,6 +41,7 @@ with lib; {
         publicKeyFile = ./peerix.pubs;
       };
     };
+
     networking.firewall.interfaces = listToAttrs (flatten (map (i: {
       name = i;
       value = {
