@@ -9,7 +9,7 @@ let
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
 in {
   _module.args.isUnstable = true;
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ../../overlays/default.nix ];
 
   boot = {
     loader = {
