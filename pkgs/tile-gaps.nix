@@ -29,7 +29,7 @@ mkDerivation rec {
 
   meta = with lib; {
     description = ''
-    KWin script to add space around windows touching a screen edge or other window
+      KWin script to add space around windows touching a screen edge or other window
     '';
     license = licenses.gpl3;
     maintainers = with maintainers; [ qbit ];
