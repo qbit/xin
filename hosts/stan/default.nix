@@ -8,7 +8,7 @@ let
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
 in {
-  _module.args.isUnstable = false;
+  _module.args.isUnstable = true;
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
