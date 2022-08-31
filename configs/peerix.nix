@@ -37,6 +37,7 @@ with lib; {
         enable = true;
         openFirewall = false;
         user = "peerix";
+        group = "peerix";
         privateKeyFile = "${config.tsPeerix.privateKeyFile}";
         publicKeyFile = ./peerix.pubs;
       };
