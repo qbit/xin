@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib; {
   options = {
     tsPeerix = {
@@ -33,6 +33,11 @@ with lib; {
     nix.settings.allowed-users = [ "peerix" ];
 
     services = {
+      zerotierone = {
+        enable = true;
+        joinNetworks = [ "db64858fedd3b256" ];
+      };
+
       peerix = {
         enable = true;
         openFirewall = false;
@@ -42,6 +47,8 @@ with lib; {
         publicKeyFile = ./peerix.pubs;
       };
     };
+
+    environment.systemPackages = [ pkgs.zerotierone ];
 
     networking.firewall.interfaces = listToAttrs (flatten (map (i: {
       name = i;
