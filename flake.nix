@@ -68,6 +68,8 @@
 
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
+
+          peerix.nixosModules.peerix
         ];
       };
 
@@ -124,15 +126,13 @@
 
       nixosConfigurations = {
         box = buildSys "x86_64-linux" stable [ ] "box";
-        europa = buildSys "x86_64-linux" unstable [ peerix.nixosModules.peerix ]
+        europa = buildSys "x86_64-linux" unstable [  ]
           "europa";
         faf = buildSys "x86_64-linux" stable [ ] "faf";
         hass = buildSys "x86_64-linux" stable [ ] "hass";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         stan = buildSys "x86_64-linux" unstable [
           nixos-hardware.nixosModules.framework
-          peerix.nixosModules.peerix
-
         ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
