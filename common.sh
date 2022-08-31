@@ -1,4 +1,4 @@
-NIX_SSHOPTS="-i /run/secrets/manager_pubkey -oIdentitiesOnly=yes -oControlPath=/tmp/manager-ssh-%r@%h:%p"
+NIX_SSHOPTS="-i /run/secrets/manager_pubkey -oIdentitiesOnly=yes -oControlPath=/tmp/manager-ssh-%r@%h:%p -F/dev/null"
 SSH="ssh ${NIX_SSHOPTS}"
 CurrentVersion="$(git rev-parse HEAD)"
 AgentKeys="$(ssh-add -L | awk '{print $2}')"
