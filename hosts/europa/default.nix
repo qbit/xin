@@ -204,6 +204,7 @@ in {
     unzip
     virt-manager
     yt-dlp
+    zig
   ];
 
   system.stateVersion = "21.11";
