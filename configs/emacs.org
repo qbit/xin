@@ -997,17 +997,6 @@ This advice can make `other-window' skip `sr-speedbar' window."
 
   (global-set-key (kbd "C-x C-n") 'sr-speedbar-toggle)
 #+end_src
-** plantuml
-
-plantuml is a pretty easy way to make decent looking flow chart sorta things.
-
-#+begin_src emacs-lisp
-  ;(use-package plantuml-mode
-  ;  :config
-  ;  (progn
-  ;    (setq org-plantuml-jar-path (expand-file-name "~/Docs/plantuml.jar"))
-  ;    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))))
-#+end_src
 
 ** Elpher
 
@@ -1376,53 +1365,6 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
 
 #+end_src
 
-** org-roam
-
-#+begin_src emacs-lisp
-  (use-package org-roam
-    :ensure t
-    :init
-    (setq org-roam-v2-ack t)
-    :custom
-    (org-roam-directory "~/roam")
-    (org-roam-dailies-directory "journal/")
-    (org-roam-completion-everywhere t)
-    (org-roam-dailies-capture-templates
-     '(("d" "default" entry "* %<%I:%M %p>: %?"
-        :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n i" . org-roam-node-insert)
-           :map org-mode-map
-           ("C-M-i" . completion-at-point)
-           :map org-roam-dailies-map
-           ("Y" . org-roam-dailies-capture-yesterday)
-           ("T" . org-roam-dailies-capture-tomorrow))
-    :bind-keymap
-    ("C-c n d" . org-roam-dailies-map)
-    :config
-    (require 'org-roam-dailies)
-    (org-roam-db-autosync-mode))
-#+end_src
-
-** org-brain
-#+begin_src emacs-lisp
-  ;; (use-package org-brain
-  ;;   :init
-  ;;   (setq org-brain-path "~/org/brain")
-  ;;   :config
-  ;;   (bind-key "C-c b" 'org-brain-prefix-map org-mode-map)
-  ;;   (setq org-id-track-globally t)
-  ;;   (setq org-id-locations-file "~/org/.org-id-locations")
-  ;;   (add-hook 'before-save-hook #'org-brain-ensure-ids-in-buffer)
-  ;;   (push '("b" "Brain" plain (function org-brain-goto-end)
-  ;;           "* %i%?" :empty-lines 1)
-  ;;         org-capture-templates)
-  ;;   (setq org-brain-visualize-default-choices 'all)
-  ;;   (setq org-brain-title-max-length 12)
-  ;;   (setq org-brain-include-file-entries nil
-  ;;         org-brain-file-entries-use-title nil))
-#+end_src
 ** Extra bits
 #+begin_src emacs-lisp
 (use-package org-journal
