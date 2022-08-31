@@ -122,7 +122,7 @@ in {
   tsPeerix = {
     enable = true;
     privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
-    interfaces = [ "tailscale0" "enp43s0" ];
+    interfaces = [ "tailscale0" "enp43s0" "enp132s0u1" ];
   };
 
   services = {
