@@ -37,7 +37,7 @@ in {
     hosts = {
       "172.16.30.253" = [ "proxmox-02.vm.calyptix.local" ];
       "127.0.0.1" = [ "borg.calyptix.dev" "localhost" ];
-      "192.168.122.133" = [ "arst.arst" "vm" ];
+      "192.168.122.249" = [ "arst.arst" "vm" ];
     };
 
     networkmanager.enable = true;
