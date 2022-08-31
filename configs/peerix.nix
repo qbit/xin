@@ -14,6 +14,11 @@ with lib; {
         example = "./private_key";
         type = lib.types.path;
       };
+      interfaces = mkOption {
+        description = "Interfaces to allow peerix to listen on.";
+        type = types.listOf types.str;
+        default = [ "tailscale0" ];
+      };
     };
   };
 
@@ -33,11 +38,12 @@ with lib; {
         publicKeyFile = ./peerix.pubs;
       };
     };
-    networking.firewall.interfaces = {
-      "tailscale0" = {
+    networking.firewall.interfaces = listToAttrs (flatten (map (i: {
+      name = i;
+      value = {
         allowedUDPPorts = [ 12304 ];
         allowedTCPPorts = [ 12304 ];
       };
-    };
+    }) config.tsPeerix.interfaces));
   };
 }
