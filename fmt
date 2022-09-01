@@ -1,6 +1,6 @@
 #!/bin/sh
 
 for i in $(find . -name \*.nix ); do
-	nixfmt $i
+	nix fmt $i
 done
 statix check .

@@ -11,9 +11,7 @@
 
     stable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware/master";
-    };
+    nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
@@ -86,7 +84,6 @@
             go
             jq
             nix-diff
-            nixfmt
             sops
             ssh-to-age
             ssh-to-pgp
@@ -120,6 +117,9 @@
           ];
         };
       };
+
+      formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.nixfmt;
+      formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.nixfmt;
 
       devShells.x86_64-linux.default = buildShell pkgs;
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
