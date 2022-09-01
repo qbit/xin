@@ -4,15 +4,15 @@
   inputs = {
     xin-secrets = {
       url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
-      inputs.nixpkgs.follows = "stable";
     };
+
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+
     stable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
-      inputs.nixpkgs.follows = "unstable";
-      inputs.nixpkgs-22_05.follows = "stable";
     };
 
     emacs-overlay = {
