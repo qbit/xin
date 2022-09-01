@@ -1,6 +1,4 @@
 #!/bin/sh
 
-for i in $(find . -name \*.nix ); do
-	nix fmt $i
-done
+find . -name \*.nix -exec nix fmt {} \+
 statix check .
