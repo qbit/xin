@@ -125,7 +125,7 @@ in {
   };
 
   tsPeerix = {
-    enable = true;
+    enable = false;
     privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
     interfaces = [ "wlp170s0" "ztksevmpn3" ];
   };
