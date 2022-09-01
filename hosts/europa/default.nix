@@ -1,5 +1,10 @@
 { config, pkgs, lib, modulesPath, ... }:
-let myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+let
+  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  peerixUser = if builtins.hasAttr "peerix" config.users.users then
+    config.users.users.peerix.name
+  else
+    "root";
 in {
   _module.args.isUnstable = true;
 
@@ -31,7 +36,7 @@ in {
     };
     peerix_private_key = {
       sopsFile = config.xin-secrets.europa.peerix;
-      owner = "peerix";
+      owner = "${peerixUser}";
       group = "wheel";
       mode = "400";
     };

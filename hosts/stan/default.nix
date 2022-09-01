@@ -7,6 +7,10 @@ let
 
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  peerixUser = if builtins.hasAttr "peerix" config.users.users then
+    config.users.users.peerix.name
+  else
+    "root";
 in {
   _module.args.isUnstable = true;
   imports = [ ./hardware-configuration.nix ../../overlays/default.nix ];
@@ -62,8 +66,8 @@ in {
     };
     peerix_private_key = {
       sopsFile = config.xin-secrets.stan.peerix;
-      owner = "peerix";
-      group = "peerix";
+      owner = "${peerixUser}";
+      group = "wheel";
       mode = "400";
     };
   };
