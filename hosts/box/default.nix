@@ -1,7 +1,7 @@
 { lib, config, pkgs, isUnstable, ... }:
 
 let
-  photoPrismTag = "220302-buster";
+  photoPrismTag = "220901-bullseye";
   httpCacheTime = "720m";
   httpAllow = ''
     allow	10.6.0.0/24;
