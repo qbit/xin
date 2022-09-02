@@ -74,7 +74,7 @@ in {
       };
     };
     firewall = {
-      allowedTCPPorts = [ 22 80 443 ];
+      allowedTCPPorts = [ 22 80 443 53589 ];
       allowedUDPPortRanges = [{
         from = 60000;
         to = 61000;
@@ -131,7 +131,7 @@ in {
       fqdn = "tasks.suah.dev";
       listenHost = "::";
       organisations."bolddaemon".users = [ "qbit" ];
-      openFirewall = true;
+      openFirewall = false;
     };
     cron = {
       enable = true;
