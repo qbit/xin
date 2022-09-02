@@ -78,6 +78,7 @@
         pkgs.mkShell {
           shellHook = ''
             PS1='\u@\h:\w; '
+            ssh-add /run/secrets/manager_key
           '';
           nativeBuildInputs = with pkgs; [
             git
