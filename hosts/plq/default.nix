@@ -13,6 +13,8 @@ in {
   _module.args.isUnstable = false;
   imports = [ ../../configs/tmux.nix ../../configs/zsh.nix ../../bins ];
 
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   networking.hostName = "plq";
 
   programs.zsh.enable = true;
@@ -51,6 +53,7 @@ in {
     (callPackage ../../pkgs/nheko.nix { inherit isUnstable; })
     (callPackage ../../pkgs/secretive.nix { inherit isUnstable; })
 
+    nix-review
     direnv
     go
     mosh
