@@ -168,12 +168,12 @@ in {
   };
   virtualisation.oci-containers.backend = "podman";
   virtualisation.oci-containers.containers = {
-    kativa = {
-      autoStart = true;
-      ports = [ "127.0.0.1:5000:5000" ];
-      image = "kizaing/kavita:0.5.2";
-      volumes = [ "/media/books:/books" "/media/books/config:/kativa/config" ];
-    };
+    #kativa = {
+    #  autoStart = true;
+    #  ports = [ "127.0.0.1:5000:5000" ];
+    #  image = "kizaing/kavita:0.5.2";
+    #  volumes = [ "/media/books:/books" "/media/books/config:/kativa/config" ];
+    #};
     photoprism = {
       #user = "${toString config.users.users.photoprism.name}:${toString config.users.groups.photoprism.name}";
       autoStart = true;
