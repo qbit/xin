@@ -74,8 +74,7 @@ in {
       };
     };
     firewall = {
-      allowedTCPPorts = [ 22 80 443 53 ];
-      allowedUDPPorts = [ 53 ];
+      allowedTCPPorts = [ 22 80 443 ];
       allowedUDPPortRanges = [{
         from = 60000;
         to = 61000;
