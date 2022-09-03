@@ -289,6 +289,8 @@ in {
       addr = "127.0.0.1";
       analytics.reporting.enable = false;
 
+      declarativePlugins = with pkgs; [ grafana-image-renderer ];
+
       provision = {
         enable = true;
         datasources = [
