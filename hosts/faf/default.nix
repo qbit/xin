@@ -24,13 +24,25 @@ in {
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.enp2s0.useDHCP = true;
 
-  networking.firewall.allowedTCPPorts = [ 22 53 ];
+  networking.firewall.allowedTCPPorts = [ 22 53 9001 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
 
   services = {
+    prometheus = {
+      enable = true;
+      port = 9001;
+
+      exporters = {
+        node = {
+          enable = true;
+          enabledCollectors = [ "systemd" ];
+          port = 9002;
+        };
+      };
+    };
     adguardhome = {
       enable = false;
       port = 3000;
