@@ -31,6 +31,10 @@ in {
   users.users.qbit = userBase;
 
   services = {
+    loki = {
+      enable = true;
+      configFile = ../../configs/loki.yaml;
+    };
     prometheus = {
       enable = true;
       port = 9001;
