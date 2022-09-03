@@ -328,7 +328,7 @@ in {
         }
         {
           job_name = "faf";
-          static_configs = [{ targets = [ "10.6.0.245:9002" ]; }];
+          static_configs = [{ targets = [ "10.6.0.245:9001" ]; }];
         }
         {
           job_name = "namish";
