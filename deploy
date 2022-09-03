@@ -4,6 +4,8 @@
 
 trap error INT TERM
 
+start
+
 rebuild() {
 	host="$(resolveAlias $1)"
 	skip_check=$2
@@ -30,7 +32,6 @@ rebuild() {
 }
 
 if [ "$1" = "status" ]; then
-	start
 	rev=$(git rev-parse HEAD)
 	msg "Currently at: ${rev}\t($(git log --format=%B -n 1 $rev | head -n1))"
 	for h in $(ls hosts); do
@@ -49,7 +50,6 @@ if [ "$1" = "status" ]; then
 		fi
 		echo -e "\t\t${remote_ver}\t${remote_rev}\t(${rev_msg})"
 	done
-	finish
 	exit 0
 fi
 
@@ -57,8 +57,6 @@ if [ "$1" = "install" ]; then
 	host="$(resolveAlias $2)"
 	shift
 	shift
-
-	start
 
 	if [ ! -d hosts/${host} ]; then
 		msg "No config found for $host"
@@ -78,7 +76,6 @@ if [ "$1" = "install" ]; then
 fi
 
 if [ "$1" = "update" ]; then
-	start
 	can_sign=0
 	for i in $(ssh-add -L | awk '{print $NF}'); do
 		grep -q $i .allowed_signers && can_sign=1
@@ -98,8 +95,6 @@ if [ "$1" = "installer" ]; then
 	exit $?
 fi
 
-start
-
 if [ "$1" = "diff" ]; then
 	host="$(resolveAlias $2)"
 	mkdir -p .gcroots
@@ -117,10 +112,4 @@ else
 	for host in $(ls hosts); do
 		rebuild $host false || ret=1
 	done
-fi
-
-if [ $ret = 0 ]; then
-	finish
-else
-	msg "WARNING: Management key retained!"
 fi
