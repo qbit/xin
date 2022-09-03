@@ -8,8 +8,8 @@
         src = super.fetchFromGitHub {
           owner = "ziglang";
           repo = "zig";
-          rev = "35e0ff7c364487152d786347cf70f47b2a390f12";
-          hash = "sha256-S6m0TrE+Ecm9yBJHgTZRMcKr0W0SoSZYX2CB+5gUSAY=";
+          rev = "10e11b60e56941cb664648dcebfd4db3d2efed30";
+          hash = "sha256-oD5yfvaaVtgW/VE+5yHCiJgC+QMwiLe2i+PGX3g/PT0=";
         };
 
         patches = [ ];
@@ -21,9 +21,9 @@
 
         checkPhase = ''
           runHook preCheck
-          ./zig2 test --cache-dir "$TMPDIR" -I $src/test $src/test/behavior.zig
           runHook postCheck
         '';
+
       });
     })
 
