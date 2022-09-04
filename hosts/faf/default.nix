@@ -106,14 +106,15 @@ in {
         };
         local-zone = ''"bold.daemon." static'';
         local-data = [
-          ''"reddit.bold.daemon. IN A 100.120.151.126"''
-          ''"jelly.bold.daemon. IN A 100.120.151.126"''
-          ''"sonarr.bold.daemon. IN A 100.120.151.126"''
-          ''"radarr.bold.daemon. IN A 100.120.151.126"''
-          ''"prowlarr.bold.daemon. IN A 100.120.151.126"''
+          ''"books.bold.daemon. IN A 100.120.151.126"''
           ''"headphones.bold.daemon. IN A 100.120.151.126"''
+          ''"jelly.bold.daemon. IN A 100.120.151.126"''
           ''"lidarr.bold.daemon. IN A 100.120.151.126"''
           ''"nzb.bold.daemon. IN A 100.120.151.126"''
+          ''"prowlarr.bold.daemon. IN A 100.120.151.126"''
+          ''"radarr.bold.daemon. IN A 100.120.151.126"''
+          ''"reddit.bold.daemon. IN A 100.120.151.126"''
+          ''"sonarr.bold.daemon. IN A 100.120.151.126"''
         ];
       };
     };
