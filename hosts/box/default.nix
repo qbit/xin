@@ -284,7 +284,6 @@ in {
 
     calibre-web = {
       enable = true;
-      dataDir = "/media/books";
       options = { enableBookUploading = true; };
     };
 
