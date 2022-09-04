@@ -675,7 +675,7 @@ in {
           #forceSSL = true;
           locations."/" = {
             proxyPass =
-              "http://localhost:${toString config.services.calibre-web.port}";
+              "http://localhost:${toString config.services.calibre-web.listen.port}";
             proxyWebsockets = true;
             extraConfig = ''
               	      ${httpAllow}
