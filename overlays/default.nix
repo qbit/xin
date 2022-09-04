@@ -51,6 +51,15 @@
 
       });
     })
+
+    # https://nixpk.gs/pr-tracker.html?pr=189458
+    (self: super: {
+      git-sync = super.get-sync.overrideAttrs (old: {
+        wrapperPath = with lib;
+          makeBinPath ([ coreutils git gnugrep gnused ]
+            ++ lib.optionals stdenv.isLinux [ inotify-tools ]);
+      });
+    })
   ] else
     [ ];
 }
