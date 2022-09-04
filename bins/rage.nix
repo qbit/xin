@@ -2,7 +2,7 @@
 
 let
   oathPkg = pkgs.oath-toolkit or pkgs.oathToolkit;
-  clip = if pkgs.system == "darwin-aarch64" then
+  clip = if pkgs.system == "aarch64-darwin" then
     "pbcopy"
   else
     "${pkgs.xclip}/bin/xclip";
