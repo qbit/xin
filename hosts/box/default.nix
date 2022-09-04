@@ -675,8 +675,9 @@ in {
           #sslCertificate = "${config.sops.secrets.reddit_cert.path}";
           #forceSSL = true;
           locations."/" = {
-            proxyPass =
-              "http://localhost:${toString config.services.calibre-web.listen.port}";
+            proxyPass = "http://localhost:${
+                toString config.services.calibre-web.listen.port
+              }";
             proxyWebsockets = true;
             extraConfig = ''
               	      ${httpAllow}
