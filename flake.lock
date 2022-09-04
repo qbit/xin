@@ -124,11 +124,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1662295501,
-        "narHash": "sha256-4vCcmkcs3pWClvRojcp2Q4siVKoBhTFbG0Jg4fKpBXM=",
+        "lastModified": 1662300001,
+        "narHash": "sha256-VoZW3ThcgPBVpHCWdUKX8gDur9crkRgxHFjwuuWFiI4=",
         "owner": "qbit",
         "repo": "microca",
-        "rev": "82f2b7c4059893da3d8acf9d92ef62644c77691a",
+        "rev": "fef8113e099dd975ed9d9a48340e6f9b35bbc103",
         "type": "github"
       },
       "original": {
