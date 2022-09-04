@@ -282,6 +282,12 @@ in {
       openFirewall = true;
     };
 
+    calibre-web = {
+      enable = true;
+      dataDir = "/media/books";
+      options = { enableBookUploading = true; };
+    };
+
     grafana = {
       enable = true;
       domain = "graph.tapenet.org";
@@ -655,6 +661,21 @@ in {
           locations."/" = {
             proxyPass =
               "http://localhost:${toString config.services.libreddit.port}";
+            proxyWebsockets = true;
+            extraConfig = ''
+              	      ${httpAllow}
+                      deny	all;
+            '';
+          };
+        };
+
+        "books.bold.daemon" = {
+          #sslCertificateKey = "${config.sops.secrets.reddit_key.path}";
+          #sslCertificate = "${config.sops.secrets.reddit_cert.path}";
+          #forceSSL = true;
+          locations."/" = {
+            proxyPass =
+              "http://localhost:${toString config.services.calibre-web.port}";
             proxyWebsockets = true;
             extraConfig = ''
               	      ${httpAllow}
