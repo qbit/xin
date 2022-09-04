@@ -28,10 +28,7 @@
       flake = false;
     };
 
-    microca = {
-      url = "github:qbit/microca";
-      flake = false;
-    };
+    microca = { url = "github:qbit/microca"; };
 
     mcchunkie = {
       url = "github:qbit/mcchunkie";
