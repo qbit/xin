@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib; {
   options = {
     nixManager = {
@@ -14,11 +14,11 @@ with lib; {
   };
 
   config = mkIf config.nixManager.enable {
-    #sops.defaultSopsFile = ../manager.yaml;
     sops.defaultSopsFile = config.xin-secrets.manager;
     sops.secrets = {
       manager_key = { owner = config.nixManager.user; };
       manager_pubkey = { owner = config.nixManager.user; };
     };
+    environment.systemPackages = with pkgs; [ microca ];
   };
 }

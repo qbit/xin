@@ -54,6 +54,7 @@
         overlays = [
           flakes.emacs-overlay.overlay
           flakes.peerix.overlay
+          flakes.microca.overlay
 
         ];
         modules = [
@@ -68,7 +69,11 @@
         ];
       };
 
-      overlays = [ flakes.emacs-overlay.overlay flakes.peerix.overlay ];
+      overlays = [
+        flakes.emacs-overlay.overlay
+        flakes.peerix.overlay
+        flakes.microca.overlay
+      ];
 
       buildVer = { system.configurationRevision = self.rev or "DIRTY"; };
       buildShell = pkgs:
