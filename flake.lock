@@ -120,13 +120,15 @@
       }
     },
     "microca": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
       "locked": {
-        "lastModified": 1647132345,
-        "narHash": "sha256-3lkT/b9vIf4nMGKnS14sWr5GhcgUFK/xsCgooM60SiU=",
+        "lastModified": 1662295501,
+        "narHash": "sha256-4vCcmkcs3pWClvRojcp2Q4siVKoBhTFbG0Jg4fKpBXM=",
         "owner": "qbit",
         "repo": "microca",
-        "rev": "8e175431c2027751704e74347f0842a5af372f53",
+        "rev": "82f2b7c4059893da3d8acf9d92ef62644c77691a",
         "type": "github"
       },
       "original": {
@@ -149,6 +151,21 @@
         "ref": "master",
         "repo": "nixos-hardware",
         "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1662019588,
+        "narHash": "sha256-oPEjHKGGVbBXqwwL+UjsveJzghWiWV0n9ogo1X6l4cw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2da64a81275b68fdad38af669afeda43d401e94b",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
       }
     },
     "nixpkgs-22_05": {
