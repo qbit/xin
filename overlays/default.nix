@@ -54,10 +54,10 @@
 
     # https://nixpk.gs/pr-tracker.html?pr=189458
     (self: super: {
-      git-sync = super.get-sync.overrideAttrs (old: {
+      git-sync = super.git-sync.overrideAttrs (old: {
         wrapperPath = with lib;
-          makeBinPath ([ coreutils git gnugrep gnused ]
-            ++ lib.optionals stdenv.isLinux [ inotify-tools ]);
+          makeBinPath ([ pkgs.coreutils pkgs.git pkgs.gnugrep pkgs.gnused ]
+            ++ lib.optionals (pkgs.system == "x86-64_linux") [ pkgs.inotify-tools ]);
       });
     })
   ] else
