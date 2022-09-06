@@ -163,5 +163,10 @@
           ];
         };
       };
+
+      templates."go" = {
+        path = ./templates/go;
+        description = "Go template.";
+      };
     };
 }
