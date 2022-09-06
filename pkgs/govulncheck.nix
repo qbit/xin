@@ -1,7 +1,12 @@
-{ lib, buildGo119Module, fetchFromGitHub, isUnstable, ... }:
+{ lib, buildGo118Module, fetchFromGitHub, isUnstable, ... }:
+let
+  vendorHash = if isUnstable then
+    "sha256-XxX+S+hXySwbXruJXM0fK7gcxiZDiysQJcXENoh/PEg="
+  else
+    "sha256-zNH+wKLT9ci5AFWxQ+yKJPhvweQu6DtiRYtTgSWq44U=";
 
-with lib;
-buildGo119Module rec {
+in with lib;
+buildGo118Module rec {
   name = "vuln";
 
   src = fetchFromGitHub {
@@ -11,7 +16,7 @@ buildGo119Module rec {
     sha256 = "sha256-G35y1V4W1nLZ+QGvIQwER9whBIBDFUVptrHx78orcI0=";
   };
 
-  vendorSha256 = "sha256-XxX+S+hXySwbXruJXM0fK7gcxiZDiysQJcXENoh/PEg=";
+  vendorSha256 = vendorHash;
 
   proxyVendor = true;
 
