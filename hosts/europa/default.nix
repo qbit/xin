@@ -186,6 +186,7 @@ in {
   environment.systemPackages = with pkgs; [
     arcanPackages.all-wrapped
     barrier
+    calibre
     cider
     drawterm
     element-desktop
