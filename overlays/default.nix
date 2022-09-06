@@ -57,7 +57,8 @@
       git-sync = super.git-sync.overrideAttrs (old: {
         wrapperPath = with lib;
           makeBinPath ([ pkgs.coreutils pkgs.git pkgs.gnugrep pkgs.gnused ]
-            ++ lib.optionals (pkgs.system == "x86-64_linux") [ pkgs.inotify-tools ]);
+            ++ lib.optionals (pkgs.system == "x86-64_linux")
+            [ pkgs.inotify-tools ]);
       });
     })
   ] else
