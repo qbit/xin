@@ -3,7 +3,7 @@ let
   vendorHash = if isUnstable then
     "sha256-XxX+S+hXySwbXruJXM0fK7gcxiZDiysQJcXENoh/PEg="
   else
-    "sha256-zNH+wKLT9ci5AFWxQ+yKJPhvweQu6DtiRYtTgSWq44U=";
+    "sha256-MFsjEHKVuQmLzebSy38B0BcPgpzwUmfjbr2rYhUTGLE=";
 
 in with lib;
 buildGo118Module rec {
