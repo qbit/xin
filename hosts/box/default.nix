@@ -65,20 +65,22 @@ in {
     };
   };
 
+  sops.secrets.books_cert = mkNginxSecret;
+  sops.secrets.books_key = mkNginxSecret;
   sops.secrets.jelly_cert = mkNginxSecret;
   sops.secrets.jelly_key = mkNginxSecret;
+  sops.secrets.lidarr_cert = mkNginxSecret;
+  sops.secrets.lidarr_key = mkNginxSecret;
+  sops.secrets.nzb_cert = mkNginxSecret;
+  sops.secrets.nzb_key = mkNginxSecret;
+  sops.secrets.prowlarr_cert = mkNginxSecret;
+  sops.secrets.prowlarr_key = mkNginxSecret;
+  sops.secrets.radarr_cert = mkNginxSecret;
+  sops.secrets.radarr_key = mkNginxSecret;
   sops.secrets.reddit_cert = mkNginxSecret;
   sops.secrets.reddit_key = mkNginxSecret;
   sops.secrets.sonarr_cert = mkNginxSecret;
   sops.secrets.sonarr_key = mkNginxSecret;
-  sops.secrets.radarr_cert = mkNginxSecret;
-  sops.secrets.radarr_key = mkNginxSecret;
-  sops.secrets.prowlarr_cert = mkNginxSecret;
-  sops.secrets.prowlarr_key = mkNginxSecret;
-  sops.secrets.nzb_cert = mkNginxSecret;
-  sops.secrets.nzb_key = mkNginxSecret;
-  sops.secrets.lidarr_cert = mkNginxSecret;
-  sops.secrets.lidarr_key = mkNginxSecret;
 
   #nixpkgs.config = {
   #  packageOverrides = super:
@@ -671,9 +673,9 @@ in {
         };
 
         "books.bold.daemon" = {
-          #sslCertificateKey = "${config.sops.secrets.reddit_key.path}";
-          #sslCertificate = "${config.sops.secrets.reddit_cert.path}";
-          #forceSSL = true;
+          sslCertificateKey = "${config.sops.secrets.books_key.path}";
+          sslCertificate = "${config.sops.secrets.books_cert.path}";
+          forceSSL = true;
           locations."/" = {
             proxyPass = "http://localhost:${
                 toString config.services.calibre-web.listen.port
