@@ -1,7 +1,7 @@
 { lib, buildGo118Module, fetchFromGitHub, isUnstable, ... }:
 let
   vendorHash = if isUnstable then
-    "sha256-XxX+S+hXySwbXruJXM0fK7gcxiZDiysQJcXENoh/PEg="
+    "sha256-MFsjEHKVuQmLzebSy38B0BcPgpzwUmfjbr2rYhUTGLE="
   else
     "sha256-MFsjEHKVuQmLzebSy38B0BcPgpzwUmfjbr2rYhUTGLE=";
 
