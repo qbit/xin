@@ -13,7 +13,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  #boot.supportedFilesystems = [ "zfs" ];
+  boot.supportedFilesystems = [ "zfs" ];
   #boot.zfs.devNodes = "/dev/";
 
   networking.hostName = "hass";
