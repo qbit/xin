@@ -208,7 +208,6 @@ in {
     drawterm
     element-desktop
     exercism
-    fido2luks
     isync
     klavaro
     libfprint-2-tod1-goodix
