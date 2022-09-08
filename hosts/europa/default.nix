@@ -217,6 +217,7 @@ in {
     nix-index
     nix-review
     nix-top
+    fido2luks
     nmap
     rofi
     signal-desktop
