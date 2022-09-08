@@ -141,7 +141,7 @@ in {
   programs.steam.enable = true;
   services = {
     emacs = {
-      enable = false;
+      enable = true;
       package = myEmacs;
       install = true;
     };
