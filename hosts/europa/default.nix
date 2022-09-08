@@ -172,7 +172,6 @@ in {
       '';
     };
 
-
     fstrim.enable = true;
 
     tlp = {
