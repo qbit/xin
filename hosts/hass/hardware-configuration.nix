@@ -6,15 +6,8 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "ehci_pci"
-    "ahci"
-    "megaraid_sas"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-    "sr_mod"
-  ];
+  boot.initrd.availableKernelModules =
+    [ "ehci_pci" "ahci" "megaraid_sas" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -27,6 +20,61 @@
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/359D-9473";
     fsType = "vfat";
+  };
+
+  fileSystems."/tank" = {
+    device = "tank";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/backups" = {
+    device = "tank/backups";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/media" = {
+    device = "tank/media";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/media/movies" = {
+    device = "tank/media/movies";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/media/music" = {
+    device = "tank/media/music";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/media/tv" = {
+    device = "tank/media/tv";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/media/downloads" = {
+    device = "tank/media/downloads";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/media/books" = {
+    device = "tank/media/books";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/media/pictures" = {
+    device = "tank/media/pictures";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/db" = {
+    device = "tank/db";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/git" = {
+    device = "tank/git";
+    fsType = "zfs";
   };
 
   swapDevices =
