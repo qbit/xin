@@ -72,6 +72,8 @@ in {
       -----END CERTIFICATE-----
     ''];
 
+    i18n.defaultLocale = "en_US.utf8";
+
     # from https://github.com/dylanaraps/neofetch
     users.motd = ''
 
