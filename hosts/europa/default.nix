@@ -58,7 +58,7 @@ in {
       };
     };
     kernelPackages = pkgs.linuxPackages;
-    kernelParams = [ "boot.shell_on_fail" ];
+    kernelParams = [ "boot.shell_on_fail" "mem_sleep_default=deep" ];
     kernelModules = [ "kvm-intel" ];
   };
 
@@ -156,22 +156,34 @@ in {
         "*/5 * * * *  qbit  . /etc/profile; (cd ~/org && git sync) >/dev/null 2>&1"
       ];
     };
+
     fprintd.enable = true;
+
     logind = {
       lidSwitch = "suspend-then-hibernate";
       lidSwitchExternalPower = "lock";
+      extraConfig = ''
+        HandlePowerKey=suspend-then-hibernate
+        IdleAction=suspend-then-hibernate
+        IdleActionSec=2m
+      '';
     };
+
+    systemd.sleep.extraConfig = "HibernateDelaySec=2h";
+
     fstrim.enable = true;
-    #tlp = {
-    #  enable = false;
-    #  settings = {
-    #    CPU_BOOST_ON_BAT = 0;
-    #    CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-    #    START_CHARGE_THRESH_BAT0 = 90;
-    #    STOP_CHARGE_THRESH_BAT0 = 97;
-    #    RUNTIME_PM_ON_BAT = "auto";
-    #  };
-    #};
+
+    tlp = {
+      enable = false;
+      settings = {
+        CPU_BOOST_ON_BAT = 0;
+        CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+        START_CHARGE_THRESH_BAT0 = 90;
+        STOP_CHARGE_THRESH_BAT0 = 97;
+        RUNTIME_PM_ON_BAT = "auto";
+      };
+    };
+
     fwupd = {
       enable = true;
       enableTestRemote = true;
