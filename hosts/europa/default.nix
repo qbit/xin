@@ -139,6 +139,9 @@ in {
   };
 
   programs.steam.enable = true;
+
+  systemd.sleep.extraConfig = "HibernateDelaySec=2h";
+
   services = {
     emacs = {
       enable = true;
@@ -169,7 +172,6 @@ in {
       '';
     };
 
-    systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
     fstrim.enable = true;
 
