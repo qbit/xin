@@ -106,7 +106,7 @@
             ++ [{ nixpkgs.overlays = overlays; }];
         };
       pkgs = unstable.legacyPackages.x86_64-linux;
-      darwinPkgs = unstable.legacyPackages.aarch64-darwin;
+      darwinPkgs = unstableSmall.legacyPackages.aarch64-darwin;
     in {
       darwinConfigurations = {
         plq = darwin.lib.darwinSystem {
