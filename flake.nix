@@ -20,7 +20,7 @@
 
     darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "stable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
 
     sshKnownHosts = {
