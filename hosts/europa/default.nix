@@ -1,6 +1,6 @@
 { config, pkgs, lib, modulesPath, ... }:
 let
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
   else
@@ -143,11 +143,11 @@ in {
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
   services = {
-    emacs = {
-      enable = true;
-      package = myEmacs;
-      install = true;
-    };
+    #emacs = {
+    #  enable = true;
+    #  package = myEmacs;
+    #  install = true;
+    #};
     tor = {
       enable = true;
       client.enable = true;
@@ -222,7 +222,6 @@ in {
     rofi
     signal-desktop
     tcpdump
-    thunderbird
     tidal-hifi
     tigervnc
     unzip
