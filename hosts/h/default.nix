@@ -24,7 +24,7 @@ in {
 
   boot.kernelParams = [ "net.ifnames=0" ];
 
-  tailscale.enable = false;
+  tailscale.sshOnly = true;
 
   sops.secrets = {
     synapse_signing_key = {
