@@ -461,6 +461,10 @@ in {
           static_configs = [{ targets = [ "10.6.0.245:9002" ]; }];
         }
         {
+          job_name = "h";
+          static_configs = [{ targets = [ "100.64.247.69:9002" ]; }];
+        }
+        {
           job_name = "namish";
           static_configs = [{ targets = [ "10.6.0.2:9100" ]; }];
         }
