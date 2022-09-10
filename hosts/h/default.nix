@@ -126,6 +126,19 @@ in {
   };
 
   services = {
+    prometheus = {
+      enable = true;
+      port = 9001;
+      listenAddress = "100.64.247.69";
+
+      exporters = {
+        node = {
+          enable = true;
+          enabledCollectors = [ "systemd" ];
+          port = 9002;
+        };
+      };
+    };
     taskserver = {
       enable = true;
       fqdn = "tasks.suah.dev";
