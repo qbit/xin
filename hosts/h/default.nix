@@ -74,6 +74,11 @@ in {
       };
     };
     firewall = {
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 9002 ];
+        };
+      };
       allowedTCPPorts = [ 22 80 443 53589 ];
       allowedUDPPortRanges = [{
         from = 60000;
