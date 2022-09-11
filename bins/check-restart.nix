@@ -6,7 +6,7 @@
   use strict;
   use warnings;
 
-  sub say { print @_, "\n"; }
+  use feature 'say';
 
   my @booted = split("/", `readlink -f /run/booted-system/kernel`);
   my @current = split("/", `readlink -f /run/current-system/kernel`);
