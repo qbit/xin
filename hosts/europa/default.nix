@@ -214,7 +214,7 @@ in {
     linphone
     logseq
     mu
-    nheko
+    #nheko
     nix-index
     nix-review
     nix-top
@@ -225,7 +225,7 @@ in {
     tidal-hifi
     tigervnc
     unzip
-    virt-manager
+    #virt-manager
     yt-dlp
     zig
   ];
