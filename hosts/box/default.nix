@@ -326,6 +326,7 @@ in {
     loki = {
       enable = true;
       configuration = {
+        analytics.reporting_enabled = false;
         server.http_listen_port = 3030;
         server.http_listen_address = "0.0.0.0";
         auth_enabled = false;
