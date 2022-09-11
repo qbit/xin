@@ -6,7 +6,7 @@ let
   ];
 
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
-  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
   else
@@ -130,11 +130,11 @@ in {
   };
 
   services = {
-    #emacs = {
-    #  enable = false;
-    #  package = myEmacs;
-    #  install = true;
-    #};
+    emacs = {
+      enable = false;
+      package = myEmacs;
+      install = true;
+    };
     printing.enable = true;
     fwupd.enable = true;
     unifi.enable = true;
