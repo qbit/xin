@@ -327,6 +327,7 @@ in {
       enable = true;
       configuration = {
         server.http_listen_port = 3030;
+        server.http_listen_address = "0.0.0.0";
         auth_enabled = false;
 
         ingester = {
@@ -873,12 +874,17 @@ in {
   #  after = [ "postgresql.service" ];
   #};
 
-  networking.firewall.allowedTCPPorts = config.services.openssh.ports
-    ++ [ 80 443 config.services.gitea.ssh.clonePort ];
-  networking.firewall.allowedUDPPortRanges = [{
-    from = 60000;
-    to = 61000;
-  }];
+  networking = {
+    firewall = {
+      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
+      allowedTCPPorts = config.services.openssh.ports
+        ++ [ 80 443 config.services.gitea.ssh.clonePort ];
+      allowedUDPPortRanges = [{
+        from = 60000;
+        to = 61000;
+      }];
+    };
+  };
 
   users.users.qbit = userBase;
   users.users.root = userBase;
