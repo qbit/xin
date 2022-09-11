@@ -74,11 +74,7 @@ in {
       };
     };
     firewall = {
-      interfaces = {
-        "tailscale0" = {
-          allowedTCPPorts = [ 9002 ];
-        };
-      };
+      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 ]; }; };
       allowedTCPPorts = [ 22 80 443 53589 ];
       allowedUDPPortRanges = [{
         from = 60000;
@@ -139,9 +135,8 @@ in {
           grpc_listen_port = 0;
         };
         positions = { filename = "/tmp/positions.yaml"; };
-        clients = [{
-          url = "http://box.humpback-trout.ts.net:3030/loki/api/v1/push";
-        }];
+        clients =
+          [{ url = "http://box.humpback-trout.ts.net:3030/loki/api/v1/push"; }];
         scrape_configs = [{
           job_name = "journal";
           journal = {
