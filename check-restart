@@ -12,8 +12,6 @@ done
 
 start
 
-trap finish EXIT INT HUP
-
 for i in $(ls hosts); do
 	host=$(resolveAlias $i)
 	echo -n "===> $i: "
