@@ -214,7 +214,7 @@ in {
     linphone
     logseq
     mu
-    #nheko
+    nheko
     nix-index
     nix-review
     nix-top
