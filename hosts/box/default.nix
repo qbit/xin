@@ -471,6 +471,10 @@ in {
           static_configs = [{ targets = [ "10.6.0.2:9100" ]; }];
         }
         {
+          job_name = "router";
+          static_configs = [{ targets = [ "10.6.0.1:9100" ]; }];
+        }
+        {
           job_name = "nginx";
           static_configs = [{
             targets = [
