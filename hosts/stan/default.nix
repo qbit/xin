@@ -29,7 +29,7 @@ in {
         "/crypto_keyfile.bin";
       secrets = { "/crypto_keyfile.bin" = null; };
     };
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages;
     kernelParams = [ "intel_idle.max_cstate=4" ];
 
   };
@@ -62,6 +62,12 @@ in {
     tskey = {
       sopsFile = config.xin-secrets.stan.secrets;
       owner = "root";
+      mode = "400";
+    };
+    vm_pass = {
+      sopsFile = config.xin-secrets.stan.main;
+      owner = "root";
+      group = "wheel";
       mode = "400";
     };
     peerix_private_key = {
