@@ -2,10 +2,11 @@
 let
   gotosocialVersion = "0.5.0-rc1";
   gotosocialWebAssets = builtins.fetchurl {
-    url = "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
+    url =
+      "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
     sha256 = "sha256-jmciiSRW73aoZu8WCVpEpMR0xemJUQ12h7ZUFFqmmko=";
   };
-  in with lib;
+in with lib;
 buildGoModule rec {
   pname = "gotosocial";
   version = gotosocialVersion;

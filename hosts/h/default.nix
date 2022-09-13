@@ -150,8 +150,10 @@ in {
         accounts-approval-required = true;
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial/storage";
-        web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
-        web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
+        web-template-base-dir =
+          "${config.services.gotosocial.package}/assets/web/template/";
+        web-asset-base-dir =
+          "${config.services.gotosocial.package}/assets/web/assets/";
 
       };
     };
@@ -381,7 +383,9 @@ in {
           root = "/var/www/mammothcircus.com";
           locations."/" = {
             proxyWebsockets = true;
-            proxyPass = "http://127.0.0.1:${toString config.services.gotosocial.configuration.port}";
+            proxyPass = "http://127.0.0.1:${
+                toString config.services.gotosocial.configuration.port
+              }";
           };
         };
         "akb.io" = {
