@@ -14,19 +14,6 @@
       });
     })
 
-    # pr:190714
-    (self: super: {
-      nheko = super.nheko.overrideAttrs (old: {
-        version = "0.10.1-1";
-        src = super.fetchFromGitHub {
-          owner = "Nheko-Reborn";
-          repo = "nheko";
-          sha256 = "sha256-Bpf38BAGfvmVyrAptIsQ9HaRUopqvytko6unlWLooUo";
-          rev = "0.10.1-1";
-        };
-      });
-    })
-
     (self: super: {
       zig = super.zig.overrideAttrs (old: {
         version = "0.10.0-dev.35e0ff7";
