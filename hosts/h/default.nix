@@ -152,7 +152,7 @@ in {
         log-db-queries = false;
         log-level = "info";
         port = 8778;
-        protocol = "http";
+        protocol = "https";
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial/storage";
         trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
