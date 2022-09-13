@@ -135,31 +135,31 @@ in {
       enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
       configuration = {
-        log-level = "info";
-        log-db-queries = true;
-        host = "mammothcircus.com";
         account-domain = "mammothcircus.com";
-        protocol = "http";
+        accounts-approval-required = false;
+        accounts-reason-required = false;
+        accounts-registration-open = false;
+        advanced-cookies-samesite = "strict";
         bind-address = "127.0.0.1";
-        port = 8778;
-        trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
-        db-type = "postgres";
         db-address = "127.0.0.1";
+        db-database = "gotosocial";
         db-port = 5432;
+        db-tls-ca-cert = "";
+        db-type = "postgres";
         db-user = "gotosocial";
         dp-password = "";
-        db-database = "gotosocial";
-        db-tls-ca-cert = "";
-        accounts-registration-open = false;
-        accounts-reason-required = true;
-        accounts-approval-required = false;
+        host = "mammothcircus.com";
+        log-db-queries = false;
+        log-level = "info";
+        port = 8778;
+        protocol = "http";
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial/storage";
+        trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
         web-template-base-dir =
           "${config.services.gotosocial.package}/assets/web/template/";
         web-asset-base-dir =
           "${config.services.gotosocial.package}/assets/web/assets/";
-        advanced-cookies-samesite =  "strict";
       };
     };
     promtail = {
@@ -385,7 +385,6 @@ in {
         "mammothcircus.com" = {
           forceSSL = true;
           enableACME = true;
-          root = "/var/www/mammothcircus.com";
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://127.0.0.1:${
