@@ -16,7 +16,7 @@ let
 
 in {
   _module.args.isUnstable = true;
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ../../modules/gotosocial.nix ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
@@ -127,6 +127,34 @@ in {
   };
 
   services = {
+    gotosocial = {
+      enable = true;
+      # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
+      configuration = {
+        log-level = "info";
+        log-db-queries = false;
+        host = "mammothcircus.com";
+        protocol = "http";
+        bind-address = "127.0.0.1";
+        port = 8778;
+        trusted-proxies = [ "127.0.0.1/32" ];
+        db-type = "postgres";
+        db-address = "127.0.0.1";
+        db-port = 5432;
+        db-user = "gotosocial";
+        dp-password = "";
+        db-database = "gotosocial";
+        db-tls-ca-cert = "";
+        accounts-registration-open = false;
+        accounts-reason-required = true;
+        accounts-approval-required = true;
+        storage-backend = "local";
+        storage-local-base-path = "/var/lib/gotosocial/storage";
+        web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
+        web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
+
+      };
+    };
     promtail = {
       enable = true;
       configuration = {
@@ -351,6 +379,10 @@ in {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/mammothcircus.com";
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:${toString config.services.gotosocial.configuration.port}";
+          };
         };
         "akb.io" = {
           forceSSL = true;
@@ -398,11 +430,17 @@ in {
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = [ "synapse" ];
-      ensureUsers = [{
-        name = "synapse_user";
-        ensurePermissions."DATABASE synapse" = "ALL PRIVILEGES";
-      }];
+      ensureDatabases = [ "synapse" "gotosocial" ];
+      ensureUsers = [
+        {
+          name = "synapse_user";
+          ensurePermissions."DATABASE synapse" = "ALL PRIVILEGES";
+        }
+        {
+          name = "gotosocial";
+          ensurePermissions."DATABASE gotosocial" = "ALL PRIVILEGES";
+        }
+      ];
     };
 
     mjolnir = {
