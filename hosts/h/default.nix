@@ -150,7 +150,7 @@ in {
         dp-password = "";
         host = "mammothcircus.com";
         log-db-queries = false;
-        log-level = "info";
+        log-level = "debug";
         port = 8778;
         protocol = "https";
         storage-backend = "local";
