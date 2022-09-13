@@ -148,7 +148,7 @@ in {
         db-tls-ca-cert = "";
         accounts-registration-open = false;
         accounts-reason-required = true;
-        accounts-approval-required = true;
+        accounts-approval-required = false;
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial/storage";
         web-template-base-dir =
