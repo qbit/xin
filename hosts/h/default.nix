@@ -132,12 +132,13 @@ in {
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
       configuration = {
         log-level = "info";
-        log-db-queries = false;
+        log-db-queries = true;
         host = "mammothcircus.com";
+        account-domain = "mammothcircus.com";
         protocol = "http";
         bind-address = "127.0.0.1";
         port = 8778;
-        trusted-proxies = [ "127.0.0.1/32" ];
+        trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
         db-type = "postgres";
         db-address = "127.0.0.1";
         db-port = 5432;
@@ -154,7 +155,7 @@ in {
           "${config.services.gotosocial.package}/assets/web/template/";
         web-asset-base-dir =
           "${config.services.gotosocial.package}/assets/web/assets/";
-
+        advanced-cookies-samesite =  "strict";
       };
     };
     promtail = {
