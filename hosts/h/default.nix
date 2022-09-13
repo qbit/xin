@@ -149,7 +149,7 @@ in {
         db-user = "gotosocial";
         dp-password = "";
         host = "mammothcircus.com";
-        log-db-queries = false;
+        log-db-queries = true;
         log-level = "debug";
         port = 8778;
         protocol = "https";
