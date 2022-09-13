@@ -60,6 +60,7 @@ in {
       enable = true;
       description = "GoToSocial server";
       wantedBy = [ "multi-user.target" ];
+      after = [ "postgresql.service" ];
 
       serviceConfig = {
         User = cfg.user;
