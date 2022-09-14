@@ -219,6 +219,7 @@ in {
     nix-review
     nix-top
     nmap
+    obsidian
     rofi
     signal-desktop
     tcpdump
