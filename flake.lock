@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1663156788,
-        "narHash": "sha256-Z+KgxF/ZqANBToRi/wJVHM/+bEiNtnyCPusCYcKeuTU=",
+        "lastModified": 1663185189,
+        "narHash": "sha256-3Q21ejhrn2O+Kl0v4DhLhQtKf7OfrfOxIUZIlZ/UUSc=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "a28218ac1fff0e9e4cd9bad9b5ad54dbdea964ad",
+        "rev": "30a7c7ee7602234f7ae79d46239ae34d57ef0a60",
         "type": "github"
       },
       "original": {
@@ -294,11 +294,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1663153075,
-        "narHash": "sha256-djrxFO3pBoxO9XQD8hTz1XySvw8ukWFvOnPTCChGpcY=",
+        "lastModified": 1663187290,
+        "narHash": "sha256-K3nIxgenofeyWI8DsNAlyBhgOgEkqha3BVPGWUPWEo0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "738fe494da28777ddeb2612c70a5dc909958df4b",
+        "rev": "cbc388fe463d7e26062ecde4464ef85860026572",
         "type": "github"
       },
       "original": {
@@ -309,11 +309,11 @@
     },
     "unstableSmall": {
       "locked": {
-        "lastModified": 1663122717,
-        "narHash": "sha256-J+3/eIqCQEJkoJdlSws/5sTl3NmGwV8I8nG8p7BnveY=",
+        "lastModified": 1663165252,
+        "narHash": "sha256-H9OiflDQy1vLu1w5yz46qWfGdcFBpS8VnPRLP0bsiZE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3ff5deafc470403d5cb7ec8edbc7b21b719d2894",
+        "rev": "bde85b0815144b77763732e0f32918017480e6b5",
         "type": "github"
       },
       "original": {
@@ -329,11 +329,11 @@
         "stable": "stable_2"
       },
       "locked": {
-        "lastModified": 1663006852,
-        "narHash": "sha256-l6s1c2Y35/1JTJwRhcllH+dd0Qi4kcyNSrNIThY+8IA=",
+        "lastModified": 1663187686,
+        "narHash": "sha256-BD2UI8NQtp7hJfVQvUqyMSuXQ6wDRU6DL9DnmOQ1E+E=",
         "ref": "main",
-        "rev": "81bc126b6b2a55b82bb8b5ac4945bdde05e3d5c7",
-        "revCount": 42,
+        "rev": "42bb120785a82eaa2bed3ef89157784ffd28dfce",
+        "revCount": 43,
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
