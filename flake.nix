@@ -133,6 +133,8 @@
         faf = buildSys "x86_64-linux" stable [ ] "faf";
         hass = buildSys "x86_64-linux" stable
           [ "${nixos-hardware}/common/cpu/intel" ] "hass";
+        luna = buildSys "x86_64-linux" stable
+          [ "${nixos-hardware}/common/cpu/intel" ] "luna";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         stan = buildSys "x86_64-linux" unstable
           [ nixos-hardware.nixosModules.framework ] "stan";
