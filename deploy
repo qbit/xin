@@ -52,7 +52,12 @@ if [ "$1" = "status" ]; then
 				rev_status="×"
 			fi
 		fi
-		echo -e "\t\t${remote_ver}\t${rev_status}\t(${rev_msg})"
+		echo -en "\t\t${remote_ver}\t${rev_status}\t(${rev_msg})"
+		if ${SSH} root@$host 'check-restart' >/dev/null 2>&1; then
+			echo -e "\tOK"
+		else
+			echo -e "\tREBOOT"
+		fi
 	done
 	exit 0
 fi
