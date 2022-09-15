@@ -8,6 +8,9 @@ case $1 in
 	haas)
 		nix build .#nixosConfigurations.hassInstall.config.system.build.isoImage
 		;;
+	iso)
+		nix build .#nixosConfigurations.isoInstall.config.system.build.isoImage
+		;;
 	*)
-		echo "Usage: boot [weather|hass]"
+		echo "Usage: boot [iso|weather|hass]"
 esac
