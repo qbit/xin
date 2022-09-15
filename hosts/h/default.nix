@@ -387,14 +387,16 @@ in {
           enableACME = true;
           locations."/" = {
             extraConfig = ''
-              proxy_pass http://127.0.0.1:${toString config.services.gotosocial.configuration.port};
+              proxy_pass http://127.0.0.1:${
+                toString config.services.gotosocial.configuration.port
+              };
               proxy_set_header Host $host;
               proxy_set_header Upgrade $http_upgrade;
               proxy_set_header Connection "upgrade";
               proxy_set_header X-Forwarded-For $remote_addr;
               proxy_set_header X-Forwarded-Proto $scheme;
             '';
-            };
+          };
         };
         "akb.io" = {
           forceSSL = true;
