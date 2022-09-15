@@ -7,10 +7,7 @@ let
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
 in {
   _module.args.isUnstable = false;
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sdb";
@@ -22,8 +19,7 @@ in {
   networking.networkmanager.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages = with pkgs; [ ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
