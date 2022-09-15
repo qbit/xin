@@ -102,6 +102,7 @@ in {
     mcchunkie
 
     restic
+    zonemaster-cli
   ];
 
   security.acme = {
