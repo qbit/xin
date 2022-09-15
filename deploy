@@ -63,24 +63,27 @@ if [ "$1" = "status" ]; then
 fi
 
 if [ "$1" = "install" ]; then
+	h="$2"
 	host="$(resolveAlias $2)"
+	dest="${3:-/nix/store}"
 	shift
 	shift
 
-	if [ ! -d hosts/${host} ]; then
-		msg "No config found for $host"
+	if [ ! -d hosts/${h} ]; then
+		msg "No config found for $h"
 		exit 1
 	fi
 
 	set -eu
+	set -x
 	mkdir -p .gcroots
-	out=$(nix build -o .gcroots/${host} --json .#nixosConfigurations.${host}.config.system.build.toplevel | jq -r '.[0].outputs.out')
+	out=$(nix build -o .gcroots/${h} --json .#nixosConfigurations.${h}.config.system.build.toplevel | jq -r '.[0].outputs.out')
 
-	nix copy -s --to "ssh://root@${host}" "$out"
-	nix copy -s --derivation --to "ssh://root@${host}" "$out"
+	nix copy -s --to "ssh://root@${host}?remote-store=${dest}" "$out"
+	nix copy -s --derivation --to "ssh://root@${host}?remote-store=${dest}" "$out"
 
-	${SSH} "root@${host}" nix build --profile /nix/var/nix/profiles/system "$out"
-	${SSH} "root@${host}" nix shell -vv "$out" -c switch-to-configuration "$@"
+	${SSH} "root@${host}" NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root "$dest" -- nix --extra-experimental-features nix-command build --profile /nix/var/nix/profiles/system "$out"
+	${SSH} "root@${host}" NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root "$dest" -- /run/current-system/bin/switch-to-configuration switch
 	exit 0
 fi
 
