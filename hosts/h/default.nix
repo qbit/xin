@@ -132,10 +132,10 @@ in {
 
   services = {
     gotosocial = {
-      enable = true;
+      enable = false;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
       configuration = {
-        account-domain = "mammothcircus.com";
+        account-domain = "mammothcirc.us";
         accounts-approval-required = false;
         accounts-reason-required = false;
         accounts-registration-open = false;
@@ -148,7 +148,7 @@ in {
         db-type = "postgres";
         db-user = "gotosocial";
         dp-password = "";
-        host = "mammothcircus.com";
+        host = "mammothcirc.us";
         log-db-queries = true;
         log-level = "debug";
         port = 8778;
@@ -382,7 +382,7 @@ in {
           enableACME = true;
           root = "/var/www/qbit.io";
         };
-        "mammothcircus.com" = {
+        "mammothcirc.us" = {
           forceSSL = true;
           enableACME = true;
           locations."/" = {
@@ -397,6 +397,11 @@ in {
               proxy_set_header X-Forwarded-Proto $scheme;
             '';
           };
+        };
+        "mammothcircus.com" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/mammothcircus.com";
         };
         "akb.io" = {
           forceSSL = true;
