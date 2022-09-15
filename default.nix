@@ -107,6 +107,7 @@ in {
       btop
       direnv
       git-sync
+      got
       jq
       lz4
       minisign
