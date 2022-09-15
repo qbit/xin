@@ -154,7 +154,7 @@ in {
         port = 8778;
         protocol = "https";
         storage-backend = "local";
-        storage-local-base-path = "/var/lib/gotosocial/storage";
+        storage-local-base-path = "/var/lib/gotosocial";
         trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
         web-template-base-dir =
           "${config.services.gotosocial.package}/assets/web/template/";
