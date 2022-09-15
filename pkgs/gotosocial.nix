@@ -1,10 +1,10 @@
 { stdenv, lib, buildGoModule, fetchFromGitHub, makeWrapper, go, git, ... }:
 let
-  gotosocialVersion = "0.5.0-rc1";
+  gotosocialVersion = "0.5.0-rc2";
   gotosocialWebAssets = builtins.fetchurl {
     url =
       "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
-    sha256 = "sha256-jmciiSRW73aoZu8WCVpEpMR0xemJUQ12h7ZUFFqmmko=";
+    sha256 = "sha256:16plfx1rnsizv2cb2s2jq6l56hp9gnj5h0fyl5mzywd44swp47ld";
   };
 in with lib;
 buildGoModule rec {
@@ -15,10 +15,10 @@ buildGoModule rec {
     owner = "superseriousbusiness";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-xq+hebQaJZ1C2Tgc9MwWf8fYTpSu8B6EZMC8CKB2nu0=";
+    hash = "sha256-HSpelOS5UMMmxVU6NOAz6iYqtboAY0yTmK7/73RtpME=";
   };
 
-  doCheck = false;
+  #doCheck = false;
 
   #ldflags = [ "-X github.com/gomods/athens/pkg/build.version=${version}" ];
 
