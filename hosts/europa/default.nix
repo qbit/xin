@@ -155,7 +155,7 @@ in {
     cron = {
       enable = true;
       systemCronJobs = [
-        "*/2 * * * *  qbit  . /etc/profile; (cd ~/Notes && git sync) >/dev/null 2>&1"
+        "*/2 * * * *  qbit  . /etc/profile; (cd ~/Brain && git sync) >/dev/null 2>&1"
         "*/5 * * * *  qbit  . /etc/profile; (cd ~/org && git sync) >/dev/null 2>&1"
       ];
     };
