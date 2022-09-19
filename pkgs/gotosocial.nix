@@ -18,15 +18,17 @@ buildGoModule rec {
     hash = "sha256-HSpelOS5UMMmxVU6NOAz6iYqtboAY0yTmK7/73RtpME=";
   };
 
-  #doCheck = false;
+  ldflags = [
+    "-s"
+    "-w"
+    "-extldflags '-static'"
+    "-X 'main.Commit=${version}'"
+    "-X 'main.Version=${version}'"
+  ];
 
-  #ldflags = [ "-X github.com/gomods/athens/pkg/build.version=${version}" ];
-
-  #nativeBuildInputs = lib.optionals stdenv.isLinux [ makeWrapper go ];
+  propagatedBuildInputs = [ ffmpeg ];
 
   proxyVendor = false;
-
-  #subPackages = [ "cmd/proxy" ];
 
   vendorSha256 = null;
 
