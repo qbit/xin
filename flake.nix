@@ -167,6 +167,10 @@
         };
       };
 
+      templates."ada" = {
+        path = ./templates/ada;
+        description = "Ada template.";
+      };
       templates."go" = {
         path = ./templates/go;
         description = "Go template.";
