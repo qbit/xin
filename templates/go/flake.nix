@@ -23,7 +23,7 @@
           };
         });
 
-      defaultPackage = forAllSystems (system: self.packages.${system}.pnix);
+      defaultPackage = forAllSystems (system: self.packages.${system}.thing);
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
