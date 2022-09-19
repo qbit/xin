@@ -20,7 +20,12 @@
           };
 
           buildPhase = ''
-            gprbuild
+            gprbuild thing
+          '';
+
+          installPhase = ''
+            mkdir -p $out/bin
+            mv thing $out/bin
           '';
         });
 
