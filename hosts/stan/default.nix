@@ -115,6 +115,7 @@ in {
     oathToolkit
     obs-studio
     openvpn
+    rustdesk
     sshfs
     tcpdump
     virt-manager
