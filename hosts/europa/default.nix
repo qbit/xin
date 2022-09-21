@@ -231,6 +231,9 @@ in {
     virt-manager
     yt-dlp
     zig
+
+    (callPackage ../../pkgs/zutty.nix { })
+
   ];
 
   # for Pharo

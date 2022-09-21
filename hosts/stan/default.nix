@@ -121,6 +121,8 @@ in {
     virt-manager
     wireshark
     zig
+
+    (callPackage ../../pkgs/zutty.nix { })
   ];
 
   virtualisation.libvirtd.enable = true;
