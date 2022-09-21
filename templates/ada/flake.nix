@@ -17,16 +17,17 @@
             pname = "thing";
             version = "v0.0.0";
             src = ./.;
+            buildInputs = with pkgs; [ gnat12 gprbuild ];
+
+            buildPhase = ''
+              gprbuild thing
+            '';
+
+            installPhase = ''
+              mkdir -p $out/bin
+              mv thing $out/bin
+            '';
           };
-
-          buildPhase = ''
-            gprbuild thing
-          '';
-
-          installPhase = ''
-            mkdir -p $out/bin
-            mv thing $out/bin
-          '';
         });
 
       defaultPackage = forAllSystems (system: self.packages.${system}.thing);
