@@ -11,27 +11,22 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-1eB5GDhWGwyhiKzxpepzjQ44Co0ZeL9JJI5ppPE1TJw=";
   };
 
-  patches = [
-    ./zutty_go.diff
-  ];
+  patches = [ ./zutty_go.diff ];
 
   nativeBuildInputs = with pkgs; [
     gcc
     pkg-config
     python
     wafHook
-    xlibsWrapper
     xorg.libXmu
-    #xorg.libXau
-    #xorg.libXdmcp
     libGL
   ];
 
   buildInputs = with pkgs; [ freetype fontconfig ];
 
   prePatch = ''
-  substituteInPlace src/options.h \
-    --replace "/usr/share/fonts" "${go-font}/share/fonts"
+    substituteInPlace src/options.h \
+      --replace "/usr/share/fonts" "${go-font}/share/fonts"
   '';
 
   postInstall = ''
