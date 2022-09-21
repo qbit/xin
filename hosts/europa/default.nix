@@ -143,6 +143,7 @@ in {
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 
   services = {
+    clamav.updater.enable = true;
     emacs = {
       enable = true;
       package = myEmacs;
