@@ -220,6 +220,8 @@ in {
     nix-top
     nmap
     obsidian
+    pharo
+    pharo-launcher
     rofi
     signal-desktop
     tcpdump
@@ -229,6 +231,22 @@ in {
     virt-manager
     yt-dlp
     zig
+  ];
+
+  # for Pharo
+  security.pam.loginLimits = [
+    {
+      domain = "qbit";
+      type = "hard";
+      item = "rtprio";
+      value = "2";
+    }
+    {
+      domain = "qbit";
+      type = "soft";
+      item = "rtprio";
+      value = "2";
+    }
   ];
 
   system.stateVersion = "21.11";
