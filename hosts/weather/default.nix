@@ -48,6 +48,8 @@ in {
   };
 
   preDNS.enable = false;
+  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
+    lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
   services.xserver = {
     enable = true;
 
