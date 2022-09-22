@@ -138,10 +138,10 @@
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         stan = buildSys "x86_64-linux" unstable
           [ nixos-hardware.nixosModules.framework ] "stan";
-        weather = buildSys "aarch64-linux" stable
+        weather = buildSys "aarch64-linux" unstable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
-        weatherInstall = stable.lib.nixosSystem {
+        weatherInstall = unstable.lib.nixosSystem {
           system = "aarch64-linux";
 
           modules = [
