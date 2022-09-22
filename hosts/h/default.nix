@@ -302,6 +302,8 @@ in {
           extraConfig = ''
             location / {
               resolver 9.9.9.9;
+              proxy_set_header Connection "";
+              proxy_http_version 1.1;
               proxy_pass https://publish.obsidian.md/serve?url=notes.suah.dev/;
               proxy_ssl_server_name on;
             }
