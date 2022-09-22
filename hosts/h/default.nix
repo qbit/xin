@@ -295,6 +295,15 @@ in {
             proxyPass = "http://localhost:9009/weechat";
           };
         };
+        "notes.suah.dev" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/suah.dev";
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "https://publish.obsidian.md/serve?url=notes.suah.dev/";
+          };
+        };
         "suah.dev" = {
           forceSSL = true;
           enableACME = true;
