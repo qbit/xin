@@ -300,14 +300,11 @@ in {
           enableACME = true;
           root = "/var/www/suah.dev";
           extraConfig = ''
-                location ~ / {
+                location / {
                   proxy_pass https://publish.obsidian.md/serve?url=notes.suah.dev/;
                   proxy_ssl_server_name on;
                 }
           '';
-          locations."/" = {
-            proxyWebsockets = true;
-          };
         };
         "suah.dev" = {
           forceSSL = true;
