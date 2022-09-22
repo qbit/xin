@@ -301,7 +301,8 @@ in {
           root = "/var/www/suah.dev";
           extraConfig = ''
                 location / {
-                  proxy_pass https://publish.obsidian.md/serve?url=notes.suah.dev/;
+                  resolver 9.9.9.9;
+                  proxy_pass https://publish.obsidian.md/serve?url=notes.suah.dev;
                   proxy_ssl_server_name on;
                 }
           '';
