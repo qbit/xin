@@ -175,5 +175,9 @@
         path = ./templates/go;
         description = "Go template.";
       };
+      templates."perl" = {
+        path = ./templates/perl;
+        description = "Perl template.";
+      };
     };
 }
