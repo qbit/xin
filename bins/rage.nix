@@ -7,7 +7,7 @@ let
   else
     "${pkgs.xclip}/bin/xclip";
 in ''
-  #!/usr/bin/env sh
+  #!${pkgs.yash}/bin/yash
 
   set -e
 
