@@ -13,6 +13,8 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
+  icbIrcTunnel = pkgs.writeScriptBin "icb-irc-tunnel"
+    (import ../../bins/icb-irc-tunnel.nix { inherit pkgs; inherit icbirc; });
 
 in {
   _module.args.isUnstable = true;
@@ -29,6 +31,16 @@ in {
   boot.kernelParams = [ "net.ifnames=0" ];
 
   tailscale.sshOnly = true;
+
+  nixpkgs.overlays = [
+    (self: super: {
+      weechat = super.weechat.override {
+        configure = { availablePlugins, ... }: {
+          scripts = with super.weechatScripts; [ highmon ];
+        };
+      };
+    })
+  ];
 
   sops.secrets = {
     synapse_signing_key = {
@@ -119,6 +131,16 @@ in {
     group = "mcchunkie";
   };
 
+  systemd.services.icb-tunnel = {
+    wantedBy = [ "network.target" ];
+    after = [ "network.target" "multi-user.target" ];
+    serviceConfig = {
+      User = "qbit";
+      WorkingDirectory = "/home/qbit";
+      ExecStart = "${icbIrcTunnel}/bin/icb-irc-tunnel";
+    };
+  };
+
   systemd.services.mcchunkie = {
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
@@ -126,7 +148,6 @@ in {
       Group = "mcchunkie";
       Restart = "always";
       WorkingDirectory = "/var/lib/mcchunkie";
-      RuntimeDirectory = "/var/lib/mcchunkie";
       ExecStart = "${mcchunkie}/bin/mcchunkie";
     };
   };
