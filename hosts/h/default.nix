@@ -6,6 +6,8 @@ let
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
   mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
+  weepushover =
+    python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIITjFpmWZVWixv2i9902R+g5B8umVhaqmjYEKs2nF3Lu qbit@tal.tapenet.org"
@@ -14,7 +16,10 @@ let
   ];
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
   icbIrcTunnel = pkgs.writeScriptBin "icb-irc-tunnel"
-    (import ../../bins/icb-irc-tunnel.nix { inherit pkgs; inherit icbirc; });
+    (import ../../bins/icb-irc-tunnel.nix {
+      inherit pkgs;
+      inherit icbirc;
+    });
 
 in {
   _module.args.isUnstable = true;
@@ -36,7 +41,7 @@ in {
     (self: super: {
       weechat = super.weechat.override {
         configure = { availablePlugins, ... }: {
-          scripts = with super.weechatScripts; [ highmon ];
+          scripts = with super.weechatScripts; [ highmon weepushover ];
         };
       };
     })
