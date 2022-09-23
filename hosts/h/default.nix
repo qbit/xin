@@ -73,6 +73,11 @@ in {
       mode = "400";
       sopsFile = config.xin-secrets.h.services;
     };
+    ttrss_password_file = {
+      owner = config.users.users.tt_rss.name;
+      mode = "400";
+      sopsFile = config.xin-secrets.h.services;
+    };
   };
 
   networking = {
@@ -158,6 +163,19 @@ in {
   };
 
   services = {
+    tt-rss = {
+      enable = true;
+      database = {
+        type = "pgsql";
+        passwordFile = "${config.sops.secrets.ttrss_password_file.path}";
+      };
+      email = {
+        fromAddress = "ttrss@rss.bolddaemon.com";
+        fromName = "News @ rss.bolddaemon.com";
+      };
+      selfUrlPath = "https://rss.bolddaemon.com/";
+      virtualHost = "rss.bolddaemon.com";
+    };
     gotosocial = {
       enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
