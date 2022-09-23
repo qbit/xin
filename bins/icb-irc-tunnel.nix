@@ -1,7 +1,7 @@
 { pkgs, icbirc }:
 
 ''
-  #!/usr/bin/env sh
+  #!${pkgs.yash}/bin/yash
   ${pkgs.procps}/bin/pkill icbirc
 
   ${icbirc}/bin/icbirc -l 127.0.0.1 -s localhost -p 6644
