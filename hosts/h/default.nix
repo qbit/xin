@@ -167,6 +167,7 @@ in {
       enable = true;
       database = {
         type = "pgsql";
+
         passwordFile = "${config.sops.secrets.ttrss_password_file.path}";
       };
       email = {
@@ -330,6 +331,10 @@ in {
           enableACME = true;
           root = "/var/www/bolddaemon.com";
         };
+        "rss.bolddaemon.com" = {
+          forceSSL = true;
+          enableACME = true;
+        };
         "relay.bolddaemon.com" = {
           forceSSL = true;
           enableACME = true;
@@ -471,9 +476,7 @@ in {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/openbsd.app";
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:3000";
-          };
+          locations."/" = { proxyPass = "http://127.0.0.1:3000"; };
         };
         "tapenet.org" = {
           forceSSL = true;
@@ -516,7 +519,7 @@ in {
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = [ "synapse" "gotosocial" ];
+      ensureDatabases = [ "synapse" "gotosocial" "tt_rss" ];
       ensureUsers = [
         {
           name = "synapse_user";
@@ -525,6 +528,10 @@ in {
         {
           name = "gotosocial";
           ensurePermissions."DATABASE gotosocial" = "ALL PRIVILEGES";
+        }
+        {
+          name = "tt_rss";
+          ensurePermissions."DATABASE tt_rss" = "ALL PRIVILEGES";
         }
       ];
     };
