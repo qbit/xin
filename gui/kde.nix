@@ -17,14 +17,8 @@ in {
 
     environment.systemPackages = with pkgs; [
       (callPackage ../pkgs/tile-gaps.nix { })
-      akonadi
-      plasma5Packages.akonadiconsole
-      plasma5Packages.akonadi-contacts
-      plasma5Packages.akonadi-search
-      plasma5Packages.akonadi-mime
+      plasma5Packages.kdeconnect-kde
       libsForQt5.bismuth
-      kdeconnect
-      plasma-pass
     ];
   };
 }

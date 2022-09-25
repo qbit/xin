@@ -63,7 +63,7 @@ in {
   };
 
   programs.zsh.shellAliases = {
-    "nix-review" = "GITHUB_TOKEN=$(cat /run/secrets/nix_review) nix-review";
+    "nixpkgs-review" = "GITHUB_TOKEN=$(cat /run/secrets/nix_review) nixpkgs-review";
     "neomutt" = "neomutt -F /etc/neomuttrc";
     "mutt" = "neomutt -F /etc/neomuttrc";
   };
@@ -217,7 +217,7 @@ in {
     mu
     nheko
     nix-index
-    nix-review
+    nixpkgs-review
     nix-top
     nmap
     obsidian
