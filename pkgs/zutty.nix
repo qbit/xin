@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
       efficient rendering implementation, coupled with a sufficiently
       complete feature set to make it useful for a wide range of users.
     '';
-    homepage = "" "https://tomscii.sig7.se/zutty/";
+    homepage = "https://tomscii.sig7.se/zutty/";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ qbit ];
