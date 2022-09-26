@@ -63,7 +63,8 @@ in {
   };
 
   programs.zsh.shellAliases = {
-    "nixpkgs-review" = "GITHUB_TOKEN=$(cat /run/secrets/nix_review) nixpkgs-review";
+    "nixpkgs-review" =
+      "GITHUB_TOKEN=$(cat /run/secrets/nix_review) nixpkgs-review";
     "neomutt" = "neomutt -F /etc/neomuttrc";
     "mutt" = "neomutt -F /etc/neomuttrc";
   };
