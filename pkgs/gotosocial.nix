@@ -1,11 +1,11 @@
 { stdenv, lib, buildGoModule, fetchFromGitHub, makeWrapper, go, git, ffmpeg, ...
 }:
 let
-  gotosocialVersion = "0.5.0-rc2";
+  gotosocialVersion = "0.5.0-rc3";
   gotosocialWebAssets = builtins.fetchurl {
     url =
       "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
-    sha256 = "sha256:16plfx1rnsizv2cb2s2jq6l56hp9gnj5h0fyl5mzywd44swp47ld";
+    sha256 = "sha256:1m8vwhwfi2n2w0vyqgf81k4qmj3fi48sah61bik3yd39n2pybcr5";
   };
 in with lib;
 buildGoModule rec {
@@ -16,7 +16,7 @@ buildGoModule rec {
     owner = "superseriousbusiness";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-HSpelOS5UMMmxVU6NOAz6iYqtboAY0yTmK7/73RtpME=";
+    hash = "sha256-4L6TkKrHBq33Yu7a/lJ7NaXxHjlz7ymBXKfDUtvLHkI=";
   };
 
   ldflags = [
@@ -32,6 +32,8 @@ buildGoModule rec {
   proxyVendor = false;
 
   vendorSha256 = null;
+
+  doCheck = false;
 
   postInstall = ''
     mkdir -p $out/assets
