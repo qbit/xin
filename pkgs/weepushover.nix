@@ -33,7 +33,7 @@ buildPythonPackage {
 
   meta = with lib; {
     inherit (weechat.meta) platforms;
-    homepage = "" "https://github.com/adtac/weepushover";
+    homepage = "https://github.com/adtac/weepushover";
     description = "push notifications from weechat to pushover";
     license = licenses.mit;
     maintainers = with maintainers; [ qbit ];
