@@ -33,6 +33,7 @@ in {
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
+  boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.kernelParams = [ "net.ifnames=0" ];
 
   tailscale.sshOnly = true;
