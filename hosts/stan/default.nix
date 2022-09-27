@@ -30,7 +30,7 @@ in {
       secrets = { "/crypto_keyfile.bin" = null; };
     };
     kernelParams = [ "intel_idle.max_cstate=4" ];
-
+    kernelPackages = pkgs.linuxPackages;
   };
 
   preDNS.enable = false;
