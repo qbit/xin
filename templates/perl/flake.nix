@@ -17,15 +17,12 @@
             pname = "thing";
             version = "v0.0.0";
             src = ./.;
-            buildInputs = with pkgs; [ perl ];
-
-            buildPhase = ''
-              gprbuild thing
-            '';
+            buildInputs = with pkgs.perlPackages; [ perl PerlTidy ];
+            nativeBuildInputs = with pkgs.perlPackages; [ perl ];
 
             installPhase = ''
               mkdir -p $out/bin
-              mv thing $out/bin
+              install -t $out/bin thing.pl
             '';
           };
         });
@@ -37,9 +34,10 @@
           default = pkgs.mkShell {
             shellHook = ''
               PS1='\u@\h:\@; '
-              echo "Ada `${pkgs.gnat12}/bin/gnatmake --version`"
+              echo "Perl `${pkgs.perl}/bin/perl --version`"
             '';
-            nativeBuildInputs = with pkgs; [ gnat12 gprbuild ];
+            buildInputs = with pkgs.perlPackages; [ PerlTidy ];
+            nativeBuildInputs = with pkgs; [ perl ];
           };
         });
     };
