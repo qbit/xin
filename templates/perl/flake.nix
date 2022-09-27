@@ -17,7 +17,7 @@
             pname = "thing";
             version = "v0.0.0";
             src = ./.;
-            buildInputs = with pkgs.perlPackages; [ perl PerlTidy ];
+            buildInputs = with pkgs.perlPackages; [ PerlTidy ];
             nativeBuildInputs = with pkgs.perlPackages; [ perl ];
 
             installPhase = ''
@@ -37,7 +37,7 @@
               echo "Perl `${pkgs.perl}/bin/perl --version`"
             '';
             buildInputs = with pkgs.perlPackages; [ PerlTidy ];
-            nativeBuildInputs = with pkgs; [ perl ];
+            nativeBuildInputs = with pkgs.perlPackages; [ perl ];
           };
         });
     };
