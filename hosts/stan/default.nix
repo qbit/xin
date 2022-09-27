@@ -29,7 +29,6 @@ in {
         "/crypto_keyfile.bin";
       secrets = { "/crypto_keyfile.bin" = null; };
     };
-    kernelPackages = pkgs.linuxPackages_hardened;
     kernelParams = [ "intel_idle.max_cstate=4" ];
 
   };

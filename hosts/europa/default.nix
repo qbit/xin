@@ -57,7 +57,6 @@ in {
         efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelPackages = pkgs.linuxPackages_hardened;
     kernelParams = [ "boot.shell_on_fail" "mem_sleep_default=deep" ];
     kernelModules = [ "kvm-intel" ];
   };

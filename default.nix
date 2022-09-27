@@ -100,6 +100,8 @@ in {
     '';
     boot.cleanTmpDir = true;
 
+    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
+
     environment.systemPackages = with pkgs; [
       age
       apg
