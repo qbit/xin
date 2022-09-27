@@ -449,12 +449,6 @@ in {
           enableACME = true;
           root = "/var/www/akb.io";
         };
-        "openbsd.app" = {
-          forceSSL = true;
-          enableACME = true;
-          root = "/var/www/openbsd.app";
-          locations."/" = { proxyPass = "http://127.0.0.1:3000"; };
-        };
         "tapenet.org" = {
           forceSSL = true;
           enableACME = true;
