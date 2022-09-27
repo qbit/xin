@@ -39,7 +39,7 @@
       });
     })
 
-    # TODO: send PR
+    # https://github.com/NixOS/nixpkgs/pull/193186
     (self: super: {
       tidal-hifi = super.tidal-hifi.overrideAttrs (old: {
         buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.imagemagick ];
