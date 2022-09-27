@@ -136,8 +136,7 @@
         luna = buildSys "x86_64-linux" stable
           [ "${nixos-hardware}/common/cpu/intel" ] "luna";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
-        stan = buildSys "x86_64-linux" unstable
-          [ nixos-hardware.nixosModules.framework ] "stan";
+        stan = buildSys "x86_64-linux" unstable [ ] "stan";
         weather = buildSys "aarch64-linux" unstable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
