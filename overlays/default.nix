@@ -51,7 +51,8 @@
             "''${gappsWrapperArgs[@]}"
 
           substituteInPlace $out/share/applications/tidal-hifi.desktop --replace \
-            "/opt/tidal-hifi/tidal-hifi" "tidal-hifi"
+            "/opt/tidal-hifi/tidal-hifi" "tidal-hifi" \
+            --replace "/usr/share/icons/hicolor/0x0/apps/tidal-hifi.png" "tidal-hifi.png"
 
           for size in 48 64 128 256 512; do
             mkdir -p $out/share/icons/hicolor/''${size}x''${size}/apps/
