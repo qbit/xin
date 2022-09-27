@@ -178,5 +178,9 @@
         path = ./templates/perl;
         description = "Perl template.";
       };
+      templates."mojo" = {
+        path = ./templates/mojo;
+        description = "Perl MojoLicious template.";
+      };
     };
 }
