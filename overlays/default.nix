@@ -4,17 +4,6 @@
   nixpkgs.overlays = if isUnstable then [
 
     (self: super: {
-      matrix-synapse = super.matrix-synapse.overrideAttrs (old: {
-        version = "1.67.0";
-        src = super.python3.pkgs.fetchPypi {
-          pname = "matrix-synapse";
-          version = "1.67.0";
-          sha256 = "sha256-86KVu1wUkVy1/mONVbDM1g+Y+Kh90y1rpf58Kc2VtBY=";
-        };
-      });
-    })
-
-    (self: super: {
       zig = super.zig.overrideAttrs (old: {
         version = "0.10.0-dev.35e0ff7";
         src = super.fetchFromGitHub {
