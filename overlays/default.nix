@@ -3,6 +3,19 @@
 {
   nixpkgs.overlays = if isUnstable then [
 
+    # https://nixpk.gs/pr-tracker.html?pr=193345
+    (self: super: {
+      nheko = super.nheko.overrideAttrs (old: {
+        version = "0.10.2";
+        src = super.fetchFromGitHub {
+          owner = "Nheko-Reborn";
+          repo = "nheko";
+          rev = "v0.10.2";
+          hash = "sha256-gid8XOZ1/hMDGNbse4GYfcAdqHiySWyy4isBgcpekIQ=";
+        };
+      });
+    })
+
     (self: super: {
       zig = super.zig.overrideAttrs (old: {
         version = "0.10.0-dev.35e0ff7";
