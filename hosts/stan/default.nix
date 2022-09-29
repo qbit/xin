@@ -115,6 +115,7 @@ in {
     obs-studio
     openvpn
     rustdesk
+    remmina
     sshfs
     tcpdump
     virt-manager
