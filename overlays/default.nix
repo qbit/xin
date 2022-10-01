@@ -69,3 +69,15 @@
   ] else
     [ ];
 }
+
+# Example Python dep overlay
+# (self: super: {
+#   python3 = super.python3.override {
+#     packageOverrides = python-self: python-super: {
+#       canonicaljson = python-super.canonicaljson.overrideAttrs (oldAttrs: {
+#         nativeBuildInputs = [ python-super.setuptools ];
+#       });
+#     };
+#   };
+# })
+
