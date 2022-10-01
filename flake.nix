@@ -80,7 +80,7 @@
         pkgs.mkShell {
           shellHook = ''
             PS1='\u@\h:\w; '
-            ( . ./common.sh; start )
+            ( . ./common.sh; start ) || true;
           '';
           nativeBuildInputs = with pkgs; [
             git
