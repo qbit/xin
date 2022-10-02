@@ -19,6 +19,8 @@ buildPythonPackage {
   dontBuild = true;
   doCheck = false;
 
+  format = "other";
+
   installPhase = ''
     runHook preInstall
     install -D $src $out/share/weepushover.py
