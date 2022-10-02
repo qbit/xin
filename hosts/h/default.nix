@@ -41,8 +41,7 @@ in {
     (self: super: {
       weechat = super.weechat.override {
         configure = { availablePlugins, ... }: {
-          #scripts = with super.weechatScripts; [ highmon weepushover ];
-          scripts = with super.weechatScripts; [ highmon ];
+          scripts = with super.weechatScripts; [ highmon weepushover ];
         };
       };
     })
