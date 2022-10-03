@@ -98,13 +98,14 @@ in {
 
   doas.enable = true;
 
-  networking.hostName = "box";
-  networking.hostId = "9a2d2563";
-
-  networking.useDHCP = false;
-  networking.enableIPv6 = false;
-
   networking = {
+    hostName = "box";
+    hostId = "9a2d2563";
+
+    useDHCP = false;
+    enableIPv6 = false;
+
+    hosts = { "127.0.0.1" = [ "git.tapenet.org" ]; };
     defaultGateway = "10.20.30.1";
     nameservers = [ "10.20.30.1" ];
     interfaces.enp7s0 = {
