@@ -33,6 +33,8 @@ in {
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
+  system.autoUpgrade.allowReboot = true;
+
   boot.kernelParams = [ "net.ifnames=0" ];
 
   tailscale.sshOnly = true;
