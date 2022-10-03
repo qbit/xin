@@ -3,19 +3,6 @@
 {
   nixpkgs.overlays = if isUnstable then [
 
-    # https://nixpk.gs/pr-tracker.html?pr=193345
-    (self: super: {
-      nheko = super.nheko.overrideAttrs (old: {
-        version = "0.10.2";
-        src = super.fetchFromGitHub {
-          owner = "Nheko-Reborn";
-          repo = "nheko";
-          rev = "v0.10.2";
-          hash = "sha256-gid8XOZ1/hMDGNbse4GYfcAdqHiySWyy4isBgcpekIQ=";
-        };
-      });
-    })
-
     (self: super: {
       zig = super.zig.overrideAttrs (old: {
         version = "0.10.0-dev.35e0ff7";
@@ -36,32 +23,6 @@
         checkPhase = ''
           runHook preCheck
           runHook postCheck
-        '';
-
-      });
-    })
-
-    # https://github.com/NixOS/nixpkgs/pull/193186
-    (self: super: {
-      tidal-hifi = super.tidal-hifi.overrideAttrs (old: {
-        buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.imagemagick ];
-        postFixup = ''
-          makeWrapper $out/opt/tidal-hifi/tidal-hifi $out/bin/tidal-hifi \
-            --prefix LD_LIBRARY_PATH : "${
-              lib.makeLibraryPath super.tidal-hifi.buildInputs
-            }" \
-            "''${gappsWrapperArgs[@]}"
-
-          substituteInPlace $out/share/applications/tidal-hifi.desktop --replace \
-            "/opt/tidal-hifi/tidal-hifi" "tidal-hifi" \
-            --replace "/usr/share/icons/hicolor/0x0/apps/tidal-hifi.png" "tidal-hifi.png"
-
-          for size in 48 64 128 256 512; do
-            mkdir -p $out/share/icons/hicolor/''${size}x''${size}/apps/
-            convert $out/share/icons/hicolor/0x0/apps/tidal-hifi.png \
-              -resize ''${size}x''${size} \
-              $out/share/icons/hicolor/''${size}x''${size}/apps/tidal-hifi.png
-          done
         '';
 
       });
