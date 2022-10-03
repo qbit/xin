@@ -44,7 +44,7 @@ in {
           controlmaster auto
           controlpath /tmp/ssh-%r@%h:%p
 
-        Include /home/qbit/.ssh/host_config
+        Include host_config
       '';
     };
   };
