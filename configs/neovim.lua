@@ -5,7 +5,7 @@ local cmd = vim.cmd
 cmd("syntax off");
 cmd("set nolist");
 cmd("set ruler");
-cmd("set mouse-=a");
+cmd("set mouse-=n");
 
 require("compe").setup {
    enabled = true;
