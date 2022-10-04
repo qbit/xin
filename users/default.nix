@@ -29,9 +29,6 @@ in {
       extraGroups = [ "wheel" ];
     };
 
-    environment.systemPackages =
-      if isUnstable then [ goVersion pkgs.yash ] else [ goVersion ];
-
     programs.ssh = {
       startAgent = true;
       agentTimeout = "100m";
@@ -41,11 +38,13 @@ in {
         CanonicalizeHostname	always
 
         Host *
-          controlmaster auto
-          controlpath /tmp/ssh-%r@%h:%p
-
-        Include host_config
+          controlmaster         auto
+          controlpath           /tmp/ssh-%r@%h:%p
       '';
     };
+
+    environment.systemPackages =
+      if isUnstable then [ goVersion pkgs.yash ] else [ goVersion ];
+
   };
 }
