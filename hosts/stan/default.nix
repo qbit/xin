@@ -13,7 +13,7 @@ let
     "root";
 in {
   _module.args.isUnstable = true;
-  imports = [ ./hardware-configuration.nix ../../overlays/default.nix ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot = {
     loader = {

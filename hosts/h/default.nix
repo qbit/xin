@@ -23,11 +23,7 @@ let
 
 in {
   _module.args.isUnstable = true;
-  imports = [
-    ./hardware-configuration.nix
-    ../../modules/gotosocial.nix
-    ../../overlays/default.nix
-  ];
+  imports = [ ./hardware-configuration.nix ../../modules/gotosocial.nix ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;

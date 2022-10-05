@@ -60,7 +60,18 @@
       });
     })
   ] else
-    [ ];
+    [
+      (self: super: {
+        openssh = super.openssh.overrideAttrs (old: {
+          version = "9.1p1";
+
+          src = super.fetchurl {
+            url = "mirror://openbsd/OpenSSH/portable/openssh-9.1p1.tar.gz";
+            hash = "sha256-GfhQCcfj4jeH8CNvuxV4OSq01L+fjsX+a8HNfov90og=";
+          };
+        });
+      })
+    ];
 }
 
 # Example Python dep overlay
