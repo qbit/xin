@@ -8,12 +8,8 @@ let
 in {
   _module.args.isUnstable = true;
 
-  imports = [
-    ./hardware-configuration.nix
-    ../../pkgs
-    ../../configs/neomutt.nix
-    ../../overlays/default.nix
-  ];
+  imports =
+    [ ./hardware-configuration.nix ../../pkgs ../../configs/neomutt.nix ];
 
   sops.secrets = {
     fastmail = {

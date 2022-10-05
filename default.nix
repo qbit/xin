@@ -20,7 +20,7 @@ in {
     ./dbuild
     ./gui
     ./pkgs
-    #./overlays
+    ./overlays
     ./services
     ./system/nix-config.nix
     ./system/nix-lockdown.nix
