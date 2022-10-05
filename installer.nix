@@ -119,6 +119,11 @@ in {
       openssh.authorizedKeys.keys = config.myconf.hwPubKeys;
     };
 
+    environment.etc."configuration-template.nix" = {
+      source = ./install_template.nix;
+      mode = "0644";
+    };
+
     services = {
       openntpd.enable = true;
       pcscd.enable = true;
