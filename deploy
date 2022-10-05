@@ -34,7 +34,7 @@ rebuild() {
 if [ "$1" = "status" ]; then
 	rev=$(git rev-parse HEAD)
 	msg "Currently at: ${rev}\t($(git log --format=%B -n 1 $rev | head -n1))"
-	for h in $(ls hosts); do
+	for h in $(nix eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]'); do
 		host="$(resolveAlias $h)"
 		if ! tsAlive $host; then
 			msg "can't reach ${host}.. skipping.."
