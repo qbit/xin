@@ -3,6 +3,17 @@
 {
   nixpkgs.overlays = if isUnstable then [
 
+    (self: super: {
+      openssh = super.openssh.overrideAttrs (old: {
+        version = "9.1p1";
+
+        src = super.fetchurl {
+          url = "mirror://openbsd/OpenSSH/portable/openssh-9.1p1.tar.gz";
+          hash = "sha256-GfhQCcfj4jeH8CNvuxV4OSq01L+fjsX+a8HNfov90og=";
+        };
+      });
+    })
+
     # https://github.com/NixOS/nixpkgs/pull/194589
     (self: super: {
       tidal-hifi = super.tidal-hifi.overrideAttrs (old: {
