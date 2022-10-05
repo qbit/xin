@@ -137,7 +137,8 @@
           [ "${nixos-hardware}/common/cpu/intel" ] "luna";
         h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
-        router = buildSys "x86_64-linux" stable [ ] "router";
+        router =
+          buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
         weather = buildSys "aarch64-linux" unstable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
