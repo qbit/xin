@@ -1,5 +1,5 @@
-{ stdenv, lib, buildGo119Module, fetchFromGitHub, makeWrapper, go, git, ffmpeg, ...
-}:
+{ stdenv, lib, buildGo119Module, fetchFromGitHub, makeWrapper, go, git, ffmpeg
+, ... }:
 let
   gotosocialVersion = "0.5.2";
   gotosocialWebAssets = builtins.fetchurl {
