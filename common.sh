@@ -8,6 +8,14 @@ msg() {
 	echo -e "===> $@"
 }
 
+listNixOSHosts() {
+	for i in $(nix eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]'); do
+		if [ -d hosts/${i} ]; then
+			echo $i
+		fi
+	done
+}
+
 resolveAlias() {
 	host="${1}"
 	if [ -f hosts/${host}/alias ]; then
