@@ -126,7 +126,7 @@ ret=0
 if [ ${#@} = 1 ]; then
 	rebuild $1 true || ret=1
 else
-	for host in $(ls hosts); do
+	for host in $(nix eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]'); do
 		rebuild $host false || ret=1
 	done
 fi
