@@ -182,5 +182,9 @@
         path = ./templates/mojo;
         description = "Perl MojoLicious template.";
       };
+      templates."ocaml" = {
+        path = ./templates/ocaml;
+        description = "OCaml template.";
+      };
     };
 }
