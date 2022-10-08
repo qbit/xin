@@ -5,11 +5,12 @@ let
     fugitive
     nvim-compe
     nvim-lspconfig
+    nvim-tree-lua
+    rust-vim
+    vimagit
     vim-gitgutter
     vim-nix
     zig-vim
-    vimagit
-    rust-vim
   ];
   myVimPackages = if pkgs.system == "aarch64-linux" then
     baseVimPackages
