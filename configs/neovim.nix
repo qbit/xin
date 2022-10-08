@@ -10,6 +10,7 @@ let
     vimagit
     vim-gitgutter
     vim-nix
+    vim-ocaml
     zig-vim
   ];
   myVimPackages = if pkgs.system == "aarch64-linux" then
