@@ -13,29 +13,7 @@ let
   };
 in {
   nixpkgs.overlays = if isUnstable then [
-
     openssh
-
-    # https://github.com/NixOS/nixpkgs/pull/194589
-    (self: super: {
-      tidal-hifi = super.tidal-hifi.overrideAttrs (old: {
-        postFixup = ''
-          makeWrapper $out/opt/tidal-hifi/tidal-hifi $out/bin/tidal-hifi \
-            --prefix LD_LIBRARY_PATH : "${
-              lib.makeLibraryPath super.tidal-hifi.buildInputs
-            }" \
-            "''${gappsWrapperArgs[@]}"
-          substituteInPlace $out/share/applications/tidal-hifi.desktop \
-            --replace "/opt/tidal-hifi/tidal-hifi" "tidal-hifi" \
-            --replace "/usr/share/icons/hicolor/0x0/apps/tidal-hifi.png" "tidal-hifi.png"
-          for size in 48 64 128 256 512; do
-            mkdir -p $out/share/icons/hicolor/''${size}x''${size}/apps/
-            convert $out/share/icons/hicolor/0x0/apps/tidal-hifi.png \
-              -resize ''${size}x''${size} $out/share/icons/hicolor/''${size}x''${size}/apps/tidal-hifi.png
-          done
-        '';
-      });
-    })
 
     (self: super: {
       zig = super.zig.overrideAttrs (old: {
