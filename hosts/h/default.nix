@@ -442,11 +442,6 @@ in {
           enableACME = true;
           root = "/var/www/mammothcircus.com";
         };
-        "akb.io" = {
-          forceSSL = true;
-          enableACME = true;
-          root = "/var/www/akb.io";
-        };
         "tapenet.org" = {
           forceSSL = true;
           enableACME = true;
