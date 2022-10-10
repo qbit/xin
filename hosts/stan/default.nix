@@ -102,6 +102,7 @@ in {
   environment.systemPackages = with pkgs; [
     barrier
     brave
+    firefox
     fzf
     google-chrome-dev
     ispell
@@ -114,8 +115,8 @@ in {
     oathToolkit
     obs-studio
     openvpn
-    rustdesk
     remmina
+    rustdesk
     sshfs
     tcpdump
     virt-manager
