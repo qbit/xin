@@ -1,4 +1,5 @@
 #!/bin/sh
 
 find . -name \*.nix -exec nix fmt {} \+
+find . -name \*.sh -exec shfmt -w {} \+
 statix check .
