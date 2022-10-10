@@ -87,6 +87,7 @@
             go
             jq
             nix-diff
+            shfmt
             sops
             ssh-to-age
             ssh-to-pgp

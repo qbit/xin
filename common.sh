@@ -54,7 +54,7 @@ error() {
 }
 
 start() {
-	agentHasKey "$(cat /run/secrets/manager_pubkey | awk '{print $2}')" || \
+	agentHasKey "$(cat /run/secrets/manager_pubkey | awk '{print $2}')" ||
 		ssh-add /run/secrets/manager_key
 }
 
