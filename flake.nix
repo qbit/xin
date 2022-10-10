@@ -129,17 +129,19 @@
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
 
       nixosConfigurations = {
-        box = buildSys "x86_64-linux" stable [ ] "box";
         europa = buildSys "x86_64-linux" unstable [ ] "europa";
-        faf = buildSys "x86_64-linux" stable [ ] "faf";
-        luna = buildSys "x86_64-linux" stable
-          [ "${nixos-hardware}/common/cpu/intel" ] "luna";
-        h = buildSys "x86_64-linux" unstableSmall [ ] "h";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
-        router =
-          buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
         weather = buildSys "aarch64-linux" unstable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
+
+        faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
+        box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
+        luna = buildSys "x86_64-linux" stable
+          [ "${nixos-hardware}/common/cpu/intel" ] "luna";
+        h =
+          buildSys "x86_64-linux" unstableSmall [ ./configs/hardened.nix ] "h";
+        router =
+          buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
 
         weatherInstall = unstable.lib.nixosSystem {
           system = "aarch64-linux";
@@ -152,7 +154,6 @@
             "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
           ];
         };
-
         isoInstall = stable.lib.nixosSystem {
           system = "x86_64-linux";
 
