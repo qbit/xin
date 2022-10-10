@@ -2,4 +2,6 @@
 
 find . -name \*.nix -exec nix fmt {} \+
 find . -name \*.sh -exec shfmt -w {} \+
+shfmt -w deploy
+shfmt -w mkboot
 statix check .

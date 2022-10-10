@@ -45,7 +45,7 @@ if [ "$1" = "status" ]; then
 		remote_rev=$(echo $host_data | jq -r .configurationRevision)
 		remote_ver=$(echo $host_data | jq -r .nixosVersion)
 		rev_msg="DIRTY"
-		rev_status="✓";
+		rev_status="✓"
 		if [ "$remote_rev" != "DIRTY" ]; then
 			rev_msg=$(git log --format=%B -n1 $remote_rev | head -n1)
 			if [ "${remote_rev}" != "${rev}" ]; then
