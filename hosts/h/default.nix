@@ -23,7 +23,11 @@ let
 
 in {
   _module.args.isUnstable = true;
-  imports = [ ./hardware-configuration.nix ../../modules/gotosocial.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/gotosocial.nix
+    ../../modules/yarr.nix
+  ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
@@ -68,6 +72,11 @@ in {
     };
     restic_password_file = {
       owner = config.users.users.root.name;
+      mode = "400";
+      sopsFile = config.xin-secrets.h.services;
+    };
+    yarr_auth = {
+      owner = config.users.users.yarr.name;
       mode = "400";
       sopsFile = config.xin-secrets.h.services;
     };
@@ -156,6 +165,9 @@ in {
   };
 
   services = {
+    yarr = {
+      enable = true;
+    };
     gotosocial = {
       enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
@@ -441,6 +453,17 @@ in {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/mammothcircus.com";
+        };
+        "rss.bolddaemon.com" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/rss.bolddaemon.com";
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://${config.services.yarr.address}:${
+                toString config.services.yarr.port
+              }";
+          };
         };
         "tapenet.org" = {
           forceSSL = true;
