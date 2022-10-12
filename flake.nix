@@ -50,6 +50,10 @@
     , sshKnownHosts, microca, mcchunkie, gqrss, darwin, xin-secrets, peerix, ...
     }@flakes:
     let
+      supportedSystems =
+        [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+      forAllSystems = unstable.lib.genAttrs supportedSystems;
+      nixpkgsFor = forAllSystems (system: import unstable { inherit system; });
       hostBase = {
         overlays = [
           flakes.emacs-overlay.overlay
@@ -167,6 +171,16 @@
           ];
         };
       };
+
+      packages = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system};
+        in {
+          gqrss = pkgs.callPackage ./pkgs/gqrss.nix { inherit pkgs; isUnstable = true; };
+          icbirc = pkgs.callPackage ./pkgs/icbirc.nix { inherit pkgs; isUnstable = true; };
+          mcchunkie = pkgs.callPackage ./pkgs/mcchunkie.nix { inherit pkgs; isUnstable = true; };
+          yarr = pkgs.callPackage ./pkgs/yarr.nix { inherit pkgs; isUnstable = true; };
+          zutty = pkgs.callPackage ./pkgs/zutty.nix { inherit pkgs; isUnstable = true; };
+        });
 
       templates."ada" = {
         path = ./templates/ada;
