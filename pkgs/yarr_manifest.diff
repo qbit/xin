@@ -1,0 +1,49 @@
+diff --git a/src/assets/assetsfs.go b/src/assets/assetsfs.go
+index 29f3a36..0edf300 100644
+--- a/src/assets/assetsfs.go
++++ b/src/assets/assetsfs.go
+@@ -1,3 +1,4 @@
++//go:build release
+ // +build release
+ 
+ package assets
+@@ -5,6 +6,7 @@ package assets
+ import "embed"
+ 
+ //go:embed *.html
++//go:embed *.json
+ //go:embed graphicarts
+ //go:embed javascripts
+ //go:embed stylesheets
+diff --git a/src/assets/index.html b/src/assets/index.html
+index 2124973..73346b2 100644
+--- a/src/assets/index.html
++++ b/src/assets/index.html
+@@ -6,6 +6,7 @@
+     <link rel="stylesheet" href="./static/stylesheets/bootstrap.min.css">
+     <link rel="stylesheet" href="./static/stylesheets/app.css">
+     <link rel="icon shortcut" href="./static/graphicarts/icon.png">
++    <link rel="manifest" href="./static/manifest.json" />
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <script>
+         window.app = window.app || {}
+diff --git a/src/assets/manifest.json b/src/assets/manifest.json
+new file mode 100644
+index 0000000..45f4e81
+--- /dev/null
++++ b/src/assets/manifest.json
+@@ -0,0 +1,14 @@
++{
++  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
++  "name": "YARR",
++  "short_name": "YARR",
++  "start_url": "/",
++  "display": "standalone",
++  "description": "Yet Another RSS Reader.",
++  "background_color": "#fff",
++  "icons": [{
++    "src": "/static/graphicarts/icon.png",
++    "sizes": "69x69",
++    "type": "image/png"
++  }]
++}
