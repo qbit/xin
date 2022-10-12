@@ -19,8 +19,9 @@ in {
     ./configs/zsh.nix
     ./dbuild
     ./gui
-    ./pkgs
+    ./modules
     ./overlays
+    ./pkgs
     ./services
     ./system/nix-config.nix
     ./system/nix-lockdown.nix

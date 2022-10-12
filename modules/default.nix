@@ -1,4 +1,5 @@
 { config, lib, pkgs, ... }:
 with lib; {
-  imports = [ ./config-manager.nix ];
+  imports = [ ./ssh-fido-agent.nix ];
 }
+
