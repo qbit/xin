@@ -63,6 +63,7 @@ in {
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.services;
     };
+    "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.services; };
   };
 
   sops.secrets.books_cert = mkNginxSecret;
@@ -495,7 +496,7 @@ in {
         signupsAllowed = false;
         rocketPort = 8222;
         rocketLog = "critical";
-        environmentFile = "/root/bitwarden_rs.env";
+        environmentFile = "/run/secrets/bitwarden_rs.env";
       };
     };
 
