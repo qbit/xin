@@ -20,6 +20,8 @@ buildGo119Module rec {
 
   proxyVendor = true;
 
+  patches = [ ./yarr_manifest.diff ];
+
   doCheck = false;
 
   subPackages = [ "./src/main.go" ];
