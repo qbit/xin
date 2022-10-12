@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
   config = {
     programs.zsh.interactiveShellInit = ''
       export NO_COLOR=1
@@ -49,6 +49,10 @@
             *)	cd "$(grep -e "$1" ''${K} | head -n 1)";;
           esac
         fi
+      }
+
+      manix() {
+        ${pkgs.manix}/bin/manix "$@" | grep -v ^Here | ${pkgs.glow}/bin/glow -p -
       }
 
       eval "$(direnv hook zsh)"
