@@ -91,8 +91,6 @@ in {
         User = cfg.user;
         Group = cfg.group;
 
-        RuntimeDirectory = "${cfg.directory}";
-
         ExecStart = ''
           ${cfg.package}/bin/yarr -addr ${cfg.address}:${toString cfg.port} -db ${cfg.dbPath} -auth-file ${cfg.authFilePath}'';
       };
