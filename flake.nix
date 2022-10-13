@@ -87,6 +87,7 @@
             ( . ./common.sh; start ) || true;
           '';
           nativeBuildInputs = with pkgs; [
+            deadnix
             git
             go
             jq
@@ -175,11 +176,26 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
-          gqrss = pkgs.callPackage ./pkgs/gqrss.nix { inherit pkgs; isUnstable = true; };
-          icbirc = pkgs.callPackage ./pkgs/icbirc.nix { inherit pkgs; isUnstable = true; };
-          mcchunkie = pkgs.callPackage ./pkgs/mcchunkie.nix { inherit pkgs; isUnstable = true; };
-          yarr = pkgs.callPackage ./pkgs/yarr.nix { inherit pkgs; isUnstable = true; };
-          zutty = pkgs.callPackage ./pkgs/zutty.nix { inherit pkgs; isUnstable = true; };
+          gqrss = pkgs.callPackage ./pkgs/gqrss.nix {
+            inherit pkgs;
+            isUnstable = true;
+          };
+          icbirc = pkgs.callPackage ./pkgs/icbirc.nix {
+            inherit pkgs;
+            isUnstable = true;
+          };
+          mcchunkie = pkgs.callPackage ./pkgs/mcchunkie.nix {
+            inherit pkgs;
+            isUnstable = true;
+          };
+          yarr = pkgs.callPackage ./pkgs/yarr.nix {
+            inherit pkgs;
+            isUnstable = true;
+          };
+          zutty = pkgs.callPackage ./pkgs/zutty.nix {
+            inherit pkgs;
+            isUnstable = true;
+          };
         });
 
       templates."ada" = {

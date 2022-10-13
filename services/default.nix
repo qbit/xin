@@ -1,4 +1,1 @@
-{ config, lib, pkgs, ... }:
-with lib; {
-  imports = [ ./config-manager.nix ];
-}
+{ config, lib, pkgs, ... }: with lib; { imports = [ ./config-manager.nix ]; }
