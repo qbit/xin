@@ -33,7 +33,7 @@ in {
       };
 
       configuration = mkOption {
-        inherit settingsType;
+        type = settingsType;
         description = ''
           Specify the configuration for GoToSocial in Nix.
         '';
