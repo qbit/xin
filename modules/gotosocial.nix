@@ -3,6 +3,8 @@ with pkgs;
 let
   cfg = config.services.gotosocial;
   gotosocial = callPackage ../pkgs/gotosocial.nix { };
+  settingsFormat = pkgs.formats.json { };
+  settingsType = settingsFormat.type;
   prettyJSON = conf:
     pkgs.runCommandLocal "gotosocial-config.json" { } ''
       echo '${
@@ -31,7 +33,7 @@ in {
       };
 
       configuration = mkOption {
-        type = (pkgs.formats.json { }).type;
+        inherit settingsType;
         description = ''
           Specify the configuration for GoToSocial in Nix.
         '';

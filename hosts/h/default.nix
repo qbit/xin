@@ -165,9 +165,7 @@ in {
   };
 
   services = {
-    yarr = {
-      enable = true;
-    };
+    yarr = { enable = true; };
     gotosocial = {
       enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
