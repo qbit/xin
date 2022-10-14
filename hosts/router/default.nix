@@ -22,7 +22,15 @@ in {
   users.users.root = userBase;
   users.users.qbit = userBase;
 
-  system.autoUpgrade.allowReboot = true;
-  system.stateVersion = "22.05";
+  system = {
+    autoUpgrade = {
+      allowReboot = true;
+      rebootWindow = {
+        upper = "03:00";
+        lower = "01:00";
+      };
+    };
+    stateVersion = "22.05";
+  };
 }
 
