@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-with lib; {
+let
+  rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
+in with lib; {
   imports = [ ./gnome.nix ./kde.nix ./xfce.nix ./arcan.nix ];
 
   options = {
@@ -40,7 +42,13 @@ with lib; {
 
       sound.enable = true;
       security.rtkit.enable = true;
-      environment.systemPackages = with pkgs; [ brave go-font vlc pcsctools ];
+      environment.systemPackages = with pkgs; [
+        brave
+        go-font
+        vlc
+        pcsctools
+        rage
+      ];
 
       programs = {
         firejail = {
