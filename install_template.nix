@@ -43,7 +43,7 @@ in {
     packages = with pkgs; [ ];
   };
 
-  environment.systemPackages = with pkgs; [ neovim nixfmt ];
+  environment.systemPackages = with pkgs; [ neovim nixfmt jq ];
 
   services.openssh = {
     enable = true;
