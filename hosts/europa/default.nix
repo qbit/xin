@@ -202,6 +202,7 @@ in {
     barrier
     calibre
     cider
+    clementine
     drawterm
     element-desktop
     exercism
