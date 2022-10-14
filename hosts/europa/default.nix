@@ -212,6 +212,7 @@ in {
     libfprint-2-tod1-goodix
     linphone
     logseq
+    minicom
     mu
     nheko
     nix-index
