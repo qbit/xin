@@ -87,6 +87,11 @@ if [ "$1" = "install" ]; then
 	exit 0
 fi
 
+if [ "$1" = "local" ]; then
+	sudo nixos-rebuild --flake .#$(uname -n) switch
+	exit $?
+fi
+
 if [ "$1" = "update" ]; then
 	single="$2"
 	can_sign=0
