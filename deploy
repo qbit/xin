@@ -94,6 +94,7 @@ if [ "$1" = "update" ]; then
 		grep -q $i .allowed_signers && can_sign=1
 	done
 
+	# TODO: capture commit message and wrap it with what is being updated.
 	if [ $can_sign = 1 ]; then
 		if [ "$single" != "" ]; then
 			nix flake lock --commit-lock-file --update-input "$single"
