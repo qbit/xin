@@ -4,6 +4,9 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
+
+  wan = "enp5s0f0";
+  trunk = "enp5s0f1";
 in {
   _module.args.isUnstable = false;
   imports = [ ./hardware-configuration.nix ];
@@ -22,19 +25,13 @@ in {
   networking = {
     hostName = "router";
 
-    nat = {
-      enable = true;
-      externalInterface = "enp5s0f0";
-      internalInterfaces =
-        [ "enp5s0f1" "lab" "common" "external" "voip" "enp1s0f0" ];
-    };
-
-    firewall = {
-      enable = false;
-      allowedTCPPorts = [ 22 ];
-    };
-
     useDHCP = false;
+    firewall.enable = false;
+
+    nftables = {
+      enable = false;
+      ruleset = builtins.readFile ./router.nft;
+    };
 
     wireguard = {
       enable = false;
@@ -56,34 +53,34 @@ in {
     vlans = {
       badwifi = {
         id = 10;
-        interface = "enp5s0f1";
+        interface = "${trunk}";
       };
       goodwifi = {
         id = 11;
-        interface = "enp5s0f1";
+        interface = "${trunk}";
       };
       lab = {
         id = 2;
-        interface = "enp5s0f1";
+        interface = "${trunk}";
       };
       common = {
         id = 5;
-        interface = "enp5s0f1";
+        interface = "${trunk}";
       };
       voip = {
         id = 6;
-        interface = "enp5s0f1";
+        interface = "${trunk}";
       };
       external = {
         id = 20;
-        interface = "enp5s0f1";
+        interface = "${trunk}";
       };
     };
 
     interfaces = {
-      enp5s0f0 = { useDHCP = true; };
+      "${wan}" = { useDHCP = true; };
 
-      enp5s0f1 = {
+      "${trunk}" = {
         ipv4.addresses = [{
           address = "10.99.99.1";
           prefixLength = 24;
@@ -134,6 +131,7 @@ in {
         }];
       };
     };
+
   };
 
   services.atftpd = {
