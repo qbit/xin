@@ -14,7 +14,7 @@
     nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
 
     emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
+      url = "github:nix-community/emacs-overlay/08445dd7824253ee8580f06127460a7d14e942cf";
       inputs.nixpkgs.follows = "stable";
     };
 
