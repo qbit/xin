@@ -30,7 +30,16 @@ in {
 
     nftables = {
       enable = true;
-      rulesetFile = ./router.nft;
+      ruleset = ''
+        add table ip nat
+
+        table ip nat {
+          chain postrouting {
+            type nat hook postrouting priority 100
+            oifname ${wan} masquerade
+          }
+        }
+      '';
     };
 
     wireguard = {
