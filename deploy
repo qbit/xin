@@ -13,7 +13,7 @@ rebuild() {
 	msg "Rebuilding: ${host}"
 
 	if ! tsAlive $host; then
-		msg "can't reach ${host}.. skipping.."
+		msg "can't reach ${1}.. skipping.."
 		return
 	fi
 
@@ -37,7 +37,7 @@ if [ "$1" = "status" ]; then
 	for h in $(listNixOSHosts); do
 		host="$(resolveAlias $h)"
 		if ! tsAlive $host; then
-			msg "can't reach ${host}.. skipping.."
+			msg "can't reach ${h}.. skipping.."
 			continue
 		fi
 		echo -n "===> $h: "
