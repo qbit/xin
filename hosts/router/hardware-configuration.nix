@@ -13,7 +13,7 @@
   boot.initrd.availableKernelModules =
     [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "nf_tables" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
