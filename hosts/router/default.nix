@@ -30,7 +30,7 @@ in {
 
     nftables = {
       enable = false;
-      ruleset = builtins.readFile ./router.nft;
+      rulesetFile = ./router.nft;
     };
 
     wireguard = {
