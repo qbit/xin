@@ -34,7 +34,7 @@
         fi
       }
 
-      NETRC=/run/secrets/netrc
+      export NETRC=/run/secrets/netrc
 
       PROMPT='%n@%m[%(?.%{$fg[default]%}.%{$fg[red]%})%?%{$reset_color%}]:%~$vcs_info_msg_0_$(prompt_char) '
 
