@@ -30,6 +30,12 @@ in {
       group = "wheel";
       mode = "400";
     };
+    netrc = {
+      sopsFile = config.xin-secrets.europa.qbit;
+      owner = "qbit";
+      group = "wheel";
+      mode = "400";
+    };
     peerix_private_key = {
       sopsFile = config.xin-secrets.europa.peerix;
       owner = "${peerixUser}";
