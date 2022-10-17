@@ -314,11 +314,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1666013589,
-        "narHash": "sha256-zQvB5zbrTK/BXOpySFanan63oHmMgkEu/7I+lWPXnzk=",
+        "lastModified": 1666015562,
+        "narHash": "sha256-7fUePJy+u+olCsXVHHthMOoiK+Ky6Eki0PNTOKOjeOw=",
         "owner": "qbit",
         "repo": "taskobs",
-        "rev": "5b3bd94df50ee686744bf91b3831d9ae956e6de3",
+        "rev": "99c579a752d37664dc6b706fbb8cf453571d82b7",
         "type": "github"
       },
       "original": {
