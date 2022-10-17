@@ -161,6 +161,7 @@ in {
       systemCronJobs = [
         "*/2 * * * *  qbit  . /etc/profile; (cd ~/Brain && git sync) >/dev/null 2>&1"
         "*/5 * * * *  qbit  . /etc/profile; (cd ~/org && git sync) >/dev/null 2>&1"
+        "*/30 * * * *  qbit  . /etc/profile; taskobs"
       ];
     };
 
