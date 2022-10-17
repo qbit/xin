@@ -230,6 +230,7 @@ in {
     pharo-launcher
     rofi
     signal-desktop
+    taskobs
     tcpdump
     tidal-hifi
     tigervnc
