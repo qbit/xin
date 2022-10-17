@@ -30,6 +30,7 @@
     };
 
     microca = { url = "github:qbit/microca"; };
+    taskobs = { url = "github:qbit/taskobs"; };
 
     mcchunkie = {
       url = "github:qbit/mcchunkie";
@@ -48,20 +49,14 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, nixos-hardware
-    , sshKnownHosts, microca, mcchunkie, gqrss, darwin, xin-secrets, peerix, ...
-    }@flakes:
+    , sshKnownHosts, microca, taskobs, mcchunkie, gqrss, darwin, xin-secrets
+    , peerix, ... }@flakes:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
       nixpkgsFor = forAllSystems (system: import unstable { inherit system; });
       hostBase = {
-        overlays = [
-          flakes.emacs-overlay.overlay
-          flakes.peerix.overlay
-          flakes.microca.overlay
-
-        ];
         modules = [
           # Common config stuffs
           (import (./default.nix))
@@ -78,6 +73,7 @@
         flakes.emacs-overlay.overlay
         flakes.peerix.overlay
         flakes.microca.overlay
+        flakes.taskobs.overlay
       ];
 
       buildVer = { system.configurationRevision = self.rev or "DIRTY"; };
