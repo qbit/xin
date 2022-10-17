@@ -185,6 +185,21 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1664178928,
+        "narHash": "sha256-+WVCZH/3Ifef4Da9N1tkGnmfX0QwtkJQz013QuImu10=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b542cc75fa03a3a29350d4c3b69739e946268a93",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-22.05",
+        "type": "indirect"
+      }
+    },
     "peerix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -218,6 +233,7 @@
         "peerix": "peerix",
         "sshKnownHosts": "sshKnownHosts",
         "stable": "stable",
+        "taskobs": "taskobs",
         "unstable": "unstable",
         "unstableSmall": "unstableSmall",
         "xin-secrets": "xin-secrets"
@@ -290,6 +306,24 @@
         "owner": "NixOS",
         "ref": "nixos-22.05-small",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "taskobs": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1666012325,
+        "narHash": "sha256-KCr4aY5oOeQxpxJo7ieJreDLUcm+zEHF8lj3wks30Sc=",
+        "owner": "qbit",
+        "repo": "taskobs",
+        "rev": "1ee613a814a434a66503be644deb481cf7a7bd76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "taskobs",
         "type": "github"
       }
     },
