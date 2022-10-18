@@ -1,6 +1,6 @@
 { pkgs, lib, isUnstable, ... }:
 let
-  gosignify = pkgs.callPackage ../pkgs/gosignify.nix { };
+  gosignify = pkgs.callPackage ../pkgs/gosignify.nix { inherit isUnstable; };
 
   ix = pkgs.writeScriptBin "ix" (import ./ix.nix { inherit (pkgs) perl; });
   checkRestart = pkgs.writeScriptBin "check-restart"
