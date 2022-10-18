@@ -46,7 +46,7 @@ in {
     (callPackage ../../pkgs/nheko.nix { inherit isUnstable; })
     (callPackage ../../pkgs/secretive.nix { inherit isUnstable; })
 
-    nix-review
+    nixpkgs-review
     direnv
     go
     mosh
