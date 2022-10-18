@@ -1,7 +1,7 @@
-{ lib, buildGo119Module, fetchFromGitHub, ... }:
+{ lib, buildGoModule, fetchFromGitHub, isUnstable, ... }:
 
 with lib;
-buildGo119Module rec {
+buildGoModule rec {
   pname = "gosignify";
   version = "0.0.0-20210702013543-c91e79d30e91";
 
@@ -12,8 +12,9 @@ buildGo119Module rec {
     sha256 = "sha256-Ynmx6NUUQ5WEYFowuW/ELjV2ESOHqoOTVqdZ6CWt6LQ=";
   };
 
-  vendorHash = null;
   proxyVendor = false;
+
+  vendorSha256 = null;
 
   meta = {
     description = "gosignify is a Go reimplementation of OpenBSD's signify";
