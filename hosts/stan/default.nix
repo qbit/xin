@@ -113,6 +113,7 @@ in {
     mupdf
     nmap
     oathToolkit
+    obsidian
     obs-studio
     openvpn
     remmina
