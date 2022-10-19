@@ -150,22 +150,22 @@ in {
   };
 
   # for photoprism
-  users.groups.photoprism = {
-    name = "photoprism";
-    gid = 986;
-  };
-  users.users.photoprism = {
-    uid = 991;
-    name = "photoprism";
-    isSystemUser = true;
-    hashedPassword = null;
-    group = "photoprism";
-    shell = "/bin/sh";
-    openssh.authorizedKeys.keys = pubKeys;
-  };
+  #users.groups.photoprism = {
+  #  name = "photoprism";
+  #  gid = 986;
+  #};
+  #users.users.photoprism = {
+  #  uid = 991;
+  #  name = "photoprism";
+  #  isSystemUser = true;
+  #  hashedPassword = null;
+  #  group = "photoprism";
+  #  shell = "/bin/sh";
+  #  openssh.authorizedKeys.keys = pubKeys;
+  #};
 
   virtualisation.podman = {
-    enable = true;
+    enable = false;
     #dockerCompat = true;
   };
   virtualisation.oci-containers.backend = "podman";
@@ -256,7 +256,7 @@ in {
     sonarr.enable = true;
     radarr.enable = true;
     lidarr.enable = true;
-    jackett.enable = true;
+    jackett.enable = false;
     prowlarr.enable = true;
     headphones.enable = false;
     nzbget = {
