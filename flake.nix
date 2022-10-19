@@ -173,6 +173,8 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
+          ada_language_server =
+            pkgs.callPackage ./pkgs/ada_language_server.nix { inherit pkgs; };
           gqrss = pkgs.callPackage ./pkgs/gqrss.nix {
             inherit pkgs;
             isUnstable = true;
