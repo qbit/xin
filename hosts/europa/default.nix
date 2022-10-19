@@ -173,7 +173,7 @@ in {
       extraConfig = ''
         HandlePowerKey=suspend-then-hibernate
         IdleAction=suspend-then-hibernate
-        IdleActionSec=2m
+        IdleActionSec=2h
       '';
     };
 
