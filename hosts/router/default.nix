@@ -30,14 +30,69 @@ in {
 
     nftables = {
       enable = true;
-      ruleset = ''
-        add table ip nat
+      #ruleset = ''
+      #  add table ip nat
 
-        table ip nat {
-          chain postrouting {
-            type nat hook postrouting priority 100
-            oifname ${wan} masquerade
-          }
+      #  table ip nat {
+      #    chain postrouting {
+      #      type nat hook postrouting priority 100
+      #      oifname ${wan} masquerade
+      #    }
+      #  }
+      #'';M
+      ruleset = ''
+        define DEV_WORLD = ${wan}
+
+        define DEV_PRIVATE = enp1s0f0
+        define NET_PRIVATE = 10.99.1.0/24
+
+        define DEV_HAM = enp2s0f1
+        define NET_HAM = 10.98.1.0/24
+
+        table ip global {
+
+            chain inbound_world {
+                icmp type echo-request limit rate 5/second accept
+                tcp dport ssh limit rate 1/minute accept
+            }
+
+            chain inbound_private {
+                icmp type echo-request limit rate 5/second accept
+                ip protocol . th dport vmap { tcp . 22 : accept, udp . 53 : accept, tcp . 53 : accept, udp . 67 : accept}
+            }
+
+            chain inbound {
+                type filter hook input priority 0; policy drop;
+
+                # Allow traffic from established and related packets, drop invalid
+                ct state vmap { established : accept, related : accept, invalid : drop }
+
+                # allow loopback traffic, anything else jump to chain for further evaluation
+                iifname vmap { lo : accept, $DEV_WORLD : jump inbound_world, $DEV_PRIVATE : jump inbound_private, $DEV_HAM : jump inbound_private }
+
+                # the rest is dropped by the above policy
+            }
+
+            chain forward {
+                type filter hook forward priority 0; policy drop;
+
+                # Allow traffic from established and related packets, drop invalid
+                ct state vmap { established : accept, related : accept, invalid : drop }
+
+                oifname $DEV_HAM iifname != $DEV_HAM drop
+                iifname $DEV_PRIVATE accept
+                iifname $DEV_HAM accept
+
+                # the rest is dropped by the above policy
+            }
+
+            chain postrouting {
+                type nat hook postrouting priority 100; policy accept;
+
+                # masquerade private IP addresses
+                ip saddr $NET_PRIVATE oifname $DEV_WORLD masquerade
+                ip saddr $NET_HAM oifname $DEV_WORLD masquerade
+            }
         }
       '';
     };
@@ -103,6 +158,13 @@ in {
         }];
       };
 
+      enp2s0f1 = {
+        ipv4.addresses = [{
+          address = "10.98.1.1";
+          prefixLength = 24;
+        }];
+      };
+
       badwifi = {
         ipv4.addresses = [{
           address = "10.10.0.1";
@@ -156,13 +218,19 @@ in {
     enable = true;
     extraConfig = ''
       option subnet-mask 255.255.255.0;
-      option routers 10.99.1.1;
+      #option routers 10.99.1.1;
       option domain-name-servers 9.9.9.9;
       subnet 10.99.1.0 netmask 255.255.255.0 {
+          option routers 10.99.1.1;
           range 10.99.1.100 10.99.1.199;
       }
+
+      subnet 10.98.1.0 netmask 255.255.255.0 {
+          option routers 10.98.1.1;
+          range 10.98.1.100 10.98.1.199;
+      }
     '';
-    interfaces = [ "enp1s0f0" ];
+    interfaces = [ "enp1s0f0" "enp2s0f1" ];
   };
 
   users.users.root = userBase;
