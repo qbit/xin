@@ -24,7 +24,23 @@ require("compe").setup {
    };
 }
 
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+    renderer = {
+        icons = {
+	    show = false,
+	    webdev_colors = false,
+	    show = {
+               file = false,
+               folder = false,
+               folder_arrow = false,
+	       git = true,
+	    },
+        },
+    },
+})
+
+cmd[[highlight NvimTreeOpenedFolderName guifg=default]]
+cmd[[highlight NvimTreeFolderName guifg=default]]
 
 local lspc = require("lspconfig")
 lspc.gopls.setup {};
