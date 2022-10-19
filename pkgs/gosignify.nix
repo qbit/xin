@@ -1,4 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub, isUnstable, ... }:
+{ lib, buildGoModule, fetchFromGitHub, ... }:
 
 with lib;
 buildGoModule rec {
