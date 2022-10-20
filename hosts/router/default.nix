@@ -16,6 +16,8 @@ in {
     "net.ipv6.conf.all.forwarding" = true;
   };
 
+  autoUpdate.enable = false;
+
   sops.secrets = {
     wireguard_private_key = {
       sopsFile = config.xin-secrets.router.networking;
@@ -46,6 +48,9 @@ in {
         define DEV_PRIVATE = enp1s0f0
         define NET_PRIVATE = 10.99.1.0/24
 
+        define DEV_COMMON = common
+        define NET_COMMON = 10.6.0.0/24
+
         define DEV_HAM = enp2s0f1
         define NET_HAM = 10.98.1.0/24
 
@@ -68,7 +73,7 @@ in {
                 ct state vmap { established : accept, related : accept, invalid : drop }
 
                 # allow loopback traffic, anything else jump to chain for further evaluation
-                iifname vmap { lo : accept, $DEV_WORLD : jump inbound_world, $DEV_PRIVATE : jump inbound_private, $DEV_HAM : jump inbound_private }
+                iifname vmap { lo : accept, $DEV_WORLD : jump inbound_world, $DEV_PRIVATE : jump inbound_private, $DEV_HAM : jump inbound_private, $DEV_COMMON : jump inbound_private }
 
                 # the rest is dropped by the above policy
             }
@@ -82,6 +87,7 @@ in {
                 oifname $DEV_HAM iifname != $DEV_HAM drop
                 iifname $DEV_PRIVATE accept
                 iifname $DEV_HAM accept
+                iifname $DEV_COMMON accept
 
                 # the rest is dropped by the above policy
             }
@@ -90,8 +96,9 @@ in {
                 type nat hook postrouting priority 100; policy accept;
 
                 # masquerade private IP addresses
-                ip saddr $NET_PRIVATE oifname $DEV_WORLD masquerade
-                ip saddr $NET_HAM oifname $DEV_WORLD masquerade
+                #ip saddr $NET_PRIVATE oifname $DEV_WORLD masquerade
+                #ip saddr $NET_HAM oifname $DEV_WORLD masquerade
+                oifname ${wan} masquerade
             }
         }
       '';
@@ -189,12 +196,12 @@ in {
           prefixLength = 24;
         }];
       };
-      #common = {
-      #  ipv4.addresses = [{
-      #    address = "10.6.0.1";
-      #    prefixLength = 24;
-      #  }];
-      #};
+      common = {
+        ipv4.addresses = [{
+          address = "10.6.0.1";
+          prefixLength = 24;
+        }];
+      };
       voip = {
         ipv4.addresses = [{
           address = "10.7.0.1";
@@ -229,9 +236,19 @@ in {
           option routers 10.98.1.1;
           range 10.98.1.100 10.98.1.199;
       }
+
+      subnet 10.6.0.0 netmask 255.255.255.0 {
+          option routers 10.6.0.1;
+          range 10.6.0.10 10.6.0.199;
+      }
+
     '';
-    interfaces = [ "enp1s0f0" "enp2s0f1" ];
+    interfaces = [ "enp1s0f0" "enp2s0f1" "common" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    tcpdump
+  ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
