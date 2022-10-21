@@ -89,6 +89,7 @@ in {
     defaultGateway = "23.29.118.1";
     defaultGateway6 = "2602:ff16:3::1";
     nameservers = [ "9.9.9.9" ];
+
     interfaces.eth0 = {
       ipv4.addresses = [{
         address = "23.29.118.127";
@@ -101,6 +102,24 @@ in {
         }];
       };
     };
+
+    wireguard = {
+      enable = false;
+      interfaces = {
+        wg0 = {
+          listenPort = 7122;
+          ips = [ "192.168.112.3/32" ];
+          peers = [{
+            publicKey = "gZ16FwqUgzKgEpJgVC9BngJ+Dd0e5LPsDhDuJby0VzY=";
+            allowedIPs = [ "192.168.112.4/32" ];
+            persistentKeepalive = 25;
+          }];
+          #privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
+          privateKeyFile = "/root/wgpk";
+        };
+      };
+    };
+
     firewall = {
       interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 ]; }; };
       allowedTCPPorts = [ 22 80 443 53589 ];
