@@ -80,6 +80,7 @@ in {
       mode = "400";
       sopsFile = config.xin-secrets.h.services;
     };
+    wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
   };
 
   networking = {
@@ -104,7 +105,7 @@ in {
     };
 
     wireguard = {
-      enable = false;
+      enable = true;
       interfaces = {
         wg0 = {
           listenPort = 7122;
@@ -114,15 +115,15 @@ in {
             allowedIPs = [ "192.168.112.4/32" ];
             persistentKeepalive = 25;
           }];
-          #privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
-          privateKeyFile = "/root/wgpk";
+          privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
         };
       };
     };
 
     firewall = {
       interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 ]; }; };
-      allowedTCPPorts = [ 22 80 443 53589 ];
+      allowedTCPPorts = [ 22 80 443 2222 53589 ];
+      allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [{
         from = 60000;
         to = 61000;
@@ -322,6 +323,17 @@ in {
         proxy_cookie_path / "/; secure; HttpOnly; SameSite=strict";
       '';
 
+      upstreams = {
+        "ssh_gitea" = { servers = { "192.168.112.4:2222" = { }; }; };
+      };
+
+      streamConfig = ''
+        server {
+          listen 23.29.118.127:2222;
+          proxy_pass 192.168.112.4:2222;
+        }
+      '';
+
       virtualHosts = {
         "deftly.net" = {
           forceSSL = true;
@@ -362,6 +374,35 @@ in {
             }
           '';
         };
+
+        "bear.tapenet.org" = {
+          forceSSL = true;
+          enableACME = true;
+
+          locations."/" = { root = "${pkgs.glowing-bear}"; };
+        };
+
+        "git.tapenet.org" = {
+          forceSSL = true;
+          enableACME = true;
+
+          locations."/" = {
+            proxyPass = "http://192.168.112.4:3000";
+            proxyWebsockets = true;
+            priority = 1000;
+          };
+        };
+
+        "bw.tapenet.org" = {
+          forceSSL = true;
+          enableACME = true;
+
+          locations."/" = {
+            proxyPass = "http://192.168.112.4:8222";
+            proxyWebsockets = true;
+          };
+        };
+
         "suah.dev" = {
           forceSSL = true;
           enableACME = true;
