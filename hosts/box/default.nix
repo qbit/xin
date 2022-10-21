@@ -1,7 +1,7 @@
 { lib, config, pkgs, isUnstable, ... }:
 
 let
-  photoPrismTag = "220901-bullseye";
+  #photoPrismTag = "220901-bullseye";
   httpCacheTime = "720m";
   httpAllow = ''
     allow	10.6.0.0/24;
@@ -42,20 +42,8 @@ let
   };
 
 in {
-  disabledModules = [
-    #"services/security/step-ca.nix"
-    #"services/matrix/mjolnir.nix"
-  ];
-
   _module.args.isUnstable = false;
-  imports = [
-    ./hardware-configuration.nix
-    #(import "${
-    #    toString unstableSrc.path
-    #  }/nixos/modules/services/security/step-ca.nix")
-    #(import
-    #  "${toString unstableSrc.path}/nixos/modules/services/matrix/mjolnir.nix")
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   sops.secrets = {
     photoprism_admin_password = { sopsFile = config.xin-secrets.box.services; };
@@ -64,6 +52,7 @@ in {
       sopsFile = config.xin-secrets.box.services;
     };
     "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.services; };
+    "wireguard_private_key" = { sopsFile = config.xin-secrets.box.services; };
   };
 
   sops.secrets.books_cert = mkNginxSecret;
@@ -82,15 +71,6 @@ in {
   sops.secrets.reddit_key = mkNginxSecret;
   sops.secrets.sonarr_cert = mkNginxSecret;
   sops.secrets.sonarr_key = mkNginxSecret;
-
-  #nixpkgs.config = {
-  #  packageOverrides = super:
-  #    let self = super.pkgs;
-  #    in {
-  #      step-ca = unstableSrc.step-ca;
-  #      mjolnir = unstableSrc.mjolnir;
-  #    };
-  #};
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.loader.grub.copyKernels = true;
@@ -111,6 +91,15 @@ in {
 
     firewall = {
       interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
+      interfaces = {
+        "wg0" = {
+          allowedTCPPorts = [
+            config.services.gitea.ssh.clonePort
+            config.services.gitea.httpPort
+            config.services.vaultwarden.config.rocketPort
+          ];
+        };
+      };
       allowedTCPPorts = config.services.openssh.ports
         ++ [ 80 443 config.services.gitea.ssh.clonePort ];
       allowedUDPPortRanges = [{
@@ -120,7 +109,7 @@ in {
     };
 
     wireguard = {
-      enable = false;
+      enable = true;
       interfaces = {
         wg0 = {
           listenPort = 7122;
@@ -131,12 +120,11 @@ in {
             allowedIPs = [ "192.168.112.3/32" ];
             persistentKeepalive = 25;
           }];
-          #privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
-          privateKeyFile = "/root/wgpk";
+          privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
+          #privateKeyFile = "/root/wgpk";
         };
       };
     };
-
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -238,29 +226,6 @@ in {
     openssh.forwardX11 = true;
 
     tor.enable = true;
-
-    #step-ca = {
-    #  enable = true;
-    #  intermediatePasswordFile = "/var/data/step-ca/secrets/password";
-    #  settings = {
-    #    dnsNames = [ "box.bold.daemon" ];
-    #    root = "/var/lib/step-ca/certs/root_ca.crt";
-    #    crt = "/var/lib/step-ca/certs/intermediate_ca.crt";
-    #    key = "/var/lib/step-ca/secrets/intermediate_ca_key";
-    #    db = {
-    #      type = "badger";
-    #      dataSource = "/var/lib/step-ca/db";
-    #    };
-    #    authority = {
-    #      provisioners = [{
-    #        type = "ACME";
-    #        name = "acme";
-    #      }];
-    #    };
-    #  };
-    #  address = "127.0.0.1";
-    #  port = 8435;
-    #};
 
     sonarr.enable = true;
     radarr.enable = true;
@@ -493,7 +458,6 @@ in {
             ];
           }];
         }
-
       ];
     };
 
@@ -537,28 +501,6 @@ in {
         socket = "/run/postgresql";
       };
     };
-
-    #nextcloud = {
-    #  enable = true;
-    #  hostName = "box.tapenet.org";
-    #  package = pkgs.nextcloud22;
-    #  home = "/media/nextcloud";
-    #  https = true;
-    #  autoUpdateApps = { enable = true; };
-
-    #  config = {
-    #    overwriteProtocol = "https";
-
-    #    dbtype = "pgsql";
-    #    dbuser = "nextcloud";
-    #    dbhost = "/run/postgresql";
-    #    dbname = "nextcloud";
-    #    dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
-
-    #    adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
-    #    adminuser = "admin";
-    #  };
-    #};
 
     rsnapshot = {
       enable = false;
@@ -622,43 +564,15 @@ in {
           locations."/pub" = openbsdPub;
         };
 
-        "photos.tapenet.org" = {
-          forceSSL = true;
-          enableACME = true;
+        #"photos.tapenet.org" = {
+        #  forceSSL = true;
+        #  enableACME = true;
 
-          locations."/" = {
-            proxyPass = "http://localhost:2343";
-            proxyWebsockets = true;
-          };
-        };
-        "bw.tapenet.org" = {
-          forceSSL = true;
-          enableACME = true;
-
-          locations."/" = {
-            proxyPass = "http://localhost:${
-                toString config.services.vaultwarden.config.rocketPort
-              }";
-            proxyWebsockets = true;
-          };
-
-          # For push notifications. Unfortunately the ports are not set in a config
-          locations."/notifications/hub" = {
-            proxyPass = "http://localhost:3012";
-            proxyWebsockets = true;
-          };
-          locations."/notifications/hub/negotiate" = {
-            proxyPass = "http://localhost:8812";
-            proxyWebsockets = true;
-          };
-        };
-
-        "bear.tapenet.org" = {
-          forceSSL = true;
-          enableACME = true;
-
-          locations."/" = { root = "${pkgs.glowing-bear}"; };
-        };
+        #  locations."/" = {
+        #    proxyPass = "http://localhost:2343";
+        #    proxyWebsockets = true;
+        #  };
+        #};
 
         "jelly.bold.daemon" = {
           forceSSL = true;
@@ -841,17 +755,6 @@ in {
           };
         };
 
-        "git.tapenet.org" = {
-          forceSSL = true;
-          enableACME = true;
-
-          locations."/" = {
-            proxyPass =
-              "http://localhost:${toString config.services.gitea.httpPort}";
-            proxyWebsockets = true;
-            priority = 1000;
-          };
-        };
       };
     };
 
