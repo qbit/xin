@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -7,6 +7,109 @@ let
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
+  interfaces = {
+    "${wan}" = { useDHCP = true; };
+    "${trunk}" = rec {
+      ipv4.addresses = [{
+        address = "10.99.99.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = false;
+        network =
+          "10.99.99.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    enp1s0f0 = rec {
+      ipv4.addresses = [{
+        address = "10.99.1.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = true;
+        network =
+          "10.99.1.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    enp2s0f1 = rec {
+      ipv4.addresses = [{
+        address = "10.98.1.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = false;
+        network =
+          "10.98.1.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    badwifi = rec {
+      ipv4.addresses = [{
+        address = "10.10.0.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = true;
+        network =
+          "10.10.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    goodwifi = rec {
+      ipv4.addresses = [{
+        address = "10.12.0.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = false;
+        network =
+          "10.12.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    lab = rec {
+      ipv4.addresses = [{
+        address = "10.3.0.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = true;
+        network =
+          "10.3.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    external = rec {
+      ipv4.addresses = [{
+        address = "10.20.30.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = true;
+        network =
+          "10.20.30.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    common = rec {
+      ipv4.addresses = [{
+        address = "10.6.0.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = true;
+        vlanID = 5;
+        network =
+          "10.6.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+    voip = rec {
+      ipv4.addresses = [{
+        address = "10.7.0.1";
+        prefixLength = 24;
+      }];
+      info = {
+        route = true;
+        network =
+          "10.7.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+      };
+    };
+  };
 in {
   _module.args.isUnstable = false;
   imports = [ ./hardware-configuration.nix ];
@@ -30,80 +133,6 @@ in {
     useDHCP = false;
     firewall.enable = false;
 
-    nftables = {
-      enable = true;
-      #ruleset = ''
-      #  add table ip nat
-
-      #  table ip nat {
-      #    chain postrouting {
-      #      type nat hook postrouting priority 100
-      #      oifname ${wan} masquerade
-      #    }
-      #  }
-      #'';M
-      ruleset = ''
-        define DEV_WORLD = ${wan}
-
-        define DEV_PRIVATE = enp1s0f0
-        define NET_PRIVATE = 10.99.1.0/24
-
-        define DEV_COMMON = common
-        define NET_COMMON = 10.6.0.0/24
-
-        define DEV_HAM = enp2s0f1
-        define NET_HAM = 10.98.1.0/24
-
-        table ip global {
-
-            chain inbound_world {
-                icmp type echo-request limit rate 5/second accept
-                tcp dport ssh limit rate 1/minute accept
-            }
-
-            chain inbound_private {
-                icmp type echo-request limit rate 5/second accept
-                ip protocol . th dport vmap { tcp . 22 : accept, udp . 53 : accept, tcp . 53 : accept, udp . 67 : accept}
-            }
-
-            chain inbound {
-                type filter hook input priority 0; policy drop;
-
-                # Allow traffic from established and related packets, drop invalid
-                ct state vmap { established : accept, related : accept, invalid : drop }
-
-                # allow loopback traffic, anything else jump to chain for further evaluation
-                iifname vmap { lo : accept, $DEV_WORLD : jump inbound_world, $DEV_PRIVATE : jump inbound_private, $DEV_HAM : jump inbound_private, $DEV_COMMON : jump inbound_private }
-
-                # the rest is dropped by the above policy
-            }
-
-            chain forward {
-                type filter hook forward priority 0; policy drop;
-
-                # Allow traffic from established and related packets, drop invalid
-                ct state vmap { established : accept, related : accept, invalid : drop }
-
-                oifname $DEV_HAM iifname != $DEV_HAM drop
-                iifname $DEV_PRIVATE accept
-                iifname $DEV_HAM accept
-                iifname $DEV_COMMON accept
-
-                # the rest is dropped by the above policy
-            }
-
-            chain postrouting {
-                type nat hook postrouting priority 100; policy accept;
-
-                # masquerade private IP addresses
-                #ip saddr $NET_PRIVATE oifname $DEV_WORLD masquerade
-                #ip saddr $NET_HAM oifname $DEV_WORLD masquerade
-                oifname ${wan} masquerade
-            }
-        }
-      '';
-    };
-
     wireguard = {
       enable = false;
       interfaces = {
@@ -121,6 +150,7 @@ in {
       };
     };
 
+    # TODO: iterate over interfaces where .<name>.vlanID is set
     vlans = {
       badwifi = {
         id = 10;
@@ -148,68 +178,65 @@ in {
       };
     };
 
-    interfaces = {
-      "${wan}" = { useDHCP = true; };
+    interfaces =
+      lib.attrsets.filterAttrsRecursive (n: v: n != "info") interfaces;
 
-      "${trunk}" = {
-        ipv4.addresses = [{
-          address = "10.99.99.1";
-          prefixLength = 24;
-        }];
-      };
+    nftables = {
+      enable = true;
+      ruleset = ''
+        define DEV_PRIVATE = enp1s0f0
+        define DEV_HAM = enp2s0f1
 
-      enp1s0f0 = {
-        ipv4.addresses = [{
-          address = "10.99.1.1";
-          prefixLength = 24;
-        }];
-      };
+        table ip global {
 
-      enp2s0f1 = {
-        ipv4.addresses = [{
-          address = "10.98.1.1";
-          prefixLength = 24;
-        }];
-      };
+            chain inbound_world {
+                #icmp type echo-request limit rate 5/second accept
+                tcp dport ssh limit rate 1/minute accept
+            }
 
-      badwifi = {
-        ipv4.addresses = [{
-          address = "10.10.0.1";
-          prefixLength = 24;
-        }];
-      };
-      goodwifi = {
-        ipv4.addresses = [{
-          address = "10.12.0.1";
-          prefixLength = 24;
-        }];
-      };
-      lab = {
-        ipv4.addresses = [{
-          address = "10.3.0.1";
-          prefixLength = 24;
-        }];
-      };
-      external = {
-        ipv4.addresses = [{
-          address = "10.20.30.1";
-          prefixLength = 24;
-        }];
-      };
-      common = {
-        ipv4.addresses = [{
-          address = "10.6.0.1";
-          prefixLength = 24;
-        }];
-      };
-      voip = {
-        ipv4.addresses = [{
-          address = "10.7.0.1";
-          prefixLength = 24;
-        }];
-      };
+            chain inbound_private {
+                icmp type echo-request limit rate 5/second accept
+                ip protocol . th dport vmap {
+                  tcp . 22 : accept,
+                  udp . 53 : accept,
+                  tcp . 53 : accept,
+                  udp . 67 : accept
+                }
+            }
+
+            chain inbound {
+                type filter hook input priority 0; policy drop;
+                ct state vmap { established : accept, related : accept, invalid : drop }
+
+                iifname vmap {
+                  lo : accept,
+                  ${wan} : jump inbound_world,
+                  $DEV_PRIVATE : jump inbound_private,
+                  $DEV_HAM : jump inbound_private,
+                  common : jump inbound_private,
+                  badwifi : jump inbound_private
+                }
+            }
+
+            chain forward {
+                type filter hook forward priority 0; policy drop;
+
+                ct state vmap { established : accept, related : accept, invalid : drop }
+
+                oifname $DEV_HAM iifname != $DEV_HAM drop
+                iifname $DEV_PRIVATE accept
+                iifname $DEV_HAM accept
+                iifname common accept
+                iifname badwifi accept
+            }
+
+            chain postrouting {
+                type nat hook postrouting priority 100; policy accept;
+                oifname ${wan} masquerade
+            }
+        }
+      '';
     };
-
   };
 
   services.atftpd = {
@@ -225,8 +252,7 @@ in {
     enable = true;
     extraConfig = ''
       option subnet-mask 255.255.255.0;
-      #option routers 10.99.1.1;
-      option domain-name-servers 9.9.9.9;
+      option domain-name-servers 45.90.28.147, 45.90.30.147;
       subnet 10.99.1.0 netmask 255.255.255.0 {
           option routers 10.99.1.1;
           range 10.99.1.100 10.99.1.199;
@@ -242,8 +268,13 @@ in {
           range 10.6.0.10 10.6.0.199;
       }
 
+      subnet 10.10.0.0 netmask 255.255.255.0 {
+          option routers 10.10.0.1;
+          range 10.10.0.10 10.10.0.199;
+      }
+
     '';
-    interfaces = [ "enp1s0f0" "enp2s0f1" "common" ];
+    interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" ];
   };
 
   environment.systemPackages = with pkgs; [ tcpdump ];
