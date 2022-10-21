@@ -133,23 +133,6 @@ in {
     useDHCP = false;
     firewall.enable = false;
 
-    wireguard = {
-      enable = false;
-      interfaces = {
-        wg0 = {
-          listenPort = 7122;
-          ips = [ "192.168.112.4/32" ];
-          peers = [{
-            publicKey = "CEnjIUpeOEZ9nUvuA1HCDg3duE/OPcdvJpbEsX1dXBM=";
-            endpoint = "107.191.42.21:7122";
-            allowedIPs = [ "0.0.0.0/0" ];
-            persistentKeepalive = 25;
-          }];
-          privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
-        };
-      };
-    };
-
     # TODO: iterate over interfaces where .<name>.vlanID is set
     vlans = {
       badwifi = {
@@ -214,7 +197,9 @@ in {
                   $DEV_PRIVATE : jump inbound_private,
                   $DEV_HAM : jump inbound_private,
                   common : jump inbound_private,
-                  badwifi : jump inbound_private
+                  badwifi : jump inbound_private,
+                  external : jump inbound_private,
+                  voip : jump inbound_private
                 }
             }
 
@@ -228,6 +213,8 @@ in {
                 iifname $DEV_HAM accept
                 iifname common accept
                 iifname badwifi accept
+                iifname external accept
+                iifname voip accept
             }
 
             chain postrouting {
@@ -266,6 +253,84 @@ in {
       subnet 10.6.0.0 netmask 255.255.255.0 {
           option routers 10.6.0.1;
           range 10.6.0.10 10.6.0.199;
+
+          host tal {
+                  #hardware ethernet 68:05:ca:c5:c1:d5;
+                  hardware ethernet 3c:7c:3f:1d:95:9c; # igc0
+                  #option  domain-name-servers 10.6.0.2;
+                  fixed-address 10.6.0.110;
+          }
+
+          host dns {
+                  hardware ethernet b8:27:eb:52:2a:54;
+                  option  domain-name-servers 10.6.0.1;
+                  fixed-address 10.6.0.2;
+          }
+
+          host cons {
+                  hardware ethernet B8:27:EB:77:73:0B;
+                  fixed-address 10.6.0.60;
+          }
+
+          host nuc {
+                  hardware ethernet b8:ae:ed:78:b5:37;
+                  fixed-address 10.6.0.78;
+          }
+
+          host printer {
+                  hardware ethernet 30:05:5c:fa:0b:53;
+                  fixed-address 10.6.0.80;
+          }
+
+          host nintendo {
+                  hardware ethernet 5c:52:1e:9b:fd:ee;
+                  fixed-address 10.6.0.81;
+          }
+
+          host stokies {
+                  hardware ethernet 58:e2:8f:9a:30:b1;
+                  fixed-address 10.6.0.42;
+          }
+
+          host g5 {
+                  hardware ethernet 00:0a:95:a8:26:42;
+                  fixed-address 10.6.0.111;
+          }
+
+          host box {
+                  hardware ethernet d0:50:99:c2:b5:4b;
+                  fixed-address 10.6.0.15;
+          }
+
+          host amd64 {
+                  hardware ethernet fe:e1:bb:d1:62:b8;
+                  fixed-address 10.6.0.16;
+          }
+
+          host greenhouse {
+                  hardware ethernet 6c:0b:84:1b:20:07;
+                  fixed-address 10.6.0.20;
+          }
+
+          host inside {
+                  hardware ethernet 6c:0b:84:cb:a7:59;
+                  fixed-address 10.6.0.21;
+          }
+
+          host weather {
+                  hardware ethernet b8:27:eb:3e:5b:4e;
+                  fixed-address 10.6.0.22;
+          }
+
+          host pi4 {
+                  hardware ethernet dc:a6:32:78:21:ca;
+                  fixed-address 10.6.0.23;
+          }
+
+          host litr {
+                  hardware ethernet 8c:16:45:c9:32:ae;
+                  fixed-address 10.6.0.224;
+          }
       }
 
       subnet 10.10.0.0 netmask 255.255.255.0 {
@@ -273,8 +338,41 @@ in {
           range 10.10.0.10 10.10.0.199;
       }
 
+      subnet 10.99.99.0 netmask 255.255.255.0 {
+          option routers 10.99.99.1;
+          range 10.99.99.10 10.99.99.199;
+
+          host doublemint {
+                  hardware ethernet 74:83:c2:19:9e:51;
+                  fixed-address 10.99.99.54;
+          }
+          host switch0 {
+                  hardware ethernet 18:e8:29:b5:48:15;
+                  fixed-address 10.99.99.4;
+          }
+          host switch1 {
+                  hardware ethernet fc:ec:da:4e:2e:51;
+                  fixed-address 10.99.99.5;
+          }
+
+          host switch2 {
+                  hardware ethernet fc:ec:da:d4:10:81;
+                  fixed-address 10.99.99.6;
+          }
+
+          host ap2 {
+                  hardware ethernet 74:83:c2:89:0b:52;
+                  fixed-address 10.99.99.7;
+          }
+
+          host ap1 {
+                  hardware ethernet 80:2a:a8:96:50:76;
+                  fixed-address 10.99.99.8;
+          }
+      }
+
     '';
-    interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" ];
+    interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" "${trunk}" ];
   };
 
   environment.systemPackages = with pkgs; [ tcpdump ];
