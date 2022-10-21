@@ -107,27 +107,36 @@ in {
     enableIPv6 = false;
 
     hosts = { "127.0.0.1" = [ "git.tapenet.org" ]; };
-    defaultGateway = "10.20.30.1";
-    nameservers = [ "10.20.30.1" ];
-    interfaces.enp7s0 = {
-      ipv4 = {
-        routes = [{
-          address = "10.6.0.0";
-          prefixLength = 24;
-          via = "10.6.0.1";
-        }];
-        addresses = [{
-          address = "10.6.0.15";
-          prefixLength = 24;
-        }];
-      };
-    };
-    interfaces.enp8s0 = {
-      ipv4.addresses = [{
-        address = "10.20.30.15";
-        prefixLength = 24;
+    interfaces.enp7s0 = { useDHCP = true; };
+
+    firewall = {
+      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
+      allowedTCPPorts = config.services.openssh.ports
+        ++ [ 80 443 config.services.gitea.ssh.clonePort ];
+      allowedUDPPortRanges = [{
+        from = 60000;
+        to = 61000;
       }];
     };
+
+    wireguard = {
+      enable = false;
+      interfaces = {
+        wg0 = {
+          listenPort = 7122;
+          ips = [ "192.168.112.4/32" ];
+          peers = [{
+            publicKey = "IMJ1gVK6KzRghon5Wg1dxv1JCB8IbdSqeFjwQAxJM10=";
+            endpoint = "23.29.118.127:7122";
+            allowedIPs = [ "192.168.112.3/32" ];
+            persistentKeepalive = 25;
+          }];
+          #privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
+          privateKeyFile = "/root/wgpk";
+        };
+      };
+    };
+
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -164,42 +173,42 @@ in {
   #  openssh.authorizedKeys.keys = pubKeys;
   #};
 
-  virtualisation.podman = {
-    enable = false;
-    #dockerCompat = true;
-  };
-  virtualisation.oci-containers.backend = "podman";
-  virtualisation.oci-containers.containers = {
-    #kativa = {
-    #  autoStart = true;
-    #  ports = [ "127.0.0.1:5000:5000" ];
-    #  image = "kizaing/kavita:0.5.2";
-    #  volumes = [ "/media/books:/books" "/media/books/config:/kativa/config" ];
-    #};
-    photoprism = {
-      #user = "${toString config.users.users.photoprism.name}:${toString config.users.groups.photoprism.name}";
-      autoStart = true;
-      ports = [ "127.0.0.1:2343:2343" ];
-      image = "photoprism/photoprism:${photoPrismTag}";
-      workdir = "/photoprism";
-      volumes = [
-        "/media/pictures/photoprism/storage:/photoprism/storage"
-        "/media/pictures/photoprism/originals:/photoprism/originals"
-        "/media/pictures/photoprism/import:/photoprism/import"
-      ];
-      environment = {
-        PHOTOPRISM_HTTP_PORT = "2343";
-        PHOTOPRISM_UPLOAD_NSFW = "true";
-        PHOTOPRISM_DETECT_NSFW = "false";
-        PHOTOPRISM_UID = "${toString config.users.users.photoprism.uid}";
-        PHOTOPRISM_GID = "${toString config.users.groups.photoprism.gid}";
-        #PHOTOPRISM_SITE_URL = "https://photos.tapenet.org/";
-        PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
-        PHOTOPRISM_SETTINGS_HIDDEN = "false";
-        PHOTOPRISM_DATABASE_DRIVER = "sqlite";
-      };
-    };
-  };
+  #virtualisation.podman = {
+  #  enable = false;
+  #  #dockerCompat = true;
+  #};
+  #virtualisation.oci-containers.backend = "podman";
+  #virtualisation.oci-containers.containers = {
+  #  #kativa = {
+  #  #  autoStart = true;
+  #  #  ports = [ "127.0.0.1:5000:5000" ];
+  #  #  image = "kizaing/kavita:0.5.2";
+  #  #  volumes = [ "/media/books:/books" "/media/books/config:/kativa/config" ];
+  #  #};
+  #  photoprism = {
+  #    #user = "${toString config.users.users.photoprism.name}:${toString config.users.groups.photoprism.name}";
+  #    autoStart = true;
+  #    ports = [ "127.0.0.1:2343:2343" ];
+  #    image = "photoprism/photoprism:${photoPrismTag}";
+  #    workdir = "/photoprism";
+  #    volumes = [
+  #      "/media/pictures/photoprism/storage:/photoprism/storage"
+  #      "/media/pictures/photoprism/originals:/photoprism/originals"
+  #      "/media/pictures/photoprism/import:/photoprism/import"
+  #    ];
+  #    environment = {
+  #      PHOTOPRISM_HTTP_PORT = "2343";
+  #      PHOTOPRISM_UPLOAD_NSFW = "true";
+  #      PHOTOPRISM_DETECT_NSFW = "false";
+  #      PHOTOPRISM_UID = "${toString config.users.users.photoprism.uid}";
+  #      PHOTOPRISM_GID = "${toString config.users.groups.photoprism.gid}";
+  #      #PHOTOPRISM_SITE_URL = "https://photos.tapenet.org/";
+  #      PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
+  #      PHOTOPRISM_SETTINGS_HIDDEN = "false";
+  #      PHOTOPRISM_DATABASE_DRIVER = "sqlite";
+  #    };
+  #  };
+  #};
 
   users.groups.media = {
     name = "media";
@@ -878,18 +887,6 @@ in {
   #  requires = [ "postgresql.service" ];
   #  after = [ "postgresql.service" ];
   #};
-
-  networking = {
-    firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
-      allowedTCPPorts = config.services.openssh.ports
-        ++ [ 80 443 config.services.gitea.ssh.clonePort ];
-      allowedUDPPortRanges = [{
-        from = 60000;
-        to = 61000;
-      }];
-    };
-  };
 
   users.users.qbit = userBase;
   users.users.root = userBase;
