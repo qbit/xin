@@ -4,7 +4,7 @@
   boot.initrd.availableKernelModules =
     [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "wireguard" ];
   boot.extraModulePackages = [ ];
 
   hardware.enableRedistributableFirmware = true;
