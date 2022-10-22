@@ -30,9 +30,8 @@ let
   };
 
   pubKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIITjFpmWZVWixv2i9902R+g5B8umVhaqmjYEKs2nF3Lu qbit@tal.tapenet.org"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFbj3DNho0T/SLcuKPzxT2/r8QNdEQ/ms6tRiX6YraJk root@tal.tapenet.org"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
   mkNginxSecret = {
