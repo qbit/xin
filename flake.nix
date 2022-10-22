@@ -131,7 +131,8 @@
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable [ ] "europa";
+        europa = buildSys "x86_64-linux" unstable [
+          nixos-hardware.nixosModules.framework ] "europa";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
         weather = buildSys "aarch64-linux" unstable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
