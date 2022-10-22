@@ -72,43 +72,6 @@ in {
   };
 
   sshFidoAgent.enable = true;
-  configManager = {
-    enable = true;
-    router = {
-      enable = true;
-
-      hostName = "10.6.0.1";
-      pfAllowUnifi = false;
-
-      interfaces = {
-        em0 = {
-          text = ''
-            inet autoconf
-            inet6 autoconf
-          '';
-        };
-        em1 = {
-          text = ''
-            inet 10.99.99.1 255.255.255.0 10.99.99.255
-            description "Trunk"
-            up
-          '';
-        };
-        vlan2 = {
-          text = ''
-            inet 10.3.0.1 255.255.255.0 10.3.0.255 vnetid 2 parent em1 description "Lab" up'';
-        };
-        vlan10 = {
-          text = ''
-            inet 10.10.0.1 255.255.255.0 10.10.0.255 vnetid 10 parent em1 description "Untrusted WiFi" up'';
-        };
-        vlan11 = {
-          text = ''
-            inet 10.12.0.1 255.255.255.0 10.12.0.255 vnetid 11 parent em1 description "Trusted WiFi" up'';
-        };
-      };
-    };
-  };
 
   nixManager = {
     enable = true;
@@ -143,8 +106,6 @@ in {
 
   programs.steam.enable = true;
 
-  systemd.sleep.extraConfig = "HibernateDelaySec=2h";
-
   services = {
     clamav.updater.enable = true;
     emacs = {
@@ -163,31 +124,6 @@ in {
         "*/5 * * * *  qbit  . /etc/profile; (cd ~/org && git sync) >/dev/null 2>&1"
         "*/30 * * * *  qbit  . /etc/profile; taskobs"
       ];
-    };
-
-    fprintd.enable = true;
-
-    logind = {
-      lidSwitch = "suspend-then-hibernate";
-      lidSwitchExternalPower = "lock";
-      extraConfig = ''
-        HandlePowerKey=suspend-then-hibernate
-        IdleAction=suspend-then-hibernate
-        IdleActionSec=2h
-      '';
-    };
-
-    fstrim.enable = true;
-
-    tlp = {
-      enable = false;
-      settings = {
-        CPU_BOOST_ON_BAT = 0;
-        CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-        START_CHARGE_THRESH_BAT0 = 90;
-        STOP_CHARGE_THRESH_BAT0 = 97;
-        RUNTIME_PM_ON_BAT = "auto";
-      };
     };
 
     fwupd = {
@@ -216,7 +152,6 @@ in {
     fido2luks
     isync
     klavaro
-    libfprint-2-tod1-goodix
     linphone
     logseq
     minicom
