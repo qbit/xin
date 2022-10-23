@@ -344,7 +344,7 @@ in {
     interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" "${trunk}" ];
   };
 
-  environment.systemPackages = with pkgs; [ bmon tcpdump ];
+  environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
