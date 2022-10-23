@@ -96,6 +96,43 @@ let
         vlanID = 5;
         network =
           "10.6.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [
+          {
+            name = "tal";
+            mac = "3c:7c:3f:1d:95:9c";
+            address = "10.6.0.110";
+          }
+          {
+            name = "namish";
+            mac = "b8:ae:ed:78:b5:37";
+            address = "10.6.0.78";
+          }
+          {
+            name = "g5";
+            mac = "00:0a:95:a8:26:42";
+            address = "10.6.0.111";
+          }
+          {
+            name = "box";
+            mac = "d0:50:99:c2:b5:4b";
+            address = "10.6.0.15";
+          }
+          {
+            name = "greenhouse";
+            mac = "6c:0b:84:1b:20:07";
+            address = "10.6.0.20";
+          }
+          {
+            name = "inside";
+            mac = "6c:0b:84:cb:a7:59";
+            address = "10.6.0.21";
+          }
+          {
+            name = "weather";
+            mac = "b8:27:eb:3e:5b:4e";
+            address = "10.6.0.22";
+          }
+        ];
       };
     };
     voip = rec {
@@ -252,84 +289,16 @@ in {
 
       subnet 10.6.0.0 netmask 255.255.255.0 {
           option routers 10.6.0.1;
-          range 10.6.0.10 10.6.0.199;
+          range 10.6.0.100 10.6.0.199;
 
-          host tal {
-                  #hardware ethernet 68:05:ca:c5:c1:d5;
-                  hardware ethernet 3c:7c:3f:1d:95:9c; # igc0
-                  #option  domain-name-servers 10.6.0.2;
-                  fixed-address 10.6.0.110;
-          }
-
-          host dns {
-                  hardware ethernet b8:27:eb:52:2a:54;
-                  option  domain-name-servers 10.6.0.1;
-                  fixed-address 10.6.0.2;
-          }
-
-          host cons {
-                  hardware ethernet B8:27:EB:77:73:0B;
-                  fixed-address 10.6.0.60;
-          }
-
-          host nuc {
-                  hardware ethernet b8:ae:ed:78:b5:37;
-                  fixed-address 10.6.0.78;
-          }
-
-          host printer {
-                  hardware ethernet 30:05:5c:fa:0b:53;
-                  fixed-address 10.6.0.80;
-          }
-
-          host nintendo {
-                  hardware ethernet 5c:52:1e:9b:fd:ee;
-                  fixed-address 10.6.0.81;
-          }
-
-          host stokies {
-                  hardware ethernet 58:e2:8f:9a:30:b1;
-                  fixed-address 10.6.0.42;
-          }
-
-          host g5 {
-                  hardware ethernet 00:0a:95:a8:26:42;
-                  fixed-address 10.6.0.111;
-          }
-
-          host box {
-                  hardware ethernet d0:50:99:c2:b5:4b;
-                  fixed-address 10.6.0.15;
-          }
-
-          host amd64 {
-                  hardware ethernet fe:e1:bb:d1:62:b8;
-                  fixed-address 10.6.0.16;
-          }
-
-          host greenhouse {
-                  hardware ethernet 6c:0b:84:1b:20:07;
-                  fixed-address 10.6.0.20;
-          }
-
-          host inside {
-                  hardware ethernet 6c:0b:84:cb:a7:59;
-                  fixed-address 10.6.0.21;
-          }
-
-          host weather {
-                  hardware ethernet b8:27:eb:3e:5b:4e;
-                  fixed-address 10.6.0.22;
-          }
-
-          host pi4 {
-                  hardware ethernet dc:a6:32:78:21:ca;
-                  fixed-address 10.6.0.23;
-          }
-
-          host litr {
-                  hardware ethernet 8c:16:45:c9:32:ae;
-                  fixed-address 10.6.0.224;
+          ${
+            builtins.concatStringsSep "\n" (map (e:
+            ''
+              host ${e.name} {
+                  hardware ethernet ${e.mac};
+                  fixed-address ${e.address};
+              }
+            '') interfaces.common.info.staticIPs)
           }
       }
 
@@ -375,7 +344,7 @@ in {
     interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" "${trunk}" ];
   };
 
-  environment.systemPackages = with pkgs; [ tcpdump ];
+  environment.systemPackages = with pkgs; [ bmon tcpdump ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
