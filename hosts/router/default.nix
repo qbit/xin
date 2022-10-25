@@ -7,17 +7,54 @@ let
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
+  dnsServers = [ "45.90.28.147" "45.90.30.147" ];
   interfaces = {
-    "${wan}" = { useDHCP = true; };
     "${trunk}" = rec {
       ipv4.addresses = [{
         address = "10.99.99.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = false;
+        router = "${(builtins.head ipv4.addresses).address}";
+        netmask = "255.255.255.0";
+        net = "10.99.99.0";
+        start = "10.99.99.100";
+        end = "10.99.99.150";
         network =
-          "10.99.99.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [
+          {
+            name = "doublemint";
+            mac = "74:83:c2:19:9e:51";
+            address = "10.99.99.54";
+          }
+          {
+            name = "switch0";
+            mac = "18:e8:29:b5:48:15";
+            address = "10.99.99.4";
+          }
+          {
+            name = "switch1";
+            mac = "fc:ec:da:4e:2e:51";
+            address = "10.99.99.5";
+          }
+          {
+            name = "switch2";
+            mac = "fc:ec:da:d4:10:81";
+            address = "10.99.99.6";
+          }
+          {
+            name = "ap2";
+            mac = "74:83:c2:89:0b:52";
+            address = "10.99.99.7";
+          }
+          {
+            name = "ap1";
+            mac = "80:2a:a8:96:50:76";
+            address = "10.99.99.8";
+          }
+        ];
       };
     };
     enp1s0f0 = rec {
@@ -25,10 +62,16 @@ let
         address = "10.99.1.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = true;
+        router = "${(builtins.head ipv4.addresses).address}";
+        start = "10.99.1.100";
+        end = "10.99.1.155";
+        net = "10.99.1.0";
+        netmask = "255.255.255.0";
         network =
-          "10.99.1.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [ ];
       };
     };
     enp2s0f1 = rec {
@@ -36,10 +79,16 @@ let
         address = "10.98.1.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = false;
+        router = "${(builtins.head ipv4.addresses).address}";
+        start = "10.98.1.100";
+        end = "10.98.1.150";
+        net = "10.98.1.0";
+        netmask = "255.255.255.0";
         network =
-          "10.98.1.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [ ];
       };
     };
     badwifi = rec {
@@ -47,10 +96,16 @@ let
         address = "10.10.0.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = true;
+        router = "${(builtins.head ipv4.addresses).address}";
+        start = "10.10.0.100";
+        end = "10.10.0.155";
+        net = "10.10.0.0";
+        netmask = "255.255.255.0";
         network =
-          "10.10.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [ ];
       };
     };
     goodwifi = rec {
@@ -58,10 +113,16 @@ let
         address = "10.12.0.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = false;
+        router = "${(builtins.head ipv4.addresses).address}";
+        start = "10.12.0.100";
+        end = "10.12.0.155";
+        net = "10.12.0.0";
+        netmask = "255.255.255.0";
         network =
-          "10.12.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [ ];
       };
     };
     lab = rec {
@@ -69,10 +130,16 @@ let
         address = "10.3.0.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = true;
+        router = "${(builtins.head ipv4.addresses).address}";
+        start = "10.3.0.100";
+        end = "10.3.0.155";
+        net = "10.3.0.0";
+        netmask = "255.255.255.0";
         network =
-          "10.3.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [ ];
       };
     };
     external = rec {
@@ -80,10 +147,16 @@ let
         address = "10.20.30.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = true;
+        router = "${(builtins.head ipv4.addresses).address}";
+        net = "10.20.30.0";
+        start = "10.20.30.100";
+        end = "10.20.30.155";
+        netmask = "255.255.255.0";
         network =
-          "10.20.30.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [ ];
       };
     };
     common = rec {
@@ -91,11 +164,16 @@ let
         address = "10.6.0.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = true;
+        router = "${(builtins.head ipv4.addresses).address}";
         vlanID = 5;
+        start = "10.6.0.100";
+        end = "10.6.0.250";
+        net = "10.6.0.0";
+        netmask = "255.255.255.0";
         network =
-          "10.6.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
         staticIPs = [
           {
             name = "tal";
@@ -140,10 +218,16 @@ let
         address = "10.7.0.1";
         prefixLength = 24;
       }];
-      info = {
+      info = rec {
         route = true;
+        router = "${(builtins.head ipv4.addresses).address}";
+        net = "10.7.0.0";
+        start = "10.7.0.100";
+        end = "10.7.0.155";
+        netmask = "255.255.255.0";
         network =
-          "10.7.0.0/${toString (builtins.head ipv4.addresses).prefixLength}";
+          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        staticIPs = [ ];
       };
     };
   };
@@ -276,70 +360,25 @@ in {
     enable = true;
     extraConfig = ''
       option subnet-mask 255.255.255.0;
-      option domain-name-servers 45.90.28.147, 45.90.30.147;
-      subnet 10.99.1.0 netmask 255.255.255.0 {
-          option routers 10.99.1.1;
-          range 10.99.1.100 10.99.1.199;
-      }
+      option domain-name-servers ${builtins.concatStringsSep ", " dnsServers};
 
-      subnet 10.98.1.0 netmask 255.255.255.0 {
-          option routers 10.98.1.1;
-          range 10.98.1.100 10.98.1.199;
-      }
+      ${builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs
+        (intf: val: ''
+          # ${intf}
+          subnet ${val.info.net} netmask ${val.info.netmask} {
+            option routers ${val.info.router};
+            range ${val.info.start} ${val.info.end};
 
-      subnet 10.6.0.0 netmask 255.255.255.0 {
-          option routers 10.6.0.1;
-          range 10.6.0.100 10.6.0.199;
-
-          ${
-            builtins.concatStringsSep "\n" (map (e:
-            ''
-              host ${e.name} {
-                  hardware ethernet ${e.mac};
-                  fixed-address ${e.address};
-              }
-            '') interfaces.common.info.staticIPs)
+            ${
+              builtins.concatStringsSep "\n" (map (e: ''
+                host ${e.name} {
+                    hardware ethernet ${e.mac};
+                    fixed-address ${e.address};
+                }
+              '') val.info.staticIPs)
+            }
           }
-      }
-
-      subnet 10.10.0.0 netmask 255.255.255.0 {
-          option routers 10.10.0.1;
-          range 10.10.0.10 10.10.0.199;
-      }
-
-      subnet 10.99.99.0 netmask 255.255.255.0 {
-          option routers 10.99.99.1;
-          range 10.99.99.10 10.99.99.199;
-
-          host doublemint {
-                  hardware ethernet 74:83:c2:19:9e:51;
-                  fixed-address 10.99.99.54;
-          }
-          host switch0 {
-                  hardware ethernet 18:e8:29:b5:48:15;
-                  fixed-address 10.99.99.4;
-          }
-          host switch1 {
-                  hardware ethernet fc:ec:da:4e:2e:51;
-                  fixed-address 10.99.99.5;
-          }
-
-          host switch2 {
-                  hardware ethernet fc:ec:da:d4:10:81;
-                  fixed-address 10.99.99.6;
-          }
-
-          host ap2 {
-                  hardware ethernet 74:83:c2:89:0b:52;
-                  fixed-address 10.99.99.7;
-          }
-
-          host ap1 {
-                  hardware ethernet 80:2a:a8:96:50:76;
-                  fixed-address 10.99.99.8;
-          }
-      }
-
+        '') interfaces))}
     '';
     interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" "${trunk}" ];
   };
