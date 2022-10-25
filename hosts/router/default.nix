@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }:
 let
+  inherit (builtins) head concatStringsSep attrValues mapAttrs hasAttr;
+  inherit (lib.attrsets) filterAttrsRecursive;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -9,6 +11,7 @@ let
   trunk = "enp5s0f1";
   dnsServers = [ "45.90.28.147" "45.90.30.147" ];
   interfaces = {
+    "${wan}" = { useDHCP = true; };
     "${trunk}" = rec {
       ipv4.addresses = [{
         address = "10.99.99.1";
@@ -16,13 +19,12 @@ let
       }];
       info = rec {
         route = false;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         netmask = "255.255.255.0";
         net = "10.99.99.0";
         start = "10.99.99.100";
         end = "10.99.99.150";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [
           {
             name = "doublemint";
@@ -64,13 +66,12 @@ let
       }];
       info = rec {
         route = true;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         start = "10.99.1.100";
         end = "10.99.1.155";
         net = "10.99.1.0";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [ ];
       };
     };
@@ -81,13 +82,12 @@ let
       }];
       info = rec {
         route = false;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         start = "10.98.1.100";
         end = "10.98.1.150";
         net = "10.98.1.0";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [ ];
       };
     };
@@ -98,13 +98,12 @@ let
       }];
       info = rec {
         route = true;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         start = "10.10.0.100";
         end = "10.10.0.155";
         net = "10.10.0.0";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [ ];
       };
     };
@@ -115,13 +114,12 @@ let
       }];
       info = rec {
         route = false;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         start = "10.12.0.100";
         end = "10.12.0.155";
         net = "10.12.0.0";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [ ];
       };
     };
@@ -132,13 +130,12 @@ let
       }];
       info = rec {
         route = true;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         start = "10.3.0.100";
         end = "10.3.0.155";
         net = "10.3.0.0";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [ ];
       };
     };
@@ -149,13 +146,12 @@ let
       }];
       info = rec {
         route = true;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         net = "10.20.30.0";
         start = "10.20.30.100";
         end = "10.20.30.155";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [ ];
       };
     };
@@ -166,14 +162,13 @@ let
       }];
       info = rec {
         route = true;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         vlanID = 5;
         start = "10.6.0.100";
         end = "10.6.0.250";
         net = "10.6.0.0";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [
           {
             name = "tal";
@@ -220,13 +215,12 @@ let
       }];
       info = rec {
         route = true;
-        router = "${(builtins.head ipv4.addresses).address}";
+        router = "${(head ipv4.addresses).address}";
         net = "10.7.0.0";
         start = "10.7.0.100";
         end = "10.7.0.155";
         netmask = "255.255.255.0";
-        network =
-          "${net}/${toString (builtins.head ipv4.addresses).prefixLength}";
+        network = "${net}/${toString (head ipv4.addresses).prefixLength}";
         staticIPs = [ ];
       };
     };
@@ -282,8 +276,7 @@ in {
       };
     };
 
-    interfaces =
-      lib.attrsets.filterAttrsRecursive (n: v: n != "info") interfaces;
+    interfaces = filterAttrsRecursive (n: v: n != "info") interfaces;
 
     nftables = {
       enable = true;
@@ -351,7 +344,7 @@ in {
     enable = true;
     extraOptions = [
       "--bind-address ${
-        (builtins.head config.networking.interfaces.lab.ipv4.addresses).address
+        (head config.networking.interfaces.lab.ipv4.addresses).address
       }"
     ];
   };
@@ -360,25 +353,26 @@ in {
     enable = true;
     extraConfig = ''
       option subnet-mask 255.255.255.0;
-      option domain-name-servers ${builtins.concatStringsSep ", " dnsServers};
+      option domain-name-servers ${concatStringsSep ", " dnsServers};
 
-      ${builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs
-        (intf: val: ''
-          # ${intf}
-          subnet ${val.info.net} netmask ${val.info.netmask} {
-            option routers ${val.info.router};
-            range ${val.info.start} ${val.info.end};
+      ${concatStringsSep "\n" (attrValues (mapAttrs (intf: val: ''
+        # ${intf}
+        subnet ${val.info.net} netmask ${val.info.netmask} {
+          option routers ${val.info.router};
+          range ${val.info.start} ${val.info.end};
 
-            ${
-              builtins.concatStringsSep "\n" (map (e: ''
-                host ${e.name} {
-                    hardware ethernet ${e.mac};
-                    fixed-address ${e.address};
-                }
-              '') val.info.staticIPs)
-            }
+          ${
+            concatStringsSep "\n" (map (e: ''
+              host ${e.name} {
+                  hardware ethernet ${e.mac};
+                  fixed-address ${e.address};
+              }
+            '') val.info.staticIPs)
           }
-        '') interfaces))}
+        }
+      '') (filterAttrsRecursive (n: v:
+        # TODO: use hasAttr
+        n != "${wan}") interfaces)))}
     '';
     interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" "${trunk}" ];
   };
