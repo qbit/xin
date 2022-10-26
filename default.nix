@@ -99,9 +99,12 @@ in {
                .::::      ::::      '::::.
 
     '';
-    boot.cleanTmpDir = true;
 
-    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
+    boot = {
+      cleanTmpDir = true;
+      kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
+      kernel.sysctl = { "net.ipv4.tcp_keepalive_time" = 60; };
+    };
 
     environment.systemPackages = with pkgs; [
       age
