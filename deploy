@@ -41,9 +41,10 @@ if [ "$1" = "status" ]; then
 			continue
 		fi
 		echo -n "===> $h: "
-		host_data="$(${SSH} root@${host} 'nixos-version --json')"
+		host_data="$(${SSH} root@${host} 'xin-status')"
 		remote_rev=$(echo $host_data | jq -r .configurationRevision)
 		remote_ver=$(echo $host_data | jq -r .nixosVersion)
+		needs_reboot=$(echo $host_data | jq -r .needs_restart)
 		rev_msg="DIRTY"
 		rev_status="✓"
 		if [ "$remote_rev" != "DIRTY" ]; then
@@ -53,7 +54,7 @@ if [ "$1" = "status" ]; then
 			fi
 		fi
 		echo -en "\t\t${remote_ver}\t${rev_status}\t(${rev_msg})"
-		if ${SSH} root@$host 'check-restart' >/dev/null 2>&1; then
+		if [ "$needs_reboot" == "false" ]; then
 			echo -e "\tOK"
 		else
 			echo -e "\tREBOOT"
