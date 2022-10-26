@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (builtins) head concatStringsSep attrValues mapAttrs hasAttr;
+  inherit (builtins) head concatStringsSep attrValues mapAttrs; # hasAttr;
   inherit (lib.attrsets) filterAttrsRecursive;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
