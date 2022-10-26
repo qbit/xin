@@ -118,6 +118,7 @@ in {
       lz4
       minisign
       mosh
+      nil
       nix-diff
       nixfmt
       nix-index

@@ -1,6 +1,26 @@
 { config, lib, pkgs, ... }:
 with pkgs;
 let
+  parchment = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+    pname = "parchment";
+    version = "0.4.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "ajgrf";
+      repo = pname;
+      rev = "v${version}";
+      sha256 = "sha256-ZphConCGZR3EG6dd8Ji7U9Qtm21SoWMk60XD4X+My1g=";
+    };
+  };
+  vacme = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+    pname = "vacme";
+    version = "2017-01-14";
+    src = pkgs.fetchFromGitHub {
+      owner = "olivertaylor";
+      repo = pname;
+      rev = "2f0b284b5bc1c9dd5b7f0b89ac880959e61b0be4";
+      sha256 = "sha256-eea0Ntr3gCmF6iZ0adZaVswWH70K9IJZ4SAyVSdFp3E=";
+    };
+  };
   baseVimPackages = with vimPlugins; [
     fugitive
     nvim-compe
@@ -12,6 +32,9 @@ let
     vim-nix
     vim-ocaml
     zig-vim
+
+    parchment
+    vacme
   ];
   myVimPackages = if pkgs.system == "aarch64-linux" then
     baseVimPackages
