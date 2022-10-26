@@ -106,28 +106,28 @@ in {
       kernel.sysctl = { "net.ipv4.tcp_keepalive_time" = 60; };
     };
 
-    environment.systemPackages = with pkgs; [
-      age
-      apg
-      bind
-      btop
-      direnv
-      git-sync
-      got
-      jq
-      lz4
-      minisign
-      mosh
-      nil
-      nix-diff
-      nixfmt
-      nix-index
-      nix-top
-      pass
-      rbw
-      taskwarrior
-      tmux
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        age
+        apg
+        bind
+        btop
+        direnv
+        git-sync
+        got
+        jq
+        lz4
+        minisign
+        mosh
+        nix-diff
+        nixfmt
+        nix-index
+        nix-top
+        pass
+        rbw
+        taskwarrior
+        tmux
+      ] ++ (if isUnstable then [ nil ] else [ ]);
 
     environment.interactiveShellInit = ''
       alias vi=nvim
