@@ -14,21 +14,21 @@ let
 in {
   nixpkgs.overlays = if isUnstable then [
     openssh
-    (self: super: rec {
+
+    (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-        pname = "matrix-synapse";
         version = "1.70.0";
         src = super.fetchFromGitHub {
           owner = "matrix-org";
           repo = "synapse";
-          rev = "v${version}";
-          sha256 = "sha256-SkPQPkSF6cppCS58e7wtkBh4nIFekt1O7qbpA6T0lEk=";
+          rev = "v1.70.0";
+          hash = "sha256-SkPQPkSF6cppCS58e7wtkBh4nIFekt1O7qbpA6T0lEk=";
         };
 
         cargoDeps = super.rustPlatform.fetchCargoTarball {
           inherit src;
-          name = "${pname}-${version}";
-          sha256 = "sha256-ucfk2rWU4k9kDIBgbOgp+3ORog/66FgZ90qxF33IuC4=";
+          name = "matrix-synapse-1.70.0";
+          hash = "sha256-ucfk2rWU4k9kDIBgbOgp+3ORog/66FgZ90qxF33IuC4=";
         };
       });
     })
