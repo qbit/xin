@@ -2,12 +2,18 @@ local map = vim.api.nvim_set_keymap
 local o = vim.o
 local cmd = vim.cmd
 
-cmd("syntax off");
-cmd("set t_Co=0");
-cmd("hi LineNr NONE");
+--cmd("syntax off");
+--cmd("set t_Co=0");
 cmd("set nolist");
 cmd("set ruler");
 cmd("set mouse-=n");
+cmd("set t_Co=256");
+cmd("colorscheme vacme");
+cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
+cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
+cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
+cmd("hi! SignColumn NONE");
+cmd("hi! LineNr NONE");
 
 require("compe").setup {
    enabled = true;
@@ -44,6 +50,7 @@ cmd[[highlight NvimTreeFolderName guifg=default]]
 
 local lspc = require("lspconfig")
 lspc.gopls.setup {};
+lspc.nil_ls.setup {};
 
 o.hlsearch = true;
 

@@ -88,6 +88,7 @@
             git
             go
             jq
+            nil
             nix-diff
             shfmt
             sops
