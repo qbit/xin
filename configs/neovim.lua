@@ -14,6 +14,7 @@ cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
 cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
 cmd("hi! SignColumn NONE");
 cmd("hi! LineNr NONE");
+cmd("hi! Search cterm=NONE ctermbg=yellow");
 
 require("compe").setup {
    enabled = true;
