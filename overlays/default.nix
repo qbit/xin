@@ -17,18 +17,18 @@ in {
 
     (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-        version = "1.70.0";
+        version = "1.70.1";
         src = super.fetchFromGitHub {
           owner = "matrix-org";
           repo = "synapse";
-          rev = "v1.70.0";
-          hash = "sha256-SkPQPkSF6cppCS58e7wtkBh4nIFekt1O7qbpA6T0lEk=";
+          rev = "v1.70.1";
+          sha256 = "sha256-/clEY3sabaDEOAAowQ896vYOvzf5Teevoa7ZkzWw+fY=";
         };
 
         cargoDeps = super.rustPlatform.fetchCargoTarball {
           inherit src;
-          name = "matrix-synapse-1.70.0";
-          hash = "sha256-ucfk2rWU4k9kDIBgbOgp+3ORog/66FgZ90qxF33IuC4=";
+          name = "matrix-synapse-1.70.1";
+          sha256 = "sha256-9wxWxrn+uPcz60710DROhDqNC6FvTtnqzWiWRk8kl6A=";
         };
       });
     })
