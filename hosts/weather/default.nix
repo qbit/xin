@@ -8,7 +8,7 @@ let
   ];
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
 in {
-  _module.args.isUnstable = true;
+  _module.args.isUnstable = false;
   imports = [ ./hardware-configuration.nix ];
 
   defaultUsers.enable = false;

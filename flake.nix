@@ -135,7 +135,7 @@
         europa = buildSys "x86_64-linux" unstable
           [ nixos-hardware.nixosModules.framework ] "europa";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
-        weather = buildSys "aarch64-linux" unstable
+        weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
@@ -147,7 +147,7 @@
         router =
           buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
 
-        weatherInstall = unstable.lib.nixosSystem {
+        weatherInstall = stable.lib.nixosSystem {
           system = "aarch64-linux";
 
           modules = [
