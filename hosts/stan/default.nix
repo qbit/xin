@@ -41,6 +41,7 @@ in {
       "172.16.30.253" = [ "proxmox-02.vm.calyptix.local" ];
       "127.0.0.1" = [ "borg.calyptix.dev" "localhost" ];
       "192.168.122.249" = [ "arst.arst" "vm" ];
+      "192.168.54.1" = [ "router.arst" "router" ];
     };
 
     networkmanager.enable = true;
@@ -94,7 +95,6 @@ in {
     description = "Aaron Bieber";
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-    packages = with pkgs; [ ];
   } // userBase;
 
   nixpkgs.config.allowUnfree = true;
