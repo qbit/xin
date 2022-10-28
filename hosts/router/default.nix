@@ -65,6 +65,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "management";
         route = true;
         router = "${(head ipv4.addresses).address}";
         start = "10.99.1.100";
@@ -81,6 +82,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "work";
         route = false;
         router = "${(head ipv4.addresses).address}";
         start = "10.98.1.100";
@@ -97,6 +99,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "IoT WiFi";
         route = true;
         router = "${(head ipv4.addresses).address}";
         start = "10.10.0.100";
@@ -113,6 +116,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "WiFi";
         route = false;
         router = "${(head ipv4.addresses).address}";
         start = "10.12.0.100";
@@ -129,6 +133,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "Lab";
         route = true;
         router = "${(head ipv4.addresses).address}";
         start = "10.3.0.100";
@@ -145,6 +150,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "DMZ";
         route = true;
         router = "${(head ipv4.addresses).address}";
         net = "10.20.30.0";
@@ -161,6 +167,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "Common";
         route = true;
         router = "${(head ipv4.addresses).address}";
         vlanID = 5;
@@ -214,6 +221,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "VoIP";
         route = true;
         router = "${(head ipv4.addresses).address}";
         net = "10.7.0.0";
@@ -356,7 +364,7 @@ in {
       option domain-name-servers ${concatStringsSep ", " dnsServers};
 
       ${concatStringsSep "\n" (attrValues (mapAttrs (intf: val: ''
-        # ${intf}
+        # ${intf} : ${val.info.description}
         subnet ${val.info.net} netmask ${val.info.netmask} {
           option routers ${val.info.router};
           range ${val.info.start} ${val.info.end};
