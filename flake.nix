@@ -6,7 +6,7 @@
       url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
     };
 
-    unstable.url = "github:NixOS/nixpkgs/2dd39f17da3d70414a3f294a10b68f88dfa6c22e";
+    unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     stable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
