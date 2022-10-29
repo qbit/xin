@@ -18,6 +18,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        description = "Management";
         route = false;
         router = "${(head ipv4.addresses).address}";
         netmask = "255.255.255.0";
@@ -65,7 +66,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
-        description = "management";
+        description = "unused";
         route = true;
         router = "${(head ipv4.addresses).address}";
         start = "10.99.1.100";
