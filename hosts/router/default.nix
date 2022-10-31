@@ -243,8 +243,6 @@ in {
     "net.ipv6.conf.all.forwarding" = true;
   };
 
-  autoUpdate.enable = false;
-
   sops.secrets = {
     wireguard_private_key = {
       sopsFile = config.xin-secrets.router.networking;
@@ -393,7 +391,6 @@ in {
 
   system = {
     autoUpgrade = {
-      allowReboot = true;
       rebootWindow = {
         upper = "03:00";
         lower = "01:00";
