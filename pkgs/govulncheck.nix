@@ -1,26 +1,22 @@
-{ lib, buildGo118Module, fetchFromGitHub, isUnstable, ... }:
-let
-  vendorHash = if isUnstable then
-    "sha256-MFsjEHKVuQmLzebSy38B0BcPgpzwUmfjbr2rYhUTGLE="
-  else
-    "sha256-MFsjEHKVuQmLzebSy38B0BcPgpzwUmfjbr2rYhUTGLE=";
-
-in with lib;
+{ lib, buildGo118Module, fetchFromGitHub, ... }:
+with lib;
 buildGo118Module rec {
   name = "vuln";
 
   src = fetchFromGitHub {
     owner = "golang";
     repo = name;
-    rev = "27dd78d2ca392c1738e54efe513a2ecb7bf46000";
-    sha256 = "sha256-G35y1V4W1nLZ+QGvIQwER9whBIBDFUVptrHx78orcI0=";
+    rev = "995372c58a16";
+    sha256 = "sha256-xkwrgOVMcV7TNtXfuBUPdhBqumbcgG9B9NVcthMrai0=";
   };
 
-  vendorSha256 = vendorHash;
+  vendorSha256 = "sha256-BYxqE/KNvstX9qcSd411nXGWwZOmgj5iHEGRka/tt4Y=";
 
   proxyVendor = true;
 
   doCheck = false;
+  
+  subPackages = [ "cmd/govulncheck" ];
 
   meta = {
     description = "tools for the Go vulnerability database";
