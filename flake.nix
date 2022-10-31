@@ -195,6 +195,7 @@
             isUnstable = true;
           };
           gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit pkgs; };
+          govulncheck = pkgs.callPackage ./pkgs/govulncheck.nix { inherit pkgs; };
           zutty = pkgs.callPackage ./pkgs/zutty.nix {
             inherit pkgs;
             isUnstable = true;
