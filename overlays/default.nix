@@ -13,7 +13,6 @@ let
   };
 in {
   nixpkgs.overlays = if isUnstable then [
-    openssh
 
     (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
