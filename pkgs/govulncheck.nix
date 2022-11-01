@@ -1,6 +1,6 @@
-{ lib, buildGo118Module, fetchFromGitHub, ... }:
+{ lib, buildGoModule, fetchFromGitHub, ... }:
 with lib;
-buildGo118Module rec {
+buildGoModule rec {
   name = "vuln";
 
   src = fetchFromGitHub {
