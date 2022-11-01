@@ -143,7 +143,7 @@
         luna = buildSys "x86_64-linux" stable
           [ "${nixos-hardware}/common/cpu/intel" ] "luna";
         h =
-          buildSys "x86_64-linux" unstableSmall [ ./configs/hardened.nix ] "h";
+          buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "h";
         router =
           buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
 
