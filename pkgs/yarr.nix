@@ -1,7 +1,7 @@
-{ lib, buildGo119Module, fetchFromGitHub, ... }:
+{ lib, buildGoModule, fetchFromGitHub, ... }:
 
 with lib;
-buildGo119Module rec {
+buildGoModule rec {
   pname = "yarr";
   version = "2.3";
 

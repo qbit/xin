@@ -1,4 +1,4 @@
-{ lib, buildGo119Module, fetchFromGitHub, isUnstable, ... }:
+{ lib, buildGoModule, fetchFromGitHub, isUnstable, ... }:
 
 let
   vendorHash = if isUnstable then
@@ -7,7 +7,7 @@ let
     "sha256-NIAJKq7TiMessqaohkdHy+j/vBKvMsiPgmnaiNAsGeE=";
 
 in with lib;
-buildGo119Module rec {
+buildGoModule rec {
   pname = "gqrss";
   version = "1.0.0";
 
