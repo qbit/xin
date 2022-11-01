@@ -9,6 +9,8 @@ let
         url = "mirror://openbsd/OpenSSH/portable/openssh-9.1p1.tar.gz";
         hash = "sha256-GfhQCcfj4jeH8CNvuxV4OSq01L+fjsX+a8HNfov90og=";
       };
+
+      doCheck = false;
     });
   };
 in {
