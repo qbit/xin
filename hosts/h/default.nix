@@ -185,7 +185,7 @@ in {
   services = {
     yarr = { enable = true; };
     gotosocial = {
-      enable = false;
+      enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
       configuration = {
         account-domain = "mammothcirc.us";

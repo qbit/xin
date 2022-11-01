@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoModule, fetchFromGitHub, makeWrapper, go, git, ffmpeg
+{ stdenv, lib, buildGo118Module, fetchFromGitHub, makeWrapper, go, git, ffmpeg
 , ... }:
 let
   gotosocialVersion = "0.5.2";
@@ -8,7 +8,7 @@ let
     sha256 = "sha256:10gqjzcp2j88cps44g7c2zdnz3is4i534ns29m9h57b7704zlqjn";
   };
 in with lib;
-buildGoModule rec {
+buildGo118Module rec {
   pname = "gotosocial";
   version = gotosocialVersion;
 
