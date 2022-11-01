@@ -15,24 +15,6 @@ in {
   nixpkgs.overlays = if isUnstable then [
 
     (self: super: {
-      matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-        version = "1.70.1";
-        src = super.fetchFromGitHub {
-          owner = "matrix-org";
-          repo = "synapse";
-          rev = "v1.70.1";
-          sha256 = "sha256-/clEY3sabaDEOAAowQ896vYOvzf5Teevoa7ZkzWw+fY=";
-        };
-
-        cargoDeps = super.rustPlatform.fetchCargoTarball {
-          inherit src;
-          name = "matrix-synapse-1.70.1";
-          sha256 = "sha256-9wxWxrn+uPcz60710DROhDqNC6FvTtnqzWiWRk8kl6A=";
-        };
-      });
-    })
-
-    (self: super: {
       zig = super.zig.overrideAttrs (old: {
         version = "0.10.0-dev.35e0ff7";
         src = super.fetchFromGitHub {
@@ -57,7 +39,28 @@ in {
       });
     })
   ] else
-    [ openssh ];
+  [
+    openssh
+
+    (self: super: {
+      matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
+        version = "1.70.1";
+        src = super.fetchFromGitHub {
+          owner = "matrix-org";
+          repo = "synapse";
+          rev = "v1.70.1";
+          sha256 = "sha256-/clEY3sabaDEOAAowQ896vYOvzf5Teevoa7ZkzWw+fY=";
+        };
+
+        cargoDeps = super.rustPlatform.fetchCargoTarball {
+          inherit src;
+          name = "matrix-synapse-1.70.1";
+          sha256 = "sha256-9wxWxrn+uPcz60710DROhDqNC6FvTtnqzWiWRk8kl6A=";
+        };
+      });
+    })
+
+  ];
 }
 
 # Example Python dep overlay
