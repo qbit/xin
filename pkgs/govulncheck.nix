@@ -15,7 +15,7 @@ buildGoModule rec {
   proxyVendor = true;
 
   doCheck = false;
-  
+
   subPackages = [ "cmd/govulncheck" ];
 
   meta = {
