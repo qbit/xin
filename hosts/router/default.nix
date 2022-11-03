@@ -134,6 +134,7 @@ let
         prefixLength = 24;
       }];
       info = rec {
+        vlanID = 2;
         description = "Lab";
         route = true;
         router = "${(head ipv4.addresses).address}";
@@ -308,6 +309,17 @@ in {
                 }
             }
 
+            chain inbound_lab {
+                icmp type echo-request limit rate 5/second accept
+                ip protocol . th dport vmap {
+                  udp . 53 : accept,
+                  tcp . 53 : accept,
+                  udp . 67 : accept,
+                  udp . 69 : accept,
+                  tcp . 69 : accept
+                }
+            }
+
             chain inbound {
                 type filter hook input priority 0; policy drop;
                 ct state vmap { established : accept, related : accept, invalid : drop }
@@ -320,7 +332,8 @@ in {
                   common : jump inbound_private,
                   badwifi : jump inbound_private,
                   external : jump inbound_private,
-                  voip : jump inbound_private
+                  voip : jump inbound_private,
+                  lab : jump inbound_lab
                 }
             }
 
@@ -336,6 +349,7 @@ in {
                 iifname badwifi accept
                 iifname external accept
                 iifname voip accept
+                iifname lab accept
             }
 
             chain postrouting {
@@ -350,6 +364,10 @@ in {
   services.atftpd = {
     enable = true;
     extraOptions = [
+      "--verbose"
+      "--trace"
+      "--no-multicast"
+      "--listen-local"
       "--bind-address ${
         (head config.networking.interfaces.lab.ipv4.addresses).address
       }"
