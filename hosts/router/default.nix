@@ -242,6 +242,7 @@ in {
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
     "net.ipv6.conf.all.forwarding" = true;
+    "net.netfilter.nf_conntrack_helper" = true;
   };
 
   sops.secrets = {
@@ -309,14 +310,19 @@ in {
                 }
             }
 
+            #ct helper tftp {
+            #  type "tftp" protocol udp;
+            #}
+
             chain inbound_lab {
                 icmp type echo-request limit rate 5/second accept
+                #udp dport 69 ct helper set "tftp"
                 ip protocol . th dport vmap {
-                  udp . 53 : accept,
                   tcp . 53 : accept,
-                  udp . 67 : accept,
+                  tcp . 67 : accept,
+                  udp . 53 : accept,
                   udp . 69 : accept,
-                  tcp . 69 : accept
+                  udp . 67 : accept
                 }
             }
 
@@ -333,7 +339,7 @@ in {
                   badwifi : jump inbound_private,
                   external : jump inbound_private,
                   voip : jump inbound_private,
-                  lab : jump inbound_lab
+                  lab : jump inbound_private
                 }
             }
 
@@ -364,10 +370,8 @@ in {
   services.atftpd = {
     enable = true;
     extraOptions = [
-      "--verbose"
+      "--verbose=9"
       "--trace"
-      "--no-multicast"
-      "--listen-local"
       "--bind-address ${
         (head config.networking.interfaces.lab.ipv4.addresses).address
       }"
