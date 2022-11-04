@@ -431,8 +431,7 @@ in {
             '') val.info.dhcp.staticIPs)
           }
         }
-      '') (filterAttrsRecursive (n: v:
-        n != "${wan}") interfaces)))}
+      '') (filterAttrsRecursive (n: v: n != "${wan}") interfaces)))}
     '';
     interfaces = attrNames (filterAttrs (n: v: v.info.dhcp.enable)
       (filterAttrsRecursive (n: v: n != "${wan}") interfaces));
