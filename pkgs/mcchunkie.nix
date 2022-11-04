@@ -1,21 +1,19 @@
 { lib, buildGoModule, fetchFromGitHub, isUnstable, ... }:
-
 let
   vendorHash = if isUnstable then
-    "sha256-d8YeLD/BQAB6IC4jvBke9EIKAe+7/MnPgVYztqjU5c4="
+    "sha256-GCQckQe9Y96upJX2X9RDXoQIyH/SD9CniPVsIbdAPmM="
   else
-    "sha256-d8YeLD/BQAB6IC4jvBke9EIKAe+7/MnPgVYztqjU5c4=";
-
-in with lib;
+    "sha256-3xIIb+fzbTOq9jf0STL3W9re5yH0JN4RO9dd/Ic1aIg=";
+    in with lib;
 buildGoModule rec {
   pname = "mcchunkie";
-  version = "1.0.8";
+  version = "1.0.11";
 
   src = fetchFromGitHub {
     owner = "qbit";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-UNPv9QXFJeNx+3RleseNVSKBZGNc3eiMsEKnfIVyoeA=";
+    sha256 = "sha256-SZx5h+RWgG1tq4kLZ4lh4jlPjprz3Gp3gPLfb/7cNzQ=";
   };
 
   vendorSha256 = vendorHash;
