@@ -76,7 +76,15 @@
         flakes.taskobs.overlay
       ];
 
-      buildVer = { system.configurationRevision = self.rev or "DIRTY"; };
+      # Set our configurationRevison based on the status of our git repo.
+      # If the repo is dirty, disable autoUpgrade as it means we are
+      # testing something.
+      buildVer = let state = self.rev or "DIRTY";
+      in {
+        system.configurationRevision = state;
+        system.autoUpgrade.enable = (state != "DIRTY");
+      };
+
       buildShell = pkgs:
         pkgs.mkShell {
           shellHook = ''
