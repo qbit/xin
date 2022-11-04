@@ -339,7 +339,7 @@ in {
                   badwifi : jump inbound_private,
                   external : jump inbound_private,
                   voip : jump inbound_private,
-                  lab : jump inbound_private
+                  lab : jump inbound_lab
                 }
             }
 
@@ -368,7 +368,7 @@ in {
   };
 
   services.atftpd = {
-    enable = true;
+    enable = false;
     extraOptions = [
       "--verbose=9"
       "--trace"
