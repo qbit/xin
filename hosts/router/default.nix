@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (builtins) head concatStringsSep attrValues mapAttrs; # hasAttr;
-  inherit (lib.attrsets) filterAttrsRecursive;
+  inherit (builtins)
+    head concatStringsSep attrValues mapAttrs attrNames; # hasAttr;
+  inherit (lib.attrsets) filterAttrsRecursive filterAttrs;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -22,42 +23,45 @@ let
         route = false;
         router = "${(head ipv4.addresses).address}";
         netmask = "255.255.255.0";
-        net = "10.99.99.0";
-        start = "10.99.99.100";
-        end = "10.99.99.150";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [
-          {
-            name = "doublemint";
-            mac = "74:83:c2:19:9e:51";
-            address = "10.99.99.54";
-          }
-          {
-            name = "switch0";
-            mac = "18:e8:29:b5:48:15";
-            address = "10.99.99.4";
-          }
-          {
-            name = "switch1";
-            mac = "fc:ec:da:4e:2e:51";
-            address = "10.99.99.5";
-          }
-          {
-            name = "switch2";
-            mac = "fc:ec:da:d4:10:81";
-            address = "10.99.99.6";
-          }
-          {
-            name = "ap2";
-            mac = "74:83:c2:89:0b:52";
-            address = "10.99.99.7";
-          }
-          {
-            name = "ap1";
-            mac = "80:2a:a8:96:50:76";
-            address = "10.99.99.8";
-          }
-        ];
+        net = "10.99.99.0";
+        dhcp = {
+          enable = true;
+          start = "10.99.99.100";
+          end = "10.99.99.150";
+          staticIPs = [
+            {
+              name = "doublemint";
+              mac = "74:83:c2:19:9e:51";
+              address = "10.99.99.54";
+            }
+            {
+              name = "switch0";
+              mac = "18:e8:29:b5:48:15";
+              address = "10.99.99.4";
+            }
+            {
+              name = "switch1";
+              mac = "fc:ec:da:4e:2e:51";
+              address = "10.99.99.5";
+            }
+            {
+              name = "switch2";
+              mac = "fc:ec:da:d4:10:81";
+              address = "10.99.99.6";
+            }
+            {
+              name = "ap2";
+              mac = "74:83:c2:89:0b:52";
+              address = "10.99.99.7";
+            }
+            {
+              name = "ap1";
+              mac = "80:2a:a8:96:50:76";
+              address = "10.99.99.8";
+            }
+          ];
+        };
       };
     };
     enp1s0f0 = rec {
@@ -69,12 +73,15 @@ let
         description = "unused";
         route = true;
         router = "${(head ipv4.addresses).address}";
-        start = "10.99.1.100";
-        end = "10.99.1.155";
         net = "10.99.1.0";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [ ];
+        dhcp = {
+          enable = true;
+          start = "10.99.1.100";
+          end = "10.99.1.155";
+          staticIPs = [ ];
+        };
       };
     };
     enp2s0f1 = rec {
@@ -86,12 +93,15 @@ let
         description = "work";
         route = false;
         router = "${(head ipv4.addresses).address}";
-        start = "10.98.1.100";
-        end = "10.98.1.150";
         net = "10.98.1.0";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [ ];
+        dhcp = {
+          enable = true;
+          start = "10.98.1.100";
+          end = "10.98.1.150";
+          staticIPs = [ ];
+        };
       };
     };
     badwifi = rec {
@@ -103,12 +113,15 @@ let
         description = "IoT WiFi";
         route = true;
         router = "${(head ipv4.addresses).address}";
-        start = "10.10.0.100";
-        end = "10.10.0.155";
         net = "10.10.0.0";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [ ];
+        dhcp = {
+          enable = true;
+          start = "10.10.0.100";
+          end = "10.10.0.155";
+          staticIPs = [ ];
+        };
       };
     };
     goodwifi = rec {
@@ -120,12 +133,15 @@ let
         description = "WiFi";
         route = false;
         router = "${(head ipv4.addresses).address}";
-        start = "10.12.0.100";
-        end = "10.12.0.155";
         net = "10.12.0.0";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [ ];
+        dhcp = {
+          enable = false;
+          start = "10.12.0.100";
+          end = "10.12.0.155";
+          staticIPs = [ ];
+        };
       };
     };
     lab = rec {
@@ -138,12 +154,19 @@ let
         description = "Lab";
         route = true;
         router = "${(head ipv4.addresses).address}";
-        start = "10.3.0.100";
-        end = "10.3.0.155";
         net = "10.3.0.0";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [ ];
+        dhcp = {
+          enable = true;
+          start = "10.3.0.100";
+          end = "10.3.0.155";
+          staticIPs = [{
+            name = "bbb";
+            mac = "c8:a0:30:ac:1d:0d";
+            address = "10.3.0.2";
+          }];
+        };
       };
     };
     external = rec {
@@ -156,11 +179,14 @@ let
         route = true;
         router = "${(head ipv4.addresses).address}";
         net = "10.20.30.0";
-        start = "10.20.30.100";
-        end = "10.20.30.155";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [ ];
+        dhcp = {
+          enable = false;
+          start = "10.20.30.100";
+          end = "10.20.30.155";
+          staticIPs = [ ];
+        };
       };
     };
     common = rec {
@@ -173,48 +199,51 @@ let
         route = true;
         router = "${(head ipv4.addresses).address}";
         vlanID = 5;
-        start = "10.6.0.100";
-        end = "10.6.0.250";
         net = "10.6.0.0";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [
-          {
-            name = "tal";
-            mac = "3c:7c:3f:1d:95:9c";
-            address = "10.6.0.110";
-          }
-          {
-            name = "namish";
-            mac = "b8:ae:ed:78:b5:37";
-            address = "10.6.0.78";
-          }
-          {
-            name = "g5";
-            mac = "00:0a:95:a8:26:42";
-            address = "10.6.0.111";
-          }
-          {
-            name = "box";
-            mac = "d0:50:99:c2:b5:4b";
-            address = "10.6.0.15";
-          }
-          {
-            name = "greenhouse";
-            mac = "6c:0b:84:1b:20:07";
-            address = "10.6.0.20";
-          }
-          {
-            name = "inside";
-            mac = "6c:0b:84:cb:a7:59";
-            address = "10.6.0.21";
-          }
-          {
-            name = "weather";
-            mac = "b8:27:eb:3e:5b:4e";
-            address = "10.6.0.22";
-          }
-        ];
+        dhcp = {
+          enable = true;
+          start = "10.6.0.100";
+          end = "10.6.0.250";
+          staticIPs = [
+            {
+              name = "tal";
+              mac = "3c:7c:3f:1d:95:9c";
+              address = "10.6.0.110";
+            }
+            {
+              name = "namish";
+              mac = "b8:ae:ed:78:b5:37";
+              address = "10.6.0.78";
+            }
+            {
+              name = "g5";
+              mac = "00:0a:95:a8:26:42";
+              address = "10.6.0.111";
+            }
+            {
+              name = "box";
+              mac = "d0:50:99:c2:b5:4b";
+              address = "10.6.0.15";
+            }
+            {
+              name = "greenhouse";
+              mac = "6c:0b:84:1b:20:07";
+              address = "10.6.0.20";
+            }
+            {
+              name = "inside";
+              mac = "6c:0b:84:cb:a7:59";
+              address = "10.6.0.21";
+            }
+            {
+              name = "weather";
+              mac = "b8:27:eb:3e:5b:4e";
+              address = "10.6.0.22";
+            }
+          ];
+        };
       };
     };
     voip = rec {
@@ -227,11 +256,14 @@ let
         route = true;
         router = "${(head ipv4.addresses).address}";
         net = "10.7.0.0";
-        start = "10.7.0.100";
-        end = "10.7.0.155";
         netmask = "255.255.255.0";
         network = "${net}/${toString (head ipv4.addresses).prefixLength}";
-        staticIPs = [ ];
+        dhcp = {
+          enable = false;
+          start = "10.7.0.100";
+          end = "10.7.0.155";
+          staticIPs = [ ];
+        };
       };
     };
   };
@@ -368,7 +400,7 @@ in {
   };
 
   services.atftpd = {
-    enable = false;
+    enable = true;
     extraOptions = [
       "--verbose=9"
       "--trace"
@@ -388,7 +420,7 @@ in {
         # ${intf} : ${val.info.description}
         subnet ${val.info.net} netmask ${val.info.netmask} {
           option routers ${val.info.router};
-          range ${val.info.start} ${val.info.end};
+          range ${val.info.dhcp.start} ${val.info.dhcp.end};
 
           ${
             concatStringsSep "\n" (map (e: ''
@@ -396,14 +428,15 @@ in {
                   hardware ethernet ${e.mac};
                   fixed-address ${e.address};
               }
-            '') val.info.staticIPs)
+            '') val.info.dhcp.staticIPs)
           }
         }
       '') (filterAttrsRecursive (n: v:
-        # TODO: use hasAttr
         n != "${wan}") interfaces)))}
     '';
-    interfaces = [ "enp1s0f0" "enp2s0f1" "common" "badwifi" "${trunk}" ];
+    interfaces = attrNames (filterAttrs (n: v: v.info.dhcp.enable)
+      (filterAttrsRecursive (n: v: n != "${wan}") interfaces));
+    # TODO: Probably a better way to pre-filter the interfaces set
   };
 
   environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
