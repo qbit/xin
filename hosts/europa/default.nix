@@ -136,7 +136,7 @@ in {
     '';
   };
 
-  users.users.qbit.extraGroups = [ "libvirtd" ];
+  users.users.qbit.extraGroups = [ "dialout" "libvirtd" ];
 
   nixpkgs.config.allowUnfree = true;
 
