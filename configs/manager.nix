@@ -22,11 +22,13 @@ in with lib; {
   config = mkIf config.nixManager.enable {
     sops.defaultSopsFile = config.xin-secrets.manager;
     sops.secrets = {
+      xin_status_key = { owner = config.nixManager.user; };
+      xin_status_pubkey = { owner = config.nixManager.user; };
       manager_key = { owner = config.nixManager.user; };
       manager_pubkey = { owner = config.nixManager.user; };
       ca_key = { owner = config.nixManager.user; };
       ca_cert = { owner = config.nixManager.user; };
     };
-    environment.systemPackages = with pkgs; [ microca ];
+    environment.systemPackages = [ microca ];
   };
 }

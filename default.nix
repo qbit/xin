@@ -3,6 +3,9 @@
 let
   managementKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
+  statusKey = ''
+    command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
+  '';
 in {
   imports = [
     ./configs/colemak.nix
@@ -32,17 +35,22 @@ in {
   ];
 
   options.myconf = {
+    managementPubKeys = lib.mkOption rec {
+      type = lib.types.listOf lib.types.str;
+      default = [ managementKey statusKey ];
+      example = default;
+      description = "List of management public keys to use";
+    };
     hwPubKeys = lib.mkOption rec {
       type = lib.types.listOf lib.types.str;
       default = [
-        managementKey
         "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB1cBO17AFcS2NtIT+rIxR2Fhdu3HD4de4+IsFyKKuGQAAAACnNzaDpsZXNzZXI="
         "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIDEKElNAm/BhLnk4Tlo00eHN5bO131daqt2DIeikw0b2AAAABHNzaDo="
         "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0="
         "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHrYWbbgBkGcOntDqdMaWVZ9xn+dHM+Ap6s1HSAalL28AAAACHNzaDptYWlu"
       ];
       example = default;
-      description = "List of hardwar public keys to use";
+      description = "List of hardware public keys to use";
     };
   };
 

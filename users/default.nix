@@ -5,7 +5,8 @@ with lib;
 let
   userBase = {
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = config.myconf.hwPubKeys;
+    openssh.authorizedKeys.keys = config.myconf.hwPubKeys
+      ++ config.myconf.managementPubKeys;
   };
   goVersion = pkgs.go_1_18;
 in {
