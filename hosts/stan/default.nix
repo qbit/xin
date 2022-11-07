@@ -5,7 +5,9 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
 
-  userBase = { openssh.authorizedKeys.keys = pubKeys; };
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
+  };
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
