@@ -6,7 +6,9 @@ let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys; };
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
+  };
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";

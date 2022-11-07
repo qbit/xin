@@ -5,7 +5,9 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0= hosts@secretive.plq.local"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys; };
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
+  };
 in {
   _module.args.isUnstable = false;
   imports = [ ./hardware-configuration.nix ];
