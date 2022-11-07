@@ -186,12 +186,13 @@ in {
     yarr = { enable = true; };
     gotosocial = {
       enable = true;
-      # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.0-rc1/example/config.yaml
+      # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.2/example/config.yaml
       configuration = {
         account-domain = "mammothcirc.us";
         accounts-approval-required = false;
         accounts-reason-required = false;
         accounts-registration-open = false;
+        accounts-allow-custom-css = true;
         advanced-cookies-samesite = "strict";
         bind-address = "127.0.0.1";
         db-address = "127.0.0.1";
