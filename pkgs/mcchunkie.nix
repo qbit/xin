@@ -4,7 +4,7 @@ let
     "sha256-GCQckQe9Y96upJX2X9RDXoQIyH/SD9CniPVsIbdAPmM="
   else
     "sha256-3xIIb+fzbTOq9jf0STL3W9re5yH0JN4RO9dd/Ic1aIg=";
-    in with lib;
+in with lib;
 buildGoModule rec {
   pname = "mcchunkie";
   version = "1.0.11";
