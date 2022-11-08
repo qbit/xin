@@ -157,6 +157,7 @@ in {
     };
   };
 
+  system.autoUpgrade.allowReboot = false;
   system.stateVersion = "22.05"; # Did you read the comment?
 
 }

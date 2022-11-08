@@ -16,7 +16,7 @@ with lib; {
       system.autoUpgrade = {
         # enable is set in flake depending on the state of the tree
         # DIRTY means disabled, git revision means enabled
-        allowReboot = mkDefault false;
+        allowReboot = mkDefault true;
         flake = "github:qbit/xin";
         dates = "*-*-* *:05:00";
       };
