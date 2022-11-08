@@ -108,7 +108,6 @@ in {
     fzf
     google-chrome-dev
     ispell
-    jitsi-meet-electron
     keychain
     matterhorn
     mosh
