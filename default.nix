@@ -111,7 +111,10 @@ in {
     boot = {
       cleanTmpDir = true;
       kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
-      kernel.sysctl = { "net.ipv4.tcp_keepalive_time" = 60; };
+      kernel.sysctl = {
+        "net.ipv4.tcp_keepalive_time" = 60;
+        "net.ipv6.tcp_keepalive_time" = 60;
+      };
     };
 
     environment.systemPackages = with pkgs;
