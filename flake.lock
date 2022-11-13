@@ -399,11 +399,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1668089091,
-        "narHash": "sha256-zLDg+fVKMxhKninu4chcRe9tsg8HAjeNks6asFPcCDg=",
+        "lastModified": 1668365827,
+        "narHash": "sha256-WOye+oYxapNs5lw3Ln6wxeuFWDgCdGdzPa9YmqtbcYQ=",
         "owner": "qbit",
         "repo": "xintray",
-        "rev": "7b3203259e0fabeaa62524ccec3bb287582ae97c",
+        "rev": "b313bf8d84c6a799438541b4b8848a07c1840da4",
         "type": "github"
       },
       "original": {
