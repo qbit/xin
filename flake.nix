@@ -31,6 +31,7 @@
 
     microca = { url = "github:qbit/microca"; };
     taskobs = { url = "github:qbit/taskobs"; };
+    xintray = { url = "github:qbit/xintray"; };
 
     mcchunkie = {
       url = "github:qbit/mcchunkie";
@@ -49,8 +50,8 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, nixos-hardware
-    , sshKnownHosts, microca, taskobs, mcchunkie, gqrss, darwin, xin-secrets
-    , peerix, ... }@flakes:
+    , sshKnownHosts, microca, xintray, taskobs, mcchunkie, gqrss, darwin
+    , xin-secrets, peerix, ... }@flakes:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
@@ -208,6 +209,7 @@
             inherit pkgs;
             isUnstable = true;
           };
+          xintray = xintray.packages.${system}.xintray;
         });
 
       templates."ada" = {
