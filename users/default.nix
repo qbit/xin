@@ -8,7 +8,6 @@ let
     openssh.authorizedKeys.keys = config.myconf.hwPubKeys
       ++ config.myconf.managementPubKeys;
   };
-  goVersion = pkgs.go_1_18;
 in {
   options = {
     defaultUsers = {
@@ -45,7 +44,7 @@ in {
     };
 
     environment.systemPackages =
-      if isUnstable then [ goVersion pkgs.yash ] else [ goVersion ];
+      if isUnstable then [ pkgs.yash ] else [ ];
 
   };
 }
