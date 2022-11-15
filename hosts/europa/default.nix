@@ -148,6 +148,7 @@ in {
     clementine
     drawterm
     element-desktop
+    cinny-desktop
     exercism
     fido2luks
     isync
