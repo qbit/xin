@@ -44,7 +44,6 @@ in {
     };
 
     environment.systemPackages =
-      if isUnstable then [ pkgs.yash ] else [ ];
-
+      if isUnstable then [ pkgs.yash pkgs.go ] else [ pkgs.go ];
   };
 }
