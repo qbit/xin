@@ -48,10 +48,6 @@ in {
   nixpkgs.config.allowUnsupportedSystem = true;
 
   boot = {
-    initrd.availableKernelModules =
-      [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-    initrd.kernelModules = [ ];
-    extraModulePackages = [ ];
     loader = {
       systemd-boot.enable = true;
       efi = {
@@ -61,7 +57,6 @@ in {
     };
     kernelParams = [ "boot.shell_on_fail" "mem_sleep_default=deep" ];
     kernelPackages = pkgs.linuxPackages;
-    kernelModules = [ "kvm-intel" ];
   };
 
   programs.zsh.shellAliases = {
