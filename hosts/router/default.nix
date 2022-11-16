@@ -401,43 +401,46 @@ in {
     };
   };
 
-  services.atftpd = {
-    enable = true;
-    extraOptions = [
-      "--verbose=9"
-      "--trace"
-      "--bind-address ${
-        (head config.networking.interfaces.lab.ipv4.addresses).address
-      }"
-    ];
-  };
+  services = {
+    vnstat.enable = true;
+    atftpd = {
+      enable = true;
+      extraOptions = [
+        "--verbose=9"
+        "--trace"
+        "--bind-address ${
+          (head config.networking.interfaces.lab.ipv4.addresses).address
+        }"
+      ];
+    };
 
-  services.dhcpd4 = {
-    enable = true;
-    extraConfig = ''
-      option subnet-mask 255.255.255.0;
-      option domain-name-servers ${concatStringsSep ", " dnsServers};
+    dhcpd4 = {
+      enable = true;
+      extraConfig = ''
+        option subnet-mask 255.255.255.0;
+        option domain-name-servers ${concatStringsSep ", " dnsServers};
 
-      ${concatStringsSep "\n" (attrValues (mapAttrs (intf: val: ''
-        # ${intf} : ${val.info.description}
-        subnet ${val.info.net} netmask ${val.info.netmask} {
-          option routers ${val.info.router};
-          range ${val.info.dhcp.start} ${val.info.dhcp.end};
+        ${concatStringsSep "\n" (attrValues (mapAttrs (intf: val: ''
+          # ${intf} : ${val.info.description}
+          subnet ${val.info.net} netmask ${val.info.netmask} {
+            option routers ${val.info.router};
+            range ${val.info.dhcp.start} ${val.info.dhcp.end};
 
-          ${
-            concatStringsSep "\n" (map (e: ''
-              host ${e.name} {
-                  hardware ethernet ${e.mac};
-                  fixed-address ${e.address};
-              }
-            '') val.info.dhcp.staticIPs)
+            ${
+              concatStringsSep "\n" (map (e: ''
+                host ${e.name} {
+                    hardware ethernet ${e.mac};
+                    fixed-address ${e.address};
+                }
+              '') val.info.dhcp.staticIPs)
+            }
           }
-        }
-      '') (filterAttrsRecursive (n: v: n != "${wan}") interfaces)))}
-    '';
-    interfaces = attrNames (filterAttrs (n: v: v.info.dhcp.enable)
-      (filterAttrsRecursive (n: v: n != "${wan}") interfaces));
-    # TODO: Probably a better way to pre-filter the interfaces set
+        '') (filterAttrsRecursive (n: v: n != "${wan}") interfaces)))}
+      '';
+      interfaces = attrNames (filterAttrs (n: v: v.info.dhcp.enable)
+        (filterAttrsRecursive (n: v: n != "${wan}") interfaces));
+      # TODO: Probably a better way to pre-filter the interfaces set
+    };
   };
 
   environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
