@@ -14,8 +14,11 @@
     fsType = "ext4";
   };
 
+  boot.initrd.luks.fido2Support = true;
   boot.initrd.luks.devices."luks-1f16b568-7726-44b6-b082-6b9d5e4d1972".device =
     "/dev/disk/by-uuid/1f16b568-7726-44b6-b082-6b9d5e4d1972";
+  boot.initrd.luks.devices."luks-1f16b568-7726-44b6-b082-6b9d5e4d1972".fido2.credential =
+    "84748120edefe40ad9b1863c242b3139932af4191744241fe729f959f16a21b4fbb36a2ea309b1f58275f5395f3b4608";
 
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/F0A2-4A56";
