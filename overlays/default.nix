@@ -13,28 +13,11 @@ let
       doCheck = false;
     });
   };
-  openssl_3 = self: super: {
-    openssl_3 = super.openssl_3.overrideAttrs (old: rec {
-      pname = "openssl";
-      version = "3.0.7";
-      sha256 = "sha256-gwSdBComDmlvYkBqxcCL9wb9hDg/lFzyG9YentlcOW4=";
-      src = super.fetchurl {
-        url = "https://www.openssl.org/source/${pname}-${version}.tar.gz";
-        inherit sha256;
-      };
-      patches = [
-        ./nix-ssl-cert-file.patch
-        ./openssl-disable-kernel-detection.patch
-        ./use-etc-ssl-certs.patch
-      ];
-    });
-  };
 in {
   nixpkgs.overlays = if isUnstable then
     [ ]
   else [
     openssh
-    openssl_3
 
     (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
