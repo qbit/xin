@@ -4,7 +4,8 @@ set -e
 
 find . -name \*.nix -exec nix fmt {} \+
 find . -name \*.sh -exec shfmt -w {} \+
-find . -name \*.nix -exec deadnix -f -l -L {} \+
+
+deadnix -f -l -L .
 shfmt -w deploy
 shfmt -w mkboot
 statix check .

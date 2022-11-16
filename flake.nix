@@ -209,7 +209,7 @@
             inherit pkgs;
             isUnstable = true;
           };
-          xintray = xintray.packages.${system}.xintray;
+          inherit (xintray.packages.${system}) xintray;
         });
 
       templates."ada" = {
