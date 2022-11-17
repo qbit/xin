@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, lib, modulesPath, inputs, ... }:
 let
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
@@ -173,8 +173,7 @@ in {
     yt-dlp
     zig
 
-    (callPackage ../../pkgs/zutty.nix { })
-
+    inputs.zutty.packages.${pkgs.system}.zutty
   ];
 
   # for Pharo
