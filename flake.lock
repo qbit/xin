@@ -202,6 +202,21 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1668417584,
+        "narHash": "sha256-yeuEyxKPwsm5fIHN49L/syn9g5coxnPp3GsVquhrv5A=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "013fcdd106823416918004bb684c3c186d3c460f",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1666610816,
         "narHash": "sha256-q4F2VNe5bpxXOvp16DyLwE1SgNZMbNO29ZQJPIomedg=",
         "owner": "NixOS",
@@ -249,6 +264,7 @@
         "sshKnownHosts": "sshKnownHosts",
         "stable": "stable",
         "taskobs": "taskobs",
+        "tsvnstat": "tsvnstat",
         "unstable": "unstable",
         "unstableSmall": "unstableSmall",
         "xin-secrets": "xin-secrets",
@@ -343,6 +359,24 @@
         "type": "github"
       }
     },
+    "tsvnstat": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1668655090,
+        "narHash": "sha256-Y1dbdwRp96dTnrDiWC7KK8HKrbsbZLYAdpXZo59TFLQ=",
+        "owner": "qbit",
+        "repo": "tsvnstat",
+        "rev": "3673cf1ebf380c64cbb6c2a22c15a4f95fc6ee96",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "tsvnstat",
+        "type": "github"
+      }
+    },
     "unstable": {
       "locked": {
         "lastModified": 1668648276,
@@ -396,7 +430,7 @@
     },
     "xintray": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1668365827,

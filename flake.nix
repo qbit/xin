@@ -32,6 +32,7 @@
     microca = { url = "github:qbit/microca"; };
     taskobs = { url = "github:qbit/taskobs"; };
     xintray = { url = "github:qbit/xintray"; };
+    tsvnstat = { url = "github:qbit/tsvnstat"; };
 
     mcchunkie = {
       url = "github:qbit/mcchunkie";
@@ -50,8 +51,8 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, nixos-hardware
-    , sshKnownHosts, microca, xintray, taskobs, mcchunkie, gqrss, darwin
-    , xin-secrets, peerix, ... }@flakes:
+    , sshKnownHosts, microca, xintray, tsvnstat, taskobs, mcchunkie, gqrss
+    , darwin, xin-secrets, peerix, ... }@inputs:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
@@ -71,10 +72,10 @@
       };
 
       overlays = [
-        flakes.emacs-overlay.overlay
-        flakes.peerix.overlay
-        flakes.microca.overlay
-        flakes.taskobs.overlay
+        inputs.emacs-overlay.overlay
+        inputs.peerix.overlay
+        inputs.microca.overlay
+        inputs.taskobs.overlay
       ];
 
       # Set our configurationRevison based on the status of our git repo.
@@ -210,6 +211,7 @@
             isUnstable = true;
           };
           inherit (xintray.packages.${system}) xintray;
+          inherit (tsvnstat.packages.${system}) tsvnstat;
         });
 
       templates."ada" = {
