@@ -1,10 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
   microcaBin = "${pkgs.microca}/bin/microca";
   microca = pkgs.writeScriptBin "microca" ''
     #!/usr/bin/env sh
     ${microcaBin} -ca-key /run/secrets/ca_key -ca-cert /run/secrets/ca_cert $@
   '';
+  xintray = inputs.xintray.packages.${pkgs.system}.xintray;
 in with lib; {
   options = {
     nixManager = {
@@ -29,6 +30,6 @@ in with lib; {
       ca_key = { owner = config.nixManager.user; };
       ca_cert = { owner = config.nixManager.user; };
     };
-    environment.systemPackages = [ microca ];
+    environment.systemPackages = [ microca xintray ];
   };
 }
