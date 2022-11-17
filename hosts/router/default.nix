@@ -462,7 +462,8 @@ in {
       Group = "tsvnstat";
       Restart = "always";
       WorkingDirectory = "/var/lib/tsvnstat";
-      ExecStart = "${tsvnstat}/bin/tsvnstat -name ${config.networking.hostName}-stats";
+      ExecStart =
+        "${tsvnstat}/bin/tsvnstat -name ${config.networking.hostName}-stats";
     };
   };
 
