@@ -103,6 +103,7 @@ in {
   programs.steam.enable = true;
 
   services = {
+    vnstat.enable = true;
     clamav.updater.enable = true;
     emacs = {
       enable = true;
