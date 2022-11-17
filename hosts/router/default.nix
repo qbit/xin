@@ -9,7 +9,6 @@ let
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
-  inherit (inputs.tsvnstat.packages.${pkgs.system}) tsvnstat;
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
@@ -272,7 +271,7 @@ let
   };
 in {
   _module.args.isUnstable = false;
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ../../modules/tsvnstat.nix ];
 
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
@@ -283,6 +282,10 @@ in {
   sops.secrets = {
     wireguard_private_key = {
       sopsFile = config.xin-secrets.router.networking;
+    };
+    router_stats_ts_key = {
+      sopsFile = config.xin-secrets.router.networking;
+      owner = config.users.users.tsvnstat.name;
     };
   };
 
@@ -403,7 +406,10 @@ in {
   };
 
   services = {
-    vnstat.enable = true;
+    tsvnstat = {
+      enable = true;
+      keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
+    };
     atftpd = {
       enable = true;
       extraOptions = [
@@ -444,28 +450,7 @@ in {
     };
   };
 
-  environment.systemPackages = with pkgs; [ bmon termshark tcpdump tsvnstat ];
-
-  users.groups.tsvnstat = { };
-
-  users.users.tsvnstat = {
-    createHome = true;
-    isSystemUser = true;
-    home = "/var/lib/tsvnstat";
-    group = "tsvnstat";
-  };
-
-  systemd.services.tsvnstat = {
-    wantedBy = [ "network.target" ];
-    serviceConfig = {
-      User = "tsvnstat";
-      Group = "tsvnstat";
-      Restart = "always";
-      WorkingDirectory = "/var/lib/tsvnstat";
-      ExecStart =
-        "${tsvnstat}/bin/tsvnstat -name ${config.networking.hostName}-stats";
-    };
-  };
+  environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
