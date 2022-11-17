@@ -173,7 +173,8 @@ in {
     yt-dlp
     zig
 
-    inputs.zutty.packages.${pkgs.system}.zutty
+    (callPackage ../../pkgs/zutty.nix { })
+
   ];
 
   # for Pharo
