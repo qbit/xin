@@ -1,4 +1,4 @@
-{ config, pkgs, lib, isUnstable, ... }:
+{ config, pkgs, lib, isUnstable, inputs, ... }:
 with pkgs;
 let
   restic = pkgs.writeScriptBin "restic"
@@ -26,6 +26,7 @@ in {
     ./hardware-configuration.nix
     ../../modules/gotosocial.nix
     ../../modules/yarr.nix
+    ../../modules/tsvnstat.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -76,6 +77,11 @@ in {
       owner = config.users.users.yarr.name;
       mode = "400";
       sopsFile = config.xin-secrets.h.services;
+    };
+    # TODO: rename
+    router_stats_ts_key = {
+      sopsFile = config.xin-secrets.h.services;
+      owner = config.users.users.tsvnstat.name;
     };
     wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
   };
@@ -181,7 +187,10 @@ in {
   };
 
   services = {
-    vnstat.enable = true;
+    tsvnstat = {
+      enable = true;
+      keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
+    };
     yarr.enable = true;
     gotosocial = {
       enable = true;
