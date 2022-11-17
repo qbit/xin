@@ -9,7 +9,7 @@ let
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
-  tsvnstat = inputs.tsvnstat.packages.${pkgs.system}.tsvnstat;
+  inherit (inputs.tsvnstat.packages.${pkgs.system}) tsvnstat;
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
