@@ -123,6 +123,7 @@
       buildSys = sys: sysBase: extraMods: name:
         sysBase.lib.nixosSystem {
           system = sys;
+          specialArgs = { inherit inputs; };
           modules = hostBase.modules ++ extraMods ++ [{
             nix = {
               registry.nixpkgs.flake = sysBase;

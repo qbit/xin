@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 let
   inherit (builtins)
     head concatStringsSep attrValues mapAttrs attrNames; # hasAttr;
@@ -9,6 +9,7 @@ let
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
+  tsvnstat = inputs.tsvnstat.packages.${pkgs.system}.tsvnstat;
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
@@ -443,7 +444,27 @@ in {
     };
   };
 
-  environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
+  environment.systemPackages = with pkgs; [ bmon termshark tcpdump tsvnstat ];
+
+  users.groups.tsvnstat = { };
+
+  users.users.tsvnstat = {
+    createHome = true;
+    isSystemUser = true;
+    home = "/var/lib/tsvnstat";
+    group = "tsvnstat";
+  };
+
+  systemd.services.tsvnstat = {
+    wantedBy = [ "network.target" ];
+    serviceConfig = {
+      User = "tsvnstat";
+      Group = "tsvnstat";
+      Restart = "always";
+      WorkingDirectory = "/var/lib/tsvnstat";
+      ExecStart = "${tsvnstat}/bin/tsvnstat -name ${config.networking.hostName}-stats";
+    };
+  };
 
   users.users.root = userBase;
   users.users.qbit = userBase;
