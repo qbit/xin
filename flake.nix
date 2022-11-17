@@ -29,10 +29,22 @@
       flake = false;
     };
 
-    microca = { url = "github:qbit/microca"; };
-    taskobs = { url = "github:qbit/taskobs"; };
-    xintray = { url = "github:qbit/xintray"; };
-    tsvnstat = { url = "github:qbit/tsvnstat"; };
+    microca = {
+      url = "github:qbit/microca";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    taskobs = {
+      url = "github:qbit/taskobs";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    xintray = {
+      url = "github:qbit/xintray";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    tsvnstat = {
+      url = "github:qbit/tsvnstat";
+      inputs.nixpkgs.follows = "unstable";
+    };
 
     mcchunkie = {
       url = "github:qbit/mcchunkie";
