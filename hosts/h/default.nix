@@ -286,8 +286,17 @@ in {
           environmentFile = "${config.sops.secrets.restic_env_file.path}";
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
-          paths =
-            [ pgBackupDir "/var/lib/synapse/media_store" "/var/www" "/home" ];
+          paths = [
+            pgBackupDir
+            "/var/lib/synapse/media_store"
+            "/var/www"
+            "/home"
+            "/var/lib/yarr"
+            "/var/lib/gotosocial"
+            "/var/lib/mcchunkie"
+            "/var/lib/taskserver"
+
+          ];
 
           timerConfig = { OnCalendar = "00:05"; };
 
