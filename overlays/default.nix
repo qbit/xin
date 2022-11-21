@@ -13,9 +13,20 @@ let
       doCheck = false;
     });
   };
+  tailscale = self: super: {
+    tailscale = super.tailscale.overrideAttrs (old: rec {
+      version = "1.32.3";
+      src = super.fetchFromGitHub {
+        owner = "tailscale";
+        repo = "tailscale";
+        rev = "v${version}";
+        sha256 = "sha256-CYNHD6TS9KTRftzSn9vAH4QlinqNgU/yZuUYxSvsl/M=";
+      };
+    });
+  };
 in {
   nixpkgs.overlays = if isUnstable then
-    [ ]
+    [ tailscale ]
   else [
     openssh
 
