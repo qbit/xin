@@ -65,11 +65,7 @@ in {
       wantedBy = [ "network-online.target" ];
       after = [ "network-online.target" ];
 
-      path = [
-        pkgs.vnstat
-        pkgs.coreutils
-        pkgs.bash
-      ];
+      path = [ pkgs.vnstat ];
 
       environment = {
         HOME = "/var/lib/tsvnstat";
@@ -83,7 +79,7 @@ in {
         RuntimeDirectory = "tsvnstat";
         StateDirectory = "tsvnstat";
         StateDirectoryMode = "0755";
-        CacheDirectory="tsvnstat";
+        CacheDirectory = "tsvnstat";
         CacheDirectoryMode = "0755";
 
         ExecStart =
