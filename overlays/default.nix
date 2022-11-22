@@ -22,7 +22,10 @@ let
         rev = "v${version}";
         sha256 = "sha256-CYNHD6TS9KTRftzSn9vAH4QlinqNgU/yZuUYxSvsl/M=";
       };
-      ldflags = [ "-X tailscale.com/version.Long=${version}" "-X tailscale.com/version.Short=${version}" ];
+      ldflags = [
+        "-X tailscale.com/version.Long=${version}"
+        "-X tailscale.com/version.Short=${version}"
+      ];
     });
   };
 in {
