@@ -36,18 +36,18 @@ in {
 
     (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-        version = "1.71.0";
+        version = "1.72.0";
         src = super.fetchFromGitHub {
           owner = "matrix-org";
           repo = "synapse";
           rev = "v${version}";
-          sha256 = "sha256-fmEQ1YsIB9xZOQZBojmYkFWPDdOLbNXqfn0szgZmtKg=";
+          sha256 = "sha256-LkzUrEXC+jonkEpAGIEDQhAKisrKNQB8/elchN/4YMU=";
         };
 
         cargoDeps = super.rustPlatform.fetchCargoTarball {
           inherit src;
           name = "matrix-synapse-${version}";
-          sha256 = "sha256-700LPWyhY95sVjB3chbdmr7AmE1Y55vN6Llszv/APL4=";
+          sha256 = "sha256-AuQURcVaIoOYG9jh6QhPpXB0akASVWMYe4fA/376cwo=";
         };
       });
     })
