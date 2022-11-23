@@ -362,16 +362,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1669140217,
-        "narHash": "sha256-Vvinz6zAotNG9PDDgPEr6LkH2CW7ajIQgps21fqrnuY=",
+        "lastModified": 1668725716,
+        "narHash": "sha256-Yif5oyoz/JDJxKgWh3C0XwdCCbxKG2uG0T7RVfsdDdk=",
         "owner": "qbit",
         "repo": "tsvnstat",
-        "rev": "7b4498b5f77204229a38c5c3b4b2e7d206a9ed20",
+        "rev": "04b11abad8299ab40c74ccd837f02a81629eea84",
         "type": "github"
       },
       "original": {
         "owner": "qbit",
         "repo": "tsvnstat",
+        "rev": "04b11abad8299ab40c74ccd837f02a81629eea84",
         "type": "github"
       }
     },
