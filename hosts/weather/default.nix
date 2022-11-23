@@ -17,7 +17,7 @@ in {
   boot = {
     initrd.availableKernelModules =
       [ "usbhid" "usb_storage" "vc4" "rtc-ds3232" "rtc-ds1307" ];
-    kernelPackages = pkgs.linuxPackages_rpi4;
+    kernelPackages = pkgs.linuxPackages;
     kernelModules = [ "raspberrypi_ts" "rtc-ds3232" "rtc-ds1307" ];
     #kernelPatches = [{
     #  name = "touchscreen";
