@@ -93,14 +93,14 @@ in {
       interfaces = {
         "wg0" = {
           allowedTCPPorts = [
-            config.services.gitea.ssh.clonePort
+            config.services.gitea.settings.server.SSH_PORT
             config.services.gitea.httpPort
             config.services.vaultwarden.config.rocketPort
           ];
         };
       };
       allowedTCPPorts = config.services.openssh.ports
-        ++ [ 80 443 config.services.gitea.ssh.clonePort ];
+        ++ [ 80 443 config.services.gitea.settings.server.SSH_PORT ];
       allowedUDPPortRanges = [{
         from = 60000;
         to = 61000;
@@ -266,16 +266,20 @@ in {
 
     grafana = {
       enable = true;
-      domain = "graph.tapenet.org";
-      port = 2342;
-      addr = "127.0.0.1";
-      analytics.reporting.enable = false;
+      settings = {
+        analytics.reporting_enabled = false;
+        server = {
+          domain = "graph.tapenet.org";
+          http_port = 2342;
+          http_addr = "127.0.0.1";
+        };
+      };
 
       #declarativePlugins = with pkgs; [ grafana-image-renderer ];
 
       provision = {
         enable = true;
-        datasources = [
+        datasources.settings.datasources = [
           {
             name = "Prometheus";
             type = "prometheus";
@@ -480,19 +484,17 @@ in {
       appName = "Tape:neT";
 
       lfs.enable = true;
-      ssh.enable = true;
-      ssh.clonePort = 2222;
 
       settings = {
         server = {
+          DISABLE_SSH = true;
           START_SSH_SERVER = true;
           SSH_SERVER_HOST_KEYS = "ssh/gitea-ed25519";
+          SSH_PORT = 2222;
+          DISABLE_REGISTRATION = true;
+          COOKIE_SECURE = true;
         };
       };
-
-      disableRegistration = true;
-
-      cookieSecure = true;
 
       database = {
         type = "postgres";
@@ -527,7 +529,6 @@ in {
     libreddit = {
       enable = true;
       port = 8482;
-      redirect = true;
     };
 
     nginx = {
@@ -696,13 +697,14 @@ in {
           };
         };
 
-        ${config.services.grafana.domain} = {
+        ${config.services.grafana.settings.server.domain} = {
           forceSSL = true;
           enableACME = true;
 
           locations."/" = {
-            proxyPass =
-              "http://127.0.0.1:${toString config.services.grafana.port}";
+            proxyPass = "http://127.0.0.1:${
+                toString config.services.grafana.settings.server.http_port
+              }";
             proxyWebsockets = true;
             extraConfig = ''
               	      ${httpAllow}

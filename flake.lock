@@ -188,6 +188,22 @@
         "type": "github"
       }
     },
+    "oldStable": {
+      "locked": {
+        "lastModified": 1669152211,
+        "narHash": "sha256-mBLiTNTzrtlYPHF0bL8NeGA4n8K5b35fYVdqaTIIkgc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "56ca700ceabcfa15396bcf581a1296e8e27ad677",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-22.05-small",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "peerix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -236,6 +252,7 @@
         "mcchunkie": "mcchunkie",
         "microca": "microca",
         "nixos-hardware": "nixos-hardware",
+        "oldStable": "oldStable",
         "peerix": "peerix",
         "reform": "reform",
         "sshKnownHosts": "sshKnownHosts",
@@ -288,16 +305,16 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1669073495,
-        "narHash": "sha256-YG8hF2YrGEArgM4dy/cDHqchqO1W20/v8Qm471O9fuw=",
+        "lastModified": 1669145873,
+        "narHash": "sha256-V3VE13eRJ8JR98amEwbS/D8gccJ8YTQeRFhAOLocS+c=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "41001c708d15d6f1de588b3443de970ebf1bec38",
+        "rev": "e2815a45a83febbb7608a2addeb589d4bd843016",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.05-small",
+        "ref": "nixos-22.11-small",
         "repo": "nixpkgs",
         "type": "github"
       }

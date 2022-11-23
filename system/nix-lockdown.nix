@@ -11,15 +11,10 @@ with lib; {
     };
   };
   config = mkIf config.nixLockdown.enable {
-    nix = if isUnstable then {
+    nix = {
       settings.sandbox = true;
       settings.trusted-users = [ "@wheel" ];
       settings.allowed-users = [ "root" "qbit" ];
-    } else {
-      allowedUsers = [ "@wheel" ];
-      trustedUsers = [ "root" "qbit" ];
-      useSandbox = true;
     };
-
   };
 }
