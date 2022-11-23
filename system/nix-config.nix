@@ -14,9 +14,4 @@ let
       experimental-features = nix-command flakes
     '';
   };
-in {
-  nix = if isUnstable then
-    { settings.auto-optimise-store = true; } // nixOptions
-  else
-    { autoOptimiseStore = true; } // nixOptions;
-}
+in { nix = { settings.auto-optimise-store = true; } // nixOptions; }

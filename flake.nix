@@ -9,7 +9,8 @@
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    stable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
+    oldStable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
+    stable.url = "github:NixOS/nixpkgs/nixos-22.11-small";
 
     nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
     reform = { url = "github:nix-community/hardware-mnt-reform"; };
@@ -63,9 +64,9 @@
     };
   };
 
-  outputs = { self, unstable, unstableSmall, stable, nixos-hardware, reform
-    , sshKnownHosts, microca, xintray, tsvnstat, taskobs, mcchunkie, gqrss
-    , darwin, xin-secrets, peerix, ... }@inputs:
+  outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
+    , reform, sshKnownHosts, microca, xintray, tsvnstat, taskobs, mcchunkie
+    , gqrss, darwin, xin-secrets, peerix, ... }@inputs:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
@@ -89,7 +90,7 @@
         inputs.peerix.overlay
         inputs.microca.overlay
         inputs.taskobs.overlay
-    inputs.reform.overlay
+        inputs.reform.overlay
       ];
 
       # Set our configurationRevison based on the status of our git repo.
@@ -182,7 +183,7 @@
             "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
           ];
         };
-        reformInstall = stable.lib.nixosSystem {
+        reformInstall = oldStable.lib.nixosSystem {
           system = "aarch64-linux";
 
           modules = [

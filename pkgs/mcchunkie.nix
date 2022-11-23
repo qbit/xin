@@ -1,9 +1,5 @@
 { lib, buildGoModule, fetchFromGitHub, isUnstable, ... }:
-let
-  vendorHash = if isUnstable then
-    "sha256-GCQckQe9Y96upJX2X9RDXoQIyH/SD9CniPVsIbdAPmM="
-  else
-    "sha256-3xIIb+fzbTOq9jf0STL3W9re5yH0JN4RO9dd/Ic1aIg=";
+let vendorHash = "sha256-GCQckQe9Y96upJX2X9RDXoQIyH/SD9CniPVsIbdAPmM=";
 in with lib;
 buildGoModule rec {
   pname = "mcchunkie";
