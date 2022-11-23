@@ -10,7 +10,10 @@ haas)
 iso)
 	nix build .#nixosConfigurations.isoInstall.config.system.build.isoImage
 	;;
+reform)
+	nix build .#nixosConfigurations.reformInstall.config.system.build.sdImage
+	;;
 *)
-	echo "Usage: boot [iso|weather|hass]"
+	echo "Usage: boot [iso|weather|hass|reform]"
 	;;
 esac
