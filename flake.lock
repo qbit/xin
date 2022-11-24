@@ -257,6 +257,7 @@
         "reform": "reform",
         "sshKnownHosts": "sshKnownHosts",
         "stable": "stable",
+        "startpage": "startpage",
         "taskobs": "taskobs",
         "tsvnstat": "tsvnstat",
         "unstable": "unstable",
@@ -332,6 +333,26 @@
         "owner": "NixOS",
         "ref": "nixos-22.05-small",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "startpage": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1669260970,
+        "narHash": "sha256-rrNgwtxKu8Q/x/QAD3JLMb6CmkG5sPZKjCkMhRBSQD0=",
+        "owner": "qbit",
+        "repo": "startpage",
+        "rev": "f627f58b2cf364d126d12e89c53dec91ffee45d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "startpage",
         "type": "github"
       }
     },
