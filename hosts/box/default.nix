@@ -487,7 +487,6 @@ in {
 
       settings = {
         server = {
-          DISABLE_SSH = true;
           START_SSH_SERVER = true;
           SSH_SERVER_HOST_KEYS = "ssh/gitea-ed25519";
           SSH_PORT = 2222;
