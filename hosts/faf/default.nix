@@ -114,6 +114,7 @@ in {
           ''"radarr.bold.daemon. IN A 100.120.151.126"''
           ''"reddit.bold.daemon. IN A 100.120.151.126"''
           ''"sonarr.bold.daemon. IN A 100.120.151.126"''
+          ''"graph.bold.daemon. IN A 100.120.151.126"''
         ];
       };
     };

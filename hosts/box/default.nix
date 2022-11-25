@@ -70,6 +70,8 @@ in {
   sops.secrets.reddit_key = mkNginxSecret;
   sops.secrets.sonarr_cert = mkNginxSecret;
   sops.secrets.sonarr_key = mkNginxSecret;
+  sops.secrets.graph_cert = mkNginxSecret;
+  sops.secrets.graph_key = mkNginxSecret;
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.loader.grub.copyKernels = true;
@@ -696,9 +698,10 @@ in {
           };
         };
 
-        ${config.services.grafana.settings.server.domain} = {
+        "graph.bold.daemon" = {
+          sslCertificateKey = "${config.sops.secrets.graph_key.path}";
+          sslCertificate = "${config.sops.secrets.graph_cert.path}";
           forceSSL = true;
-          enableACME = true;
 
           locations."/" = {
             proxyPass = "http://127.0.0.1:${
