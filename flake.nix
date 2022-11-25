@@ -35,6 +35,10 @@
       url = "github:qbit/microca";
       inputs.nixpkgs.follows = "unstable";
     };
+    startpage = {
+      url = "github:qbit/startpage";
+      inputs.nixpkgs.follows = "unstable";
+    };
     taskobs = {
       url = "github:qbit/taskobs";
       inputs.nixpkgs.follows = "unstable";
@@ -65,8 +69,8 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, sshKnownHosts, microca, xintray, tsvnstat, taskobs, mcchunkie
-    , gqrss, darwin, xin-secrets, peerix, ... }@inputs:
+    , reform, sshKnownHosts, microca, startpage, xintray, tsvnstat, taskobs
+    , mcchunkie, gqrss, darwin, xin-secrets, peerix, ... }@inputs:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
@@ -91,6 +95,7 @@
         inputs.microca.overlay
         inputs.taskobs.overlay
         inputs.reform.overlay
+        inputs.startpage.overlay
       ];
 
       # Set our configurationRevison based on the status of our git repo.
@@ -158,8 +163,10 @@
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable
-          [ nixos-hardware.nixosModules.framework ] "europa";
+        europa = buildSys "x86_64-linux" unstable [
+          nixos-hardware.nixosModules.framework
+          startpage.nixosModule
+        ] "europa";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
