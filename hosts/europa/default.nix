@@ -80,7 +80,6 @@ in {
   virtualisation.libvirtd.enable = true;
   programs.dconf.enable = true;
 
-  networking.hosts."100.120.151.126" = [ "graph.tapenet.org" ];
   networking = {
     hostName = "europa";
     hostId = "87703c3e";
