@@ -72,6 +72,8 @@ in {
   sops.secrets.sonarr_key = mkNginxSecret;
   sops.secrets.graph_cert = mkNginxSecret;
   sops.secrets.graph_key = mkNginxSecret;
+  sops.secrets.bw_cert = mkNginxSecret;
+  sops.secrets.bw_key = mkNginxSecret;
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.loader.grub.copyKernels = true;
@@ -473,6 +475,7 @@ in {
         domain = "https://bw.tapenet.org";
         signupsAllowed = false;
         rocketPort = 8222;
+        rocketAddress = "192.168.112.4"; # wg0
         rocketLog = "critical";
         environmentFile = "/run/secrets/bitwarden_rs.env";
       };
