@@ -19,28 +19,27 @@ let
 in {
   nixpkgs.overlays = if isUnstable then
     [ tailscale ]
-  else
-    [
-      tailscale
-      (self: super: {
-        matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-          version = "1.72.0";
-          src = super.fetchFromGitHub {
-            owner = "matrix-org";
-            repo = "synapse";
-            rev = "v${version}";
-            sha256 = "sha256-LkzUrEXC+jonkEpAGIEDQhAKisrKNQB8/elchN/4YMU=";
-          };
+  else [
+    tailscale
+    (self: super: {
+      matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
+        version = "1.72.0";
+        src = super.fetchFromGitHub {
+          owner = "matrix-org";
+          repo = "synapse";
+          rev = "v${version}";
+          sha256 = "sha256-LkzUrEXC+jonkEpAGIEDQhAKisrKNQB8/elchN/4YMU=";
+        };
 
-          cargoDeps = super.rustPlatform.fetchCargoTarball {
-            inherit src;
-            name = "matrix-synapse-${version}";
-            sha256 = "sha256-AuQURcVaIoOYG9jh6QhPpXB0akASVWMYe4fA/376cwo=";
-          };
-        });
-      })
+        cargoDeps = super.rustPlatform.fetchCargoTarball {
+          inherit src;
+          name = "matrix-synapse-${version}";
+          sha256 = "sha256-AuQURcVaIoOYG9jh6QhPpXB0akASVWMYe4fA/376cwo=";
+        };
+      });
+    })
 
-    ];
+  ];
 }
 
 # Example Python dep overlay
