@@ -175,8 +175,9 @@ in {
     zig
 
     (callPackage ../../pkgs/zutty.nix { })
-    kurinto
   ];
+
+  fonts.fonts = [ kurinto ];
 
   # for Pharo
   security.pam.loginLimits = [
