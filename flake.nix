@@ -231,6 +231,7 @@
             inherit pkgs;
             isUnstable = true;
           };
+          kurinto = pkgs.callPackage ./pkgs/kurinto.nix { };
           mcchunkie = pkgs.callPackage ./pkgs/mcchunkie.nix {
             inherit pkgs;
             isUnstable = true;
