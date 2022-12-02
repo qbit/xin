@@ -240,6 +240,14 @@
             inherit pkgs;
             isUnstable = true;
           };
+          precursorupdater = pkgs.callPackage ./pkgs/precursorupdater.nix {
+            inherit pkgs;
+            inherit (pkgs.python39Packages) buildPythonPackage;
+            inherit (pkgs.python39Packages) fetchPypi;
+            inherit (pkgs.python39Packages) pyusb;
+            inherit (pkgs.python39Packages) progressbar2;
+            inherit (pkgs.python39Packages) requests;
+          };
           golink = pkgs.callPackage ./pkgs/golink.nix { inherit pkgs; };
           gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit pkgs; };
           gotosocial = pkgs.callPackage ./pkgs/gotosocial.nix { inherit pkgs; };
