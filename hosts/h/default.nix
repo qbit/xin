@@ -27,6 +27,7 @@ in {
     ../../modules/gotosocial.nix
     ../../modules/yarr.nix
     ../../modules/tsvnstat.nix
+    ../../modules/golink.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -82,6 +83,10 @@ in {
     router_stats_ts_key = {
       sopsFile = config.xin-secrets.h.services;
       owner = config.users.users.tsvnstat.name;
+    };
+    golink = {
+      sopsFile = config.xin-secrets.h.services;
+      owner = config.users.users.golink.name;
     };
     wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
   };
@@ -187,6 +192,10 @@ in {
   };
 
   services = {
+    golink = {
+      enable = true;
+      keyFile = "${config.sops.secrets.golink.path}";
+    };
     tsvnstat = {
       enable = true;
       keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
