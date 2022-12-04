@@ -138,15 +138,25 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
+  environment.sessionVariables = {
+    XDG_BIN_HOME = "\${HOME}/.local/bin";
+    XDG_CACHE_HOME = "\${HOME}/.cache";
+    XDG_CONFIG_HOME = "\${HOME}/.config";
+    XDG_DATA_HOME = "\${HOME}/.local/share";
+
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+    PATH = [ "\${XDG_BIN_HOME}" ];
+  };
+
   environment.systemPackages = with pkgs; [
     arcanPackages.all-wrapped
     barrier
     calibre
     cider
+    cinny-desktop
     clementine
     drawterm
     element-desktop
-    cinny-desktop
     exercism
     fido2luks
     isync
@@ -163,6 +173,8 @@ in {
     obsidian
     pharo
     pharo-launcher
+    proton-caller
+    protonup-ng
     rofi
     signal-desktop
     taskobs
