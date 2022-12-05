@@ -292,6 +292,7 @@ in {
   networking = {
     hostName = "router";
 
+    enableIPv6 = true;
     useDHCP = false;
     firewall.enable = false;
 
