@@ -88,6 +88,10 @@ in {
       sopsFile = config.xin-secrets.h.services;
       owner = config.users.users.golink.name;
     };
+    gostart = {
+      sopsFile = config.xin-secrets.h.services;
+      owner = config.users.users.gostart.name;
+    };
     wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
   };
 
@@ -192,6 +196,10 @@ in {
   };
 
   services = {
+    gostart = {
+      enable = true;
+      keyPath = "${config.sops.secrets.gostart.path}";
+    };
     golink = {
       enable = true;
       keyFile = "${config.sops.secrets.golink.path}";
