@@ -276,6 +276,14 @@ in {
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
     "net.ipv6.conf.all.forwarding" = true;
+
+    "net.ipv6.conf.all.accept_ra" = 0;
+    "net.ipv6.conf.all.autoconf" = 0;
+    "net.ipv6.conf.all.use_tempaddr" = 0;
+
+    "net.ipv6.conf.${wan}.accept_ra" = 2;
+    "net.ipv6.conf.${wan}.autoconf" = 1;
+
     "net.netfilter.nf_conntrack_helper" = true;
   };
 
@@ -407,6 +415,22 @@ in {
   };
 
   services = {
+    corerad = {
+      enable = true;
+      settings = {
+        interfaces = [
+          {
+            name = wan;
+            monitor = true;
+          }
+          {
+            name = "common";
+            advertise = true;
+            prefix = [{ prefix = "::/64"; }];
+          }
+        ];
+      };
+    };
     tsvnstat = {
       enable = true;
       keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
