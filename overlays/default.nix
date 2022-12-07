@@ -1,27 +1,9 @@
 { self, config, pkgs, lib, isUnstable, ... }:
 
-let
-  tailscale = self: super: {
-    tailscale = super.tailscale.overrideAttrs (old: rec {
-      version = "1.34.0";
-      src = super.fetchFromGitHub {
-        owner = "tailscale";
-        repo = "tailscale";
-        rev = "v${version}";
-        sha256 = "sha256-ngcFoEDec/6I9gWpJ767ju2OvZfS4RhlSbK//xXIFxs=";
-      };
-      vendorSha256 = "sha256-nSllDi6G4QAGyuoGduDhI0vaVuN2//eg+gXRSZ3ERiQ=";
-      ldflags = [
-        "-X tailscale.com/version.Long=${version}"
-        "-X tailscale.com/version.Short=${version}"
-      ];
-    });
-  };
-in {
+{
   nixpkgs.overlays = if isUnstable then
-    [ tailscale ]
+    [ ]
   else [
-    tailscale
     (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
         version = "1.73.0";
