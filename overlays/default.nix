@@ -3,13 +3,14 @@
 let
   tailscale = self: super: {
     tailscale = super.tailscale.overrideAttrs (old: rec {
-      version = "1.32.3";
+      version = "1.34.0";
       src = super.fetchFromGitHub {
         owner = "tailscale";
         repo = "tailscale";
         rev = "v${version}";
-        sha256 = "sha256-CYNHD6TS9KTRftzSn9vAH4QlinqNgU/yZuUYxSvsl/M=";
+        sha256 = "sha256-ngcFoEDec/6I9gWpJ767ju2OvZfS4RhlSbK//xXIFxs=";
       };
+      vendorSha256 = "sha256-nSllDi6G4QAGyuoGduDhI0vaVuN2//eg+gXRSZ3ERiQ=";
       ldflags = [
         "-X tailscale.com/version.Long=${version}"
         "-X tailscale.com/version.Short=${version}"
