@@ -23,18 +23,18 @@ in {
     tailscale
     (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-        version = "1.72.0";
+        version = "1.73.0";
         src = super.fetchFromGitHub {
           owner = "matrix-org";
           repo = "synapse";
           rev = "v${version}";
-          sha256 = "sha256-LkzUrEXC+jonkEpAGIEDQhAKisrKNQB8/elchN/4YMU=";
+          sha256 = "sha256-Er5a+0Qyvm5V1ObWjDQ8fs+r/XB+4aRItJMqaz1VSqk=";
         };
 
         cargoDeps = super.rustPlatform.fetchCargoTarball {
           inherit src;
           name = "matrix-synapse-${version}";
-          sha256 = "sha256-AuQURcVaIoOYG9jh6QhPpXB0akASVWMYe4fA/376cwo=";
+          sha256 = "sha256-yU72e8OBnUtNdUI/crX7v2KRYHHHOY4Ga9CI3PJwais=";
         };
       });
     })
