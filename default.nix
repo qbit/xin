@@ -66,6 +66,8 @@ in {
       };
     };
 
+    security.pki.caCertificateBlacklist =
+      [ "TrustCor ECA-1" "TrustCor RootCert CA-1" "TrustCor RootCert CA-2" ];
     security.pki.certificates = [''
       -----BEGIN CERTIFICATE-----
       MIIBrjCCAVOgAwIBAgIIKUKZ6zcNut8wCgYIKoZIzj0EAwIwFzEVMBMGA1UEAxMM
