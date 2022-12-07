@@ -1,7 +1,6 @@
 { config, pkgs, lib, modulesPath, inputs, ... }:
 let
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
-  kurinto = pkgs.callPackage ../../pkgs/kurinto.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
   else
@@ -188,8 +187,6 @@ in {
 
     (callPackage ../../pkgs/zutty.nix { })
   ];
-
-  fonts.fonts = [ kurinto ];
 
   # for Pharo
   security.pam.loginLimits = [
