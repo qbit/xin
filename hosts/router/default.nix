@@ -281,9 +281,6 @@ in {
     "net.ipv6.conf.all.autoconf" = 0;
     "net.ipv6.conf.all.use_tempaddr" = 0;
 
-    "net.ipv6.conf.${wan}.accept_ra" = 2;
-    "net.ipv6.conf.${wan}.autoconf" = 1;
-
     "net.netfilter.nf_conntrack_helper" = true;
   };
 
@@ -303,6 +300,15 @@ in {
     enableIPv6 = true;
     useDHCP = false;
     firewall.enable = false;
+    dhcpcd = {
+      enable = true;
+      extraConfig = ''
+        interface ${wan}
+        ipv6rs
+        iaid 1
+        ia_pd 1 common
+      '';
+    };
 
     # TODO: iterate over interfaces where .<name>.vlanID is set
     vlans = {
@@ -344,7 +350,8 @@ in {
 
             chain inbound_world {
                 #icmp type echo-request limit rate 5/second accept
-                tcp dport ssh limit rate 1/minute accept
+                #tcp dport ssh limit rate 1/minute accept
+                udp dport dhcpv6-client accept
             }
 
             chain inbound_private {
