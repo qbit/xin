@@ -48,7 +48,7 @@
       inputs.nixpkgs.follows = "unstable";
     };
     tsvnstat = {
-      url = "github:qbit/tsvnstat/04b11abad8299ab40c74ccd837f02a81629eea84";
+      url = "github:qbit/tsvnstat";
       inputs.nixpkgs.follows = "unstable";
     };
 
