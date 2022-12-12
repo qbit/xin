@@ -198,7 +198,7 @@ in {
   services = {
     gostart = {
       enable = true;
-      keyPath = "${config.sops.secrets.gostart.path}";
+      envFile = "${config.sops.secrets.gostart.path}";
     };
     golink = {
       enable = true;
