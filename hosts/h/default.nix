@@ -198,11 +198,11 @@ in {
   services = {
     gostart = {
       enable = true;
-      envFile = "${config.sops.secrets.gostart.path}";
+      keyPath = "${config.sops.secrets.gostart.path}";
     };
     golink = {
       enable = true;
-      keyFile = "${config.sops.secrets.golink.path}";
+      envFile = "${config.sops.secrets.golink.path}";
     };
     tsvnstat = {
       enable = true;
