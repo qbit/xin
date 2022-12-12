@@ -24,7 +24,7 @@ in {
         '';
       };
 
-      keyFile = mkOption {
+      envFile = mkOption {
         type = types.path;
         default = "/run/secrets/golink";
         description = ''
@@ -81,8 +81,10 @@ in {
         CacheDirectory = "golink";
         CacheDirectoryMode = "0755";
 
+        EnvironmentFile = cfg.envFile;
+
         ExecStart =
-          "${cfg.package}/bin/golink -sqlitedb ${cfg.dataDir}/golink.db -keyfile ${cfg.keyFile}";
+          "${cfg.package}/bin/golink -sqlitedb ${cfg.dataDir}/golink.db";
       };
     };
   };

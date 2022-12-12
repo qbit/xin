@@ -10,11 +10,9 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "tailscale";
     repo = pname;
-    rev = "0755e37a910b73b586544e2805c075dcec7d0207";
-    sha256 = "sha256-zzup/TR9iRNPrEEOzhIL5PTF8iKF8NlPqXBuRKt8AEc=";
+    rev = "5fefe2519ffd9f1c6a3dd86a764d69717ee66d20";
+    sha256 = "sha256-H4mwyQVFH/Yp6gIpN1o+L7S3Rupwbxl5CCLltcBh1Vk=";
   };
-
-  patches = [ ./golink_keyfile.diff ];
 
   vendorSha256 = vendorHash;
 
