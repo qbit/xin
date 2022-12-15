@@ -66,11 +66,16 @@
       url = "github:cid-chan/peerix";
       inputs.nixpkgs.follows = "stable";
     };
+
+    talon = {
+      url = "github:nix-community/talon-nix";
+      inputs.nixpkgs.follows = "unstable";
+    };
   };
 
   outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
     , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, taskobs
-    , mcchunkie, gqrss, darwin, xin-secrets, peerix, ... }@inputs:
+    , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
@@ -96,6 +101,7 @@
         inputs.taskobs.overlay
         inputs.reform.overlay
         inputs.gostart.overlay
+        inputs.talon.overlays.default
       ];
 
       # Set our configurationRevison based on the status of our git repo.
@@ -163,8 +169,10 @@
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable
-          [ nixos-hardware.nixosModules.framework ] "europa";
+        europa = buildSys "x86_64-linux" unstable [
+          nixos-hardware.nixosModules.framework
+          talon.nixosModules.talon
+        ] "europa";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
