@@ -185,6 +185,8 @@ in {
     yt-dlp
     zig
 
+    talon
+
     (callPackage ../../pkgs/zutty.nix { })
   ];
 
