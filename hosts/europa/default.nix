@@ -132,7 +132,8 @@ in {
     '';
   };
 
-  users.users.qbit.extraGroups = [ "dialout" "libvirtd" ];
+  virtualisation.docker.enable = true;
+  users.users.qbit.extraGroups = [ "dialout" "libvirtd" "docker" ];
 
   nixpkgs.config.allowUnfree = true;
 
