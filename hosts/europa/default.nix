@@ -149,6 +149,9 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    _1password-gui
+    _1password
+    git-credential-1password
     arcanPackages.all-wrapped
     barrier
     calibre
