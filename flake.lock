@@ -365,15 +365,15 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1664617741,
-        "narHash": "sha256-3pd6ZlAUPdRDh0IkN4qE/RlXQjRIoewMtCIyBNGOPp8=",
-        "owner": "nix-community",
+        "lastModified": 1671197098,
+        "narHash": "sha256-MZwBfeERO8xv7m5RvO2N80FU2hJXLajc12exYtZDw9s=",
+        "owner": "qbit",
         "repo": "talon-nix",
-        "rev": "2fc31badd8a800825bb697290f2f798559c5025f",
+        "rev": "8a0d0e31524319b7a32e9143e9e93562f45dfcd2",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "qbit",
         "repo": "talon-nix",
         "type": "github"
       }
