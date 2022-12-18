@@ -60,13 +60,6 @@ in {
     kernelPackages = pkgs.linuxPackages;
   };
 
-  programs.zsh.shellAliases = {
-    "nixpkgs-review" =
-      "GITHUB_TOKEN=$(cat /run/secrets/nix_review) nixpkgs-review";
-    "neomutt" = "neomutt -F /etc/neomuttrc";
-    "mutt" = "neomutt -F /etc/neomuttrc";
-  };
-
   sshFidoAgent.enable = true;
 
   nixManager = {
@@ -78,7 +71,6 @@ in {
   jetbrains.enable = true;
 
   virtualisation.libvirtd.enable = true;
-  programs.dconf.enable = true;
 
   networking = {
     hostName = "europa";
@@ -99,7 +91,21 @@ in {
     interfaces = [ "wlp170s0" "ztksevmpn3" ];
   };
 
-  programs.steam.enable = true;
+  programs = {
+    steam.enable = true;
+    _1password.enable = true;
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ "qbit" ];
+    };
+    dconf.enable = true;
+    zsh.shellAliases = {
+      "nixpkgs-review" =
+        "GITHUB_TOKEN=$(cat /run/secrets/nix_review) nixpkgs-review";
+      "neomutt" = "neomutt -F /etc/neomuttrc";
+      "mutt" = "neomutt -F /etc/neomuttrc";
+    };
+  };
 
   services = {
     vnstat.enable = true;
@@ -149,8 +155,6 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    _1password-gui
-    _1password
     git-credential-1password
     arcanPackages.all-wrapped
     barrier
