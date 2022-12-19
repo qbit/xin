@@ -2,7 +2,19 @@
 
 {
   nixpkgs.overlays = if isUnstable then
-    [ ]
+    [
+      (self: super: {
+        aerc = super.aerc.overrideAttrs (old: {
+          patches = [
+            (pkgs.fetchurl {
+              url =
+                "https://lists.sr.ht/~rjarry/aerc-devel/%3C20221218160541.680374-1-moritz%40poldrack.dev%3E/raw";
+              sha256 = "sha256-qPRMOuPs5Pxiu2p08vGxsoO057Y1rVltPyBMbJXsH1s=";
+            })
+          ];
+        });
+      })
+    ]
   else
     [
       (self: super: {

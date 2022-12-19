@@ -155,6 +155,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    aerc
     git-credential-1password
     arcanPackages.all-wrapped
     barrier
