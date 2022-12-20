@@ -284,6 +284,7 @@
         "unstable": "unstable",
         "unstableSmall": "unstableSmall",
         "xin-secrets": "xin-secrets",
+        "xinDev": "xinDev",
         "xintray": "xintray"
       }
     },
@@ -482,6 +483,22 @@
         "ref": "main",
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
+      }
+    },
+    "xinDev": {
+      "locked": {
+        "lastModified": 1671573752,
+        "narHash": "sha256-ZKWE45bhj/6DSaDL7+/kHNIycYDn2g5qLY1VeK+89cc=",
+        "owner": "qbit",
+        "repo": "nixpkgs",
+        "rev": "13ff4b1299d5d76c83854f571463deb89f5c0954",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "nixpkgs",
+        "rev": "13ff4b1299d5d76c83854f571463deb89f5c0954",
+        "type": "github"
       }
     },
     "xintray": {
