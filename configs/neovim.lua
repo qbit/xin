@@ -6,7 +6,7 @@ local cmd = vim.cmd
 --cmd("set t_Co=0");
 cmd("set nolist");
 cmd("set ruler");
-cmd("set mouse-=n");
+cmd("set mouse=");
 cmd("set t_Co=256");
 cmd("colorscheme vacme");
 cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
