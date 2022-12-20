@@ -6,6 +6,7 @@
       url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
     };
 
+    xinDev.url = "github:qbit/nixpkgs/13ff4b1299d5d76c83854f571463deb89f5c0954";
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
@@ -73,7 +74,7 @@
     };
   };
 
-  outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
+  outputs = { self, xinDev, unstable, unstableSmall, stable, oldStable, nixos-hardware
     , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, taskobs
     , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
     let
@@ -169,11 +170,11 @@
       devShells.aarch64-darwin.default = buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable [
+        europa = buildSys "x86_64-linux" xinDev [
           nixos-hardware.nixosModules.framework
           talon.nixosModules.talon
         ] "europa";
-        stan = buildSys "x86_64-linux" unstable [ ] "stan";
+        stan = buildSys "x86_64-linux" xinDev [ ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 

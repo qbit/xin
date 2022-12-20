@@ -58,8 +58,12 @@
       };
 
       pull = { rebase = false; };
-      include = { path = "~/work/git/gitconfig"; };
     };
+    extraConfig = ''
+
+      [include]
+          path = ~/work/git/gitconfig
+    '';
   };
 }
 
