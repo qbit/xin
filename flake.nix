@@ -6,7 +6,7 @@
       url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
     };
 
-    xinDev.url = "github:qbit/nixpkgs/13ff4b1299d5d76c83854f571463deb89f5c0954";
+    xinDev.url = "github:qbit/nixpkgs/f9f4444cdf01270c5e463e84e02cc225d8208476";
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
@@ -74,9 +74,10 @@
     };
   };
 
-  outputs = { self, xinDev, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, taskobs
-    , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
+  outputs = { self, xinDev, unstable, unstableSmall, stable, oldStable
+    , nixos-hardware, reform, sshKnownHosts, microca, gostart, xintray, tsvnstat
+    , taskobs, mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ...
+    }@inputs:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
