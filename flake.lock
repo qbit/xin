@@ -487,17 +487,17 @@
     },
     "xinDev": {
       "locked": {
-        "lastModified": 1671573752,
-        "narHash": "sha256-ZKWE45bhj/6DSaDL7+/kHNIycYDn2g5qLY1VeK+89cc=",
+        "lastModified": 1671589301,
+        "narHash": "sha256-A9kIPTeI5gM2NsOrT3V2egYLJQT7Zzx+/j6sgcXCNo0=",
         "owner": "qbit",
         "repo": "nixpkgs",
-        "rev": "13ff4b1299d5d76c83854f571463deb89f5c0954",
+        "rev": "f9f4444cdf01270c5e463e84e02cc225d8208476",
         "type": "github"
       },
       "original": {
         "owner": "qbit",
         "repo": "nixpkgs",
-        "rev": "13ff4b1299d5d76c83854f571463deb89f5c0954",
+        "rev": "f9f4444cdf01270c5e463e84e02cc225d8208476",
         "type": "github"
       }
     },
