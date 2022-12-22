@@ -167,6 +167,7 @@ in {
     element-desktop
     exercism
     fido2luks
+    gh
     isync
     klavaro
     linphone
