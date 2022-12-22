@@ -99,11 +99,15 @@ in {
       polkitPolicyOwners = [ "qbit" ];
     };
     dconf.enable = true;
-    zsh.shellAliases = {
-      "nixpkgs-review" =
-        "GITHUB_TOKEN=$(cat /run/secrets/nix_review) nixpkgs-review";
-      "neomutt" = "neomutt -F /etc/neomuttrc";
-      "mutt" = "neomutt -F /etc/neomuttrc";
+    zsh = {
+      shellInit = ''
+        export OP_PLUGIN_ALIASES_SOURCED=1
+      '';
+      shellAliases = {
+        "gh" = "op plugin run -- gh";
+        "neomutt" = "neomutt -F /etc/neomuttrc";
+        "mutt" = "neomutt -F /etc/neomuttrc";
+      };
     };
   };
 
