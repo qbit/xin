@@ -12,7 +12,17 @@ in {
 
   networking.hostName = "plq";
 
-  programs.zsh.enable = true;
+  programs = {
+    zsh = {
+      enable = true;
+      shellInit = ''
+        export OP_PLUGIN_ALIASES_SOURCED=1
+      '';
+      shellAliases = {
+        "gh" = "op plugin run -- gh";
+      };
+    };
+  };
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
 
@@ -50,6 +60,7 @@ in {
 
     nixpkgs-review
     direnv
+    gh
     go
     mosh
     neovim
