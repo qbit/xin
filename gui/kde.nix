@@ -19,9 +19,6 @@ in {
       (callPackage ../pkgs/tile-gaps.nix { })
       plasma5Packages.kdeconnect-kde
       libsForQt5.bismuth
-      libsForQt5.kalendar
-      libsForQt5.kmail
-      libsForQt5.kontact
     ];
   };
 }
