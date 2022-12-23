@@ -128,8 +128,8 @@ in {
         btop
         direnv
         git-sync
-        got
         gosignify
+        got
         jq
         lz4
         minisign
@@ -140,6 +140,7 @@ in {
         nix-top
         pass
         rbw
+        ripgrep
         taskwarrior
         tmux
       ] ++ (if isUnstable then [ nil ] else [ ]);
