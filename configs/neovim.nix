@@ -23,6 +23,7 @@ let
   };
   baseVimPackages = with vimPlugins; [
     fugitive
+    fzf-vim
     nvim-compe
     nvim-lspconfig
     nvim-tree-lua
@@ -41,6 +42,13 @@ let
   else
     baseVimPackages ++ [ vimPlugins.vim-go ];
 in {
+  environment.systemPackages = with pkgs; [
+    go
+    gopls
+    gotools
+    ripgrep
+    fzf
+  ];
   programs.neovim = {
     enable = true;
     defaultEditor = true;
