@@ -18,9 +18,6 @@ in {
       shellInit = ''
         export OP_PLUGIN_ALIASES_SOURCED=1
       '';
-      shellAliases = {
-        "gh" = "op plugin run -- gh";
-      };
     };
   };
   services.nix-daemon.enable = true;
