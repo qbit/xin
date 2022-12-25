@@ -479,11 +479,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1670431020,
-        "narHash": "sha256-mk3eFHphkpvYNY65A1GJWhKb15JTJ9rkODeXAsBxQ94=",
+        "lastModified": 1671974135,
+        "narHash": "sha256-owKtIkbRPKTEm4phuz2HKwih7Qs/nn308XJ71a53jeo=",
         "owner": "qbit",
         "repo": "xintray",
-        "rev": "a161f63375842d56706cd17644b4a51fae7eeb25",
+        "rev": "6946547949861c08f3472633c8b0b6e3568153c4",
         "type": "github"
       },
       "original": {
