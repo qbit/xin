@@ -2,15 +2,22 @@
   description = "bold.daemon";
 
   inputs = {
-    xin-secrets = {
-      url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
-    };
-
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     oldStable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
     stable.url = "github:NixOS/nixpkgs/nixos-22.11-small";
+
+    sops-nix  = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs-stable.follows = "stable";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
+    xin-secrets = {
+      url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
+      inputs.sops-nix.follows = "sops-nix";
+    };
 
     nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
     reform = { url = "github:nix-community/hardware-mnt-reform"; };
