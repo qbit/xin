@@ -113,6 +113,7 @@ in {
   };
 
   services = {
+    pcscd.enable = true;
     vnstat.enable = true;
     clamav.updater.enable = true;
     emacs = {
