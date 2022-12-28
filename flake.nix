@@ -8,7 +8,7 @@
     oldStable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
     stable.url = "github:NixOS/nixpkgs/nixos-22.11-small";
 
-    sops-nix  = {
+    sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs-stable.follows = "stable";
       inputs.nixpkgs.follows = "unstable";
@@ -80,10 +80,9 @@
     };
   };
 
-  outputs = { self, unstable, unstableSmall, stable, oldStable
-    , nixos-hardware, reform, sshKnownHosts, microca, gostart, xintray, tsvnstat
-    , taskobs, mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ...
-    }@inputs:
+  outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
+    , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, taskobs
+    , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
     let
       supportedSystems =
         [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];

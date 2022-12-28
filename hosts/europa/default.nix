@@ -105,7 +105,8 @@ in {
       '';
       shellAliases = {
         "gh" = "op plugin run -- gh";
-        "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
+        "godeps" =
+          "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "mutt" = "neomutt -F /etc/neomuttrc";
         "neomutt" = "neomutt -F /etc/neomuttrc";
       };
