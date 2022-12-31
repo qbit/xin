@@ -23,7 +23,8 @@ in {
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.enp2s0.useDHCP = true;
 
-  networking.firewall.allowedTCPPorts = [ 22 53 config.services.prometheus.exporters.node.port ];
+  networking.firewall.allowedTCPPorts =
+    [ 22 53 config.services.prometheus.exporters.node.port ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
   users.users.root = userBase;
