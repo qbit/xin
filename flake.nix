@@ -180,6 +180,7 @@
           nixos-hardware.nixosModules.framework
           talon.nixosModules.talon
         ] "europa";
+        pwntie = buildSys "x86_64-linux" unstable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
         weather = buildSys "aarch64-linux" stable
           [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
