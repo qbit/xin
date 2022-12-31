@@ -113,6 +113,10 @@ in {
     };
   };
 
+  muInit = {
+    enable = true;
+  };
+
   services = {
     pcscd.enable = true;
     vnstat.enable = true;
