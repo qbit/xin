@@ -113,10 +113,6 @@ in {
     };
   };
 
-  muInit = {
-    enable = true;
-  };
-
   services = {
     pcscd.enable = true;
     vnstat.enable = true;
@@ -163,6 +159,7 @@ in {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "\${HOME}/.steam/root/compatibilitytools.d";
     PATH = [ "\${XDG_BIN_HOME}" ];
+    MUHOME = "\${HOME}/.config/mu";
   };
 
   environment.systemPackages = with pkgs; [
