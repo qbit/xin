@@ -18,6 +18,13 @@
   else
     [
       (self: super: {
+        go1_19 = super.go1_19.overrideAttrs (old: {
+          patchs = old.patches ++ [
+            ./452438.diff
+          ];
+        });
+      })
+      (self: super: {
         matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
           version = "1.74.0";
           src = super.fetchFromGitHub {
