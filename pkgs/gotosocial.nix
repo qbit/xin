@@ -35,6 +35,11 @@ buildGo119Module rec {
 
   doCheck = false;
 
+  preBuild = ''
+    echo ${go}/bin/go
+    ${go}/bin/go version
+    '';
+
   postInstall = ''
     mkdir -p $out/assets
     tar -C $out/assets/ -zxvf ${gotosocialWebAssets}
