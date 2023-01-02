@@ -1,14 +1,14 @@
 { self, config, pkgs, lib, isUnstable, ... }:
 let go = self: super: {
         go = super.go.overrideAttrs (old: {
-          patchss = old.patches ++ [
+          patches = old.patches ++ [
             ./452438.diff
           ];
         });
 };
 go1_19 = self: super: {
         go1_19 = super.go1_19.overrideAttrs (old: {
-          patchss = old.patches ++ [
+          patches = old.patches ++ [
             ./452438.diff
           ];
         });
