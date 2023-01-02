@@ -1,8 +1,23 @@
 { self, config, pkgs, lib, isUnstable, ... }:
-
-{
+let go = self: super: {
+        go = super.go.overrideAttrs (old: {
+          patchs = old.patches ++ [
+            ./452438.diff
+          ];
+        });
+};
+go1_19 = self: super: {
+        go1_19 = super.go1_19.overrideAttrs (old: {
+          patchs = old.patches ++ [
+            ./452438.diff
+          ];
+        });
+};
+in {
   nixpkgs.overlays = if isUnstable then
     [
+      go
+      go1_19
       (self: super: {
         aerc = super.aerc.overrideAttrs (old: {
           patches = [
@@ -17,26 +32,21 @@
     ]
   else
     [
+      go
+      go1_19
       (self: super: {
-        go1_19 = super.go1_19.overrideAttrs (old: {
-          patchs = old.patches ++ [
-            ./452438.diff
-          ];
-        });
-      })
-      (self: super: {
-        matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
+        matrix-synapse = super.matrix-synapse.overrideAttrs (old: {
           version = "1.74.0";
           src = super.fetchFromGitHub {
             owner = "matrix-org";
             repo = "synapse";
-            rev = "v${version}";
+            rev = "v${self.version}";
             sha256 = "sha256-UsYodjykcLOgClHegqH598kPoGAI1Z8bLzV5LLE6yLg=";
           };
 
           cargoDeps = super.rustPlatform.fetchCargoTarball {
-            inherit src;
-            name = "matrix-synapse-${version}";
+            inherit (self) src;
+            name = "matrix-synapse-${self.version}";
             sha256 = "sha256-XOW9DRUhGIs8x5tQ9l2A85sNv736uMmfC72f8FX3g/I=";
           };
         });
