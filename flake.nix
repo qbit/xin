@@ -129,16 +129,15 @@
           nativeBuildInputs = with pkgs; [
             deadnix
             git
-            go
             jq
             nil
             nix-diff
+            nix-output-monitor
             shfmt
             sops
             ssh-to-age
             ssh-to-pgp
             statix
-            tree
           ];
         };
       buildSys = sys: sysBase: extraMods: name:
