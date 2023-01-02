@@ -54,6 +54,7 @@ in {
   environment.systemPackages = with pkgs; [
     (callPackage ../../pkgs/nheko.nix { inherit isUnstable; })
     (callPackage ../../pkgs/secretive.nix { inherit isUnstable; })
+    (callPackage ../../pkgs/hammerspoon.nix { inherit isUnstable; })
 
     nixpkgs-review
     direnv
