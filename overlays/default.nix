@@ -35,18 +35,18 @@ in {
       go
       go1_19
       (self: super: {
-        matrix-synapse = super.matrix-synapse.overrideAttrs (old: {
+        matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
           version = "1.74.0";
           src = super.fetchFromGitHub {
             owner = "matrix-org";
             repo = "synapse";
-            rev = "v${self.version}";
+            rev = "v${version}";
             sha256 = "sha256-UsYodjykcLOgClHegqH598kPoGAI1Z8bLzV5LLE6yLg=";
           };
 
           cargoDeps = super.rustPlatform.fetchCargoTarball {
             inherit (self) src;
-            name = "matrix-synapse-${self.version}";
+            name = "matrix-synapse-${version}";
             sha256 = "sha256-XOW9DRUhGIs8x5tQ9l2A85sNv736uMmfC72f8FX3g/I=";
           };
         });
