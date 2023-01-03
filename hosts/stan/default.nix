@@ -109,7 +109,6 @@ in {
     google-chrome-dev
     ispell
     keychain
-    matterhorn
     mosh
     mupdf
     nmap
