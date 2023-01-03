@@ -19,8 +19,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    description =
-      "Staggeringly powerful macOS desktop automation with Lua";
+    description = "Staggeringly powerful macOS desktop automation with Lua";
     homepage = "http://www.hammerspoon.org/";
     license = lib.licenses.mit;
     platforms = lib.platforms.darwin;
