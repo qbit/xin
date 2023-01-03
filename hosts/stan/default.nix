@@ -103,6 +103,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     barrier
+    waynergy
     brave
     firefox
     fzf
