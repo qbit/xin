@@ -1,19 +1,4 @@
-{ self, config, pkgs, lib, isUnstable, ... }:
-let go = self: super: {
-        go = super.go_1_19.overrideAttrs (old: {
-          patches = old.patches ++ [
-            ./452438.diff
-          ];
-        });
-};
-go1_19 = self: super: {
-        go_1_19 = super.go_1_19.overrideAttrs (old: {
-          patches = old.patches ++ [
-            ./452438.diff
-          ];
-        });
-};
-in {
+{ self, config, pkgs, lib, isUnstable, ... }: {
   nixpkgs.overlays = if isUnstable then
     [
       (self: super: {
@@ -30,8 +15,6 @@ in {
     ]
   else
     [
-      go
-      go1_19
       (self: super: {
         matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
           version = "1.74.0";

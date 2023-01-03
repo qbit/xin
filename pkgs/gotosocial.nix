@@ -38,7 +38,7 @@ buildGo119Module rec {
   preBuild = ''
     echo ${go}/bin/go
     ${go}/bin/go version
-    '';
+  '';
 
   postInstall = ''
     mkdir -p $out/assets
