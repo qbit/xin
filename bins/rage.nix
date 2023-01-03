@@ -2,7 +2,11 @@
 
 let
   oathPkg = pkgs.oath-toolkit or pkgs.oathToolkit;
-  clip = if pkgs.system == "aarch64-darwin" then
+  wlclip = if pkgs.system == "aarch64-darwin" then
+    ""
+  else
+    "${pkgs.wl-clipboard}/bin/wl-copy";
+  xclip = if pkgs.system == "aarch64-darwin" then
     "pbcopy"
   else
     "${pkgs.xclip}/bin/xclip";
@@ -63,11 +67,16 @@ in ''
               fi
               ;;
       cp)
+              CLIP=${xclip}
+              if [ ! -z $WAYLAND_DISPLAY ]; then
+                CLIP=${wlclip}
+              fi
+
               if [ -f $2 ]; then
-                      ${pkgs.age}/bin/age -i $identity -d $2 | ${clip}
+                      ${pkgs.age}/bin/age -i $identity -d $2 | $CLIP
               else
                       F=$(list | grep $2)
-                      ${pkgs.age}/bin/age -i $identity -d "$F" | ${clip}
+                      ${pkgs.age}/bin/age -i $identity -d "$F" | $CLIP
               fi
               ;;
       otp)
