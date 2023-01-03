@@ -1,13 +1,13 @@
 { self, config, pkgs, lib, isUnstable, ... }:
 let go = self: super: {
-        go = super.go.overrideAttrs (old: {
+        go = super.go_1_19.overrideAttrs (old: {
           patches = old.patches ++ [
             ./452438.diff
           ];
         });
 };
 go1_19 = self: super: {
-        go1_19 = super.go1_19.overrideAttrs (old: {
+        go_1_19 = super.go_1_19.overrideAttrs (old: {
           patches = old.patches ++ [
             ./452438.diff
           ];
@@ -16,8 +16,6 @@ go1_19 = self: super: {
 in {
   nixpkgs.overlays = if isUnstable then
     [
-      go
-      go1_19
       (self: super: {
         aerc = super.aerc.overrideAttrs (old: {
           patches = [
