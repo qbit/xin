@@ -18,8 +18,9 @@ in {
     environment.systemPackages = with pkgs; [
       (callPackage ../pkgs/tile-gaps.nix { })
       (callPackage ../pkgs/rkvm.nix { })
-      plasma5Packages.kdeconnect-kde
       libsForQt5.bismuth
+      plasma5Packages.kdeconnect-kde
+      waynergy
     ];
   };
 }
