@@ -273,6 +273,7 @@
             inherit pkgs;
             isUnstable = true;
           };
+          rkvm = pkgs.callPackage ./pkgs/rkvm.nix { inherit pkgs; };
           inherit (xintray.packages.${system}) xintray;
           inherit (tsvnstat.packages.${system}) tsvnstat;
         });
