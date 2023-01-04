@@ -181,19 +181,19 @@
         ] "europa";
         pwntie = buildSys "x86_64-linux" unstable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
-        weather = buildSys "aarch64-linux" stable
-          [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
+        #weather = buildSys "aarch64-linux" stable
+        #  [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
         box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
-        luna = buildSys "x86_64-linux" stable
-          [ "${nixos-hardware}/common/cpu/intel" ] "luna";
+        #luna = buildSys "x86_64-linux" stable
+        #  [ "${nixos-hardware}/common/cpu/intel" ] "luna";
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule
         ] "h";
-        router =
-          buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
+        #router =
+        #  buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
 
         weatherInstall = stable.lib.nixosSystem {
           system = "aarch64-linux";
