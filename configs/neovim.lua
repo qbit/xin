@@ -31,6 +31,10 @@ require("compe").setup {
    };
 }
 
+local telescope = require('telescope')
+telescope.load_extension('manix')
+telescope.load_extension('fzf')
+
 require("nvim-tree").setup({
     renderer = {
         icons = {

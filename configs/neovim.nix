@@ -28,6 +28,9 @@ let
     nvim-lspconfig
     nvim-tree-lua
     rust-vim
+    telescope-fzf-native-nvim
+    telescope-manix
+    telescope-nvim
     vimagit
     vim-gitgutter
     vim-nix
@@ -42,7 +45,7 @@ let
   else
     baseVimPackages ++ [ vimPlugins.vim-go ];
 in {
-  environment.systemPackages = with pkgs; [ go gopls gotools ripgrep fzf ];
+  environment.systemPackages = with pkgs; [ go gopls gotools ripgrep fzf manix ];
   programs.neovim = {
     enable = true;
     defaultEditor = true;

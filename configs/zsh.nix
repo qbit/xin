@@ -53,10 +53,6 @@
         fi
       }
 
-      manix() {
-        ${pkgs.manix}/bin/manix "$@" | grep -v ^Here | ${pkgs.glow}/bin/glow -p -
-      }
-
       eval "$(direnv hook zsh)"
     '';
   };
