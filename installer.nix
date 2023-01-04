@@ -130,7 +130,7 @@ in {
       openssh = {
         enable = true;
         # This is set in modules/profiles/installation-device.nix, but it is set to 'yes' :(
-        #permitRootLogin = "prohibit-password";
+        permitRootLogin = lib.mkForce "prohibit-password";
         passwordAuthentication = false;
       };
     };
