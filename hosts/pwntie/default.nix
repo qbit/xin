@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 let
+  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -12,6 +13,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking = {
     hostName = "pwntie";
@@ -53,9 +55,17 @@ in {
 
   environment.systemPackages = with pkgs; [ neovim nixfmt jq ];
 
-  services.openssh = {
-    enable = true;
-    permitRootLogin = "prohibit-password";
+  services = {
+    emacs = {
+      enable = true;
+      package = myEmacs;
+      install = true;
+    };
+    fwupd = {
+      enable = true;
+      enableTestRemote = true;
+    };
+
   };
 
   users.users.root = { openssh.authorizedKeys.keys = pubKeys; };
