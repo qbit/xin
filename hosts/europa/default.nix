@@ -132,15 +132,9 @@ in {
           environmentFile = "${config.sops.secrets.restic_env_file.path}";
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
-          paths = [
-            "/home/qbit"
-          ];
+          paths = [ "/home/qbit" ];
 
-          pruneOpts = [
-            "--keep-daily 7"
-            "--keep-weekly 5"
-            "--keep-yearly 5"
-          ];
+          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5" ];
         };
       };
     };
