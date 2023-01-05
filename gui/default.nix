@@ -36,19 +36,18 @@ in with lib; {
         pcscd.enable = true;
       };
 
+      fonts.fonts = with pkgs; [
+        go-font
+        (callPackage ../pkgs/kurinto.nix { })
+      ];
+
       # TODO: TEMP FIX
       systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
         lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
 
       sound.enable = true;
       security.rtkit.enable = true;
-      environment.systemPackages = with pkgs; [
-        brave
-        go-font
-        vlc
-        pcsctools
-        rage
-      ];
+      environment.systemPackages = with pkgs; [ brave vlc pcsctools rage ];
 
       programs = {
         firejail = {

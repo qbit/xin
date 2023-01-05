@@ -5,14 +5,16 @@ stdenvNoCC.mkDerivation rec {
   version = "2.197";
 
   src = fetchzip {
-    url = "https://www.kurinto.com/zip/Kurinto_v${version}_Full.zip";
+    # Upstream re-rolled the same file name with changes so I am hosting on my site.
+    #url = "https://www.kurinto.com/zip/Kurinto_v${version}_Full.zip";
+    url = "https://deftly.net/Kurinto_v${version}_Full.zip";
     stripRoot = true;
-    sha256 = "sha256-ofROCmd4TeYmIfkbNGpg4qO4E80noAo+4LGDC/y90Dk=";
+    sha256 = "sha256-0tr2PyznTnipTVN6ydOxgvmCXj1WA7F696FtDmPBd+A=";
   };
 
   installPhase = ''
     mkdir -p $out/share/fonts/truetype
-    mv */Fonts/*.ttf $out/share/fonts/truetype
+    find . -name \*.ttf -exec cp {} $out/share/fonts/truetype/ \;
   '';
 
   dontBuild = true;
