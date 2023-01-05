@@ -42,6 +42,16 @@ in {
       group = "wheel";
       mode = "400";
     };
+    restic_password_file = {
+      sopsFile = config.xin-secrets.europa.services;
+      owner = "root";
+      mode = "400";
+    };
+    restic_env_file = {
+      sopsFile = config.xin-secrets.europa.services;
+      owner = "root";
+      mode = "400";
+    };
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -114,6 +124,26 @@ in {
   };
 
   services = {
+    restic = {
+      backups = {
+        local = {
+          initialize = true;
+          repository = "/run/media/qbit/backup/${config.networking.hostName}";
+          environmentFile = "${config.sops.secrets.restic_env_file.path}";
+          passwordFile = "${config.sops.secrets.restic_password_file.path}";
+
+          paths = [
+            "/home/qbit"
+          ];
+
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 5"
+            "--keep-yearly 5"
+          ];
+        };
+      };
+    };
     pcscd.enable = true;
     vnstat.enable = true;
     clamav.updater.enable = true;
