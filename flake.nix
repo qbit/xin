@@ -84,9 +84,8 @@
     , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, taskobs
     , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
     let
-      supportedSystems =
-        [ "x86_64-linux" ];
-        #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+      supportedSystems = [ "x86_64-linux" ];
+      #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
       nixpkgsFor = forAllSystems (system: import unstable { inherit system; });
       hostBase = {
@@ -303,9 +302,13 @@
       };
 
       # TODO: magicify this to be built of a list
-      checks.x86_64-linux.europa = self.nixosConfigurations.europa.config.system.build.toplevel;
-      checks.x86_64-linux.h = self.nixosConfigurations.h.config.system.build.toplevel;
-      checks.x86_64-linux.box = self.nixosConfigurations.box.config.system.build.toplevel;
-      checks.x86_64-linux.faf = self.nixosConfigurations.faf.config.system.build.toplevel;
+      checks.x86_64-linux.europa =
+        self.nixosConfigurations.europa.config.system.build.toplevel;
+      checks.x86_64-linux.h =
+        self.nixosConfigurations.h.config.system.build.toplevel;
+      checks.x86_64-linux.box =
+        self.nixosConfigurations.box.config.system.build.toplevel;
+      checks.x86_64-linux.faf =
+        self.nixosConfigurations.faf.config.system.build.toplevel;
     };
 }
