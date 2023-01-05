@@ -134,5 +134,6 @@ in {
         passwordAuthentication = false;
       };
     };
+    system.stateVersion = "21.11";
   };
 }
