@@ -147,7 +147,11 @@
           modules = hostBase.modules ++ extraMods ++ [{
             nix = {
               registry.nixpkgs.flake = sysBase;
-              nixPath = [ "nixpkgs=${sysBase}" ];
+              registry.stable.flake = stable;
+              registry.unstable.flake = unstable;
+              nixPath = [
+                "nixpkgs=${sysBase}"
+              ];
             };
           }] ++ [ buildVer (./. + "/hosts/${name}") ]
             ++ [{ nixpkgs.overlays = overlays; }];
