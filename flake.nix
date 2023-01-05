@@ -149,9 +149,7 @@
               registry.nixpkgs.flake = sysBase;
               registry.stable.flake = stable;
               registry.unstable.flake = unstable;
-              nixPath = [
-                "nixpkgs=${sysBase}"
-              ];
+              nixPath = [ "nixpkgs=${sysBase}" ];
             };
           }] ++ [ buildVer (./. + "/hosts/${name}") ]
             ++ [{ nixpkgs.overlays = overlays; }];

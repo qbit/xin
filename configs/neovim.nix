@@ -45,7 +45,14 @@ let
   else
     baseVimPackages ++ [ vimPlugins.vim-go ];
 in {
-  environment.systemPackages = with pkgs; [ go gopls gotools ripgrep fzf manix ];
+  environment.systemPackages = with pkgs; [
+    go
+    gopls
+    gotools
+    ripgrep
+    fzf
+    manix
+  ];
   programs.neovim = {
     enable = true;
     defaultEditor = true;
