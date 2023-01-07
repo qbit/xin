@@ -9,9 +9,17 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/4b758b9b-4c75-4658-9649-64a2ceba2a0b";
-    fsType = "ext4";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/4b758b9b-4c75-4658-9649-64a2ceba2a0b";
+      fsType = "ext4";
+    };
+    "/run/media/qbit/backup" = {
+      device = "/dev/disk/by-uuid/6e71eeea-6437-46f4-88d0-126c92af42ef";
+      fsType = "ext4";
+      label = "backup";
+      neededForBoot = false;
+    };
   };
 
   boot.initrd.luks.devices."luks-1f16b568-7726-44b6-b082-6b9d5e4d1972".device =
