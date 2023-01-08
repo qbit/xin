@@ -245,6 +245,11 @@
             inherit pkgs;
             isUnstable = true;
           };
+          icloudpd = pkgs.callPackage ./pkgs/icloudpd.nix {
+            inherit pkgs;
+            inherit (pkgs.python3Packages) buildPythonPackage;
+            inherit (pkgs) python3Packages;
+        };
           icbirc = pkgs.callPackage ./pkgs/icbirc.nix {
             inherit pkgs;
             isUnstable = true;
