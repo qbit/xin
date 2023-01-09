@@ -792,6 +792,11 @@ in {
     ReadOnlyPaths = [ "/etc/nixos/secrets" ];
   };
 
+  systemd.services.gitea.environment = {
+    GIT_CONFIG_NOGLOBAL = "true";
+    GIT_CONFIG_NOSYSTEM = "true";
+  };
+
   #systemd.services."nextcloud-setup" = {
   #  requires = [ "postgresql.service" ];
   #  after = [ "postgresql.service" ];
