@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = with pkgs; [
     gcc
     pkg-config
-    python
+    python3
     wafHook
     xorg.libXmu
     libGL
