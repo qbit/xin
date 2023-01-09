@@ -19,6 +19,7 @@ let
       inherit pkgs;
       inherit icbirc;
     });
+  goModuleHost = "https://git.sr.ht/~qbit";
 
 in {
   _module.args.isUnstable = false;
@@ -495,8 +496,8 @@ in {
                                       add_header X-Content-Type-Options nosniff;
                                       add_header Content-Type text/html;
                                       return 200 '<html><head>
-                                        <meta name="go-import" content="$host/$1 git https://git.sr.ht/~qbit/$1">
-                                        <meta name="go-source" content="$host/$1 _ https://git.sr.ht/~qbit/$1/tree/master{/dir} https://git.sr.ht/~qbit/$1/tree/master{/dir}/{file}#L{line}">
+                                        <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
+                                        <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
                                         <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
                                         </head>
                                         <body>
@@ -511,8 +512,8 @@ in {
                                       add_header X-Content-Type-Options nosniff;
                                       add_header Content-Type text/html;
                                       return 200 '<html><head>
-                                        <meta name="go-import" content="$host/$1 git https://git.sr.ht/~qbit/$1">
-                                        <meta name="go-source" content="$host/$1 _ https://git.sr.ht/~qbit/$1/tree/master{/dir} https://git.sr.ht/~qbit/$1/tree/master{/dir}/{file}#L{line}">
+                                        <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
+                                        <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
                                         <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
                                         </head>
                                         <body>
