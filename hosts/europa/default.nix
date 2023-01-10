@@ -219,6 +219,7 @@ in {
     rofi
     signal-desktop
     taskobs
+    tea
     tcpdump
     tidal-hifi
     tigervnc
