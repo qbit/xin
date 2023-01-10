@@ -230,6 +230,26 @@
         "type": "github"
       }
     },
+    "pots": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1673388834,
+        "narHash": "sha256-OYi/54PiapS3D619v7HXYmxONM0f58PzGtIwxCELGoo=",
+        "owner": "qbit",
+        "repo": "pots",
+        "rev": "0f70db9eada52548a6d3643af84254e479f5601f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "pots",
+        "type": "github"
+      }
+    },
     "reform": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -259,6 +279,7 @@
         "nixos-hardware": "nixos-hardware",
         "oldStable": "oldStable",
         "peerix": "peerix",
+        "pots": "pots",
         "reform": "reform",
         "sops-nix": "sops-nix",
         "sshKnownHosts": "sshKnownHosts",
@@ -458,11 +479,11 @@
         "stable": "stable_2"
       },
       "locked": {
-        "lastModified": 1672870873,
-        "narHash": "sha256-Tf3HDsF4wG86P8KGZlUwxcWvKBAxwECl6FWjss58Nm8=",
+        "lastModified": 1673388038,
+        "narHash": "sha256-7nSJr0AT3exO5EUb7tgS2nOL8QUJrLS+jWwPPKDWK3I=",
         "ref": "main",
-        "rev": "a544c1c9dde8609b0438d4a6f40c566c2f1501ff",
-        "revCount": 75,
+        "rev": "de51142ac4cab1ad56bb8a256ef09cec74682b94",
+        "revCount": 76,
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
