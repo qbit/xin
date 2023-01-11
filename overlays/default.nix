@@ -1,4 +1,25 @@
-{ self, config, pkgs, lib, isUnstable, ... }: {
+{ self, config, pkgs, lib, isUnstable, ... }:
+let
+  tailscale = self: super: {
+    tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
+      buildGoModule = args:
+        super.buildGo119Module (args // rec {
+          version = "1.34.2";
+          src = super.fetchFromGitHub {
+            owner = "tailscale";
+            repo = "tailscale";
+            rev = "v${version}";
+            sha256 = "sha256-uFr7swB7AQLvjDg+1KBCQuoLkDw454+gVe+6/iD74LM=";
+          };
+          vendorSha256 = "sha256-//qhvzZzaAqfcj4HZIy6ZkGyfAwtRdf7ARaXI+trTe0=";
+          ldflags = [
+            "-X tailscale.com/version.Long=${version}"
+            "-X tailscale.com/version.Short=${version}"
+          ];
+        });
+    };
+  };
+in {
   nixpkgs.overlays = if isUnstable then
     [
       (self: super: {
@@ -13,27 +34,27 @@
         });
       })
     ]
-  else
-    [
-      (self: super: {
-        matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-          version = "1.74.0";
-          src = super.fetchFromGitHub {
-            owner = "matrix-org";
-            repo = "synapse";
-            rev = "v${version}";
-            sha256 = "sha256-UsYodjykcLOgClHegqH598kPoGAI1Z8bLzV5LLE6yLg=";
-          };
+  else [
+    tailscale
+    (self: super: {
+      matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
+        version = "1.74.0";
+        src = super.fetchFromGitHub {
+          owner = "matrix-org";
+          repo = "synapse";
+          rev = "v${version}";
+          sha256 = "sha256-UsYodjykcLOgClHegqH598kPoGAI1Z8bLzV5LLE6yLg=";
+        };
 
-          cargoDeps = super.rustPlatform.fetchCargoTarball {
-            inherit (self) src;
-            name = "matrix-synapse-${version}";
-            sha256 = "sha256-XOW9DRUhGIs8x5tQ9l2A85sNv736uMmfC72f8FX3g/I=";
-          };
-        });
-      })
+        cargoDeps = super.rustPlatform.fetchCargoTarball {
+          inherit (self) src;
+          name = "matrix-synapse-${version}";
+          sha256 = "sha256-XOW9DRUhGIs8x5tQ9l2A85sNv736uMmfC72f8FX3g/I=";
+        };
+      });
+    })
 
-    ];
+  ];
 }
 
 # Example Python dep overlay
