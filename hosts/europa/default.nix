@@ -91,7 +91,7 @@ in {
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
-      checkReversePath = "loose";
+      checkReversePath = "strict";
     };
   };
 
