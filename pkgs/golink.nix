@@ -1,8 +1,6 @@
 { lib, buildGoModule, fetchFromGitHub, ... }:
 
-let vendorHash = "sha256-U3j5yiFhtYR0wvHD1U+DkYuFVt6NyEPlx7feLWfr3/Y=";
-
-in with lib;
+with lib;
 buildGoModule rec {
   pname = "golink";
   version = "0.0.0";
@@ -10,11 +8,11 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "tailscale";
     repo = pname;
-    rev = "5fefe2519ffd9f1c6a3dd86a764d69717ee66d20";
-    sha256 = "sha256-H4mwyQVFH/Yp6gIpN1o+L7S3Rupwbxl5CCLltcBh1Vk=";
+    rev = "3af59c51b849a19a01a47fe8bbad33dc16374201";
+    sha256 = "sha256-AAVX1G0ajN/G5IK4Xf7X8mrWj7LGblGCbd+x4BUZqrw=";
   };
 
-  vendorSha256 = vendorHash;
+  vendorSha256 = "sha256-U3j5yiFhtYR0wvHD1U+DkYuFVt6NyEPlx7feLWfr3/Y=";
 
   proxyVendor = true;
 
