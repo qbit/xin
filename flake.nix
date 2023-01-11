@@ -58,6 +58,10 @@
       url = "github:qbit/tsvnstat";
       inputs.nixpkgs.follows = "unstable";
     };
+    pots = {
+      url = "github:qbit/pots";
+      inputs.nixpkgs.follows = "unstable";
+    };
 
     mcchunkie = {
       url = "github:qbit/mcchunkie";
@@ -81,7 +85,7 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, taskobs
+    , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, pots, taskobs
     , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
     let
       supportedSystems = [ "x86_64-linux" ];
@@ -108,6 +112,7 @@
         inputs.taskobs.overlay
         inputs.reform.overlay
         inputs.gostart.overlay
+        inputs.pots.overlay
         inputs.talon.overlays.default
       ];
 
@@ -193,6 +198,7 @@
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule
+          pots.nixosModule
         ] "h";
         #router =
         #  buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
@@ -278,6 +284,7 @@
           rkvm = pkgs.callPackage ./pkgs/rkvm.nix { inherit pkgs; };
           inherit (xintray.packages.${system}) xintray;
           inherit (tsvnstat.packages.${system}) tsvnstat;
+          inherit (pots.packages.${system}) pots;
         });
 
       templates."ada" = {

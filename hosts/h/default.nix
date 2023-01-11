@@ -98,6 +98,11 @@ in {
       owner = config.users.users.gostart.name;
     };
     wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
+    pots_env_file = {
+      owner = config.users.users.pots.name;
+      mode = "400";
+      sopsFile = config.xin-secrets.h.services;
+    };
   };
 
   networking = {
@@ -201,6 +206,10 @@ in {
   };
 
   services = {
+    pots = {
+      enable = true;
+      envFile = "${config.sops.secrets.pots_env_file.path}";
+    };
     gostart = {
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
@@ -446,6 +455,15 @@ in {
           enableACME = true;
           root = "/var/www/suah.dev";
           extraConfig = ''
+                        location ~ ^/api {
+                                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                                proxy_set_header Host $host:$server_port;
+                                proxy_set_header X-Forwarded-Proto $scheme;
+                                proxy_set_header X-Forwarded-Ssl on;
+                                proxy_read_timeout 300;
+                                proxy_connect_timeout 300;
+                                proxy_pass http://127.0.0.1:8888; # pots
+                        }
                         location ~ ^/_got {
                                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                                 proxy_set_header Host $host:$server_port;
