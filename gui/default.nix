@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
+  rpr = pkgs.writeScriptBin "rpr" (import ../bins/rpr.nix {
+    inherit (pkgs) _1password;
+    inherit (pkgs) gh;
+    inherit (pkgs) tea;
+  });
 in with lib; {
   imports = [ ./gnome.nix ./kde.nix ./xfce.nix ./arcan.nix ];
 
@@ -47,7 +52,7 @@ in with lib; {
 
       sound.enable = true;
       security.rtkit.enable = true;
-      environment.systemPackages = with pkgs; [ brave vlc pcsctools rage ];
+      environment.systemPackages = with pkgs; [ brave vlc pcsctools rage rpr ];
 
       programs = {
         firejail = {

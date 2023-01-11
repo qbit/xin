@@ -12,17 +12,11 @@ let
     inherit gosignify;
     inherit (pkgs) curl;
   });
-  rpr = pkgs.writeScriptBin "rpr" (import ./rpr.nix {
-    inherit (pkgs) _1password;
-    inherit (pkgs) gh;
-    inherit (pkgs) tea;
-  });
 
 in {
   environment.systemPackages = with pkgs; [
     checkRestart
     ix
-    #rpr
     sfetch
     xclip
     xinStatus
