@@ -19,7 +19,7 @@ let
       inherit pkgs;
       inherit icbirc;
     });
-  goModuleHost = "https://git.sr.ht/~qbit";
+  goModuleHost = "https://codeberg.org/qbit"; #"https://git.sr.ht/~qbit";
 
 in {
   _module.args.isUnstable = false;
