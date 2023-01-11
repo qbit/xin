@@ -28,8 +28,8 @@ with lib; {
 
   config = mkMerge [
     (mkIf config.tailscale.enable {
-      services = { tailscale = { enable = true; }; };
-      networking.firewall.checkReversePath = "loose";
+      services = { tailscale = { enable = mkDefault true; }; };
+      networking.firewall.checkReversePath = mkDefault "loose";
     })
     (mkIf (config.tailscale.enable && config.tailscale.sshOnly) {
       sops.secrets = {
