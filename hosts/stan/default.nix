@@ -102,6 +102,7 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    rex
     barrier
     brave
     firefox
