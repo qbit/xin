@@ -20,21 +20,45 @@ let
     };
   };
 in {
-  nixpkgs.overlays = if isUnstable then
-    [
-      (self: super: {
-        aerc = super.aerc.overrideAttrs (old: {
-          patches = [
-            (pkgs.fetchurl {
-              url =
-                "https://lists.sr.ht/~rjarry/aerc-devel/%3C20221218160541.680374-1-moritz%40poldrack.dev%3E/raw";
-              sha256 = "sha256-qPRMOuPs5Pxiu2p08vGxsoO057Y1rVltPyBMbJXsH1s=";
-            })
-          ];
-        });
-      })
-    ]
-  else [
+  nixpkgs.overlays = if isUnstable then [
+    (self: super: {
+      rex = super.rex.overrideAttrs (old: {
+        patches = [
+          (pkgs.fetchurl {
+            url = "https://deftly.net/rex-git.diff";
+            sha256 = "sha256-hLzWJydIBxAVXLTcqYFTLuWnMgPwNE6aZ+4fDN4agrM=";
+          })
+        ];
+        nativeBuildInputs = with pkgs.perlPackages; [
+          ParallelForkManager
+          pkgs.installShellFiles
+        ];
+
+        outputs = [ "out" ];
+
+        fixupPhase = ''
+          substituteInPlace ./share/rex-tab-completion.zsh \
+            --replace 'perl' "${pkgs.perl}/bin/perl -I ${pkgs.perlPackages.YAML}/${pkgs.perlPackages.YAML.perlModule.libPrefix}"
+          substituteInPlace ./share/rex-tab-completion.bash \
+            --replace 'perl' "${pkgs.perl}/bin/perl -I ${pkgs.perlPackages.YAML}/${pkgs.perlPackages.YAML.perlModule.libPrefix}"
+          installShellCompletion --name _rex --zsh ./share/rex-tab-completion.zsh
+          installShellCompletion --name _rex --bash ./share/rex-tab-completion.bash
+        '';
+
+      });
+    })
+    (self: super: {
+      aerc = super.aerc.overrideAttrs (old: {
+        patches = [
+          (pkgs.fetchurl {
+            url =
+              "https://lists.sr.ht/~rjarry/aerc-devel/%3C20221218160541.680374-1-moritz%40poldrack.dev%3E/raw";
+            sha256 = "sha256-qPRMOuPs5Pxiu2p08vGxsoO057Y1rVltPyBMbJXsH1s=";
+          })
+        ];
+      });
+    })
+  ] else [
     tailscale
     (self: super: {
       matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {

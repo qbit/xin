@@ -191,6 +191,7 @@ in {
     git-credential-1password
     arcanPackages.all-wrapped
     barrier
+    rex
     calibre
     cider
     cinny-desktop
