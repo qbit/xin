@@ -5,6 +5,30 @@ let
     config.users.users.peerix.name
   else
     "root";
+  jobs = [
+    {
+      name = "brain";
+      script = ". /etc/profile; (cd ~/Brain && git sync) >/dev/null 2>&1";
+      startAt = "*:0/2";
+    }
+    {
+      name = "org";
+      script = ". /etc/profile; (cd ~/org && git sync) >/dev/null 2>&1";
+      startAt = "*:0/5";
+    }
+    {
+      name = "taskobs";
+      script = ". /etc/profile; taskobs";
+      startAt = "*:0/30";
+    }
+  ];
+  jobToService = job: {
+    name = "${job.name}";
+    value = {
+      inherit (job) startAt;
+      inherit (job) script;
+    };
+  };
 in {
   _module.args.isUnstable = true;
 
@@ -150,15 +174,6 @@ in {
       enable = true;
       client.enable = true;
     };
-    #cron = {
-    #  enable = true;
-    #  systemCronJobs = [
-    #    "*/2 * * * *  qbit  . /etc/profile; (cd ~/Brain && git sync) >/dev/null 2>&1"
-    #    "*/5 * * * *  qbit  . /etc/profile; (cd ~/org && git sync) >/dev/null 2>&1"
-    #    "*/30 * * * *  qbit  . /etc/profile; taskobs"
-    #  ];
-    #};
-
     fwupd = {
       enable = true;
       enableTestRemote = true;
@@ -168,6 +183,8 @@ in {
       SUBSYSTEM=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="5bf0", GROUP="users", TAG+="uaccess"
     '';
   };
+
+  systemd.user.services = lib.listToAttrs (builtins.map jobToService jobs);
 
   virtualisation.docker.enable = true;
   users.users.qbit.extraGroups = [ "dialout" "libvirtd" "docker" ];
