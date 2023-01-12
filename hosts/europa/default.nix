@@ -5,28 +5,35 @@ let
     config.users.users.peerix.name
   else
     "root";
+  gitSync = "${pkgs.git-sync}/bin/git-sync";
+  mkCronScript = name: src: ''
+    . /etc/profile;
+    set -x
+    # autogenreated ${name}
+    ${src}
+  '';
   jobs = [
     {
       name = "brain";
-      script = ". /etc/profile; (cd ~/Brain && git sync) >/dev/null 2>&1";
+      script = "cd ~/Brain && ${gitSync}";
       startAt = "*:0/2";
     }
     {
       name = "org";
-      script = ". /etc/profile; (cd ~/org && git sync) >/dev/null 2>&1";
+      script = "(cd ~/org && ${gitSync})";
       startAt = "*:0/5";
     }
     {
       name = "taskobs";
-      script = ". /etc/profile; taskobs";
+      script = "${pkgs.taskobs}/bin/taskobs";
       startAt = "*:0/30";
     }
   ];
   jobToService = job: {
     name = "${job.name}";
     value = {
+      script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt;
-      inherit (job) script;
     };
   };
 in {
