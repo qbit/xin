@@ -392,11 +392,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1666015562,
-        "narHash": "sha256-7fUePJy+u+olCsXVHHthMOoiK+Ky6Eki0PNTOKOjeOw=",
+        "lastModified": 1673627256,
+        "narHash": "sha256-r5aMEiVtBrzcBEzUwpuYlsr518p0PGVR5+LhtLy+iZI=",
         "owner": "qbit",
         "repo": "taskobs",
-        "rev": "99c579a752d37664dc6b706fbb8cf453571d82b7",
+        "rev": "1b615b1af5cb2ea08b041b3190ce2b67bd56c2f3",
         "type": "github"
       },
       "original": {
