@@ -5,7 +5,6 @@ let
     config.users.users.peerix.name
   else
     "root";
-  gitSync = "${pkgs.git-sync}/bin/git-sync";
   mkCronScript = name: src: ''
     . /etc/profile;
     set -x
@@ -15,18 +14,21 @@ let
   jobs = [
     {
       name = "brain";
-      script = "cd ~/Brain && ${gitSync}";
+      script = "cd ~/Brain && git sync";
       startAt = "*:0/2";
+      path = [ pkgs.git pkgs.git-sync ];
     }
     {
       name = "org";
-      script = "(cd ~/org && ${gitSync})";
+      script = "(cd ~/org && git sync)";
       startAt = "*:0/5";
+      path = [ pkgs.git pkgs.git-sync ];
     }
     {
       name = "taskobs";
-      script = "${pkgs.taskobs}/bin/taskobs";
+      script = "taskobs";
       startAt = "*:0/30";
+      path = [ pkgs.perl pkgs.taskobs ];
     }
   ];
   jobToService = job: {
@@ -34,6 +36,7 @@ let
     value = {
       script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt;
+      inherit (job) path;
     };
   };
 in {
