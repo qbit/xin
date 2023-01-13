@@ -29,7 +29,6 @@ let
     nvim-tree-lua
     rust-vim
     telescope-fzf-native-nvim
-    telescope-manix
     telescope-nvim
     vimagit
     vim-gitgutter
@@ -43,7 +42,7 @@ let
   myVimPackages = if pkgs.system == "aarch64-linux" then
     baseVimPackages
   else
-    baseVimPackages ++ [ vimPlugins.vim-go ];
+    baseVimPackages ++ [ vimPlugins.vim-go vimPlugins.telescope-manix ];
 in {
   environment.systemPackages = with pkgs; [
     go

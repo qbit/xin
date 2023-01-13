@@ -28,7 +28,7 @@ let
       name = "taskobs";
       script = "taskobs";
       startAt = "*:0/30";
-      path = [ pkgs.perl pkgs.taskobs ];
+      path = [ pkgs.taskobs ] ++ pkgs.taskobs.buildInputs;
     }
   ];
   jobToService = job: {

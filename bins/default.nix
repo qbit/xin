@@ -7,9 +7,8 @@ let
     (import ./check-restart.nix { inherit (pkgs) perl; });
   xinStatus = pkgs.writeScriptBin "xin-status"
     (import ./xin-status.nix { inherit (pkgs) perl perlPackages; });
-  tstart = pkgs.writeScriptBin "tstart" (import ./tstart.nix {
-    inherit (pkgs) tmux;
-  });
+  tstart =
+    pkgs.writeScriptBin "tstart" (import ./tstart.nix { inherit (pkgs) tmux; });
   sfetch = pkgs.writeScriptBin "sfetch" (import ./sfetch.nix {
     inherit gosignify;
     inherit (pkgs) curl;
