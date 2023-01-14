@@ -273,6 +273,7 @@
             inherit (pkgs.python39Packages) requests;
           };
           golink = pkgs.callPackage ./pkgs/golink.nix { inherit pkgs; };
+          gokrazy = pkgs.callPackage ./pkgs/gokrazy.nix { inherit pkgs; };
           gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit pkgs; };
           gotosocial = pkgs.callPackage ./pkgs/gotosocial.nix { inherit pkgs; };
           govulncheck =
