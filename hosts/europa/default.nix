@@ -258,6 +258,7 @@ in {
 
     talon
 
+    (callPackage ../../pkgs/gokrazy.nix { })
     (callPackage ../../pkgs/zutty.nix { })
   ];
 
