@@ -38,9 +38,13 @@ in {
 
         fixupPhase = ''
           substituteInPlace ./share/rex-tab-completion.zsh \
-            --replace 'perl' "${pkgs.perl.withPackages (ps: [ ps.YAML ])}/bin/perl"
+            --replace 'perl' "${
+              pkgs.perl.withPackages (ps: [ ps.YAML ])
+            }/bin/perl"
           substituteInPlace ./share/rex-tab-completion.bash \
-            --replace 'perl' "${pkgs.perl.withPackages (ps: [ ps.YAML ])}/bin/perl"
+            --replace 'perl' "${
+              pkgs.perl.withPackages (ps: [ ps.YAML ])
+            }/bin/perl"
           installShellCompletion --name _rex --zsh ./share/rex-tab-completion.zsh
           installShellCompletion --name _rex --bash ./share/rex-tab-completion.bash
         '';
