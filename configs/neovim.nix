@@ -21,6 +21,19 @@ let
       sha256 = "sha256-eea0Ntr3gCmF6iZ0adZaVswWH70K9IJZ4SAyVSdFp3E=";
     };
   };
+  mind = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+    pname = "mind.nvim";
+    version = "2.2.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "phaazon";
+      repo = pname;
+      rev = "79e0ca131d5e37dfa65f3f0e725d99742e4ff783";
+      sha256 = "sha256-y64F9v7Ggzagmz2p2EYTdtKDuGyA19xYXqW92S0tRj0=";
+    };
+    nativeBuildBuildInputs = with vimPlugins; [
+      plenary-nvim
+    ];
+  };
   baseVimPackages = with vimPlugins; [
     fugitive
     fzf-vim
@@ -32,12 +45,14 @@ let
     telescope-nvim
     vimagit
     vim-gitgutter
+    vim-lua
     vim-nix
     vim-ocaml
     zig-vim
 
     parchment
     vacme
+    mind
   ];
   myVimPackages = if pkgs.system == "aarch64-linux" then
     baseVimPackages
@@ -45,12 +60,14 @@ let
     baseVimPackages ++ [ vimPlugins.vim-go vimPlugins.telescope-manix ];
 in {
   environment.systemPackages = with pkgs; [
+    fzf
     go
     gopls
     gotools
-    ripgrep
-    fzf
+    luaformatter
     manix
+    ripgrep
+    sumneko-lua-language-server
   ];
   programs.neovim = {
     enable = true;
