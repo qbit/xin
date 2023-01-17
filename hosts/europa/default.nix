@@ -263,6 +263,7 @@ in {
     unzip
     virt-manager
     yt-dlp
+    yubioath-flutter
     zig
 
     talon
