@@ -68,6 +68,7 @@ in {
     manix
     ripgrep
     sumneko-lua-language-server
+    rubyPackages.solargraph
   ];
   programs.neovim = {
     enable = true;
