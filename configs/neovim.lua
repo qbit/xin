@@ -59,6 +59,7 @@ local lspc = require("lspconfig")
 lspc.gopls.setup {};
 lspc.nil_ls.setup {};
 lspc.sumneko_lua.setup {};
+lspc.solargraph.setup {};
 
 o.hlsearch = true;
 
