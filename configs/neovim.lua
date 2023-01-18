@@ -50,7 +50,16 @@ require("nvim-tree").setup({
 	},
 })
 
-require 'mind'.setup()
+require('mind').setup()
+require("obsidian").setup({
+  dir = "~/Brain",
+  daily_notes = {
+    folder = "Daily",
+  },
+  completion = {
+    nvim_cmp = false,
+  }
+})
 
 cmd [[highlight NvimTreeOpenedFolderName guifg=default]]
 cmd [[highlight NvimTreeFolderName guifg=default]]
@@ -70,13 +79,13 @@ map('n', '<leader>s', ':%s/\\s\\+$//e', { noremap = true })
 map('n', '<leader>fm', ':Telescope manix<CR>', {})
 map('n', '<leader>mo', ':MindOpenMain<CR>', {})
 map('n', '<leader>mp', ':MindOpenProject<CR>', {})
+map('n', '<leader>ot', ':ObsidianToday<CR>', {})
 
 map('n', '<leader>1', ':GitGutterToggle<CR>', { noremap = true })
 map('n', '<leader>2', ':set list!<CR>', { noremap = true })
 map('n', '<leader>3', ':set nu!<CR>', { noremap = true })
 map('n', '<leader>4', ':set paste!<CR>', { noremap = true })
 vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})

@@ -21,6 +21,21 @@ let
       sha256 = "sha256-eea0Ntr3gCmF6iZ0adZaVswWH70K9IJZ4SAyVSdFp3E=";
     };
   };
+  obsidian = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+    pname = "obsidian-nvim";
+    version = "1.6.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "epwalsh";
+      repo = "obsidian.nvim";
+      rev = "v${version}";
+      sha256 = "sha256-2VxDk5FHpVMxPR/or9ZsaaDOLlaraOHJoN7C8JI0+24=";
+      fetchSubmodules = true;
+    };
+    dependencies = with vimPlugins; [
+      nvim-cmp
+      tabular
+    ];
+  };
   mind = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
     pname = "mind.nvim";
     version = "2.2.1";
@@ -30,7 +45,7 @@ let
       rev = "79e0ca131d5e37dfa65f3f0e725d99742e4ff783";
       sha256 = "sha256-y64F9v7Ggzagmz2p2EYTdtKDuGyA19xYXqW92S0tRj0=";
     };
-    nativeBuildBuildInputs = with vimPlugins; [
+    dependencies = with vimPlugins; [
       plenary-nvim
     ];
   };
@@ -41,11 +56,13 @@ let
     nvim-lspconfig
     nvim-tree-lua
     rust-vim
+    obsidian
     telescope-fzf-native-nvim
     telescope-nvim
     vimagit
     vim-gitgutter
     vim-lua
+    vim-markdown
     vim-nix
     vim-ocaml
     zig-vim
