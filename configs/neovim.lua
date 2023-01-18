@@ -68,6 +68,8 @@ map('n', '<C-p>', ':Files<CR>', { noremap = true })
 map('n', '<leader>r', ':NvimTreeRefresh<CR>', { noremap = true })
 map('n', '<leader>s', ':%s/\\s\\+$//e', { noremap = true })
 map('n', '<leader>fm', ':Telescope manix<CR>', {})
+map('n', '<leader>mo', ':MindOpenMain<CR>', {})
+map('n', '<leader>mp', ':MindOpenProject<CR>', {})
 
 map('n', '<leader>1', ':GitGutterToggle<CR>', { noremap = true })
 map('n', '<leader>2', ':set list!<CR>', { noremap = true })

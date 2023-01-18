@@ -256,8 +256,9 @@ in {
     rofi
     signal-desktop
     taskobs
-    tea
     tcpdump
+    tea
+    thunderbird
     tidal-hifi
     tigervnc
     unzip
