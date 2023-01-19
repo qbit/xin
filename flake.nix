@@ -79,7 +79,7 @@
     };
 
     talon = {
-      url = "github:qbit/talon-nix";
+      url = "github:nix-community/talon-nix";
       inputs.nixpkgs.follows = "unstable";
     };
   };
