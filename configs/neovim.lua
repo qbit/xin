@@ -50,7 +50,6 @@ require("nvim-tree").setup({
 	},
 })
 
-require('mind').setup()
 require("obsidian").setup({
   dir = "~/Brain",
   daily_notes = {

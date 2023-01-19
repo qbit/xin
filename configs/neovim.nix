@@ -36,19 +36,6 @@ let
       tabular
     ];
   };
-  mind = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
-    pname = "mind.nvim";
-    version = "2.2.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "phaazon";
-      repo = pname;
-      rev = "79e0ca131d5e37dfa65f3f0e725d99742e4ff783";
-      sha256 = "sha256-y64F9v7Ggzagmz2p2EYTdtKDuGyA19xYXqW92S0tRj0=";
-    };
-    dependencies = with vimPlugins; [
-      plenary-nvim
-    ];
-  };
   baseVimPackages = with vimPlugins; [
     fugitive
     fzf-vim
@@ -69,7 +56,6 @@ let
 
     parchment
     vacme
-    mind
   ];
   myVimPackages = if pkgs.system == "aarch64-linux" then
     baseVimPackages
