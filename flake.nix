@@ -272,6 +272,8 @@
             inherit (pkgs.python39Packages) progressbar2;
             inherit (pkgs.python39Packages) requests;
           };
+          tailscaleSystray =
+            pkgs.callPackage ./pkgs/tailscale-systray.nix { inherit pkgs; };
           golink = pkgs.callPackage ./pkgs/golink.nix { inherit pkgs; };
           gokrazy = pkgs.callPackage ./pkgs/gokrazy.nix { inherit pkgs; };
           gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit pkgs; };
