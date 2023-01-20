@@ -477,8 +477,8 @@ in {
         rocketPort = 8222;
         rocketAddress = "192.168.112.4"; # wg0
         rocketLog = "critical";
-        environmentFile = "/run/secrets/bitwarden_rs.env";
       };
+      environmentFile = config.sops.secrets."bitwarden_rs.env".path;
     };
 
     gitea = {

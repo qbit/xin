@@ -20,6 +20,11 @@ let
       inherit icbirc;
     });
   goModuleHost = "https://codeberg.org/qbit"; # "https://git.sr.ht/~qbit";
+  httpAllow = ''
+    allow	10.6.0.0/24;
+    allow	100.64.0.0/10;
+    allow	10.20.30.1/32;
+  '';
 
 in {
   _module.args.isUnstable = false;
@@ -447,6 +452,12 @@ in {
           locations."/" = {
             proxyPass = "http://192.168.112.4:8222";
             proxyWebsockets = true;
+          };
+          locations."/admin" = {
+            extraConfig = ''
+              	      ${httpAllow}
+                      deny	all;
+            '';
           };
         };
 
