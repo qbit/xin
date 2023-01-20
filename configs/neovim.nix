@@ -31,10 +31,7 @@ let
       sha256 = "sha256-2VxDk5FHpVMxPR/or9ZsaaDOLlaraOHJoN7C8JI0+24=";
       fetchSubmodules = true;
     };
-    dependencies = with vimPlugins; [
-      nvim-cmp
-      tabular
-    ];
+    dependencies = with vimPlugins; [ nvim-cmp tabular ];
   };
   baseVimPackages = with vimPlugins; [
     fugitive

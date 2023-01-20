@@ -62,9 +62,8 @@ in {
         ];
       });
     })
-  ] else [
-    tailscale
-  ];
+  ] else
+    [ tailscale ];
 }
 
 # Example Python dep overlay
