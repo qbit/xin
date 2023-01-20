@@ -52,7 +52,14 @@ in with lib; {
 
       sound.enable = true;
       security.rtkit.enable = true;
-      environment.systemPackages = with pkgs; [ brave vlc pcsctools rage rpr ];
+      environment.systemPackages = with pkgs; [
+        brave
+        vlc
+        pcsctools
+        rage
+        rpr
+        (callPackage ../pkgs/tailscale-systray.nix { })
+      ];
 
       programs = {
         firejail = {
