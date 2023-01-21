@@ -7,6 +7,15 @@ let
     command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
   gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit isUnstable; };
+  inFluxSSHOptions = if isUnstable then {
+    settings = {
+      PermitRootLogin = "prohibit-password";
+      PasswordAuthentication = false;
+    };
+  } else {
+    permitRootLogin = "prohibit-password";
+    passwordAuthentication = false;
+  };
 in {
   imports = [
     ./configs/colemak.nix
@@ -174,15 +183,13 @@ in {
     services = {
       openssh = {
         enable = true;
-        permitRootLogin = "prohibit-password";
-        passwordAuthentication = false;
         kexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
         macs = [
           "hmac-sha2-512-etm@openssh.com"
           "hmac-sha2-256-etm@openssh.com"
           "umac-128-etm@openssh.com"
         ];
-      };
+      } // inFluxSSHOptions;
     };
   };
 }
