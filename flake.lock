@@ -372,11 +372,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1671197098,
-        "narHash": "sha256-MZwBfeERO8xv7m5RvO2N80FU2hJXLajc12exYtZDw9s=",
+        "lastModified": 1674481533,
+        "narHash": "sha256-aMrexhFzVJKFB2PKUjjJiJCCNDTyCWFDHlhjFNAuHFg=",
         "owner": "qbit",
         "repo": "talon-nix",
-        "rev": "8a0d0e31524319b7a32e9143e9e93562f45dfcd2",
+        "rev": "52b4568e186691624db941517418e165b6ff0e9f",
         "type": "github"
       },
       "original": {
