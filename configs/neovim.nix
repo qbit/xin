@@ -33,6 +33,17 @@ let
     };
     dependencies = with vimPlugins; [ nvim-cmp tabular ];
   };
+  neogen = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+    pname = "neogen";
+    version = "2023-01-16";
+    src = pkgs.fetchFromGitHub {
+      owner = "danymat";
+      repo = pname;
+      rev = "465af9d6c6fb7f360175991dcc23fc10917e3a06";
+      sha256 = "sha256-I8vlVDSJQqFfLkqRS8lwdVAEUxKwi+IKSGFVqZ6l2SE=";
+      fetchSubmodules = true;
+    };
+  };
   baseVimPackages = with vimPlugins; [
     fugitive
     fzf-vim
@@ -40,7 +51,6 @@ let
     nvim-lspconfig
     nvim-tree-lua
     rust-vim
-    obsidian
     telescope-fzf-native-nvim
     telescope-nvim
     vimagit
@@ -50,7 +60,10 @@ let
     vim-nix
     vim-ocaml
     zig-vim
+    nvim-treesitter.withAllGrammars
 
+    neogen
+    obsidian
     parchment
     vacme
   ];
