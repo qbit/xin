@@ -1,7 +1,7 @@
 {
   description = "thing: stuff and things";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "nixpkgs/nixos-22.11";
 
   outputs = { self, nixpkgs }:
     let
