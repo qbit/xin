@@ -60,6 +60,9 @@ require("obsidian").setup({
   }
 })
 
+require'nvim-treesitter.configs'.setup({})
+require('neogen').setup({})
+
 cmd [[highlight NvimTreeOpenedFolderName guifg=default]]
 cmd [[highlight NvimTreeFolderName guifg=default]]
 
@@ -74,6 +77,7 @@ o.hlsearch = true;
 map('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
 map('n', '<C-p>', ':Files<CR>', { noremap = true })
 map('n', '<leader>r', ':NvimTreeRefresh<CR>', { noremap = true })
+map('n', '<leader>n', ':Neogen<CR>', { noremap = true })
 map('n', '<leader>s', ':%s/\\s\\+$//e', { noremap = true })
 map('n', '<leader>fm', ':Telescope manix<CR>', {})
 map('n', '<leader>mo', ':MindOpenMain<CR>', {})
