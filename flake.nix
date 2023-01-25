@@ -285,6 +285,7 @@
             isUnstable = true;
           };
           rkvm = pkgs.callPackage ./pkgs/rkvm.nix { inherit pkgs; };
+          lunatask = pkgs.callPackage ./pkgs/lunatask.nix { inherit pkgs; };
           inherit (xintray.packages.${system}) xintray;
           inherit (tsvnstat.packages.${system}) tsvnstat;
           inherit (pots.packages.${system}) pots;
