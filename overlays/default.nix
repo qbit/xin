@@ -21,6 +21,7 @@ let
   };
 in {
   nixpkgs.overlays = if isUnstable then [
+    tailscale
     (self: super: {
       rex = super.rex.overrideAttrs (old: {
         patches = [
