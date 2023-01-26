@@ -110,6 +110,7 @@ in {
     google-chrome-dev
     ispell
     keychain
+    mattermost-desktop
     mosh
     mupdf
     nmap
