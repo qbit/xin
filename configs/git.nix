@@ -1,6 +1,12 @@
 { config, pkgs, isUnstable, ... }:
+let
+  rewriteGitHub = if config.networking.hostName != "stan" then {
+    url = { "ssh://git@github.com/" = { insteadOf = "https://github.com/"; }; };
+  } else {
+    url = { };
+  };
 
-{
+in {
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -49,11 +55,7 @@
       { fetch = { fsckobjects = true; }; }
       { github = { user = "qbit"; }; }
 
-      {
-        url = {
-          "ssh://git@github.com/" = { insteadOf = "https://github.com/"; };
-        };
-      }
+      { inherit (rewriteGitHub) url; }
 
       {
         sendmail = {
