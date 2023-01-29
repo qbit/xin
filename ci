@@ -13,7 +13,8 @@ else
 	tmux -2 new-session -d ${SESS}
 fi
 
-tmux -2 attach-session -t "$NAME" "./ci run"
+tmux -t "$NAME" send "./ci run" ENTER
+tmux -2 attach-session -t "$NAME"
 
 trap ci_error INT TERM
 
