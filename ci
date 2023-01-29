@@ -13,7 +13,6 @@ else
 	tmux -2 new-session -d ${SESS}
 fi
 
-tmux send "./ci run" ENTER
 tmux -2 attach-session -t "$NAME"
 
 trap ci_error INT TERM
@@ -34,4 +33,6 @@ if [ "$1" = "run" ]; then
 	git checkout -b "${ci_branch}" || handle_co_fail
 	nix flake update --commit-lock-file || handle_update_fail
 	nix flake check || handle_check_fail
+else
+	tmux send "./ci run" ENTER
 fi
