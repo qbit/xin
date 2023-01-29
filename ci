@@ -9,7 +9,7 @@ set -x
 NAME="CI"
 
 if ! tmux ls | grep -q "^${NAME}:"; then
-	tmux -2 new-session -d -s ${NAME} "./ci run"
+	tmux -2 new-session -d -s ${NAME}
 fi
 
 tmux -2 attach-session -t $NAME
@@ -32,4 +32,8 @@ if [ "$CMD" = "run" ]; then
 	git checkout -b "${ci_branch}" || handle_co_fail
 	nix flake update --commit-lock-file || handle_update_fail
 	nix flake check || handle_check_fail
+else
+	echo 'running "./ci run"'
+	tmux select-window -t "=${NAME}:0"
+	tmux send-keys -t "=${NAME}:0" "./ci run" ENTER
 fi
