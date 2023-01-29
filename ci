@@ -34,6 +34,6 @@ if [ "$CMD" = "run" ]; then
 	nix flake check || handle_check_fail
 else
 	echo 'running "./ci run"'
-	tmux select-window -t "=${NAME}:0"
-	tmux send-keys -t "=${NAME}:0" "./ci run" ENTER
+	tmux select-window -t "${NAME}:0"
+	tmux send-keys -t "${NAME}:0" "./ci run" ENTER
 fi
