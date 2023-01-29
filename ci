@@ -2,6 +2,8 @@
 
 . ./common.sh
 
+CMD=${1:-""}
+
 set -eu
 
 NAME="CI"
@@ -17,7 +19,7 @@ tmux -2 attach-session -t "$NAME"
 
 trap ci_error INT TERM
 
-if [ "$1" = "run" ]; then
+if [ "$CMD" = "run" ]; then
 	ci_branch=$(date +"%Y%m%dT%H%M%S%z")
 	can_sign=0
 
