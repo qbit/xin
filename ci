@@ -4,16 +4,15 @@
 
 CMD=${1:-""}
 
-set -eu
+set -eux
 
 NAME="CI"
-SESS="-s ${NAME}"
 
 if ! tmux ls | grep -q "^${NAME}:"; then
-	tmux -2 new-session -d -s "${NAME}"
+	tmux -2 new-session -d -s ${NAME}
 fi
 
-tmux -2 attach-session -t "$NAME"
+tmux -2 attach-session -t $NAME
 
 trap ci_error INT TERM
 
