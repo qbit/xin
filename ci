@@ -14,9 +14,9 @@ fi
 
 tmux -2 attach-session -t $NAME
 
-trap ci_error INT TERM
-
 if [ "$CMD" = "run" ]; then
+	trap ci_error INT TERM
+
 	ci_branch=$(date +"%Y%m%dT%H%M%S%z")
 	can_sign=0
 
@@ -33,6 +33,7 @@ if [ "$CMD" = "run" ]; then
 	nix flake update --commit-lock-file || handle_update_fail
 	nix flake check || handle_check_fail
 else
+	echo 'running "./ci run"'
 	tmux select-window -t "=${NAME}:0"
 	tmux send-keys -t "=${NAME}:0" "./ci run" ENTER
 fi
