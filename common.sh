@@ -1,3 +1,4 @@
+. /run/secrets/po_env
 NIX_SSHOPTS="-i /run/secrets/manager_pubkey -oIdentitiesOnly=yes -oControlPath=/tmp/manager-ssh-%r@%h:%p -F/dev/null"
 SSH="ssh ${NIX_SSHOPTS}"
 CurrentVersion="$(git rev-parse HEAD)"
@@ -53,6 +54,17 @@ error() {
 	exit 1
 }
 
+ci_error() {
+	git reset --hard HEAD
+	git clean -fd
+	git checkout main
+}
+
+po_error() {
+	po -title "$1" -body "$2"
+	error
+}
+
 start() {
 	agentHasKey "$(cat /run/secrets/manager_pubkey | awk '{print $2}')" ||
 		ssh-add /run/secrets/manager_key
@@ -61,4 +73,16 @@ start() {
 finish() {
 	ssh-add -d /run/secrets/manager_key
 	exit 0
+}
+
+handle_co_fail() {
+	po_error "Failed to checkout CI branch!" "Pelase help!"
+}
+
+handle_update_fail() {
+	po_error "Failed to update flake inputs!" "Pelase help!"
+}
+
+handle_check_fail() {
+	po_error "Failed to update pass flake checks!" "Pelase help!"
 }

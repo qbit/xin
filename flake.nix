@@ -62,6 +62,10 @@
       url = "github:qbit/pots";
       inputs.nixpkgs.follows = "unstable";
     };
+    po = {
+      url = "github:qbit/po";
+      inputs.nixpkgs.follows = "unstable";
+    };
 
     mcchunkie = {
       url = "github:qbit/mcchunkie";
@@ -85,8 +89,9 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, pots, taskobs
-    , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
+    , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, pots, po
+    , taskobs, mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ...
+    }@inputs:
     let
       supportedSystems = [ "x86_64-linux" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
@@ -288,6 +293,7 @@
           inherit (xintray.packages.${system}) xintray;
           inherit (tsvnstat.packages.${system}) tsvnstat;
           inherit (pots.packages.${system}) pots;
+          inherit (po.packages.${system}) po;
         });
 
       templates."ada" = {
