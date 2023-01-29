@@ -9,10 +9,8 @@ set -eu
 NAME="CI"
 SESS="-s ${NAME}"
 
-if tmux ls | grep -q "^${NAME}:"; then
-	tmux -u2 at -t "${NAME}"
-else
-	tmux -2 new-session -d ${SESS}
+if ! tmux ls | grep -q "^${NAME}:"; then
+	tmux -2 new-session -d -s "${NAME}"
 fi
 
 tmux -2 attach-session -t "$NAME"
