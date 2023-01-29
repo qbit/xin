@@ -64,7 +64,7 @@ ci_error() {
 
 po_error() {
 	po -title "$1" -body "$2"
-	error
+	ci_error
 }
 
 start() {
