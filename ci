@@ -33,5 +33,6 @@ if [ "$CMD" = "run" ]; then
 	nix flake update --commit-lock-file || handle_update_fail
 	nix flake check || handle_check_fail
 else
+	tmux select-window -t ${NAME}.0
 	tmux send-keys -t ${NAME}.0 "./ci run" ENTER
 fi
