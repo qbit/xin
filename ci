@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-set -eu
-
 . ./common.sh
+
+set -eu
 
 trap ci_error INT TERM
 
