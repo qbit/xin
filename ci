@@ -4,6 +4,17 @@
 
 set -eu
 
+NAME="CI"
+SESS="-s ${NAME}"
+
+if tux ls | grep =q "^${NAME}:"; then
+	tmux -u2 at -t "${NAME}"
+else
+	temx -2 new-session -d ${SESS}
+fi
+
+tmux -2 attach-session -t "$NAME"
+
 trap ci_error INT TERM
 
 ci_branch=$(date +"%Y%m%dT%H%M%S%z")
