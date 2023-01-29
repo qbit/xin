@@ -78,13 +78,13 @@ finish() {
 }
 
 handle_co_fail() {
-	po_error "Failed to checkout CI branch!" "Pelase help!"
+	po_error "CI: git checkout failed!" "Pelase help!"
 }
 
 handle_update_fail() {
-	po_error "Failed to update flake inputs!" "Pelase help!"
+	po_error "CI: flake input update failed!" "Pelase help!"
 }
 
 handle_check_fail() {
-	po_error "Failed to update pass flake checks!" "Pelase help!"
+	po_error "CI: flake checks failed!" "Pelase help!"
 }
