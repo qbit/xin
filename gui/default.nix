@@ -53,6 +53,7 @@ in with lib; {
       sound.enable = true;
       security.rtkit.enable = true;
 
+      # https://github.com/NixOS/nixpkgs/pull/213593
       nixpkgs.config.permittedInsecurePackages = [
         "electron-18.1.0" # obsidian
       ];
