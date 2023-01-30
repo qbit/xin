@@ -52,6 +52,11 @@ in with lib; {
 
       sound.enable = true;
       security.rtkit.enable = true;
+
+      nixpkgs.config.permittedInsecurePackages = [
+        "electron-18.1.0" # obsidian
+      ];
+
       environment.systemPackages = with pkgs; [
         brave
         vlc
