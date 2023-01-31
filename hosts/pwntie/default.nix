@@ -55,6 +55,11 @@ in {
 
   environment.systemPackages = with pkgs; [ neovim nixfmt jq ];
 
+  xinCI = {
+    user = "qbit";
+    enable = true;
+  };
+
   services = {
     emacs = {
       enable = true;

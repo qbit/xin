@@ -18,6 +18,7 @@ let
   };
 in {
   imports = [
+    ./configs/ci.nix
     ./configs/colemak.nix
     ./configs/develop.nix
     ./configs/dns.nix
@@ -127,6 +128,16 @@ in {
         "net.ipv4.tcp_keepalive_time" = 60;
         "net.ipv6.tcp_keepalive_time" = 60;
       };
+    };
+
+    nix = {
+      settings = if config.networking.hostName != "pwntie" then {
+        substituters = [ "https://nix-binary-cache.humpback-trout.ts.net/" ];
+        trusted-public-keys = [
+          "nix-binary-cache.humpback-trout.ts.net:e9fJhcRtNVp6miW2pffFyK/gZ2et4y6IDigBNrEsAa0="
+        ];
+      } else
+        { };
     };
 
     environment.systemPackages = with pkgs;
