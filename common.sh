@@ -72,6 +72,11 @@ start() {
 		ssh-add /run/secrets/manager_key
 }
 
+start_ci() {
+	agentHasKey "$(cat /run/secrets/ci_ed25519_pub | awk '{print $2}')" ||
+		ssh-add /run/secrets/ci_ed25519_key
+}
+
 finish() {
 	ssh-add -d /run/secrets/manager_key
 	exit 0
