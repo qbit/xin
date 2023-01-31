@@ -53,8 +53,6 @@ in {
     dconf.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ neovim nixfmt jq ];
-
   xinCI = {
     user = "qbit";
     enable = true;
