@@ -26,7 +26,7 @@ in {
         default = "tsrevprox";
         description = ''
           Name used in for the front facing http server (will be a tailscale name).
-          '';
+        '';
       };
 
       user = mkOption {
@@ -68,7 +68,7 @@ in {
     };
   };
 
-  config = lib.mkIf (cfg.enable) {
+  config = lib.mkIf cfg.enable {
     users.groups.${cfg.group} = { };
     users.users.${cfg.user} = {
       description = "tsrevprox service user";
@@ -91,7 +91,9 @@ in {
         Group = cfg.group;
 
         ExecStart =
-          "${cfg.package}/bin/ts-reverse-proxy -name ${cfg.reverseName} -port ${toString cfg.reversePort} -ip ${cfg.reverseIP}";
+          "${cfg.package}/bin/ts-reverse-proxy -name ${cfg.reverseName} -port ${
+            toString cfg.reversePort
+          } -ip ${cfg.reverseIP}";
         EnvironmentFile = cfg.envFile;
       };
     };

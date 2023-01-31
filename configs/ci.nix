@@ -13,8 +13,8 @@ with lib; {
     };
   };
 
+  imports = [ ../modules/ts-rev-prox.nix ];
   config = mkIf config.xinCI.enable {
-    imports = [ ../../modules/ts-rev-prox.nix ];
     sops.defaultSopsFile = config.xin-secrets.ci;
     sops.secrets = {
       ci_ed25519_key = {
