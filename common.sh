@@ -82,6 +82,10 @@ finish() {
 	exit 0
 }
 
+handle_pull_fail() {
+	po_error "CI: git pull failed!" "Pelase help!"
+}
+
 handle_co_fail() {
 	po_error "CI: git checkout failed!" "Pelase help!"
 }
@@ -92,4 +96,12 @@ handle_update_fail() {
 
 handle_check_fail() {
 	po_error "CI: flake checks failed!" "Pelase help!"
+}
+
+handle_merge_fail() {
+	po_error "CI: git merge failed!" "Pelase help!"
+}
+
+handle_push_fail() {
+	po_error "CI: git push failed!" "Pelase help!"
 }
