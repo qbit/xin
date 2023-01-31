@@ -19,6 +19,25 @@ let
         });
     };
   };
+  matrix-synapse = self: super: {
+    matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
+      version = "1.76.0";
+      pname = "matrix-synapse";
+
+      src = super.fetchFromGitHub {
+        owner = "matrix-org";
+        repo = "synapse";
+        rev = "v${version}";
+        hash = "sha256-kPc6T8yLe1TDxPKLnK/TcU+RUxAVIq8qsr5JQXCXyjM=";
+      };
+
+      cargoDeps = super.rustPlatform.fetchCargoTarball {
+        inherit src;
+        name = "${pname}-${version}";
+        hash = "sha256-tXtnVYH9uWu0nHHx53PgML92NWl3qcAcnFKhiijvQBc=";
+      };
+    });
+  };
 in {
   nixpkgs.overlays = if isUnstable then [
     tailscale
@@ -82,19 +101,10 @@ in {
 
       });
     })
-    (self: super: {
-      aerc = super.aerc.overrideAttrs (old: {
-        patches = [
-          (pkgs.fetchurl {
-            url =
-              "https://lists.sr.ht/~rjarry/aerc-devel/%3C20221218160541.680374-1-moritz%40poldrack.dev%3E/raw";
-            sha256 = "sha256-qPRMOuPs5Pxiu2p08vGxsoO057Y1rVltPyBMbJXsH1s=";
-          })
-        ];
-      });
-    })
-  ] else
-    [ tailscale ];
+  ] else [
+    tailscale
+    matrix-synapse
+  ];
 }
 
 # Example Python dep overlay
