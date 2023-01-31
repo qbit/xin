@@ -43,6 +43,7 @@ in {
     packages = with pkgs; [ ];
   };
 
+  # neovim will overwrite my neovim!!
   environment.systemPackages = with pkgs; [ neovim nixfmt jq ];
 
   services.openssh = {
