@@ -6,7 +6,7 @@ CMD=${1:-""}
 
 set -x
 
-NAME="CI"
+start_ci
 
 trap ci_error INT TERM
 
