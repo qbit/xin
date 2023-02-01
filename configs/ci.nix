@@ -46,6 +46,10 @@ with lib; {
     nix = {
       settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
     };
+
+    # TODOs
+    # - Service to fire off ./ci
+    # - Git config for signing
     services = {
       tsrevprox = {
         enable = true;
