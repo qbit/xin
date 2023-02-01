@@ -101,8 +101,8 @@ in {
       };
     };
     kernelParams = [ "boot.shell_on_fail" "mem_sleep_default=deep" ];
-    #kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_latest;
+    #kernelPackages = pkgs.linuxPackages;
   };
 
   sshFidoAgent.enable = true;
