@@ -102,7 +102,6 @@ in {
       });
     })
   ] else [
-    tailscale
     matrix-synapse
   ];
 }
