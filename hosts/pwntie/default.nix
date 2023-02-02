@@ -21,7 +21,8 @@ in {
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  systemd.user.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+  systemd.user.services =
+    lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
   networking = {
     hostName = "pwntie";

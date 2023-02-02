@@ -184,7 +184,8 @@ in {
     '';
   };
 
-  systemd.user.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+  systemd.user.services =
+    lib.listToAttrs (builtins.map xinlib.jobToService jobs);
   systemd.services."whytailscalewhy" = {
     description = "Tailscale restart on resume";
     wantedBy = [ "post-resume.target" ];
