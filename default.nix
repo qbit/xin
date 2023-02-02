@@ -11,10 +11,12 @@ let
     settings = {
       PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
+      EnableEscapeCommandline = "yes";
     };
   } else {
     permitRootLogin = "prohibit-password";
     passwordAuthentication = false;
+    enableEscapeCommandline = "yes";
   };
 in {
   imports = [
