@@ -133,6 +133,7 @@ ret=0
 if [ ${#@} = 1 ]; then
 	rebuild $1 true || ret=1
 else
+	lock
 	for host in $(listNixOSHosts); do
 		rebuild $host false || ret=1
 	done
