@@ -1,5 +1,20 @@
-{ config, lib, pkgs, inputs, ... }:
-with lib; {
+{ config, lib, pkgs, inputs, xinlib, ... }:
+let
+  jobs = [
+    {
+      name = "xin-ci-update";
+      script = "cd ~/src/xin && ./ci update";
+      startAt = "daily";
+      path = [ ];
+    }
+    {
+      name = "xin-ci";
+      script = "cd ~/src/xin && ./ci";
+      startAt = "hourly";
+      path = [ ];
+    }
+  ];
+in with lib; {
   options = {
     xinCI = {
       enable = mkEnableOption "Configure host as a xin CI host.";
@@ -47,9 +62,9 @@ with lib; {
       settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
     };
 
-    # TODOs
-    # - Service to fire off ./ci
-    # - Git config for signing
+    systemd.user.services =
+      lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+
     services = {
       tsrevprox = {
         enable = true;

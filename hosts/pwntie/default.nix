@@ -5,12 +5,6 @@ let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  jobs = [{
-    name = "xin-ci";
-    script = "cd ~/src/xin && ./ci update";
-    startAt = "daily";
-    path = [ ];
-  }];
 in {
   _module.args.isUnstable = true;
   imports = [ ./hardware-configuration.nix ];
@@ -20,9 +14,6 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  systemd.user.services =
-    lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
   networking = {
     hostName = "pwntie";
