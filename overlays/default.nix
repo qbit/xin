@@ -101,9 +101,8 @@ in {
 
       });
     })
-  ] else [
-    matrix-synapse
-  ];
+  ] else
+    [ matrix-synapse ];
 }
 
 # Example Python dep overlay
