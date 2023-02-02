@@ -1,45 +1,12 @@
 { self, config, pkgs, lib, isUnstable, ... }:
 let
-  tailscale = self: super: {
-    tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
-      buildGoModule = args:
-        super.buildGo119Module (args // rec {
-          version = "1.36.0";
-          src = super.fetchFromGitHub {
-            owner = "tailscale";
-            repo = "tailscale";
-            rev = "v${version}";
-            sha256 = "sha256-hNyEABs/GdfOx6vLTVBgbOzkbFvEDYZ0y1y0a0mIsfA=";
-          };
-          vendorSha256 = "sha256-Jy3kjUA8qLhcw9XLw4Xo1zhD+IWZrDNM79TsbnKpx/g=";
-          ldflags = [
-            "-X tailscale.com/version.Long=${version}"
-            "-X tailscale.com/version.Short=${version}"
-          ];
-        });
-    };
-  };
-  matrix-synapse = self: super: {
-    matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
-      version = "1.76.0";
-      pname = "matrix-synapse";
+  openssh = import ./openssh.nix;
+  tailscale = import ./tailscale.nix;
+  matrix-synapse = import ./matrix-synapse.nix;
 
-      src = super.fetchFromGitHub {
-        owner = "matrix-org";
-        repo = "synapse";
-        rev = "v${version}";
-        hash = "sha256-kPc6T8yLe1TDxPKLnK/TcU+RUxAVIq8qsr5JQXCXyjM=";
-      };
-
-      cargoDeps = super.rustPlatform.fetchCargoTarball {
-        inherit src;
-        name = "${pname}-${version}";
-        hash = "sha256-tXtnVYH9uWu0nHHx53PgML92NWl3qcAcnFKhiijvQBc=";
-      };
-    });
-  };
 in {
   nixpkgs.overlays = if isUnstable then [
+    openssh
     tailscale
 
     # https://github.com/NixOS/nixpkgs/pull/213613
@@ -101,8 +68,10 @@ in {
 
       });
     })
-  ] else
-    [ matrix-synapse ];
+  ] else [
+    matrix-synapse
+    openssh
+  ];
 }
 
 # Example Python dep overlay
