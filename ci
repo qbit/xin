@@ -4,8 +4,6 @@
 
 CMD=${1:-""}
 
-set -x
-
 start_ci
 
 trap ci_error INT TERM
@@ -35,3 +33,4 @@ else
 	nix flake check || handle_check_fail
 fi
 
+finish

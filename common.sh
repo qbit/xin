@@ -79,6 +79,7 @@ start_ci() {
 
 finish() {
 	ssh-add -d /run/secrets/manager_key
+	ssh-add -d /run/secrets/ci_ed25519_key
 	exit 0
 }
 
