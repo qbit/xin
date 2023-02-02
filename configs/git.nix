@@ -18,7 +18,7 @@ in {
           name = "Aaron Bieber";
           email = "aaron@bolddaemon.com";
           signingKey = if isUnstable then
-            "key::sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHrYWbbgBkGcOntDqdMaWVZ9xn+dHM+Ap6s1HSAalL28AAAACHNzaDptYWlu"
+            "key::sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB1cBO17AFcS2NtIT+rIxR2Fhdu3HD4de4+IsFyKKuGQAAAACnNzaDpsZXNzZXI="
           else
             "35863350BFEAC101DB1A4AF01F81112D62A9ADCE";
         };
