@@ -12,7 +12,34 @@ let
       inherit (job) startAt path;
     };
   };
+  buildShell = pkgs:
+    pkgs.mkShell {
+      shellHook = ''
+        PS1='\u@\h:\w; '
+        ( . ./common.sh; start ) || true;
+      '';
+      nativeBuildInputs = with pkgs; [
+        deadnix
+        git
+        jq
+        nil
+        nix-diff
+        nix-output-monitor
+        shfmt
+        sops
+        ssh-to-age
+        ssh-to-pgp
+        statix
+      ];
+    };
 
-  xinlib = { inherit mkCronScript jobToService; };
+  buildVer = self:
+    let state = self.rev or "DIRTY";
+    in {
+      system.configurationRevision = state;
+      system.autoUpgrade.enable = state != "DIRTY";
+    };
+
+  xinlib = { inherit buildVer mkCronScript jobToService buildShell; };
 
 in xinlib

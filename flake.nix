@@ -130,32 +130,6 @@
       # Set our configurationRevison based on the status of our git repo.
       # If the repo is dirty, disable autoUpgrade as it means we are
       # testing something.
-      buildVer = let state = self.rev or "DIRTY";
-      in {
-        system.configurationRevision = state;
-        system.autoUpgrade.enable = state != "DIRTY";
-      };
-
-      buildShell = pkgs:
-        pkgs.mkShell {
-          shellHook = ''
-            PS1='\u@\h:\w; '
-            ( . ./common.sh; start ) || true;
-          '';
-          nativeBuildInputs = with pkgs; [
-            deadnix
-            git
-            jq
-            nil
-            nix-diff
-            nix-output-monitor
-            shfmt
-            sops
-            ssh-to-age
-            ssh-to-pgp
-            statix
-          ];
-        };
       buildSys = sys: sysBase: extraMods: name:
         sysBase.lib.nixosSystem {
           system = sys;
@@ -170,7 +144,7 @@
               registry.unstable.flake = unstable;
               nixPath = [ "nixpkgs=${sysBase}" ];
             };
-          }] ++ [ buildVer (./. + "/hosts/${name}") ]
+          }] ++ [ (xinlib.buildVer self) (./. + "/hosts/${name}") ]
             ++ [{ nixpkgs.overlays = overlays; }];
         };
       pkgs = unstable.legacyPackages.x86_64-linux;
@@ -192,8 +166,8 @@
       formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.nixfmt;
       formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.nixfmt;
 
-      devShells.x86_64-linux.default = buildShell pkgs;
-      devShells.aarch64-darwin.default = buildShell darwinPkgs;
+      devShells.x86_64-linux.default = xinlib.buildShell pkgs;
+      devShells.aarch64-darwin.default = xinlib.buildShell darwinPkgs;
 
       nixosConfigurations = {
         europa = buildSys "x86_64-linux" unstable [
@@ -245,7 +219,7 @@
           system = "x86_64-linux";
 
           modules = [
-            buildVer
+            (xinlib.buildVer self)
             (import (./installer.nix))
             xin-secrets.nixosModules.sops
             (import "${sshKnownHosts}")
