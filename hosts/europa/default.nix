@@ -1,16 +1,10 @@
-{ config, pkgs, lib, modulesPath, inputs, ... }:
+{ config, pkgs, lib, modulesPath, inputs, xinlib, ... }:
 let
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
   else
     "root";
-  mkCronScript = name: src: ''
-    . /etc/profile;
-    set -x
-    # autogenreated ${name}
-    ${src}
-  '';
   jobs = [
     {
       name = "brain";
@@ -31,14 +25,6 @@ let
       path = [ pkgs.taskobs ] ++ pkgs.taskobs.buildInputs;
     }
   ];
-  jobToService = job: {
-    name = "${job.name}";
-    value = {
-      script = mkCronScript "${job.name}_script" job.script;
-      inherit (job) startAt;
-      inherit (job) path;
-    };
-  };
 in {
   _module.args.isUnstable = true;
 
@@ -200,7 +186,7 @@ in {
     '';
   };
 
-  systemd.user.services = lib.listToAttrs (builtins.map jobToService jobs);
+  systemd.user.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
   systemd.services."whytailscalewhy" = {
     description = "Tailscale restart on resume";
     wantedBy = [ "post-resume.target" ];
