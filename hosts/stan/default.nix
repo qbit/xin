@@ -143,7 +143,7 @@ in {
 
   services = {
     emacs = {
-      enable = false;
+      enable = true;
       package = myEmacs;
       install = true;
     };
