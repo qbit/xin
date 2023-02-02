@@ -1,6 +1,13 @@
 . /etc/profile
 . /run/secrets/po_env
 
+SCRIPT_NAME="${0##*/}"
+SCRIPT_PID=$$
+LOCK_PATH="${LOCK:-/tmp/xin}"
+LOCK_FILE="${LOCK_PATH}/${SCRIPT_NAME}"
+
+mkdir -p "${LOCK_PATH}"
+
 NIX_SSHOPTS="-i /run/secrets/manager_pubkey -oIdentitiesOnly=yes -oControlPath=/tmp/manager-ssh-%r@%h:%p -F/dev/null"
 SSH="ssh ${NIX_SSHOPTS}"
 CurrentVersion="$(git rev-parse HEAD)"
@@ -9,6 +16,24 @@ RunHost="$(uname -n)"
 
 msg() {
 	echo -e "===> $@"
+}
+
+unlock() {
+	rm -f ${LOCK_FILE};
+}
+
+_lock() {
+	echo "${SCRIPT_PID}" > "${LOCK_FILE}"
+	trap 'unlock' INT EXIT TERM
+}
+
+lock() {
+	if [ -f "${LOCK_FILE}" ]; then
+		msg "${SCRIPT_NAME} already running..."
+		exit 0
+	else
+		_lock
+	fi
 }
 
 listNixOSHosts() {
@@ -73,6 +98,7 @@ start() {
 }
 
 start_ci() {
+	lock
 	agentHasKey "$(cat /run/secrets/ci_ed25519_pub | awk '{print $2}')" ||
 		ssh-add /run/secrets/ci_ed25519_key
 }
@@ -106,3 +132,4 @@ handle_merge_fail() {
 handle_push_fail() {
 	po_error "CI: git push failed!" "Pelase help!"
 }
+
