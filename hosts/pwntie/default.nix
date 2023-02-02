@@ -7,7 +7,7 @@ let
   ];
   jobs = [{
     name = "xin-ci";
-    script = "cd ~/src/xin && ./ci";
+    script = "cd ~/src/xin && ./ci update";
     startAt = "daily";
     path = [ ];
   }];
