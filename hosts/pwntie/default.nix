@@ -1,32 +1,16 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, xinlib, ... }:
 
 let
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  mkCronScript = name: src: ''
-    . /etc/profile;
-    set -x
-    # autogenreated ${name}
-    ${src}
-  '';
-  jobs = [
-    {
-      name = "xin-ci";
-      script = "cd ~/src/xin && ./ci";
-      startAt = "daily";
-      path = [ ];
-    }
-  ];
-  jobToService = job: {
-    name = "${job.name}";
-    value = {
-      script = mkCronScript "${job.name}_script" job.script;
-      inherit (job) startAt;
-      inherit (job) path;
-    };
-  };
+  jobs = [{
+    name = "xin-ci";
+    script = "cd ~/src/xin && ./ci";
+    startAt = "daily";
+    path = [ ];
+  }];
 in {
   _module.args.isUnstable = true;
   imports = [ ./hardware-configuration.nix ];
@@ -37,7 +21,7 @@ in {
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  systemd.user.services = lib.listToAttrs (builtins.map jobToService jobs);
+  systemd.user.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
   networking = {
     hostName = "pwntie";

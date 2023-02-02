@@ -97,6 +97,7 @@
     , tsRevProx, taskobs, mcchunkie, gqrss, darwin, xin-secrets, talon, peerix
     , ... }@inputs:
     let
+      xinlib = import ./lib;
       supportedSystems = [ "x86_64-linux" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
@@ -158,7 +159,10 @@
       buildSys = sys: sysBase: extraMods: name:
         sysBase.lib.nixosSystem {
           system = sys;
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+            inherit xinlib;
+          };
           modules = hostBase.modules ++ extraMods ++ [{
             nix = {
               registry.nixpkgs.flake = sysBase;
