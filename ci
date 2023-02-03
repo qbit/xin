@@ -2,7 +2,7 @@
 
 . ./common.sh
 
-nix develop
+direnv allow
 
 CMD=${1:-""}
 
