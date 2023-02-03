@@ -19,11 +19,11 @@ msg() {
 }
 
 unlock() {
-	rm -f ${LOCK_FILE};
+	rm -f ${LOCK_FILE}
 }
 
 _lock() {
-	echo "${SCRIPT_PID}" > "${LOCK_FILE}"
+	echo "${SCRIPT_PID}" >"${LOCK_FILE}"
 	trap 'unlock' INT EXIT TERM
 }
 
@@ -132,4 +132,3 @@ handle_merge_fail() {
 handle_push_fail() {
 	po_error "CI: git push failed!" "Pelase help!"
 }
-
