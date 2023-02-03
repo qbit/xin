@@ -72,6 +72,7 @@ in {
   };
 
   users.users.root = { openssh.authorizedKeys.keys = pubKeys; };
+  users.users.qbit = { openssh.authorizedKeys.keys = pubKeys; };
 
   system.stateVersion = "22.11";
 }
