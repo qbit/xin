@@ -18,11 +18,12 @@ in with lib; {
   options = {
     xinCI = {
       enable = mkEnableOption "Configure host as a xin CI host.";
+
       user = mkOption {
         type = types.str;
         default = "root";
         description = ''
-          User who will own the private key.
+          User who will own the CI private key.
         '';
       };
     };

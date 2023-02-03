@@ -2,6 +2,8 @@
 
 . ./common.sh
 
+nix develop
+
 CMD=${1:-""}
 
 start_ci
