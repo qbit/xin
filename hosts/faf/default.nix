@@ -16,18 +16,18 @@ in {
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.devNodes = "/dev/";
 
-  networking.hostName = "faf";
-  networking.hostId = "12963a2a";
+  networking = {
+    hostName = "faf";
+    hostId = "12963a2a";
 
-  networking.useDHCP = false;
-  networking.interfaces.enp1s0.useDHCP = true;
-  networking.interfaces.enp2s0.useDHCP = true;
+    useDHCP = false;
+    interfaces.enp1s0.useDHCP = true;
+    interfaces.enp2s0.useDHCP = true;
 
-  networking.firewall.allowedTCPPorts =
-    [ 22 53 config.services.prometheus.exporters.node.port ];
-  networking.firewall.allowedUDPPorts = [ 53 ];
-  networking.hosts = {
-    "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ];
+    firewall.allowedTCPPorts =
+      [ 22 53 config.services.prometheus.exporters.node.port ];
+    firewall.allowedUDPPorts = [ 53 ];
+    hosts = { "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ]; };
   };
 
   users.users.root = userBase;
