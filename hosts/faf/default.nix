@@ -26,6 +26,9 @@ in {
   networking.firewall.allowedTCPPorts =
     [ 22 53 config.services.prometheus.exporters.node.port ];
   networking.firewall.allowedUDPPorts = [ 53 ];
+  networking.hosts = {
+    "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ];
+  };
 
   users.users.root = userBase;
   users.users.qbit = userBase;
