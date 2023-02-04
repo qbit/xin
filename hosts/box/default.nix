@@ -89,7 +89,10 @@ in {
     useDHCP = false;
     enableIPv6 = false;
 
-    hosts = { "127.0.0.1" = [ "git.tapenet.org" ]; };
+    hosts = {
+      "127.0.0.1" = [ "git.tapenet.org" ];
+      "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ];
+    };
     interfaces.enp7s0 = { useDHCP = true; };
 
     firewall = {
