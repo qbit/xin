@@ -4,7 +4,7 @@ let
     {
       name = "xin-ci-update";
       script = "cd ~/src/xin && ./ci update";
-      startAt = "00,12:00:00";
+      startAt = "23:00";
       path = [ ];
     }
     {
