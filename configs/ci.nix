@@ -4,13 +4,13 @@ let
     {
       name = "xin-ci-update";
       script = "cd ~/src/xin && ./ci update";
-      startAt = "daily";
+      startAt = "00,12:00:00";
       path = [ ];
     }
     {
       name = "xin-ci";
       script = "cd ~/src/xin && ./ci";
-      startAt = "hourly";
+      startAt = "*:30:00";
       path = [ ];
     }
   ];
