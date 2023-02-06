@@ -8,7 +8,7 @@ let
     version = "0.0.20200417";
 
     nativeBuildInputs = [ setuptools-scm ];
-    propagatedBuildInputs = [ pytz appdirs more-itertools decorator click];
+    propagatedBuildInputs = [ pytz appdirs more-itertools decorator click ];
 
     src = fetchPypi {
       inherit pname version;
