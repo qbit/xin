@@ -65,6 +65,15 @@ in with lib; {
         rage
         rpr
         (callPackage ../pkgs/tailscale-systray.nix { })
+        (callPackage ../pkgs/promnesia.nix {
+          inherit pkgs;
+          inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
+          inherit (pkgs.python39Packages) pdm-pep517 setuptools setuptools-scm;
+          inherit (pkgs.python39Packages)
+            appdirs tzlocal more-itertools pytz sqlalchemy urlextract fastapi
+            uvicorn websockets uvloop httptools watchfiles;
+          inherit (pkgs.python39Packages) lxml mistletoe logzero;
+        })
       ];
 
       programs = {
