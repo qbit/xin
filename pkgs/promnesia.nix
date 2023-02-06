@@ -1,8 +1,22 @@
 { lib, buildPythonPackage, fetchPypi, pdm-pep517, setuptools, setuptools-scm
 , appdirs, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi
 , websockets, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero
-, decorator, click, ... }:
+, decorator, click, beautifulsoup4, ... }:
 let
+  orgparse = buildPythonPackage rec {
+    pname = "orgparse";
+    version = "0.3.2";
+
+    nativeBuildInputs = [ setuptools-scm ];
+    #propagatedBuildInputs = [ ];
+
+    doCheck = false;
+
+    src = fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-RRBQ55rLelHGXcmbkJXq5NUL1ZhUE1T552PLTL31mlU=";
+    };
+  };
   HPI = buildPythonPackage rec {
     pname = "HPI";
     version = "0.0.20200417";
@@ -42,14 +56,16 @@ in buildPythonPackage rec {
   # Optional
   # bs4 lxml mistletoe logzero
   propagatedBuildInputs = [
-    HPI
+    beautifulsoup4
     cachew
     fastapi
+    HPI
     httptools
     logzero
     lxml
     mistletoe
     more-itertools
+    orgparse
     pytz
     setuptools
     tzlocal
