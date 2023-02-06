@@ -254,11 +254,18 @@
           };
           precursorupdater = pkgs.callPackage ./pkgs/precursorupdater.nix {
             inherit pkgs;
-            inherit (pkgs.python39Packages) buildPythonPackage;
-            inherit (pkgs.python39Packages) fetchPypi;
-            inherit (pkgs.python39Packages) pyusb;
-            inherit (pkgs.python39Packages) progressbar2;
-            inherit (pkgs.python39Packages) requests;
+            inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
+            inherit (pkgs.python39Packages) pyusb progressbar2 requests;
+          };
+          promnesia = pkgs.callPackage ./pkgs/promnesia.nix {
+            inherit pkgs;
+            inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
+            inherit (pkgs.python39Packages)
+              pdm-pep517 setuptools setuptools-scm;
+            inherit (pkgs.python39Packages)
+              appdirs tzlocal more-itertools pytz sqlalchemy urlextract fastapi
+              uvicorn websockets uvloop httptools watchfiles;
+            inherit (pkgs.python39Packages) lxml mistletoe logzero;
           };
           tailscaleSystray =
             pkgs.callPackage ./pkgs/tailscale-systray.nix { inherit pkgs; };
