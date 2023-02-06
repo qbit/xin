@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, xinlib, ... }:
 let
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr = pkgs.writeScriptBin "rpr" (import ../bins/rpr.nix {
@@ -6,6 +6,30 @@ let
     inherit (pkgs) gh;
     inherit (pkgs) tea;
   });
+  promnesia = pkgs.callPackage ../pkgs/promnesia.nix {
+    inherit pkgs;
+    inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
+    inherit (pkgs.python39Packages) pdm-pep517 setuptools setuptools-scm;
+    inherit (pkgs.python39Packages)
+      appdirs tzlocal more-itertools pytz sqlalchemy urlextract fastapi uvicorn
+      websockets uvloop httptools watchfiles;
+    inherit (pkgs.python39Packages) lxml mistletoe logzero;
+  };
+  promnesiaService = {
+    promnesia = {
+      description = "Service for promnesia.server";
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        ${promnesia}/bin/promnesia serve
+      '';
+    };
+  };
+  jobs = [{
+    name = "promnesia-index";
+    script = "${promnesia}/bin/promnesia index";
+    startAt = "*:0/30";
+    path = [ promnesia ];
+  }];
 in with lib; {
   imports = [ ./gnome.nix ./kde.nix ./xfce.nix ./arcan.nix ];
 
@@ -58,6 +82,10 @@ in with lib; {
         "electron-18.1.0" # obsidian
       ];
 
+      systemd.user.services =
+        (lib.listToAttrs (builtins.map xinlib.jobToService jobs))
+        // promnesiaService;
+
       environment.systemPackages = with pkgs; [
         brave
         vlc
@@ -65,15 +93,7 @@ in with lib; {
         rage
         rpr
         (callPackage ../pkgs/tailscale-systray.nix { })
-        (callPackage ../pkgs/promnesia.nix {
-          inherit pkgs;
-          inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
-          inherit (pkgs.python39Packages) pdm-pep517 setuptools setuptools-scm;
-          inherit (pkgs.python39Packages)
-            appdirs tzlocal more-itertools pytz sqlalchemy urlextract fastapi
-            uvicorn websockets uvloop httptools watchfiles;
-          inherit (pkgs.python39Packages) lxml mistletoe logzero;
-        })
+        promnesia
       ];
 
       programs = {

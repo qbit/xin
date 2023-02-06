@@ -1,8 +1,20 @@
 { lib, buildPythonPackage, fetchPypi, pdm-pep517, setuptools, setuptools-scm
 , appdirs, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi
 , websockets, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero
-, ... }:
+, decorator, click, ... }:
 let
+  HPI = buildPythonPackage rec {
+    pname = "HPI";
+    version = "0.0.20200417";
+
+    nativeBuildInputs = [ setuptools-scm ];
+    propagatedBuildInputs = [ pytz appdirs more-itertools decorator click];
+
+    src = fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-cozMmfBF7D1qCZFjf48wRQaeN4MhdHAAxS8tGp/krK8=";
+    };
+  };
   cachew = buildPythonPackage rec {
     pname = "cachew";
     version = "0.11.0";
@@ -30,6 +42,7 @@ in buildPythonPackage rec {
   # Optional
   # bs4 lxml mistletoe logzero
   propagatedBuildInputs = [
+    HPI
     cachew
     fastapi
     httptools

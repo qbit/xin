@@ -1,4 +1,4 @@
-{ config, lib, options, pkgs, isUnstable, ... }:
+{ config, lib, options, pkgs, isUnstable, xinlib, ... }:
 
 let
   managementKey =
