@@ -311,6 +311,8 @@
       # TODO: magicify this to be built of a list
       checks.x86_64-linux.europa =
         self.nixosConfigurations.europa.config.system.build.toplevel;
+      checks.x86_64-linux.stan =
+        self.nixosConfigurations.europa.config.system.build.toplevel;
       checks.x86_64-linux.h =
         self.nixosConfigurations.h.config.system.build.toplevel;
       checks.x86_64-linux.box =
