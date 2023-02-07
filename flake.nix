@@ -259,6 +259,7 @@
           };
           promnesia = pkgs.callPackage ./pkgs/promnesia.nix {
             inherit pkgs;
+            inherit (pkgs) sqlcipher;
             inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
             inherit (pkgs.python39Packages)
               pdm-pep517 setuptools setuptools-scm;
