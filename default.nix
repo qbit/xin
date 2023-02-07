@@ -11,10 +11,22 @@ let
     settings = {
       PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
+      KexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
+      Macs = [
+        "hmac-sha2-512-etm@openssh.com"
+        "hmac-sha2-256-etm@openssh.com"
+        "umac-128-etm@openssh.com"
+      ];
     };
   } else {
     permitRootLogin = "prohibit-password";
     passwordAuthentication = false;
+    kexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
+    macs = [
+      "hmac-sha2-512-etm@openssh.com"
+      "hmac-sha2-256-etm@openssh.com"
+      "umac-128-etm@openssh.com"
+    ];
   };
 in {
   imports = [
@@ -191,16 +203,6 @@ in {
       };
     };
 
-    services = {
-      openssh = {
-        enable = true;
-        kexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
-        macs = [
-          "hmac-sha2-512-etm@openssh.com"
-          "hmac-sha2-256-etm@openssh.com"
-          "umac-128-etm@openssh.com"
-        ];
-      } // inFluxSSHOptions;
-    };
+    services = { openssh = { enable = true; } // inFluxSSHOptions; };
   };
 }
