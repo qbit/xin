@@ -1,8 +1,22 @@
 { lib, buildPythonPackage, fetchPypi, pdm-pep517, setuptools, setuptools-scm
 , appdirs, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi
 , websockets, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero
-, decorator, click, beautifulsoup4, ... }:
+, decorator, click, beautifulsoup4, sqlcipher, ... }:
 let
+  sqlcipher3 = buildPythonPackage rec {
+    pname = "sqlcipher3";
+    version = "0.5.0";
+
+    nativeBuildInputs = [ setuptools-scm ];
+    propagatedBuildInputs = [ sqlcipher ];
+
+    doCheck = false;
+
+    src = fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-+wa7UzaCWvIE6Obb/Ihema8UnFPr2P+HeDe1R4+iU+U=";
+    };
+  };
   orgparse = buildPythonPackage rec {
     pname = "orgparse";
     version = "0.3.2";
@@ -68,6 +82,7 @@ in buildPythonPackage rec {
     orgparse
     pytz
     setuptools
+    sqlcipher3
     tzlocal
     urlextract
     uvicorn
