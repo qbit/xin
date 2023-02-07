@@ -13,7 +13,8 @@ let
     inherit (pkgs.python39Packages) pdm-pep517 setuptools setuptools-scm;
     inherit (pkgs.python39Packages)
       appdirs tzlocal more-itertools pytz sqlalchemy urlextract fastapi uvicorn
-      websockets uvloop httptools watchfiles decorator beautifulsoup4;
+      websockets uvloop httptools watchfiles decorator beautifulsoup4 mypy
+      pandas orjson pytest;
     inherit (pkgs.python39Packages) lxml mistletoe logzero;
   };
   promnesiaService = {
@@ -95,6 +96,7 @@ in with lib; {
         rpr
         (callPackage ../pkgs/tailscale-systray.nix { })
         promnesia
+        black
       ];
 
       programs = {
