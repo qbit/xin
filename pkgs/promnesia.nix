@@ -1,4 +1,4 @@
-{ lib, buildPythonPackage, fetchPypi, pdm-pep517, setuptools, setuptools-scm
+{ lib, buildPythonPackage, fetchPypi, setuptools, setuptools-scm
 , appdirs, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi
 , websockets, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero
 , decorator, click, beautifulsoup4, sqlcipher, mypy, pandas, orjson, pytest, ...
@@ -85,7 +85,7 @@ in buildPythonPackage rec {
 
   doCheck = true;
 
-  nativeBuildInputs = [ pdm-pep517 setuptools-scm ];
+  nativeBuildInputs = [ setuptools-scm ];
 
   # Optional
   # bs4 lxml mistletoe logzero
