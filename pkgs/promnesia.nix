@@ -1,7 +1,8 @@
 { lib, buildPythonPackage, fetchPypi, pdm-pep517, setuptools, setuptools-scm
 , appdirs, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi
 , websockets, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero
-, decorator, click, beautifulsoup4, sqlcipher, ... }:
+, decorator, click, beautifulsoup4, sqlcipher, mypy, pandas, orjson, pytest, ...
+}:
 let
   sqlcipher3 = buildPythonPackage rec {
     pname = "sqlcipher3";
@@ -10,7 +11,7 @@ let
     nativeBuildInputs = [ setuptools-scm ];
     propagatedBuildInputs = [ sqlcipher ];
 
-    doCheck = false;
+    doCheck = true;
 
     src = fetchPypi {
       inherit pname version;
@@ -24,7 +25,9 @@ let
     nativeBuildInputs = [ setuptools-scm ];
     #propagatedBuildInputs = [ ];
 
-    doCheck = false;
+    nativeCheckInputs = [ pytest ];
+
+    doCheck = true;
 
     src = fetchPypi {
       inherit pname version;
@@ -36,7 +39,20 @@ let
     version = "0.0.20200417";
 
     nativeBuildInputs = [ setuptools-scm ];
-    propagatedBuildInputs = [ pytz appdirs more-itertools decorator click ];
+    propagatedBuildInputs = [
+      pytz
+      appdirs
+      more-itertools
+      decorator
+      click
+      mypy
+      pandas
+      logzero
+      orjson
+      lxml
+    ];
+
+    doCheck = true;
 
     src = fetchPypi {
       inherit pname version;
@@ -48,6 +64,8 @@ let
     version = "0.11.0";
 
     nativeBuildInputs = [ setuptools-scm ];
+
+    doCheck = true;
 
     propagatedBuildInputs = [ appdirs sqlalchemy ];
 
@@ -65,6 +83,8 @@ in buildPythonPackage rec {
     sha256 = "sha256-T6sayrPkz8I0u11ZvFbkDdOyVodbaTVkRzLib5lMX+Q=";
   };
 
+  doCheck = true;
+
   nativeBuildInputs = [ pdm-pep517 setuptools-scm ];
 
   # Optional
@@ -79,6 +99,7 @@ in buildPythonPackage rec {
     lxml
     mistletoe
     more-itertools
+    mypy
     orgparse
     pytz
     setuptools
