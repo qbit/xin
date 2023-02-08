@@ -20,7 +20,7 @@ let
   promnesiaService = {
     promnesia = {
       description = "Service for promnesia.server";
-      wantedBy = [ "multi-user.target" ];
+      after = [ "graphical-session.target" ];
       script = ''
         ${promnesia}/bin/promnesia serve
       '';
