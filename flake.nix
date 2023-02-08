@@ -257,6 +257,11 @@
             inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
             inherit (pkgs.python39Packages) pyusb progressbar2 requests;
           };
+          kobuddy = pkgs.callPackage ./pkgs/kobuddy.nix {
+            inherit pkgs;
+            inherit (pkgs.python39Packages)
+              buildPythonPackage fetchPypi setuptools-scm dataset pytz;
+          };
           promnesia = pkgs.callPackage ./pkgs/promnesia.nix {
             inherit pkgs;
             inherit (pkgs) sqlcipher;

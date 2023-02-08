@@ -40,16 +40,16 @@ let
 
     nativeBuildInputs = [ setuptools-scm ];
     propagatedBuildInputs = [
-      pytz
       appdirs
-      more-itertools
-      decorator
       click
-      mypy
-      pandas
+      decorator
       logzero
-      orjson
       lxml
+      more-itertools
+      mypy
+      orjson
+      pandas
+      pytz
     ];
 
     doCheck = true;
