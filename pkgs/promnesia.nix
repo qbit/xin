@@ -1,78 +1,13 @@
-{ lib, buildPythonPackage, fetchPypi, setuptools, setuptools-scm, appdirs
-, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi, websockets
-, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero, decorator
-, click, beautifulsoup4, sqlcipher, mypy, pandas, orjson, pytest, ... }:
+{ lib, buildPythonPackage, fetchPypi, beautifulsoup4, fastapi, httptools, pytest
+, logzero, lxml, mistletoe, more-itertools, mypy, pytz, setuptools, appdirs
+, sqlalchemy, tzlocal, urlextract, uvicorn, uvloop, watchfiles, websockets
+, orjson, pandas, simplejson, setuptools-scm, decorator, geopy, pkgs, ... }:
+with pkgs;
 let
-  sqlcipher3 = buildPythonPackage rec {
-    pname = "sqlcipher3";
-    version = "0.5.0";
-
-    nativeBuildInputs = [ setuptools-scm ];
-    propagatedBuildInputs = [ sqlcipher ];
-
-    doCheck = true;
-
-    src = fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-+wa7UzaCWvIE6Obb/Ihema8UnFPr2P+HeDe1R4+iU+U=";
-    };
-  };
-  orgparse = buildPythonPackage rec {
-    pname = "orgparse";
-    version = "0.3.2";
-
-    nativeBuildInputs = [ setuptools-scm ];
-    #propagatedBuildInputs = [ ];
-
-    nativeCheckInputs = [ pytest ];
-
-    doCheck = true;
-
-    src = fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-RRBQ55rLelHGXcmbkJXq5NUL1ZhUE1T552PLTL31mlU=";
-    };
-  };
-  HPI = buildPythonPackage rec {
-    pname = "HPI";
-    version = "0.0.20200417";
-
-    nativeBuildInputs = [ setuptools-scm ];
-    propagatedBuildInputs = [
-      appdirs
-      click
-      decorator
-      logzero
-      lxml
-      more-itertools
-      mypy
-      orjson
-      pandas
-      pytz
-    ];
-
-    doCheck = true;
-
-    src = fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-cozMmfBF7D1qCZFjf48wRQaeN4MhdHAAxS8tGp/krK8=";
-    };
-  };
-  cachew = buildPythonPackage rec {
-    pname = "cachew";
-    version = "0.11.0";
-
-    nativeBuildInputs = [ setuptools-scm ];
-
-    doCheck = true;
-
-    propagatedBuildInputs = [ appdirs sqlalchemy ];
-
-    src = fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-4qjgvffInKRpKST9xbwwC2+m8h3ups0ZePyJLUU+KhA=";
-    };
-  };
+  hpi = pkgs.python3Packages.callPackage ./hpi.nix { inherit pkgs; };
+  sqlcipher3 =
+    pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
+  cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
 in buildPythonPackage rec {
   pname = "promnesia";
   version = "1.1.20230129";
@@ -92,14 +27,13 @@ in buildPythonPackage rec {
     beautifulsoup4
     cachew
     fastapi
-    HPI
+    hpi
     httptools
     logzero
     lxml
     mistletoe
     more-itertools
     mypy
-    orgparse
     pytz
     setuptools
     sqlcipher3
