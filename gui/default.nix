@@ -6,17 +6,9 @@ let
     inherit (pkgs) gh;
     inherit (pkgs) tea;
   });
-  promnesia = pkgs.callPackage ../pkgs/promnesia.nix {
-    inherit pkgs;
-    inherit (pkgs) sqlcipher;
-    inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
-    inherit (pkgs.python39Packages) pdm-pep517 setuptools setuptools-scm;
-    inherit (pkgs.python39Packages)
-      appdirs tzlocal more-itertools pytz sqlalchemy urlextract fastapi uvicorn
-      websockets uvloop httptools watchfiles decorator beautifulsoup4 mypy
-      pandas orjson pytest;
-    inherit (pkgs.python39Packages) lxml mistletoe logzero;
-  };
+  promnesia =
+    pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
+  hpi = pkgs.python3Packages.callPackage ../pkgs/hpi.nix { inherit pkgs; };
   promnesiaService = {
     promnesia = {
       description = "Service for promnesia.server";
@@ -30,7 +22,7 @@ let
     name = "promnesia-index";
     script = "${promnesia}/bin/promnesia index";
     startAt = "*:0/5";
-    path = [ promnesia ];
+    path = [ promnesia hpi ];
   }];
 in with lib; {
   imports = [ ./gnome.nix ./kde.nix ./xfce.nix ./arcan.nix ];

@@ -257,22 +257,16 @@
             inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
             inherit (pkgs.python39Packages) pyusb progressbar2 requests;
           };
-          kobuddy = pkgs.callPackage ./pkgs/kobuddy.nix {
+          kobuddy = pkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
             inherit pkgs;
-            inherit (pkgs.python39Packages)
-              buildPythonPackage fetchPypi setuptools-scm dataset pytz;
           };
-          promnesia = pkgs.callPackage ./pkgs/promnesia.nix {
+          ghexport = pkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
             inherit pkgs;
-            inherit (pkgs) sqlcipher;
-            inherit (pkgs.python39Packages) buildPythonPackage fetchPypi;
-            inherit (pkgs.python39Packages)
-              pdm-pep517 setuptools setuptools-scm;
-            inherit (pkgs.python39Packages)
-              appdirs tzlocal more-itertools pytz sqlalchemy urlextract fastapi
-              uvicorn websockets uvloop httptools watchfiles decorator click
-              beautifulsoup4 mypy pandas orjson pytest;
-            inherit (pkgs.python39Packages) lxml mistletoe logzero;
+          };
+          hpi =
+            pkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit pkgs; };
+          promnesia = pkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
+            inherit pkgs;
           };
           tailscaleSystray =
             pkgs.callPackage ./pkgs/tailscale-systray.nix { inherit pkgs; };
