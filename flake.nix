@@ -248,6 +248,7 @@
             inherit pkgs;
             isUnstable = true;
           };
+          yaegi = pkgs.callPackage ./pkgs/yaegi.nix { inherit pkgs; };
           yarr = pkgs.callPackage ./pkgs/yarr.nix {
             inherit pkgs;
             isUnstable = true;
