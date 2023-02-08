@@ -1,8 +1,7 @@
-{ lib, buildPythonPackage, fetchPypi, setuptools, setuptools-scm
-, appdirs, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi
-, websockets, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero
-, decorator, click, beautifulsoup4, sqlcipher, mypy, pandas, orjson, pytest, ...
-}:
+{ lib, buildPythonPackage, fetchPypi, setuptools, setuptools-scm, appdirs
+, tzlocal, more-itertools, pytz, sqlalchemy, urlextract, fastapi, websockets
+, uvloop, httptools, watchfiles, uvicorn, lxml, mistletoe, logzero, decorator
+, click, beautifulsoup4, sqlcipher, mypy, pandas, orjson, pytest, ... }:
 let
   sqlcipher3 = buildPythonPackage rec {
     pname = "sqlcipher3";
