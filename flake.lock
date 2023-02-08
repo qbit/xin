@@ -147,11 +147,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1662300001,
-        "narHash": "sha256-VoZW3ThcgPBVpHCWdUKX8gDur9crkRgxHFjwuuWFiI4=",
+        "lastModified": 1675861164,
+        "narHash": "sha256-WKFaORWZhmGWL6ZsnQ0ff4Ui5lASU0Y0p5Zf5jT2BWs=",
         "owner": "qbit",
         "repo": "microca",
-        "rev": "fef8113e099dd975ed9d9a48340e6f9b35bbc103",
+        "rev": "335467bed57a23dfb6d49e30eb854be187931ab3",
         "type": "github"
       },
       "original": {
@@ -469,11 +469,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1675858762,
-        "narHash": "sha256-dATp1mtG0JV+mWJRo5dWdm64pZ51qtA4HLXVDndyQNs=",
+        "lastModified": 1675860434,
+        "narHash": "sha256-HQcf+f2Ma+1Suo1wu6fl4XkZGNA7Gl8pkEK9YmqGmIg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3971475aaddf9441f75f5fa87758bfb531ee6d12",
+        "rev": "b0a25c439d079e8be56e6fffa1365a6fe68a3499",
         "type": "github"
       },
       "original": {
