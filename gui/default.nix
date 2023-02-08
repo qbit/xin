@@ -29,7 +29,7 @@ let
   jobs = [{
     name = "promnesia-index";
     script = "${promnesia}/bin/promnesia index";
-    startAt = "*:0/30";
+    startAt = "*:0/5";
     path = [ promnesia ];
   }];
 in with lib; {
