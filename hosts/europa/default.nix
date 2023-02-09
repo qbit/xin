@@ -250,7 +250,7 @@ in {
     drawterm
     element-desktop
     exercism
-    fido2luks
+    firefox
     gh
     isync
     klavaro
