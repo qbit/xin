@@ -3,13 +3,13 @@ let
   jobs = [
     {
       name = "xin-ci-update";
-      script = "cd ~/src/xin && ./ci update";
+      script = "cd ~/src/xin && ci update";
       startAt = "23:00";
       path = [ ];
     }
     {
       name = "xin-ci";
-      script = "cd ~/src/xin && ./ci";
+      script = "cd ~/src/xin && ci";
       startAt = "*:30:00";
       path = [ ];
     }
