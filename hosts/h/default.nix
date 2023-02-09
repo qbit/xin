@@ -51,10 +51,6 @@ in {
           scripts = with super.weechatScripts; [ highmon weepushover ];
         };
       };
-      go = super.go_1_19.overrideAttrs
-        (old: { patches = old.patches ++ [ ../../overlays/452438.diff ]; });
-      go_1_19 = super.go_1_19.overrideAttrs
-        (old: { patches = old.patches ++ [ ../../overlays/452438.diff ]; });
     })
   ];
 
