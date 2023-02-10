@@ -71,6 +71,7 @@ in {
   ] else [
     matrix-synapse
     openssh
+    tailscale
   ];
 }
 
