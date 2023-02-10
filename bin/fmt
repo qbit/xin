@@ -6,6 +6,6 @@ find . -name \*.nix -exec nix fmt {} \+
 find . -name \*.sh -exec shfmt -w {} \+
 
 deadnix -f -l -L .
-shfmt -w deploy
-shfmt -w mkboot
+shfmt -w bin/deploy
+shfmt -w bin/mkboot
 statix check .
