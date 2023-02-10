@@ -30,6 +30,7 @@ let
   };
 in {
   imports = [
+    ./configs/ca.nix
     ./configs/ci.nix
     ./configs/colemak.nix
     ./configs/develop.nix
