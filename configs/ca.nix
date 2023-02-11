@@ -22,12 +22,6 @@ with lib; {
         owner = config.xinCA.user;
         sopsFile = config.xin-secrets.cert_authority;
       };
-      "ca.json" = {
-        mode = "400";
-        owner = config.xinCA.user;
-        sopsFile = config.xin-secrets.cert_authority;
-        path = "/var/lib/step-ca/config/ca.json";
-      };
       "defaults.json" = {
         mode = "400";
         owner = config.xinCA.user;
@@ -61,6 +55,10 @@ with lib; {
     };
 
     networking.hosts = { "127.0.0.1" = [ "ca.bolddaemon.com" ]; };
+
+    environment.systemPackages = with pkgs; [ step-cli ];
+
+    environment.sessionVariables = { STEPPATH = "/var/lib/step-ca"; };
 
     services.step-ca = {
       enable = true;
