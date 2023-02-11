@@ -253,9 +253,10 @@
             inherit pkgs;
             isUnstable = true;
           };
-          precursorupdater = pkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
-            inherit pkgs;
-          };
+          precursorupdater =
+            pkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
+              inherit pkgs;
+            };
           kobuddy = pkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
             inherit pkgs;
           };

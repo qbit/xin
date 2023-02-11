@@ -1,4 +1,5 @@
-{ lib, buildPythonPackage, fetchPypi, pyusb, progressbar2, requests, pycryptodome, ... }:
+{ lib, buildPythonPackage, fetchPypi, pyusb, progressbar2, requests
+, pycryptodome, ... }:
 buildPythonPackage rec {
   pname = "precursorupdater";
   version = "0.1.1";
