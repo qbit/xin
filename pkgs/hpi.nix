@@ -1,7 +1,7 @@
 { pkgs, buildPythonPackage, setuptools-scm, pytest, fetchPypi, appdirs, click
 , decorator, geopy, logzero, lxml, more-itertools, mypy, orjson, pandas, pytz
 , simplejson, ... }:
-
+with pkgs;
 let
   orgparse = pkgs.python3Packages.callPackage ./orgparse.nix { inherit pkgs; };
   kobuddy = pkgs.python3Packages.callPackage ./kobuddy.nix { inherit pkgs; };
@@ -34,6 +34,12 @@ in buildPythonPackage rec {
   doCheck = true;
 
   buildInputs = [ mypy kobuddy ];
+
+  makeWrapperArgs = [
+    # Add the installed directories to the python path so the daemon can find them
+    "--prefix PYTHONPATH : ${python3.pkgs.makePythonPath propagatedBuildInputs}"
+    "--prefix PYTHONPATH : $out/lib/${python3.libPrefix}/site-packages"
+  ];
 
   preCheck = ''
     export HOME=$(mktemp -d)
