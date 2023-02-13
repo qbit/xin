@@ -90,6 +90,7 @@ in with lib; {
         rpr
         (callPackage ../pkgs/tailscale-systray.nix { })
         promnesia
+        hpi
         black
       ];
 
