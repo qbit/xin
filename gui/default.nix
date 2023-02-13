@@ -12,6 +12,9 @@ let
   promnesiaService = {
     promnesia = {
       description = "Service for promnesia.server";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       script = ''
         ${promnesia}/bin/promnesia serve
       '';
