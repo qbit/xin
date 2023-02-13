@@ -45,6 +45,12 @@ in buildPythonPackage rec {
     websockets
   ];
 
+  makeWrapperArgs = [
+    # Add the installed directories to the python path so the daemon can find them
+    "--prefix PYTHONPATH : ${python3.pkgs.makePythonPath propagatedBuildInputs}"
+    "--prefix PYTHONPATH : $out/lib/${python3.libPrefix}/site-packages"
+  ];
+
   meta = with lib; {
     homepage = "https://github.com/karlicoss/promnesia";
     description = "Another piece of your extended mind";
