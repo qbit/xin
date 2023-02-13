@@ -150,7 +150,7 @@ in {
     };
     printing.enable = true;
     fwupd.enable = true;
-    unifi.enable = true;
+    unifi.enable = false;
     openntpd.enable = true;
     resolved = {
       enable = true;
