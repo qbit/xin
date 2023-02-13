@@ -49,7 +49,7 @@ in {
   };
 
   config = lib.mkIf config.sshFidoAgent.enable {
-    environment.systemPackages = with pkgs; [ fidoAddDevice ];
+    environment.systemPackages = [ fidoAddDevice ];
     systemd.user.services.sshfidoagent = {
       script = ''
         ${fidoAddDevice}/bin/fido-add-device
