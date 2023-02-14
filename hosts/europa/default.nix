@@ -147,7 +147,7 @@ in {
     };
   };
 
-  #xinCA = { enable = true; };
+  services.xinCA = { enable = true; };
 
   services = {
     restic = {
