@@ -1,7 +1,8 @@
 { config, lib, pkgs, inputs, xinlib, ... }:
-with lib; {
+let cfg = config.services.xinCA;
+in with lib; {
   options = {
-    xinCA = {
+    services.xinCA = {
       enable = mkEnableOption "Configure host as a xin certificate authority.";
 
       user = mkOption {
@@ -15,41 +16,47 @@ with lib; {
   };
 
   imports = [ ../modules/ts-rev-prox.nix ];
-  config = mkIf config.xinCA.enable {
+  config = mkIf cfg.enable {
     sops.secrets = {
       ca_password = {
         mode = "400";
-        owner = config.xinCA.user;
+        owner = cfg.user;
         sopsFile = config.xin-secrets.cert_authority;
       };
       "defaults.json" = {
         mode = "400";
-        owner = config.xinCA.user;
+        owner = cfg.user;
         path = "/var/lib/step-ca/config/defaults.json";
         sopsFile = config.xin-secrets.cert_authority;
       };
       "intermediate_ca.crt" = {
         mode = "444";
-        owner = config.xinCA.user;
+        owner = cfg.user;
         path = "/var/lib/step-ca/certs/intermediate_ca.crt";
         sopsFile = config.xin-secrets.cert_authority;
       };
       "intermediate_ca_key" = {
         mode = "400";
-        owner = config.xinCA.user;
+        owner = cfg.user;
         path = "/var/lib/step-ca/secrets/intermediate_ca_key";
         sopsFile = config.xin-secrets.cert_authority;
       };
       "root_ca.crt" = {
         mode = "444";
-        owner = config.xinCA.user;
+        owner = cfg.user;
         path = "/var/lib/step-ca/certs/root_ca.crt";
         sopsFile = config.xin-secrets.cert_authority;
       };
       "root_ca_key" = {
         mode = "400";
-        owner = config.xinCA.user;
+        owner = cfg.user;
         path = "/var/lib/step-ca/secrets/root_ca_key";
+        sopsFile = config.xin-secrets.cert_authority;
+      };
+      "jwk_encryptedKey" = {
+        mode = "400";
+        owner = cfg.user;
+        path = "/var/lib/step-ca/secrets/jwk_encryptedKey";
         sopsFile = config.xin-secrets.cert_authority;
       };
     };
@@ -77,12 +84,15 @@ with lib; {
           badgerFileLoadingMode = "";
         };
         authority = {
-          provisioners = [{
-            type = "SSHPOP";
-            name = "sshpop";
-            claims = { enableSSHCA = true; };
-          }];
+          provisioners = [
+            {
+              type = "SSHPOP";
+              name = "sshpop";
+              claims = { enableSSHCA = true; };
+            }
+          ];
         };
+
         tls = {
           cipherSuites = [
             "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256"
