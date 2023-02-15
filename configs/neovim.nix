@@ -80,7 +80,7 @@ in {
     luaformatter
     manix
     ripgrep
-    sumneko-lua-language-server
+    luajitPackages.lua-lsp
     rubyPackages.solargraph
   ];
   programs.neovim = {

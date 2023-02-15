@@ -69,7 +69,7 @@ cmd [[highlight NvimTreeFolderName guifg=default]]
 local lspc = require("lspconfig")
 lspc.gopls.setup {};
 lspc.nil_ls.setup {};
-lspc.sumneko_lua.setup {};
+lspc.lua_ls.setup {};
 lspc.solargraph.setup {};
 
 o.hlsearch = true;
