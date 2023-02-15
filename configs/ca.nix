@@ -84,13 +84,11 @@ in with lib; {
           badgerFileLoadingMode = "";
         };
         authority = {
-          provisioners = [
-            {
-              type = "SSHPOP";
-              name = "sshpop";
-              claims = { enableSSHCA = true; };
-            }
-          ];
+          provisioners = [{
+            type = "SSHPOP";
+            name = "sshpop";
+            claims = { enableSSHCA = true; };
+          }];
         };
 
         tls = {
