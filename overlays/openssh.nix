@@ -7,7 +7,11 @@ let
         hash = "sha256-P2bb8WVftF9Q4cVtpiqwEhjCKIB7ITONY068351xz0Y=";
       };
 
-      patches = [ ./ssh-keysign-8.5.patch ];
+      patches = [
+        ./ssh-keysign-8.5.patch
+        ./dont_create_privsep_path.patch
+        ./locale_archive.patch
+      ];
     });
   };
 
