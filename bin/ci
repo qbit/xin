@@ -30,6 +30,10 @@ if [ "${1}" = "update" ]; then
 	nix flake check || handle_check_fail
 	git checkout main || handle_co_fail
 	git merge "${ci_branch}" || handle_merge_fail
+
+	# Agent is configured to forget keys after X, if that happens we need to re-add before push
+	agentHasKey "$(cat /run/secrets/ci_ed25519_pub | awk '{print $2}')" ||
+		ssh-add /run/secrets/ci_ed25519_key
 	git push || handle_push_fail
 else
 	nix flake check || handle_check_fail
