@@ -1,6 +1,8 @@
 { config, lib, options, pkgs, isUnstable, xinlib, ... }:
 
 let
+  caPubKey =
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGaOxh+Ci8akc39LKXkdAg1xFWsab1hGs80zpCkVUVqdFmkMh+MAQkbWcgqxB1vrMX+dS38evc/H4+SbcNFxa9I= Bold::Daemon SSH CA";
   managementKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
   statusKey = ''
@@ -204,6 +206,23 @@ in {
       };
     };
 
-    services = { openssh = { enable = true; } // inFluxSSHOptions; };
+    environment.etc."ssh/ca.pub" = { text = caPubKey; };
+
+    services = {
+      openssh = {
+        enable = true;
+        knownHosts = {
+          "CA" = {
+            publicKey = ''
+              ${caPubKey}
+            '';
+            certAuthority = true;
+          };
+        };
+        extraConfig = ''
+          TrustedUserCAKeys = "/etc/ssh/ca.pub";
+        '';
+      } // inFluxSSHOptions;
+    };
   };
 }
