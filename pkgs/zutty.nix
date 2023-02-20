@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "zutty";
-  version = "0.13";
+  version = "0.14";
 
   src = fetchFromGitHub {
     owner = "tomszilagyi";
     repo = "zutty";
     rev = version;
-    sha256 = "sha256-1eB5GDhWGwyhiKzxpepzjQ44Co0ZeL9JJI5ppPE1TJw=";
+    sha256 = "sha256-b/q7hIi/U/GkKo+MIFX2wWnHZAy5rQGXNul3I1pxo1Q=";
   };
 
   patches = [ ./zutty_go.diff ];
