@@ -162,11 +162,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1676775543,
-        "narHash": "sha256-VI0e60l94RY9Sc90OwDZpOf/nyLy41n2ULK6I6YkoP8=",
+        "lastModified": 1676886000,
+        "narHash": "sha256-t7nxEvJb4ISR7u54YADZiZi9EaKHJKbXQjyyf00Q8TA=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "525177a78023e1363bee482f520d4f2471ada03a",
+        "rev": "26c9dbdc92abc370510be78889942f38a272d705",
         "type": "github"
       },
       "original": {
@@ -356,11 +356,11 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1676718858,
-        "narHash": "sha256-giQecvcifVLNHCC9lMfTGP09tNxXhOMw+d/aql7MhRw=",
+        "lastModified": 1676817468,
+        "narHash": "sha256-ovuJ1jQOC2/EEibufBkXmSN/O9mLx80Wh7aDmHmHAhA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e6d5772f3515b8518d50122471381feae7cbae36",
+        "rev": "0cf4274b5d06325bd16dbf879a30981bc283e58a",
         "type": "github"
       },
       "original": {
@@ -469,11 +469,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1676784314,
-        "narHash": "sha256-LcBnqz+F3Z7l1RusedhXTFFIjm/PN/C6LjLgWukRIdU=",
+        "lastModified": 1676897885,
+        "narHash": "sha256-oJD1jthAdt3vn9iu2l1dQLLpfIsugiMe72Txfakl1FY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "03057aa1fd4762137877036e954e62b13c9fae76",
+        "rev": "e0c0a6c80c36a579ba8c855280c401185d07617e",
         "type": "github"
       },
       "original": {
@@ -484,11 +484,11 @@
     },
     "unstableSmall": {
       "locked": {
-        "lastModified": 1676767111,
-        "narHash": "sha256-csKQPDf3wKSwCuxRMGOcI+ULRw+C7iGAhRH69CC5Qfo=",
+        "lastModified": 1676829209,
+        "narHash": "sha256-EFrP2hxxRr1uGG49cKNjFh78X5U9O5QAFURYC/GQ6kU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e27be4336086ccab7255e6f22ec574a04439f25e",
+        "rev": "01a88ede6a2b64bd15b3b0fdcee30afb0b237edb",
         "type": "github"
       },
       "original": {
