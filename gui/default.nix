@@ -94,24 +94,7 @@ in with lib; {
         black
       ];
 
-      programs = {
-        firejail = {
-          enable = true;
-          wrappedBinaries = {
-            #firefox = {
-            #  executable = "${lib.getBin pkgs.firefox}/bin/firefox";
-            #  profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
-            #};
-            #brave = {
-            #  executable = "${lib.getBin pkgs.brave}/bin/brave";
-            #  profile = "${pkgs.firejail}/etc/firejail/brave.profile";
-            #};
-          };
-        };
-      };
-
     })
-    (mkIf config.pulse.enable { hardware.pulseaudio = { enable = true; }; })
     (mkIf config.pipewire.enable {
       services.pipewire = {
         enable = true;
