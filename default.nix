@@ -212,7 +212,7 @@ in {
       openssh = {
         enable = true;
         knownHosts = {
-          "CA" = {
+          "*.bold.daemon,*.humpback-trout.ts.net,*.suah.dev" = {
             publicKey = ''
               ${caPubKey}
             '';
@@ -220,7 +220,7 @@ in {
           };
         };
         extraConfig = ''
-          TrustedUserCAKeys = "/etc/ssh/ca.pub";
+          TrustedUserCAKeys = /etc/ssh/ca.pub
         '';
       } // inFluxSSHOptions;
     };
