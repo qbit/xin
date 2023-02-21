@@ -220,7 +220,7 @@ in {
           };
         };
         extraConfig = ''
-          TrustedUserCAKeys = /etc/ssh/ca.pub
+          #TrustedUserCAKeys = /etc/ssh/ca.pub
         '';
       } // inFluxSSHOptions;
     };
