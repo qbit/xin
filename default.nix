@@ -34,20 +34,7 @@ let
   };
 in {
   imports = [
-    ./configs/ca.nix
-    ./configs/ci.nix
-    ./configs/colemak.nix
-    ./configs/develop.nix
-    ./configs/dns.nix
-    ./configs/doas.nix
-    ./configs/gitmux.nix
-    ./configs/git.nix
-    ./configs/neovim.nix
-    ./configs/peerix.nix
-    ./configs/manager.nix
-    ./configs/tmux.nix
-    ./configs/net-overlay.nix
-    ./configs/zsh.nix
+    ./configs
     ./dbuild
     ./gui
     ./modules
