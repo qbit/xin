@@ -15,6 +15,9 @@ in {
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
+  nixpkgs.config.allowUnsupportedSystem = true;
+
   networking = {
     hostName = "pwntie";
     networkmanager.enable = true;
