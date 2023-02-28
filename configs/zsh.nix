@@ -38,6 +38,13 @@
 
       PROMPT='%n@%m[%(?.%{$fg[default]%}.%{$fg[red]%})%?%{$reset_color%}]:%~$vcs_info_msg_0_$(prompt_char) '
 
+      go_update_deps() {
+          for i in $(go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all); do
+            go get -u $i
+          done
+          go mod tidy
+      }
+
       k() {
         ''${K_DEBUG}
         if [ -z $1 ]; then
