@@ -35,5 +35,14 @@ in with lib; {
       inputs.xintray.packages.${pkgs.system}.xintray
       inputs.po.packages.${pkgs.system}.po
     ];
+    networking = {
+
+      hosts = {
+        "66.135.2.235" = [ "ns1" ];
+        "23.234.251.216" = [ "ns2" ];
+        "46.23.94.18" = [ "ns3" ];
+        "198.23.149.18" = [ "ns4" ];
+      };
+    };
   };
 }
