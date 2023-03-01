@@ -125,8 +125,8 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    rex
     barrier
+    bitwarden
     brave
     firefox
     fzf
@@ -142,6 +142,7 @@ in {
     obs-studio
     openvpn
     remmina
+    rex
     sshfs
     tcpdump
     virt-manager
