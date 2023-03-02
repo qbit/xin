@@ -21,6 +21,7 @@ let
       nativeBuildInputs = with pkgs; [
         deadnix
         git
+        git-bug
         jq
         nil
         nix-diff
