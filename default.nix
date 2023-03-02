@@ -150,6 +150,7 @@ in {
         bind
         btop
         direnv
+        git-bug
         git-sync
         gosignify
         got
@@ -162,7 +163,6 @@ in {
         nix-index
         nix-top
         pass
-        rbw
         ripgrep
         taskwarrior
         tmux
