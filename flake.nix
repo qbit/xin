@@ -235,6 +235,7 @@
           ada_language_server =
             pkgs.callPackage ./pkgs/ada_language_server.nix { inherit pkgs; };
           alire = pkgs.callPackage ./pkgs/alire.nix { inherit pkgs; };
+          bearclaw = pkgs.callPackage ./pkgs/bearclaw.nix { inherit pkgs; };
           gqrss = pkgs.callPackage ./pkgs/gqrss.nix {
             inherit pkgs;
             isUnstable = true;
