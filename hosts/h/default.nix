@@ -675,7 +675,7 @@ in {
         };
         managementRoom = "#moderation:tapenet.org";
         automaticallyRedactForReasons =
-          [ "spam" "advertising" "racism" "nazi" "nazism" "trolling" "porn" ];
+          [ "spam" "advertising" "racism" "nazi" "nazism" "trolling" "porn" "csam" ];
         aditionalPrefixes = [ "hammer" ];
         confirmWildcardBan = false;
       };
