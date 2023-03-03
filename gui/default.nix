@@ -79,7 +79,7 @@ in with lib; {
       ];
 
       systemd.user.services =
-        (lib.listToAttrs (builtins.map xinlib.jobToService jobs))
+        (lib.listToAttrs (builtins.map xinlib.jobToUserService jobs))
         // promnesiaService;
 
       environment.systemPackages = with pkgs; [
