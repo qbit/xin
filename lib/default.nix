@@ -5,6 +5,16 @@ let
     # autogenreated ${name}
     ${src}
   '';
+  jobToUserService = job: {
+    name = "${job.name}";
+    value = {
+      serviceConfig = {
+        User = "${job.user}";
+      };
+      script = mkCronScript "${job.name}_script" job.script;
+      inherit (job) startAt path;
+    };
+  };
   jobToService = job: {
     name = "${job.name}";
     value = {
@@ -41,6 +51,6 @@ let
       system.autoUpgrade.enable = state != "DIRTY";
     };
 
-  xinlib = { inherit buildVer mkCronScript jobToService buildShell; };
+  xinlib = { inherit buildVer mkCronScript jobToUserService jobToService buildShell; };
 
 in xinlib

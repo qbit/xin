@@ -3,12 +3,14 @@ let
   jobs = [
     {
       name = "xin-ci-update";
+      user = "qbit";
       script = "cd ~/src/xin && ./bin/ci update";
       startAt = "23:00";
       path = [ ];
     }
     {
       name = "xin-ci";
+      user = "qbit";
       script = "cd ~/src/xin && ./bin/ci";
       startAt = "*:30:00";
       path = [ ];
@@ -63,7 +65,7 @@ in with lib; {
       settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
     };
 
-    systemd.user.services =
+    systemd.services =
       lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
     services = {
