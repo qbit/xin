@@ -59,14 +59,16 @@ in with lib; {
         owner = config.services.tsrevprox.user;
       };
     };
-    environment.systemPackages = [ inputs.po.packages.${pkgs.system}.po ];
+    environment.systemPackages = with pkgs; [
+      inputs.po.packages.${pkgs.system}.po
+      keychain
+    ];
 
     nix = {
       settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
     };
 
-    systemd.services =
-      lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+    systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
     services = {
       tsrevprox = {

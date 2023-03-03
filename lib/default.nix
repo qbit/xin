@@ -8,9 +8,6 @@ let
   jobToUserService = job: {
     name = "${job.name}";
     value = {
-      serviceConfig = {
-        User = "${job.user}";
-      };
       script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt path;
     };
@@ -20,6 +17,7 @@ let
     value = {
       script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt path;
+      serviceConfig = { User = "${job.user}"; };
     };
   };
   buildShell = pkgs:
@@ -51,6 +49,8 @@ let
       system.autoUpgrade.enable = state != "DIRTY";
     };
 
-  xinlib = { inherit buildVer mkCronScript jobToUserService jobToService buildShell; };
+  xinlib = {
+    inherit buildVer mkCronScript jobToUserService jobToService buildShell;
+  };
 
 in xinlib
