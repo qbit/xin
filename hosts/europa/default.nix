@@ -79,9 +79,6 @@ in {
 
   boot = {
     initrd.systemd.enable = true;
-    # Temp fix for: https://github.com/NixOS/nixpkgs/pull/214048
-    initrd.systemd.storePaths =
-      [ "${config.boot.initrd.systemd.package.kbd.gzip}/bin/.gzip-wrapped" ];
     loader = {
       systemd-boot.enable = true;
       efi = {
