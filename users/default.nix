@@ -29,20 +29,6 @@ in {
       extraGroups = [ "wheel" ];
     };
 
-    programs.ssh = {
-      startAgent = true;
-      agentTimeout = "100m";
-      extraConfig = ''
-        VerifyHostKeyDNS	yes
-        AddKeysToAgent		confirm 90m
-        CanonicalizeHostname	always
-
-        Host *
-          controlmaster         auto
-          controlpath           /tmp/ssh-%r@%h:%p
-      '';
-    };
-
     environment.systemPackages =
       if isUnstable then [ pkgs.yash pkgs.go ] else [ pkgs.go ];
   };
