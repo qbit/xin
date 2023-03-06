@@ -269,7 +269,8 @@
           promnesia = pkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
             inherit pkgs;
           };
-          sliding-sync = pkgs.callPackage ./pkgs/sliding-sync.nix { inherit pkgs; };
+          sliding-sync =
+            pkgs.callPackage ./pkgs/sliding-sync.nix { inherit pkgs; };
           tailscaleSystray =
             pkgs.callPackage ./pkgs/tailscale-systray.nix { inherit pkgs; };
           golink = pkgs.callPackage ./pkgs/golink.nix { inherit pkgs; };
