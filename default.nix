@@ -3,7 +3,12 @@
 let
   caPubKeys = builtins.concatStringsSep "\n" [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5xMSYMwu6rjjLe2UYs1YGCIBVs35E9db2qAjNltCVPG5UoctxCDXxIz0PMOJrBbfqZzP/6qPU1WAhdGNTZ5eXq/ftnhI+2xFfMg1uzpXZ9vjy8lUCfXIObtoEdZ9h/7OUCN/BnL0ySqsamkcUo8SAj6wXoNCdwk6oncfyTmhPnoW5tCWCS9p7Q/LuWpYGsvW5nFDSxteP7re6SUe10eftIkFAPNhKA2lsrvzMgjxhnXqwIr1qJeY0otcuYA4V5V09FmElbnOWVuy4Pt8SqV4N9ykkAUXZN1Pi7Q4JnCUifRJVWpKHLoJe0mqwMDJbGtt2Akn3EwiGhyaVjq2FFgBKAb7w8UAE8gob8n4+DOx4TQAXlmWviYij2Xh6CvepbamxlJMvVdWgqk53+u4e+/oOQQ9QTmQvAuecg9dSO3m7+hNHEf+0TXjuTNlk9KHRg4s7ZAI+2Stfo1tBrvEeE2fAF//Mw7zaLPKmEbMiXdbDs816gvYtG6Y36fTGyzhowDQAMNm+zbg8YPz7xFukLdSCPt7RcpPnP1iJs/hGBnog5UaG/Cm4ftkm9zKvOaQKIoA/GQ3yQSyltczA+2h5fur6VQQGrQeVhAcXm9a6GaLPWxgvJX/og76CHps0rYzFM3QBlsiJ+Z0sstk5TtBex9nTjwRZ1U9+4DQes2TB4/uxnQ== SUAH CA"
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCr/f87ARSgfYfjMpGHZuObStuh+8BPcQ/ByvJ/Lb+K04AaD2RzUfbTsXm3ZWqvt2uJARX8OSkV1DTWvOAQ/3gqDM981CBFqGMh2yMtptXUd1IL2h9qcfH2CIH1tka2QHdd2iK2xqHS3Z2jGE2klrMVKxr1bk2tJEzb6xK71lUjkGhwZ196Hb+8Fxs3RD0tmd78HF4p+nR2PD+lCba/TFPJyIu8MxmJsqZiv7uRKk4Nn+EZwbFahr2c6p/jmIPcFi3alm7YJ66I6hWHrXIVDR+PGgMlM1/eS/UfsI1m9fG7D/uOMezwCgqRt14aCYZYjziR6pTdIxIUr+JPRFXsuBN9H+2sfo2hzxpV7zOQ8JZYPVWNbCHxrRJvwRgdddjesyUM5my3zJAoNePNhFCfnUD9+t9mKev6aIgmjeIvMcKqHEwFRX/zn9k6fqXOUHZTEo4SMdTSUpeZOf7FWnIM3c0/LIuof+HitdMnjPC9bZ1SGkg9yN+OPO9HDVfxJUDTakhE1LSVaTUPxG0LZ1uaJt4ADz8cnW0EQsNEClYn07SqSp6K/yxKBg7BYgsc7n+sqTVAJDR0q/pmCl9I5JZHvylXsyHEBXyCn+EDtzvAVLulzDTJRIxpP3e1Zw6TPh1uKTgaPLpVqy4kI3D9GV6XCTa5pcoYN0E6iARCU5eQTE+0hQ== Bold::Daemon SSH CA"
   ];
+  caPubKeyFile = pkgs.writeTextFile {
+    name = "ssh-ca-pubkeys";
+    text = caPubKeys;
+  };
   managementKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
   statusKey = ''
@@ -201,7 +206,7 @@ in {
         enable = true;
         knownHosts = {
           "*.bold.daemon,*.humpback-trout.ts.net,*.suah.dev" = {
-            publicKey = caPubKeys;
+            publicKeyFile = caPubKeyFile;
             certAuthority = true;
           };
         };
