@@ -195,15 +195,15 @@ in {
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOkbSJWeWJyJjak/boaMTqzPVq91wfJz1P+I4rnBUsPW";
         };
         startAgent = true;
+        agentTimeout = "100m";
         extraConfig = ''
-          agentTimeout = "100m";
-            VerifyHostKeyDNS	yes
-            AddKeysToAgent		confirm 90m
-            CanonicalizeHostname	always
+          VerifyHostKeyDNS	yes
+          AddKeysToAgent		confirm 90m
+          CanonicalizeHostname	always
 
-            Host *
-              controlmaster         auto
-              controlpath           /tmp/ssh-%r@%h:%p
+          Host *
+            controlmaster         auto
+            controlpath           /tmp/ssh-%r@%h:%p
         '';
       };
     };
