@@ -133,6 +133,7 @@ in {
     google-chrome-dev
     ispell
     keychain
+    libreoffice
     mattermost-desktop
     mosh
     mupdf
