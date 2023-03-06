@@ -64,7 +64,7 @@ in with lib; {
     networking.hosts = { "127.0.0.1" = [ "ca.bolddaemon.com" ]; };
 
     environment.sessionVariables = { STEPPATH = "/var/lib/step-ca"; };
-    environment.systemPackages = with pkgs; [ step-cli opensc ];
+    environment.systemPackages = with pkgs; [ step-cli opensc libressl ];
 
     services.step-ca = {
       enable = true;
