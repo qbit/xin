@@ -74,7 +74,7 @@ in with lib; {
     ];
 
     services.step-ca = {
-      enable = false;
+      enable = true;
       intermediatePasswordFile = "${config.sops.secrets.ca_password.path}";
       address = "127.0.0.1";
       port = 443;

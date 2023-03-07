@@ -23,7 +23,7 @@ in buildGoModule rec {
 
   buildInputs = [ pcsclite softhsm ];
 
-  ldflags = [ "-w" "-s" "-X main.Version=${version}" ];
+  ldflags = [ "-w" "-s" "-X github.com/smallstep/step-kms-plugin/cmd.Version=${version}" ];
 
   vendorHash = "sha256-Z1hMZGRLiLlrYlyV4GBL+zCPJv+i/EcZPI07RinpY2Q=";
 
