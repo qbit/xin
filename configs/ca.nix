@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, xinlib, ... }:
 let
   cfg = config.services.xinCA;
-  stepKmsPlugin = pkgs.callpackage ../pkgs/step-kms-plugin.nix { };
+  stepKmsPlugin = pkgs.callPackage ../pkgs/step-kms-plugin.nix { };
 in with lib; {
   options = {
     services.xinCA = {
