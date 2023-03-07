@@ -271,6 +271,7 @@
           };
           sliding-sync =
             pkgs.callPackage ./pkgs/sliding-sync.nix { inherit pkgs; };
+          step-kms-plugin = pkgs.callPackage ./pkgs/step-kms-plugin.nix { };
           tailscaleSystray =
             pkgs.callPackage ./pkgs/tailscale-systray.nix { inherit pkgs; };
           golink = pkgs.callPackage ./pkgs/golink.nix { inherit pkgs; };
