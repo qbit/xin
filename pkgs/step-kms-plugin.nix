@@ -1,11 +1,20 @@
-{ lib, buildGoModule, fetchFromGitHub, pkg-config, pcsclite, softhsm
+{ lib, buildGoModule, fetchFromGitHub, pkg-config, pcsclite, softhsm, opensc
 , writeScriptBin }:
 
 let
-  getScriptName = "get_softhsm_so_path";
+  getScriptName = "step-kms-module";
   getSoftHSMsoPath = writeScriptBin getScriptName ''
     #!/usr/bin/env sh
-    echo ${softhsm}/lib/softhsm/libsofthsm2.so
+    case $1 in
+    softhsm)
+      echo ${softhsm}/lib/softhsm/libsofthsm2.so
+      ;;
+    opensc)
+      echo ${opensc}/lib/opensc-pkcs11.so
+      ;;
+    *)
+      echo "usage: ${getScriptName} [softhsm|opensc]"
+    esac
   '';
 
 in buildGoModule rec {
@@ -21,7 +30,7 @@ in buildGoModule rec {
 
   nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [ pcsclite softhsm ];
+  buildInputs = [ pcsclite softhsm opensc ];
 
   ldflags = [ "-w" "-s" "-X github.com/smallstep/step-kms-plugin/cmd.Version=${version}" ];
 
@@ -29,7 +38,7 @@ in buildGoModule rec {
 
   postBuild = ''
     mkdir -p $out/bin
-    ln -s ${getSoftHSMsoPath}/bin/get_softhsm_so_path $out/bin/
+    ln -s ${getSoftHSMsoPath}/bin/${getScriptName} $out/bin/
   '';
 
   meta = with lib; {
