@@ -6,6 +6,7 @@ let
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
   mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
+  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
   weepushover =
     python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
@@ -34,6 +35,7 @@ in {
     ../../modules/yarr.nix
     ../../modules/tsvnstat.nix
     ../../modules/golink.nix
+    ../../modules/sliding-sync.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -101,6 +103,11 @@ in {
     wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
     pots_env_file = {
       owner = config.users.users.pots.name;
+      mode = "400";
+      sopsFile = config.xin-secrets.h.services;
+    };
+    sliding_sync_env = {
+      owner = config.services.sliding-sync.user;
       mode = "400";
       sopsFile = config.xin-secrets.h.services;
     };
@@ -207,6 +214,11 @@ in {
   };
 
   services = {
+    sliding-sync = {
+      enable = true;
+      server = "https://tapenet.org";
+      package = slidingSyncPkg;
+    };
     pots = {
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
@@ -597,7 +609,27 @@ in {
               }";
           };
         };
-        "tapenet.org" = {
+        "tapenet.org" = if config.services.sliding-sync.enable then {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/tapenet.org";
+          extraConfig = ''
+            location ~ ^/(client/|_matrix/client/v3/sync|_matrix/client/unstable/org.matrix.msc3575/sync) {
+                proxy_pass http://${config.services.sliding-sync.address}:${
+                  toString config.services.sliding-sync.port
+                };
+                proxy_set_header X-Forwarded-For $remote_addr;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header Host $host;
+            }
+            location ~* ^(\/_matrix|\/_synapse\/client) {
+                proxy_pass http://127.0.0.1:8009;
+                proxy_set_header X-Forwarded-For $remote_addr;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header Host $host;
+            }
+          '';
+        } else {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/tapenet.org";
@@ -638,7 +670,7 @@ in {
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = [ "synapse" "gotosocial" ];
+      ensureDatabases = [ "synapse" "gotosocial" "syncv3" ];
       ensureUsers = [
         {
           name = "synapse_user";
@@ -647,6 +679,10 @@ in {
         {
           name = "gotosocial";
           ensurePermissions."DATABASE gotosocial" = "ALL PRIVILEGES";
+        }
+        {
+          name = "syncv3";
+          ensurePermissions."DATABASE syncv3" = "ALL PRIVILEGES";
         }
       ];
     };
