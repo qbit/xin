@@ -27,12 +27,12 @@ let
     allow	10.20.30.1/32;
   '';
 
-  matrixServer = "https://tapenet.org";
+  matrixServer = "tapenet.org";
   matrixClientConfig = {
-    "m.homeserver".base_url = matrixServer;
+    "m.homeserver".base_url = "https://${matrixServer}";
     "m.identity_server" = {};
     "org.matrix.msc3575".proxy = {
-      url = matrixServer;
+      url = "https://${matrixServer}";
     };
   };
   matrixServerConfig = {
@@ -41,6 +41,15 @@ let
   mkMatrixWellKnown = p: ''
     return 200 '${builtins.toJSON p}';
   '';
+
+  mkMatrixSliderLoc = {
+      proxyWebsockets = true;
+      proxyPass = "http://${config.services.sliding-sync.address}:${toString config.services.sliding-sync.port}";
+  };
+  mkMatrixLoc = {
+      proxyWebsockets = true;
+      proxyPass = "http://127.0.0.1:8009";
+  };
 
 in {
   _module.args.isUnstable = false;
@@ -630,36 +639,22 @@ in {
           root = "/var/www/tapenet.org";
           locations."/.well-known/matrix/client".extraConfig = mkMatrixWellKnown matrixClientConfig;
           locations."/.well-known/matrix/server".extraConfig = mkMatrixWellKnown matrixServerConfig;
-          extraConfig = ''
-            location ~ ^/(client/|_matrix/client/v3/sync|_matrix/client/unstable/org.matrix.msc3575/sync) {
-                proxy_pass http://${config.services.sliding-sync.address}:${
-                  toString config.services.sliding-sync.port
-                };
-                proxy_set_header X-Forwarded-For $remote_addr;
-                proxy_set_header X-Forwarded-Proto $scheme;
-                proxy_set_header Host $host;
-            }
-            location ~* ^(\/_matrix|\/_synapse\/client) {
-                proxy_pass http://127.0.0.1:8009;
-                proxy_set_header X-Forwarded-For $remote_addr;
-                proxy_set_header X-Forwarded-Proto $scheme;
-                proxy_set_header Host $host;
-            }
-          '';
+
+          locations."/_matrix" = mkMatrixLoc;
+          locations."/_matrix/client/v3/sync" = mkMatrixLoc;
+          locations."/_synapse/client" = mkMatrixLoc;
+
+          locations."/client" = mkMatrixSliderLoc;
+          locations."/_matrix/client/unstable/org.matrix.msc3575/sync" = mkMatrixSliderLoc;
         } else {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/tapenet.org";
           locations."/.well-known/matrix/client".extraConfig = mkMatrixWellKnown matrixClientConfig;
           locations."/.well-known/matrix/server".extraConfig = mkMatrixWellKnown matrixServerConfig;
-          locations."/_matrix" = {
-            proxyWebsockets = true;
-            proxyPass = "http://127.0.0.1:8009";
-          };
-          locations."/_synapse/client" = {
-            proxyWebsockets = true;
-            proxyPass = "http://127.0.0.1:8009";
-          };
+
+          locations."/_matrix" = mkMatrixLoc;
+          locations."/_synapse/client" = mkMatrixLoc;
         };
       };
     };
