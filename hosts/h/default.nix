@@ -27,6 +27,21 @@ let
     allow	10.20.30.1/32;
   '';
 
+  matrixServer = "https://tapenet.org";
+  matrixClientConfig = {
+    "m.homeserver".base_url = matrixServer;
+    "m.identity_server" = {};
+    "org.matrix.msc3575".proxy = {
+      url = matrixServer;
+    };
+  };
+  matrixServerConfig = {
+    "m.server" = "${matrixServer}:443";
+  };
+  mkMatrixWellKnown = p: ''
+    return 200 '${builtins.toJSON p}';
+  '';
+
 in {
   _module.args.isUnstable = false;
   imports = [
@@ -613,6 +628,8 @@ in {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/tapenet.org";
+          locations."/.well-known/matrix/client".extraConfig = mkMatrixWellKnown matrixClientConfig;
+          locations."/.well-known/matrix/server".extraConfig = mkMatrixWellKnown matrixServerConfig;
           extraConfig = ''
             location ~ ^/(client/|_matrix/client/v3/sync|_matrix/client/unstable/org.matrix.msc3575/sync) {
                 proxy_pass http://${config.services.sliding-sync.address}:${
@@ -633,6 +650,8 @@ in {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/tapenet.org";
+          locations."/.well-known/matrix/client".extraConfig = mkMatrixWellKnown matrixClientConfig;
+          locations."/.well-known/matrix/server".extraConfig = mkMatrixWellKnown matrixServerConfig;
           locations."/_matrix" = {
             proxyWebsockets = true;
             proxyPass = "http://127.0.0.1:8009";
