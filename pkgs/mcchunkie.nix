@@ -1,18 +1,17 @@
-{ lib, buildGoModule, fetchFromGitHub, isUnstable, ... }:
-let vendorHash = "sha256-GCQckQe9Y96upJX2X9RDXoQIyH/SD9CniPVsIbdAPmM=";
-in with lib;
+{ lib, buildGoModule, fetchFromGitHub, ... }:
+with lib;
 buildGoModule rec {
   pname = "mcchunkie";
-  version = "1.0.11";
+  version = "1.0.12";
 
   src = fetchFromGitHub {
     owner = "qbit";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-SZx5h+RWgG1tq4kLZ4lh4jlPjprz3Gp3gPLfb/7cNzQ=";
+    hash = "sha256-Cum5VmNN0Y+LY7O0o7UGnbGkwZJv6g9N/ml0DtROEmI=";
   };
 
-  vendorSha256 = vendorHash;
+  vendorHash = "sha256-OWIjq8Qsr1UEOrdDZlYG6qlVKs51R6xNhCqXSqAE2Mk=";
 
   ldflags = [ "-X suah.dev/mcchunkie/plugins.version=${version}" ];
 
