@@ -33,11 +33,6 @@
       inputs.nixpkgs.follows = "unstableSmall";
     };
 
-    sshKnownHosts = {
-      url = "github:qbit/ssh_known_hosts";
-      flake = false;
-    };
-
     microca = {
       url = "github:qbit/microca";
       inputs.nixpkgs.follows = "unstable";
@@ -93,9 +88,8 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, sshKnownHosts, microca, gostart, xintray, tsvnstat, pots, po
-    , tsRevProx, taskobs, mcchunkie, gqrss, darwin, xin-secrets, talon, peerix
-    , ... }@inputs:
+    , reform, microca, gostart, xintray, tsvnstat, pots, po, tsRevProx, taskobs
+    , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
     let
       xinlib = import ./lib;
       supportedSystems = [ "x86_64-linux" ];
@@ -106,7 +100,6 @@
         modules = [
           # Common config stuffs
           (import (./default.nix))
-          (import "${sshKnownHosts}")
 
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
@@ -155,7 +148,6 @@
           system = "aarch64-darwin";
           modules = [
             xin-secrets.nixosModules.sops
-            (import "${sshKnownHosts}")
             ./overlays
 
             ./hosts/plq
@@ -197,7 +189,6 @@
           modules = [
             (import (./installer.nix))
             xin-secrets.nixosModules.sops
-            (import "${sshKnownHosts}")
 
             "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
           ];
@@ -209,7 +200,6 @@
             reform.nixosModule
             (import (./installer.nix))
             xin-secrets.nixosModules.sops
-            (import "${sshKnownHosts}")
 
             "${reform}/nixos/installer.nix"
           ];
@@ -222,7 +212,6 @@
             (xinlib.buildVer self)
             (import (./installer.nix))
             xin-secrets.nixosModules.sops
-            (import "${sshKnownHosts}")
 
             "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
           ];

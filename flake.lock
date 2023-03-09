@@ -303,7 +303,6 @@
         "pots": "pots",
         "reform": "reform",
         "sops-nix": "sops-nix",
-        "sshKnownHosts": "sshKnownHosts",
         "stable": "stable",
         "talon": "talon",
         "taskobs": "taskobs",
@@ -335,22 +334,6 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
-        "type": "github"
-      }
-    },
-    "sshKnownHosts": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1656701928,
-        "narHash": "sha256-wxSl4azf1nQNcUZVNOn6zDzk31sQ1NNoiFDEVUqdGmk=",
-        "owner": "qbit",
-        "repo": "ssh_known_hosts",
-        "rev": "3b18047443bfe259497de7584cf389c72c5afec2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "qbit",
-        "repo": "ssh_known_hosts",
         "type": "github"
       }
     },

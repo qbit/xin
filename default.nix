@@ -194,6 +194,7 @@ in {
           "[git.tapenet.org]:2222".publicKey =
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOkbSJWeWJyJjak/boaMTqzPVq91wfJz1P+I4rnBUsPW";
         };
+        knownHostsFiles = [ ./configs/ssh_known_hosts ];
         startAgent = true;
         agentTimeout = "100m";
         extraConfig = ''
