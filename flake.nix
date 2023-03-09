@@ -313,16 +313,13 @@
         description = "OCaml template.";
       };
 
-      # TODO: magicify this to be built of a list
-      checks.x86_64-linux.europa =
-        self.nixosConfigurations.europa.config.system.build.toplevel;
-      checks.x86_64-linux.stan =
-        self.nixosConfigurations.europa.config.system.build.toplevel;
-      checks.x86_64-linux.h =
-        self.nixosConfigurations.h.config.system.build.toplevel;
-      checks.x86_64-linux.box =
-        self.nixosConfigurations.box.config.system.build.toplevel;
-      checks.x86_64-linux.faf =
-        self.nixosConfigurations.faf.config.system.build.toplevel;
+      checks = let buildList = [ "europa" "stan" "h" "box" "faf" ];
+      in with unstable.lib;
+        foldl' recursiveUpdate { } (mapAttrsToList (name: system: {
+          "${system.pkgs.stdenv.hostPlatform.system}"."${name}" =
+            system.config.system.build.toplevel;
+        }) (filterAttrs
+          (n: v: (builtins.elem n buildList))
+          self.nixosConfigurations));
     };
 }
