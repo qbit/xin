@@ -32,5 +32,14 @@ in {
       builtins.readFile ./pubs/openbsd-72-pkg.pub;
     "signify/openbsd-72-syspatch.pub".text =
       builtins.readFile ./pubs/openbsd-72-syspatch.pub;
+
+    "signify/openbsd-73-base.pub".text =
+      builtins.readFile ./pubs/openbsd-73-base.pub;
+    "signify/openbsd-73-fw.pub".text =
+      builtins.readFile ./pubs/openbsd-73-fw.pub;
+    "signify/openbsd-73-pkg.pub".text =
+      builtins.readFile ./pubs/openbsd-73-pkg.pub;
+    "signify/openbsd-73-syspatch.pub".text =
+      builtins.readFile ./pubs/openbsd-73-syspatch.pub;
   };
 }
