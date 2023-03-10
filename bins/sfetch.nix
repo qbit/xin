@@ -8,7 +8,7 @@
   SERVER=cdn.openbsd.org
   ITEM=$1
   MACHINE=''${2:-amd64}
-  V="72"
+  V="73"
   [[ ! -z $2 ]] && MACHINE=$2
   ${curl}/bin/curl -s -o "$PWD/$ITEM" "https://$SERVER/pub/OpenBSD/snapshots/$MACHINE/$ITEM" && \
   ${curl}/bin/curl -s -o "$PWD/SHA256.sig" "https://$SERVER/pub/OpenBSD/snapshots/$MACHINE/SHA256.sig"
