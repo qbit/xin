@@ -645,6 +645,7 @@ in {
           locations."/_synapse/client" = mkMatrixLoc;
 
           locations."/client" = mkMatrixSliderLoc;
+          locations."/_matrix/client/v4/sync" = mkMatrixSliderLoc;
           locations."/_matrix/client/unstable/org.matrix.msc3575/sync" =
             mkMatrixSliderLoc;
         } else {
