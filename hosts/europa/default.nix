@@ -283,6 +283,7 @@ in {
 
     talon
 
+    (callPackage ../../pkgs/iamb.nix { })
     (callPackage ../../pkgs/kobuddy.nix {
       inherit pkgs;
       inherit (pkgs.python39Packages)

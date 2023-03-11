@@ -229,6 +229,7 @@
             inherit pkgs;
             isUnstable = true;
           };
+          iamb = pkgs.callPackage ./pkgs/iamb.nix { };
           icbirc = pkgs.callPackage ./pkgs/icbirc.nix {
             inherit pkgs;
             isUnstable = true;
