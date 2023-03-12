@@ -219,8 +219,12 @@ in {
     serviceConfig.Type = "oneshot";
   };
 
-  virtualisation.docker.enable = true;
-  users.users.qbit.extraGroups = [ "dialout" "libvirtd" "docker" ];
+  virtualisation.docker.enable = false;
+  users.users.qbit.extraGroups = [
+    "dialout"
+    "libvirtd"
+    #"docker"
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
