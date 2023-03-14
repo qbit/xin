@@ -198,13 +198,13 @@ in {
         startAgent = true;
         agentTimeout = "100m";
         extraConfig = ''
-          VerifyHostKeyDNS	yes
-          AddKeysToAgent		confirm 90m
-          CanonicalizeHostname	always
-
           Host *
             controlmaster         auto
             controlpath           /tmp/ssh-%r@%h:%p
+
+          VerifyHostKeyDNS	yes
+          AddKeysToAgent	confirm 90m
+          CanonicalizeHostname	always
         '';
       };
     };
