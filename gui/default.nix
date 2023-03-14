@@ -92,6 +92,7 @@ in with lib; {
         promnesia
         hpi
         black
+        zeal
       ];
 
     })
