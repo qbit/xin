@@ -3,7 +3,7 @@
 
 buildPythonPackage rec {
   pname = "ghexport";
-  version = "2022-08-28";
+  version = "20220828";
 
   nativeBuildInputs = [ setuptools-scm ];
   propagatedBuildInputs = [ PyGithub pytz ];

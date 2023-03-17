@@ -9,62 +9,6 @@ in {
     openssh
     tailscale
 
-   (self: super: {
-     python310 = super.python310.override {
-       packageOverrides = python-self: python-super: {
-         dataset = python-super.dataset.overrideAttrs (old: {
-           src = python-super.fetchFromGitHub {
-             owner = "pudo";
-             repo = "dataset";
-             rev = "0757b5010b600a66ed07fbb06a0e86c7bb0e09bc";
-             hash = "sha256-BfIGQvXKlsydV3p93/qLYtbVujTNWqWfMg16/aENHks=";
-           };
-
-           prePatch = ''
-             substituteInPlace ./setup.py --replace "sqlalchemy >= 1.3.2, < 2.0.0" \
-              "sqlalchemy >= 1.3.2, <= 2.0.4"
-           '';
-
-           patch = [
-             (python-super.fetchpatch {
-               url = "https://patch-diff.githubusercontent.com/raw/pudo/dataset/pull/415.patch";
-               hash = "sha256-dz380ws4801lW669sOfshU5ZoUTmILkamwRgYCDZzAM=";
-             })
-           ];
-         });
-       };
-     };
-   })
-
-    # https://github.com/NixOS/nixpkgs/pull/213613
-    (self: super: {
-      tidal-hifi = super.tidal-hifi.overrideAttrs (old: rec {
-        version = "4.4.0";
-
-        src = super.fetchurl {
-          url =
-            "https://github.com/Mastermindzh/tidal-hifi/releases/download/${version}/tidal-hifi_${version}_amd64.deb";
-          sha256 = "sha256-6KlcxBV/zHN+ZnvIu1PcKNeS0u7LqhDqAjbXawT5Vv8=";
-        };
-
-        postFixup = ''
-          makeWrapper $out/opt/tidal-hifi/tidal-hifi $out/bin/tidal-hifi \
-            --prefix LD_LIBRARY_PATH : "${
-              lib.makeLibraryPath old.buildInputs
-            }" \
-            "''${gappsWrapperArgs[@]}"
-          substituteInPlace $out/share/applications/tidal-hifi.desktop \
-            --replace "/opt/tidal-hifi/tidal-hifi" "tidal-hifi"
-
-          for size in 48 64 128 256 512; do
-            mkdir -p $out/share/icons/hicolor/''${size}x''${size}/apps/
-            convert $out/share/icons/hicolor/0x0/apps/tidal-hifi.png \
-              -resize ''${size}x''${size} $out/share/icons/hicolor/''${size}x''${size}/apps/icon.png
-          done
-        '';
-
-      });
-    })
     (self: super: {
       rex = super.rex.overrideAttrs (old: {
         patches = [
