@@ -291,7 +291,7 @@ in {
     (callPackage ../../pkgs/kobuddy.nix {
       inherit pkgs;
       inherit (pkgs.python39Packages)
-        buildPythonPackage fetchPypi setuptools-scm dataset pytz;
+        buildPythonPackage fetchPypi setuptools-scm pytz banal sqlalchemy;
     })
     (callPackage ../../pkgs/gokrazy.nix { })
     (callPackage ../../pkgs/zutty.nix { })
