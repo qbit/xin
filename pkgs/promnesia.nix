@@ -1,7 +1,8 @@
-{ lib, buildPythonPackage, fetchPypi, beautifulsoup4, fastapi, httptools, pytest
-, logzero, lxml, mistletoe, more-itertools, mypy, pytz, setuptools, appdirs
-, sqlalchemy, tzlocal, urlextract, uvicorn, uvloop, watchfiles, websockets
-, orjson, pandas, simplejson, setuptools-scm, decorator, geopy, pkgs, ... }:
+{ lib, buildPythonPackage, fetchFromGitHub, beautifulsoup4, fastapi, httptools
+, pytest, logzero, lxml, mistletoe, more-itertools, mypy, pytz, setuptools
+, appdirs, sqlalchemy, tzlocal, urlextract, uvicorn, uvloop, watchfiles
+, websockets, orjson, pandas, simplejson, setuptools-scm, decorator, geopy, pkgs
+, ... }:
 with pkgs;
 let
   hpi = pkgs.python3Packages.callPackage ./hpi.nix { inherit pkgs; };
@@ -12,10 +13,14 @@ in buildPythonPackage rec {
   pname = "promnesia";
   version = "1.1.20230129";
 
-  src = fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-T6sayrPkz8I0u11ZvFbkDdOyVodbaTVkRzLib5lMX+Q=";
+  src = fetchFromGitHub {
+    owner = "karlicoss";
+    repo = pname;
+    rev = "c4a7b47e198a3822dd540968c5a8e6b95ab51b53";
+    hash = "sha256-QMqvqspuqkyIsz05aA1xObT0tKaJmbts3Cn3O9rlQ1k=";
   };
+
+  SETUPTOOLS_SCM_PRETEND_VERSION = version;
 
   doCheck = true;
 
