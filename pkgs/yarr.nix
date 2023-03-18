@@ -3,17 +3,17 @@
 with lib;
 buildGoModule rec {
   pname = "yarr";
-  version = "2023-01-30";
+  version = "2023-03-18";
 
   src = fetchFromGitHub {
     owner = "nkanaev";
     repo = pname;
     #rev = "v${version}";
-    rev = "c092842ee4a9621aff12d439f2fedd95058010fe";
-    sha256 = "sha256-VTEe+7x6DVXJFS+AEnfcUaag85zzK5Xve0zp1Polw7I=";
+    rev = "d2678be96d37a71ec34ac23207393f78dcceafc5";
+    sha256 = "sha256-BCP2d4Fk5KkWz7tmx7kMybnRZEGHIRjtNiNIpNCXRYE=";
   };
 
-  vendorSha256 = null;
+  vendorHash = null;
 
   ldflags = [ "-X main.Version=${version}" ];
 
