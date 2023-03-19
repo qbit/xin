@@ -30,7 +30,6 @@ let
   matrixServer = "tapenet.org";
   matrixClientConfig = {
     "m.homeserver".base_url = "https://${matrixServer}";
-    "m.identity_server" = { };
     "org.matrix.msc3575".proxy = { url = "https://${matrixServer}"; };
   };
   matrixServerConfig = { "m.server" = "${matrixServer}:443"; };
