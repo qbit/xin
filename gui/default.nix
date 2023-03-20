@@ -83,16 +83,17 @@ in with lib; {
         // promnesiaService;
 
       environment.systemPackages = with pkgs; [
+        black
         brave
-        vlc
+        hpi
         pcsctools
+        promnesia
         rage
         rpr
-        (callPackage ../pkgs/tailscale-systray.nix { })
-        promnesia
-        hpi
-        black
+        vlc
         zeal
+
+        (callPackage ../pkgs/tailscale-systray.nix { })
       ];
 
     })
