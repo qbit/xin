@@ -38,7 +38,7 @@
   hardware = {
     cpu.intel.updateMicrocode =
       lib.mkDefault config.hardware.enableRedistributableFirmware;
-    video.hidpi.enable = lib.mkDefault true;
+    video.hidpi.enable = lib.mkDefault false;
     bluetooth.enable = true;
   };
 }
