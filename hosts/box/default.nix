@@ -1,4 +1,4 @@
-{ lib, config, pkgs, isUnstable, ... }:
+{ inputs, lib, config, pkgs, isUnstable, ... }:
 
 let
   #photoPrismTag = "220901-bullseye";
@@ -490,6 +490,8 @@ in {
       rootUrl = "https://git.tapenet.org";
       stateDir = "/media/git";
       appName = "Tape:neT";
+
+      package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
 
       lfs.enable = true;
 
