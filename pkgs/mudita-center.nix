@@ -1,5 +1,4 @@
-{ lib, fetchurl, appimageTools, makeDesktopItem, isUnstable, desktop-file-utils
-, ... }:
+{ fetchurl, appimageTools, desktop-file-utils, ... }:
 
 let
   name = "mudita-center";

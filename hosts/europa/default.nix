@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, inputs, xinlib, ... }:
+{ config, pkgs, lib, xinlib, ... }:
 let
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then

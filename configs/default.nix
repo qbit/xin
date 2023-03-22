@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ ... }: {
   imports = [
     ./ca.nix
     ./ci.nix
@@ -6,7 +6,6 @@
     ./develop.nix
     ./dns.nix
     ./doas.nix
-    ./gitmux.nix
     ./git.nix
     ./neovim.nix
     ./peerix.nix

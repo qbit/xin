@@ -1,4 +1,4 @@
-{ config, lib, pkgs, prettyJSON, ... }:
+{ config, lib, pkgs, ... }:
 with pkgs;
 let
   cfg = config.services.yarr;

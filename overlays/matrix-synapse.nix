@@ -1,6 +1,6 @@
 let
-  matrix-synapse = self: super: {
-    matrix-synapse = super.matrix-synapse.overrideAttrs (old: rec {
+  matrix-synapse = _: super: {
+    matrix-synapse = super.matrix-synapse.overrideAttrs (_: rec {
       version = "1.79.0";
       pname = "matrix-synapse";
 

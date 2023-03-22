@@ -1,5 +1,4 @@
-{ stdenv, lib, buildGo119Module, fetchFromGitHub, makeWrapper, go, git, ffmpeg
-, ... }:
+{ lib, buildGo119Module, fetchFromGitHub, go, ffmpeg, ... }:
 let
   gotosocialVersion = "0.7.1";
   gtswaHash = "sha256:0k0i3qw89fq6w2akdbrbg4s3amp5hznr2b5z5dzz2jragvb8a6yx";

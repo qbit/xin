@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, xinlib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.services.xinCA;
   stepKmsPlugin = pkgs.callPackage ../pkgs/step-kms-plugin.nix { };

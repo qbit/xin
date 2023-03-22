@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 let
   inherit (builtins)
     head concatStringsSep attrValues mapAttrs attrNames; # hasAttr;
@@ -338,7 +338,7 @@ in {
       };
     };
 
-    interfaces = filterAttrsRecursive (n: v: n != "info") interfaces;
+    interfaces = filterAttrsRecursive (n: _: n != "info") interfaces;
 
     nftables = {
       enable = true;
@@ -474,10 +474,10 @@ in {
               '') val.info.dhcp.staticIPs)
             }
           }
-        '') (filterAttrsRecursive (n: v: n != "${wan}") interfaces)))}
+        '') (filterAttrsRecursive (n: _: n != "${wan}") interfaces)))}
       '';
-      interfaces = attrNames (filterAttrs (n: v: v.info.dhcp.enable)
-        (filterAttrsRecursive (n: v: n != "${wan}") interfaces));
+      interfaces = attrNames (filterAttrs (_: v: v.info.dhcp.enable)
+        (filterAttrsRecursive (n: _: n != "${wan}") interfaces));
       # TODO: Probably a better way to pre-filter the interfaces set
     };
   };

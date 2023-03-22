@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   pubKeys = [
@@ -40,7 +40,7 @@ in {
     isNormalUser = true;
     description = "Aaron Bieber";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ ];
+    packages = [ ];
   };
 
   # neovim will overwrite my neovim!!

@@ -1,11 +1,11 @@
-{ lib, stdenv, fetchpatch, fetchurl, pkgs, ... }:
+{ lib, stdenv, fetchurl, pkgs, ... }:
 
 stdenv.mkDerivation rec {
   pname = "icbirc";
   version = "2.1";
 
   src = fetchurl {
-    url = "http://www.benzedrine.ch/icbirc-2.1.tar.gz";
+    url = "http://www.benzedrine.ch/icbirc-${version}.tar.gz";
     sha256 = "sha256-aDk0TZPABNqX7Gu12AWh234Kee/DhwRFeIBDYnFiu7E=";
   };
 

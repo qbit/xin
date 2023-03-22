@@ -1,4 +1,4 @@
-{ pkgs, buildPythonPackage, setuptools-scm, sqlcipher, fetchPypi, ... }:
+{ buildPythonPackage, setuptools-scm, sqlcipher, fetchPypi, ... }:
 
 buildPythonPackage rec {
   pname = "sqlcipher3";

@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchpatch, fetchFromGitHub, pkgs, go-font, ... }:
+{ lib, stdenv, fetchFromGitHub, pkgs, go-font, ... }:
 
 stdenv.mkDerivation rec {
   pname = "zutty";

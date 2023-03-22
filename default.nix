@@ -1,4 +1,4 @@
-{ config, lib, options, pkgs, isUnstable, xinlib, ... }:
+{ config, lib, options, pkgs, isUnstable, ... }:
 
 let
   caPubKeys = builtins.concatStringsSep "\n" [

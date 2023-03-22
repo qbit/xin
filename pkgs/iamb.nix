@@ -1,4 +1,4 @@
-{ lib, rustPlatform, fetchFromGitHub, stdenv }:
+{ lib, rustPlatform, fetchFromGitHub }:
 rustPlatform.buildRustPackage rec {
   pname = "iamb";
   version = "2023-03-09";

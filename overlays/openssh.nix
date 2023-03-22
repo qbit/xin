@@ -1,6 +1,6 @@
 let
-  openssh = self: super: {
-    openssh = super.openssh.overrideAttrs (old: rec {
+  openssh = _: super: {
+    openssh = super.openssh.overrideAttrs (_: rec {
       version = "9.3p1";
       src = super.fetchurl {
         url = "mirror://openbsd/OpenSSH/portable/openssh-${version}.tar.gz";

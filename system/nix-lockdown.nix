@@ -1,4 +1,4 @@
-{ config, lib, isUnstable, ... }:
+{ config, lib, ... }:
 with lib; {
   options = {
     nixLockdown = {

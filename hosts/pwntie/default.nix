@@ -1,4 +1,4 @@
-{ config, pkgs, lib, xinlib, ... }:
+{ pkgs, ... }:
 
 let
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };

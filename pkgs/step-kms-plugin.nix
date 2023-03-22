@@ -1,5 +1,5 @@
 { lib, buildGoModule, fetchFromGitHub, pkg-config, pcsclite, softhsm, opensc
-, yubihsm-shell, writeScriptBin }:
+, yubihsm-shell }:
 
 buildGoModule rec {
   pname = "step-kms-plugin";

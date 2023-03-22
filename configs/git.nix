@@ -1,4 +1,4 @@
-{ config, pkgs, isUnstable, ... }:
+{ config, isUnstable, ... }:
 let
   rewriteGitHub = if config.networking.hostName != "stan" then {
     url = { "ssh://git@github.com/" = { insteadOf = "https://github.com/"; }; };

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-with lib; {
+{ ... }: {
   programs.tmux = {
     enable = true;
     extraConfig = ''

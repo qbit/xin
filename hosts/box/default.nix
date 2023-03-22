@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, isUnstable, ... }:
+{ inputs, config, pkgs, isUnstable, ... }:
 
 let
   #photoPrismTag = "220901-bullseye";

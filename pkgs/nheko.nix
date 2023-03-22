@@ -1,4 +1,4 @@
-{ lib, fetchurl, stdenv, undmg, isUnstable }:
+{ lib, fetchurl, stdenv, undmg }:
 
 stdenv.mkDerivation rec {
   pname = "nheko";

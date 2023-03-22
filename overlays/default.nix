@@ -1,4 +1,4 @@
-{ pkgs, lib, isUnstable, ... }:
+{ pkgs, isUnstable, ... }:
 let
   openssh = import ./openssh.nix;
   tailscale = import ./tailscale.nix;
@@ -9,8 +9,8 @@ in {
     openssh
     tailscale
 
-    (self: super: {
-      rex = super.rex.overrideAttrs (old: {
+    (_: super: {
+      rex = super.rex.overrideAttrs (_: {
         patches = [
           (pkgs.fetchurl {
             url = "https://deftly.net/rex-git.diff";

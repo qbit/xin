@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, ... }:
 let cfg = config.services.sliding-sync;
 in {
   options = with lib; {
