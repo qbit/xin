@@ -70,7 +70,7 @@ in {
   nixpkgs.overlays = [
     (_: super: {
       weechat = super.weechat.override {
-        configure = { }: {
+        configure = { ... }: {
           scripts = with super.weechatScripts; [ highmon weepushover ];
         };
       };
