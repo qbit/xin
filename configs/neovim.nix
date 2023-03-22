@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 with pkgs;
 let
   parchment = pkgs.vimUtils.buildVimPluginFrom2Nix rec {

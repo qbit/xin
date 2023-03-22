@@ -1,4 +1,4 @@
-{ lib, fetchurl, stdenv, unzip, isUnstable }:
+{ lib, fetchurl, stdenv, unzip }:
 
 stdenv.mkDerivation rec {
   pname = "hammerspoon";

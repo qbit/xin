@@ -1,4 +1,4 @@
-{ config, pkgs, emacs, isUnstable, ... }:
+{ pkgs, isUnstable, ... }:
 let
   secretAgent =
     "Contents/Library/LoginItems/SecretAgent.app/Contents/MacOS/SecretAgent";

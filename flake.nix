@@ -88,8 +88,8 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, microca, gostart, xintray, tsvnstat, pots, po, tsRevProx, taskobs
-    , mcchunkie, gqrss, darwin, xin-secrets, talon, peerix, ... }@inputs:
+    , reform, gostart, xintray, tsvnstat, pots, po, tsRevProx, darwin
+    , xin-secrets, talon, peerix, ... }@inputs:
     let
       xinlib = import ./lib;
       supportedSystems = [ "x86_64-linux" ];
@@ -305,7 +305,7 @@
       foldl' recursiveUpdate { } (mapAttrsToList (name: system: {
         "${system.pkgs.stdenv.hostPlatform.system}"."${name}" =
           system.config.system.build.toplevel;
-      }) (filterAttrs (n: v: (builtins.elem n buildList))
+      }) (filterAttrs (n: _: (builtins.elem n buildList))
         self.nixosConfigurations));
     };
 }

@@ -1,8 +1,7 @@
 { lib, buildPythonPackage, fetchFromGitHub, beautifulsoup4, fastapi, httptools
-, pytest, logzero, lxml, mistletoe, more-itertools, mypy, pytz, setuptools
-, appdirs, sqlalchemy, tzlocal, urlextract, uvicorn, uvloop, watchfiles
-, websockets, orjson, pandas, simplejson, setuptools-scm, decorator, geopy, pkgs
-, ... }:
+, logzero, lxml, mistletoe, more-itertools, mypy, pytz, setuptools, tzlocal
+, urlextract, uvicorn, uvloop, watchfiles, websockets, setuptools-scm, pkgs, ...
+}:
 with pkgs;
 let
   hpi = pkgs.python3Packages.callPackage ./hpi.nix { inherit pkgs; };

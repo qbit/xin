@@ -1,5 +1,4 @@
-{ pkgs, buildPythonPackage, setuptools-scm, fetchFromGitHub, PyGithub, pytz, ...
-}:
+{ buildPythonPackage, setuptools-scm, fetchFromGitHub, PyGithub, pytz, ... }:
 
 buildPythonPackage rec {
   pname = "ghexport";

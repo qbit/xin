@@ -1,4 +1,4 @@
-{ config, pkgs, lib, isUnstable, inputs, ... }:
+{ config, pkgs, isUnstable, ... }:
 with pkgs;
 let
   restic = pkgs.writeScriptBin "restic"
@@ -68,9 +68,9 @@ in {
   tailscale.sshOnly = true;
 
   nixpkgs.overlays = [
-    (self: super: {
+    (_: super: {
       weechat = super.weechat.override {
-        configure = { availablePlugins, ... }: {
+        configure = { }: {
           scripts = with super.weechatScripts; [ highmon weepushover ];
         };
       };

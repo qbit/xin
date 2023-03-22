@@ -1,2 +1,2 @@
-{ config, lib, pkgs, ... }: { imports = [ ./ssh-fido-agent.nix ]; }
+{ ... }: { imports = [ ./ssh-fido-agent.nix ]; }
 

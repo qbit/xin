@@ -1,5 +1,5 @@
 let
-  tailscale = self: super: {
+  tailscale = _: super: {
     tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
       buildGoModule = args:
         super.buildGo120Module (args // rec {

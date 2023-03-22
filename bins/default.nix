@@ -1,4 +1,4 @@
-{ pkgs, lib, isUnstable, ... }:
+{ pkgs, isUnstable, ... }:
 let
   gosignify = pkgs.callPackage ../pkgs/gosignify.nix { inherit isUnstable; };
 

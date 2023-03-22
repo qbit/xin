@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPMaAm4rDxyU975Z54YiNw3itC2fGc3SaE2VaS1fai8 root@box"
@@ -19,7 +19,7 @@ in {
   networking.networkmanager.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = [ ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
