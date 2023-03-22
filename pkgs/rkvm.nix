@@ -1,5 +1,5 @@
 { lib, fetchFromGitHub, rustPlatform, pkg-config, openssl_1_1, llvmPackages
-, libevdev, linuxHeaders }:
+, libevdev, linuxHeaders, ... }:
 
 rustPlatform.buildRustPackage {
   pname = "rkvm";
