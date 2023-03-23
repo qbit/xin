@@ -2,10 +2,12 @@
 let
   openssh = import ./openssh.nix;
   tailscale = import ./tailscale.nix;
+  jetbrains = import ./jetbrains.nix;
   matrix-synapse = import ./matrix-synapse.nix;
 
 in {
   nixpkgs.overlays = if isUnstable then [
+    jetbrains
     openssh
     tailscale
 
