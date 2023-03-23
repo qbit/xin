@@ -23,12 +23,12 @@ let
   };
   obsidian = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
     pname = "obsidian-nvim";
-    version = "1.6.1";
+    version = "1.7.0"; # 1.8.0 has breaking changes
     src = pkgs.fetchFromGitHub {
       owner = "epwalsh";
       repo = "obsidian.nvim";
       rev = "v${version}";
-      sha256 = "sha256-2VxDk5FHpVMxPR/or9ZsaaDOLlaraOHJoN7C8JI0+24=";
+      sha256 = "sha256-pMYvtNEYoVFaWlj35F1rDlfJkNY4y4S62RNpHBNBgto=";
       fetchSubmodules = true;
     };
     dependencies = with vimPlugins; [ nvim-cmp tabular ];
