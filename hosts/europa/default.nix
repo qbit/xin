@@ -250,10 +250,8 @@ in {
     cider
     cinny-desktop
     clementine
-    drawterm
     element-desktop
     exercism
-    firefox
     gh
     isync
     klavaro

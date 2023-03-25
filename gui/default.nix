@@ -52,7 +52,14 @@ in with lib; {
     (mkIf config.arcan.enable {
       sound.enable = true;
       services = { xserver.enable = false; };
-      environment.systemPackages = with pkgs; [ brave go-font vlc pcsctools ];
+      environment.systemPackages = with pkgs; [
+        brave
+        firefox
+        drawterm
+        go-font
+        vlc
+        pcsctools
+      ];
     })
     (mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
 
@@ -85,6 +92,8 @@ in with lib; {
       environment.systemPackages = with pkgs; [
         black
         brave
+        drawterm
+        firefox
         hpi
         pcsctools
         promnesia
