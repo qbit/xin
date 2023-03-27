@@ -36,7 +36,7 @@ if [ "${1}" = "update" ]; then
 		exit 1
 	fi
 	if ! nix flake check; then
-		handle_check_fail
+		handle_update_check_fail
 		exit 1
 	fi
 	if ! git checkout main; then
@@ -56,7 +56,10 @@ if [ "${1}" = "update" ]; then
 		exit 1
 	fi
 else
-	nix flake check || handle_check_fail
+	if ! nix flake check; then
+		handle_check_fail
+		exit 1
+	fi
 fi
 
 finish

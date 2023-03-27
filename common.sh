@@ -125,6 +125,10 @@ handle_check_fail() {
 	po_error "CI: flake checks failed!" "Pelase help!"
 }
 
+handle_update_check_fail() {
+	po_error "CI: flake checks failed while updating!" "Pelase help!"
+}
+
 handle_merge_fail() {
 	po_error "CI: git merge failed!" "Pelase help!"
 }
