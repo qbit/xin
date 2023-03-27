@@ -15,10 +15,7 @@ let
     };
 
     patches = [
-      (fetchpatch {
-        url = "http://sprunge.us/VjQHXp";
-        hash = "sha256-7TASRvvaNE4V1ShMkahdCb0js2Muaq+NC88wIsTvFu8=";
-      })
+      ./kobuddy.diff
     ];
 
     propagatedBuildInputs = [ alembic banal sqlalchemy ];
