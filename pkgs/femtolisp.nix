@@ -29,6 +29,6 @@ stdenv.mkDerivation {
     homepage = "https://git.sr.ht/~ft/femtolisp";
     license = lib.licenses.bsd3;
     maintainer = with lib.maintainers; [ qbit ];
-    program = "flisp";
+    mainProgram = "flisp";
   };
 }
