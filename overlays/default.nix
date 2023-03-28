@@ -41,7 +41,7 @@ in {
       });
     })
   ] else [
-    #(import ./matrix-synapse.nix)
+    (import ./matrix-synapse.nix)
     openssh
     tailscale
   ];
