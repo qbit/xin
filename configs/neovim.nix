@@ -45,6 +45,7 @@ let
     };
   };
   baseVimPackages = with vimPlugins; [
+    elm-vim
     fugitive
     fzf-vim
     nvim-compe
@@ -73,14 +74,17 @@ let
     baseVimPackages ++ [ vimPlugins.vim-go vimPlugins.telescope-manix ];
 in {
   environment.systemPackages = with pkgs; [
+    elmPackages.elm
+    elmPackages.elm-format
+    elmPackages.elm-language-server
     fzf
     go
     gopls
     gotools
     luaformatter
+    luajitPackages.lua-lsp
     manix
     ripgrep
-    luajitPackages.lua-lsp
     rubyPackages.solargraph
   ];
   programs.neovim = {

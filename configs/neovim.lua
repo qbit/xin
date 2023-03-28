@@ -97,3 +97,4 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 vim.g["vim_markdown_folding_disabled"] = 1
+vim.g["elm_setup_keybindings"] = 0
