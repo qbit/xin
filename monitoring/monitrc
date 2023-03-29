@@ -20,6 +20,3 @@ check system $HOST
     if cpu usage (wait) > 80% for 2 cycles then alert
     if cpu usage > 200% for 4 cycles then alert
 
-check filesystem rootfs with path /
-    if space usage > 90% then alert
-    if inode usage > 90% then alert
