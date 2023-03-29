@@ -71,7 +71,7 @@ isRunHost() {
 }
 
 tsAlive() {
-	ping -c 1 -w 2 $1 >/dev/null 2>&1 && return 0
+	ping -4 -c 1 -w 2 $1 >/dev/null 2>&1 && return 0
 	tailscale ping --timeout 2s --c 1 --until-direct=false $1 >/dev/null 2>&1 && return 0
 	return 1
 }
