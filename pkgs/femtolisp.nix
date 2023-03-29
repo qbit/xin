@@ -1,9 +1,4 @@
-{
-  stdenv
-  , lib
-  , fetchgit
-  , gnumake
-}:
+{ stdenv, lib, fetchgit, gnumake }:
 
 stdenv.mkDerivation {
   pname = "femtolisp";
@@ -15,9 +10,7 @@ stdenv.mkDerivation {
     hash = "sha256-mh7upbCmWXLhudtaaebBf1XTIv4nYPSh0OAJDOqaQnk=";
   };
 
-  buildInputs = [
-    gnumake
-  ];
+  buildInputs = [ gnumake ];
 
   installPhase = ''
     mkdir -p $out/bin

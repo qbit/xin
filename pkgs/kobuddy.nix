@@ -1,5 +1,5 @@
-{ lib, fetchFromGitHub, fetchpatch, buildPythonPackage, fetchPypi
-, setuptools-scm, pytz, alembic, banal, sqlalchemy, ... }:
+{ lib, fetchFromGitHub, buildPythonPackage, fetchPypi, setuptools-scm, pytz
+, alembic, banal, sqlalchemy, ... }:
 
 let
   myDataset = buildPythonPackage rec {
@@ -14,9 +14,7 @@ let
       hash = "sha256-BfIGQvXKlsydV3p93/qLYtbVujTNWqWfMg16/aENHks=";
     };
 
-    patches = [
-      ./kobuddy.diff
-    ];
+    patches = [ ./kobuddy.diff ];
 
     propagatedBuildInputs = [ alembic banal sqlalchemy ];
 
