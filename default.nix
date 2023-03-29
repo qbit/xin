@@ -49,6 +49,8 @@ in {
     ./system/update.nix
     ./users
 
+    ./monitoring
+
     ./bins
   ];
 
