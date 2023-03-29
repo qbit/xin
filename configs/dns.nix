@@ -18,6 +18,8 @@ with lib; {
         enable = true;
         dnssec = "allow-downgrade";
         # TODO: Enable a toggle for ipv6
+        fallbackDns =
+          [ "9.9.9.9" "2620:fe::fe" "149.112.112.112" "2620:fe::9" ];
         extraConfig = ''
           [Resolve]
             DNS=45.90.28.0#8436c6.dns1.nextdns.io
