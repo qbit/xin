@@ -1,4 +1,4 @@
-{ pkgs, isUnstable, ... }:
+{ isUnstable, ... }:
 let
   openssh = import ./openssh.nix;
   tailscale = import ./tailscale.nix;
@@ -9,37 +9,6 @@ in {
     jetbrains
     openssh
     tailscale
-
-    (_: super: {
-      rex = super.rex.overrideAttrs (_: {
-        patches = [
-          (pkgs.fetchurl {
-            url = "https://deftly.net/rex-git.diff";
-            sha256 = "sha256-hLzWJydIBxAVXLTcqYFTLuWnMgPwNE6aZ+4fDN4agrM=";
-          })
-        ];
-        nativeBuildInputs = with pkgs.perlPackages; [
-          ParallelForkManager
-          pkgs.installShellFiles
-        ];
-
-        outputs = [ "out" ];
-
-        fixupPhase = ''
-          substituteInPlace ./share/rex-tab-completion.zsh \
-            --replace 'perl' "${
-              pkgs.perl.withPackages (ps: [ ps.YAML ])
-            }/bin/perl"
-          substituteInPlace ./share/rex-tab-completion.bash \
-            --replace 'perl' "${
-              pkgs.perl.withPackages (ps: [ ps.YAML ])
-            }/bin/perl"
-          installShellCompletion --name _rex --zsh ./share/rex-tab-completion.zsh
-          installShellCompletion --name _rex --bash ./share/rex-tab-completion.bash
-        '';
-
-      });
-    })
   ] else [
     (import ./matrix-synapse.nix)
     openssh
