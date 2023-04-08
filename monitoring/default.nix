@@ -1,5 +1,7 @@
-{ config, ... }:
+{ config, lib, ... }:
+with lib;
 let
+  cfg = config.services.xin-monitoring;
   inherit (builtins)
     readFile concatStringsSep attrValues mapAttrs replaceStrings;
 
@@ -10,7 +12,6 @@ let
          if space usage > 90% then alert
          if inode usage > 90% then alert
     '') fsList)));
-
   buildNginxChecker = vhostList:
     (concatStringsSep "\n" (attrValues (mapAttrs (f: v: ''
       check host ${f} with address ${f}
@@ -22,7 +23,6 @@ let
               ""
           }
     '') vhostList)));
-
   nginxChecks = if nginxCfg.enable then
     if config.networking.hostName == "h" then
       (buildNginxChecker nginxCfg.virtualHosts)
@@ -32,7 +32,30 @@ let
     "";
 
 in {
-  config = {
+  options = {
+    services.xin-monitoring = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable Monitoring";
+      };
+      fs = mkOption {
+        type = types.bool;
+        default = true;
+        description = ''
+          Create monitoring entry points from `config.fileSystems`.
+        '';
+      };
+      nginx = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Create monitoring entry points from `services.nginx.virtualHosts`.
+        '';
+      };
+    };
+  };
+  config = mkIf cfg.enable {
     sops.secrets = {
       monit_cfg = {
         sopsFile = config.xin-secrets.deploy;
@@ -42,8 +65,11 @@ in {
     };
     services.monit = {
       enable = true;
-      config = readFile ./monitrc + (buildFSChecker config.fileSystems)
-        + nginxChecks;
+      config = concatStrings [
+        (readFile ./monitrc)
+        (optionalString cfg.fs (buildFSChecker config.fileSystems))
+        (optionalString cfg.nginx nginxChecks)
+      ];
     };
   };
 }
