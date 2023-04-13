@@ -127,22 +127,6 @@
         "type": "github"
       }
     },
-    "mcchunkie": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1678393353,
-        "narHash": "sha256-Cum5VmNN0Y+LY7O0o7UGnbGkwZJv6g9N/ml0DtROEmI=",
-        "owner": "qbit",
-        "repo": "mcchunkie",
-        "rev": "d996e84c86ad15337d9f4fa1ffa0ec647c69f920",
-        "type": "github"
-      },
-      "original": {
-        "owner": "qbit",
-        "repo": "mcchunkie",
-        "type": "github"
-      }
-    },
     "microca": {
       "inputs": {
         "nixpkgs": [
@@ -297,7 +281,6 @@
         "emacs-overlay": "emacs-overlay",
         "gostart": "gostart",
         "gqrss": "gqrss",
-        "mcchunkie": "mcchunkie",
         "microca": "microca",
         "nixos-hardware": "nixos-hardware",
         "oldStable": "oldStable",

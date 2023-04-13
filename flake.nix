@@ -66,11 +66,6 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
-    mcchunkie = {
-      url = "github:qbit/mcchunkie";
-      flake = false;
-    };
-
     gqrss = {
       url = "github:qbit/gqrss";
       flake = false;
