@@ -6,14 +6,13 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "golang";
     repo = name;
-    rev = "995372c58a16";
-    sha256 = "sha256-xkwrgOVMcV7TNtXfuBUPdhBqumbcgG9B9NVcthMrai0=";
+    rev = "03dd099d9b0dd4e0a3ab25b3192b9d95c97252ea";
+    sha256 = "sha256-UJ2svg/exjwH/T3dqHixRgD6ZqYjbV/MpnEEaFza6Ns=";
   };
 
-  vendorSha256 = "sha256-BYxqE/KNvstX9qcSd411nXGWwZOmgj5iHEGRka/tt4Y=";
+  vendorSha256 = "sha256-tk186BCy8l0o1mxaWXcz0BWVMvvMvhEGcTmDdthJlcc=";
 
-  proxyVendor = true;
-
+  #>   github.com/tidwall/pretty@v1.2.0: is explicitly required in go.mod, but not marked as explicit in vendor/modules.txt
   doCheck = false;
 
   subPackages = [ "cmd/govulncheck" ];

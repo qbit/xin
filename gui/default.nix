@@ -103,6 +103,7 @@ in with lib; {
         zeal
 
         (callPackage ../pkgs/tailscale-systray.nix { })
+        (callPackage ../pkgs/govulncheck.nix { })
       ];
 
     })
