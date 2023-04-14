@@ -12,5 +12,5 @@ include /run/secrets/monit_cfg
 
 check system $HOST
     if memory usage > 80% for 10 cycles then alert
-    if cpu usage > 200% for 200 cycles then alert
+    if cpu usage > 200% for 20 cycles then alert
 
