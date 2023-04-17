@@ -84,7 +84,7 @@ map('n', '<leader>mo', ':MindOpenMain<CR>', {})
 map('n', '<leader>mp', ':MindOpenProject<CR>', {})
 map('n', '<leader>ot', ':ObsidianToday<CR>', {})
 
-map('n', '<leader>1', ':GitGutterToggle<CR>', { noremap = true })
+map('n', '<leader>g', ':GitGutterToggle<CR>', { noremap = true })
 map('n', '<leader>2', ':set list!<CR>', { noremap = true })
 map('n', '<leader>3', ':set nu!<CR>', { noremap = true })
 map('n', '<leader>4', ':set paste!<CR>', { noremap = true })
