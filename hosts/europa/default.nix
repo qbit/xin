@@ -1,5 +1,10 @@
 { config, pkgs, lib, xinlib, ... }:
 let
+  restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
+    inherit pkgs;
+    inherit lib;
+    inherit config;
+  });
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
@@ -294,6 +299,8 @@ in {
     })
     (callPackage ../../pkgs/gokrazy.nix { })
     (callPackage ../../pkgs/zutty.nix { })
+
+    restic
   ];
 
   # for Pharo

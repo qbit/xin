@@ -1,9 +1,17 @@
-{ pkgs }:
+{ lib, pkgs, config, ... }:
 
-let resticBin = "${pkgs.restic}/bin/restic";
+assert (builtins.length
+  (lib.mapAttrsToList (a: _: a) config.services.restic.backups)) <= 1;
+
+let
+  resticBin = "${pkgs.restic}/bin/restic";
+  cfg = config.services.restic.backups;
+  bkp = lib.mapAttrs' (_: lib.nameValuePair "default") cfg;
 in ''
   #!/usr/bin/env sh
 
-  export $(cat /run/secrets/restic_env_file)
-  ${resticBin} --password-file /run/secrets/restic_password_file $@
+  set -e
+
+  export $(cat ${bkp.default.environmentFile})
+  ${resticBin} -r ${bkp.default.repository} --password-file ${bkp.default.passwordFile} $@
 ''
