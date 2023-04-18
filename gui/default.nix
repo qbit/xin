@@ -82,7 +82,7 @@ in with lib; {
 
       # https://github.com/NixOS/nixpkgs/pull/213593
       nixpkgs.config.permittedInsecurePackages = [
-        "electron-18.1.0" # obsidian
+        "electron-21.4.0" # obsidian
       ];
 
       systemd.user.services =
