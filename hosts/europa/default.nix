@@ -269,6 +269,7 @@ in {
     nixpkgs-review
     nix-top
     nmap
+    nushell
     obsidian
     pharo
     pharo-launcher
