@@ -1,8 +1,8 @@
 { lib, buildGo119Module, fetchFromGitHub, go, ffmpeg, ... }:
 let
-  gotosocialVersion = "0.8.0";
-  gtswaHash = "sha256:1r3n8r5jvf2fhmdb0x2sayri4zfcjiq65vhdv9jsgh4ivmz1y0zx";
-  gtssHash = "sha256-wRo0qg/4nukhpAtC3qRR9zH+G4S7vMtveQueklOZrbM=";
+  gotosocialVersion = "0.8.1";
+  gtswaHash = "sha256:1apcp8kirbp5s23dh48ymlwkwrvq424k0fj52z9bf8w68qbnas9w";
+  gtssHash = "sha256-nNkcK9MmhL6HbiR8yE2OI/XbBATyJ8qNIUDmJwXxD6I=";
   gotosocialWebAssets = builtins.fetchurl {
     url =
       "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
