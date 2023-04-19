@@ -42,6 +42,9 @@ let
       ];
     };
 
+  # Set our configurationRevison based on the status of our git repo.
+  # If the repo is dirty, disable autoUpgrade as it means we are
+  # testing something.
   buildVer = self:
     let state = self.rev or "DIRTY";
     in {

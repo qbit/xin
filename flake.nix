@@ -115,9 +115,6 @@
         inputs.talon.overlays.default
       ];
 
-      # Set our configurationRevison based on the status of our git repo.
-      # If the repo is dirty, disable autoUpgrade as it means we are
-      # testing something.
       buildSys = sys: sysBase: extraMods: name:
         sysBase.lib.nixosSystem {
           system = sys;

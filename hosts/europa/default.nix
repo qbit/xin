@@ -321,5 +321,6 @@ in {
   ];
 
   system.autoUpgrade.allowReboot = false;
+  system.autoUpgrade.enable = false;
   system.stateVersion = "21.11";
 }
