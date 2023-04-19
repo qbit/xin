@@ -86,7 +86,7 @@
     , reform, gostart, xintray, tsvnstat, pots, po, tsRevProx, darwin
     , xin-secrets, talon, peerix, ... }@inputs:
     let
-      xinlib = import ./lib;
+      xinlib = import ./lib { inherit (unstable) lib; };
       supportedSystems = [ "x86_64-linux" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;

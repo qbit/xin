@@ -1,3 +1,4 @@
+{ lib, ... }:
 let
   mkCronScript = name: src: ''
     . /etc/profile;
@@ -49,7 +50,7 @@ let
     let state = self.rev or "DIRTY";
     in {
       system.configurationRevision = state;
-      system.autoUpgrade.enable = state != "DIRTY";
+      system.autoUpgrade.enable = lib.mkDefault (state != "DIRTY");
     };
 
   xinlib = {
