@@ -179,6 +179,7 @@ in {
     virt-manager
     wireshark
     zig
+    rustdesk
 
     (callPackage ../../pkgs/zutty.nix { })
   ];
