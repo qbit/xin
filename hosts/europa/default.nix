@@ -261,7 +261,6 @@ in {
     isync
     klavaro
     linphone
-    logseq
     minicom
     mu
     nheko
