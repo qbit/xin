@@ -1,12 +1,12 @@
-{ isUnstable, ... }:
+{ isUnstable, lib, ... }:
 let
   openssh = import ./openssh.nix;
   tailscale = import ./tailscale.nix;
-  jetbrains = import ./jetbrains.nix;
 
 in {
   nixpkgs.overlays = if isUnstable then [
-    jetbrains
+    (import ./jetbrains.nix)
+    (import ./tidal-hifi.nix { inherit lib; })
     openssh
     tailscale
   ] else [
