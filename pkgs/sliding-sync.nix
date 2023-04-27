@@ -2,16 +2,16 @@
 with lib;
 buildGoModule rec {
   pname = "sliding-sync";
-  version = "0.99.1";
+  version = "0.99.2";
 
   src = fetchFromGitHub {
     owner = "matrix-org";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-g1yMGb8taToEFG6N057yPcdZB855r0f6EwnJ98FIiic=";
+    hash = "sha256-QbTCr1dsJX8nlLE3PhevBbLv1dnvLTMkOiKgTeThlKw=";
   };
 
-  vendorHash = "sha256-FmibAVjKeJUrMSlhoE7onLoa4EVjQvjDI4oU4PB5LBE=";
+  vendorHash = "sha256-EIFUuWwpNUtWy6lSNeIEwe3gjyb3yq/WRJEND9YhQjs=";
 
   # Note: tests require a postgres install accessible to the current user
   doCheck = false;
