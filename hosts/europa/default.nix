@@ -213,16 +213,6 @@ in {
 
   systemd.user.services =
     lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
-  systemd.services."whytailscalewhy" = {
-    description = "Tailscale restart on resume";
-    wantedBy = [ "post-resume.target" ];
-    after = [ "post-resume.target" ];
-    script = ''
-      . /etc/profile;
-      ${pkgs.systemd}/bin/systemctl restart tailscaled.service
-    '';
-    serviceConfig.Type = "oneshot";
-  };
 
   virtualisation.docker.enable = false;
   users.users.qbit.extraGroups = [
