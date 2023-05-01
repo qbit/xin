@@ -60,6 +60,7 @@ let
     vim-markdown
     vim-nix
     vim-ocaml
+    vim-sleuth
     zig-vim
     nvim-treesitter.withAllGrammars
 
