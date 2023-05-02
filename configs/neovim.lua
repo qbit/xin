@@ -71,6 +71,9 @@ lspc.gopls.setup {};
 lspc.nil_ls.setup {};
 lspc.lua_ls.setup {};
 lspc.solargraph.setup {};
+lspc.elmls.setup {};
+lspc.tsserver.setup {};
+lspc.zls.setup {};
 
 o.hlsearch = true;
 

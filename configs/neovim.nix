@@ -85,8 +85,11 @@ in {
     luaformatter
     luajitPackages.lua-lsp
     manix
+    nodePackages.typescript-language-server
     ripgrep
     rubyPackages.solargraph
+    sumneko-lua-language-server
+    zls
   ];
   programs.neovim = {
     enable = true;
