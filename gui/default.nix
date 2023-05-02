@@ -99,6 +99,7 @@ in with lib; {
 
         (callPackage ../pkgs/tailscale-systray.nix { })
         (callPackage ../pkgs/govulncheck.nix { })
+        (callPackage ../configs/helix.nix { })
       ];
 
     })

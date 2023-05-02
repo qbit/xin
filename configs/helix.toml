@@ -1,0 +1,4 @@
+theme = "acme"
+
+[editor]
+mouse = false
