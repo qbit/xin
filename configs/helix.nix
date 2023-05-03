@@ -2,7 +2,7 @@
 
 let
   tomlFmt = pkgs.formats.toml { };
-  heliBin = "${pkgs.helix}/bin/hx";
+  helixBin = "${pkgs.helix}/bin/hx";
 
   helixConfig = tomlFmt.generate "config.toml" {
     theme = "acme-nobg";
