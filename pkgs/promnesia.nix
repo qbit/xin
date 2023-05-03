@@ -8,6 +8,7 @@ let
   sqlcipher3 =
     pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
   cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
+  python-dotenv = pkgs.python3Packages.callPackage ./python-dotenv.nix { };
 in buildPythonPackage rec {
   pname = "promnesia";
   version = "1.1.20230417";
@@ -38,6 +39,7 @@ in buildPythonPackage rec {
     mistletoe
     more-itertools
     mypy
+    python-dotenv
     pytz
     setuptools
     sqlcipher3
