@@ -118,11 +118,11 @@ handle_co_fail() {
 }
 
 handle_update_fail() {
-	po_error "CI: flake input update failed!" "Pelase help!"
+	po_error "CI: flake input update failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
 }
 
 handle_check_fail() {
-	po_error "CI: flake checks failed!" "Pelase help!"
+	po_error "CI: flake checks failed!" "$(journalctl -p 3 -xb -u xin-ci)"
 }
 
 handle_update_check_fail() {
