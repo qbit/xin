@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, linkFarm, ... }:
 
 let
   tomlFmt = pkgs.formats.toml { };
-  helixConfig = tomlFmt.generate "helix-config.toml" {
-    theme = "acme";
+
+  helixConfig = tomlFmt.generate "config.toml" {
+    theme = "acme-nobg";
     editor = {
       mouse = false;
       cursor-shape = {
@@ -14,7 +15,22 @@ let
       lsp = { auto-signature-help = false; };
     };
   };
+
+  helixTheme = tomlFmt.generate "acme-nobg.toml" {
+    inherits = "acme";
+
+    "ui.background" = "default";
+  };
+
+  xdgDir = linkFarm "helix-config" [
+    { name = "helix/config.toml"; path = helixConfig; }
+    { name = "helix/themes/acme-nobg.toml"; path = helixTheme; }
+  ];
+
   helixBin = "${pkgs.helix}/bin/hx";
 in pkgs.writeScriptBin "hx" ''
-  ${helixBin} -c ${helixConfig} $@
+  # Conf:  ${helixConfig}
+  # Theme:  ${helixTheme}
+
+  env XDG_CONFIG_HOME="${xdgDir}" ${helixBin} "$@"
 ''
