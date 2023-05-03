@@ -2,6 +2,7 @@
 
 let
   tomlFmt = pkgs.formats.toml { };
+  heliBin = "${pkgs.helix}/bin/hx";
 
   helixConfig = tomlFmt.generate "config.toml" {
     theme = "acme-nobg";
@@ -21,14 +22,13 @@ let
 
     "ui.background" = "default";
     "ui.linenr" = "default";
+    "ui.linenr.selected" = "#DEDEFF";
   };
 
   xdgDir = linkFarm "helix-config" [
     { name = "helix/config.toml"; path = helixConfig; }
     { name = "helix/themes/acme-nobg.toml"; path = helixTheme; }
   ];
-
-  helixBin = "${pkgs.helix}/bin/hx";
 in pkgs.writeScriptBin "hx" ''
   # Conf:  ${helixConfig}
   # Theme:  ${helixTheme}
