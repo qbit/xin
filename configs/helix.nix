@@ -20,6 +20,7 @@ let
     inherits = "acme";
 
     "ui.background" = "default";
+    "ui.linenr" = "default";
   };
 
   xdgDir = linkFarm "helix-config" [
