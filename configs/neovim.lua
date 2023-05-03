@@ -101,3 +101,9 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 vim.g["vim_markdown_folding_disabled"] = 1
 vim.g["elm_setup_keybindings"] = 0
+
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
