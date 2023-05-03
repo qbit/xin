@@ -10,13 +10,13 @@ let
   cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
 in buildPythonPackage rec {
   pname = "promnesia";
-  version = "1.1.20230129";
+  version = "1.1.20230417";
 
   src = fetchFromGitHub {
     owner = "karlicoss";
     repo = pname;
-    rev = "c4a7b47e198a3822dd540968c5a8e6b95ab51b53";
-    hash = "sha256-QMqvqspuqkyIsz05aA1xObT0tKaJmbts3Cn3O9rlQ1k=";
+    rev = "1f60af17761570b8a6787ebf0753ecfa750cad1b";
+    hash = "sha256-iaMoNEz3bNNEH+K2vXu21T+JLQVGC7iq3PBjm4Vv+24=";
   };
 
   SETUPTOOLS_SCM_PRETEND_VERSION = version;
