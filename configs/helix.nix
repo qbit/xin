@@ -1,9 +1,12 @@
-{ pkgs, writeTextFile, ... }:
+{ pkgs, ... }:
 
 let
-  helixConfig = writeTextFile {
-    name = "helix/config.toml";
-    text = builtins.readFile ./helix.toml;
+  tomlFmt = pkgs.formats.toml {};
+  helixConfig = tomlFmt.generate "helix-config.toml" {
+    theme = "acme";
+    editor = {
+      mouse = false;
+    };
   };
   helixBin = "${pkgs.helix}/bin/hx";
 in pkgs.writeScriptBin "hx" ''
