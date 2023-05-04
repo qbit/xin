@@ -26,8 +26,14 @@ let
   };
 
   xdgDir = linkFarm "helix-config" [
-    { name = "helix/config.toml"; path = helixConfig; }
-    { name = "helix/themes/acme-nobg.toml"; path = helixTheme; }
+    {
+      name = "helix/config.toml";
+      path = helixConfig;
+    }
+    {
+      name = "helix/themes/acme-nobg.toml";
+      path = helixTheme;
+    }
   ];
 in pkgs.writeScriptBin "hx" ''
   # Conf:  ${helixConfig}
