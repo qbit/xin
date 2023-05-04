@@ -14,6 +14,11 @@ let
     command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
   gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit isUnstable; };
+  inFluxBootOptions = if isUnstable then {
+    tmp = { cleanOnBoot = true; };
+  } else {
+    cleanTmpDir = true;
+  };
   inFluxSSHOptions = if isUnstable then {
     settings = {
       PermitRootLogin = "prohibit-password";
@@ -142,13 +147,12 @@ in {
     '';
 
     boot = {
-      cleanTmpDir = true;
       kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
       kernel.sysctl = {
         "net.ipv4.tcp_keepalive_time" = 60;
         "net.ipv6.tcp_keepalive_time" = 60;
       };
-    };
+    } // inFluxBootOptions;
 
     nix = {
       settings = if config.networking.hostName != "pwntie" then {
