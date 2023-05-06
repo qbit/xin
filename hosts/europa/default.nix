@@ -237,17 +237,21 @@ in {
 
   environment.systemPackages = with pkgs; [
     aerc
-    git-credential-1password
     arcanPackages.all-wrapped
     barrier
-    rex
     calibre
     cider
     cinny-desktop
     clementine
     element-desktop
+    elmPackages.elm
+    elmPackages.elm-format
+    elmPackages.elm-language-server
+    elmPackages.elm-live
+    entr
     exercism
     gh
+    git-credential-1password
     isync
     klavaro
     linphone
@@ -264,6 +268,7 @@ in {
     pharo-launcher
     proton-caller
     protonup-ng
+    rex
     rofi
     signal-desktop
     taskobs
