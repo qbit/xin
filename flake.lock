@@ -149,11 +149,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1683009613,
-        "narHash": "sha256-jJh8JaoHOLlk7iFLgZk1PlxCCNA2KTKfOLMLCa9mduA=",
+        "lastModified": 1683269598,
+        "narHash": "sha256-KNsb+nBbB1Fmxd07dt4E0KXMT4YeKJB7gQaA6Xfk+mo=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "7dc46304675f4ff2d6be921ef60883efd31363c4",
+        "rev": "51559e691f1493a26f94f1df1aaf516bb507e78b",
         "type": "github"
       },
       "original": {
@@ -325,11 +325,11 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1683207485,
-        "narHash": "sha256-gs+PHt/y/XQB7S8+YyBLAM8LjgYpPZUVFQBwpFSmJro=",
+        "lastModified": 1683249378,
+        "narHash": "sha256-H6wNN0Jhl+H51puQtfUDohitykZ8z/Gsc19kHR5Yzwk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cc45a3f8c98e1c33ca996e3504adefbf660a72d1",
+        "rev": "8eff1ce6cf8611a1ad7a9dbee4d775aa720cb208",
         "type": "github"
       },
       "original": {
@@ -453,11 +453,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1683250446,
-        "narHash": "sha256-poBkMQ0q7X2xH5hAqLYmsly0NGbC6zDCUnrwOXIxo50=",
+        "lastModified": 1683343952,
+        "narHash": "sha256-9kiNLYpyIRFWVKCm5/7ea90kuH4MfA5yCcEWDpIVE5s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fed0618057e5714b2eb0b88bedbe671ce057a41a",
+        "rev": "6e500cb14cc8690dd64b72811fc75b2e30ac3d08",
         "type": "github"
       },
       "original": {
@@ -468,11 +468,11 @@
     },
     "unstableSmall": {
       "locked": {
-        "lastModified": 1683212983,
-        "narHash": "sha256-4GwtXD3tBUtBAL20ygoOggZWgLdxU34VZ1vanbV64KI=",
+        "lastModified": 1683273001,
+        "narHash": "sha256-1PqMzz0cu/MaU4QdHgmwWXpkJcdTYC+skRCPTyEA6Qc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5751551558d7896ffb30ff3d709b4943bb3eafa8",
+        "rev": "7091454bd11b53156b053e74503ecdb19736d77e",
         "type": "github"
       },
       "original": {
