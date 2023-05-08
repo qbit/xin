@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
-let
-  cfg = config.services.xinCA;
-  stepKmsPlugin = pkgs.callPackage ../pkgs/step-kms-plugin.nix { };
+let cfg = config.services.xinCA;
 in with lib; {
   options = {
     services.xinCA = {
@@ -68,7 +66,7 @@ in with lib; {
     environment.sessionVariables = { STEPPATH = "/var/lib/step-ca"; };
     environment.systemPackages = with pkgs; [
       step-cli
-      stepKmsPlugin
+      step-kms-plugin
       opensc
       libressl
     ];
