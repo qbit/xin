@@ -110,11 +110,11 @@ finish() {
 }
 
 handle_pull_fail() {
-	po_error "CI: git pull failed!" "Pelase help!"
+	po_error "CI: git pull failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
 }
 
 handle_co_fail() {
-	po_error "CI: git checkout failed!" "Pelase help!"
+	po_error "CI: git checkout failed!" "Please help!"
 }
 
 handle_update_fail() {
@@ -126,13 +126,13 @@ handle_check_fail() {
 }
 
 handle_update_check_fail() {
-	po_error "CI: flake checks failed while updating!" "Pelase help!"
+	po_error "CI: flake checks failed while updating!" "$(journalctl -p 3 -xb -u xin-ci-update)"
 }
 
 handle_merge_fail() {
-	po_error "CI: git merge failed!" "Pelase help!"
+	po_error "CI: git merge failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
 }
 
 handle_push_fail() {
-	po_error "CI: git push failed!" "Pelase help!"
+	po_error "CI: git push failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
 }
