@@ -109,8 +109,12 @@ finish() {
 	exit 0
 }
 
+get_journal() {
+	journalctl -u "$1" -n 50 --no-pager
+}
+
 handle_pull_fail() {
-	po_error "CI: git pull failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
+	po_error "CI: git pull failed!" "$(get_journal xin-ci-update)"
 }
 
 handle_co_fail() {
@@ -118,21 +122,21 @@ handle_co_fail() {
 }
 
 handle_update_fail() {
-	po_error "CI: flake input update failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
+	po_error "CI: flake input update failed!" "$(get_journal xin-ci-update)"
 }
 
 handle_check_fail() {
-	po_error "CI: flake checks failed!" "$(journalctl -p 3 -xb -u xin-ci)"
+	po_error "CI: flake checks failed!" "$(get_journal xin-ci)"
 }
 
 handle_update_check_fail() {
-	po_error "CI: flake checks failed while updating!" "$(journalctl -p 3 -xb -u xin-ci-update)"
+	po_error "CI: flake checks failed while updating!" "$(get_journal xin-ci-update)"
 }
 
 handle_merge_fail() {
-	po_error "CI: git merge failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
+	po_error "CI: git merge failed!" "$(get_journal xin-ci-update)"
 }
 
 handle_push_fail() {
-	po_error "CI: git push failed!" "$(journalctl -p 3 -xb -u xin-ci-update)"
+	po_error "CI: git push failed!" "$(get_journal xin-ci-update)"
 }
