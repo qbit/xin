@@ -8,6 +8,8 @@ NOW_EPOCH=$(@coreutils@/bin/date +"%s")
 
 EPOCH_DIFF=$(($NOW_EPOCH - $FLAKE_EPOCH))
 
-if [ $EPOCH_DIFF -gt 60480 ]; then
+if [ $EPOCH_DIFF -gt $((60480 * 5)) ]; then
+	echo
 	echo "${BOLD}WARNING: inputs haven't been updated in $(($EPOCH_DIFF / 86400)) days!${NORMAL}"
+	echo
 fi
