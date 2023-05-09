@@ -32,6 +32,7 @@
           default = pkgs.mkShell {
             shellHook = ''
               PS1='\u@\h:\@; '
+              nix flake run github:qbit/xin#flake-warn
               echo "Go `${pkgs.go}/bin/go version`"
             '';
             nativeBuildInputs = with pkgs; [ git go gopls go-tools ];

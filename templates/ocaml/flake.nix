@@ -39,6 +39,7 @@
           default = pkgs.mkShell {
             shellHook = ''
               PS1='\u@\h:\@; '
+              nix flake run github:qbit/xin#flake-warn
               echo "OCaml `${pkgs.ocaml}/bin/ocaml --version`"
             '';
             nativeBuildInputs = with pkgs;

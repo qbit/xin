@@ -37,6 +37,7 @@
           default = pkgs.mkShell {
             shellHook = ''
               PS1='\u@\h:\@; '
+              nix flake run github:qbit/xin#flake-warn
               echo "Ada `${pkgs.gnat12}/bin/gnatmake --version`"
             '';
             nativeBuildInputs = with pkgs; [ gnat12 gprbuild ];
