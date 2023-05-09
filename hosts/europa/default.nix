@@ -290,7 +290,7 @@ in {
     unzip
     virt-manager
     yt-dlp
-    yubioath-flutter
+    #yubioath-flutter
     zig
 
     talon
