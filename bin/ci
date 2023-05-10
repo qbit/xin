@@ -28,24 +28,49 @@ git pull || handle_pull_fail
 
 if [ "${1}" = "update" ]; then
 	if ! git checkout -b "${ci_branch}"; then
-		handle_co_fail
+		handle_co_fail "${ci_branch}"
 		exit 1
 	fi
+	
 	for inp in $(nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[] as $k | $k'); do
+		if ! git checkout -b "${ci_branch}_${inp}"; then
+			handle_co_fail "${ci_branch}_${inp}"
+			continue
+		fi
+
 		if ! nix flake lock --commit-lock-file --update-input "$inp"; then
-			handle_update_fail $inp
+			handle_update_fail "$inp"
+			continue
+		fi
+
+		if ! nix flake check --print-build-logs; then
+			handle_update_check_fail "$inp"
+			continue
+		fi
+
+		if ! git checkout "${ci_branch}"; then
+			handle_co_fail "${ci_branch}"
+			continue
+		fi
+
+		if ! git merge "${ci_branch}_${inp}"; then
+			handle_merge_fail "${ci_branch}_${inp}" "${ci_branch}"
+			continue
 		fi
 	done
+
 	if ! nix flake check --print-build-logs; then
-		handle_update_check_fail
+		handle_update_check_fail "$ci_branch"
 		exit 1
 	fi
+
+
 	if ! git checkout main; then
 		handle_co_fail
 		exit 1
 	fi
 	if ! git merge "${ci_branch}"; then
-		handle_merge_fail
+		handle_merge_fail "${ci_branch}" "main"
 		exit 1
 	fi
 

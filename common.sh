@@ -122,7 +122,7 @@ handle_pull_fail() {
 }
 
 handle_co_fail() {
-	po_error "CI: git checkout failed!" "Please help!"
+	_po "CI: git checkout ($1) failed!" "Please help!"
 }
 
 handle_update_fail() {
@@ -134,11 +134,11 @@ handle_check_fail() {
 }
 
 handle_update_check_fail() {
-	po_error "CI: flake checks failed while updating!" "$(get_journal xin-ci-update)"
+	_po "CI: flake checks failed while updating $1!" "$(get_journal xin-ci-update)"
 }
 
 handle_merge_fail() {
-	po_error "CI: git merge failed!" "$(get_journal xin-ci-update)"
+	_po "CI: git merge ('$1' into '$2') failed!" "$(get_journal xin-ci-update)"
 }
 
 handle_push_fail() {
