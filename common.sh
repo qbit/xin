@@ -87,6 +87,10 @@ ci_error() {
 	git checkout main
 }
 
+_po() {
+	po -title "$1" -body "$2"
+}
+
 po_error() {
 	po -title "$1" -body "$2"
 	ci_error
@@ -122,7 +126,7 @@ handle_co_fail() {
 }
 
 handle_update_fail() {
-	po_error "CI: flake input update failed!" "$(get_journal xin-ci-update)"
+	_po "CI: input '$1' update failed!" "$(get_journal xin-ci-update)"
 }
 
 handle_check_fail() {

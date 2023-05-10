@@ -31,10 +31,11 @@ if [ "${1}" = "update" ]; then
 		handle_co_fail
 		exit 1
 	fi
-	if ! nix flake update --commit-lock-file; then
-		handle_update_fail
-		exit 1
-	fi
+	for inp in $(nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[] as $k | $k'); do
+		if ! nix flake lock --commit-lock-file --update-input "$inp"; then
+			handle_update_fail $inp
+		fi
+	done
 	if ! nix flake check --print-build-logs; then
 		handle_update_check_fail
 		exit 1
