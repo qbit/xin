@@ -51,6 +51,7 @@ let
     nvim-compe
     nvim-lspconfig
     nvim-tree-lua
+    nvim-treesitter.withAllGrammars
     rust-vim
     telescope-fzf-native-nvim
     telescope-nvim
@@ -62,7 +63,6 @@ let
     vim-ocaml
     vim-sleuth
     zig-vim
-    nvim-treesitter.withAllGrammars
 
     neogen
     obsidian
@@ -86,6 +86,8 @@ in {
     luajitPackages.lua-lsp
     manix
     nodePackages.typescript-language-server
+    perlPackages.PerlCritic
+    perlPackages.PLS
     ripgrep
     rubyPackages.solargraph
     sumneko-lua-language-server

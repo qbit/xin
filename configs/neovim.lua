@@ -67,11 +67,12 @@ cmd [[highlight NvimTreeOpenedFolderName guifg=default]]
 cmd [[highlight NvimTreeFolderName guifg=default]]
 
 local lspc = require("lspconfig")
-lspc.gopls.setup {};
-lspc.nil_ls.setup {};
-lspc.lua_ls.setup {};
-lspc.solargraph.setup {};
 lspc.elmls.setup {};
+lspc.gopls.setup {};
+lspc.lua_ls.setup {};
+lspc.nil_ls.setup {};
+lspc.perlpls.setup {};
+lspc.solargraph.setup {};
 lspc.tsserver.setup {};
 lspc.zls.setup {};
 
