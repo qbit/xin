@@ -5,6 +5,14 @@ let
 
 in {
   nixpkgs.overlays = if isUnstable then [
+    (_: super: {
+      elmPackages = super.elmPackages // {
+        elm =
+          super.elmPackages.elm.override {
+            patches = [ ./elm-no-color.diff ];
+          };
+      };
+    })
     (import ./jetbrains.nix)
     (import ./tidal-hifi.nix { inherit lib; })
     openssh

@@ -1,0 +1,12 @@
+diff --git a/compiler/src/Reporting/Doc.hs b/compiler/src/Reporting/Doc.hs
+index 26c15517..95dbae4e 100644
+--- a/compiler/src/Reporting/Doc.hs
++++ b/compiler/src/Reporting/Doc.hs
+@@ -404,7 +404,6 @@ encodeChunks (Style bold underline color) revChunks =
+       E.object
+         [ "bold" ==> E.bool bold
+         , "underline" ==> E.bool underline
+-        , "color" ==> maybe E.null encodeColor color
+         , "string" ==> E.chars chars
+         ]
+ 
