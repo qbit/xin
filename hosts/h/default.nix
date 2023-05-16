@@ -192,6 +192,7 @@ in {
     weechat
     weechatScripts.highmon
     aspell
+    aspellDicts.en
     icbirc
 
     # matrix things
