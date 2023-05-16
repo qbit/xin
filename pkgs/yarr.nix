@@ -3,14 +3,14 @@
 with lib;
 buildGoModule rec {
   pname = "yarr";
-  version = "2023-03-18";
+  version = "2023-05-16";
 
   src = fetchFromGitHub {
     owner = "nkanaev";
     repo = pname;
     #rev = "v${version}";
-    rev = "d2678be96d37a71ec34ac23207393f78dcceafc5";
-    sha256 = "sha256-BCP2d4Fk5KkWz7tmx7kMybnRZEGHIRjtNiNIpNCXRYE=";
+    rev = "7d99edab8d3c054e75feba183bd76fead15712f1";
+    sha256 = "sha256-gOydL1SyM1bGbErpefWlwhjLWH6j0GGpI/F0kEBHxic=";
   };
 
   vendorHash = null;
