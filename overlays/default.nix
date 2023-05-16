@@ -7,10 +7,9 @@ in {
   nixpkgs.overlays = if isUnstable then [
     (_: super: {
       elmPackages = super.elmPackages // {
-        elm =
-          super.elmPackages.elm.override {
-            patches = [ ./elm-no-color.diff ];
-          };
+        elm = super.elmPackages.elm.overrideAttrs (oldAttrs: {
+          patches = (oldAttrs.patches or [ ]) ++ [ ./elm-no-color.diff ];
+        });
       };
     })
     (import ./jetbrains.nix)
