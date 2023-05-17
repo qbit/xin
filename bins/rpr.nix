@@ -1,14 +1,16 @@
-{ tea, gh, _1password }:
+{ tea, gh, _1password, hut }:
 
 let
   teaBin = "${tea}/bin/tea";
   ghBin = "${gh}/bin/gh";
-  opBin = "${_1password}/bin/op";
+  htBin = "${hut}/bin/hut";
 
 in ''
   #!/usr/bin/env sh
 
   set -eu
+
+  source ~/.config/op/plugins.sh
 
   proj="$(basename $PWD)"
 
@@ -18,6 +20,9 @@ in ''
   done
 
   # ${ghBin}
-  ${opBin} plugin run -- gh repo create --public "$proj" || echo "error creating '$proj' on 'github'"
+  gh repo create --public "$proj" || echo "error creating '$proj' on 'github'"
+
+  # ${htBin}
+  ${htBin} git create "$proj" || echo "error creating '$proj' on 'sr.ht'"
 
 ''

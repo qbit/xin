@@ -1,11 +1,8 @@
 { config, lib, pkgs, xinlib, ... }:
 let
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
-  rpr = pkgs.writeScriptBin "rpr" (import ../bins/rpr.nix {
-    inherit (pkgs) _1password;
-    inherit (pkgs) gh;
-    inherit (pkgs) tea;
-  });
+  rpr = pkgs.writeScriptBin "rpr"
+    (import ../bins/rpr.nix { inherit (pkgs) _1password hut gh tea; });
   promnesia =
     pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
   hpi = pkgs.python3Packages.callPackage ../pkgs/hpi.nix { inherit pkgs; };
