@@ -147,9 +147,7 @@ in {
     '';
 
     boot = {
-      loader = {
-        systemd-boot.configurationLimit = 15;
-      };
+      loader = { systemd-boot.configurationLimit = 15; };
       kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
       kernel.sysctl = {
         "net.ipv4.tcp_keepalive_time" = 60;
