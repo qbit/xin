@@ -82,6 +82,7 @@ in with lib; {
         // promnesiaService;
 
       environment.systemPackages = with pkgs; [
+        bc
         black
         brave
         drawterm
