@@ -25,4 +25,10 @@ in ''
   # ${htBin}
   ${htBin} git create "$proj" || echo "error creating '$proj' on 'sr.ht'"
 
+  git config --unset-all remote.origin.url
+  for repo in "git@github.com:qbit/%s.git" "ssh://gitea@git.tapenet.org:2222/qbit/%s.git" "git@codeberg.org:qbit/%s.git" "git@git.sr.ht:~qbit/%s"; do
+    echo "Adding remote: $(printf $repo $proj)"
+    git config --add remote.origin.url "$(printf $repo $proj)"
+  done
+
 ''
