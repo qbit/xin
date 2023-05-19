@@ -69,6 +69,7 @@ cmd [[highlight NvimTreeFolderName guifg=default]]
 local lspc = require("lspconfig")
 lspc.elmls.setup {};
 lspc.gopls.setup {};
+lspc.hls.setup {};
 lspc.lua_ls.setup {};
 lspc.nil_ls.setup {};
 lspc.perlpls.setup {};

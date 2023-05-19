@@ -48,6 +48,7 @@ let
     elm-vim
     fugitive
     fzf-vim
+    haskell-vim
     nvim-compe
     nvim-lspconfig
     nvim-tree-lua
@@ -57,6 +58,7 @@ let
     telescope-nvim
     vimagit
     vim-gitgutter
+    vim-hindent
     vim-lua
     vim-markdown
     vim-nix
@@ -82,6 +84,8 @@ in {
     go
     gopls
     gotools
+    haskellPackages.haskell-language-server
+    haskellPackages.hindent
     luaformatter
     luajitPackages.lua-lsp
     manix
