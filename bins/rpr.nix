@@ -1,4 +1,4 @@
-{ tea, gh, _1password, hut }:
+{ tea, gh, hut }:
 
 let
   teaBin = "${tea}/bin/tea";
