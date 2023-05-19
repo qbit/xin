@@ -644,7 +644,8 @@ in {
             mkMatrixWellKnown matrixServerConfig;
 
           locations."/client" = mkMatrixSliderLoc;
-          locations."/_matrix/client/unstable/org.matrix.msc3575/sync" = mkMatrixSliderLoc;
+          locations."/_matrix/client/unstable/org.matrix.msc3575/sync" =
+            mkMatrixSliderLoc;
 
           locations."/_matrix" = mkMatrixLoc;
           locations."/_synapse/client" = mkMatrixLoc;
