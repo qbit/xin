@@ -643,14 +643,11 @@ in {
           locations."/.well-known/matrix/server".extraConfig =
             mkMatrixWellKnown matrixServerConfig;
 
-          locations."/_matrix" = mkMatrixLoc;
-          locations."/_matrix/client/v3/sync" = mkMatrixLoc;
-          locations."/_synapse/client" = mkMatrixLoc;
-
           locations."/client" = mkMatrixSliderLoc;
-          locations."/_matrix/client/v4/sync" = mkMatrixSliderLoc;
-          locations."/_matrix/client/unstable/org.matrix.msc3575/sync" =
-            mkMatrixSliderLoc;
+          locations."/_matrix/client/unstable/org.matrix.msc3575/sync" = mkMatrixSliderLoc;
+
+          locations."/_matrix" = mkMatrixLoc;
+          locations."/_synapse/client" = mkMatrixLoc;
         } else {
           forceSSL = true;
           enableACME = true;
