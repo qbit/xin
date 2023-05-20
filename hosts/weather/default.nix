@@ -187,7 +187,6 @@ in {
 
   environment.systemPackages = with pkgs; [
     qutebrowser
-    firefox
     dtc
     rofi
     polybar

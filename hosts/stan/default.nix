@@ -158,7 +158,6 @@ in {
     barrier
     bitwarden
     brave
-    firefox
     fzf
     google-chrome-dev
     ispell
