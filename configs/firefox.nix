@@ -59,6 +59,7 @@
         };
         NetworkPrediction = true;
         NoDefaultBookmarks = true;
+        OfferToSaveLogins = false;
         PasswordManagerEnabled = false;
         SearchBar = "unified";
         SearchEngines = {
@@ -101,7 +102,6 @@
         "dom.event.clipboardevents.enabled" = false;
         "media.peerconnection.enabled" = false;
 
-        "beacon.enabled" = false;
         "browser.aboutConfig.showWarning" = false;
         "browser.contentblocking.category" = "strict";
         "browser.newtabpage.activity-stream.feeds.recommendationprovider" =
@@ -141,8 +141,13 @@
         "network.IDN_show_punycode" = true;
         "network.predictor.enabled" = false;
         "network.prefetch-next" = false;
-        "privacy.resistFingerprinting" = true;
         "security.OCSP.enabled" = false;
+        "security.ssl.errorReporting.enabled" = false;
+
+        # Not yet working:
+        # https://github.com/mozilla/policy-templates/blob/master/README.md#preferences
+        "beacon.enabled" = false;
+        "privacy.resistFingerprinting" = true;
         "services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.highlights.includePocket" =
           false;
       };
