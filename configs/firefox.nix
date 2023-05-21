@@ -86,6 +86,14 @@
           ];
         };
         SearchSuggestEnabled = false;
+        UserMessaging = {
+          WhatsNew = false;
+          ExtensionRecommendations = false;
+          FeatureRecommendations = false;
+          UrlbarInterventions = false;
+          SkipOnboarding = false;
+          MoreFromMozilla = false;
+        };
       };
       preferences = {
         # TODO: confirm no issues
