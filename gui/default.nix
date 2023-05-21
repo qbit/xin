@@ -1,6 +1,6 @@
 { config, lib, pkgs, xinlib, ... }:
 let
-  firefox = (import ../configs/firefox.nix {inherit pkgs;});
+  firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr = pkgs.writeScriptBin "rpr"
     (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
@@ -80,7 +80,7 @@ in with lib; {
         (callPackage ../configs/helix.nix { })
       ];
 
-      programs = {} // firefox.programs;
+      programs = { } // firefox.programs;
 
       systemd.user.services =
         (lib.listToAttrs (builtins.map xinlib.jobToUserService jobs))

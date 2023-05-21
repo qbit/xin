@@ -4,6 +4,7 @@
   programs = {
     firefox = {
       enable = true;
+      #package = pkgs.firefox-esr;
       policies = {
         DisableFirefoxStudies = true;
         DisableFormHistory = true;
@@ -46,10 +47,44 @@
               "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
           };
         };
+        FirefoxHome = {
+          Search = false;
+          TopSites = false;
+          SponsoredTopSites = false;
+          Highlights = false;
+          Pocket = false;
+          SponsoredPocket = false;
+          Snippets = false;
+          Locked = true;
+        };
         NetworkPrediction = true;
         NoDefaultBookmarks = true;
         PasswordManagerEnabled = false;
         SearchBar = "unified";
+        SearchEngines = {
+          Add = [
+            {
+              Name = "Kagi";
+              URLTemplate = "https://kagi.com/search?q={searchTerms}";
+              Method = "GET";
+              Alias = "k";
+            }
+            {
+              Name = "OpenBSD.app";
+              URLTemplate = "https://openbsd.app/?search={searchTerms}";
+              Method = "GET";
+            }
+          ];
+          Default = "Kagi";
+          Remove = [
+            "Google"
+            "Amazon.com"
+            "Bing"
+            "eBay"
+            "Wikipedia (en)"
+            "DuckDuckGo"
+          ];
+        };
         SearchSuggestEnabled = false;
       };
       preferences = {
