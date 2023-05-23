@@ -36,12 +36,12 @@ if [ "$1" = "watch" ]; then
 		msg "updating watches..."
 		for f in pull_requests/*.json; do
 			pr=$(basename $f .json)
-			curl -s -o pull_requests/${pr}.json https://pr-status.humpback-trout.ts.net/${pr}
+			curl -s -o - https://pr-status.humpback-trout.ts.net/${pr} | jq -rS >pull_requests/${pr}.json
 			msg "Updated watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
 		done
 	else
 		pr="$2"
-		curl -s -o pull_requests/${pr}.json https://pr-status.humpback-trout.ts.net/${pr}
+		curl -s -o - https://pr-status.humpback-trout.ts.net/${pr} | jq -rS >pull_requests/${pr}.json
 		msg "Added watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
 	fi
 	exit 0

@@ -1,1 +1,21 @@
-{"branches":["master","nixos-unstable-small","staging","staging-next"],"pull_request":"232308","queryTime":"0.044244","release":"unstable","status":"open","status_info":{"master":true,"nixos-unstable":false,"nixos-unstable-small":true,"nixpkgs-unstable":false,"staging":true,"staging-next":true},"title":"jetbrains.jdk: 17.0.6-b829.5 â 17.0.6-b829.9"}
+{
+  "branches": [
+    "master",
+    "nixos-unstable-small",
+    "staging",
+    "staging-next"
+  ],
+  "pull_request": "232308",
+  "queryTime": "0.052190",
+  "release": "unstable",
+  "status": "open",
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": true,
+    "nixpkgs-unstable": false,
+    "staging": true,
+    "staging-next": true
+  },
+  "title": "jetbrains.jdk: 17.0.6-b829.5 â 17.0.6-b829.9"
+}

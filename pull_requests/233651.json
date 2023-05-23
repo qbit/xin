@@ -1,1 +1,9 @@
-{"branches":[],"pull_request":"233651","queryTime":"0.037351","release":"stable","status":"complete","status_info":{},"title":"matrix-synapse: 1.83.0 -> 1.84.0"}
+{
+  "branches": [],
+  "pull_request": "233651",
+  "queryTime": "0.056087",
+  "release": "stable",
+  "status": "complete",
+  "status_info": {},
+  "title": "matrix-synapse: 1.83.0 -> 1.84.0"
+}
