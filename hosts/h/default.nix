@@ -60,6 +60,7 @@ in {
     ../../modules/tsvnstat.nix
     ../../modules/golink.nix
     ../../modules/sliding-sync.nix
+    ../../modules/ts-rev-prox.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -133,6 +134,11 @@ in {
     sliding_sync_env = {
       owner = config.services.sliding-sync.user;
       mode = "400";
+      sopsFile = config.xin-secrets.h.services;
+    };
+    pr_status_env = {
+      mode = "400";
+      owner = config.services.tsrevprox.user;
       sopsFile = config.xin-secrets.h.services;
     };
   };
@@ -239,6 +245,12 @@ in {
   };
 
   services = {
+    tsrevprox = {
+      enable = true;
+      reverseName = "pr-status";
+      reversePort = 3003;
+      envFile = config.sops.secrets.pr_status_env.path;
+    };
     sliding-sync = {
       enable = true;
       server = "https://tapenet.org";
@@ -248,9 +260,7 @@ in {
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
     };
-    pr-status = {
-      enable = true;
-    };
+    pr-status = { enable = true; };
     gostart = {
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
