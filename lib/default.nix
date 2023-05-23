@@ -1,11 +1,15 @@
 { lib, ... }:
 let
-  prStatus = builtins.fromJSON (builtins.readFile ../pr_status.json);
   prIsOpen = pr: overlay:
-    if prStatus."${builtins.toString pr}".status == "open" then
+    let
+      prstr = builtins.toString pr;
+      prStatus =
+        builtins.fromJSON (builtins.readFile ../pull_requests/${prstr}.json);
+    in if prStatus.status == "open" then
       overlay
     else
-      null;
+      lib.warn "PR: ${prstr} (${prStatus.title}) is COMPLETE!" (_: _: {});
+
 
   mkCronScript = name: src: ''
     . /etc/profile;
@@ -35,6 +39,7 @@ let
         ( . ./common.sh; start ) || true;
       '';
       nativeBuildInputs = with pkgs; [
+        curl
         deadnix
         git
         git-bug
@@ -62,7 +67,8 @@ let
     };
 
   xinlib = {
-    inherit buildVer mkCronScript jobToUserService jobToService buildShell prStatus prIsOpen;
+    inherit buildVer mkCronScript jobToUserService jobToService buildShell
+      prIsOpen;
   };
 
 in xinlib

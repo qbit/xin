@@ -31,6 +31,22 @@ rebuild() {
 	return $?
 }
 
+if [ "$1" = "watch" ]; then
+	if [ "$2" = "update" ]; then
+		msg "updating watches..."
+		for f in pull_requests/*.json; do
+			pr=$(basename $f .json)
+			curl -s -o pull_requests/${pr}.json https://pr-status.humpback-trout.ts.net/${pr}
+			msg "Updated watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
+		done
+	else
+		pr="$2"
+		curl -s -o pull_requests/${pr}.json https://pr-status.humpback-trout.ts.net/${pr}
+		msg "Added watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
+	fi
+	exit 0
+fi
+
 if [ "$1" = "status" ]; then
 	rev=$(git rev-parse HEAD)
 	msg "Currently at: ${rev}\t($(git log --format=%B -n 1 $rev | head -n1))"

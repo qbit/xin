@@ -3,7 +3,9 @@ let
   openssh = import ./openssh.nix;
   tailscale = xinlib.prIsOpen 231281 (import ./tailscale.nix);
   jetbrains = xinlib.prIsOpen 232308 (import ./jetbrains.nix);
-  tidal-hifi = xinlib.prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
+  tidal-hifi =
+    xinlib.prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
+  matrix-synapse = xinlib.prIsOpen 233651 (import ./matrix-synapse.nix);
 in {
   nixpkgs.overlays = if isUnstable then [
     (_: super: {
@@ -18,7 +20,7 @@ in {
     openssh
     tailscale
   ] else [
-    (import ./matrix-synapse.nix)
+    matrix-synapse
     openssh
     tailscale
   ];
