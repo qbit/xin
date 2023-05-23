@@ -1,1 +1,17 @@
-{"232308":{"status":"open","link":"https://github.com/NixOS/nixpkgs/pull/232308"}}
+{
+  "232308": {
+    "status": "open",
+    "target": "unstable",
+    "link": "https://github.com/NixOS/nixpkgs/pull/232308"
+  },
+  "228552": {
+    "status": "open",
+    "target": "unstable",
+    "link": "https://github.com/NixOS/nixpkgs/pull/228552"
+  },
+  "231281": {
+    "status": "open",
+    "target": "stable",
+    "link": "https://github.com/NixOS/nixpkgs/pull/231281"
+  }
+}

@@ -1,5 +1,12 @@
 { lib, ... }:
 let
+  prStatus = builtins.fromJSON (builtins.readFile ../pr_status.json);
+  prIsOpen = pr: overlay:
+    if prStatus."${builtins.toString pr}".status == "open" then
+      overlay
+    else
+      null;
+
   mkCronScript = name: src: ''
     . /etc/profile;
     set -x
@@ -31,6 +38,7 @@ let
         deadnix
         git
         git-bug
+        jo
         jq
         nil
         nix-diff
@@ -54,7 +62,7 @@ let
     };
 
   xinlib = {
-    inherit buildVer mkCronScript jobToUserService jobToService buildShell;
+    inherit buildVer mkCronScript jobToUserService jobToService buildShell prStatus prIsOpen;
   };
 
 in xinlib
