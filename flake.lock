@@ -264,11 +264,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1684810737,
-        "narHash": "sha256-YJLrmwIXXNg5IYHEFyRMfteHePl3HUG+yBQbY5N+Pak=",
+        "lastModified": 1684859907,
+        "narHash": "sha256-oj6QUXMBJFXJojSr3epT7rofAujswczVVTak2cl1wjQ=",
         "owner": "qbit",
         "repo": "pr-status-pl",
-        "rev": "5601ed4ee40fd6a591e61b9e0f111096597514d8",
+        "rev": "a452199d40db219809711813b3164018fac36062",
         "type": "github"
       },
       "original": {
