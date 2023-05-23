@@ -248,6 +248,9 @@ in {
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
     };
+    pr-status = {
+      enable = true;
+    };
     gostart = {
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";

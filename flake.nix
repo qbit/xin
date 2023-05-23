@@ -41,6 +41,10 @@
       url = "github:qbit/gostart";
       inputs.nixpkgs.follows = "unstable";
     };
+    pr-status = {
+      url = "github:qbit/pr-status-pl";
+      inputs.nixpkgs.follows = "stable";
+    };
     taskobs = {
       url = "github:qbit/taskobs";
       inputs.nixpkgs.follows = "unstable";
@@ -83,7 +87,7 @@
   };
 
   outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, gostart, xintray, tsvnstat, pots, po, tsRevProx, darwin
+    , reform, gostart, xintray, tsvnstat, pots, po, pr-status, tsRevProx, darwin
     , xin-secrets, talon, peerix, ... }@inputs:
     let
       xinlib = import ./lib { inherit (unstable) lib; };
@@ -105,14 +109,15 @@
 
       overlays = [
         inputs.emacs-overlay.overlay
-        inputs.peerix.overlay
-        inputs.microca.overlay
-        inputs.taskobs.overlay
-        inputs.reform.overlay
         inputs.gostart.overlay
+        inputs.microca.overlay
+        inputs.peerix.overlay
         inputs.pots.overlay
-        inputs.tsRevProx.overlay
+        inputs.pr-status.overlay
+        inputs.reform.overlay
         inputs.talon.overlays.default
+        inputs.taskobs.overlay
+        inputs.tsRevProx.overlay
       ];
 
       buildSys = sys: sysBase: extraMods: name:
@@ -171,6 +176,7 @@
           ./configs/hardened.nix
           gostart.nixosModule
           pots.nixosModule
+          pr-status.nixosModule
         ] "h";
         #router =
         #  buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
