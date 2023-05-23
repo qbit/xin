@@ -31,6 +31,12 @@ if [ "${1}" = "update" ]; then
 		handle_co_fail "${ci_branch}"
 		exit 1
 	fi
+
+	deploy watch update
+	if ! git diff --exit-code >/dev/null; then
+		git add pull_requests
+		git commit -m 'watched: update watched pull requests'
+	fi
 	
 	for inp in $(nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[] as $k | $k'); do
 		if ! git checkout -b "${ci_branch}_${inp}"; then
