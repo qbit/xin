@@ -257,6 +257,26 @@
         "type": "github"
       }
     },
+    "pr-status": {
+      "inputs": {
+        "nixpkgs": [
+          "stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1684808110,
+        "narHash": "sha256-lhXhEKsND0UnZkY5p63Gv0KEujdoAZa2tfFtlPPhB2U=",
+        "owner": "qbit",
+        "repo": "pr-status-pl",
+        "rev": "3d86e50449d848b58f369abba775e80874115da5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "pr-status-pl",
+        "type": "github"
+      }
+    },
     "reform": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -287,6 +307,7 @@
         "peerix": "peerix",
         "po": "po",
         "pots": "pots",
+        "pr-status": "pr-status",
         "reform": "reform",
         "sops-nix": "sops-nix",
         "stable": "stable",
