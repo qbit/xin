@@ -143,6 +143,9 @@
       darwinConfigurations = {
         plq = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
+          specialArgs = {
+            inherit xinlib;
+          };
           modules = [
             xin-secrets.nixosModules.sops
             ./overlays
