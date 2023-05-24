@@ -24,6 +24,7 @@ if [ $can_sign != 1 ]; then
 	exit 1
 fi
 
+git checkout main || handle_co_fail "main"
 git pull || handle_pull_fail
 
 if [ "${1}" = "update" ]; then
