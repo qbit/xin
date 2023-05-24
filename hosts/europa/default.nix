@@ -251,7 +251,6 @@ in {
     barrier
     calibre
     cider
-    cinny-desktop
     clementine
     element-desktop
     elmPackages.elm

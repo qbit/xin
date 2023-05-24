@@ -16,7 +16,6 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      (callPackage ../pkgs/rkvm.nix { })
       (callPackage ../pkgs/tile-gaps.nix { })
       libsForQt5.bismuth
       plasma5Packages.kdeconnect-kde
