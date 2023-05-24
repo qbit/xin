@@ -36,8 +36,12 @@ if [ "$1" = "watch" ]; then
 		msg "updating watches..."
 		for f in pull_requests/*.json; do
 			pr=$(basename $f .json)
-			curl -s -o - https://pr-status.humpback-trout.ts.net/${pr} | jq -rS 'del(.queryTime)' >pull_requests/${pr}.json
-			msg "Updated watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
+			if [ "$(jq -r '.status' <$f)" = "open" ]; then
+				curl -s -o - https://pr-status.humpback-trout.ts.net/${pr} | jq -rS 'del(.queryTime)' >pull_requests/${pr}.json
+				msg "Updated watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
+			else
+				msg "$Skipping: ${pr} ($(jq -r .title <pull_requests/${pr}.json)), already complete"
+			fi
 		done
 	else
 		pr="$2"
