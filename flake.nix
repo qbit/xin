@@ -8,6 +8,8 @@
     oldStable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
     stable.url = "github:NixOS/nixpkgs/nixos-22.11-small";
 
+    beta.url = "github:NixOS/nixpkgs/nixos-23.05";
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs-stable.follows = "stable";
@@ -86,7 +88,7 @@
     };
   };
 
-  outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
+  outputs = { self, beta, unstable, unstableSmall, stable, oldStable, nixos-hardware
     , reform, gostart, xintray, tsvnstat, pots, po, pr-status, tsRevProx, darwin
     , xin-secrets, talon, peerix, ... }@inputs:
     let
@@ -171,8 +173,8 @@
         #weather = buildSys "aarch64-linux" stable
         #  [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
-        faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
-        box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
+        faf = buildSys "x86_64-linux" beta [ ./configs/hardened.nix ] "faf";
+        box = buildSys "x86_64-linux" beta [ ./configs/hardened.nix ] "box";
         #luna = buildSys "x86_64-linux" stable
         #  [ "${nixos-hardware}/common/cpu/intel" ] "luna";
         h = buildSys "x86_64-linux" stable [

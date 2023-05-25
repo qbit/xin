@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "beta": {
+      "locked": {
+        "lastModified": 1684922889,
+        "narHash": "sha256-l0WZAmln8959O7RdYUJ3gnAIM9OPKFLKHKGX4q+Blrk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "04aaf8511678a0d0f347fdf1e8072fe01e4a509e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -297,6 +313,7 @@
     },
     "root": {
       "inputs": {
+        "beta": "beta",
         "darwin": "darwin",
         "emacs-overlay": "emacs-overlay",
         "gostart": "gostart",
