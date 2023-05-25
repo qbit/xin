@@ -177,7 +177,7 @@
         box = buildSys "x86_64-linux" beta [ ./configs/hardened.nix ] "box";
         #luna = buildSys "x86_64-linux" stable
         #  [ "${nixos-hardware}/common/cpu/intel" ] "luna";
-        h = buildSys "x86_64-linux" stable [
+        h = buildSys "x86_64-linux" beta [
           ./configs/hardened.nix
           gostart.nixosModule
           pots.nixosModule
