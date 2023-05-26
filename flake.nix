@@ -88,9 +88,9 @@
     };
   };
 
-  outputs = { self, unstable, unstableSmall, stable, oldStable
-    , nixos-hardware, reform, gostart, xintray, tsvnstat, pots, po, pr-status
-    , tsRevProx, darwin, xin-secrets, talon, peerix, ... }@inputs:
+  outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
+    , reform, gostart, xintray, tsvnstat, pots, po, pr-status, tsRevProx, darwin
+    , xin-secrets, talon, peerix, ... }@inputs:
     let
       xinlib = import ./lib { inherit (unstable) lib; };
       supportedSystems = [ "x86_64-linux" ];
