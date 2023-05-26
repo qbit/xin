@@ -123,6 +123,8 @@
           "http://127.0.0.1/null";
         "browser.newtabpage.enabled" = false;
         "browser.newtabpage.pinned" = false;
+        "browser.promo.focus.enabled" = false;
+        "browser.promo.pin.enabled" = false;
         "browser.search.suggest.enabled" = false;
         "browser.search.update" = false;
         "browser.topsites.contile.enabled" = false;
@@ -130,6 +132,7 @@
         "browser.urlbar.suggest.quicksuggest.sponsored" = false;
         "browser.urlbar.suggest.searches" = false;
         "browser.urlbar.trimURLs" = false;
+        "browser.vpn_promo.enabled" = false;
         "datareporting.healthreport.uploadEnabled" = false;
         "devtools.cache.disabled" = true;
         "extensions.pocket.enabled" = false;
