@@ -2,19 +2,17 @@ local map = vim.api.nvim_set_keymap
 local o = vim.o
 local cmd = vim.cmd
 
---cmd("syntax off");
---cmd("set t_Co=0");
 cmd("set nolist");
 cmd("set ruler");
 cmd("set mouse=");
 cmd("set t_Co=256");
+
+-- Theme / overrides
 cmd("colorscheme vacme");
-cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
-cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
-cmd("hi! Normal ctermbg=NONE ctermfg=NONE");
-cmd("hi! SignColumn NONE");
-cmd("hi! LineNr NONE");
-cmd("hi! Search cterm=NONE ctermbg=yellow");
+cmd("hi Normal ctermbg=none ctermfg=none");
+cmd("hi SignColumn none");
+cmd("hi LineNr none");
+cmd("hi Search cterm=none ctermbg=yellow");
 
 require("compe").setup {
 	enabled = true;
@@ -38,7 +36,6 @@ telescope.load_extension('fzf')
 require("nvim-tree").setup({
 	renderer = {
 		icons = {
-			--show = false,
 			webdev_colors = false,
 			show = {
 				file = false,
