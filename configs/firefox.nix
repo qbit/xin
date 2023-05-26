@@ -100,7 +100,7 @@
         # TODO: confirm no issues
         "dom.allow_cut_copy" = false;
         "dom.event.clipboardevents.enabled" = false;
-        "media.peerconnection.enabled" = false;
+        #"media.peerconnection.enabled" = false;
 
         "browser.aboutConfig.showWarning" = false;
         "browser.contentblocking.category" = "strict";
