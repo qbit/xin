@@ -14,32 +14,6 @@ let
     command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
   gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit isUnstable; };
-  inFluxBootOptions = if isUnstable then {
-    tmp = { cleanOnBoot = true; };
-  } else {
-    cleanTmpDir = true;
-  };
-  inFluxSSHOptions = if isUnstable then {
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-      KexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
-      Macs = [
-        "hmac-sha2-512-etm@openssh.com"
-        "hmac-sha2-256-etm@openssh.com"
-        "umac-128-etm@openssh.com"
-      ];
-    };
-  } else {
-    permitRootLogin = "prohibit-password";
-    passwordAuthentication = false;
-    kexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
-    macs = [
-      "hmac-sha2-512-etm@openssh.com"
-      "hmac-sha2-256-etm@openssh.com"
-      "umac-128-etm@openssh.com"
-    ];
-  };
 in {
   imports = [
     ./configs
@@ -153,7 +127,8 @@ in {
         "net.ipv4.tcp_keepalive_time" = 60;
         "net.ipv6.tcp_keepalive_time" = 60;
       };
-    } // inFluxBootOptions;
+      tmp.cleanOnBoot = true;
+    };
 
     nix = {
       settings = if config.networking.hostName != "pwntie" then {
@@ -240,7 +215,18 @@ in {
         extraConfig = ''
           #TrustedUserCAKeys = /etc/ssh/ca.pub
         '';
-      } // inFluxSSHOptions;
+        settings = {
+          PermitRootLogin = "prohibit-password";
+          PasswordAuthentication = false;
+          KexAlgorithms =
+            [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
+          Macs = [
+            "hmac-sha2-512-etm@openssh.com"
+            "hmac-sha2-256-etm@openssh.com"
+            "umac-128-etm@openssh.com"
+          ];
+        };
+      };
     };
   };
 }

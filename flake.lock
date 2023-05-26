@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "beta": {
-      "locked": {
-        "lastModified": 1685004253,
-        "narHash": "sha256-AbVL1nN/TDicUQ5wXZ8xdLERxz/eJr7+o8lqkIOVuaE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3e01645c40b92d29f3ae76344a6d654986a91a91",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -313,7 +297,6 @@
     },
     "root": {
       "inputs": {
-        "beta": "beta",
         "darwin": "darwin",
         "emacs-overlay": "emacs-overlay",
         "gostart": "gostart",
@@ -363,16 +346,16 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1685000228,
-        "narHash": "sha256-mzOWvIPrz5aBJnMftB1F8Oh5+QuhM8KtNRuXKRib2Hc=",
+        "lastModified": 1685089234,
+        "narHash": "sha256-osxsp9HQLDFhpm6CSGWuq2n3P5LQr2lNH/Kb1Ifq8XQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "adaeddeae797a873b23c45d935750daaa8d6dbad",
+        "rev": "7f17766e1f0412f910b20fa45f57eebfbf7bd63e",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.11-small",
+        "ref": "nixos-23.05-small",
         "repo": "nixpkgs",
         "type": "github"
       }

@@ -2,7 +2,10 @@ let
   obsidian = _: super: {
     obsidian = super.obsidian.overrideAttrs (_: rec {
       version = "1.3.4";
-      filename = if super.stdenv.isDarwin then "Obsidian-${version}-universal.dmg" else "obsidian-${version}.tar.gz";
+      filename = if super.stdenv.isDarwin then
+        "Obsidian-${version}-universal.dmg"
+      else
+        "obsidian-${version}.tar.gz";
       src = super.fetchurl {
         url =
           "https://github.com/obsidianmd/obsidian-releases/releases/download/v${version}/${filename}";

@@ -6,9 +6,9 @@
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     oldStable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
-    stable.url = "github:NixOS/nixpkgs/nixos-22.11-small";
+    #stable.url = "github:NixOS/nixpkgs/nixos-22.11-small";
 
-    beta.url = "github:NixOS/nixpkgs/nixos-23.05";
+    stable.url = "github:NixOS/nixpkgs/nixos-23.05-small";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -88,9 +88,9 @@
     };
   };
 
-  outputs = { self, beta, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, gostart, xintray, tsvnstat, pots, po, pr-status, tsRevProx, darwin
-    , xin-secrets, talon, peerix, ... }@inputs:
+  outputs = { self, unstable, unstableSmall, stable, oldStable
+    , nixos-hardware, reform, gostart, xintray, tsvnstat, pots, po, pr-status
+    , tsRevProx, darwin, xin-secrets, talon, peerix, ... }@inputs:
     let
       xinlib = import ./lib { inherit (unstable) lib; };
       supportedSystems = [ "x86_64-linux" ];
@@ -145,9 +145,7 @@
       darwinConfigurations = {
         plq = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = {
-            inherit xinlib;
-          };
+          specialArgs = { inherit xinlib; };
           modules = [
             xin-secrets.nixosModules.sops
             ./overlays
@@ -170,14 +168,14 @@
         ] "europa";
         pwntie = buildSys "x86_64-linux" unstable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
-        #weather = buildSys "aarch64-linux" stable
-        #  [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
+        weather = buildSys "aarch64-linux" stable
+          [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
-        faf = buildSys "x86_64-linux" beta [ ./configs/hardened.nix ] "faf";
-        box = buildSys "x86_64-linux" beta [ ./configs/hardened.nix ] "box";
+        faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
+        box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
         #luna = buildSys "x86_64-linux" stable
         #  [ "${nixos-hardware}/common/cpu/intel" ] "luna";
-        h = buildSys "x86_64-linux" beta [
+        h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule
           pots.nixosModule
