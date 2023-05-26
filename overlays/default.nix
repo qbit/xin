@@ -1,12 +1,13 @@
 { isUnstable, lib, xinlib, ... }:
 let
+  prIsOpen = xinlib.prIsOpen;
   openssh = import ./openssh.nix;
-  obsidian = xinlib.prIsOpen 233877 (import ./obsidian.nix);
+  obsidian = prIsOpen 233877 (import ./obsidian.nix);
   tailscale = (import ./tailscale.nix);
-  jetbrains = xinlib.prIsOpen 232308 (import ./jetbrains.nix);
+  jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
   tidal-hifi =
-    xinlib.prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
-  matrix-synapse = xinlib.prIsOpen 233651 (import ./matrix-synapse.nix);
+    prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
+  matrix-synapse = prIsOpen 233651 (import ./matrix-synapse.nix);
 in {
   nixpkgs.overlays = if isUnstable then [
     (_: super: {
@@ -20,11 +21,11 @@ in {
     tidal-hifi
     obsidian
     openssh
-    tailscale
+    (prIsOpen 234161 tailscale)
   ] else [
     matrix-synapse
     openssh
-    tailscale
+    (prIsOpen 234229 tailscale)
   ];
 }
 

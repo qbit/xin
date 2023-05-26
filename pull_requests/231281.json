@@ -7,7 +7,7 @@
     "staging-22.11",
     "staging-next-22.11"
   ],
-  "pull_request": "231281",
+  "pull_request": 231281,
   "release": "stable",
   "status": "complete",
   "status_info": {

@@ -1,8 +1,12 @@
 {
-  "branches": [],
-  "pull_request": "233651",
+  "branches": [
+    "release-22.11"
+  ],
+  "pull_request": 233651,
   "release": "stable",
   "status": "complete",
-  "status_info": {},
+  "status_info": {
+    "release-22.11": true
+  },
   "title": "matrix-synapse: 1.83.0 -> 1.84.0"
 }
