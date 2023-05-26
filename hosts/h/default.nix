@@ -65,6 +65,7 @@ in {
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.configurationLimit = 15;
 
   boot.kernelParams = [ "net.ifnames=0" ];
 
