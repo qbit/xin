@@ -8,7 +8,7 @@ let
     in if prStatus.status == "open" then
       overlay
     else
-      lib.warn "PR: ${prstr} (${prStatus.title}) is COMPLETE!" (_: _: {});
+      lib.warn "PR: ${prstr} (${prStatus.title}) is complete, ignoring overlay..." (_: _: {});
 
 
   mkCronScript = name: src: ''
