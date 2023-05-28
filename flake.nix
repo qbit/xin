@@ -5,9 +5,7 @@
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    oldStable.url = "github:NixOS/nixpkgs/nixos-22.05-small";
     #stable.url = "github:NixOS/nixpkgs/nixos-22.11-small";
-
     stable.url = "github:NixOS/nixpkgs/nixos-23.05-small";
 
     sops-nix = {
@@ -22,7 +20,6 @@
     };
 
     nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
-    reform = { url = "github:nix-community/hardware-mnt-reform"; };
 
     emacs-overlay = {
       url =
@@ -88,9 +85,9 @@
     };
   };
 
-  outputs = { self, unstable, unstableSmall, stable, oldStable, nixos-hardware
-    , reform, gostart, xintray, tsvnstat, pots, po, pr-status, tsRevProx, darwin
-    , xin-secrets, talon, peerix, ... }@inputs:
+  outputs = { self, darwin, gostart, nixos-hardware, peerix, po, pots, pr-status
+    , stable, talon, tsRevProx, tsvnstat, unstable, unstableSmall, xin-secrets
+    , xintray, ... }@inputs:
     let
       xinlib = import ./lib { inherit (unstable) lib; };
       supportedSystems = [ "x86_64-linux" ];
@@ -116,7 +113,6 @@
         inputs.peerix.overlay
         inputs.pots.overlay
         inputs.pr-status.overlay
-        inputs.reform.overlay
         inputs.talon.overlays.default
         inputs.taskobs.overlay
         inputs.tsRevProx.overlay
@@ -168,8 +164,8 @@
         ] "europa";
         pwntie = buildSys "x86_64-linux" unstable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
-        weather = buildSys "aarch64-linux" stable
-          [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
+        #weather = buildSys "aarch64-linux" stable
+        #  [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
         box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
@@ -192,17 +188,6 @@
             xin-secrets.nixosModules.sops
 
             "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
-          ];
-        };
-        reformInstall = oldStable.lib.nixosSystem {
-          system = "aarch64-linux";
-
-          modules = [
-            reform.nixosModule
-            (import (./installer.nix))
-            xin-secrets.nixosModules.sops
-
-            "${reform}/nixos/installer.nix"
           ];
         };
 

@@ -163,38 +163,6 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1660215038,
-        "narHash": "sha256-tqMyd5QB4MZh59wMHXqpro4hkKjz9ubQxkxFSuCuBGE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "45c9736ed69800a6ff2164fb4538c9e40dad25d6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-22.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "oldStable": {
-      "locked": {
-        "lastModified": 1682600000,
-        "narHash": "sha256-ha4BehR1dh8EnXSoE1m/wyyYVvHI9txjW4w5/oxsW5Y=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "50fc86b75d2744e1ab3837ef74b53f103a9b55a0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-22.05-small",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "peerix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -277,24 +245,6 @@
         "type": "github"
       }
     },
-    "reform": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1660545962,
-        "narHash": "sha256-JrsEoAdBzflng/ksBNu2cUZMezRQPytDSkz7bZNzI7s=",
-        "owner": "nix-community",
-        "repo": "hardware-mnt-reform",
-        "rev": "302b06b967e0777b52abd8ee0f9c736d63399137",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "hardware-mnt-reform",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "darwin": "darwin",
@@ -303,12 +253,10 @@
         "gqrss": "gqrss",
         "microca": "microca",
         "nixos-hardware": "nixos-hardware",
-        "oldStable": "oldStable",
         "peerix": "peerix",
         "po": "po",
         "pots": "pots",
         "pr-status": "pr-status",
-        "reform": "reform",
         "sops-nix": "sops-nix",
         "stable": "stable",
         "talon": "talon",
