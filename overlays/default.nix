@@ -6,7 +6,7 @@ let
   #tailscale = import ./tailscale.nix;
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
   #tidal-hifi = prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
-  matrix-synapse = prIsOpen 233651 (import ./matrix-synapse.nix);
+  #matrix-synapse = prIsOpen 233652 (import ./matrix-synapse.nix);
 in {
   nixpkgs.overlays = if isUnstable then [
     (_: super: {
@@ -19,7 +19,7 @@ in {
     obsidian
     #(prIsOpen 234161 tailscale)
   ] else [
-    matrix-synapse
+    #matrix-synapse
     #(prIsOpen 234229 tailscale)
   ];
 }

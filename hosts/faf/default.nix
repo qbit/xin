@@ -48,9 +48,9 @@ in {
     };
     adguardhome = {
       enable = false;
-      port = 3000;
       openFirewall = true;
       settings = {
+        bind_port = 3000;
         user_rules = [
           "# Stuff from kyle"
           "# some google stuff that wasn't being blocked"

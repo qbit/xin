@@ -97,7 +97,7 @@ in {
                .::::      ::::      '::::.
 
     '';
-    boot.cleanTmpDir = true;
+    boot.tmp.cleanOnBoot = true;
 
     environment.systemPackages = with pkgs; [ apg inetutils nixfmt ];
 
@@ -129,9 +129,17 @@ in {
       pcscd.enable = true;
       openssh = {
         enable = true;
-        # This is set in modules/profiles/installation-device.nix, but it is set to 'yes' :(
-        permitRootLogin = lib.mkForce "prohibit-password";
-        passwordAuthentication = false;
+        settings = {
+          PermitRootLogin = lib.mkForce "prohibit-password";
+          PasswordAuthentication = false;
+          KexAlgorithms =
+            [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
+          Macs = [
+            "hmac-sha2-512-etm@openssh.com"
+            "hmac-sha2-256-etm@openssh.com"
+            "umac-128-etm@openssh.com"
+          ];
+        };
       };
     };
     system.stateVersion = "21.11";

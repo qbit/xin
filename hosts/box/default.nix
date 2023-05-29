@@ -101,7 +101,7 @@ in {
         "wg0" = {
           allowedTCPPorts = [
             config.services.gitea.settings.server.SSH_PORT
-            config.services.gitea.httpPort
+            config.services.gitea.settings.server.HTTP_PORT
             config.services.vaultwarden.config.rocketPort
           ];
         };
@@ -229,7 +229,9 @@ in {
         '';
       in [ "@daily root ${tsCertsScript}/bin/ts-certs.sh" ];
     };
-    openssh.forwardX11 = true;
+    openssh = {
+      settings.X11Forwarding = true;
+    };
 
     tor.enable = true;
 
@@ -486,8 +488,6 @@ in {
 
     gitea = {
       enable = true;
-      domain = "git.tapenet.org";
-      rootUrl = "https://git.tapenet.org";
       stateDir = "/media/git";
       appName = "Tape:neT";
 
@@ -497,6 +497,8 @@ in {
 
       settings = {
         server = {
+          DOMAIN = "git.tapenet.org";
+          ROOT_URL = "https://git.tapenet.org";
           START_SSH_SERVER = true;
           SSH_SERVER_HOST_KEYS = "ssh/gitea-ed25519";
           SSH_PORT = 2222;
