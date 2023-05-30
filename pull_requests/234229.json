@@ -1,16 +1,20 @@
 {
   "branches": [
+    "nixos-23.05",
     "nixos-23.05-small",
     "nixpkgs-23.05-darwin",
     "release-23.05",
+    "staging-23.05",
     "staging-next-23.05"
   ],
   "pull_request": 234229,
   "release": "stable",
-  "status": "open",
+  "status": "complete",
   "status_info": {
-    "nixos-23.05-small": false,
+    "nixos-23.05": true,
+    "nixos-23.05-small": true,
     "release-23.05": true,
+    "staging-23.05": true,
     "staging-next-23.05": true
   },
   "title": "tailscale: 1.40.1 -> 1.42.0"
