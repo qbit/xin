@@ -229,9 +229,7 @@ in {
         '';
       in [ "@daily root ${tsCertsScript}/bin/ts-certs.sh" ];
     };
-    openssh = {
-      settings.X11Forwarding = true;
-    };
+    openssh = { settings.X11Forwarding = true; };
 
     tor.enable = true;
 

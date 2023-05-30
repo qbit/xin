@@ -18,10 +18,11 @@ in {
     })
     obsidian
     #(prIsOpen 234161 tailscale)
-  ] else [
-    #matrix-synapse
-    #(prIsOpen 234229 tailscale)
-  ];
+  ] else
+    [
+      #matrix-synapse
+      #(prIsOpen 234229 tailscale)
+    ];
 }
 
 # Example Python dep overlay
