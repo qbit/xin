@@ -8,6 +8,8 @@ let
     name = "ssh-ca-pubkeys";
     text = caPubKeys;
   };
+  breakGlassKey =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6CO4aa8ymIgPgHRMwVLPnkUXwFQRKJa66R3wGXrAS0 BreakGlass";
   managementKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
   statusKey = ''
@@ -36,7 +38,7 @@ in {
   options.myconf = {
     managementPubKeys = lib.mkOption rec {
       type = lib.types.listOf lib.types.str;
-      default = [ managementKey statusKey ];
+      default = [ managementKey statusKey breakGlassKey ];
       example = default;
       description = "List of management public keys to use";
     };
