@@ -152,6 +152,14 @@ in {
   services.xinCA = { enable = false; };
 
   services = {
+    power-profiles-daemon.enable = false;
+    tlp = {
+      enable = true;
+      settings = {
+        START_CHARGE_THRESH_BAT0 = 40;
+        STOP_CHARGE_THRESH_BAT0 = 60;
+      };
+    };
     restic = {
       backups = {
         local = {
