@@ -1,7 +1,7 @@
 {
   description = "thing: stuff and things";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-22.11";
+  inputs.nixpkgs.url = "nixpkgs/nixos-23.05";
 
   outputs = { self, nixpkgs }:
     let
@@ -20,8 +20,7 @@
             version = "v0.0.0";
             src = ./.;
 
-            vendorSha256 = pkgs.lib.fakeSha256;
-            proxyVendor = true;
+            vendorHash = pkgs.lib.fakeSha256;
           };
         });
 
