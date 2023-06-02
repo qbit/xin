@@ -1,8 +1,19 @@
 {
-  "branches": [],
+  "branches": [
+    "master",
+    "staging",
+    "staging-next"
+  ],
   "pull_request": 235408,
-  "release": "stable",
+  "release": "unstable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": false,
+    "nixpkgs-unstable": false,
+    "staging": true,
+    "staging-next": true
+  },
   "title": "obsidian: 1.3.4 -> 1.3.5"
 }
