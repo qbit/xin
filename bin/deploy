@@ -47,6 +47,7 @@ if [ "$1" = "watch" ]; then
 		pr="$2"
 		curl -s -o - https://pr-status.humpback-trout.ts.net/${pr} | jq -rS 'del(.queryTime)' >pull_requests/${pr}.json
 		msg "Added watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
+		git add pull_requests/${pr}.json
 	fi
 	exit 0
 fi
