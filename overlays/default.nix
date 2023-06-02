@@ -2,16 +2,13 @@
 let
   inherit (xinlib) prIsOpen;
   #openssh = import ./openssh.nix;
-  obsidian = prIsOpen 235408 (import ./obsidian.nix);
+  obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
   #tailscale = import ./tailscale.nix;
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
   #tidal-hifi = prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
   #matrix-synapse = prIsOpen 233652 (import ./matrix-synapse.nix);
 in {
-  nixpkgs.overlays = if isUnstable then [
-    obsidian
-  ] else
-    [ ];
+  nixpkgs.overlays = if isUnstable then [ obsidian ] else [ ];
 }
 
 # Example Python dep overlay

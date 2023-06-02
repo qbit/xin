@@ -1,0 +1,19 @@
+{
+  "branches": [
+    "master",
+    "staging",
+    "staging-next"
+  ],
+  "pull_request": 219502,
+  "release": "unstable",
+  "status": "open",
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": false,
+    "nixpkgs-unstable": false,
+    "staging": true,
+    "staging-next": true
+  },
+  "title": "tailscale-systray: init at 2022-10-19"
+}

@@ -24,6 +24,8 @@ let
     startAt = "*:0/5";
     path = [ promnesia hpi ];
   }];
+  tailscale-systray = xinlib.prIsOpen.pkg 219502
+    (pkgs.callPackage ../pkgs/tailscale-systray.nix { });
 in with lib; {
   imports = [ ./gnome.nix ./kde.nix ./xfce.nix ./arcan.nix ];
 
@@ -75,9 +77,9 @@ in with lib; {
         vlc
         zeal
 
-        (callPackage ../pkgs/tailscale-systray.nix { })
         (callPackage ../pkgs/govulncheck.nix { })
         (callPackage ../configs/helix.nix { })
+        tailscale-systray
       ];
 
       programs = { } // firefox.programs;

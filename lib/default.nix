@@ -1,16 +1,31 @@
 { lib, ... }:
+# TODO: this could be cleaner :D
 let
-  prIsOpen = pr: overlay:
+  getPrStatus = pr:
     let
       prstr = builtins.toString pr;
       prStatus =
         builtins.fromJSON (builtins.readFile ../pull_requests/${prstr}.json);
-    in if prStatus.status == "open" then
-      overlay
-    else
-      lib.warn
-      "PR: ${prstr} (${prStatus.title}) is complete, ignoring overlay..."
-      (_: _: { });
+    in prStatus;
+  prIsOpen = {
+    pkg = pr: pkg:
+      let prStatus = getPrStatus pr;
+      in if prStatus.status == "open" then
+        pkg
+      else
+        lib.warn "PR: ${
+          builtins.toString pr
+        } (${prStatus.title}) is complete, ignoring pkg..." null;
+
+    overlay = pr: overlay:
+      let prStatus = getPrStatus pr;
+      in if prStatus.status == "open" then
+        overlay
+      else
+        lib.warn "PR: ${
+          builtins.toString pr
+        } (${prStatus.title}) is complete, ignoring overlay..." (_: _: { });
+  };
 
   mkCronScript = name: src: ''
     . /etc/profile;
