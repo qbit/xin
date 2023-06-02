@@ -25,7 +25,8 @@ let
     path = [ promnesia hpi ];
   }];
   tailscale-systray = xinlib.prIsOpen.pkg 219502
-    (pkgs.callPackage ../pkgs/tailscale-systray.nix { });
+    (pkgs.callPackage ../pkgs/tailscale-systray.nix { })
+    pkgs."tailscale-systray";
 in with lib; {
   imports = [ ./gnome.nix ./kde.nix ./xfce.nix ./arcan.nix ];
 
@@ -63,24 +64,25 @@ in with lib; {
         (callPackage ../pkgs/kurinto.nix { })
       ];
       sound.enable = true;
-      environment.systemPackages = with pkgs; [
-        bc
-        black
-        brave
-        drawterm
-        go-font
-        hpi
-        pcsctools
-        promnesia
-        rage
-        rpr
-        vlc
-        zeal
+      environment.systemPackages = with pkgs;
+        (xinlib.filterList [
+          bc
+          black
+          brave
+          drawterm
+          go-font
+          hpi
+          pcsctools
+          promnesia
+          rage
+          rpr
+          vlc
+          zeal
 
-        (callPackage ../pkgs/govulncheck.nix { })
-        (callPackage ../configs/helix.nix { })
-        tailscale-systray
-      ];
+          (callPackage ../pkgs/govulncheck.nix { })
+          (callPackage ../configs/helix.nix { })
+          tailscale-systray
+        ]);
 
       programs = { } // firefox.programs;
 

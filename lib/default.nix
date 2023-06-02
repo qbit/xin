@@ -1,21 +1,20 @@
 { lib, ... }:
-# TODO: this could be cleaner :D
 let
+  inherit (builtins) toString readFile fromJSON filter;
   getPrStatus = pr:
     let
-      prstr = builtins.toString pr;
-      prStatus =
-        builtins.fromJSON (builtins.readFile ../pull_requests/${prstr}.json);
+      prstr = toString pr;
+      prStatus = fromJSON (readFile ../pull_requests/${prstr}.json);
     in prStatus;
   prIsOpen = {
-    pkg = pr: pkg:
+    pkg = pr: localPkg: upstreamPkg:
       let prStatus = getPrStatus pr;
       in if prStatus.status == "open" then
-        pkg
+        localPkg
       else
-        lib.warn "PR: ${
-          builtins.toString pr
-        } (${prStatus.title}) is complete, ignoring pkg..." null;
+        lib.warn
+        "PR: ${toString pr} (${prStatus.title}) is complete, ignoring pkg..."
+        upstreamPkg;
 
     overlay = pr: overlay:
       let prStatus = getPrStatus pr;
@@ -23,9 +22,11 @@ let
         overlay
       else
         lib.warn "PR: ${
-          builtins.toString pr
+          toString pr
         } (${prStatus.title}) is complete, ignoring overlay..." (_: _: { });
   };
+
+  filterList = pkgList: filter (x: x != null) pkgList;
 
   mkCronScript = name: src: ''
     . /etc/profile;
@@ -84,7 +85,7 @@ let
 
   xinlib = {
     inherit buildVer mkCronScript jobToUserService jobToService buildShell
-      prIsOpen;
+      prIsOpen filterList;
   };
 
 in xinlib
