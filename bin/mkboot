@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 case $1 in
-weather)
-	nix build .#nixosConfigurations.weatherInstall.config.system.build.sdImage
+arm|arm64)
+	nix build .#nixosConfigurations.arm64Install.config.system.build.sdImage
 	;;
 haas)
 	nix build .#nixosConfigurations.hassInstall.config.system.build.isoImage
@@ -14,6 +14,6 @@ reform)
 	nix build .#nixosConfigurations.reformInstall.config.system.build.sdImage
 	;;
 *)
-	echo "Usage: boot [iso|weather|hass|reform]"
+	echo "Usage: boot [iso|arm64|arm|hass|reform]"
 	;;
 esac

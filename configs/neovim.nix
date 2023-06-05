@@ -123,9 +123,11 @@ let
     nvim-treesitter.withAllGrammars
     rust-vim
     telescope-fzf-native-nvim
+    telescope-manix
     telescope-nvim
     vimagit
     vim-gitgutter
+    vim-go
     vim-hindent
     vim-lua
     vim-markdown
@@ -142,7 +144,7 @@ let
   myVimPackages = if pkgs.system == "aarch64-linux" then
     baseVimPackages
   else
-    baseVimPackages ++ [ vimPlugins.vim-go vimPlugins.telescope-manix ];
+    baseVimPackages ++ [ ];
 in {
   environment.systemPackages = with pkgs; [
     elmPackages.elm

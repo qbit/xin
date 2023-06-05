@@ -180,7 +180,7 @@
         #router =
         #  buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
 
-        weatherInstall = stable.lib.nixosSystem {
+        arm64Install = stable.lib.nixosSystem {
           system = "aarch64-linux";
 
           modules = [

@@ -107,6 +107,17 @@ in {
 
     time.timeZone = "US/Mountain";
 
+    systemd.services."setdate" = if pkgs.system == "aarch64-linux" then {
+      description = "Set date on boot";
+      wantedBy = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      script = ''
+        . /etc/profile;
+        ${pkgs.outils}/bin/rdate pool.ntp.org
+      '';
+      serviceConfig.Type = "oneshot";
+    } else {};
+
     programs = {
       zsh.enable = true;
       ssh = {
