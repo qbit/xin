@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 case $1 in
-arm|arm64)
+arm | arm64)
 	nix build .#nixosConfigurations.arm64Install.config.system.build.sdImage
 	;;
 haas)
