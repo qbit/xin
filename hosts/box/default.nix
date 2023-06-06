@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, isUnstable, ... }:
+{ inputs, config, lib, pkgs, isUnstable, ... }:
 
 let
   #photoPrismTag = "220901-bullseye";
@@ -74,6 +74,8 @@ in {
   sops.secrets.graph_key = mkNginxSecret;
   sops.secrets.bw_cert = mkNginxSecret;
   sops.secrets.bw_key = mkNginxSecret;
+  sops.secrets.invidious_cert = mkNginxSecret;
+  sops.secrets.invidious_key = mkNginxSecret;
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.loader.grub.copyKernels = true;
@@ -211,6 +213,17 @@ in {
   };
 
   services = {
+    invidious = {
+      enable = true;
+      settings = {
+        port = lib.mkForce 1538;
+        host_binding = "127.0.0.1";
+        domain = "invidious.bold.daemon";
+        https_only = true;
+        popular_enabled = false;
+        statistics_enabled = false;
+      };
+    };
     cron = {
       enable = true;
       systemCronJobs = let
@@ -559,6 +572,15 @@ in {
       '';
 
       virtualHosts = {
+        "invidious.bold.daemon" = {
+          forceSSL = true;
+          sslCertificateKey = "${config.sops.secrets.invidious_key.path}";
+          sslCertificate = "${config.sops.secrets.invidious_cert.path}";
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${toString config.services.invidious.settings.port}";
+            proxyWebsockets = true;
+          };
+        };
         "box.humpback-trout.ts.net" = {
           forceSSL = true;
           sslCertificateKey =
@@ -786,6 +808,10 @@ in {
         {
           name = "gitea";
           ensurePermissions."DATABASE gitea" = "ALL PRIVILEGES";
+        }
+        {
+          name = "invidious";
+          ensurePermissions."DATABASE invidious" = "ALL PRIVILEGES";
         }
       ];
     };
