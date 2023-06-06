@@ -116,7 +116,8 @@ in {
         ${pkgs.outils}/bin/rdate pool.ntp.org
       '';
       serviceConfig.Type = "oneshot";
-    } else {};
+    } else
+      { };
 
     programs = {
       zsh.enable = true;
