@@ -18,7 +18,7 @@ let
 
     overlay = pr: overlay:
       let prStatus = getPrStatus pr;
-      in if prStatus.status == "open" then
+      in if pr == 0 || prStatus.status == "open" then
         overlay
       else
         lib.warn "PR: ${
