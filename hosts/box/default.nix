@@ -577,7 +577,9 @@ in {
           sslCertificateKey = "${config.sops.secrets.invidious_key.path}";
           sslCertificate = "${config.sops.secrets.invidious_cert.path}";
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString config.services.invidious.settings.port}";
+            proxyPass = "http://127.0.0.1:${
+                toString config.services.invidious.settings.port
+              }";
             proxyWebsockets = true;
           };
         };
