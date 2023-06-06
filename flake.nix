@@ -93,7 +93,16 @@
       supportedSystems = [ "x86_64-linux" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
-      nixpkgsFor = forAllSystems (system: import unstable { inherit system; });
+      unstablePkgsFor = forAllSystems (system:
+        import unstable {
+          inherit system;
+          #imports = [ ./overlays ];
+        });
+      stablePkgsFor = forAllSystems (system:
+        import stable {
+          inherit system;
+          #imports = [ ./overlays ];
+        });
       hostBase = {
         modules = [
           # Common config stuffs
@@ -135,7 +144,7 @@
           }] ++ [ (xinlib.buildVer self) (./. + "/hosts/${name}") ]
             ++ [{ nixpkgs.overlays = overlays; }];
         };
-      pkgs = unstable.legacyPackages.x86_64-linux;
+      lpkgs = unstable.legacyPackages.x86_64-linux;
       darwinPkgs = unstableSmall.legacyPackages.aarch64-darwin;
     in {
       darwinConfigurations = {
@@ -154,7 +163,7 @@
       formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.nixfmt;
       formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.nixfmt;
 
-      devShells.x86_64-linux.default = xinlib.buildShell pkgs;
+      devShells.x86_64-linux.default = xinlib.buildShell lpkgs;
       devShells.aarch64-darwin.default = xinlib.buildShell darwinPkgs;
 
       nixosConfigurations = {
@@ -205,57 +214,58 @@
       };
 
       packages = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system};
+      let
+        upkgs = unstablePkgsFor.${system};
+        spkgs = stablePkgsFor.${system};
+
         in {
           ada_language_server =
-            pkgs.callPackage ./pkgs/ada_language_server.nix { inherit pkgs; };
-          alire = pkgs.callPackage ./pkgs/alire.nix { inherit pkgs; };
-          bearclaw = pkgs.callPackage ./pkgs/bearclaw.nix { inherit pkgs; };
-          gqrss = pkgs.callPackage ./pkgs/gqrss.nix {
-            inherit pkgs;
+            spkgs.callPackage ./pkgs/ada_language_server.nix { inherit spkgs; };
+          alire = spkgs.callPackage ./pkgs/alire.nix { inherit spkgs; };
+          bearclaw = spkgs.callPackage ./pkgs/bearclaw.nix { inherit spkgs; };
+          gqrss = spkgs.callPackage ./pkgs/gqrss.nix {
+            inherit spkgs;
             isUnstable = true;
           };
-          iamb = pkgs.callPackage ./pkgs/iamb.nix { };
-          icbirc = pkgs.callPackage ./pkgs/icbirc.nix {
-            inherit pkgs;
+          iamb = upkgs.callPackage ./pkgs/iamb.nix { };
+          icbirc = spkgs.callPackage ./pkgs/icbirc.nix {
+            inherit spkgs;
             isUnstable = true;
           };
-          femtolisp = pkgs.callPackage ./pkgs/femtolisp.nix { };
-          flake-warn = pkgs.callPackage ./pkgs/flake-warn.nix { inherit pkgs; };
-          kurinto = pkgs.callPackage ./pkgs/kurinto.nix { };
-          mcchunkie = pkgs.callPackage ./pkgs/mcchunkie.nix { inherit pkgs; };
-          yaegi = pkgs.callPackage ./pkgs/yaegi.nix { inherit pkgs; };
-          yarr = pkgs.callPackage ./pkgs/yarr.nix {
-            inherit pkgs;
+          femtolisp = upkgs.callPackage ./pkgs/femtolisp.nix { };
+          flake-warn = spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
+          kurinto = spkgs.callPackage ./pkgs/kurinto.nix { };
+          mcchunkie = spkgs.callPackage ./pkgs/mcchunkie.nix { inherit spkgs; };
+          yaegi = spkgs.callPackage ./pkgs/yaegi.nix { inherit spkgs; };
+          yarr = spkgs.callPackage ./pkgs/yarr.nix {
+            inherit spkgs;
             isUnstable = true;
           };
           precursorupdater =
-            pkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
-              inherit pkgs;
+            spkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
+              inherit spkgs;
             };
-          kobuddy = pkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
-            inherit pkgs;
+          kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
+            inherit upkgs;
           };
-          ghexport = pkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
-            inherit pkgs;
+          ghexport = upkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
+            inherit upkgs;
           };
           hpi =
-            pkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit pkgs; };
-          promnesia = pkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
-            inherit pkgs;
+            upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
+          promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
+            inherit upkgs;
           };
           sliding-sync =
-            pkgs.callPackage ./pkgs/sliding-sync.nix { inherit pkgs; };
-          tailscaleSystray =
-            pkgs.callPackage ./pkgs/tailscale-systray.nix { inherit pkgs; };
-          golink = pkgs.callPackage ./pkgs/golink.nix { inherit pkgs; };
-          gokrazy = pkgs.callPackage ./pkgs/gokrazy.nix { inherit pkgs; };
-          gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit pkgs; };
-          gotosocial = pkgs.callPackage ./pkgs/gotosocial.nix { inherit pkgs; };
+            spkgs.callPackage ./pkgs/sliding-sync.nix { inherit spkgs; };
+          golink = spkgs.callPackage ./pkgs/golink.nix { inherit spkgs; };
+          gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
+          gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
+          gotosocial = spkgs.callPackage ./pkgs/gotosocial.nix { inherit spkgs; };
           govulncheck =
-            pkgs.callPackage ./pkgs/govulncheck.nix { inherit pkgs; };
-          zutty = pkgs.callPackage ./pkgs/zutty.nix {
-            inherit pkgs;
+            upkgs.callPackage ./pkgs/govulncheck.nix { inherit upkgs; };
+          zutty = upkgs.callPackage ./pkgs/zutty.nix {
+            inherit upkgs;
             isUnstable = true;
           };
           inherit (xintray.packages.${system}) xintray;
@@ -263,6 +273,8 @@
           inherit (pots.packages.${system}) pots;
           inherit (po.packages.${system}) po;
           inherit (tsRevProx.packages.${system}) ts-reverse-proxy;
+
+          inherit (spkgs) matrix-synapse;
         });
 
       templates."ada" = {
