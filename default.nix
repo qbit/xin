@@ -208,14 +208,8 @@ in {
     services = {
       openssh = {
         enable = true;
-        knownHosts = {
-          "*.bold.daemon,*.humpback-trout.ts.net,*.suah.dev" = {
-            publicKeyFile = caPubKeyFile;
-            certAuthority = true;
-          };
-        };
         extraConfig = ''
-          #TrustedUserCAKeys = /etc/ssh/ca.pub
+          TrustedUserCAKeys = /etc/ssh/ca.pub
         '';
         settings = {
           PermitRootLogin = "prohibit-password";
