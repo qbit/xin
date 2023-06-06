@@ -77,10 +77,11 @@ in with lib; {
         envFile = config.sops.secrets.ts_proxy_env.path;
       };
       nix-serve = {
-        package = pkgs.nix-serve.override {
-          nix =
-            inputs.unstable.legacyPackages.x86_64-linux.nixVersions.nix_2_12;
-        };
+        package = pkgs.nix-serve-ng;
+        #package = pkgs.nix-serve.override {
+        #  nix =
+        #    inputs.unstable.legacyPackages.x86_64-linux.nixVersions.nix_2_12;
+        #};
         enable = true;
         secretKeyFile = config.sops.secrets.bin_cache_priv_key.path;
         bindAddress = "127.0.0.1";
