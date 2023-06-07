@@ -272,7 +272,6 @@ in {
     git-credential-1password
     isync
     klavaro
-    linphone
     minicom
     mu
     nheko
