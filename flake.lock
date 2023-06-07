@@ -94,7 +94,7 @@
     "gostart": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "stable"
         ]
       },
       "locked": {
@@ -232,11 +232,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1685367270,
-        "narHash": "sha256-DgwM1bnz4ntaNzpJ/SU88gn9NjUq/9AhPoXfc8w59ZY=",
+        "lastModified": 1686098766,
+        "narHash": "sha256-d6tOSs/z5rd6XB4l59uqGqregh5HiYO+6TlKzS8pRqE=",
         "owner": "qbit",
         "repo": "pr-status-pl",
-        "rev": "e162059f1df06a36e8bb9888c741c955b1e80261",
+        "rev": "fe2e75da6365f0d4f47fdf3ee6551116c1f548aa",
         "type": "github"
       },
       "original": {
