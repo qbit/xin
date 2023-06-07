@@ -137,6 +137,7 @@
         "datareporting.healthreport.uploadEnabled" = false;
         "devtools.cache.disabled" = true;
         "extensions.pocket.enabled" = false;
+        "extensions.screenshots.disabled" = true;
         "geo.enabled" = false;
         "geo.provider.network.url" = "";
         "geo.provider.use_geoclue" = false;
