@@ -80,7 +80,7 @@ in with lib; {
         #package = pkgs.nix-serve;
         package = pkgs.nix-serve-ng.override {
           nix =
-            inputs.unstable.legacyPackages.x86_64-linux.nixVersions.nix_2_13;
+            inputs.unstable.legacyPackages.x86_64-linux.nixVersions.nix_2_14;
         };
         enable = true;
         secretKeyFile = config.sops.secrets.bin_cache_priv_key.path;
