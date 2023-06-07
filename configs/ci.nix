@@ -16,6 +16,17 @@ let
       path = [ ];
     }
   ];
+  patchedNixServeNg = _: super: {
+    nix = super.nix-serve-ng.overrideAttrs (_: {
+          patches = [
+            (pkgs.fetchpatch {
+              name = "initStore.patch";
+              url ="https://patch-diff.githubusercontent.com/raw/aristanetworks/nix-serve-ng/pull/23.diff";
+              hash = "sha256-tLIOMbqEB6zw87taqxs5zGtqgIvE0F6gxxfs8C6ShX8=";
+            })
+          ];
+    });
+  };
 in with lib; {
   options = {
     xinCI = {
@@ -70,6 +81,10 @@ in with lib; {
 
     systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
+    nixpkgs.overlays = [
+      patchedNixServeNg
+    ];
+
     services = {
       tsrevprox = {
         enable = true;
@@ -77,11 +92,7 @@ in with lib; {
         envFile = config.sops.secrets.ts_proxy_env.path;
       };
       nix-serve = {
-        #package = pkgs.nix-serve;
-        package = pkgs.nix-serve-ng.override {
-          nix =
-            inputs.unstable.legacyPackages.x86_64-linux.nixVersions.nix_2_14;
-        };
+        package = pkgs.nix-serve-ng;
         enable = true;
         secretKeyFile = config.sops.secrets.bin_cache_priv_key.path;
         bindAddress = "127.0.0.1";
