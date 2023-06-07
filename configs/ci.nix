@@ -76,7 +76,8 @@ in with lib; {
     ];
 
     nix = {
-      settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
+      #settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
+      settings.allowed-users = [ "root" config.xinCI.user "harmonia" ];
     };
 
     systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
@@ -87,12 +88,19 @@ in with lib; {
         reverseName = "nix-binary-cache";
         envFile = config.sops.secrets.ts_proxy_env.path;
       };
-      nix-serve = {
-        package = pkgs.nix-serve-ng;
+      harmonia = {
         enable = true;
-        secretKeyFile = config.sops.secrets.bin_cache_priv_key.path;
-        bindAddress = "127.0.0.1";
+        signKeyPath = config.sops.secrets.bin_cache_priv_key.path;
+        settings = {
+          bind = "127.0.0.1:5000";
+        };
       };
+      #nix-serve = {
+      #  package = pkgs.nix-serve-ng;
+      #  enable = true;
+      #  secretKeyFile = config.sops.secrets.bin_cache_priv_key.path;
+      #  bindAddress = "127.0.0.1";
+      #};
     };
 
     boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
