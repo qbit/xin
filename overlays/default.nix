@@ -7,7 +7,7 @@ let
   #tailscale = import ./tailscale.nix;
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
   #tidal-hifi = prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
-  matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
+  matrix-synapse = prIsOpen.overlay 236474 (import ./matrix-synapse.nix);
 in {
   nixpkgs.overlays =
     if isUnstable then [ _1password-gui ] else [ matrix-synapse ];
