@@ -81,10 +81,6 @@ in with lib; {
 
     systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
-    nixpkgs.overlays = [
-      patchedNixServeNg
-    ];
-
     services = {
       tsrevprox = {
         enable = true;
