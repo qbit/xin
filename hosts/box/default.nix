@@ -222,6 +222,7 @@ in {
         https_only = true;
         popular_enabled = false;
         statistics_enabled = false;
+        default_home = "Subscriptions";
       };
     };
     cron = {
