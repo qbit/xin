@@ -39,10 +39,14 @@
       PROMPT='%n@%m[%(?.%{$fg[default]%}.%{$fg[red]%})%?%{$reset_color%}]:%~$vcs_info_msg_0_$(prompt_char) '
 
       go_update_deps() {
-          for i in $(go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all); do
-            go get -u $i
-          done
-          go mod tidy
+        for i in $(go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all); do
+          go get -u $i
+        done
+        go mod tidy
+      }
+
+      mkhash() {
+        nix hash to-sri --type sha256 $(nix-prefetch-url --type sha256 "$1")
       }
 
       k() {
