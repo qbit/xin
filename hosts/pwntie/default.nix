@@ -6,7 +6,7 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
 in {
-  _module.args.isUnstable = true;
+  _module.args.isUnstable = false;
   imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
