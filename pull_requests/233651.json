@@ -1,12 +1,21 @@
 {
   "branches": [
-    "release-22.11"
+    "nixos-22.11",
+    "nixos-22.11-small",
+    "nixpkgs-22.11-darwin",
+    "release-22.11",
+    "staging-22.11",
+    "staging-next-22.11"
   ],
   "pull_request": 233651,
   "release": "stable",
   "status": "complete",
   "status_info": {
-    "release-22.11": true
+    "nixos-22.11": true,
+    "nixos-22.11-small": true,
+    "release-22.11": true,
+    "staging-22.11": true,
+    "staging-next-22.11": true
   },
   "title": "matrix-synapse: 1.83.0 -> 1.84.0"
 }
