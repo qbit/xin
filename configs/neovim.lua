@@ -85,6 +85,7 @@ map('n', '<leader>fm', ':Telescope manix<CR>', {})
 map('n', '<leader>mo', ':MindOpenMain<CR>', {})
 map('n', '<leader>mp', ':MindOpenProject<CR>', {})
 map('n', '<leader>ot', ':ObsidianToday<CR>', {})
+map('n', '<leader>tb', ':TagbarToggle<CR>', {})
 
 map('n', '<leader>g', ':GitGutterToggle<CR>', { noremap = true })
 map('n', '<leader>2', ':set list!<CR>', { noremap = true })
@@ -118,3 +119,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		end, opts)
 	end,
 })
+
+vim.g.tagbar_type_elm = {
+	kinds = {
+		'f:function:0:0',
+		'm:modules:0:0',
+		'i:imports:1:0',
+		't:types:1:0',
+		'a:type aliases:0:0',
+		'c:type constructors:0:0',
+		'p:ports:0:0',
+		's:functions:0:0'
+	}
+}

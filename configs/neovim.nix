@@ -122,6 +122,7 @@ let
     nvim-tree-lua
     nvim-treesitter.withAllGrammars
     rust-vim
+    tagbar
     telescope-fzf-native-nvim
     telescope-manix
     telescope-nvim
@@ -147,6 +148,7 @@ let
     baseVimPackages ++ [ ];
 in {
   environment.systemPackages = with pkgs; [
+    ctags
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
