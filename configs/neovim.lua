@@ -121,6 +121,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 vim.g.tagbar_type_elm = {
+	ctagstype = 'elm',
 	kinds = {
 		'f:function:0:0',
 		'm:modules:0:0',
@@ -130,5 +131,19 @@ vim.g.tagbar_type_elm = {
 		'c:type constructors:0:0',
 		'p:ports:0:0',
 		's:functions:0:0'
+	}
+}
+
+vim.g.tagbar_type_typescript = {
+	ctagstype = 'typescript',
+	kinds = {
+		'c:classes',
+		'n:modules',
+		'f:functions',
+		'v:variables',
+		'v:varlambdas',
+		'm:members',
+		'i:interfaces',
+		'e:enums'
 	}
 }

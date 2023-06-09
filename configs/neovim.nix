@@ -149,7 +149,6 @@ let
     baseVimPackages ++ [ ];
 in {
   environment.systemPackages = with pkgs; [
-    ctags
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
@@ -172,6 +171,7 @@ in {
     rubyPackages.solargraph
     sumneko-lua-language-server
     tree-sitter
+    universal-ctags
     zls
 
     NeovimExt
