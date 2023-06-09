@@ -129,6 +129,7 @@ let
     vimagit
     vim-gitgutter
     vim-go
+    vim-gutentags
     vim-hindent
     vim-lua
     vim-markdown
