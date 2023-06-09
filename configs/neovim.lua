@@ -15,18 +15,18 @@ cmd("hi LineNr none");
 cmd("hi Search cterm=none ctermbg=yellow");
 
 require("compe").setup {
-	enabled = true;
-	autocomplete = true;
+	enabled = true,
+	autocomplete = true,
 	source = {
-		path = true;
-		buffer = true;
-		calc = true;
-		nvim_lsp = true;
-		nvim_lua = true;
-		vsnip = true;
-		ultisnips = true;
-		luasnip = true;
-	};
+		path = true,
+		buffer = true,
+		calc = true,
+		nvim_lsp = true,
+		nvim_lua = true,
+		vsnip = true,
+		ultisnips = true,
+		luasnip = true,
+	},
 }
 
 local telescope = require('telescope')
@@ -48,16 +48,16 @@ require("nvim-tree").setup({
 })
 
 require("obsidian").setup({
-  dir = "~/Brain",
-  daily_notes = {
-    folder = "Daily",
-  },
-  completion = {
-    nvim_cmp = false,
-  }
+	dir = "~/Brain",
+	daily_notes = {
+		folder = "Daily",
+	},
+	completion = {
+		nvim_cmp = false,
+	}
 })
 
-require'nvim-treesitter.configs'.setup({})
+require 'nvim-treesitter.configs'.setup({})
 require('neogen').setup({})
 
 cmd [[highlight NvimTreeOpenedFolderName guifg=default]]
@@ -106,15 +106,15 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
-  end,
+	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+	callback = function(ev)
+		local opts = { buffer = ev.buf }
+		vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+		vim.keymap.set('n', '<space>f', function()
+			vim.lsp.buf.format { async = true }
+		end, opts)
+	end,
 })
