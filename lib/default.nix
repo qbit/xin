@@ -26,6 +26,8 @@ let
         } (${prStatus.title}) is complete, ignoring overlay..." (_: _: { });
   };
 
+  todo = msg: lib.warn "TODO: ${msg}";
+
   filterList = pkgList: filter (x: x != null) pkgList;
 
   mkCronScript = name: src: ''
@@ -85,7 +87,7 @@ let
 
   xinlib = {
     inherit buildVer mkCronScript jobToUserService jobToService buildShell
-      prIsOpen filterList;
+      prIsOpen filterList todo;
   };
 
 in xinlib

@@ -16,17 +16,6 @@ let
       path = [ ];
     }
   ];
-  patchedNixServeNg = _: super: {
-    nix = super.nix-serve-ng.overrideAttrs (_: {
-          patches = [
-            (pkgs.fetchpatch {
-              name = "initStore.patch";
-              url ="https://patch-diff.githubusercontent.com/raw/aristanetworks/nix-serve-ng/pull/23.diff";
-              hash = "sha256-tLIOMbqEB6zw87taqxs5zGtqgIvE0F6gxxfs8C6ShX8=";
-            })
-          ];
-    });
-  };
 in with lib; {
   options = {
     xinCI = {
@@ -91,9 +80,7 @@ in with lib; {
       harmonia = {
         enable = true;
         signKeyPath = config.sops.secrets.bin_cache_priv_key.path;
-        settings = {
-          bind = "127.0.0.1:5000";
-        };
+        settings = { bind = "127.0.0.1:5000"; };
       };
       #nix-serve = {
       #  package = pkgs.nix-serve-ng;

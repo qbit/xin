@@ -214,9 +214,9 @@
       };
 
       packages = forAllSystems (system:
-      let
-        upkgs = unstablePkgsFor.${system};
-        spkgs = stablePkgsFor.${system};
+        let
+          upkgs = unstablePkgsFor.${system};
+          spkgs = stablePkgsFor.${system};
 
         in {
           ada_language_server =
@@ -233,7 +233,8 @@
             isUnstable = true;
           };
           femtolisp = upkgs.callPackage ./pkgs/femtolisp.nix { };
-          flake-warn = spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
+          flake-warn =
+            spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
           kurinto = spkgs.callPackage ./pkgs/kurinto.nix { };
           mcchunkie = spkgs.callPackage ./pkgs/mcchunkie.nix { inherit spkgs; };
           yaegi = spkgs.callPackage ./pkgs/yaegi.nix { inherit spkgs; };
@@ -261,7 +262,8 @@
           golink = spkgs.callPackage ./pkgs/golink.nix { inherit spkgs; };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
-          gotosocial = spkgs.callPackage ./pkgs/gotosocial.nix { inherit spkgs; };
+          gotosocial =
+            spkgs.callPackage ./pkgs/gotosocial.nix { inherit spkgs; };
           govulncheck =
             upkgs.callPackage ./pkgs/govulncheck.nix { inherit upkgs; };
           zutty = upkgs.callPackage ./pkgs/zutty.nix {
