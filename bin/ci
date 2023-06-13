@@ -8,6 +8,8 @@ CMD=${1:-""}
 
 eval $(keychain --eval --agents ssh --inherit any)
 
+grep -qv /run/secrets/ci_ed25519_key.pub .git/config || git config user.signingkey /run/secrets/ci_ed25519_key.pub
+
 start_ci
 
 trap ci_error INT TERM
