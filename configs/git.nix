@@ -1,4 +1,4 @@
-{ config, isUnstable, ... }:
+{ config, ... }:
 let
   rewriteGitHub = if config.networking.hostName != "stan" then {
     url = { "ssh://git@github.com/" = { insteadOf = "https://github.com/"; }; };
@@ -34,8 +34,8 @@ in {
       }
       { push = { default = "current"; }; }
 
-      { gpg = if isUnstable then { format = "ssh"; } else { }; }
-      { commit = if isUnstable then { gpgsign = true; } else { }; }
+      { gpg = { format = "ssh"; }; }
+      { commit = { gpgsign = true; }; }
 
       {
         color = {
