@@ -98,7 +98,6 @@
       };
       preferences = {
         # TODO: confirm no issues
-        "dom.allow_cut_copy" = false;
         "dom.event.clipboardevents.enabled" = false;
         "dom.serviceWorkers.enabled" = false;
         #"media.peerconnection.enabled" = false;
