@@ -8,9 +8,9 @@ CMD=${1:-""}
 
 eval $(keychain --eval --agents ssh --inherit any)
 
-grep -q /run/secrets/ci_ed25519_pub .git/config || git config user.signingkey /run/secrets/ci_ed25519_pub
-grep -q gpgsign .git/config || git config commit.gpgsign true
-grep -q allowedSignersFile .git/config || git config gpg.ssh.allowedSignersFile .allowed_signers
+git config user.signingkey /run/secrets/ci_ed25519_key
+git config commit.gpgsign true
+git config gpg.ssh.allowedSignersFile .allowed_signers
 
 start_ci
 
