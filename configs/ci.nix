@@ -44,6 +44,14 @@ in with lib; {
         mode = "444";
         owner = config.xinCI.user;
       };
+      ci_signing_ed25519_key = {
+        mode = "400";
+        owner = config.xinCI.user;
+      };
+      ci_signing_ed25519_pub = {
+        mode = "444";
+        owner = config.xinCI.user;
+      };
       bin_cache_priv_key = {
         mode = "400";
         owner = "root";

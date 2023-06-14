@@ -8,7 +8,7 @@ CMD=${1:-""}
 
 eval $(keychain --eval --agents ssh --inherit any)
 
-git config user.signingkey /run/secrets/ci_ed25519_key
+git config user.signingkey /run/secrets/ci_signing_ed25519_key
 git config commit.gpgsign true
 git config gpg.ssh.allowedSignersFile .allowed_signers
 

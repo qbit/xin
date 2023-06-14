@@ -3,3 +3,4 @@ aaron@bolddaemon.com sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5z
 aaron@bolddaemon.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC74Cw0fk2g/Fzo2a5bJ+Tw6mEjbGR1/yx0HBt/p3R30
 aaron@bolddaemon.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager
 aaron@bolddaemon.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIACUwXo7HdoPI9vAMzcbYuXRgsbHA2otn0zF1zsaaj40 nixos ci
+aaron@bolddaemon.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIlVMdlJxNwsBAb6UUA0hqSwpbMA23L+UzRgkiodpOGq CI Signing
