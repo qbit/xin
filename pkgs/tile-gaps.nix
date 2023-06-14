@@ -3,13 +3,13 @@
 
 mkDerivation rec {
   pname = "tile-gaps";
-  version = "7.1";
+  version = "8.0";
 
   src = fetchFromGitHub {
     owner = "nclarius";
     repo = "tile-gaps";
     rev = "window-gaps_v${version}";
-    sha256 = "sha256-7tW098kP50rQApn0SW538NrJT0YArpkw/njYWavMvLo=";
+    sha256 = "sha256-IqmRazguCLSBe27Sy94gABCL+9lJFhFRYe1SPLF8jT8=";
   };
 
   buildInputs = [ kcoreaddons kwindowsystem plasma-framework systemsettings ];
