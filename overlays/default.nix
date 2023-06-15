@@ -9,8 +9,7 @@ let
   #tidal-hifi = prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
   #matrix-synapse = prIsOpen.overlay 236474 (import ./matrix-synapse.nix);
 in {
-  nixpkgs.overlays =
-    if isUnstable then [ ] else [ ];
+  nixpkgs.overlays = if isUnstable then [ ] else [ ];
 }
 
 # Example Python dep overlay
