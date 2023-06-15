@@ -41,7 +41,6 @@ in {
     PATH = [ "\${XDG_BIN_HOME}" ];
   };
 
-  kde.enable = true;
   users.users.qbit.extraGroups = [ "dialout" "libvirtd" "docker" ];
 
   nixpkgs.config.allowUnfree = true;
