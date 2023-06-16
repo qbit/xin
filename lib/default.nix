@@ -41,9 +41,7 @@ let
     value = {
       script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt path;
-      serviceConfig = {
-        OneShot = true;
-      };
+      serviceConfig = { Type = "oneshot"; };
     };
   };
   jobToService = job: {
@@ -53,7 +51,7 @@ let
       inherit (job) startAt path;
       serviceConfig = {
         User = "${job.user}";
-        OneShot = true;
+        Type = "oneshot";
       };
     };
   };
