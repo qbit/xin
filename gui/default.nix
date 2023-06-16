@@ -63,6 +63,7 @@ in with lib; {
       sound.enable = true;
       environment.systemPackages = with pkgs;
         (xinlib.filterList [
+          arcanPackages.all-wrapped
           bc
           black
           brave

@@ -254,8 +254,6 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    aerc
-    arcanPackages.all-wrapped
     barrier
     calibre
     cider
