@@ -99,4 +99,4 @@ else
 	fi
 fi
 
-finish
+finish_ci

@@ -105,11 +105,18 @@ start_ci() {
 	lock
 	agentHasKey "$(cat /run/secrets/ci_ed25519_pub | awk '{print $2}')" ||
 		ssh-add /run/secrets/ci_ed25519_key
+	agentHasKey "$(cat /run/secrets/ci_signing_ed25519_pub | awk '{print $2}')" ||
+		ssh-add /run/secrets/ci_signing_ed25519_key
 }
 
 finish() {
 	ssh-add -d /run/secrets/manager_key
+	exit 0
+}
+
+finish_ci() {
 	ssh-add -d /run/secrets/ci_ed25519_key
+	ssh-add -d /run/secrets/ci_signing_ed25519_key
 	exit 0
 }
 
