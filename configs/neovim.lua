@@ -47,7 +47,7 @@ require("nvim-tree").setup({
 	},
 })
 
-require("obsidian").setup({
+require('obsidian').setup({
 	dir = "~/Brain",
 	daily_notes = {
 		folder = "Daily",
@@ -60,10 +60,12 @@ require("obsidian").setup({
 require 'nvim-treesitter.configs'.setup({})
 require('neogen').setup({})
 
+require('todo-comments').setup {};
+
 cmd [[highlight NvimTreeOpenedFolderName guifg=default]]
 cmd [[highlight NvimTreeFolderName guifg=default]]
 
-local lspc = require("lspconfig")
+local lspc = require('lspconfig')
 lspc.elmls.setup {};
 lspc.gopls.setup {};
 lspc.hls.setup {};
@@ -86,6 +88,7 @@ map('n', '<leader>mo', ':MindOpenMain<CR>', {})
 map('n', '<leader>mp', ':MindOpenProject<CR>', {})
 map('n', '<leader>ot', ':ObsidianToday<CR>', {})
 map('n', '<leader>tb', ':TagbarToggle<CR>', {})
+map('n', '<leader>t', ':TodoQuickFix<CR>', {})
 
 map('n', '<leader>g', ':GitGutterToggle<CR>', { noremap = true })
 map('n', '<leader>2', ':set list!<CR>', { noremap = true })

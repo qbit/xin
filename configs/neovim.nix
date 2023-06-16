@@ -126,6 +126,7 @@ let
     telescope-fzf-native-nvim
     telescope-manix
     telescope-nvim
+    todo-comments-nvim
     vimagit
     vim-gitgutter
     vim-go
