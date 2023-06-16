@@ -69,7 +69,15 @@ local lspc = require('lspconfig')
 lspc.elmls.setup {};
 lspc.gopls.setup {};
 lspc.hls.setup {};
-lspc.lua_ls.setup {};
+lspc.lua_ls.setup {
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = {'vim'},
+			},
+		},
+	},
+};
 lspc.nil_ls.setup {};
 lspc.perlpls.setup {};
 lspc.solargraph.setup {};
