@@ -117,6 +117,7 @@ finish() {
 finish_ci() {
 	ssh-add -d /run/secrets/ci_ed25519_key
 	ssh-add -d /run/secrets/ci_signing_ed25519_key
+	pkill ssh-agent # TODO: https://github.com/systemd/systemd/pull/28035
 	exit 0
 }
 
