@@ -213,7 +213,8 @@ in {
   };
 
   programs.ssh.knownHosts = {
-    "[192.168.122.249]:7022".publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJd1dn/0YmUEInXbNTpUFNwzDrP0/FoMEJJc+3yYkZaCMrT0WPS5rFlkWJZ8mQf8udnfUWnTZzpDwIvXpfMQqf0=";
+    "[192.168.122.249]:7022".publicKey =
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJd1dn/0YmUEInXbNTpUFNwzDrP0/FoMEJJc+3yYkZaCMrT0WPS5rFlkWJZ8mQf8udnfUWnTZzpDwIvXpfMQqf0=";
   };
 
   system.autoUpgrade.allowReboot = false;
