@@ -140,7 +140,7 @@ in {
       '';
       shellAliases = {
         "gh" = "op plugin run -- gh";
-        "nixpkgs-review" = "op plugin run -- nixpkgs-review";
+        "nixpkgs-review" = "env GH_AUTH_TOKEN=$(op item get nixpkgs-review --field token) nixpkgs-review";
         "godeps" =
           "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "mutt" = "neomutt -F /etc/neomuttrc";
