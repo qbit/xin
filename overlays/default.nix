@@ -1,15 +1,15 @@
 { isUnstable, xinlib, ... }:
 let
-  #inherit (xinlib) prIsOpen;
+  inherit (xinlib) prIsOpen;
   #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
   #openssh = import ./openssh.nix;
   #obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
   #tailscale = import ./tailscale.nix;
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
-  #tidal-hifi = prIsOpen 228552 (import ./tidal-hifi.nix { inherit lib; });
+  tidal-hifi = prIsOpen.overlay 238572 (import ./tidal-hifi.nix);
   #matrix-synapse = prIsOpen.overlay 236474 (import ./matrix-synapse.nix);
 in {
-  nixpkgs.overlays = if isUnstable then [ ] else [ ];
+  nixpkgs.overlays = if isUnstable then [ tidal-hifi ] else [ ];
 }
 
 # Example Python dep overlay
