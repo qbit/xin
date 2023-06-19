@@ -12,7 +12,7 @@ in {
     lfs.enable = true;
     config = [
       { init = { defaultBranch = "main"; }; }
-
+      { advice.detachedHead = false; }
       {
         user = {
           name = "Aaron Bieber";
