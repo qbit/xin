@@ -8,8 +8,10 @@ let
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
   tidal-hifi = prIsOpen.overlay 238572 (import ./tidal-hifi.nix);
   matrix-synapse = prIsOpen.overlay 238794 (import ./matrix-synapse.nix);
+  nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
 in {
-  nixpkgs.overlays = if isUnstable then [ tidal-hifi ] else [ matrix-synapse ];
+  nixpkgs.overlays =
+    if isUnstable then [ tidal-hifi nixd ] else [ matrix-synapse ];
 }
 
 # Example Python dep overlay
