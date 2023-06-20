@@ -150,6 +150,8 @@ let
     baseVimPackages ++ [ ];
 in {
   environment.systemPackages = with pkgs; [
+    nixd
+
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server

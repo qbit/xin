@@ -78,7 +78,8 @@ lspc.lua_ls.setup {
 		},
 	},
 };
-lspc.nil_ls.setup {};
+lspc.nixd.setup {};
+--lspc.nil_ls.setup {};
 lspc.perlpls.setup {};
 lspc.solargraph.setup {};
 lspc.tsserver.setup {};
