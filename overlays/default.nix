@@ -7,7 +7,7 @@ let
   #tailscale = import ./tailscale.nix;
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
   tidal-hifi = prIsOpen.overlay 238572 (import ./tidal-hifi.nix);
-  matrix-synapse = prIsOpen.overlay 238794 (import ./matrix-synapse.nix);
+  matrix-synapse = prIsOpen.overlay 238845 (import ./matrix-synapse.nix);
   nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
 in {
   nixpkgs.overlays =
