@@ -160,6 +160,23 @@
         };
       };
 
+      # Expose all of the overlays to unstable so we can test build
+      # everything before deploying
+      legacyPackages.x86_64-linux = import unstable {
+        system = "x86_64-linux";
+        overlays = let
+          overlayFn = import ./overlays;
+          stableList = overlayFn {
+            isUnstable = true;
+            inherit xinlib;
+          };
+          unstableList = overlayFn {
+            isUnstable = false;
+            inherit xinlib;
+          };
+        in [ ] ++ stableList.nixpkgs.overlays ++ unstableList.nixpkgs.overlays;
+      };
+
       formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.nixfmt;
       formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.nixfmt;
 
