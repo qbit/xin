@@ -1,9 +1,13 @@
 {
-  "branches": [],
+  "branches": [
+    "release-23.05"
+  ],
   "error": "",
   "pull_request": 238845,
   "release": "stable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "release-23.05": true
+  },
   "title": "matrix-synapse: 1.85.2 -> 1.86.0"
 }

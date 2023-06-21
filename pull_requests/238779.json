@@ -5,5 +5,5 @@
   "release": "stable",
   "status": "open",
   "status_info": {},
-  "title": "nixd: add `bison``flex` to nativeBuildInputs"
+  "title": "nixd: 1.0.0 -> 1.1.0"
 }
