@@ -32,6 +32,16 @@ rebuild() {
 }
 
 if [ "$1" = "watch" ]; then
+	if [ "$2" = "status" ]; then
+		for f in pull_requests/*.json; do
+			pr=$(basename $f .json)
+			title="$(jq -r '.title' <$f)"
+			status="$(jq -r '.status' <$f)"
+			echo "${pr}|${title}|${status}"
+		done | column -t -s '|'
+		exit 0
+	fi
+
 	if [ "$2" = "update" ]; then
 		msg "updating watches..."
 		for f in pull_requests/*.json; do
