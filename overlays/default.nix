@@ -4,14 +4,20 @@ let
   #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
   #openssh = import ./openssh.nix;
   #obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
-  #tailscale = import ./tailscale.nix;
+  tailscale = prIsOpen.overlay 239176 import ./tailscale.nix;
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
   tidal-hifi = prIsOpen.overlay 238572 (import ./tidal-hifi.nix);
   matrix-synapse = prIsOpen.overlay 238845 (import ./matrix-synapse.nix);
   nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
 in {
-  nixpkgs.overlays =
-    if isUnstable then [ tidal-hifi nixd ] else [ matrix-synapse ];
+  nixpkgs.overlays = if isUnstable then [
+    tailscale
+    tidal-hifi
+    nixd
+  ] else [
+    matrix-synapse
+    tailscale
+  ];
 }
 
 # Example Python dep overlay
@@ -24,20 +30,3 @@ in {
 #     };
 #   };
 # })
-
-# Example of an overlay that changes the buildGoModule function
-#tailscale = self: super: {
-#  tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
-#    buildGoModule = args:
-#      super.buildGo119Module (args // rec {
-#        version = "1.32.2";
-#        src = super.fetchFromGitHub {
-#          owner = "tailscale";
-#          repo = "tailscale";
-#          rev = "v${version}";
-#          sha256 = "sha256-CYNHD6TS9KTRftzSn9vAH4QlinqNgU/yZuUYxSvsl/M=";
-#        };
-#        vendorSha256 = "sha256-VW6FvbgLcokVGunTCHUXKuH5+O6T55hGIP2g5kFfBsE=";
-#      });
-#  };
-#};
