@@ -89,7 +89,10 @@
     , stable, talon, tsRevProx, tsvnstat, unstable, unstableSmall, xin-secrets
     , xintray, ... }@inputs:
     let
-      xinlib = import ./lib { inherit (unstable) lib; };
+      xinlib = import ./lib {
+        inherit (unstable) lib;
+        inherit (unstable.legacyPackages.x86_64-linux) writeTextFile linkFarm;
+      };
       supportedSystems = [ "x86_64-linux" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;

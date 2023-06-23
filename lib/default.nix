@@ -1,6 +1,12 @@
-{ lib, ... }:
+{ lib, writeTextFile, linkFarm, ... }:
 let
-  inherit (builtins) toString readFile fromJSON filter;
+  inherit (builtins)
+    toString readFile fromJSON filter concatStringsSep map;
+  makeListReFile = name: list:
+    writeTextFile {
+      inherit name;
+      text = concatStringsSep "\n" (map (h: ".*(^|\\.)${h}$") list);
+    };
   getPrStatus = pr:
     let
       prstr = toString pr;
@@ -24,6 +30,50 @@ let
         lib.warn "PR: ${
           toString pr
         } (${prStatus.title}) is complete, ignoring overlay..." (_: _: { });
+  };
+
+  osRuleMaker = {
+    allowBinAll = name: bin: {
+      name = "${name}";
+      enabled = true;
+      precidence = false;
+      action = "allow";
+      duration = "always";
+      operator = {
+        type = "simple";
+        sensitive = false;
+        operand = "process.path";
+        data = "${bin}";
+      };
+    };
+    makeBinList = name: action: bin: list: {
+      inherit action name;
+      enabled = true;
+      precidence = true;
+      duration = "always";
+      operator = {
+        type = "lists";
+        operand = "lists";
+        sensitive = false;
+        list = [ { } { } ];
+      };
+    };
+    makeREList = name: action: list: {
+      inherit action name;
+      enabled = true;
+      precidence = true;
+      duration = "always";
+      operator = {
+        type = "lists";
+        operand = "lists.domains_regexp";
+        sensitive = false;
+        data = linkFarm "${name}-${action}-dir" [{
+          name = "${name}-${action}-file";
+          path = (makeListReFile "${name}-${action}-list" list);
+        }];
+        list = [ ];
+      };
+    };
   };
 
   todo = msg: lib.warn "TODO: ${msg}";
@@ -91,7 +141,7 @@ let
 
   xinlib = {
     inherit buildVer mkCronScript jobToUserService jobToService buildShell
-      prIsOpen filterList todo;
+      prIsOpen filterList todo osRuleMaker;
   };
 
 in xinlib

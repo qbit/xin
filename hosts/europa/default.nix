@@ -1,12 +1,15 @@
 { config, pkgs, lib, xinlib, ... }:
+with lib;
 let
+  inherit (builtins) map hasAttr;
+  inherit (xinlib) jobToUserService osRuleMaker;
   restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
     inherit pkgs;
     inherit lib;
     inherit config;
   });
   myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
-  peerixUser = if builtins.hasAttr "peerix" config.users.users then
+  peerixUser = if hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
   else
     "root";
@@ -153,6 +156,31 @@ in {
   services.xinCA = { enable = false; };
 
   services = {
+    opensnitch = {
+      enable = true;
+      rules = {
+        tailscale = osRuleMaker.allowBinAll "tailscale"
+          "${getBin pkgs.tailscale}/bin/.tailscaled-wrapped";
+        openssh =
+          osRuleMaker.allowBinAll "openssh" "${getBin pkgs.openssh}/bin/ssh";
+        mosh =
+          osRuleMaker.allowBinAll "mosh" "${getBin pkgs.mosh}/bin/mosh-client";
+        systemd-resolved = osRuleMaker.allowBinAll "systemd-resolved"
+          "${getBin pkgs.systemd}/lib/systemd/systemd-resolved";
+        blocked-hosts = osRuleMaker.makeREList "blocked-hosts" "deny" [
+          "facebook.com"
+          "facebook.net"
+          "pusher.com"
+          "www.facebook.com"
+        ];
+        allowed-hosts = osRuleMaker.makeREList "allowed-hosts" "allow" [
+          "tapenet.org"
+          "bolddaemon.com"
+          "suah.dev"
+          "humpback-trout.ts.net"
+        ];
+      };
+    };
     restic = {
       backups = {
         local = {
@@ -212,8 +240,7 @@ in {
     -----END CERTIFICATE-----
   ''];
 
-  systemd.user.services =
-    lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
+  systemd.user.services = lib.listToAttrs (map jobToUserService jobs);
   systemd.services."whytailscalewhy" = {
     description = "Tailscale restart on resume";
     wantedBy = [ "post-resume.target" ];
@@ -247,6 +274,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    opensnitch-ui
     barrier
     calibre
     cider
