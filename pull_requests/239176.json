@@ -1,9 +1,18 @@
 {
-  "branches": [],
+  "branches": [
+    "master"
+  ],
   "error": "",
   "pull_request": 239176,
-  "release": "stable",
+  "release": "unstable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": false,
+    "nixpkgs-unstable": false,
+    "staging": false,
+    "staging-next": false
+  },
   "title": "tailscale: 1.42.0 -> 1.44.0"
 }
