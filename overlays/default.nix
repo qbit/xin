@@ -11,12 +11,12 @@ let
   nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
 in {
   nixpkgs.overlays = if isUnstable then [
-    tailscale
+    #tailscale
     tidal-hifi
     nixd
   ] else [
     matrix-synapse
-    tailscale
+    #tailscale
   ];
 }
 
