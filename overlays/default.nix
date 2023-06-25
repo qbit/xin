@@ -6,7 +6,7 @@ let
   #obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
   tailscale = prIsOpen.overlay 239176 import ./tailscale.nix;
   #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
-  tidal-hifi = prIsOpen.overlay 238572 (import ./tidal-hifi.nix);
+  tidal-hifi = prIsOpen.overlay 239732 (import ./tidal-hifi.nix);
   matrix-synapse = prIsOpen.overlay 238845 (import ./matrix-synapse.nix);
   nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
 in {
