@@ -14,10 +14,11 @@ in {
     #tailscale
     tidal-hifi
     nixd
-  ] else [
-    matrix-synapse
-    #tailscale
-  ];
+  ] else
+    [
+      matrix-synapse
+      #tailscale
+    ];
 }
 
 # Example Python dep overlay
