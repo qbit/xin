@@ -274,6 +274,7 @@ in {
     obsidian
     pharo
     pharo-launcher
+    picocom
     proton-caller
     protonup-ng
     rex
