@@ -202,7 +202,7 @@ in {
 
     environment.etc."ssh/ca.pub" = { text = caPubKeys; };
 
-    services.logrotate.enable =
+    services.logrotate.checkConfig =
       todo "logrotate disabled: https://github.com/NixOS/nix/issues/8502" false;
 
     services = {
