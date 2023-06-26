@@ -197,11 +197,6 @@ in {
   };
 
   services = {
-    emacs = {
-      enable = true;
-      package = myEmacs;
-      install = true;
-    };
     printing.enable = true;
     fwupd.enable = true;
     unifi.enable = false;
