@@ -209,7 +209,7 @@ in {
 
   programs.ssh.knownHosts = {
     "[192.168.122.249]:7022".publicKey =
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJd1dn/0YmUEInXbNTpUFNwzDrP0/FoMEJJc+3yYkZaCMrT0WPS5rFlkWJZ8mQf8udnfUWnTZzpDwIvXpfMQqf0=";
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
   };
 
   system.autoUpgrade.allowReboot = false;
