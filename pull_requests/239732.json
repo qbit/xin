@@ -1,9 +1,22 @@
 {
-  "branches": [],
+  "branches": [
+    "master",
+    "nixos-unstable-small",
+    "nixpkgs-unstable",
+    "staging",
+    "staging-next"
+  ],
   "error": "",
   "pull_request": 239732,
-  "release": "stable",
+  "release": "unstable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": true,
+    "nixpkgs-unstable": true,
+    "staging": true,
+    "staging-next": true
+  },
   "title": "tidal-hifi: 5.2.0 -> 5.3.0"
 }
