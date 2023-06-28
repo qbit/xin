@@ -250,6 +250,7 @@
             isUnstable = true;
           };
           femtolisp = upkgs.callPackage ./pkgs/femtolisp.nix { };
+          fyne = upkgs.callPackage ./pkgs/fyne.nix { inherit upkgs; };
           flake-warn =
             spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
           kurinto = spkgs.callPackage ./pkgs/kurinto.nix { };
