@@ -256,6 +256,8 @@
           kurinto = spkgs.callPackage ./pkgs/kurinto.nix { };
           mcchunkie = spkgs.callPackage ./pkgs/mcchunkie.nix { inherit spkgs; };
           yaegi = spkgs.callPackage ./pkgs/yaegi.nix { inherit spkgs; };
+          gen-patches =
+            spkgs.callPackage ./bins/gen-patches.nix { inherit spkgs; };
           yarr = spkgs.callPackage ./pkgs/yarr.nix {
             inherit spkgs;
             isUnstable = true;

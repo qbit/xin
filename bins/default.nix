@@ -13,7 +13,7 @@ let
     inherit gosignify;
     inherit (pkgs) curl;
   });
-  genPatches = import ./gen-patches.nix { inherit pkgs; };
+  genPatches = pkgs.callPackage ./gen-patches.nix { };
 
 in {
   environment.systemPackages = with pkgs; [
