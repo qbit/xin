@@ -13,10 +13,12 @@ let
     inherit gosignify;
     inherit (pkgs) curl;
   });
+  genPatches = import ./gen-patches.nix { inherit pkgs; };
 
 in {
   environment.systemPackages = with pkgs; [
     checkRestart
+    genPatches
     ix
     sfetch
     tstart
