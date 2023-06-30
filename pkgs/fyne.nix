@@ -1,5 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub, pkg-config, glfw, libGL, libGLU, xorg
-, ... }:
+{ lib, buildGoModule, fetchFromGitHub, ... }:
 
 with lib;
 buildGoModule rec {
