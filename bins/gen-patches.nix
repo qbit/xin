@@ -42,8 +42,8 @@ let
         dname=$(dirname "$patch")
         file="$dname/$fname"
         outfile=$(echo "$dname/$fname" | sed 's;/;_;g')
-        diff -u "$file" "$patch" > "$output/$outfile";
-        echo "==> Created patch: $output/$outfile"
+        diff -u "$patch" "$file" > "$output/$outfile" || \
+          echo "==> Created patch: $output/$outfile"
       done
     '';
   };
