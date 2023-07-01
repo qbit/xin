@@ -503,7 +503,7 @@ in {
       stateDir = "/media/git";
       appName = "Tape:neT";
 
-      package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
+      package = inputs.unstable.legacyPackages.${pkgs.system}.forgejo;
 
       lfs.enable = true;
 
