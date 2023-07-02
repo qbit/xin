@@ -240,6 +240,7 @@
             spkgs.callPackage ./pkgs/ada_language_server.nix { inherit spkgs; };
           alire = spkgs.callPackage ./pkgs/alire.nix { inherit spkgs; };
           bearclaw = spkgs.callPackage ./pkgs/bearclaw.nix { inherit spkgs; };
+          clilol = spkgs.callPackage ./pkgs/clilol.nix { inherit spkgs; };
           gqrss = spkgs.callPackage ./pkgs/gqrss.nix {
             inherit spkgs;
             isUnstable = true;
