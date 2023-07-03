@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -43,17 +43,17 @@ in {
 
   users.users.qbit.extraGroups = [ "dialout" "libvirtd" "docker" ];
 
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfree = true;
 
-  programs = {
-    steam.enable = true;
-    _1password.enable = true;
-    _1password-gui = {
-      enable = true;
-      polkitPolicyOwners = [ "qbit" ];
-    };
-    dconf.enable = true;
-  };
+  #programs = {
+  #  steam.enable = true;
+  #  _1password.enable = true;
+  #  _1password-gui = {
+  #    enable = true;
+  #    polkitPolicyOwners = [ "qbit" ];
+  #  };
+  #  dconf.enable = true;
+  #};
 
   xinCI = {
     user = "qbit";
@@ -61,11 +61,11 @@ in {
   };
 
   services = {
-    emacs = {
-      enable = true;
-      package = myEmacs;
-      install = true;
-    };
+    #emacs = {
+    #  enable = true;
+    #  package = myEmacs;
+    #  install = true;
+    #};
     fwupd = {
       enable = true;
       enableTestRemote = true;

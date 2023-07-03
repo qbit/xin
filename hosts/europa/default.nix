@@ -5,7 +5,7 @@ let
     inherit lib;
     inherit config;
   });
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   peerixUser = if builtins.hasAttr "peerix" config.users.users then
     config.users.users.peerix.name
   else
@@ -172,11 +172,11 @@ in {
     pcscd.enable = true;
     vnstat.enable = true;
     clamav.updater.enable = true;
-    emacs = {
-      enable = true;
-      package = myEmacs;
-      install = true;
-    };
+    #emacs = {
+    #  enable = true;
+    #  package = myEmacs;
+    #  install = true;
+    #};
     tor = {
       enable = true;
       client.enable = true;
