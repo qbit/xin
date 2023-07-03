@@ -7,6 +7,9 @@ let
       prStatus = fromJSON (readFile ../pull_requests/${prstr}.json);
     in prStatus;
   prIsOpen = {
+    option = pr: a:
+      let prStatus = getPrStatus pr;
+      in if prStatus.status == "open" then a else { };
     pkg = pr: localPkg: upstreamPkg:
       let prStatus = getPrStatus pr;
       in if prStatus.status == "open" then

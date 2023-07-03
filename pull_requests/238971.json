@@ -1,0 +1,15 @@
+{
+  "branches": [
+    "staging-23.05",
+    "staging-next-23.05"
+  ],
+  "error": "",
+  "pull_request": 238971,
+  "release": "stable",
+  "status": "open",
+  "status_info": {
+    "staging-23.05": true,
+    "staging-next-23.05": true
+  },
+  "title": "systemd: fix services not stopping"
+}
