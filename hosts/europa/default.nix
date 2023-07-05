@@ -33,6 +33,23 @@ let
 in {
   _module.args.isUnstable = true;
 
+  specialisation = {
+    arcan = {
+      configuration = {
+        system.nixos.tags = [ "arcan" ];
+        kde.enable = false;
+        sshFidoAgent.enable = false;
+        nixManager = { enable = false; };
+
+        jetbrains.enable = false;
+
+        programs = { };
+
+        virtualisation.libvirtd.enable = false;
+      };
+    };
+  };
+
   imports =
     [ ./hardware-configuration.nix ../../pkgs ../../configs/neomutt.nix ];
 
@@ -96,17 +113,17 @@ in {
     #kernelPackages = pkgs.linuxPackages;
   };
 
-  sshFidoAgent.enable = true;
+  sshFidoAgent.enable = lib.mkDefault true;
 
   nixManager = {
-    enable = true;
+    enable = lib.mkDefault true;
     user = "qbit";
   };
 
-  kde.enable = true;
-  jetbrains.enable = true;
+  kde.enable = lib.mkDefault true;
+  jetbrains.enable = lib.mkDefault true;
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.enable = lib.mkDefault true;
 
   networking = {
     hostName = "europa";
