@@ -296,6 +296,7 @@ in {
     picocom
     proton-caller
     protonup-ng
+    python3Packages.meshtastic
     rex
     rofi
     signal-desktop
