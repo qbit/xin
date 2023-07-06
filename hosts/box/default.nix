@@ -45,6 +45,8 @@ in {
   imports = [ ./hardware-configuration.nix ];
 
   sops.secrets = {
+    nextcloud_db_pass = { sopsFile = config.xin-secrets.box.services; };
+    nextcloud_admin_pass = { sopsFile = config.xin-secrets.box.services; };
     photoprism_admin_password = { sopsFile = config.xin-secrets.box.services; };
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
@@ -213,6 +215,26 @@ in {
   };
 
   services = {
+    nextcloud = {
+      enable = false;
+      hostName = "nc.humpback-trout.ts.net";
+      home = "/media/nextcloud";
+      https = true;
+      autoUpdateApps = { enable = true; };
+
+      config = {
+        overwriteProtocol = "https";
+
+        dbtype = "pgsql";
+        dbuser = "nextcloud";
+        dbhost = "/run/postgresql";
+        dbname = "nextcloud";
+        dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
+
+        adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
+        adminuser = "admin";
+      };
+    };
     invidious = {
       enable = true;
       settings = {
@@ -801,6 +823,13 @@ in {
     postgresql = {
       enable = true;
       dataDir = "/db/postgres";
+
+      enableTCPIP = true;
+      authentication = pkgs.lib.mkOverride 14 ''
+        local all all trust
+        host all all 127.0.0.1/32 trust
+        host all all ::1/128 trust
+      '';
 
       ensureDatabases = [ "nextcloud" "gitea" ];
       ensureUsers = [
