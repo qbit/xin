@@ -45,8 +45,14 @@ in {
   imports = [ ./hardware-configuration.nix ];
 
   sops.secrets = {
-    nextcloud_db_pass = { sopsFile = config.xin-secrets.box.services; };
-    nextcloud_admin_pass = { sopsFile = config.xin-secrets.box.services; };
+    nextcloud_db_pass = {
+      owner = config.users.users.nextcloud.name;
+      sopsFile = config.xin-secrets.box.services;
+    };
+    nextcloud_admin_pass = {
+      owner = config.users.users.nextcloud.name;
+      sopsFile = config.xin-secrets.box.services;
+    };
     photoprism_admin_password = { sopsFile = config.xin-secrets.box.services; };
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
@@ -214,12 +220,11 @@ in {
       [ "qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" ];
   };
 
-
   services = {
     nextcloud = {
       enable = true;
       enableBrokenCiphersForSSE = false;
-      hostName = "nc.humpback-trout.ts.net";
+      hostName = "box.humpback-trout.ts.net";
       home = "/media/nextcloud";
       https = true;
 
