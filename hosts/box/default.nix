@@ -214,13 +214,21 @@ in {
       [ "qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" ];
   };
 
+
   services = {
     nextcloud = {
-      enable = false;
+      enable = true;
+      enableBrokenCiphersForSSE = false;
       hostName = "nc.humpback-trout.ts.net";
       home = "/media/nextcloud";
       https = true;
-      autoUpdateApps = { enable = true; };
+
+      package = pkgs.nextcloud27;
+      extraApps = with config.services.nextcloud.package.packages.apps; {
+        inherit bookmarks calendar contacts notes tasks twofactor_webauthn;
+      };
+
+      extraAppsEnable = true;
 
       config = {
         overwriteProtocol = "https";
