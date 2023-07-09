@@ -128,6 +128,9 @@ in {
   networking = {
     hostName = "europa";
     hostId = "87703c3e";
+    hosts = {
+      "192.168.122.6" = [ "chubs" ];
+    };
     wireless.userControlled.enable = true;
     networkmanager.enable = true;
 
