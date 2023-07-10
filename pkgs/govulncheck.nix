@@ -2,15 +2,16 @@
 with lib;
 buildGoModule rec {
   name = "vuln";
+  version = "0.2.0";
 
   src = fetchFromGitHub {
     owner = "golang";
     repo = name;
-    rev = "03dd099d9b0dd4e0a3ab25b3192b9d95c97252ea";
-    sha256 = "sha256-UJ2svg/exjwH/T3dqHixRgD6ZqYjbV/MpnEEaFza6Ns=";
+    rev = "v${version}";
+    sha256 = "sha256-0lb1GwOcEpchT3TkdSve335bjYbVsuVzq1SvCDwtX/Q=";
   };
 
-  vendorSha256 = "sha256-tk186BCy8l0o1mxaWXcz0BWVMvvMvhEGcTmDdthJlcc=";
+  vendorSha256 = "sha256-r9XshbgVA5rppJF46SFYPad344ZHMLWTHTnL6vbIFH8=";
 
   #>   github.com/tidwall/pretty@v1.2.0: is explicitly required in go.mod, but not marked as explicit in vendor/modules.txt
   doCheck = false;
