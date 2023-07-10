@@ -69,6 +69,7 @@ in with lib; {
           brave
           drawterm
           go-font
+          govulncheck
           hpi
           pcsctools
           promnesia
@@ -77,7 +78,6 @@ in with lib; {
           vlc
           zeal
 
-          (callPackage ../pkgs/govulncheck.nix { })
           (callPackage ../configs/helix.nix { })
         ]);
 
