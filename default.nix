@@ -162,7 +162,6 @@ in {
         minisign
         mosh
         nix-diff
-        nixfmt
         nix-index
         nix-top
         pass
