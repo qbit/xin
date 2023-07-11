@@ -145,6 +145,7 @@ with pkgs; let
     else baseVimPackages ++ [];
 in {
   environment.systemPackages = with pkgs; [
+    alejandra
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
