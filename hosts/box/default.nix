@@ -155,7 +155,6 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    nixfmt
     tmux
     mosh
     apg

@@ -42,7 +42,7 @@ in {
   };
 
   # neovim will overwrite my neovim!!
-  environment.systemPackages = with pkgs; [neovim nixfmt jq];
+  environment.systemPackages = with pkgs; [neovim jq];
 
   services.openssh = {
     enable = true;

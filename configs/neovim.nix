@@ -112,6 +112,7 @@ with pkgs; let
     fugitive
     fzf-vim
     haskell-vim
+    neoformat
     nvim-compe
     nvim-lspconfig
     nvim-tree-lua

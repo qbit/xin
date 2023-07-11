@@ -62,7 +62,6 @@ in {
     go
     mosh
     neovim
-    nixfmt
     nmap
     rage
     statix
