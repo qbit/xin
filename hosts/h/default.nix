@@ -1,24 +1,29 @@
-{ config, pkgs, isUnstable, ... }:
-with pkgs;
-let
+{
+  config,
+  pkgs,
+  isUnstable,
+  ...
+}:
+with pkgs; let
   restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
     inherit pkgs;
     inherit lib;
     inherit config;
   });
-  gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
-  icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
-  mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
-  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
+  gqrss = callPackage ../../pkgs/gqrss.nix {inherit isUnstable;};
+  icbirc = callPackage ../../pkgs/icbirc.nix {inherit isUnstable;};
+  mcchunkie = callPackage ../../pkgs/mcchunkie.nix {inherit isUnstable;};
+  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix {};
   weepushover =
-    python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
+    python3Packages.callPackage ../../pkgs/weepushover.nix {inherit pkgs;};
   pgBackupDir = "/var/backups/postgresql";
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys; };
-  icbIrcTunnel = pkgs.writeScriptBin "icb-irc-tunnel"
+  userBase = {openssh.authorizedKeys.keys = pubKeys;};
+  icbIrcTunnel =
+    pkgs.writeScriptBin "icb-irc-tunnel"
     (import ../../bins/icb-irc-tunnel.nix {
       inherit pkgs;
       inherit icbirc;
@@ -33,9 +38,9 @@ let
   matrixServer = "tapenet.org";
   matrixClientConfig = {
     "m.homeserver".base_url = "https://${matrixServer}:443";
-    "org.matrix.msc3575.proxy" = { url = "https://${matrixServer}"; };
+    "org.matrix.msc3575.proxy" = {url = "https://${matrixServer}";};
   };
-  matrixServerConfig = { "m.server" = "${matrixServer}:443"; };
+  matrixServerConfig = {"m.server" = "${matrixServer}:443";};
   mkMatrixWellKnown = p: ''
     return 200 '${builtins.toJSON p}';
   '';
@@ -43,14 +48,13 @@ let
   mkMatrixSliderLoc = {
     proxyWebsockets = true;
     proxyPass = "http://${config.services.sliding-sync.address}:${
-        toString config.services.sliding-sync.port
-      }";
+      toString config.services.sliding-sync.port
+    }";
   };
   mkMatrixLoc = {
     proxyWebsockets = true;
     proxyPass = "http://127.0.0.1:8009";
   };
-
 in {
   _module.args.isUnstable = false;
   imports = [
@@ -67,15 +71,15 @@ in {
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.configurationLimit = 15;
 
-  boot.kernelParams = [ "net.ifnames=0" ];
+  boot.kernelParams = ["net.ifnames=0"];
 
   tailscale.sshOnly = true;
 
   nixpkgs.overlays = [
     (_: super: {
       weechat = super.weechat.override {
-        configure = { ... }: {
-          scripts = with super.weechatScripts; [ highmon weepushover ];
+        configure = {...}: {
+          scripts = with super.weechatScripts; [highmon weepushover];
         };
       };
     })
@@ -125,7 +129,7 @@ in {
       sopsFile = config.xin-secrets.h.services;
       owner = config.users.users.gostart.name;
     };
-    wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
+    wireguard_private_key = {sopsFile = config.xin-secrets.h.services;};
     pots_env_file = {
       owner = config.users.users.pots.name;
       mode = "400";
@@ -149,18 +153,22 @@ in {
     useDHCP = false;
     defaultGateway = "23.29.118.1";
     defaultGateway6 = "2602:ff16:3::1";
-    nameservers = [ "9.9.9.9" ];
+    nameservers = ["9.9.9.9"];
 
     interfaces.eth0 = {
-      ipv4.addresses = [{
-        address = "23.29.118.127";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "23.29.118.127";
+          prefixLength = 24;
+        }
+      ];
       ipv6 = {
-        addresses = [{
-          address = "2602:ff16:3:0:1:3a0:0:1";
-          prefixLength = 64;
-        }];
+        addresses = [
+          {
+            address = "2602:ff16:3:0:1:3a0:0:1";
+            prefixLength = 64;
+          }
+        ];
       };
     };
 
@@ -169,25 +177,29 @@ in {
       interfaces = {
         wg0 = {
           listenPort = 7122;
-          ips = [ "192.168.112.3/32" ];
-          peers = [{
-            publicKey = "gZ16FwqUgzKgEpJgVC9BngJ+Dd0e5LPsDhDuJby0VzY=";
-            allowedIPs = [ "192.168.112.4/32" ];
-            persistentKeepalive = 25;
-          }];
+          ips = ["192.168.112.3/32"];
+          peers = [
+            {
+              publicKey = "gZ16FwqUgzKgEpJgVC9BngJ+Dd0e5LPsDhDuJby0VzY=";
+              allowedIPs = ["192.168.112.4/32"];
+              persistentKeepalive = 25;
+            }
+          ];
           privateKeyFile = "${config.sops.secrets.wireguard_private_key.path}";
         };
       };
     };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 ]; }; };
-      allowedTCPPorts = [ 22 80 443 2222 53589 ];
-      allowedUDPPorts = [ 7122 ];
-      allowedUDPPortRanges = [{
-        from = 60000;
-        to = 61000;
-      }];
+      interfaces = {"tailscale0" = {allowedTCPPorts = [9002];};};
+      allowedTCPPorts = [22 80 443 2222 53589];
+      allowedUDPPorts = [7122];
+      allowedUDPPortRanges = [
+        {
+          from = 60000;
+          to = 61000;
+        }
+      ];
     };
   };
 
@@ -214,7 +226,7 @@ in {
     defaults.email = "aaron@bolddaemon.com";
   };
 
-  users.groups.mcchunkie = { };
+  users.groups.mcchunkie = {};
 
   users.users.mcchunkie = {
     createHome = true;
@@ -224,8 +236,8 @@ in {
   };
 
   systemd.services.icb-tunnel = {
-    wantedBy = [ "network.target" ];
-    after = [ "network.target" "multi-user.target" ];
+    wantedBy = ["network.target"];
+    after = ["network.target" "multi-user.target"];
     serviceConfig = {
       User = "qbit";
       WorkingDirectory = "/home/qbit";
@@ -234,7 +246,7 @@ in {
   };
 
   systemd.services.mcchunkie = {
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       User = "mcchunkie";
       Group = "mcchunkie";
@@ -260,7 +272,7 @@ in {
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
     };
-    pr-status = { enable = true; };
+    pr-status = {enable = true;};
     gostart = {
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
@@ -299,11 +311,9 @@ in {
         protocol = "https";
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial";
-        trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
-        web-template-base-dir =
-          "${config.services.gotosocial.package}/assets/web/template/";
-        web-asset-base-dir =
-          "${config.services.gotosocial.package}/assets/web/assets/";
+        trusted-proxies = ["127.0.0.1/32" "23.29.118.0/24"];
+        web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
+        web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
       };
     };
     promtail = {
@@ -313,23 +323,26 @@ in {
           http_listen_port = 3031;
           grpc_listen_port = 0;
         };
-        positions = { filename = "/tmp/positions.yaml"; };
-        clients =
-          [{ url = "http://box.humpback-trout.ts.net:3030/loki/api/v1/push"; }];
-        scrape_configs = [{
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = "box";
+        positions = {filename = "/tmp/positions.yaml";};
+        clients = [{url = "http://box.humpback-trout.ts.net:3030/loki/api/v1/push";}];
+        scrape_configs = [
+          {
+            job_name = "journal";
+            journal = {
+              max_age = "12h";
+              labels = {
+                job = "systemd-journal";
+                host = "box";
+              };
             };
-          };
-          relabel_configs = [{
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
-        }];
+            relabel_configs = [
+              {
+                source_labels = ["__journal__systemd_unit"];
+                target_label = "unit";
+              }
+            ];
+          }
+        ];
       };
     };
     prometheus = {
@@ -340,7 +353,7 @@ in {
       exporters = {
         node = {
           enable = true;
-          enabledCollectors = [ "systemd" ];
+          enabledCollectors = ["systemd"];
           port = 9002;
         };
       };
@@ -349,7 +362,7 @@ in {
       enable = true;
       fqdn = "tasks.suah.dev";
       listenHost = "::";
-      organisations."bolddaemon".users = [ "qbit" ];
+      organisations."bolddaemon".users = ["qbit"];
       openFirewall = false;
     };
     cron = {
@@ -377,12 +390,11 @@ in {
             "/var/lib/gotosocial"
             "/var/lib/mcchunkie"
             "/var/lib/taskserver"
-
           ];
 
-          timerConfig = { OnCalendar = "00:05"; };
+          timerConfig = {OnCalendar = "00:05";};
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
+          pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10"];
         };
       };
     };
@@ -422,7 +434,7 @@ in {
       '';
 
       upstreams = {
-        "ssh_gitea" = { servers = { "192.168.112.4:2222" = { }; }; };
+        "ssh_gitea" = {servers = {"192.168.112.4:2222" = {};};};
       };
 
       streamConfig = ''
@@ -477,7 +489,7 @@ in {
           forceSSL = true;
           enableACME = true;
 
-          locations."/" = { root = "${pkgs.glowing-bear}"; };
+          locations."/" = {root = "${pkgs.glowing-bear}";};
         };
 
         "git.tapenet.org" = {
@@ -501,8 +513,8 @@ in {
           };
           locations."/admin" = {
             extraConfig = ''
-              	      ${httpAllow}
-                      deny	all;
+              ${httpAllow}
+               deny	all;
             '';
           };
         };
@@ -512,91 +524,91 @@ in {
           enableACME = true;
           root = "/var/www/suah.dev";
           extraConfig = ''
-                        location ~ ^/api {
-                                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                                proxy_set_header Host $host:$server_port;
-                                proxy_set_header X-Forwarded-Proto $scheme;
-                                proxy_set_header X-Forwarded-Ssl on;
-                                proxy_read_timeout 300;
-                                proxy_connect_timeout 300;
-                                proxy_pass http://127.0.0.1:8888; # pots
-                        }
-                        location ~ ^/_got {
-                                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                                proxy_set_header Host $host:$server_port;
-                                proxy_set_header X-Forwarded-Proto $scheme;
-                                proxy_set_header X-Forwarded-Ssl on;
-                                proxy_read_timeout 300;
-                                proxy_connect_timeout 300;
-                                proxy_pass http://127.0.0.1:8043;
-                        }
+                      location ~ ^/api {
+                              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                              proxy_set_header Host $host:$server_port;
+                              proxy_set_header X-Forwarded-Proto $scheme;
+                              proxy_set_header X-Forwarded-Ssl on;
+                              proxy_read_timeout 300;
+                              proxy_connect_timeout 300;
+                              proxy_pass http://127.0.0.1:8888; # pots
+                      }
+                      location ~ ^/_got {
+                              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                              proxy_set_header Host $host:$server_port;
+                              proxy_set_header X-Forwarded-Proto $scheme;
+                              proxy_set_header X-Forwarded-Ssl on;
+                              proxy_read_timeout 300;
+                              proxy_connect_timeout 300;
+                              proxy_pass http://127.0.0.1:8043;
+                      }
 
-                        location ~ ^/_sms {
-                                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                                proxy_set_header Host $host:$server_port;
-                                proxy_set_header X-Forwarded-Proto $scheme;
-                                proxy_set_header X-Forwarded-Ssl on;
-                                proxy_read_timeout 300;
-                                proxy_connect_timeout 300;
-                                proxy_pass http://127.0.0.1:8044;
-                        }
-            		location ~ ^/p/ {
-            			autoindex		on;
-            		}
+                      location ~ ^/_sms {
+                              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                              proxy_set_header Host $host:$server_port;
+                              proxy_set_header X-Forwarded-Proto $scheme;
+                              proxy_set_header X-Forwarded-Ssl on;
+                              proxy_read_timeout 300;
+                              proxy_connect_timeout 300;
+                              proxy_pass http://127.0.0.1:8044;
+                      }
+            location ~ ^/p/ {
+            	autoindex		on;
+            }
 
-            		location ~ ^/recipes/ {
-            			autoindex		on;
-            		}
+            location ~ ^/recipes/ {
+            	autoindex		on;
+            }
 
-            		location ~* .(xml)$ {
-            			autoindex		on;
-            			root			/var/www/suah.dev/rss;
-            		}
+            location ~* .(xml)$ {
+            	autoindex		on;
+            	root			/var/www/suah.dev/rss;
+            }
 
-                        location ~ "([^/\s]+)(/.*)?" {
-                              set $not_serving 1;
+                      location ~ "([^/\s]+)(/.*)?" {
+                            set $not_serving 1;
 
-                              if ($request_filename = 'index.html') {
-                                      set $not_serving 0;
-                              }
-
-                              if (-f $request_filename) {
-                                      set $not_serving 0;
-                              }
-
-                              if ($args = "go-get=1") {
-                                      add_header Strict-Transport-Security $hsts_header;
-                                      add_header Referrer-Policy origin-when-cross-origin;
-                                      add_header X-Frame-Options DENY;
-                                      add_header X-Content-Type-Options nosniff;
-                                      add_header Content-Type text/html;
-                                      return 200 '<html><head>
-                                        <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
-                                        <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
-                                        <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
-                                        </head>
-                                        <body>
-                                        Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
-                                        </body>
-                                        </html>';
-                              }
-                              if ($not_serving) {
-                                      add_header Strict-Transport-Security $hsts_header;
-                                      add_header Referrer-Policy origin-when-cross-origin;
-                                      add_header X-Frame-Options DENY;
-                                      add_header X-Content-Type-Options nosniff;
-                                      add_header Content-Type text/html;
-                                      return 200 '<html><head>
-                                        <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
-                                        <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
-                                        <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
-                                        </head>
-                                        <body>
-                                        Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
-                                        </body>
-                                        </html>';
-                              }
+                            if ($request_filename = 'index.html') {
+                                    set $not_serving 0;
                             }
+
+                            if (-f $request_filename) {
+                                    set $not_serving 0;
+                            }
+
+                            if ($args = "go-get=1") {
+                                    add_header Strict-Transport-Security $hsts_header;
+                                    add_header Referrer-Policy origin-when-cross-origin;
+                                    add_header X-Frame-Options DENY;
+                                    add_header X-Content-Type-Options nosniff;
+                                    add_header Content-Type text/html;
+                                    return 200 '<html><head>
+                                      <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
+                                      <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
+                                      <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
+                                      </head>
+                                      <body>
+                                      Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
+                                      </body>
+                                      </html>';
+                            }
+                            if ($not_serving) {
+                                    add_header Strict-Transport-Security $hsts_header;
+                                    add_header Referrer-Policy origin-when-cross-origin;
+                                    add_header X-Frame-Options DENY;
+                                    add_header X-Content-Type-Options nosniff;
+                                    add_header Content-Type text/html;
+                                    return 200 '<html><head>
+                                      <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
+                                      <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
+                                      <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
+                                      </head>
+                                      <body>
+                                      Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
+                                      </body>
+                                      </html>';
+                            }
+                          }
           '';
         };
         "qbit.io" = {
@@ -608,7 +620,8 @@ in {
           forceSSL = true;
           enableACME = true;
           extraConfig =
-            if config.services.gotosocial.package.version == "0.7.1" then ''
+            if config.services.gotosocial.package.version == "0.7.1"
+            then ''
               # TODO: This can be removed next release
               # https://github.com/superseriousbusiness/gotosocial/issues/1419
               # Workaround for missing API + Ice Cubes
@@ -616,8 +629,8 @@ in {
                   default_type application/json;
                   return 200 '[]';
               }
-            '' else
-              "";
+            ''
+            else "";
           locations."/" = {
             extraConfig = ''
               proxy_pass http://127.0.0.1:${
@@ -643,37 +656,40 @@ in {
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://${config.services.yarr.address}:${
-                toString config.services.yarr.port
-              }";
+              toString config.services.yarr.port
+            }";
           };
         };
-        "tapenet.org" = if config.services.sliding-sync.enable then {
-          forceSSL = true;
-          enableACME = true;
-          root = "/var/www/tapenet.org";
-          locations."/.well-known/matrix/client".extraConfig =
-            mkMatrixWellKnown matrixClientConfig;
-          locations."/.well-known/matrix/server".extraConfig =
-            mkMatrixWellKnown matrixServerConfig;
+        "tapenet.org" =
+          if config.services.sliding-sync.enable
+          then {
+            forceSSL = true;
+            enableACME = true;
+            root = "/var/www/tapenet.org";
+            locations."/.well-known/matrix/client".extraConfig =
+              mkMatrixWellKnown matrixClientConfig;
+            locations."/.well-known/matrix/server".extraConfig =
+              mkMatrixWellKnown matrixServerConfig;
 
-          locations."/client" = mkMatrixSliderLoc;
-          locations."/_matrix/client/unstable/org.matrix.msc3575/sync" =
-            mkMatrixSliderLoc;
+            locations."/client" = mkMatrixSliderLoc;
+            locations."/_matrix/client/unstable/org.matrix.msc3575/sync" =
+              mkMatrixSliderLoc;
 
-          locations."/_matrix" = mkMatrixLoc;
-          locations."/_synapse/client" = mkMatrixLoc;
-        } else {
-          forceSSL = true;
-          enableACME = true;
-          root = "/var/www/tapenet.org";
-          locations."/.well-known/matrix/client".extraConfig =
-            mkMatrixWellKnown matrixClientConfig;
-          locations."/.well-known/matrix/server".extraConfig =
-            mkMatrixWellKnown matrixServerConfig;
+            locations."/_matrix" = mkMatrixLoc;
+            locations."/_synapse/client" = mkMatrixLoc;
+          }
+          else {
+            forceSSL = true;
+            enableACME = true;
+            root = "/var/www/tapenet.org";
+            locations."/.well-known/matrix/client".extraConfig =
+              mkMatrixWellKnown matrixClientConfig;
+            locations."/.well-known/matrix/server".extraConfig =
+              mkMatrixWellKnown matrixServerConfig;
 
-          locations."/_matrix" = mkMatrixLoc;
-          locations."/_synapse/client" = mkMatrixLoc;
-        };
+            locations."/_matrix" = mkMatrixLoc;
+            locations."/_synapse/client" = mkMatrixLoc;
+          };
       };
     };
 
@@ -686,7 +702,7 @@ in {
       enable = true;
       package = pkgs.postgresql_14;
 
-      settings = { };
+      settings = {};
 
       enableTCPIP = true;
       authentication = pkgs.lib.mkOverride 14 ''
@@ -702,7 +718,7 @@ in {
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = [ "synapse" "gotosocial" "syncv3" ];
+      ensureDatabases = ["synapse" "gotosocial" "syncv3"];
       ensureUsers = [
         {
           name = "synapse_user";
@@ -752,7 +768,7 @@ in {
           "porn"
           "csam"
         ];
-        aditionalPrefixes = [ "hammer" ];
+        aditionalPrefixes = ["hammer"];
         confirmWildcardBan = false;
       };
     };
@@ -768,8 +784,7 @@ in {
         server_name = "tapenet.org";
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
-        plugins = with config.services.matrix-synapse.package.plugins;
-          [ matrix-synapse-mjolnir-antispam ];
+        plugins = with config.services.matrix-synapse.package.plugins; [matrix-synapse-mjolnir-antispam];
         database = {
           name = "psycopg2";
           args = {
@@ -777,23 +792,25 @@ in {
             user = "synapse_user";
           };
         };
-        listeners = [{
-          bind_addresses = [ "127.0.0.1" ];
-          port = 8009;
-          resources = [
-            {
-              compress = true;
-              names = [ "client" ];
-            }
-            {
-              compress = false;
-              names = [ "federation" ];
-            }
-          ];
-          tls = false;
-          type = "http";
-          x_forwarded = true;
-        }];
+        listeners = [
+          {
+            bind_addresses = ["127.0.0.1"];
+            port = 8009;
+            resources = [
+              {
+                compress = true;
+                names = ["client"];
+              }
+              {
+                compress = false;
+                names = ["federation"];
+              }
+            ];
+            tls = false;
+            type = "http";
+            x_forwarded = true;
+          }
+        ];
       };
     };
   };
@@ -802,4 +819,3 @@ in {
 
   system.stateVersion = "22.11";
 }
-

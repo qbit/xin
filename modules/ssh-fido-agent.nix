@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   perl = "${pkgs.perl}/bin/perl";
   sshAdd = "${pkgs.openssh}/bin/ssh-add";
   pKill = "${pkgs.procps}/bin/pkill";
@@ -25,7 +29,7 @@ let
     }
   '';
 
-  # fido-send-sig is called by a udev rule when a YK is attached. It sends SIGUSR1 to fido-add-device. 
+  # fido-send-sig is called by a udev rule when a YK is attached. It sends SIGUSR1 to fido-add-device.
   fidoSendSig = pkgs.writeScriptBin "fido-send-sig" ''
     #! ${pkgs.runtimeShell} -e
 
@@ -49,14 +53,14 @@ in {
   };
 
   config = lib.mkIf config.sshFidoAgent.enable {
-    environment.systemPackages = [ fidoAddDevice ];
+    environment.systemPackages = [fidoAddDevice];
     systemd.user.services.sshfidoagent = {
       script = ''
         ${fidoAddDevice}/bin/fido-add-device
       '';
-      wantedBy = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      partOf = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       environment.DISPLAY = "fake";
       environment.SSH_ASKPASS = askPassWrapper;
       #serviceConfig = { Restart = "on-failure"; };

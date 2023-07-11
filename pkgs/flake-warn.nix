@@ -1,5 +1,12 @@
-{ stdenv, lib, substituteAll, jq, nix, coreutils, ... }:
-
+{
+  stdenv,
+  lib,
+  substituteAll,
+  jq,
+  nix,
+  coreutils,
+  ...
+}:
 stdenv.mkDerivation rec {
   pname = "flake-warn";
   version = "1.0.0";
@@ -19,7 +26,7 @@ stdenv.mkDerivation rec {
     description = "script to warn when flake inputs are out of date";
     homepage = "https://github.com/qbit/xin";
     license = lib.licenses.isc;
-    maintainer = with lib.maintainers; [ qbit ];
+    maintainer = with lib.maintainers; [qbit];
     mainProgram = "flake-warn";
   };
 }

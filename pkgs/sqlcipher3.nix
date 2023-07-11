@@ -1,11 +1,16 @@
-{ buildPythonPackage, setuptools-scm, sqlcipher, fetchPypi, ... }:
-
+{
+  buildPythonPackage,
+  setuptools-scm,
+  sqlcipher,
+  fetchPypi,
+  ...
+}:
 buildPythonPackage rec {
   pname = "sqlcipher3";
   version = "0.5.0";
 
-  nativeBuildInputs = [ setuptools-scm ];
-  propagatedBuildInputs = [ sqlcipher ];
+  nativeBuildInputs = [setuptools-scm];
+  propagatedBuildInputs = [sqlcipher];
 
   doCheck = true;
 

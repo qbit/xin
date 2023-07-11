@@ -1,6 +1,7 @@
-{ curl, gosignify }:
-
-''
+{
+  curl,
+  gosignify,
+}: ''
   #!/usr/bin/env sh
 
   set -e

@@ -1,1 +1,1 @@
-{ lib, ... }: with lib; { imports = [ ./config-manager.nix ]; }
+{lib, ...}: with lib; {imports = [./config-manager.nix];}

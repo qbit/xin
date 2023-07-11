@@ -1,6 +1,14 @@
-{ lib, fetchFromGitHub, rustPlatform, pkg-config, openssl_1_1, llvmPackages
-, libevdev, linuxHeaders, ... }:
-
+{
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+  pkg-config,
+  openssl_1_1,
+  llvmPackages,
+  libevdev,
+  linuxHeaders,
+  ...
+}:
 rustPlatform.buildRustPackage {
   pname = "rkvm";
   version = "0.0.0";
@@ -17,8 +25,8 @@ rustPlatform.buildRustPackage {
   BINDGEN_EXTRA_CLANG_ARGS = "-I${lib.getDev libevdev}/include/libevdev-1.0";
   LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
 
-  nativeBuildInputs = [ llvmPackages.clang pkg-config openssl_1_1 ];
-  buildInputs = [ libevdev openssl_1_1 linuxHeaders ];
+  nativeBuildInputs = [llvmPackages.clang pkg-config openssl_1_1];
+  buildInputs = [libevdev openssl_1_1 linuxHeaders];
 
   doCheck = false;
 
@@ -32,8 +40,8 @@ rustPlatform.buildRustPackage {
     description = "Virtual KVM switch for Linux machines";
     homepage = "https://github.com/htrefil/rkvm";
     license = licenses.mit;
-    maintainers = with maintainers; [ qbit ];
-    platforms = [ "x86_64-linux" ];
+    maintainers = with maintainers; [qbit];
+    platforms = ["x86_64-linux"];
     mainProgram = "rkvm";
   };
 }

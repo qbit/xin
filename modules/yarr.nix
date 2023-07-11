@@ -1,8 +1,12 @@
-{ config, lib, pkgs, ... }:
-with pkgs;
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with pkgs; let
   cfg = config.services.yarr;
-  yarr = callPackage ../pkgs/yarr.nix { };
+  yarr = callPackage ../pkgs/yarr.nix {};
 in {
   options = with lib; {
     services.yarr = {
@@ -47,7 +51,7 @@ in {
       };
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type = with types; oneOf [str int];
         default = "yarr";
         description = ''
           The user the service will use.
@@ -55,7 +59,7 @@ in {
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type = with types; oneOf [str int];
         default = "yarr";
         description = ''
           The user the service will use.
@@ -72,7 +76,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.yarr = { };
+    users.groups.yarr = {};
     users.users.yarr = {
       description = "Yarr service user";
       isSystemUser = true;
@@ -84,16 +88,16 @@ in {
     systemd.services.yarr = {
       enable = true;
       description = "Yet Another Rss Reader server";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "networking.service" ];
+      wantedBy = ["multi-user.target"];
+      after = ["networking.service"];
 
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;
 
         ExecStart = "${cfg.package}/bin/yarr -addr ${cfg.address}:${
-            toString cfg.port
-          } -db ${cfg.dbPath} -auth-file ${cfg.authFilePath}";
+          toString cfg.port
+        } -db ${cfg.dbPath} -auth-file ${cfg.authFilePath}";
       };
     };
   };

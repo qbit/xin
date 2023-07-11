@@ -1,8 +1,5 @@
-{ lib, ... }:
-
-with lib;
-
-{
+{lib, ...}:
+with lib; {
   environment = {
     memoryAllocator.provider = mkDefault "scudo";
     variables.SCUDO_OPTIONS = mkDefault "ZeroContents=1";

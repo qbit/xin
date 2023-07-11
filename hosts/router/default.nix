@@ -1,7 +1,17 @@
-{ config, pkgs, lib, ... }:
-let
-  inherit (builtins)
-    head concatStringsSep attrValues mapAttrs attrNames; # hasAttr;
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  inherit
+    (builtins)
+    head
+    concatStringsSep
+    attrValues
+    mapAttrs
+    attrNames
+    ; # hasAttr;
   inherit (lib.attrsets) filterAttrsRecursive filterAttrs;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -12,14 +22,16 @@ let
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
-  dnsServers = [ "45.90.28.147" "45.90.30.147" ];
+  dnsServers = ["45.90.28.147" "45.90.30.147"];
   interfaces = {
-    "${wan}" = { useDHCP = true; };
+    "${wan}" = {useDHCP = true;};
     "${trunk}" = rec {
-      ipv4.addresses = [{
-        address = "10.99.99.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.99.99.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "Management";
         route = false;
@@ -67,10 +79,12 @@ let
       };
     };
     enp1s0f0 = rec {
-      ipv4.addresses = [{
-        address = "10.99.1.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.99.1.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "unused";
         route = true;
@@ -82,15 +96,17 @@ let
           enable = true;
           start = "10.99.1.100";
           end = "10.99.1.155";
-          staticIPs = [ ];
+          staticIPs = [];
         };
       };
     };
     enp2s0f1 = rec {
-      ipv4.addresses = [{
-        address = "10.98.1.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.98.1.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "work";
         route = false;
@@ -102,15 +118,17 @@ let
           enable = true;
           start = "10.98.1.100";
           end = "10.98.1.150";
-          staticIPs = [ ];
+          staticIPs = [];
         };
       };
     };
     badwifi = rec {
-      ipv4.addresses = [{
-        address = "10.10.0.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.10.0.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "IoT WiFi";
         route = true;
@@ -122,15 +140,17 @@ let
           enable = true;
           start = "10.10.0.100";
           end = "10.10.0.155";
-          staticIPs = [ ];
+          staticIPs = [];
         };
       };
     };
     goodwifi = rec {
-      ipv4.addresses = [{
-        address = "10.12.0.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.12.0.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "WiFi";
         route = false;
@@ -142,15 +162,17 @@ let
           enable = false;
           start = "10.12.0.100";
           end = "10.12.0.155";
-          staticIPs = [ ];
+          staticIPs = [];
         };
       };
     };
     lab = rec {
-      ipv4.addresses = [{
-        address = "10.3.0.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.3.0.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         vlanID = 2;
         description = "Lab";
@@ -163,19 +185,23 @@ let
           enable = true;
           start = "10.3.0.100";
           end = "10.3.0.155";
-          staticIPs = [{
-            name = "bbb";
-            mac = "c8:a0:30:ac:1d:0d";
-            address = "10.3.0.2";
-          }];
+          staticIPs = [
+            {
+              name = "bbb";
+              mac = "c8:a0:30:ac:1d:0d";
+              address = "10.3.0.2";
+            }
+          ];
         };
       };
     };
     external = rec {
-      ipv4.addresses = [{
-        address = "10.20.30.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.20.30.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "DMZ";
         route = true;
@@ -187,15 +213,17 @@ let
           enable = false;
           start = "10.20.30.100";
           end = "10.20.30.155";
-          staticIPs = [ ];
+          staticIPs = [];
         };
       };
     };
     common = rec {
-      ipv4.addresses = [{
-        address = "10.6.0.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.6.0.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "Common";
         route = true;
@@ -249,10 +277,12 @@ let
       };
     };
     voip = rec {
-      ipv4.addresses = [{
-        address = "10.7.0.1";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "10.7.0.1";
+          prefixLength = 24;
+        }
+      ];
       info = rec {
         description = "VoIP";
         route = true;
@@ -264,14 +294,14 @@ let
           enable = false;
           start = "10.7.0.100";
           end = "10.7.0.155";
-          staticIPs = [ ];
+          staticIPs = [];
         };
       };
     };
   };
 in {
   _module.args.isUnstable = false;
-  imports = [ ./hardware-configuration.nix ../../modules/tsvnstat.nix ];
+  imports = [./hardware-configuration.nix ../../modules/tsvnstat.nix];
 
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
@@ -433,7 +463,7 @@ in {
           {
             name = "common";
             advertise = true;
-            prefix = [{ prefix = "::/64"; }];
+            prefix = [{prefix = "::/64";}];
           }
         ];
       };
@@ -466,23 +496,25 @@ in {
             range ${val.info.dhcp.start} ${val.info.dhcp.end};
 
             ${
-              concatStringsSep "\n" (map (e: ''
+            concatStringsSep "\n" (map (e: ''
                 host ${e.name} {
                     hardware ethernet ${e.mac};
                     fixed-address ${e.address};
                 }
-              '') val.info.dhcp.staticIPs)
-            }
+              '')
+              val.info.dhcp.staticIPs)
+          }
           }
         '') (filterAttrsRecursive (n: _: n != "${wan}") interfaces)))}
       '';
-      interfaces = attrNames (filterAttrs (_: v: v.info.dhcp.enable)
-        (filterAttrsRecursive (n: _: n != "${wan}") interfaces));
+      interfaces =
+        attrNames (filterAttrs (_: v: v.info.dhcp.enable)
+          (filterAttrsRecursive (n: _: n != "${wan}") interfaces));
       # TODO: Probably a better way to pre-filter the interfaces set
     };
   };
 
-  environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
+  environment.systemPackages = with pkgs; [bmon termshark tcpdump];
 
   users.users.root = userBase;
   users.users.qbit = userBase;
@@ -497,4 +529,3 @@ in {
     stateVersion = "22.05";
   };
 }
-
