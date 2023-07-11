@@ -18,7 +18,6 @@ let
       inherit vendorHash ldflags version;
     });
   };
-
   #tailscale = _: super: {
   #  tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
   #    buildGoModule = args:
@@ -28,5 +27,5 @@ let
   #      });
   #  };
   #};
-
-in tailscale
+in
+  tailscale

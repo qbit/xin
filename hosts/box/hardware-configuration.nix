@@ -1,11 +1,8 @@
-{ ... }:
-
-{
-  boot.initrd.availableKernelModules =
-    [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "wireguard" ];
-  boot.extraModulePackages = [ ];
+{...}: {
+  boot.initrd.availableKernelModules = ["ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = ["kvm-intel" "wireguard"];
+  boot.extraModulePackages = [];
 
   hardware.enableRedistributableFirmware = true;
 
@@ -69,6 +66,5 @@
     fsType = "vfat";
   };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/97d6ef56-ea18-493b-aac0-e58e773ced30"; }];
+  swapDevices = [{device = "/dev/disk/by-uuid/97d6ef56-ea18-493b-aac0-e58e773ced30";}];
 }

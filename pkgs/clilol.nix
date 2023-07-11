@@ -1,5 +1,9 @@
-{ lib, buildGoModule, fetchgit, ... }:
-
+{
+  lib,
+  buildGoModule,
+  fetchgit,
+  ...
+}:
 buildGoModule rec {
   pname = "clilol";
   version = "1.0.4";
@@ -18,9 +22,8 @@ buildGoModule rec {
   meta = with lib; {
     description = "a CLI for omg.lol";
     homepage = "https://mcornick.dev/clilol/";
-    changelog =
-      "https://git.mcornick.dev/mcornick/clilol/releases/tag/${version}";
+    changelog = "https://git.mcornick.dev/mcornick/clilol/releases/tag/${version}";
     license = licenses.mpl20;
-    maintainers = [ maintainers.qbit ];
+    maintainers = [maintainers.qbit];
   };
 }

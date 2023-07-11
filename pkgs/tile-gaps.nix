@@ -1,6 +1,12 @@
-{ lib, mkDerivation, fetchFromGitHub, kcoreaddons, kwindowsystem
-, plasma-framework, systemsettings }:
-
+{
+  lib,
+  mkDerivation,
+  fetchFromGitHub,
+  kcoreaddons,
+  kwindowsystem,
+  plasma-framework,
+  systemsettings,
+}:
 mkDerivation rec {
   pname = "tile-gaps";
   version = "8.0";
@@ -12,7 +18,7 @@ mkDerivation rec {
     sha256 = "sha256-IqmRazguCLSBe27Sy94gABCL+9lJFhFRYe1SPLF8jT8=";
   };
 
-  buildInputs = [ kcoreaddons kwindowsystem plasma-framework systemsettings ];
+  buildInputs = [kcoreaddons kwindowsystem plasma-framework systemsettings];
 
   dontBuild = true;
 
@@ -32,7 +38,7 @@ mkDerivation rec {
       KWin script to add space around windows touching a screen edge or other window
     '';
     license = licenses.gpl3;
-    maintainers = with maintainers; [ qbit ];
+    maintainers = with maintainers; [qbit];
     inherit (src.meta) homepage;
     inherit (kwindowsystem.meta) platforms;
   };

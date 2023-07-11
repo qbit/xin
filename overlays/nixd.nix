@@ -17,4 +17,5 @@ let
       ];
     });
   };
-in nixd
+in
+  nixd

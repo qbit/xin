@@ -1,4 +1,4 @@
-{ isUnstable, ... }:
+{isUnstable, ...}:
 #let
 #inherit (xinlib) prIsOpen;
 #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
@@ -11,25 +11,23 @@
 #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
 #in {
 {
-  nixpkgs.overlays = if isUnstable then
-    [
+  nixpkgs.overlays =
+    if isUnstable
+    then [
       (_: super: {
         clementine = super.clementine.overrideAttrs (_: {
           patches = [
             (super.fetchpatch {
               name = "clementine-di-radio-fix.diff";
-              url =
-                "https://patch-diff.githubusercontent.com/raw/clementine-player/Clementine/pull/7217.diff";
+              url = "https://patch-diff.githubusercontent.com/raw/clementine-player/Clementine/pull/7217.diff";
               hash = "sha256-kaKc2YFkXJRPibbKbBCHvlm6Y/H9zS83ohMxtUNUFlM=";
             })
           ];
         });
       })
     ]
-  else
-    [ ];
+    else [];
 }
-
 # Example Python dep overlay
 # (self: super: {
 #   python3 = super.python3.override {
@@ -40,3 +38,4 @@
 #     };
 #   };
 # })
+
