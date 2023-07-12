@@ -27,7 +27,8 @@ rebuild() {
 		return 0
 	fi
 
-	nixos-rebuild ${TRACE} --flake .#${1} --build-host root@${host} --target-host root@${host} switch
+	set -x
+	nixos-rebuild ${TRACE} --flake .#${1} --build-host ssh-ng://root@${host} --target-host ssh-ng://root@${host} switch
 	return $?
 }
 

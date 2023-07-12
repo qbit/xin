@@ -10,6 +10,7 @@
     #!/usr/bin/env sh
     ${microcaBin} -ca-key /run/secrets/ca_key -ca-cert /run/secrets/ca_cert $@
   '';
+  cfg = config.nixManager;
 in
   with lib; {
     options = {
@@ -25,17 +26,31 @@ in
       };
     };
 
-    config = mkIf config.nixManager.enable {
+    config = mkIf cfg.enable {
       sops.defaultSopsFile = config.xin-secrets.manager;
       sops.secrets = {
-        xin_status_key = {owner = config.nixManager.user;};
-        xin_status_pubkey = {owner = config.nixManager.user;};
-        manager_key = {owner = config.nixManager.user;};
-        manager_pubkey = {owner = config.nixManager.user;};
-        ca_key = {owner = config.nixManager.user;};
-        ca_cert = {owner = config.nixManager.user;};
-        po_env = {owner = config.nixManager.user;};
+        xin_status_key = {owner = cfg.user;};
+        xin_status_pubkey = {owner = cfg.user;};
+        manager_key = {owner = cfg.user;};
+        manager_pubkey = {owner = cfg.user;};
+        ca_key = {owner = cfg.user;};
+        ca_cert = {owner = cfg.user;};
+        po_env = {owner = cfg.user;};
       };
+
+      systemd.services.ssh-agent = {
+        wantedBy = ["multi-user.target"];
+        environment.SSH_AUTH_SOCK = config.environment.variables.SSH_AUTH_SOCK;
+        serviceConfig = {
+          ExecStartPre = "${pkgs.coreutils}/bin/rm -f $SSH_AUTH_SOCK";
+          ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a $SSH_AUTH_SOCK";
+          User = "${cfg.user}";
+        };
+      };
+
+      systemd.services.nix-daemon.environment.SSH_AUTH_SOCK = config.environment.variables.SSH_AUTH_SOCK;
+      environment.variables.SSH_AUTH_SOCK = "/tmp/ssh-agent.socket";
+
       environment.systemPackages = [
         microca
         inputs.xintray.packages.${pkgs.system}.xintray
