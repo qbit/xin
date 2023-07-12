@@ -183,8 +183,8 @@ in {
       originalsPath = "/media/pictures/photoprism/originals";
       importPath = "/media/pictures/photoprism/import";
       settings = {
-        PHOTOPRISM_UPLOAD_NSFW = true;
-        PHOTOPRISM_DETECT_NSFW = false;
+        PHOTOPRISM_UPLOAD_NSFW = "true";
+        PHOTOPRISM_DETECT_NSFW = "false";
         PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
         PHOTOPRISM_SETTINGS_HIDDEN = "false";
         PHOTOPRISM_DATABASE_DRIVER = "sqlite";
