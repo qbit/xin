@@ -180,7 +180,11 @@ in {
     members = ["qbit"];
   };
 
-  systemd.services.photoprism.serviceConfig.SupplementaryGroups = "photos";
+  systemd.services.photoprism.serviceConfig = {
+    SupplementaryGroups = "photos";
+    BindPaths = "/media/pictures/photoprism";
+  };
+
   services = {
     photoprism = {
       enable = true;
