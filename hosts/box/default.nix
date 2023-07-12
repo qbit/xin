@@ -175,6 +175,12 @@ in {
     members = ["qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones"];
   };
 
+  users.groups.photos = {
+    name = "photos";
+    members = ["qbit"];
+  };
+
+  systemd.services.photoprism.serviceConfig.SupplementaryGroups = "photos";
   services = {
     photoprism = {
       enable = true;
