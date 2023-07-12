@@ -194,6 +194,8 @@ in {
     openssh.authorizedKeys.keys = pubKeys;
   };
 
+  systemd.services.photoprism.serviceConfig.WorkingDirectory = lib.mkDefault "/media/pictures/photoprism";
+
   services = {
     photoprism = {
       enable = true;
