@@ -273,8 +273,10 @@ in {
   environment.systemPackages = with pkgs; [
     barrier
     calibre
+    chirp
     cider
     clementine
+    direwolf
     element-desktop
     elmPackages.elm
     elmPackages.elm-format
@@ -285,6 +287,8 @@ in {
     exercism
     gh
     git-credential-1password
+    gqrx
+    hackrf
     isync
     klavaro
     minicom
@@ -302,6 +306,7 @@ in {
     proton-caller
     protonup-ng
     python3Packages.meshtastic
+    qdmr
     rex
     rofi
     signal-desktop
