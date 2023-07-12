@@ -180,9 +180,18 @@ in {
     members = ["qbit"];
   };
 
-  systemd.services.photoprism.serviceConfig = {
-    SupplementaryGroups = "photos";
-    BindPaths = "/media/pictures/photoprism";
+  users.groups.photoprism = {
+    name = "photoprism";
+    gid = 986;
+  };
+  users.users.photoprism = {
+    uid = 991;
+    name = "photoprism";
+    isSystemUser = true;
+    hashedPassword = null;
+    group = "photoprism";
+    shell = "/bin/sh";
+    openssh.authorizedKeys.keys = pubKeys;
   };
 
   services = {
