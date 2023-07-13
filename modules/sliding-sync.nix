@@ -1,12 +1,17 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.services.sliding-sync;
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.services.sliding-sync;
 in {
   options = with lib; {
     services.sliding-sync = {
       enable = lib.mkEnableOption "Enable sliding-sync";
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type = with types; oneOf [str int];
         default = "syncv3";
         description = ''
           The user the service will use.
@@ -14,7 +19,7 @@ in {
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type = with types; oneOf [str int];
         default = "syncv3";
         description = ''
           The group the service will use.
@@ -63,7 +68,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
     users.users.${cfg.user} = {
       description = "sliding-sync service user";
       isSystemUser = true;
@@ -75,8 +80,8 @@ in {
     systemd.services.sliding-sync = {
       enable = true;
       description = "sliding-sync server";
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" "matrix-synapse.service" ];
+      wantedBy = ["network-online.target"];
+      after = ["network-online.target" "matrix-synapse.service"];
 
       environment = {
         HOME = "${cfg.dataDir}";

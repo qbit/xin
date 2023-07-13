@@ -1,19 +1,33 @@
-{ isUnstable, xinlib, ... }:
-let
-  inherit (xinlib) prIsOpen;
-  #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
-  #openssh = import ./openssh.nix;
-  #obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
-  #tailscale = import ./tailscale.nix;
-  #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
-  tidal-hifi = prIsOpen.overlay 238572 (import ./tidal-hifi.nix);
-  matrix-synapse = prIsOpen.overlay 238794 (import ./matrix-synapse.nix);
-  nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
-in {
+{isUnstable, ...}:
+#let
+#inherit (xinlib) prIsOpen;
+#_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
+#openssh = import ./openssh.nix;
+#obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
+#tailscale = prIsOpen.overlay 239176 import ./tailscale.nix;
+#jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
+#tidal-hifi = prIsOpen.overlay 239732 (import ./tidal-hifi.nix);
+#matrix-synapse = prIsOpen.overlay 238845 (import ./matrix-synapse.nix);
+#nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
+#in {
+{
   nixpkgs.overlays =
-    if isUnstable then [ tidal-hifi nixd ] else [ matrix-synapse ];
+    if isUnstable
+    then [
+      (_: super: {
+        clementine = super.clementine.overrideAttrs (_: {
+          patches = [
+            (super.fetchpatch {
+              name = "clementine-di-radio-fix.diff";
+              url = "https://patch-diff.githubusercontent.com/raw/clementine-player/Clementine/pull/7217.diff";
+              hash = "sha256-kaKc2YFkXJRPibbKbBCHvlm6Y/H9zS83ohMxtUNUFlM=";
+            })
+          ];
+        });
+      })
+    ]
+    else [];
 }
-
 # Example Python dep overlay
 # (self: super: {
 #   python3 = super.python3.override {
@@ -25,19 +39,3 @@ in {
 #   };
 # })
 
-# Example of an overlay that changes the buildGoModule function
-#tailscale = self: super: {
-#  tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
-#    buildGoModule = args:
-#      super.buildGo119Module (args // rec {
-#        version = "1.32.2";
-#        src = super.fetchFromGitHub {
-#          owner = "tailscale";
-#          repo = "tailscale";
-#          rev = "v${version}";
-#          sha256 = "sha256-CYNHD6TS9KTRftzSn9vAH4QlinqNgU/yZuUYxSvsl/M=";
-#        };
-#        vendorSha256 = "sha256-VW6FvbgLcokVGunTCHUXKuH5+O6T55hGIP2g5kFfBsE=";
-#      });
-#  };
-#};

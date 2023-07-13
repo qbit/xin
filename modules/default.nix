@@ -1,2 +1,1 @@
-{ ... }: { imports = [ ./ssh-fido-agent.nix ]; }
-
+{...}: {imports = [./ssh-fido-agent.nix];}

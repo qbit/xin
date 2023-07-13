@@ -1,13 +1,11 @@
-{ pkgs, ... }:
-
-let
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+{pkgs, ...}: let
+  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
 in {
   _module.args.isUnstable = false;
-  imports = [ ./hardware-configuration.nix ];
+  imports = [./hardware-configuration.nix];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -15,7 +13,7 @@ in {
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
+  boot.binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
   nixpkgs.config.allowUnsupportedSystem = true;
 
   networking = {
@@ -23,7 +21,7 @@ in {
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [22];
       checkReversePath = "loose";
     };
   };
@@ -36,24 +34,23 @@ in {
     XDG_CONFIG_HOME = "\${HOME}/.config";
     XDG_DATA_HOME = "\${HOME}/.local/share";
 
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "\${HOME}/.steam/root/compatibilitytools.d";
-    PATH = [ "\${XDG_BIN_HOME}" ];
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+    PATH = ["\${XDG_BIN_HOME}"];
   };
 
-  users.users.qbit.extraGroups = [ "dialout" "libvirtd" "docker" ];
+  users.users.qbit.extraGroups = ["dialout" "libvirtd" "docker"];
 
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfree = true;
 
-  programs = {
-    steam.enable = true;
-    _1password.enable = true;
-    _1password-gui = {
-      enable = true;
-      polkitPolicyOwners = [ "qbit" ];
-    };
-    dconf.enable = true;
-  };
+  #programs = {
+  #  steam.enable = true;
+  #  _1password.enable = true;
+  #  _1password-gui = {
+  #    enable = true;
+  #    polkitPolicyOwners = [ "qbit" ];
+  #  };
+  #  dconf.enable = true;
+  #};
 
   xinCI = {
     user = "qbit";
@@ -61,20 +58,19 @@ in {
   };
 
   services = {
-    emacs = {
-      enable = true;
-      package = myEmacs;
-      install = true;
-    };
+    #emacs = {
+    #  enable = true;
+    #  package = myEmacs;
+    #  install = true;
+    #};
     fwupd = {
       enable = true;
       enableTestRemote = true;
     };
-
   };
 
-  users.users.root = { openssh.authorizedKeys.keys = pubKeys; };
-  users.users.qbit = { openssh.authorizedKeys.keys = pubKeys; };
+  users.users.root = {openssh.authorizedKeys.keys = pubKeys;};
+  users.users.qbit = {openssh.authorizedKeys.keys = pubKeys;};
 
   system.stateVersion = "22.11";
 }

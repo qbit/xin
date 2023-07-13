@@ -1,25 +1,30 @@
-{ lib, buildGoModule, fetchFromGitHub, ... }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  ...
+}:
 with lib;
-buildGoModule rec {
-  pname = "sliding-sync";
-  version = "0.99.3";
+  buildGoModule rec {
+    pname = "sliding-sync";
+    version = "0.99.4";
 
-  src = fetchFromGitHub {
-    owner = "matrix-org";
-    repo = pname;
-    rev = "v${version}";
-    hash = "sha256-lmmOq0gkvrIXQmy3rbTga0cC85t0LWjDOqrH1NWUpdA=";
-  };
+    src = fetchFromGitHub {
+      owner = "matrix-org";
+      repo = pname;
+      rev = "v${version}";
+      hash = "sha256-s7hQ4qCOhkNS8Mc2HZjFqedtj0KqXMAxVMZRIjPyvOA=";
+    };
 
-  vendorHash = "sha256-447P2TbBUEHmHubHiiZCrFVCj2/tmEuYFzLo27UyCk4=";
+    vendorHash = "sha256-447P2TbBUEHmHubHiiZCrFVCj2/tmEuYFzLo27UyCk4=";
 
-  # Note: tests require a postgres install accessible to the current user
-  doCheck = false;
+    # Note: tests require a postgres install accessible to the current user
+    doCheck = false;
 
-  meta = {
-    description = "An implementation of MSC3575";
-    homepage = "https://github.com/matrix-org/sliding-sync";
-    license = licenses.asl20;
-    maintainers = with maintainers; [ qbit ];
-  };
-}
+    meta = {
+      description = "An implementation of MSC3575";
+      homepage = "https://github.com/matrix-org/sliding-sync";
+      license = licenses.asl20;
+      maintainers = with maintainers; [qbit];
+    };
+  }

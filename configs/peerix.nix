@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib; {
   options = {
     tsPeerix = {
@@ -17,25 +22,25 @@ with lib; {
       interfaces = mkOption {
         description = "Interfaces to allow peerix to listen on.";
         type = types.listOf types.str;
-        default = [ "tailscale0" ];
+        default = ["tailscale0"];
       };
     };
   };
 
   config = mkIf config.tsPeerix.enable {
-    users.groups.peerix = { name = "peerix"; };
+    users.groups.peerix = {name = "peerix";};
     users.users.peerix = {
       name = "peerix";
       group = "peerix";
       isSystemUser = true;
     };
 
-    nix.settings.allowed-users = [ "peerix" ];
+    nix.settings.allowed-users = ["peerix"];
 
     services = {
       zerotierone = {
         enable = true;
-        joinNetworks = [ "db64858fedd3b256" ];
+        joinNetworks = ["db64858fedd3b256"];
       };
 
       peerix = {
@@ -48,14 +53,15 @@ with lib; {
       };
     };
 
-    environment.systemPackages = [ pkgs.zerotierone ];
+    environment.systemPackages = [pkgs.zerotierone];
 
     networking.firewall.interfaces = listToAttrs (flatten (map (i: {
-      name = i;
-      value = {
-        allowedUDPPorts = [ 12304 ];
-        allowedTCPPorts = [ 12304 ];
-      };
-    }) config.tsPeerix.interfaces));
+        name = i;
+        value = {
+          allowedUDPPorts = [12304];
+          allowedTCPPorts = [12304];
+        };
+      })
+      config.tsPeerix.interfaces));
   };
 }

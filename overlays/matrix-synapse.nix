@@ -18,5 +18,5 @@ let
       };
     });
   };
-
-in matrix-synapse
+in
+  matrix-synapse

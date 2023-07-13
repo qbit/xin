@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
-let inherit (pkgs.libsForQt5) callPackage;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (pkgs.libsForQt5) callPackage;
 in {
-  options = { kde = { enable = lib.mkEnableOption "Enable KDE desktop."; }; };
+  options = {kde = {enable = lib.mkEnableOption "Enable KDE desktop.";};};
 
   config = lib.mkIf config.kde.enable {
     services.xserver.displayManager.sddm.enable = true;
@@ -16,7 +21,7 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      (callPackage ../pkgs/tile-gaps.nix { })
+      (callPackage ../pkgs/tile-gaps.nix {})
       libsForQt5.bismuth
       plasma5Packages.kdeconnect-kde
       waynergy

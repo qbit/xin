@@ -1,14 +1,16 @@
-{ pkgs, isUnstable, ... }:
-let
-  secretAgent =
-    "Contents/Library/LoginItems/SecretAgent.app/Contents/MacOS/SecretAgent";
+{
+  pkgs,
+  isUnstable,
+  ...
+}: let
+  secretAgent = "Contents/Library/LoginItems/SecretAgent.app/Contents/MacOS/SecretAgent";
   rage =
-    pkgs.writeScriptBin "rage" (import ../../bins/rage.nix { inherit pkgs; });
+    pkgs.writeScriptBin "rage" (import ../../bins/rage.nix {inherit pkgs;});
 in {
   _module.args.isUnstable = false;
-  imports = [ ../../configs/tmux.nix ../../configs/zsh.nix ../../bins ];
+  imports = [../../configs/tmux.nix ../../configs/zsh.nix ../../bins];
 
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
   networking.hostName = "plq";
 
@@ -37,8 +39,7 @@ in {
   };
 
   launchd.user.agents."SecretAgent" = {
-    command =
-      ''"/Users/qbit/Applications/Nix Apps/Secretive.app/${secretAgent}"'';
+    command = ''"/Users/qbit/Applications/Nix Apps/Secretive.app/${secretAgent}"'';
     serviceConfig = rec {
       KeepAlive = true;
       StandardErrorPath = StandardOutPath;
@@ -47,14 +48,13 @@ in {
   };
 
   environment.variables = {
-    SSH_AUTH_SOCK =
-      "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+    SSH_AUTH_SOCK = "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
   };
 
   environment.systemPackages = with pkgs; [
-    (callPackage ../../pkgs/nheko.nix { inherit isUnstable; })
-    (callPackage ../../pkgs/secretive.nix { inherit isUnstable; })
-    (callPackage ../../pkgs/hammerspoon.nix { inherit isUnstable; })
+    (callPackage ../../pkgs/nheko.nix {inherit isUnstable;})
+    (callPackage ../../pkgs/secretive.nix {inherit isUnstable;})
+    (callPackage ../../pkgs/hammerspoon.nix {inherit isUnstable;})
 
     nixpkgs-review
     direnv
@@ -62,10 +62,8 @@ in {
     go
     mosh
     neovim
-    nixfmt
     nmap
     rage
     statix
   ];
 }
-

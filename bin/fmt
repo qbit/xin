@@ -2,7 +2,7 @@
 
 set -e
 
-find . -name \*.nix -exec nix fmt {} \+
+find . -name \*.nix -exec nix fmt -- -q {} \+
 find . -name \*.sh -exec shfmt -w {} \+
 
 deadnix -f .
