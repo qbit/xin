@@ -1,10 +1,12 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
   xinlib,
   ...
 }: let
+  chirp = inputs.unstable.legacyPackages.${pkgs.system}.chirp;
   restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
     inherit pkgs;
     inherit lib;
