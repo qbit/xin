@@ -35,6 +35,11 @@ with pkgs; let
     allow	10.20.30.1/32;
   '';
 
+  mtxCfg = {
+    port = 8009;
+    address = "127.0.0.1";
+  };
+
   matrixServer = "tapenet.org";
   matrixClientConfig = {
     "m.homeserver".base_url = "https://${matrixServer}:443";
@@ -53,7 +58,7 @@ with pkgs; let
   };
   mkMatrixLoc = {
     proxyWebsockets = true;
-    proxyPass = "http://127.0.0.1:8009";
+    proxyPass = "http://${mtxCfg.address}:${toString mtxCfg.port}";
   };
 in {
   _module.args.isUnstable = false;
@@ -257,6 +262,21 @@ in {
   };
 
   services = {
+    heisenbridge = {
+      enable = true;
+      homeserver = "http://${mtxCfg.address}:${toString mtxCfg.port}";
+      owner = "@qbit:tapenet.org";
+      namespaces = {
+        users = [
+          {
+            regex = "@irc_.*";
+            exclusive = true;
+          }
+        ];
+        aliases = [];
+        rooms = [];
+      };
+    };
     tsrevprox = {
       enable = true;
       reverseName = "pr-status";
@@ -390,6 +410,7 @@ in {
             "/var/lib/gotosocial"
             "/var/lib/mcchunkie"
             "/var/lib/taskserver"
+            "/var/lib/heisenbridge"
           ];
 
           timerConfig = {OnCalendar = "00:05";};
@@ -785,6 +806,9 @@ in {
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
         plugins = with config.services.matrix-synapse.package.plugins; [matrix-synapse-mjolnir-antispam];
+        app_service_config_files = [
+          "/var/lib/heisenbridge/registration.yml"
+        ];
         database = {
           name = "psycopg2";
           args = {
@@ -794,8 +818,8 @@ in {
         };
         listeners = [
           {
-            bind_addresses = ["127.0.0.1"];
-            port = 8009;
+            bind_addresses = [mtxCfg.address];
+            port = mtxCfg.port;
             resources = [
               {
                 compress = true;
