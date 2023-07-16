@@ -103,7 +103,18 @@ in {
   };
 
   boot.binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
-  nixpkgs.config.allowUnsupportedSystem = true;
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnsupportedSystem = true;
+    packageOverrides = pkgs: {
+      element-desktop = pkgs.element-desktop.overrideAttrs (old: {
+        desktopItem = old.desktopItem.override (old: {
+          exec = "element-desktop --disable-gpu --in-process-gpu %u";
+        });
+      });
+    };
+  };
 
   boot = {
     initrd.systemd.enable = true;
@@ -258,8 +269,6 @@ in {
     "libvirtd"
     #"docker"
   ];
-
-  nixpkgs.config.allowUnfree = true;
 
   environment.sessionVariables = {
     XDG_BIN_HOME = "\${HOME}/.local/bin";
