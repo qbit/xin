@@ -767,6 +767,7 @@ in {
         "https://matrix.to/#/#go-lang:matrix.org"
         "https://matrix.to/#/#plan9:matrix.org"
         "https://matrix.to/#/#nix-openbsd:tapenet.org"
+        "https://matrix.to/#/#cobug:tapenet.org"
       ];
       settings = {
         verboseLogging = false;
