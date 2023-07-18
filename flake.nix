@@ -238,6 +238,22 @@
         ];
       };
 
+      weatherzero = buildSys "armv6l" unstable [
+        "${unstable}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
+        {
+          nixpkgs = {
+            buildPlatform = {
+              system = "x86_64-linux";
+              config = "x86_64-unknown-linux-gnu";
+            };
+            hostPlatform = {
+              system = "armv6l-linux";
+              config = "armv6l-unknown-linux-gnueabihf";
+            };
+          };
+        }
+      ] "weatherzero";
+
       isoInstall = stable.lib.nixosSystem {
         system = "x86_64-linux";
 
@@ -338,7 +354,7 @@
     };
 
     checks = let
-      buildList = ["europa" "stan" "h" "box" "faf"];
+      buildList = ["europa" "stan" "h" "box" "faf" "weatherzero"];
     in
       with unstable.lib;
         foldl' recursiveUpdate {} (mapAttrsToList (name: system: {
