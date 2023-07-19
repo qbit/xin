@@ -151,12 +151,10 @@ in {
         age
         apg
         bind
-        btop
         direnv
         git-bug
         git-sync
         gosignify
-        got
         jq
         lz4
         minisign
@@ -165,13 +163,21 @@ in {
         nix-index
         nix-top
         pass
-        ripgrep
-        taskwarrior
         tmux
       ]
       ++ (
         if isUnstable
         then [nil]
+        else []
+      )
+      ++ (
+        if pkgs.system == "x86_64-linux"
+        then [
+          taskwarrior
+          btop
+          got
+          ripgrep
+        ]
         else []
       );
 

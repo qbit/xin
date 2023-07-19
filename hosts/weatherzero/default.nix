@@ -34,7 +34,10 @@ in {
 
   networking = {
     hostName = "wzero";
-    networkmanager = {enable = true;};
+    networkmanager.enable = false;
+    useNetworkd = true;
+    useDHCP = true;
+
     wireless.userControlled.enable = true;
     hosts."100.120.151.126" = ["graph.tapenet.org"];
   };

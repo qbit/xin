@@ -108,24 +108,17 @@ with pkgs; let
   };
 
   baseVimPackages = with vimPlugins; [
-    elm-vim
     fugitive
-    fzf-vim
-    haskell-vim
     neoformat
     nvim-compe
     nvim-lspconfig
     nvim-tree-lua
     nvim-treesitter.withAllGrammars
-    rust-vim
     tagbar
-    telescope-fzf-native-nvim
-    telescope-manix
     telescope-nvim
     todo-comments-nvim
     vimagit
     vim-gitgutter
-    vim-go
     vim-gutentags
     vim-hindent
     vim-lua
@@ -140,40 +133,60 @@ with pkgs; let
     parchment
     vacme
   ];
-  myVimPackages =
-    if pkgs.system == "aarch64-linux"
-    then baseVimPackages
-    else baseVimPackages ++ [];
-in {
-  environment.systemPackages = with pkgs; [
-    alejandra
-    elmPackages.elm
-    elmPackages.elm-format
-    elmPackages.elm-language-server
-    fd
-    fzf
-    go
-    gopls
-    gotools
-    haskellPackages.haskell-language-server
-    haskellPackages.hindent
+  basePackages = with pkgs; [
     luaformatter
-    luajitPackages.lua-lsp
-    manix
-    nodejs
-    nodePackages.typescript-language-server
     perl
-    perlPackages.PerlCritic
-    perlPackages.PLS
-    ripgrep
-    rubyPackages.solargraph
-    sumneko-lua-language-server
     tree-sitter
     universal-ctags
-    zls
+
+  ];
+  myPackages =
+    if pkgs.system != "x86_64-linux"
+    then basePackages
+    else
+      basePackages
+      ++ [
+        alejandra
+        elmPackages.elm
+        elmPackages.elm-format
+        elmPackages.elm-language-server
+        fd
+        fzf
+        go
+        gopls
+        gotools
+        haskellPackages.haskell-language-server
+        haskellPackages.hindent
+        luajitPackages.lua-lsp
+        manix
+        nodejs
+        nodePackages.typescript-language-server
+        perlPackages.PerlCritic
+        perlPackages.PLS
+        ripgrep
+        rubyPackages.solargraph
+        sumneko-lua-language-server
+        zls
 
     NeovimExt
-  ];
+      ];
+  myVimPackages =
+    if pkgs.system != "x86_64-linux"
+    then baseVimPackages
+    else
+      baseVimPackages
+      ++ [
+        elm-vim
+        fzf-vim
+        haskell-vim
+        rust-vim
+        telescope-fzf-native-nvim
+        telescope-manix
+        vim-go
+      ];
+in {
+  environment.systemPackages = myPackages;
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
