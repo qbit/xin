@@ -138,7 +138,6 @@ with pkgs; let
     perl
     tree-sitter
     universal-ctags
-
   ];
   myPackages =
     if pkgs.system != "x86_64-linux"
@@ -168,14 +167,14 @@ with pkgs; let
         sumneko-lua-language-server
         zls
 
-    NeovimExt
+        NeovimExt
       ];
   myVimPackages =
     if pkgs.system != "x86_64-linux"
     then baseVimPackages
     else
       baseVimPackages
-      ++ [
+      ++ (with vimPlugins; [
         elm-vim
         fzf-vim
         haskell-vim
@@ -183,7 +182,7 @@ with pkgs; let
         telescope-fzf-native-nvim
         telescope-manix
         vim-go
-      ];
+      ]);
 in {
   environment.systemPackages = myPackages;
 
