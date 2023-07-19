@@ -238,8 +238,8 @@
         ];
       };
 
-      weatherzero = buildSys "armv6l" unstable [
-        "${unstable}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
+      weatherzero = buildSys "armv6l" stable [
+        "${stable}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
         {
           nixpkgs = {
             buildPlatform = {

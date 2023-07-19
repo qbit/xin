@@ -12,7 +12,7 @@
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
 in {
-  _module.args.isUnstable = true;
+  _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
   ];
