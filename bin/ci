@@ -2,6 +2,11 @@
 
 . ./common.sh
 
+if [ -f ./lock ]; then
+	msg "${SCRIPT_NAME} locked..."
+	exit 0
+fi
+
 direnv allow
 
 CMD=${1:-""}
