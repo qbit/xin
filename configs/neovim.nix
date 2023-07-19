@@ -134,7 +134,6 @@ with pkgs; let
     vacme
   ];
   basePackages = with pkgs; [
-    luaformatter
     perl
     tree-sitter
     universal-ctags
@@ -156,6 +155,7 @@ with pkgs; let
         gotools
         haskellPackages.haskell-language-server
         haskellPackages.hindent
+        luaformatter
         luajitPackages.lua-lsp
         manix
         nodejs
