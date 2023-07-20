@@ -67,7 +67,7 @@ in
           lib.mkForce ["" "${pkgs.networkmanager}/bin/nm-online -q"];
         fonts.fonts = with pkgs; [
           go-font
-          (callPackage ../pkgs/kurinto.nix {})
+          #(callPackage ../pkgs/kurinto.nix {})
         ];
         sound.enable = true;
         environment.systemPackages = with pkgs; (xinlib.filterList [

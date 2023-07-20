@@ -289,7 +289,7 @@
       fyne = upkgs.callPackage ./pkgs/fyne.nix {inherit upkgs;};
       flake-warn =
         spkgs.callPackage ./pkgs/flake-warn.nix {inherit spkgs;};
-      kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
+      #kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
       mcchunkie = spkgs.callPackage ./pkgs/mcchunkie.nix {inherit spkgs;};
       yaegi = spkgs.callPackage ./pkgs/yaegi.nix {inherit spkgs;};
       gen-patches =
