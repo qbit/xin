@@ -314,6 +314,8 @@ in {
     qdmr
     rex
     rofi
+    rtl-sdr
+    sdrpp
     signal-desktop
     taskobs
     tcpdump
