@@ -260,6 +260,7 @@ in {
   users.users.qbit.extraGroups = [
     "dialout"
     "libvirtd"
+    "plugdev"
     #"docker"
   ];
 
