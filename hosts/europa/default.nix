@@ -107,13 +107,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
-    packageOverrides = pkgs: {
-      element-desktop = pkgs.element-desktop.overrideAttrs (old: {
-        desktopItem = old.desktopItem.override (old: {
-          exec = "element-desktop --disable-gpu --in-process-gpu %u";
-        });
-      });
-    };
   };
 
   boot = {
