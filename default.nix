@@ -190,6 +190,7 @@ in {
       zsh.enable = true;
       gnupg.agent.enable = true;
       ssh = {
+        agentPKCS11Whitelist = "${pkgs.opensc}/lib/opensc-pkcs11.so";
         knownHosts = {
           "[namish.humpback-trout.ts.net]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF9jlU5XATs8N90mXuCqrflwOJ+s3s7LefDmFZBx8cCk";
           "[git.tapenet.org]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOkbSJWeWJyJjak/boaMTqzPVq91wfJz1P+I4rnBUsPW";
