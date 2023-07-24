@@ -12,6 +12,7 @@
   #tidal-hifi = prIsOpen.overlay 239732 (import ./tidal-hifi.nix);
   matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
   #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
+  heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
 in {
   nixpkgs.overlays =
     if isUnstable
@@ -30,6 +31,7 @@ in {
     ]
     else [
       matrix-synapse
+      heisenbridge
     ];
 }
 # Example Python dep overlay
