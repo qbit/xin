@@ -329,8 +329,6 @@ in {
     #yubioath-flutter
     zig
 
-    talon
-
     (callPackage ../../pkgs/clilol.nix {})
     (callPackage ../../pkgs/iamb.nix {})
     (callPackage ../../pkgs/kobuddy.nix {

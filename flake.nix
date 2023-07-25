@@ -77,11 +77,6 @@
       url = "github:cid-chan/peerix";
       inputs.nixpkgs.follows = "stable";
     };
-
-    talon = {
-      url = "github:qbit/talon-nix";
-      inputs.nixpkgs.follows = "unstable";
-    };
   };
 
   outputs = {
@@ -94,7 +89,6 @@
     pots,
     pr-status,
     stable,
-    talon,
     tsRevProx,
     tsvnstat,
     unstable,
@@ -136,7 +130,6 @@
       inputs.peerix.overlay
       inputs.pots.overlay
       inputs.pr-status.overlay
-      inputs.talon.overlays.default
       inputs.taskobs.overlay
       inputs.tsRevProx.overlay
     ];
@@ -207,7 +200,6 @@
     nixosConfigurations = {
       europa = buildSys "x86_64-linux" unstable [
         nixos-hardware.nixosModules.framework
-        talon.nixosModules.talon
       ] "europa";
       pwntie = buildSys "x86_64-linux" stable [] "pwntie";
       stan = buildSys "x86_64-linux" unstable [] "stan";

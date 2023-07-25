@@ -259,7 +259,6 @@
         "pr-status": "pr-status",
         "sops-nix": "sops-nix",
         "stable": "stable",
-        "talon": "talon",
         "taskobs": "taskobs",
         "tsRevProx": "tsRevProx",
         "tsvnstat": "tsvnstat",
@@ -336,27 +335,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "talon": {
-      "inputs": {
-        "nixpkgs": [
-          "unstable"
-        ],
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1674481533,
-        "narHash": "sha256-aMrexhFzVJKFB2PKUjjJiJCCNDTyCWFDHlhjFNAuHFg=",
-        "owner": "qbit",
-        "repo": "talon-nix",
-        "rev": "52b4568e186691624db941517418e165b6ff0e9f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "qbit",
-        "repo": "talon-nix",
         "type": "github"
       }
     },
@@ -448,21 +426,6 @@
         "owner": "NixOS",
         "ref": "nixos-unstable-small",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1659877975,
-        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
         "type": "github"
       }
     },
