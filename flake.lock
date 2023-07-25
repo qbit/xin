@@ -98,11 +98,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1689607574,
-        "narHash": "sha256-menpBldlKQiqcb+i9AHrhC4O83QmP+dsdhEnkMyU0Hw=",
+        "lastModified": 1690291253,
+        "narHash": "sha256-ap2ekWGXPAdzF8H7pJgL2yPcjblv7JwZKuQz6nOgWrg=",
         "owner": "qbit",
         "repo": "gostart",
-        "rev": "4d925dad5ec05ea70fee6283d9b7794ec5825983",
+        "rev": "3fc6edbf5350fbeafd318a27118d2e67493269ed",
         "type": "github"
       },
       "original": {
