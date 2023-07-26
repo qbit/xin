@@ -108,6 +108,7 @@ with pkgs; let
   };
 
   baseVimPackages = with vimPlugins; [
+    ale
     elm-vim
     fugitive
     fzf-vim

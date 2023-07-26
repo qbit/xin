@@ -15,18 +15,18 @@ cmd("hi LineNr none");
 cmd("hi Search cterm=none ctermbg=yellow");
 
 require("compe").setup {
-	enabled = true,
-	autocomplete = true,
-	source = {
-		path = true,
-		buffer = true,
-		calc = true,
-		nvim_lsp = true,
-		nvim_lua = true,
-		vsnip = true,
-		ultisnips = true,
-		luasnip = true,
-	},
+    enabled = true,
+    autocomplete = true,
+    source = {
+        path = true,
+        buffer = true,
+        calc = true,
+        nvim_lsp = true,
+        nvim_lua = true,
+        vsnip = true,
+        ultisnips = true,
+        luasnip = true
+    }
 }
 
 local telescope = require('telescope')
@@ -34,30 +34,26 @@ telescope.load_extension('manix')
 telescope.load_extension('fzf')
 
 require("nvim-tree").setup({
-	renderer = {
-		icons = {
-			webdev_colors = false,
-			show = {
-				file = false,
-				folder = false,
-				folder_arrow = false,
-				git = true,
-			},
-		},
-	},
+    renderer = {
+        icons = {
+            webdev_colors = false,
+            show = {
+                file = false,
+                folder = false,
+                folder_arrow = false,
+                git = true
+            }
+        }
+    }
 })
 
 require('obsidian').setup({
-	dir = "~/Brain",
-	daily_notes = {
-		folder = "Daily",
-	},
-	completion = {
-		nvim_cmp = false,
-	}
+    dir = "~/Brain",
+    daily_notes = {folder = "Daily"},
+    completion = {nvim_cmp = false}
 })
 
-require 'nvim-treesitter.configs'.setup({})
+require'nvim-treesitter.configs'.setup({})
 require('neogen').setup({})
 
 require('todo-comments').setup {};
@@ -69,15 +65,7 @@ local lspc = require('lspconfig')
 lspc.elmls.setup {};
 lspc.gopls.setup {};
 lspc.hls.setup {};
-lspc.lua_ls.setup {
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = { 'vim' },
-			},
-		},
-	},
-};
+lspc.lua_ls.setup {settings = {Lua = {diagnostics = {globals = {'vim'}}}}};
 lspc.nil_ls.setup {};
 lspc.perlpls.setup {};
 lspc.solargraph.setup {};
@@ -86,11 +74,11 @@ lspc.zls.setup {};
 
 o.hlsearch = true;
 
-map('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
-map('n', '<C-p>', ':Files<CR>', { noremap = true })
-map('n', '<leader>r', ':NvimTreeRefresh<CR>', { noremap = true })
-map('n', '<leader>n', ':Neogen<CR>', { noremap = true })
-map('n', '<leader>s', ':%s/\\s\\+$//e', { noremap = true })
+map('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true})
+map('n', '<C-p>', ':Files<CR>', {noremap = true})
+map('n', '<leader>r', ':NvimTreeRefresh<CR>', {noremap = true})
+map('n', '<leader>n', ':Neogen<CR>', {noremap = true})
+map('n', '<leader>s', ':%s/\\s\\+$//e', {noremap = true})
 map('n', '<leader>fm', ':Telescope manix<CR>', {})
 map('n', '<leader>mo', ':MindOpenMain<CR>', {})
 map('n', '<leader>mp', ':MindOpenProject<CR>', {})
@@ -98,10 +86,10 @@ map('n', '<leader>ot', ':ObsidianToday<CR>', {})
 map('n', '<leader>tb', ':TagbarToggle<CR>', {})
 map('n', '<leader>t', ':TodoQuickFix<CR>', {})
 
-map('n', '<leader>g', ':GitGutterToggle<CR>', { noremap = true })
-map('n', '<leader>2', ':set list!<CR>', { noremap = true })
-map('n', '<leader>3', ':set nu!<CR>', { noremap = true })
-map('n', '<leader>4', ':set paste!<CR>', { noremap = true })
+map('n', '<leader>g', ':GitGutterToggle<CR>', {noremap = true})
+map('n', '<leader>2', ':set list!<CR>', {noremap = true})
+map('n', '<leader>3', ':set nu!<CR>', {noremap = true})
+map('n', '<leader>4', ':set paste!<CR>', {noremap = true})
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -119,43 +107,32 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 vim.keymap.set('n', '<space>f', ':Neoformat<CR>')
 
 vim.api.nvim_create_autocmd('LspAttach', {
-	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-	callback = function(ev)
-		local opts = { buffer = ev.buf }
-		vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-		--vim.keymap.set('n', '<space>f', function()
-		--	vim.lsp.buf.format { async = true }
-		--end, opts)
-	end,
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+        local opts = {buffer = ev.buf}
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        -- vim.keymap.set('n', '<space>f', function()
+        --	vim.lsp.buf.format { async = true }
+        -- end, opts)
+    end
 })
 
 vim.g.tagbar_type_elm = {
-	ctagstype = 'elm',
-	kinds = {
-		'f:function:0:0',
-		'm:modules:0:0',
-		'i:imports:1:0',
-		't:types:1:0',
-		'a:type aliases:0:0',
-		'c:type constructors:0:0',
-		'p:ports:0:0',
-		's:functions:0:0'
-	}
+    ctagstype = 'elm',
+    kinds = {
+        'f:function:0:0', 'm:modules:0:0', 'i:imports:1:0', 't:types:1:0',
+        'a:type aliases:0:0', 'c:type constructors:0:0', 'p:ports:0:0',
+        's:functions:0:0'
+    }
 }
 
 vim.g.tagbar_type_typescript = {
-	ctagstype = 'typescript',
-	kinds = {
-		'c:classes',
-		'n:modules',
-		'f:functions',
-		'v:variables',
-		'v:varlambdas',
-		'm:members',
-		'i:interfaces',
-		'e:enums'
-	}
+    ctagstype = 'typescript',
+    kinds = {
+        'c:classes', 'n:modules', 'f:functions', 'v:variables', 'v:varlambdas',
+        'm:members', 'i:interfaces', 'e:enums'
+    }
 }
