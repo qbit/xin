@@ -104,6 +104,39 @@ in {
 
   boot.binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
 
+  environment.etc."pymultimonaprs.json".text = let
+    aprsConf = {
+      callsign = "KD0WKW-4";
+      passcode = "17318";
+      gateway = [
+        "noam.aprs2.net:14580"
+      ];
+      source = "rtl";
+      rtl = {
+        freq = 144.390;
+        ppm = 0;
+        gain = 0;
+        offset_tuning = false;
+        device_index = 0;
+      };
+      beacon = {
+        lat = 38.3035;
+        lng = -104.8118;
+        table = "R";
+        symbol = "&";
+        comment = "NixOS iGate";
+        status = {
+          text = "RX only mode on Raspberry Pi + RTL";
+          file = false;
+        };
+        weather = false;
+        send_every = 300;
+        ambiguity = 0.01;
+      };
+    };
+  in
+    builtins.toJSON aprsConf;
+
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
@@ -344,6 +377,7 @@ in {
         alembic
         ;
     })
+    (pkgs.python3Packages.callPackage ../../pkgs/pymultimonaprs.nix {})
     (callPackage ../../pkgs/gokrazy.nix {})
     (callPackage ../../pkgs/zutty.nix {})
 

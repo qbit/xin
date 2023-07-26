@@ -301,6 +301,8 @@
       };
       hpi =
         upkgs.python3Packages.callPackage ./pkgs/hpi.nix {inherit upkgs;};
+      pymultimonaprs =
+        upkgs.python3Packages.callPackage ./pkgs/pymultimonaprs.nix {inherit upkgs;};
       promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
         inherit upkgs;
       };
