@@ -186,6 +186,8 @@ in {
 
   virtualisation.libvirtd.enable = true;
 
+  programs.git.config.safe.directory = "/home/abieber/aef100";
+
   programs = {
     dconf.enable = true;
     zsh.enable = true;
