@@ -3,7 +3,6 @@
     ./ca.nix
     ./ci.nix
     ./colemak.nix
-    ./develop.nix
     ./dns.nix
     ./doas.nix
     ./git.nix

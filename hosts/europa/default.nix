@@ -48,8 +48,6 @@ in {
         sshFidoAgent.enable = false;
         nixManager = {enable = false;};
 
-        jetbrains.enable = false;
-
         programs = {};
 
         virtualisation.libvirtd.enable = false;
@@ -131,7 +129,6 @@ in {
   };
 
   kde.enable = lib.mkDefault true;
-  jetbrains.enable = lib.mkDefault true;
 
   virtualisation.libvirtd.enable = lib.mkDefault true;
 
