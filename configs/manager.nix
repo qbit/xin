@@ -25,6 +25,8 @@ in
       };
     };
 
+    imports = [./tailnet.nix];
+
     config = mkIf config.nixManager.enable {
       sops.defaultSopsFile = config.xin-secrets.manager;
       sops.secrets = {
@@ -36,11 +38,13 @@ in
         ca_cert = {owner = config.nixManager.user;};
         po_env = {owner = config.nixManager.user;};
       };
+
       environment.systemPackages = [
         microca
         inputs.xintray.packages.${pkgs.system}.xintray
         inputs.po.packages.${pkgs.system}.po
       ];
+
       networking = {
         hosts = {
           "66.135.2.235" = ["ns1"];
