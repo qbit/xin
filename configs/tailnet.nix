@@ -21,6 +21,7 @@
       tagOwners = {
         "tag:untrusted" = ["qbit@github"];
         "tag:minservice" = ["qbit@github"];
+        "tag:sshonly" = ["qbit@github"];
         "tag:apper" = ["qbit@github"];
         "tag:golink" = ["qbit@github"];
         "tag:lab" = ["qbit@github"];
@@ -42,7 +43,7 @@
         }
         {
           action = "accept";
-          src = ["tag:minservice"];
+          src = ["tag:minservice" "tag:sshonly"];
           dst = ["*:22" "box:3030" "nbc:443" "console:2222"];
         }
         {
