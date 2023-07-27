@@ -6,7 +6,7 @@
   xinlib,
   ...
 }: let
-  chirp = inputs.stable.legacyPackages.${pkgs.system}.chirp;
+  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp;
   restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
     inherit pkgs;
     inherit lib;

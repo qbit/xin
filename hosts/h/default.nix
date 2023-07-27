@@ -819,8 +819,8 @@ in {
         };
         listeners = [
           {
+            inherit (mtxCfg) port;
             bind_addresses = [mtxCfg.address];
-            port = mtxCfg.port;
             resources = [
               {
                 compress = true;
