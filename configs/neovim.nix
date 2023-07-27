@@ -162,6 +162,7 @@ in {
     luajitPackages.lua-lsp
     manix
     nodejs
+    nodePackages.prettier
     nodePackages.typescript-language-server
     perl
     perlPackages.PerlCritic
