@@ -87,9 +87,10 @@
       inherit (config.nixManager) user;
     }
   ];
+  enabled = config.nixManager.enable;
 in
   with lib; {
-    sops.secrets = {
+    sops.secrets = mkIf enabled {
       tailnet_acl_manager = {
         owner = config.nixManager.user;
         sopsFile = config.xin-secrets.manager;
@@ -99,5 +100,5 @@ in
         sopsFile = config.xin-secrets.manager;
       };
     };
-    systemd.services = listToAttrs (builtins.map xinlib.jobToService jobs);
+    systemd.services = mkIf enabled (listToAttrs (builtins.map xinlib.jobToService jobs));
   }
