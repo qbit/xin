@@ -365,11 +365,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1683583841,
-        "narHash": "sha256-5r2TP7cuEyy/XgSQhfaqLjbgiIbXtlNp9P9OvPjzvTk=",
+        "lastModified": 1690485919,
+        "narHash": "sha256-7DxtcPq/QPsdwqUg91vs1mMu21mYn1HCamUkOD0ug2M=",
         "owner": "qbit",
         "repo": "ts-reverse-proxy",
-        "rev": "36749e9fbe0f4c04163f9924f8e8be01d0442745",
+        "rev": "1b7eac645a0c56effc8d637019161febd0015d08",
         "type": "github"
       },
       "original": {
