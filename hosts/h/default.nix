@@ -768,6 +768,8 @@ in {
         "https://matrix.to/#/#plan9:matrix.org"
         "https://matrix.to/#/#nix-openbsd:tapenet.org"
         "https://matrix.to/#/#cobug:tapenet.org"
+        "https://matrix.to/#/#gosec:tapenet.org"
+        "https://matrix.to/#/#gophers-offtopic:matrix.org"
       ];
       settings = {
         verboseLogging = false;
