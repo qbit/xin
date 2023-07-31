@@ -52,17 +52,18 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    (callPackage ../../pkgs/nheko.nix {inherit isUnstable;})
     (callPackage ../../pkgs/secretive.nix {inherit isUnstable;})
     (callPackage ../../pkgs/hammerspoon.nix {inherit isUnstable;})
 
-    nixpkgs-review
     direnv
     gh
     go
     mosh
     neovim
+    nheko
+    nixpkgs-review
     nmap
+    obsidian
     rage
     statix
   ];
