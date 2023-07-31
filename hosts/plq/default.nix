@@ -60,7 +60,6 @@ in {
     go
     mosh
     neovim
-    nheko
     nixpkgs-review
     nmap
     obsidian
