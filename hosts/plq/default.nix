@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   isUnstable,
   ...
 }: let
@@ -49,6 +50,10 @@ in {
 
   nixpkgs.config = {
     allowUnfree = true;
+    allowUnfreePredicate = pkg:
+      builtins.elm (lib.getName pkg) [
+        "obsidian"
+      ];
   };
 
   environment.variables = {
