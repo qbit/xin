@@ -88,6 +88,8 @@ in {
   sops.secrets.bw_key = mkNginxSecret;
   sops.secrets.invidious_cert = mkNginxSecret;
   sops.secrets.invidious_key = mkNginxSecret;
+  sops.secrets.readarr_cert = mkNginxSecret;
+  sops.secrets.readarr_key = mkNginxSecret;
 
   boot.supportedFilesystems = ["zfs"];
   boot.loader.grub.copyKernels = true;
@@ -172,7 +174,7 @@ in {
 
   users.groups.media = {
     name = "media";
-    members = ["qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones"];
+    members = ["qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" "rtorrent" "readarr"];
   };
 
   users.groups.photos = {
@@ -277,6 +279,14 @@ in {
 
     tor.enable = true;
 
+    rtorrent = {
+      enable = true;
+      downloadDir = "/media/downloads/rtorrent";
+    };
+    readarr = {
+      enable = true;
+      dataDir = "/media/books";
+    };
     sonarr.enable = true;
     radarr.enable = true;
     lidarr.enable = true;
@@ -762,6 +772,19 @@ in {
           forceSSL = true;
           locations."/" = {
             proxyPass = "http://localhost:8686";
+            proxyWebsockets = true;
+            extraConfig = ''
+              ${httpAllow}
+               deny	all;
+            '';
+          };
+        };
+        "readarr.bold.daemon" = {
+          sslCertificateKey = "${config.sops.secrets.readarr_key.path}";
+          sslCertificate = "${config.sops.secrets.readarr_cert.path}";
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://localhost:8787";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
