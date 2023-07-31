@@ -47,6 +47,10 @@ in {
     };
   };
 
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
   environment.variables = {
     SSH_AUTH_SOCK = "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
   };
