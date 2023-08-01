@@ -279,9 +279,13 @@ in {
 
     tor.enable = true;
 
-    rtorrent = {
+    transmission = {
       enable = true;
-      downloadDir = "/media/downloads/rtorrent";
+      group = "media";
+      downloadDirPermissions = "770";
+      settings = {
+        download-dir = "/media/downloads/torrents";
+      };
     };
     readarr = {
       enable = true;
