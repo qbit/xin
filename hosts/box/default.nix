@@ -321,6 +321,7 @@ in {
 
     calibre-web = {
       enable = true;
+      group = "media";
       options = {enableBookUploading = true;};
       listen.port = 8909;
       listen.ip = "127.0.0.1";
