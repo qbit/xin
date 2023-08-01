@@ -286,6 +286,7 @@ in {
     readarr = {
       enable = true;
       dataDir = "/media/books";
+      group = "media";
     };
     sonarr.enable = true;
     radarr.enable = true;
