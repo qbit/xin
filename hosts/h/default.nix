@@ -150,6 +150,11 @@ in {
       owner = config.services.tsrevprox.user;
       sopsFile = config.xin-secrets.h.services;
     };
+    writefreely = {
+      mode = "400";
+      owner = config.services.writefreely.user;
+      sopsFile = config.xin-secrets.h.services;
+    };
   };
 
   networking = {
@@ -411,12 +416,33 @@ in {
             "/var/lib/mcchunkie"
             "/var/lib/taskserver"
             "/var/lib/heisenbridge"
+            "/var/lib/writefreely"
           ];
 
           timerConfig = {OnCalendar = "00:05";};
 
           pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10"];
         };
+      };
+    };
+
+    writefreely = {
+      enable = true;
+      host = "arst.lol";
+      settings = {
+        server.port = 3287;
+        app = {
+          single_user = true;
+          min_username_len = 4;
+          federation = true;
+          monetization = false;
+          wf_modesty = true;
+        };
+      };
+      database.migrate = true;
+      admin = {
+        name = "qbit";
+        initialPasswordFile = "${config.sops.secrets.writefreely.path}";
       };
     };
 
@@ -491,6 +517,22 @@ in {
             proxyPass = "http://localhost:9009/weechat";
           };
         };
+        "arst.lol" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/arst.lol";
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:${
+              toString config.services.writefreely.settings.server.port
+            }";
+          };
+        };
+        #"embracethe.lol" = {
+        #  forceSSL = true;
+        #  enableACME = true;
+        #  root = "/var/www/embracethe.lol";
+        #};
         "notes.suah.dev" = {
           forceSSL = true;
           enableACME = true;
