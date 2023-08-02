@@ -100,14 +100,13 @@ in {
     };
   };
 
-  boot.binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
-
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
   };
 
   boot = {
+    binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
     initrd.systemd.enable = true;
     loader = {
       systemd-boot.enable = true;
@@ -118,7 +117,6 @@ in {
     };
     kernelParams = ["boot.shell_on_fail" "mem_sleep_default=deep"];
     kernelPackages = pkgs.linuxPackages_latest;
-    #kernelPackages = pkgs.linuxPackages;
   };
 
   sshFidoAgent.enable = lib.mkDefault true;
