@@ -204,6 +204,15 @@ in {
   };
 
   services = {
+    home-assistant = {
+      enable = true;
+      config = {
+        homeassistant = {
+          name = "Home";
+          time_zone = "MDT";
+        };
+      };
+    };
     photoprism = {
       enable = true;
       port = 2343;
