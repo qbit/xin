@@ -313,7 +313,9 @@
         spkgs.callPackage ./pkgs/gotosocial.nix {inherit spkgs;};
       zutty = upkgs.callPackage ./pkgs/zutty.nix {
         inherit upkgs;
-        isUnstable = true;
+      };
+      mvoice = upkgs.callPackage ./pkgs/mvoice.nix {
+        inherit upkgs;
       };
       inherit (xintray.packages.${system}) xintray;
       inherit (tsvnstat.packages.${system}) tsvnstat;
