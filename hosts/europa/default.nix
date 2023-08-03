@@ -340,6 +340,7 @@ in {
         ;
     })
     (callPackage ../../pkgs/gokrazy.nix {})
+    (callPackage ../../pkgs/mvoice.nix {})
     (callPackage ../../pkgs/zutty.nix {})
 
     restic
