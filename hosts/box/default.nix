@@ -49,15 +49,15 @@ in {
   imports = [./hardware-configuration.nix];
 
   sops.secrets = {
-    nextcloud_db_pass = {
-      owner = config.users.users.nextcloud.name;
-      sopsFile = config.xin-secrets.box.services;
-    };
-    nextcloud_admin_pass = {
-      owner = config.users.users.nextcloud.name;
-      sopsFile = config.xin-secrets.box.services;
-    };
-    photoprism_admin_password = {sopsFile = config.xin-secrets.box.services;};
+    #nextcloud_db_pass = {
+    #  owner = config.users.users.nextcloud.name;
+    #  sopsFile = config.xin-secrets.box.services;
+    #};
+    #nextcloud_admin_pass = {
+    #  owner = config.users.users.nextcloud.name;
+    #  sopsFile = config.xin-secrets.box.services;
+    #};
+    #photoprism_admin_password = {sopsFile = config.xin-secrets.box.services;};
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.services;
@@ -90,6 +90,8 @@ in {
   sops.secrets.invidious_key = mkNginxSecret;
   sops.secrets.readarr_cert = mkNginxSecret;
   sops.secrets.readarr_key = mkNginxSecret;
+  sops.secrets.home_cert = mkNginxSecret;
+  sops.secrets.home_key = mkNginxSecret;
 
   boot.supportedFilesystems = ["zfs"];
   boot.loader.grub.copyKernels = true;
@@ -107,6 +109,7 @@ in {
 
     hosts = {
       "127.0.0.1" = ["git.tapenet.org"];
+      "10.6.0.15" = ["jelly.bold.daemon"];
       "100.122.61.43" = ["nix-binary-cache.humpback-trout.ts.net"];
     };
     interfaces.enp7s0 = {useDHCP = true;};
@@ -124,7 +127,15 @@ in {
       };
       allowedTCPPorts =
         config.services.openssh.ports
-        ++ [80 443 config.services.gitea.settings.server.SSH_PORT];
+        ++ [
+          80
+          443
+          config.services.gitea.settings.server.SSH_PORT
+          21063 #homekit
+        ];
+      allowedUDPPorts = [
+        5353 #homekit
+      ];
       allowedUDPPortRanges = [
         {
           from = 60000;
@@ -163,6 +174,7 @@ in {
     git
     signify
     glowing-bear
+    rtl_433
 
     (callPackage ../../pkgs/athens.nix {inherit isUnstable;})
   ];
@@ -203,57 +215,123 @@ in {
     preStart = lib.mkForce "";
   };
 
+  hardware.rtl-sdr.enable = true;
+
   services = {
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
     home-assistant = {
       enable = true;
+      extraPackages = python3Packages:
+        with python3Packages; [
+          pyipp
+          pymetno
+        ];
+      extraComponents = [
+        "airthings"
+        "airthings_ble"
+        "airvisual"
+        "airvisual_pro"
+        "apple_tv"
+        "aprs"
+        "brother"
+        "esphome"
+        "rest"
+        "ffmpeg"
+        "homekit"
+        "homekit_controller"
+        "icloud"
+        "jellyfin"
+        "met"
+        "prometheus"
+        "nextdns"
+        "pushover"
+        "snmp"
+        "zeroconf"
+      ];
       config = {
+        rest = [
+          {
+            resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
+            sensor = {
+              name = "rtl_433_temperature_celsius";
+              value_template = "{{value_json.data.result[0].value[1]}}";
+            };
+          }
+        ];
+        device_tracker = [
+          {
+            platform = "aprs";
+            username = "KD0WKW-15";
+            callsigns = [
+              "KD0WKW-0"
+              "KD0WKW-1"
+              "KD0WKW-2"
+              "KD0WKW-3"
+              "KD0WKW-4"
+              "KD0WKW-5"
+            ];
+          }
+        ];
+        default_config = {};
+        http = {
+          use_x_forwarded_for = true;
+          server_host = "127.0.0.1";
+          trusted_proxies = "127.0.0.1";
+        };
         homeassistant = {
           name = "Home";
-          time_zone = "MDT";
+          time_zone = "America/Denver";
+          temperature_unit = "C";
+          unit_system = "metric";
+          longitude = -104.72;
+          latitude = 38.35;
         };
       };
     };
-    photoprism = {
-      enable = true;
-      port = 2343;
-      storagePath = "/media/pictures/photoprism/storage";
-      originalsPath = "/media/pictures/photoprism/originals";
-      importPath = "/media/pictures/photoprism/import";
-      settings = {
-        PHOTOPRISM_UPLOAD_NSFW = "true";
-        PHOTOPRISM_DETECT_NSFW = "false";
-        PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
-        PHOTOPRISM_SETTINGS_HIDDEN = "false";
-        PHOTOPRISM_DATABASE_DRIVER = "sqlite";
-      };
-    };
-    nextcloud = {
-      enable = true;
-      enableBrokenCiphersForSSE = false;
-      hostName = "box.humpback-trout.ts.net";
-      home = "/media/nextcloud";
-      https = true;
+    #photoprism = {
+    #  enable = true;
+    #  port = 2343;
+    #  storagePath = "/media/pictures/photoprism/storage";
+    #  originalsPath = "/media/pictures/photoprism/originals";
+    #  importPath = "/media/pictures/photoprism/import";
+    #  settings = {
+    #    PHOTOPRISM_UPLOAD_NSFW = "true";
+    #    PHOTOPRISM_DETECT_NSFW = "false";
+    #    PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
+    #    PHOTOPRISM_SETTINGS_HIDDEN = "false";
+    #    PHOTOPRISM_DATABASE_DRIVER = "sqlite";
+    #  };
+    #};
+    #nextcloud = {
+    #  enable = true;
+    #  enableBrokenCiphersForSSE = false;
+    #  hostName = "box.humpback-trout.ts.net";
+    #  home = "/media/nextcloud";
+    #  https = true;
 
-      package = pkgs.nextcloud27;
-      extraApps = with config.services.nextcloud.package.packages.apps; {
-        inherit bookmarks calendar contacts notes tasks twofactor_webauthn;
-      };
+    #  package = pkgs.nextcloud27;
+    #  extraApps = with config.services.nextcloud.package.packages.apps; {
+    #    inherit bookmarks calendar contacts notes tasks twofactor_webauthn;
+    #  };
 
-      extraAppsEnable = true;
+    #  extraAppsEnable = true;
 
-      config = {
-        overwriteProtocol = "https";
+    #  config = {
+    #    overwriteProtocol = "https";
 
-        dbtype = "pgsql";
-        dbuser = "nextcloud";
-        dbhost = "/run/postgresql";
-        dbname = "nextcloud";
-        dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
+    #    dbtype = "pgsql";
+    #    dbuser = "nextcloud";
+    #    dbhost = "/run/postgresql";
+    #    dbname = "nextcloud";
+    #    dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
 
-        adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
-        adminuser = "admin";
-      };
-    };
+    #    adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
+    #    adminuser = "admin";
+    #  };
+    #};
     invidious = {
       enable = true;
       settings = {
@@ -493,9 +571,33 @@ in {
         };
 
         nginx = {enable = true;};
+
+        rtl_433 = {
+          enable = true;
+          group = "plugdev";
+          ids = [
+            {
+              id = 55;
+              name = "LaCrosse-TX141Bv3";
+              location = "Kitchen";
+            }
+          ];
+        };
       };
 
       scrapeConfigs = [
+        {
+          job_name = "rtl_433";
+          static_configs = [
+            {
+              targets = [
+                "127.0.0.1:${
+                  toString config.services.prometheus.exporters.rtl_433.port
+                }"
+              ];
+            }
+          ];
+        }
         {
           job_name = "box";
           static_configs = [
@@ -530,11 +632,7 @@ in {
         }
         {
           job_name = "namish";
-          static_configs = [{targets = ["10.6.0.2:9100"];}];
-        }
-        {
-          job_name = "router";
-          static_configs = [{targets = ["10.6.0.1:9100"];}];
+          static_configs = [{targets = ["10.200.0.100:9100"];}];
         }
         {
           job_name = "nginx";
@@ -639,6 +737,18 @@ in {
       '';
 
       virtualHosts = {
+        "home.bold.daemon" = {
+          forceSSL = true;
+          sslCertificateKey = "${config.sops.secrets.home_key.path}";
+          sslCertificate = "${config.sops.secrets.home_cert.path}";
+          extraConfig = ''
+            proxy_buffering off;
+          '';
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8123";
+            proxyWebsockets = true;
+          };
+        };
         "invidious.bold.daemon" = {
           forceSSL = true;
           sslCertificateKey = "${config.sops.secrets.invidious_key.path}";

@@ -116,6 +116,7 @@ in {
           ''"reddit.bold.daemon. IN A 100.120.151.126"''
           ''"sonarr.bold.daemon. IN A 100.120.151.126"''
           ''"readarr.bold.daemon. IN A 100.120.151.126"''
+          ''"home.bold.daemon. IN A 100.120.151.126"''
           ''"graph.bold.daemon. IN A 100.120.151.126"''
           ''"invidious.bold.daemon. IN A 100.120.151.126"''
           ''"router.bold.daemon. IN A 10.6.0.1"''
