@@ -300,8 +300,6 @@ in {
     nmap
     nushell
     obsidian
-    pharo
-    pharo-launcher
     picocom
     proton-caller
     protonup-ng
