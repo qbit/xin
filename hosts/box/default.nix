@@ -252,6 +252,9 @@ in {
         "zeroconf"
       ];
       config = {
+        "automation manual" = [
+        ];
+        "automation ui" = "!include automations.yaml";
         rest = [
           {
             resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
