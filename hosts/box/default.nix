@@ -46,7 +46,10 @@
   };
 in {
   _module.args.isUnstable = false;
-  imports = [./hardware-configuration.nix];
+  imports = [
+    ./hardware-configuration.nix
+    #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
+  ];
 
   sops.secrets = {
     #nextcloud_db_pass = {
@@ -132,6 +135,7 @@ in {
           443
           config.services.gitea.settings.server.SSH_PORT
           21063 #homekit
+          21064 #homekit
         ];
       allowedUDPPorts = [
         5353 #homekit
@@ -165,7 +169,18 @@ in {
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    #overlays = [
+    #  (self: super: {
+    #    inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
+    #  })
+    #];
+  };
+
+  #disabledModules = [
+  #  "services/home-automation/home-assistant.nix"
+  #];
 
   environment.systemPackages = with pkgs; [
     tmux
@@ -250,8 +265,16 @@ in {
         "pushover"
         "snmp"
         "zeroconf"
+
+        "logger"
       ];
       config = {
+        logger = {
+          default = "warning";
+          logs = {
+            "homeassistant.components.aprs" = "debug";
+          };
+        };
         "automation manual" = [
         ];
         "automation ui" = "!include automations.yaml";
