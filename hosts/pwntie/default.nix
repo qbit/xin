@@ -7,6 +7,8 @@ in {
   _module.args.isUnstable = false;
   imports = [./hardware-configuration.nix];
 
+  hardware.rtl-sdr.enable = true;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -38,9 +40,12 @@ in {
     PATH = ["\${XDG_BIN_HOME}"];
   };
 
-  users.users.qbit.extraGroups = ["dialout" "libvirtd" "docker"];
+  users.users.qbit.extraGroups = ["dialout" "libvirtd" "docker" "plugdev"];
 
   #nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    rtl-sdr
+  ];
 
   #programs = {
   #  steam.enable = true;
