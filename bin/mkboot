@@ -4,6 +4,9 @@ case $1 in
 arm | arm64)
 	nix build .#nixosConfigurations.arm64Install.config.system.build.sdImage
 	;;
+hamie)
+	nix build .#nixosConfigurations.hamie.config.system.build.sdImage
+	;;
 haas)
 	nix build .#nixosConfigurations.hassInstall.config.system.build.isoImage
 	;;

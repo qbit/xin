@@ -257,6 +257,17 @@
           "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
         ];
       };
+
+      hamie = stable.lib.nixosSystem {
+        system = "aarch64-linux";
+
+        modules = [
+          (import ./minimal.nix)
+          xin-secrets.nixosModules.sops
+
+          "${stable}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
+        ];
+      };
     };
 
     packages = forAllSystems (system: let
@@ -348,7 +359,7 @@
     };
 
     checks = let
-      buildList = ["europa" "stan" "h" "box" "faf"];
+      buildList = ["europa" "stan" "h" "box" "faf" "hamie"];
     in
       with unstable.lib;
         foldl' recursiveUpdate {} (mapAttrsToList (name: system: {
