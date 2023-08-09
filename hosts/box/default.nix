@@ -44,11 +44,22 @@
     owner = config.users.users.nginx.name;
     mode = "400";
   };
+  rtlamr2mqtt = pkgs.fetchFromGitHub {
+    owner = "allangood";
+    repo = "rtlamr2mqtt";
+    rev = "b2b05b9c16c396790913fd6f2ff11d5afdef4de8";
+    hash = "sha256-bm348peVASsApjH+tUyFeF/gXltUNhssT7o+z20qnCc=";
+  };
 in {
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
     #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
+  ];
+
+  systemd.tmpfiles.rules = [
+    "C /var/lib/hass/custom_components/rtlamr2mqtt - - - - ${rtlamr2mqtt}"
+    "Z /var/lib/hass/custom_components 770 hass hass - -"
   ];
 
   sops.secrets = {
@@ -136,6 +147,7 @@ in {
           config.services.gitea.settings.server.SSH_PORT
           21063 #homekit
           21064 #homekit
+          1883 # mosquitto
         ];
       allowedUDPPorts = [
         5353 #homekit
@@ -233,6 +245,17 @@ in {
   hardware.rtl-sdr.enable = true;
 
   services = {
+    mosquitto = {
+      enable = true;
+      listeners = [
+        {
+          acl = ["pattern readwrite #"];
+          omitPasswordAuth = true;
+          settings.allow_anonymous = true;
+        }
+      ];
+    };
+
     avahi = {
       enable = true;
       openFirewall = true;
@@ -253,22 +276,38 @@ in {
         "aprs"
         "brother"
         "esphome"
-        "rest"
         "ffmpeg"
         "homekit"
         "homekit_controller"
         "icloud"
         "jellyfin"
+        "logger"
         "met"
-        "prometheus"
+        "mqtt"
         "nextdns"
+        "prometheus"
         "pushover"
+        "rest"
         "snmp"
         "zeroconf"
-
-        "logger"
       ];
       config = {
+        mqtt.sensor = [
+        #  {
+        #    name = "Gas Meter";
+        #    unique_id = "gas_meter";
+        #    state_topic = "readings/48582066/meter_reading";
+        #    icon = "mdi:gas-burner";
+        #    unit_of_measurement = "cu ft";
+        #  }
+        #  {
+        #    name = "Electric Meter";
+        #    unique_id = "electric_meter";
+        #    state_topic = "readings/20015637/meter_reading";
+        #    icon = "mdi:meter-electric-outline";
+        #    unit_of_measurement = "kWh";
+        #  }
+        ];
         logger = {
           default = "warning";
           logs = {
