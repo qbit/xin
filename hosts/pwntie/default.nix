@@ -45,6 +45,8 @@ in {
   #nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     rtl-sdr
+    direwolf
+    (callPackage ../../pkgs/rtlamr.nix {})
   ];
 
   #programs = {
