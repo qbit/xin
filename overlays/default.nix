@@ -12,10 +12,12 @@
   matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
   #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
+  rex = prIsOpen.overlay 0 (import ./rex.nix);
 in {
   nixpkgs.overlays =
     if isUnstable
     then [
+      rex
       (_: super: {
         clementine = super.clementine.overrideAttrs (_: {
           patches = [
@@ -29,6 +31,7 @@ in {
       })
     ]
     else [
+      rex
       matrix-synapse
       heisenbridge
     ];
