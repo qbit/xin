@@ -136,14 +136,14 @@ in {
 
     nix = {
       settings =
-        if config.networking.hostName != "pwntie"
-        then {
+        if config.xinCI.enable
+        then {}
+        else {
           substituters = ["https://nix-binary-cache.humpback-trout.ts.net/"];
           trusted-public-keys = [
             "nix-binary-cache.humpback-trout.ts.net:e9fJhcRtNVp6miW2pffFyK/gZ2et4y6IDigBNrEsAa0="
           ];
-        }
-        else {};
+        };
     };
 
     environment.systemPackages = with pkgs;
