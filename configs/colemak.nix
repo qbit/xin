@@ -21,6 +21,16 @@ with lib; {
       layout = "us";
       xkbVariant = "colemak";
       xkbOptions = "ctrl:swapcaps";
+      inputClassSections = [
+        ''
+          Identifier "precursor"
+          MatchIsKeyboard "on"
+          MatchProduct "Precursor"
+          MatchVendor "Kosagi"
+          Option "XkbLayout" "us"
+          Option "XkbVariant" "basic"
+        ''
+      ];
     };
   };
 }
