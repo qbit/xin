@@ -54,7 +54,7 @@ in {
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
-    #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
+    "${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
   ];
 
   systemd.tmpfiles.rules = [
@@ -183,16 +183,16 @@ in {
 
   nixpkgs = {
     config.allowUnfree = true;
-    #overlays = [
-    #  (self: super: {
-    #    inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
-    #  })
-    #];
+    overlays = [
+      (self: super: {
+        inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
+      })
+    ];
   };
 
-  #disabledModules = [
-  #  "services/home-automation/home-assistant.nix"
-  #];
+  disabledModules = [
+    "services/home-automation/home-assistant.nix"
+  ];
 
   environment.systemPackages = with pkgs; [
     tmux
@@ -273,7 +273,7 @@ in {
         "airvisual"
         "airvisual_pro"
         "apple_tv"
-        "aprs"
+        #"aprs"
         "brother"
         "esphome"
         "ffmpeg"
@@ -285,6 +285,7 @@ in {
         "met"
         "mqtt"
         "nextdns"
+        "openevse"
         "prometheus"
         "pushover"
         "rest"
@@ -311,7 +312,7 @@ in {
         logger = {
           default = "warning";
           logs = {
-            "homeassistant.components.aprs" = "debug";
+            #"homeassistant.components.aprs" = "debug";
           };
         };
         "automation manual" = [
@@ -327,18 +328,18 @@ in {
           }
         ];
         device_tracker = [
-          {
-            platform = "aprs";
-            username = "KD0WKW-15";
-            callsigns = [
-              "KD0WKW-0"
-              "KD0WKW-1"
-              "KD0WKW-2"
-              "KD0WKW-3"
-              "KD0WKW-4"
-              "KD0WKW-5"
-            ];
-          }
+          #{
+          #  platform = "aprs";
+          #  username = "KD0WKW-15";
+          #  callsigns = [
+          #    "KD0WKW-0"
+          #    "KD0WKW-1"
+          #    "KD0WKW-2"
+          #    "KD0WKW-3"
+          #    "KD0WKW-4"
+          #    "KD0WKW-5"
+          #  ];
+          #}
         ];
         default_config = {};
         http = {
