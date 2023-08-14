@@ -6,9 +6,9 @@
   ffmpeg,
   ...
 }: let
-  gotosocialVersion = "0.11.0-rc2";
-  gtswaHash = "sha256:06cy07xycs605c7hgilj427pg6jg29vi11f048795fzjcrrl4r6z";
-  gtssHash = "sha256-HYUqIyAxcd4pMjMcSHdR75XT/llEACNVMEljSYz9104=";
+  gotosocialVersion = "0.11.0-rc3";
+  gtswaHash = "sha256:1vp4v9fm7mq24gv2lp4lxdzd952fxr74xr4j2y8z9h7xn5zm0m99";
+  gtssHash = "sha256-MZ1E1uTZ6pE95LIFA+SfSSQXKXMCrilS1/uvOa4VfiU=";
   gotosocialWebAssets = builtins.fetchurl {
     url = "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
     sha256 = gtswaHash;
