@@ -7,14 +7,13 @@
 with lib;
   buildGoModule rec {
     pname = "yarr";
-    version = "2023-05-16";
+    version = "2.4";
 
     src = fetchFromGitHub {
       owner = "nkanaev";
       repo = pname;
-      #rev = "v${version}";
-      rev = "7d99edab8d3c054e75feba183bd76fead15712f1";
-      sha256 = "sha256-gOydL1SyM1bGbErpefWlwhjLWH6j0GGpI/F0kEBHxic=";
+      rev = "v${version}";
+      sha256 = "sha256-ZMQ+IX8dZuxyxQhD/eWAe4bGGCVcaCeVgF+Wqs79G+k=";
     };
 
     vendorHash = null;
