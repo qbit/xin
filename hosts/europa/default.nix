@@ -177,6 +177,11 @@ in {
   services.xinCA = {enable = false;};
 
   services = {
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
+    printing.enable = true;
     restic = {
       backups = {
         local = {
