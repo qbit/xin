@@ -20,7 +20,7 @@ with lib; {
     services.xserver = {
       layout = "us";
       xkbVariant = "colemak";
-      xkbOptions = "ctrl:swapcaps";
+      xkbOptions = "ctrl:swapcaps,compose:ralt";
       inputClassSections = [
         ''
           Identifier "precursor"
