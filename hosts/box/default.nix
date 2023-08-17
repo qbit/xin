@@ -44,22 +44,11 @@
     owner = config.users.users.nginx.name;
     mode = "400";
   };
-  rtlamr2mqtt = pkgs.fetchFromGitHub {
-    owner = "allangood";
-    repo = "rtlamr2mqtt";
-    rev = "b2b05b9c16c396790913fd6f2ff11d5afdef4de8";
-    hash = "sha256-bm348peVASsApjH+tUyFeF/gXltUNhssT7o+z20qnCc=";
-  };
 in {
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
     "${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
-  ];
-
-  systemd.tmpfiles.rules = [
-    "C /var/lib/hass/custom_components/rtlamr2mqtt - - - - ${rtlamr2mqtt}"
-    "Z /var/lib/hass/custom_components 770 hass hass - -"
   ];
 
   sops.secrets = {
@@ -184,7 +173,7 @@ in {
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [
-      (self: super: {
+      (_: _: {
         inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
       })
     ];

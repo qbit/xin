@@ -295,6 +295,9 @@
       precursorupdater = spkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
         inherit spkgs;
       };
+      rtlamr2mqtt = spkgs.python3Packages.callPackage ./pkgs/rtlamr2mqtt.nix {
+        inherit spkgs;
+      };
       kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
         inherit upkgs;
       };
