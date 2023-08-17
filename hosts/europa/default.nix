@@ -326,6 +326,7 @@ in {
     tidal-hifi
     tigervnc
     unzip
+    veilid
     virt-manager
     yt-dlp
     #yubioath-flutter
