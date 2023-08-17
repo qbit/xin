@@ -34,6 +34,17 @@ in {
       rex
       matrix-synapse
       heisenbridge
+      (_: super: {
+        invidious = super.invidious.overrideAttrs (_: {
+          patches = [
+            (super.fetchpatch {
+              name = "invidious-newpipe.diff";
+              url = "https://patch-diff.githubusercontent.com/raw/iv-org/invidious/pull/4037.patch";
+              hash = "sha256-KyqQtmfIPIX48S8SZnSlvCLvdw6Ws1u0oWEk8jLKWlU=";
+            })
+          ];
+        });
+      })
     ];
 }
 # Example Python dep overlay

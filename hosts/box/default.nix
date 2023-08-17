@@ -294,20 +294,6 @@ in {
       ];
       config = {
         mqtt.sensor = [
-        #  {
-        #    name = "Gas Meter";
-        #    unique_id = "gas_meter";
-        #    state_topic = "readings/48582066/meter_reading";
-        #    icon = "mdi:gas-burner";
-        #    unit_of_measurement = "cu ft";
-        #  }
-        #  {
-        #    name = "Electric Meter";
-        #    unique_id = "electric_meter";
-        #    state_topic = "readings/20015637/meter_reading";
-        #    icon = "mdi:meter-electric-outline";
-        #    unit_of_measurement = "kWh";
-        #  }
         ];
         logger = {
           default = "warning";
@@ -328,18 +314,6 @@ in {
           }
         ];
         device_tracker = [
-          #{
-          #  platform = "aprs";
-          #  username = "KD0WKW-15";
-          #  callsigns = [
-          #    "KD0WKW-0"
-          #    "KD0WKW-1"
-          #    "KD0WKW-2"
-          #    "KD0WKW-3"
-          #    "KD0WKW-4"
-          #    "KD0WKW-5"
-          #  ];
-          #}
         ];
         default_config = {};
         http = {
