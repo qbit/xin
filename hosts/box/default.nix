@@ -30,7 +30,7 @@
       proxy_set_header Connection "";
       proxy_http_version 1.1;
 
-      proxy_pass http://ftp.usa.openbsd.org;
+      proxy_pass http://cdn.openbsd.org;
     '';
   };
 
