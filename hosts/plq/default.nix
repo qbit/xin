@@ -65,6 +65,7 @@ in {
     (callPackage ../../pkgs/hammerspoon.nix {inherit isUnstable;})
 
     direnv
+    exiftool
     gh
     go
     mosh
