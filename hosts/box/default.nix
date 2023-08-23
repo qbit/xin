@@ -301,6 +301,13 @@ in {
               value_template = "{{value_json.data.result[0].value[1]}}";
             };
           }
+          {
+            resource = "http://127.0.0.1:9001/api/v1/query?query=wstation_temp_c";
+            sensor = {
+              name = "wstation_garage_temp_c";
+              value_template = "{{value_json.data.result[0].value[1]}}";
+            };
+          }
         ];
         device_tracker = [
         ];
