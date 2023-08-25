@@ -43,21 +43,6 @@
 in {
   _module.args.isUnstable = true;
 
-  specialisation = {
-    arcan = {
-      configuration = {
-        system.nixos.tags = ["arcan"];
-        kde.enable = false;
-        sshFidoAgent.enable = false;
-        nixManager = {enable = false;};
-
-        programs = {};
-
-        virtualisation.libvirtd.enable = false;
-      };
-    };
-  };
-
   imports = [./hardware-configuration.nix ../../pkgs ../../configs/neomutt.nix];
 
   sops.secrets = {
