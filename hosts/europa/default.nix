@@ -329,6 +329,7 @@ in {
     unzip
     veilid
     virt-manager
+    w3m
     yt-dlp
     #yubioath-flutter
     zig
