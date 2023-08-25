@@ -295,6 +295,7 @@ in {
     entr
     exercism
     gh
+    gimp
     git-credential-1password
     gqrx
     hackrf
