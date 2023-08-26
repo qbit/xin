@@ -15,6 +15,8 @@ in {
 
   networking.hostName = "plq";
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   programs = {
     zsh = {
       enable = true;
@@ -23,10 +25,16 @@ in {
       '';
     };
   };
-  services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
-
-  services.emacs.package = pkgs.emacsUnstable;
+  nix = {
+    package = pkgs.nix;
+    settings = {
+      sandbox = true;
+    };
+  };
+  services = {
+    nix-daemon.enable = true;
+    emacs.package = pkgs.emacsUnstable;
+  };
 
   system = {
     keyboard = {
@@ -69,6 +77,7 @@ in {
     gh
     go
     mosh
+    nb
     neovim
     nixpkgs-review
     nmap
