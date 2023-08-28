@@ -11,7 +11,7 @@
   #tidal-hifi = prIsOpen.overlay 239732 (import ./tidal-hifi.nix);
   #matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
   #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
-  heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
+  #heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
   rex = prIsOpen.overlay 0 (import ./rex.nix);
 in {
   nixpkgs.overlays =
@@ -33,7 +33,6 @@ in {
     else [
       rex
       #matrix-synapse
-      heisenbridge
       (_: super: {
         invidious = super.invidious.overrideAttrs (_: {
           patches = [
