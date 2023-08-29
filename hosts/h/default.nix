@@ -813,7 +813,7 @@ in {
         "https://matrix.to/#/#cobug:tapenet.org"
         "https://matrix.to/#/#gosec:tapenet.org"
         "https://matrix.to/#/#gophers-offtopic:matrix.org"
-        "https://matrix.to/#/#devious:matrix.org"
+        "https://matrix.to/#/#devious:tapenet.org"
       ];
       settings = {
         verboseLogging = false;
