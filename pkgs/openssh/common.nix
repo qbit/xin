@@ -19,7 +19,7 @@
 , pkg-config
 , pam
 , libredirect
-, etcDir ? null
+, etcDir ? "/etc/ssh"
 , withKerberos ? true
 , libkrb5
 , libfido2
