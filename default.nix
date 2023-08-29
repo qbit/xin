@@ -17,6 +17,7 @@
     command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
   gosignify = pkgs.callPackage ./pkgs/gosignify.nix {inherit isUnstable;};
+  myOpenSSH = pkgs.callPackage ./pkgs/openssh {};
 in {
   imports = [
     ./configs
@@ -191,6 +192,7 @@ in {
       zsh.enable = true;
       gnupg.agent.enable = true;
       ssh = {
+        package = myOpenSSH.openssh;
         agentPKCS11Whitelist = "${pkgs.opensc}/lib/opensc-pkcs11.so";
         knownHosts = {
           "[namish.humpback-trout.ts.net]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF9jlU5XATs8N90mXuCqrflwOJ+s3s7LefDmFZBx8cCk";
