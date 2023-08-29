@@ -70,6 +70,7 @@
       '';
       nativeBuildInputs = with pkgs; [
         curl
+        dasel
         deadnix
         git
         git-bug

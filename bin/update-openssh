@@ -1,0 +1,8 @@
+#!/bin/sh
+
+ATOM="$(curl -s https://github.com/openssh/openssh-portable/commits/master.atom)"
+COMMIT="$(echo $ATOM | dasel -rxml 'feed.entry.[0].id' | awk -F/ '{print $NF}')"
+COMMENT="$(echo $ATOM | dasel -rxml 'feed.entry.[0].title')"
+UPDATED="$(echo $ATOM | dasel -rxml 'feed.entry.[0].updated' | awk -FT '{print $1}')"
+
+jo -- version="${UPDATED}" rev="${COMMIT}" comment="${COMMENT}" -s hash=
