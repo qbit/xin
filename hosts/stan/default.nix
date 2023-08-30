@@ -161,7 +161,6 @@ in {
   environment.systemPackages = with pkgs; [
     barrier
     bitwarden
-    brave
     doom-emacs
     fzf
     google-chrome-dev

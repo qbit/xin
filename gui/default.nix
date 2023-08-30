@@ -76,8 +76,8 @@ in
           arcanPackages.all-wrapped
           bc
           black
-          brave
           drawterm
+          exiftool
           go-font
           govulncheck
           hpi
