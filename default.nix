@@ -183,7 +183,6 @@ in {
 
     time.timeZone = "US/Mountain";
 
-    documentation.enable = true;
     documentation.man.enable = true;
 
     networking.timeServers = options.networking.timeServers.default;

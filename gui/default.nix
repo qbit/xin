@@ -62,6 +62,8 @@ in
           pcscd.enable = true;
         };
 
+        documentation.enable = true;
+
         # TODO: TEMP FIX
         systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
           lib.mkForce ["" "${pkgs.networkmanager}/bin/nm-online -q"];
