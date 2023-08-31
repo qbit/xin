@@ -79,6 +79,7 @@
         nil
         nix-diff
         nix-output-monitor
+        nix-prefetch-github
         shfmt
         sops
         ssh-to-age
