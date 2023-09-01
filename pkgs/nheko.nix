@@ -1,16 +1,20 @@
-{ lib, fetchurl, stdenv, undmg, ... }:
-
+{
+  lib,
+  fetchurl,
+  stdenv,
+  undmg,
+  ...
+}:
 stdenv.mkDerivation rec {
   pname = "nheko";
   version = "0.10.0";
 
   src = fetchurl {
-    url =
-      "https://github.com/Nheko-Reborn/nheko/releases/download/v${version}/nheko-v${version}.dmg";
+    url = "https://github.com/Nheko-Reborn/nheko/releases/download/v${version}/nheko-v${version}.dmg";
     hash = "sha256-t7evlvb+ueJZhtmt4KrOeXv2BZV8/fY4vj4GAmoCR2w=";
   };
 
-  nativeBuildInputs = [ undmg ];
+  nativeBuildInputs = [undmg];
 
   sourceRoot = ".";
 

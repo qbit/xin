@@ -1,6 +1,10 @@
-{ config, lib, pkgs, ... }:
-with lib;
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfgMgr = config.configManager;
   cfgRouter = config.configManager.router;
   pfConf = pkgs.writeTextFile {
@@ -58,17 +62,16 @@ let
     '';
   };
 
-  interfaceOptions = mkOptionType { name = "interface text"; };
+  interfaceOptions = mkOptionType {name = "interface text";};
 
   interfaceFiles = mapAttrs' (name: value:
     nameValuePair "configManager/router/hostname.${name}" {
       text = value.text + "\n";
-    }) cfgRouter.interfaces;
-
+    })
+  cfgRouter.interfaces;
 in {
   options = {
     configManager = {
-
       enable = lib.mkEnableOption "Manage configurations for non-nix machines.";
 
       router = {
@@ -90,8 +93,8 @@ in {
 
         services = mkOption {
           type = types.listOf types.str;
-          default = [ ];
-          example = [ "dhcpd" "unbound" ];
+          default = [];
+          example = ["dhcpd" "unbound"];
           description = ''
             Services to run on the router (rcctl enable XXX, rcctl start XXX).
           '';
@@ -108,7 +111,7 @@ in {
         };
 
         interfaces = mkOption {
-          default = { };
+          default = {};
           type = types.attrsOf interfaceOptions;
           description = ''
             Interfaces to create hostname.if files for.
@@ -136,12 +139,14 @@ in {
   };
 
   config = lib.mkIf cfgMgr.enable {
-    environment.etc = {
-      "configManager/router/pf.conf".text = builtins.readFile pfConf;
-      "configManager/router/managed_interfaces".text =
-        (concatMapStringsSep "\n") (h: "hostname.${h}")
-        (builtins.attrNames config.configManager.router.interfaces) + "\n";
-    } // interfaceFiles;
+    environment.etc =
+      {
+        "configManager/router/pf.conf".text = builtins.readFile pfConf;
+        "configManager/router/managed_interfaces".text =
+          (concatMapStringsSep "\n") (h: "hostname.${h}")
+          (builtins.attrNames config.configManager.router.interfaces)
+          + "\n";
+      }
+      // interfaceFiles;
   };
 }
-

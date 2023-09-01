@@ -1,19 +1,23 @@
-{ pkgs, isUnstable, ... }:
-let
-  gosignify = pkgs.callPackage ../pkgs/gosignify.nix { inherit isUnstable; };
+{
+  pkgs,
+  isUnstable,
+  ...
+}: let
+  gosignify = pkgs.callPackage ../pkgs/gosignify.nix {inherit isUnstable;};
 
-  ix = pkgs.writeScriptBin "ix" (import ./ix.nix { inherit (pkgs) perl; });
-  checkRestart = pkgs.writeScriptBin "check-restart"
-    (import ./check-restart.nix { inherit (pkgs) perl; });
-  xinStatus = pkgs.writeScriptBin "xin-status"
-    (import ./xin-status.nix { inherit (pkgs) perl perlPackages; });
+  ix = pkgs.writeScriptBin "ix" (import ./ix.nix {inherit (pkgs) perl;});
+  checkRestart =
+    pkgs.writeScriptBin "check-restart"
+    (import ./check-restart.nix {inherit (pkgs) perl;});
+  xinStatus =
+    pkgs.writeScriptBin "xin-status"
+    (import ./xin-status.nix {inherit (pkgs) perl perlPackages;});
   tstart =
-    pkgs.writeScriptBin "tstart" (import ./tstart.nix { inherit (pkgs) tmux; });
+    pkgs.writeScriptBin "tstart" (import ./tstart.nix {inherit (pkgs) tmux;});
   sfetch = pkgs.writeScriptBin "sfetch" (import ./sfetch.nix {
     inherit gosignify;
     inherit (pkgs) curl;
   });
-
 in {
   environment.systemPackages = with pkgs; [
     checkRestart

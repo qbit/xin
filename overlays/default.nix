@@ -1,5 +1,8 @@
-{ isUnstable, xinlib, ... }:
-let
+{
+  isUnstable,
+  xinlib,
+  ...
+}: let
   inherit (xinlib) prIsOpen;
   #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
   #openssh = import ./openssh.nix;
@@ -10,16 +13,18 @@ let
   matrix-synapse = prIsOpen.overlay 238845 (import ./matrix-synapse.nix);
   nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
 in {
-  nixpkgs.overlays = if isUnstable then [
-    tailscale
-    tidal-hifi
-    nixd
-  ] else [
-    matrix-synapse
-    tailscale
-  ];
+  nixpkgs.overlays =
+    if isUnstable
+    then [
+      tailscale
+      tidal-hifi
+      nixd
+    ]
+    else [
+      matrix-synapse
+      tailscale
+    ];
 }
-
 # Example Python dep overlay
 # (self: super: {
 #   python3 = super.python3.override {
@@ -30,3 +35,4 @@ in {
 #     };
 #   };
 # })
+

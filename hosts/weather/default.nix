@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0= hosts@secretive.plq.local"
@@ -10,15 +13,14 @@ let
   };
 in {
   _module.args.isUnstable = false;
-  imports = [ ./hardware-configuration.nix ];
+  imports = [./hardware-configuration.nix];
 
   defaultUsers.enable = false;
 
   boot = {
-    initrd.availableKernelModules =
-      [ "usbhid" "usb_storage" "vc4" "rtc-ds3232" "rtc-ds1307" ];
+    initrd.availableKernelModules = ["usbhid" "usb_storage" "vc4" "rtc-ds3232" "rtc-ds1307"];
     kernelPackages = pkgs.linuxPackages;
-    kernelModules = [ "raspberrypi_ts" "rtc-ds3232" "rtc-ds1307" ];
+    kernelModules = ["raspberrypi_ts" "rtc-ds3232" "rtc-ds1307"];
     #kernelPatches = [{
     #  name = "touchscreen";
     #  patch = null;
@@ -36,21 +38,21 @@ in {
 
   networking = {
     hostName = "weather";
-    networkmanager = { enable = true; };
+    networkmanager = {enable = true;};
     wireless.userControlled.enable = true;
-    hosts."100.120.151.126" = [ "graph.tapenet.org" ];
+    hosts."100.120.151.126" = ["graph.tapenet.org"];
   };
 
   users.users.weather = {
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "Weather";
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
   };
 
   preDNS.enable = false;
   systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
-    lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+    lib.mkForce ["" "${pkgs.networkmanager}/bin/nm-online -q"];
   services.xserver = {
     enable = true;
 
@@ -58,7 +60,7 @@ in {
 
     windowManager.xmonad = {
       enable = true;
-      extraPackages = haskellPackages: [ haskellPackages.xmonad-contrib ];
+      extraPackages = haskellPackages: [haskellPackages.xmonad-contrib];
       config = ''
         {-# LANGUAGE QuasiQuotes #-}
 

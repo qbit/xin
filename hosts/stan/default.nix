@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   pubKeys = [
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0= hosts@secretive.plq.local"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -9,14 +12,14 @@ let
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
-  peerixUser = if builtins.hasAttr "peerix" config.users.users then
-    config.users.users.peerix.name
-  else
-    "root";
+  myEmacs = pkgs.callPackage ../../configs/emacs.nix {};
+  peerixUser =
+    if builtins.hasAttr "peerix" config.users.users
+    then config.users.users.peerix.name
+    else "root";
 in {
   _module.args.isUnstable = true;
-  imports = [ ./hardware-configuration.nix ];
+  imports = [./hardware-configuration.nix];
 
   boot = {
     loader = {
@@ -26,13 +29,11 @@ in {
     };
 
     initrd = {
-      luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".device =
-        "/dev/disk/by-uuid/23b20980-eb1e-4390-b706-f0f42a623ddf";
-      luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".keyFile =
-        "/crypto_keyfile.bin";
-      secrets = { "/crypto_keyfile.bin" = null; };
+      luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".device = "/dev/disk/by-uuid/23b20980-eb1e-4390-b706-f0f42a623ddf";
+      luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".keyFile = "/crypto_keyfile.bin";
+      secrets = {"/crypto_keyfile.bin" = null;};
     };
-    kernelParams = [ "intel_idle.max_cstate=4" ];
+    kernelParams = ["intel_idle.max_cstate=4"];
     kernelPackages = pkgs.linuxPackages;
   };
   security.pki.certificates = [
@@ -93,15 +94,15 @@ in {
     hostName = "stan";
 
     hosts = {
-      "172.16.30.253" = [ "proxmox-02.vm.calyptix.local" ];
-      "127.0.0.1" = [ "borg.calyptix.dev" "localhost" ];
-      "192.168.122.249" = [ "arst.arst" "vm" ];
-      "192.168.54.1" = [ "router.arst" "router" ];
+      "172.16.30.253" = ["proxmox-02.vm.calyptix.local"];
+      "127.0.0.1" = ["borg.calyptix.dev" "localhost"];
+      "192.168.122.249" = ["arst.arst" "vm"];
+      "192.168.54.1" = ["router.arst" "router"];
     };
 
     networkmanager.enable = true;
     firewall = {
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [22];
       checkReversePath = "loose";
     };
   };
@@ -135,22 +136,23 @@ in {
 
   systemd.services = {
     "tailscale-init" = {
-      wantedBy = [ "tailscaled.service" ];
-      after = [ "tailscaled.service" ];
+      wantedBy = ["tailscaled.service"];
+      after = ["tailscaled.service"];
       serviceConfig = {
-        ExecStart =
-          "${pkgs.tailscale}/bin/tailscale up --auth-key file://${config.sops.secrets.tskey.path}";
+        ExecStart = "${pkgs.tailscale}/bin/tailscale up --auth-key file://${config.sops.secrets.tskey.path}";
       };
     };
   };
 
   users.users.root = userBase;
-  users.users.abieber = {
-    isNormalUser = true;
-    description = "Aaron Bieber";
-    shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-  } // userBase;
+  users.users.abieber =
+    {
+      isNormalUser = true;
+      description = "Aaron Bieber";
+      shell = pkgs.zsh;
+      extraGroups = ["networkmanager" "wheel" "libvirtd"];
+    }
+    // userBase;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -180,7 +182,7 @@ in {
     zig
     rustdesk
 
-    (callPackage ../../pkgs/zutty.nix { })
+    (callPackage ../../pkgs/zutty.nix {})
   ];
 
   virtualisation.libvirtd.enable = true;
@@ -193,7 +195,7 @@ in {
   tsPeerix = {
     enable = false;
     privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
-    interfaces = [ "wlp170s0" "ztksevmpn3" ];
+    interfaces = ["wlp170s0" "ztksevmpn3"];
   };
 
   services = {
@@ -213,11 +215,9 @@ in {
   };
 
   programs.ssh.knownHosts = {
-    "[192.168.122.249]:7022".publicKey =
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJd1dn/0YmUEInXbNTpUFNwzDrP0/FoMEJJc+3yYkZaCMrT0WPS5rFlkWJZ8mQf8udnfUWnTZzpDwIvXpfMQqf0=";
+    "[192.168.122.249]:7022".publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJd1dn/0YmUEInXbNTpUFNwzDrP0/FoMEJJc+3yYkZaCMrT0WPS5rFlkWJZ8mQf8udnfUWnTZzpDwIvXpfMQqf0=";
   };
 
   system.autoUpgrade.allowReboot = false;
   system.stateVersion = "22.05"; # Did you read the comment?
-
 }

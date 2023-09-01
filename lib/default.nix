@@ -1,35 +1,48 @@
-{ lib, writeTextFile, linkFarm, ... }:
-let
-  inherit (builtins)
-    toString readFile fromJSON filter concatStringsSep map;
+{
+  lib,
+  writeTextFile,
+  linkFarm,
+  ...
+}: let
+  inherit
+    (builtins)
+    toString
+    readFile
+    fromJSON
+    filter
+    concatStringsSep
+    map
+    ;
   makeListReFile = name: list:
     writeTextFile {
       inherit name;
       text = concatStringsSep "\n" (map (h: ".*(^|\\.)${h}$") list);
     };
-  getPrStatus = pr:
-    let
-      prstr = toString pr;
-      prStatus = fromJSON (readFile ../pull_requests/${prstr}.json);
-    in prStatus;
+  getPrStatus = pr: let
+    prstr = toString pr;
+    prStatus = fromJSON (readFile ../pull_requests/${prstr}.json);
+  in
+    prStatus;
   prIsOpen = {
-    pkg = pr: localPkg: upstreamPkg:
-      let prStatus = getPrStatus pr;
-      in if prStatus.status == "open" then
-        localPkg
+    pkg = pr: localPkg: upstreamPkg: let
+      prStatus = getPrStatus pr;
+    in
+      if prStatus.status == "open"
+      then localPkg
       else
         lib.warn
         "PR: ${toString pr} (${prStatus.title}) is complete, ignoring pkg..."
         upstreamPkg;
 
-    overlay = pr: overlay:
-      let prStatus = getPrStatus pr;
-      in if pr == 0 || prStatus.status == "open" then
-        overlay
+    overlay = pr: overlay: let
+      prStatus = getPrStatus pr;
+    in
+      if pr == 0 || prStatus.status == "open"
+      then overlay
       else
         lib.warn "PR: ${
           toString pr
-        } (${prStatus.title}) is complete, ignoring overlay..." (_: _: { });
+        } (${prStatus.title}) is complete, ignoring overlay..." (_: _: {});
   };
 
   osRuleMaker = {
@@ -55,7 +68,7 @@ let
         type = "lists";
         operand = "lists";
         sensitive = false;
-        list = [ { } { } ];
+        list = [{} {}];
       };
     };
     makeREList = name: action: list: {
@@ -67,11 +80,13 @@ let
         type = "lists";
         operand = "lists.domains_regexp";
         sensitive = false;
-        data = linkFarm "${name}-${action}-dir" [{
-          name = "${name}-${action}-file";
-          path = (makeListReFile "${name}-${action}-list" list);
-        }];
-        list = [ ];
+        data = linkFarm "${name}-${action}-dir" [
+          {
+            name = "${name}-${action}-file";
+            path = makeListReFile "${name}-${action}-list" list;
+          }
+        ];
+        list = [];
       };
     };
   };
@@ -91,7 +106,7 @@ let
     value = {
       script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt path;
-      serviceConfig = { Type = "oneshot"; };
+      serviceConfig = {Type = "oneshot";};
     };
   };
   jobToService = job: {
@@ -132,16 +147,25 @@ let
   # Set our configurationRevison based on the status of our git repo.
   # If the repo is dirty, disable autoUpgrade as it means we are
   # testing something.
-  buildVer = self:
-    let state = self.rev or "DIRTY";
-    in {
-      system.configurationRevision = state;
-      system.autoUpgrade.enable = lib.mkDefault (state != "DIRTY");
-    };
-
-  xinlib = {
-    inherit buildVer mkCronScript jobToUserService jobToService buildShell
-      prIsOpen filterList todo osRuleMaker;
+  buildVer = self: let
+    state = self.rev or "DIRTY";
+  in {
+    system.configurationRevision = state;
+    system.autoUpgrade.enable = lib.mkDefault (state != "DIRTY");
   };
 
-in xinlib
+  xinlib = {
+    inherit
+      buildVer
+      mkCronScript
+      jobToUserService
+      jobToService
+      buildShell
+      prIsOpen
+      filterList
+      todo
+      osRuleMaker
+      ;
+  };
+in
+  xinlib

@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   programs = {
     firefox = {
       enable = true;
@@ -13,38 +11,31 @@
         ExtensionSettings = {
           "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
             "installation_mode" = "force_installed";
-            "install_url" =
-              "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
           };
           "custom-new-tab-page@mint.as" = {
             "installation_mode" = "force_installed";
-            "install_url" =
-              "https://addons.mozilla.org/firefox/downloads/latest/custom-new-tab-page/latest.xpi";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/custom-new-tab-page/latest.xpi";
           };
           "simple-tab-groups@drive4ik" = {
             "installation_mode" = "force_installed";
-            "install_url" =
-              "https://addons.mozilla.org/firefox/downloads/latest/simple-tab-groups/latest.xpi";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/simple-tab-groups/latest.xpi";
           };
           "{07c6b8e1-94f7-4bbf-8e91-26c0a8992ab5}" = {
             "installation_mode" = "force_installed";
-            "install_url" =
-              "https://addons.mozilla.org/firefox/downloads/latest/promnesia/latest.xpi";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/promnesia/latest.xpi";
           };
           "7esoorv3@alefvanoon.anonaddy.me" = {
             "installation_mode" = "force_installed";
-            "install_url" =
-              "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
           };
           "{b86e4813-687a-43e6-ab65-0bde4ab75758}" = {
             "installation_mode" = "force_installed";
-            "install_url" =
-              "https://addons.mozilla.org/firefox/downloads/latest/localcdn-fork-of-decentraleyes/latest.xpi";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/localcdn-fork-of-decentraleyes/latest.xpi";
           };
           "uBlock0@raymondhill.net" = {
             "installation_mode" = "force_installed";
-            "install_url" =
-              "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
           };
         };
         FirefoxHome = {
@@ -119,8 +110,7 @@
         "browser.newtabpage.activity-stream.showSponsored" = false;
         "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
         "browser.newtabpage.activity-stream.telemetry" = false;
-        "browser.newtabpage.activity-stream.telemetry.structuredIngestion.endpoint" =
-          "http://127.0.0.1/null";
+        "browser.newtabpage.activity-stream.telemetry.structuredIngestion.endpoint" = "http://127.0.0.1/null";
         "browser.newtabpage.enabled" = false;
         "browser.newtabpage.pinned" = false;
         "browser.promo.focus.enabled" = false;

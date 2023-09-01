@@ -24,11 +24,12 @@ let
   tailscale = _: super: {
     tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
       buildGoModule = args:
-        super.buildGo120Module (args // {
-          src = super.fetchFromGitHub fetchArgs;
-          inherit vendorHash ldflags version;
-        });
+        super.buildGo120Module (args
+          // {
+            src = super.fetchFromGitHub fetchArgs;
+            inherit vendorHash ldflags version;
+          });
     };
   };
-
-in tailscale
+in
+  tailscale

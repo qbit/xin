@@ -1,4 +1,8 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 with lib; {
   options = {
     colemak = {
@@ -12,7 +16,7 @@ with lib; {
   };
 
   config = mkIf config.colemak.enable {
-    console = { keyMap = "colemak"; };
+    console = {keyMap = "colemak";};
     services.xserver = {
       layout = "us";
       xkbVariant = "colemak";

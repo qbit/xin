@@ -1,5 +1,5 @@
-{ tmux }:
-let tmuxBin = "${tmux}/bin/tmux";
+{tmux}: let
+  tmuxBin = "${tmux}/bin/tmux";
 in ''
   #!/usr/bin/env sh
 
