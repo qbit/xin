@@ -18,9 +18,11 @@
     inherit gosignify;
     inherit (pkgs) curl;
   });
+  genPatches = pkgs.callPackage ./gen-patches.nix {};
 in {
   environment.systemPackages = with pkgs; [
     checkRestart
+    genPatches
     ix
     sfetch
     tstart

@@ -1,21 +1,21 @@
 {
   lib,
-  buildGo119Module,
+  buildGoModule,
   fetchFromGitHub,
   go,
   ffmpeg,
   ...
 }: let
-  gotosocialVersion = "0.9.0";
-  gtswaHash = "sha256:1yxyl8q0dqpv3cqzxj0anh8rskk3rmw9mjnjkm4svc0vgaph1y1s";
-  gtssHash = "sha256-UZRIQTdVESCYv2KW7HUS2c4bS5qnB7wdwiYAgEJ60fU=";
+  gotosocialVersion = "0.11.0";
+  gtswaHash = "sha256:0qbs4a3wblrlcr1l5155p54vdd6hn2szkdns99wxjhjr8kw6dbil";
+  gtssHash = "sha256-qbq5pDvG2L1s6BG+sh7eagcFNH/DWyANMQaAl2WcQzE=";
   gotosocialWebAssets = builtins.fetchurl {
     url = "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
     sha256 = gtswaHash;
   };
 in
   with lib;
-    buildGo119Module rec {
+    buildGoModule rec {
       pname = "gotosocial";
       version = gotosocialVersion;
 

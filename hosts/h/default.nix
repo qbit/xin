@@ -2,6 +2,7 @@
   config,
   pkgs,
   isUnstable,
+  inputs,
   ...
 }:
 with pkgs; let
@@ -35,6 +36,11 @@ with pkgs; let
     allow	10.20.30.1/32;
   '';
 
+  mtxCfg = {
+    port = 8009;
+    address = "127.0.0.1";
+  };
+
   matrixServer = "tapenet.org";
   matrixClientConfig = {
     "m.homeserver".base_url = "https://${matrixServer}:443";
@@ -53,7 +59,7 @@ with pkgs; let
   };
   mkMatrixLoc = {
     proxyWebsockets = true;
-    proxyPass = "http://127.0.0.1:8009";
+    proxyPass = "http://${mtxCfg.address}:${toString mtxCfg.port}";
   };
 in {
   _module.args.isUnstable = false;
@@ -143,6 +149,11 @@ in {
     pr_status_env = {
       mode = "400";
       owner = config.services.tsrevprox.user;
+      sopsFile = config.xin-secrets.h.services;
+    };
+    writefreely = {
+      mode = "400";
+      owner = config.services.writefreely.user;
       sopsFile = config.xin-secrets.h.services;
     };
   };
@@ -257,6 +268,21 @@ in {
   };
 
   services = {
+    heisenbridge = {
+      enable = true;
+      homeserver = "http://${mtxCfg.address}:${toString mtxCfg.port}";
+      owner = "@qbit:tapenet.org";
+      namespaces = {
+        users = [
+          {
+            regex = "@irc_.*";
+            exclusive = true;
+          }
+        ];
+        aliases = [];
+        rooms = [];
+      };
+    };
     tsrevprox = {
       enable = true;
       reverseName = "pr-status";
@@ -390,12 +416,34 @@ in {
             "/var/lib/gotosocial"
             "/var/lib/mcchunkie"
             "/var/lib/taskserver"
+            "/var/lib/heisenbridge"
+            "/var/lib/writefreely"
           ];
 
           timerConfig = {OnCalendar = "00:05";};
 
           pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10"];
         };
+      };
+    };
+
+    writefreely = {
+      enable = true;
+      host = "arst.lol";
+      settings = {
+        server.port = 3287;
+        app = {
+          single_user = true;
+          min_username_len = 4;
+          federation = true;
+          monetization = false;
+          wf_modesty = true;
+        };
+      };
+      database.migrate = true;
+      admin = {
+        name = "qbit";
+        initialPasswordFile = "${config.sops.secrets.writefreely.path}";
       };
     };
 
@@ -470,6 +518,22 @@ in {
             proxyPass = "http://localhost:9009/weechat";
           };
         };
+        "arst.lol" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/arst.lol";
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:${
+              toString config.services.writefreely.settings.server.port
+            }";
+          };
+        };
+        #"embracethe.lol" = {
+        #  forceSSL = true;
+        #  enableACME = true;
+        #  root = "/var/www/embracethe.lol";
+        #};
         "notes.suah.dev" = {
           forceSSL = true;
           enableACME = true;
@@ -746,6 +810,10 @@ in {
         "https://matrix.to/#/#go-lang:matrix.org"
         "https://matrix.to/#/#plan9:matrix.org"
         "https://matrix.to/#/#nix-openbsd:tapenet.org"
+        "https://matrix.to/#/#cobug:tapenet.org"
+        "https://matrix.to/#/#gosec:tapenet.org"
+        "https://matrix.to/#/#gophers-offtopic:matrix.org"
+        "https://matrix.to/#/#devious:tapenet.org"
       ];
       settings = {
         verboseLogging = false;
@@ -785,6 +853,9 @@ in {
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
         plugins = with config.services.matrix-synapse.package.plugins; [matrix-synapse-mjolnir-antispam];
+        app_service_config_files = [
+          "/var/lib/heisenbridge/registration.yml"
+        ];
         database = {
           name = "psycopg2";
           args = {
@@ -794,8 +865,8 @@ in {
         };
         listeners = [
           {
-            bind_addresses = ["127.0.0.1"];
-            port = 8009;
+            inherit (mtxCfg) port;
+            bind_addresses = [mtxCfg.address];
             resources = [
               {
                 compress = true;

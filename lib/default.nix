@@ -24,6 +24,12 @@
   in
     prStatus;
   prIsOpen = {
+    option = pr: a: let
+      prStatus = getPrStatus pr;
+    in
+      if prStatus.status == "open"
+      then a
+      else {};
     pkg = pr: localPkg: upstreamPkg: let
       prStatus = getPrStatus pr;
     in
@@ -128,6 +134,7 @@
       '';
       nativeBuildInputs = with pkgs; [
         curl
+        dasel
         deadnix
         git
         git-bug
@@ -136,6 +143,7 @@
         nil
         nix-diff
         nix-output-monitor
+        nix-prefetch-github
         shfmt
         sops
         ssh-to-age

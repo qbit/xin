@@ -30,7 +30,7 @@
       proxy_set_header Connection "";
       proxy_http_version 1.1;
 
-      proxy_pass http://ftp.usa.openbsd.org;
+      proxy_pass http://cdn.openbsd.org;
     '';
   };
 
@@ -46,10 +46,21 @@
   };
 in {
   _module.args.isUnstable = false;
-  imports = [./hardware-configuration.nix];
+  imports = [
+    ./hardware-configuration.nix
+    "${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
+  ];
 
   sops.secrets = {
-    photoprism_admin_password = {sopsFile = config.xin-secrets.box.services;};
+    #nextcloud_db_pass = {
+    #  owner = config.users.users.nextcloud.name;
+    #  sopsFile = config.xin-secrets.box.services;
+    #};
+    #nextcloud_admin_pass = {
+    #  owner = config.users.users.nextcloud.name;
+    #  sopsFile = config.xin-secrets.box.services;
+    #};
+    #photoprism_admin_password = {sopsFile = config.xin-secrets.box.services;};
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.services;
@@ -80,6 +91,10 @@ in {
   sops.secrets.bw_key = mkNginxSecret;
   sops.secrets.invidious_cert = mkNginxSecret;
   sops.secrets.invidious_key = mkNginxSecret;
+  sops.secrets.readarr_cert = mkNginxSecret;
+  sops.secrets.readarr_key = mkNginxSecret;
+  sops.secrets.home_cert = mkNginxSecret;
+  sops.secrets.home_key = mkNginxSecret;
 
   boot.supportedFilesystems = ["zfs"];
   boot.loader.grub.copyKernels = true;
@@ -97,6 +112,7 @@ in {
 
     hosts = {
       "127.0.0.1" = ["git.tapenet.org"];
+      "10.6.0.15" = ["jelly.bold.daemon"];
       "100.122.61.43" = ["nix-binary-cache.humpback-trout.ts.net"];
     };
     interfaces.enp7s0 = {useDHCP = true;};
@@ -114,7 +130,17 @@ in {
       };
       allowedTCPPorts =
         config.services.openssh.ports
-        ++ [80 443 config.services.gitea.settings.server.SSH_PORT];
+        ++ [
+          80
+          443
+          config.services.gitea.settings.server.SSH_PORT
+          21063 #homekit
+          21064 #homekit
+          1883 # mosquitto
+        ];
+      allowedUDPPorts = [
+        5353 #homekit
+      ];
       allowedUDPPortRanges = [
         {
           from = 60000;
@@ -144,16 +170,27 @@ in {
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [
+      (_: _: {
+        inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
+      })
+    ];
+  };
+
+  disabledModules = [
+    "services/home-automation/home-assistant.nix"
+  ];
 
   environment.systemPackages = with pkgs; [
-    nixfmt
     tmux
     mosh
     apg
     git
     signify
     glowing-bear
+    rtl_433
 
     (callPackage ../../pkgs/athens.nix {inherit isUnstable;})
   ];
@@ -163,64 +200,174 @@ in {
     defaults.email = "aaron@bolddaemon.com";
   };
 
-  # for photoprism
-  #users.groups.photoprism = {
-  #  name = "photoprism";
-  #  gid = 986;
-  #};
-  #users.users.photoprism = {
-  #  uid = 991;
-  #  name = "photoprism";
-  #  isSystemUser = true;
-  #  hashedPassword = null;
-  #  group = "photoprism";
-  #  shell = "/bin/sh";
-  #  openssh.authorizedKeys.keys = pubKeys;
-  #};
-
-  #virtualisation.podman = {
-  #  enable = false;
-  #  #dockerCompat = true;
-  #};
-  #virtualisation.oci-containers.backend = "podman";
-  #virtualisation.oci-containers.containers = {
-  #  #kativa = {
-  #  #  autoStart = true;
-  #  #  ports = [ "127.0.0.1:5000:5000" ];
-  #  #  image = "kizaing/kavita:0.5.2";
-  #  #  volumes = [ "/media/books:/books" "/media/books/config:/kativa/config" ];
-  #  #};
-  #  photoprism = {
-  #    #user = "${toString config.users.users.photoprism.name}:${toString config.users.groups.photoprism.name}";
-  #    autoStart = true;
-  #    ports = [ "127.0.0.1:2343:2343" ];
-  #    image = "photoprism/photoprism:${photoPrismTag}";
-  #    workdir = "/photoprism";
-  #    volumes = [
-  #      "/media/pictures/photoprism/storage:/photoprism/storage"
-  #      "/media/pictures/photoprism/originals:/photoprism/originals"
-  #      "/media/pictures/photoprism/import:/photoprism/import"
-  #    ];
-  #    environment = {
-  #      PHOTOPRISM_HTTP_PORT = "2343";
-  #      PHOTOPRISM_UPLOAD_NSFW = "true";
-  #      PHOTOPRISM_DETECT_NSFW = "false";
-  #      PHOTOPRISM_UID = "${toString config.users.users.photoprism.uid}";
-  #      PHOTOPRISM_GID = "${toString config.users.groups.photoprism.gid}";
-  #      #PHOTOPRISM_SITE_URL = "https://photos.tapenet.org/";
-  #      PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
-  #      PHOTOPRISM_SETTINGS_HIDDEN = "false";
-  #      PHOTOPRISM_DATABASE_DRIVER = "sqlite";
-  #    };
-  #  };
-  #};
-
   users.groups.media = {
     name = "media";
-    members = ["qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones"];
+    members = ["qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" "rtorrent" "readarr"];
   };
 
+  users.groups.photos = {
+    name = "photos";
+    members = ["qbit"];
+  };
+
+  users.groups.photoprism = {
+    name = "photoprism";
+    gid = 986;
+  };
+  users.users.photoprism = {
+    uid = 991;
+    name = "photoprism";
+    isSystemUser = true;
+    hashedPassword = null;
+    group = "photoprism";
+    shell = "/bin/sh";
+    openssh.authorizedKeys.keys = pubKeys;
+  };
+
+  systemd.services.photoprism = {
+    serviceConfig = {
+      WorkingDirectory = lib.mkForce "/media/pictures/photoprism";
+    };
+    preStart = lib.mkForce "";
+  };
+
+  hardware.rtl-sdr.enable = true;
+
   services = {
+    mosquitto = {
+      enable = true;
+      listeners = [
+        {
+          acl = ["pattern readwrite #"];
+          omitPasswordAuth = true;
+          settings.allow_anonymous = true;
+        }
+      ];
+    };
+
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
+    home-assistant = {
+      enable = true;
+      extraPackages = python3Packages:
+        with python3Packages; [
+          pyipp
+          pymetno
+        ];
+      extraComponents = [
+        "airthings"
+        "airthings_ble"
+        "airvisual"
+        "airvisual_pro"
+        "apple_tv"
+        #"aprs"
+        "brother"
+        "esphome"
+        "ffmpeg"
+        "homekit"
+        "homekit_controller"
+        "icloud"
+        "jellyfin"
+        "logger"
+        "met"
+        "mqtt"
+        "nextdns"
+        "openevse"
+        "prometheus"
+        "pushover"
+        "rest"
+        "snmp"
+        "zeroconf"
+      ];
+      config = {
+        mqtt.sensor = [
+        ];
+        logger = {
+          default = "warning";
+          logs = {
+            #"homeassistant.components.aprs" = "debug";
+          };
+        };
+        "automation manual" = [
+        ];
+        "automation ui" = "!include automations.yaml";
+        rest = [
+          {
+            resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
+            sensor = {
+              name = "rtl_433_temperature_celsius";
+              value_template = "{{value_json.data.result[0].value[1]}}";
+            };
+          }
+          {
+            resource = "http://127.0.0.1:9001/api/v1/query?query=wstation_temp_c";
+            sensor = {
+              name = "wstation_garage_temp_c";
+              value_template = "{{value_json.data.result[0].value[1]}}";
+            };
+          }
+        ];
+        device_tracker = [
+        ];
+        default_config = {};
+        http = {
+          use_x_forwarded_for = true;
+          server_host = "127.0.0.1";
+          trusted_proxies = "127.0.0.1";
+        };
+        homeassistant = {
+          name = "Home";
+          time_zone = "America/Denver";
+          temperature_unit = "C";
+          unit_system = "metric";
+          longitude = -104.72;
+          latitude = 38.35;
+        };
+      };
+    };
+    #photoprism = {
+    #  enable = true;
+    #  port = 2343;
+    #  storagePath = "/media/pictures/photoprism/storage";
+    #  originalsPath = "/media/pictures/photoprism/originals";
+    #  importPath = "/media/pictures/photoprism/import";
+    #  settings = {
+    #    PHOTOPRISM_UPLOAD_NSFW = "true";
+    #    PHOTOPRISM_DETECT_NSFW = "false";
+    #    PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
+    #    PHOTOPRISM_SETTINGS_HIDDEN = "false";
+    #    PHOTOPRISM_DATABASE_DRIVER = "sqlite";
+    #  };
+    #};
+    #nextcloud = {
+    #  enable = true;
+    #  enableBrokenCiphersForSSE = false;
+    #  hostName = "box.humpback-trout.ts.net";
+    #  home = "/media/nextcloud";
+    #  https = true;
+
+    #  package = pkgs.nextcloud27;
+    #  extraApps = with config.services.nextcloud.package.packages.apps; {
+    #    inherit bookmarks calendar contacts notes tasks twofactor_webauthn;
+    #  };
+
+    #  extraAppsEnable = true;
+
+    #  config = {
+    #    overwriteProtocol = "https";
+
+    #    dbtype = "pgsql";
+    #    dbuser = "nextcloud";
+    #    dbhost = "/run/postgresql";
+    #    dbname = "nextcloud";
+    #    dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
+
+    #    adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
+    #    adminuser = "admin";
+    #  };
+    #};
     invidious = {
       enable = true;
       settings = {
@@ -255,6 +402,19 @@ in {
 
     tor.enable = true;
 
+    transmission = {
+      enable = true;
+      group = "media";
+      downloadDirPermissions = "770";
+      settings = {
+        download-dir = "/media/downloads/torrents";
+      };
+    };
+    readarr = {
+      enable = true;
+      dataDir = "/media/books";
+      group = "media";
+    };
     sonarr.enable = true;
     radarr.enable = true;
     lidarr.enable = true;
@@ -288,6 +448,7 @@ in {
 
     calibre-web = {
       enable = true;
+      group = "media";
       options = {enableBookUploading = true;};
       listen.port = 8909;
       listen.ip = "127.0.0.1";
@@ -446,9 +607,33 @@ in {
         };
 
         nginx = {enable = true;};
+
+        rtl_433 = {
+          enable = true;
+          group = "plugdev";
+          ids = [
+            {
+              id = 55;
+              name = "LaCrosse-TX141Bv3";
+              location = "Kitchen";
+            }
+          ];
+        };
       };
 
       scrapeConfigs = [
+        {
+          job_name = "rtl_433";
+          static_configs = [
+            {
+              targets = [
+                "127.0.0.1:${
+                  toString config.services.prometheus.exporters.rtl_433.port
+                }"
+              ];
+            }
+          ];
+        }
         {
           job_name = "box";
           static_configs = [
@@ -483,11 +668,7 @@ in {
         }
         {
           job_name = "namish";
-          static_configs = [{targets = ["10.6.0.2:9100"];}];
-        }
-        {
-          job_name = "router";
-          static_configs = [{targets = ["10.6.0.1:9100"];}];
+          static_configs = [{targets = ["10.200.0.100:9100"];}];
         }
         {
           job_name = "nginx";
@@ -522,7 +703,7 @@ in {
       stateDir = "/media/git";
       appName = "Tape:neT";
 
-      package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
+      package = inputs.unstable.legacyPackages.${pkgs.system}.forgejo;
 
       lfs.enable = true;
 
@@ -592,6 +773,18 @@ in {
       '';
 
       virtualHosts = {
+        "home.bold.daemon" = {
+          forceSSL = true;
+          sslCertificateKey = "${config.sops.secrets.home_key.path}";
+          sslCertificate = "${config.sops.secrets.home_cert.path}";
+          extraConfig = ''
+            proxy_buffering off;
+          '';
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8123";
+            proxyWebsockets = true;
+          };
+        };
         "invidious.bold.daemon" = {
           forceSSL = true;
           sslCertificateKey = "${config.sops.secrets.invidious_key.path}";
@@ -747,6 +940,19 @@ in {
             '';
           };
         };
+        "readarr.bold.daemon" = {
+          sslCertificateKey = "${config.sops.secrets.readarr_key.path}";
+          sslCertificate = "${config.sops.secrets.readarr_cert.path}";
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://localhost:8787";
+            proxyWebsockets = true;
+            extraConfig = ''
+              ${httpAllow}
+               deny	all;
+            '';
+          };
+        };
 
         "graph.bold.daemon" = {
           sslCertificateKey = "${config.sops.secrets.graph_key.path}";
@@ -818,7 +1024,14 @@ in {
       enable = true;
       dataDir = "/db/postgres";
 
-      ensureDatabases = ["nextcloud" "gitea"];
+      #enableTCPIP = true;
+      #authentication = pkgs.lib.mkOverride 14 ''
+      #  local all all trust
+      #  host all all 127.0.0.1/32 trust
+      #  host all all ::1/128 trust
+      #'';
+
+      ensureDatabases = ["nextcloud" "gitea" "invidious"];
       ensureUsers = [
         {
           name = "nextcloud";

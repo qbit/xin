@@ -20,7 +20,17 @@ with lib; {
     services.xserver = {
       layout = "us";
       xkbVariant = "colemak";
-      xkbOptions = "ctrl:swapcaps";
+      xkbOptions = "ctrl:swapcaps,compose:ralt";
+      inputClassSections = [
+        ''
+          Identifier "precursor"
+          MatchIsKeyboard "on"
+          MatchProduct "Precursor"
+          MatchVendor "Kosagi"
+          Option "XkbLayout" "us"
+          Option "XkbVariant" "basic"
+        ''
+      ];
     };
   };
 }

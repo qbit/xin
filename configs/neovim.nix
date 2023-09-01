@@ -108,10 +108,12 @@ with pkgs; let
   };
 
   baseVimPackages = with vimPlugins; [
+    ale
     elm-vim
     fugitive
     fzf-vim
     haskell-vim
+    neoformat
     nvim-compe
     nvim-lspconfig
     nvim-tree-lua
@@ -145,6 +147,7 @@ with pkgs; let
     else baseVimPackages ++ [];
 in {
   environment.systemPackages = with pkgs; [
+    alejandra
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
@@ -159,6 +162,7 @@ in {
     luajitPackages.lua-lsp
     manix
     nodejs
+    nodePackages.prettier
     nodePackages.typescript-language-server
     perl
     perlPackages.PerlCritic

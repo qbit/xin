@@ -12,24 +12,20 @@ let
     "-X tailscale.com/version.shortStamp=${version}"
   ];
 
-  #tailscale = _: super: {
-  #  tailscale = super.tailscale.overrideAttrs (_: {
-  #    version = "1.44.0";
-  #    src = super.fetchFromGitHub fetchArgs
-  #    inherit vendorHash ldflags version;
-  #    ];
-  #  });
-  #};
-
   tailscale = _: super: {
-    tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
-      buildGoModule = args:
-        super.buildGo120Module (args
-          // {
-            src = super.fetchFromGitHub fetchArgs;
-            inherit vendorHash ldflags version;
-          });
-    };
+    tailscale = super.tailscale.overrideAttrs (_: {
+      src = super.fetchFromGitHub fetchArgs;
+      inherit vendorHash ldflags version;
+    });
   };
+  #tailscale = _: super: {
+  #  tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
+  #    buildGoModule = args:
+  #      super.buildGo120Module (args // {
+  #        src = super.fetchFromGitHub fetchArgs;
+  #        inherit vendorHash ldflags version;
+  #      });
+  #  };
+  #};
 in
   tailscale

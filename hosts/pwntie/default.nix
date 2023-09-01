@@ -1,11 +1,20 @@
-{pkgs, ...}: let
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix {};
+{
+  pkgs,
+  config,
+  ...
+}: let
+  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
 in {
   _module.args.isUnstable = false;
-  imports = [./hardware-configuration.nix];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/rtlamr2mqtt.nix
+  ];
+
+  hardware.rtl-sdr.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -38,19 +47,24 @@ in {
     PATH = ["\${XDG_BIN_HOME}"];
   };
 
-  users.users.qbit.extraGroups = ["dialout" "libvirtd" "docker"];
+  users.users.qbit.extraGroups = ["dialout" "libvirtd" "docker" "plugdev"];
 
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    rtl-sdr
+    direwolf
+    (callPackage ../../pkgs/rtlamr.nix {})
+  ];
 
-  programs = {
-    steam.enable = true;
-    _1password.enable = true;
-    _1password-gui = {
-      enable = true;
-      polkitPolicyOwners = ["qbit"];
-    };
-    dconf.enable = true;
-  };
+  #programs = {
+  #  steam.enable = true;
+  #  _1password.enable = true;
+  #  _1password-gui = {
+  #    enable = true;
+  #    polkitPolicyOwners = [ "qbit" ];
+  #  };
+  #  dconf.enable = true;
+  #};
 
   xinCI = {
     user = "qbit";
@@ -58,11 +72,45 @@ in {
   };
 
   services = {
-    emacs = {
+    rtlamr2mqtt = {
       enable = true;
-      package = myEmacs;
-      install = true;
+      configuration = {
+        general = {
+          device_ids_path = "${config.services.rtlamr2mqtt.package}/sdl_ids.txt";
+          sleep_for = 0;
+          verbosity = "debug";
+          tickle_rtl_tcp = false;
+          device_id = "0bda:2838";
+        };
+        mqtt = {
+          host = "10.6.0.15";
+          port = 1883;
+          tls_enabled = false;
+          ha_autodiscovery = true;
+          base_topec = "rtlamr";
+        };
+        custom_parameters = {
+          rtltcp = "-s 2048000";
+          rtlamr = "-unique=true -symbollength=32";
+        };
+        meters = [
+          {
+            id = 48582066;
+            protocol = "scm";
+            name = "gas_meter";
+            unit_of_measurement = "ft³";
+            icon = "mdi:gas-burner";
+            device_class = "gas";
+            state_class = "total_increasing";
+          }
+        ];
+      };
     };
+    #emacs = {
+    #  enable = true;
+    #  package = myEmacs;
+    #  install = true;
+    #};
     fwupd = {
       enable = true;
       enableTestRemote = true;

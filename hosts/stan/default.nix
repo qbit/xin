@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   pkgs,
   ...
 }: let
@@ -12,11 +13,13 @@
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix {};
   peerixUser =
     if builtins.hasAttr "peerix" config.users.users
     then config.users.users.peerix.name
     else "root";
+  doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
+    doomPrivateDir = ../../configs/doom.d;
+  };
 in {
   _module.args.isUnstable = true;
   imports = [./hardware-configuration.nix];
@@ -97,7 +100,7 @@ in {
       "172.16.30.253" = ["proxmox-02.vm.calyptix.local"];
       "127.0.0.1" = ["borg.calyptix.dev" "localhost"];
       "192.168.122.249" = ["arst.arst" "vm"];
-      "192.168.54.1" = ["router.arst" "router"];
+      "192.168.8.194" = ["router.arst" "router"];
     };
 
     networkmanager.enable = true;
@@ -111,7 +114,6 @@ in {
 
   kde.enable = true;
   defaultUsers.enable = false;
-  jetbrains.enable = true;
   sshFidoAgent.enable = true;
 
   sops.secrets = {
@@ -159,7 +161,7 @@ in {
   environment.systemPackages = with pkgs; [
     barrier
     bitwarden
-    brave
+    doom-emacs
     fzf
     google-chrome-dev
     ispell
@@ -187,6 +189,8 @@ in {
 
   virtualisation.libvirtd.enable = true;
 
+  programs.git.config.safe.directory = "/home/abieber/aef100";
+
   programs = {
     dconf.enable = true;
     zsh.enable = true;
@@ -199,11 +203,6 @@ in {
   };
 
   services = {
-    emacs = {
-      enable = true;
-      package = myEmacs;
-      install = true;
-    };
     printing.enable = true;
     fwupd.enable = true;
     unifi.enable = false;
@@ -215,7 +214,7 @@ in {
   };
 
   programs.ssh.knownHosts = {
-    "[192.168.122.249]:7022".publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJd1dn/0YmUEInXbNTpUFNwzDrP0/FoMEJJc+3yYkZaCMrT0WPS5rFlkWJZ8mQf8udnfUWnTZzpDwIvXpfMQqf0=";
+    "[192.168.122.249]:7022".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
   };
 
   system.autoUpgrade.allowReboot = false;

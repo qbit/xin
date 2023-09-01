@@ -62,21 +62,24 @@ in
           pcscd.enable = true;
         };
 
+        documentation.enable = true;
+
         # TODO: TEMP FIX
         systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
           lib.mkForce ["" "${pkgs.networkmanager}/bin/nm-online -q"];
         fonts.fonts = with pkgs; [
           go-font
-          (callPackage ../pkgs/kurinto.nix {})
+          #(callPackage ../pkgs/kurinto.nix {})
         ];
         sound.enable = true;
         environment.systemPackages = with pkgs; (xinlib.filterList [
           arcanPackages.all-wrapped
           bc
           black
-          brave
           drawterm
+          exiftool
           go-font
+          govulncheck
           hpi
           pcsctools
           promnesia
@@ -85,7 +88,6 @@ in
           vlc
           zeal
 
-          (callPackage ../pkgs/govulncheck.nix {})
           (callPackage ../configs/helix.nix {})
         ]);
 

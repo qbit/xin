@@ -7,22 +7,45 @@
   #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
   #openssh = import ./openssh.nix;
   #obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
-  tailscale = prIsOpen.overlay 239176 import ./tailscale.nix;
-  #jetbrains = prIsOpen 232308 (import ./jetbrains.nix);
-  tidal-hifi = prIsOpen.overlay 238572 (import ./tidal-hifi.nix);
-  matrix-synapse = prIsOpen.overlay 238845 (import ./matrix-synapse.nix);
-  nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
+  #tailscale = prIsOpen.overlay 239176 import ./tailscale.nix;
+  #tidal-hifi = prIsOpen.overlay 239732 (import ./tidal-hifi.nix);
+  matrix-synapse = prIsOpen.overlay 252544 (import ./matrix-synapse.nix);
+  #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
+  heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
+  #rex = prIsOpen.overlay 0 (import ./rex.nix);
 in {
   nixpkgs.overlays =
     if isUnstable
     then [
-      tailscale
-      tidal-hifi
-      nixd
+      #rex
+      heisenbridge
+      (_: super: {
+        clementine = super.clementine.overrideAttrs (_: {
+          patches = [
+            (super.fetchpatch {
+              name = "clementine-di-radio-fix.diff";
+              url = "https://patch-diff.githubusercontent.com/raw/clementine-player/Clementine/pull/7217.diff";
+              hash = "sha256-kaKc2YFkXJRPibbKbBCHvlm6Y/H9zS83ohMxtUNUFlM=";
+            })
+          ];
+        });
+      })
     ]
     else [
+      #rex
       matrix-synapse
-      tailscale
+      heisenbridge
+      (_: super: {
+        invidious = super.invidious.overrideAttrs (_: {
+          patches = [
+            (super.fetchpatch {
+              name = "invidious-newpipe.diff";
+              url = "https://patch-diff.githubusercontent.com/raw/iv-org/invidious/pull/4037.patch";
+              hash = "sha256-KyqQtmfIPIX48S8SZnSlvCLvdw6Ws1u0oWEk8jLKWlU=";
+            })
+          ];
+        });
+      })
     ];
 }
 # Example Python dep overlay

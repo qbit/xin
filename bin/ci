@@ -2,6 +2,11 @@
 
 . ./common.sh
 
+if [ -f ./lock ]; then
+	msg "${SCRIPT_NAME} locked..."
+	exit 0
+fi
+
 direnv allow
 
 CMD=${1:-""}
@@ -49,14 +54,22 @@ if [ "${1}" = "update" ]; then
 			continue
 		fi
 
+		current_hash="$(git rev-parse HEAD)"
+
 		if ! nix flake lock --commit-lock-file --update-input "$inp"; then
 			handle_update_fail "$inp"
 			continue
 		fi
 
-		if ! nix flake check --print-build-logs; then
-			handle_update_check_fail "$inp"
-			continue
+		maybe_new_hash="$(git rev-parse HEAD)"
+
+		if [ "${current_hash}" != "${maybe_new_hash}" ]; then
+			if ! nix flake check --print-build-logs; then
+				handle_update_check_fail "$inp"
+				continue
+			fi
+		else
+			msg "No change in input, skipping checks."
 		fi
 
 		if ! git checkout "${ci_branch}"; then

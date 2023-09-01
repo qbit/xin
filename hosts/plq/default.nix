@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   isUnstable,
   ...
 }: let
@@ -14,6 +15,8 @@ in {
 
   networking.hostName = "plq";
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   programs = {
     zsh = {
       enable = true;
@@ -22,10 +25,16 @@ in {
       '';
     };
   };
-  services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
-
-  services.emacs.package = pkgs.emacsUnstable;
+  nix = {
+    package = pkgs.nix;
+    settings = {
+      sandbox = true;
+    };
+  };
+  services = {
+    nix-daemon.enable = true;
+    emacs.package = pkgs.emacsUnstable;
+  };
 
   system = {
     keyboard = {
@@ -47,23 +56,32 @@ in {
     };
   };
 
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = pkg:
+      builtins.elm (lib.getName pkg) [
+        "obsidian"
+      ];
+  };
+
   environment.variables = {
     SSH_AUTH_SOCK = "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
   };
 
   environment.systemPackages = with pkgs; [
-    (callPackage ../../pkgs/nheko.nix {inherit isUnstable;})
     (callPackage ../../pkgs/secretive.nix {inherit isUnstable;})
     (callPackage ../../pkgs/hammerspoon.nix {inherit isUnstable;})
 
-    nixpkgs-review
     direnv
+    exiftool
     gh
     go
     mosh
+    nb
     neovim
-    nixfmt
+    nixpkgs-review
     nmap
+    obsidian
     rage
     statix
   ];

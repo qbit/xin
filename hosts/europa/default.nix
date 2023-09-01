@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -13,9 +14,12 @@ with lib; let
     inherit lib;
     inherit config;
   });
-  myEmacs = pkgs.callPackage ../../configs/emacs.nix {};
+  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
+    doomPrivateDir = ../../configs/doom.d;
+  };
   peerixUser =
-    if hasAttr "peerix" config.users.users
+    if builtins.hasAttr "peerix" config.users.users
     then config.users.users.peerix.name
     else "root";
   jobs = [
@@ -86,10 +90,13 @@ in {
     };
   };
 
-  boot.binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
-  nixpkgs.config.allowUnsupportedSystem = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnsupportedSystem = true;
+  };
 
   boot = {
+    binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
     initrd.systemd.enable = true;
     loader = {
       systemd-boot.enable = true;
@@ -100,24 +107,25 @@ in {
     };
     kernelParams = ["boot.shell_on_fail" "mem_sleep_default=deep"];
     kernelPackages = pkgs.linuxPackages_latest;
-    #kernelPackages = pkgs.linuxPackages;
   };
 
-  sshFidoAgent.enable = true;
+  sshFidoAgent.enable = lib.mkDefault true;
 
   nixManager = {
-    enable = true;
+    enable = lib.mkDefault true;
     user = "qbit";
   };
 
-  kde.enable = true;
-  jetbrains.enable = true;
+  kde.enable = lib.mkDefault true;
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.enable = lib.mkDefault true;
 
   networking = {
     hostName = "europa";
     hostId = "87703c3e";
+    hosts = {
+      "192.168.122.6" = ["chubs"];
+    };
     wireless.userControlled.enable = true;
     networkmanager.enable = true;
 
@@ -148,6 +156,7 @@ in {
       shellAliases = {
         "gh" = "op plugin run -- gh";
         "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token) nixpkgs-review";
+        "clilol" = "env CLILOL_APIKEY=$(op item get omglol-cli --field credential) clilol";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "mutt" = "neomutt -F /etc/neomuttrc";
         "neomutt" = "neomutt -F /etc/neomuttrc";
@@ -185,6 +194,11 @@ in {
         ];
       };
     };
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
+    printing.enable = true;
     restic = {
       backups = {
         local = {
@@ -202,11 +216,11 @@ in {
     pcscd.enable = true;
     vnstat.enable = true;
     clamav.updater.enable = true;
-    emacs = {
-      enable = true;
-      package = myEmacs;
-      install = true;
-    };
+    #emacs = {
+    #  enable = true;
+    #  package = myEmacs;
+    #  install = true;
+    #};
     tor = {
       enable = true;
       client.enable = true;
@@ -262,10 +276,9 @@ in {
   users.users.qbit.extraGroups = [
     "dialout"
     "libvirtd"
+    "plugdev"
     #"docker"
   ];
-
-  nixpkgs.config.allowUnfree = true;
 
   environment.sessionVariables = {
     XDG_BIN_HOME = "\${HOME}/.local/bin";
@@ -280,10 +293,13 @@ in {
 
   environment.systemPackages = with pkgs; [
     opensnitch-ui
+    doom-emacs
     barrier
     calibre
+    chirp
     cider
     clementine
+    direwolf
     element-desktop
     elmPackages.elm
     elmPackages.elm-format
@@ -293,7 +309,10 @@ in {
     entr
     exercism
     gh
+    gimp
     git-credential-1password
+    gqrx
+    hackrf
     isync
     klavaro
     minicom
@@ -305,12 +324,15 @@ in {
     nmap
     nushell
     obsidian
-    pharo
-    pharo-launcher
+    picocom
     proton-caller
     protonup-ng
+    python3Packages.meshtastic
+    qdmr
     rex
     rofi
+    rtl-sdr
+    sdrpp
     signal-desktop
     taskobs
     tcpdump
@@ -319,13 +341,14 @@ in {
     tidal-hifi
     tigervnc
     unzip
+    veilid
     virt-manager
+    w3m
     yt-dlp
     #yubioath-flutter
     zig
 
-    talon
-
+    (callPackage ../../pkgs/clilol.nix {})
     (callPackage ../../pkgs/iamb.nix {})
     (callPackage ../../pkgs/kobuddy.nix {
       inherit pkgs;
@@ -341,6 +364,7 @@ in {
         ;
     })
     (callPackage ../../pkgs/gokrazy.nix {})
+    (callPackage ../../pkgs/mvoice.nix {})
     (callPackage ../../pkgs/zutty.nix {})
 
     restic

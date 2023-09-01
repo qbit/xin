@@ -1,20 +1,21 @@
 let
+  hash = "sha256-rLEewCN8OdZ4wIWQRbLkxVF/VOAESTLAVQLfUu/PYsA=";
+  sha256 = "sha256-aOoSvT6e2x7JcXoQ2sVTCDvkWupixLzpbk3cTHVQs7I=";
   matrix-synapse = _: super: {
     matrix-synapse = super.matrix-synapse.overrideAttrs (_: rec {
-      version = "1.86.0";
+      version = "1.91.0";
       pname = "matrix-synapse";
 
       src = super.fetchFromGitHub {
         owner = "matrix-org";
         repo = "synapse";
         rev = "v${version}";
-        hash = "sha256-vSNAISWTTT3IAeA8hxQhQNp9T3soey4vgh7v+BxI+K0=";
+        inherit hash;
       };
 
       cargoDeps = super.rustPlatform.fetchCargoTarball {
-        inherit src;
+        inherit src sha256;
         name = "${pname}-${version}";
-        sha256 = "sha256-lPLhh5FkxpBUQ5UH6eAfUIyGvHIcZHmbYBT5QUW/W4k=";
       };
     });
   };

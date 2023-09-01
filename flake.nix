@@ -21,10 +21,11 @@
 
     nixos-hardware = {url = "github:NixOS/nixos-hardware/master";};
 
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay/d54a1521619daa37c9aa8c9e3362abb34e676007";
-      inputs.nixpkgs.follows = "stable";
-    };
+    #emacs-overlay = {
+    #  url = "github:nix-community/emacs-overlay/d54a1521619daa37c9aa8c9e3362abb34e676007";
+    #  inputs.nixpkgs.follows = "stable";
+    #};
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
 
     darwin = {
       url = "github:lnl7/nix-darwin";
@@ -77,11 +78,6 @@
       url = "github:cid-chan/peerix";
       inputs.nixpkgs.follows = "stable";
     };
-
-    talon = {
-      url = "github:qbit/talon-nix";
-      inputs.nixpkgs.follows = "unstable";
-    };
   };
 
   outputs = {
@@ -94,7 +90,6 @@
     pots,
     pr-status,
     stable,
-    talon,
     tsRevProx,
     tsvnstat,
     unstable,
@@ -133,13 +128,12 @@
     };
 
     overlays = [
-      inputs.emacs-overlay.overlay
+      #inputs.emacs-overlay.overlay
       inputs.gostart.overlay
       inputs.microca.overlay
       inputs.peerix.overlay
       inputs.pots.overlay
       inputs.pr-status.overlay
-      inputs.talon.overlays.default
       inputs.taskobs.overlay
       inputs.tsRevProx.overlay
     ];
@@ -201,8 +195,8 @@
         [] ++ stableList.nixpkgs.overlays ++ unstableList.nixpkgs.overlays;
     };
 
-    formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.nixfmt;
-    formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.nixfmt;
+    formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.alejandra;
+    formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.alejandra;
 
     devShells.x86_64-linux.default = xinlib.buildShell lpkgs;
     devShells.aarch64-darwin.default = xinlib.buildShell darwinPkgs;
@@ -210,7 +204,6 @@
     nixosConfigurations = {
       europa = buildSys "x86_64-linux" unstable [
         nixos-hardware.nixosModules.framework
-        talon.nixosModules.talon
       ] "europa";
       pwntie = buildSys "x86_64-linux" stable [] "pwntie";
       stan = buildSys "x86_64-linux" unstable [] "stan";
@@ -262,6 +255,8 @@
         spkgs.callPackage ./pkgs/ada_language_server.nix {inherit spkgs;};
       alire = spkgs.callPackage ./pkgs/alire.nix {inherit spkgs;};
       bearclaw = spkgs.callPackage ./pkgs/bearclaw.nix {inherit spkgs;};
+      rtlamr = spkgs.callPackage ./pkgs/rtlamr.nix {inherit spkgs;};
+      clilol = spkgs.callPackage ./pkgs/clilol.nix {inherit spkgs;};
       gqrss = spkgs.callPackage ./pkgs/gqrss.nix {
         inherit spkgs;
         isUnstable = true;
@@ -272,16 +267,22 @@
         isUnstable = true;
       };
       femtolisp = upkgs.callPackage ./pkgs/femtolisp.nix {};
+      fyne = upkgs.callPackage ./pkgs/fyne.nix {inherit upkgs;};
       flake-warn =
         spkgs.callPackage ./pkgs/flake-warn.nix {inherit spkgs;};
-      kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
+      #kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
       mcchunkie = spkgs.callPackage ./pkgs/mcchunkie.nix {inherit spkgs;};
       yaegi = spkgs.callPackage ./pkgs/yaegi.nix {inherit spkgs;};
+      gen-patches =
+        spkgs.callPackage ./bins/gen-patches.nix {inherit spkgs;};
       yarr = spkgs.callPackage ./pkgs/yarr.nix {
         inherit spkgs;
         isUnstable = true;
       };
       precursorupdater = spkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
+        inherit spkgs;
+      };
+      rtlamr2mqtt = spkgs.python3Packages.callPackage ./pkgs/rtlamr2mqtt.nix {
         inherit spkgs;
       };
       kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
@@ -302,11 +303,11 @@
       gosignify = spkgs.callPackage ./pkgs/gosignify.nix {inherit spkgs;};
       gotosocial =
         spkgs.callPackage ./pkgs/gotosocial.nix {inherit spkgs;};
-      govulncheck =
-        upkgs.callPackage ./pkgs/govulncheck.nix {inherit upkgs;};
       zutty = upkgs.callPackage ./pkgs/zutty.nix {
         inherit upkgs;
-        isUnstable = true;
+      };
+      mvoice = upkgs.callPackage ./pkgs/mvoice.nix {
+        inherit upkgs;
       };
       inherit (xintray.packages.${system}) xintray;
       inherit (tsvnstat.packages.${system}) tsvnstat;

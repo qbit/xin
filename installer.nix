@@ -102,7 +102,7 @@ in {
     '';
     boot.tmp.cleanOnBoot = true;
 
-    environment.systemPackages = with pkgs; [apg inetutils nixfmt];
+    environment.systemPackages = with pkgs; [apg inetutils];
 
     environment.interactiveShellInit = ''
       alias vi=nvim

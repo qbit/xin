@@ -17,6 +17,7 @@
     command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
   gosignify = pkgs.callPackage ./pkgs/gosignify.nix {inherit isUnstable;};
+  myOpenSSH = pkgs.callPackage ./pkgs/openssh {};
 in {
   imports = [
     ./configs
@@ -136,14 +137,14 @@ in {
 
     nix = {
       settings =
-        if config.networking.hostName != "pwntie"
-        then {
+        if config.xinCI.enable
+        then {}
+        else {
           substituters = ["https://nix-binary-cache.humpback-trout.ts.net/"];
           trusted-public-keys = [
             "nix-binary-cache.humpback-trout.ts.net:e9fJhcRtNVp6miW2pffFyK/gZ2et4y6IDigBNrEsAa0="
           ];
-        }
-        else {};
+        };
     };
 
     environment.systemPackages = with pkgs;
@@ -161,8 +162,8 @@ in {
         lz4
         minisign
         mosh
+        nb
         nix-diff
-        nixfmt
         nix-index
         nix-top
         pass
@@ -182,7 +183,6 @@ in {
 
     time.timeZone = "US/Mountain";
 
-    documentation.enable = true;
     documentation.man.enable = true;
 
     networking.timeServers = options.networking.timeServers.default;
@@ -191,6 +191,8 @@ in {
       zsh.enable = true;
       gnupg.agent.enable = true;
       ssh = {
+        package = myOpenSSH.openssh;
+        agentPKCS11Whitelist = "${pkgs.opensc}/lib/opensc-pkcs11.so";
         knownHosts = {
           "[namish.humpback-trout.ts.net]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF9jlU5XATs8N90mXuCqrflwOJ+s3s7LefDmFZBx8cCk";
           "[git.tapenet.org]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOkbSJWeWJyJjak/boaMTqzPVq91wfJz1P+I4rnBUsPW";
@@ -212,7 +214,7 @@ in {
 
     environment.etc."ssh/ca.pub" = {text = caPubKeys;};
 
-    services.logrotate.enable =
+    services.logrotate.checkConfig =
       todo "logrotate disabled: https://github.com/NixOS/nix/issues/8502" false;
 
     services = {
