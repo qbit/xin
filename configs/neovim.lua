@@ -95,7 +95,6 @@ local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 vim.g["vim_markdown_folding_disabled"] = 1
 vim.g["elm_setup_keybindings"] = 0
@@ -119,20 +118,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- end, opts)
     end
 })
-
-vim.g.tagbar_type_elm = {
-    ctagstype = 'elm',
-    kinds = {
-        'f:function:0:0', 'm:modules:0:0', 'i:imports:1:0', 't:types:1:0',
-        'a:type aliases:0:0', 'c:type constructors:0:0', 'p:ports:0:0',
-        's:functions:0:0'
-    }
-}
-
-vim.g.tagbar_type_typescript = {
-    ctagstype = 'typescript',
-    kinds = {
-        'c:classes', 'n:modules', 'f:functions', 'v:variables', 'v:varlambdas',
-        'm:members', 'i:interfaces', 'e:enums'
-    }
-}

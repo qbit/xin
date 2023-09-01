@@ -119,7 +119,6 @@ with pkgs; let
     nvim-tree-lua
     nvim-treesitter.withAllGrammars
     rust-vim
-    tagbar
     telescope-fzf-native-nvim
     telescope-manix
     telescope-nvim
@@ -127,7 +126,6 @@ with pkgs; let
     vimagit
     vim-gitgutter
     vim-go
-    vim-gutentags
     vim-hindent
     vim-lua
     vim-markdown
@@ -171,7 +169,6 @@ in {
     rubyPackages.solargraph
     sumneko-lua-language-server
     tree-sitter
-    universal-ctags
     zls
 
     NeovimExt
