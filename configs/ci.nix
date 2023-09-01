@@ -87,14 +87,6 @@ in
 
       systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
-      services.cron = prIsOpen.option 238971 {
-        enable = true;
-        systemCronJobs = [
-          "0 0 * * *  systemctl start xin-ci-update"
-          "30 * * * *  systemctl start xin-ci"
-        ];
-      };
-
       services = {
         tsrevprox = {
           enable = true;
