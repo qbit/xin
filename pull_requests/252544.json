@@ -1,9 +1,17 @@
 {
-  "branches": [],
+  "branches": [
+    "release-23.05",
+    "staging-23.05",
+    "staging-next-23.05"
+  ],
   "error": "",
   "pull_request": 252544,
   "release": "stable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "release-23.05": true,
+    "staging-23.05": true,
+    "staging-next-23.05": true
+  },
   "title": "matrix-synapse: 1.90.0 -> 1.91.0"
 }
