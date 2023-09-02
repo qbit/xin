@@ -1,5 +1,7 @@
 {
   "branches": [
+    "nixos-23.05-small",
+    "nixpkgs-23.05-darwin",
     "release-23.05",
     "staging-23.05",
     "staging-next-23.05"
@@ -9,6 +11,7 @@
   "release": "stable",
   "status": "open",
   "status_info": {
+    "nixos-23.05-small": false,
     "release-23.05": true,
     "staging-23.05": true,
     "staging-next-23.05": true
