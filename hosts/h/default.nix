@@ -65,12 +65,6 @@ in {
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
-    ../../modules/gotosocial.nix
-    ../../modules/yarr.nix
-    ../../modules/tsvnstat.nix
-    ../../modules/golink.nix
-    ../../modules/sliding-sync.nix
-    ../../modules/ts-rev-prox.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -268,6 +262,10 @@ in {
   };
 
   services = {
+    veilid-server = {
+      enable = true;
+      openFirewall = true;
+    };
     heisenbridge = {
       enable = true;
       homeserver = "http://${mtxCfg.address}:${toString mtxCfg.port}";
