@@ -264,7 +264,6 @@ in {
   services = {
     veilid-server = {
       enable = true;
-      openFirewall = true;
       package = inputs.unstable.legacyPackages.${pkgs.system}.veilid;
     };
     heisenbridge = {
