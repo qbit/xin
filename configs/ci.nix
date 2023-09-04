@@ -6,7 +6,7 @@
   xinlib,
   ...
 }: let
-  inherit (xinlib) prIsOpen;
+  #inherit (xinlib) prIsOpen;
   jobs = [
     {
       name = "xin-ci-update";

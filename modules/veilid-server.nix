@@ -44,16 +44,16 @@ in {
   config = lib.mkIf cfg.enable {
     users.groups.${cfg.group} = {};
     users.users.${cfg.user} = {
+      inherit (cfg) group;
       description = "veilid-server user";
       isSystemUser = true;
       home = cfg.dataDir;
       createHome = true;
-      group = cfg.group;
     };
 
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 5150 ];
-      allowedUDPPorts = [ 5150 ];
+      allowedTCPPorts = [5150];
+      allowedUDPPorts = [5150];
     };
 
     systemd.services.veilid-server = {
