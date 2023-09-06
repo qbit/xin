@@ -13,7 +13,9 @@ if [ "${CURRENT_COMMIT}" != "${COMMIT}" ]; then
 	nix-prefetch-github openssh openssh-portable \
 		--rev "${COMMIT}" \
 		--json  | \
-		jq -r --arg v "${UPDATED}" '. |= . + {"version": $v}' \
+		jq -r --arg v "${UPDATED}" \
+		--arg c "${COMMENT}" \
+		'. |= . + {"version": $v, "comment": $c}' \
 		> pkgs/openssh/version.json
 else
 	echo "No updates."

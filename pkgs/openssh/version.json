@@ -3,5 +3,6 @@
   "repo": "openssh-portable",
   "rev": "694150ad92765574ff82a18f4e86322bd3231e68",
   "hash": "sha256-j0g0hPbAAWIFP0p3wL81heA7IUywznLGMJu4SaVlb3c=",
-  "version": "2023-09-04"
+  "version": "2023-09-04",
+  "comment": "upstream: trigger keystroke timing obfucation only if the channels"
 }
