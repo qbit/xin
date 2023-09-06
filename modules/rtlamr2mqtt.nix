@@ -72,7 +72,7 @@ in {
         User = cfg.user;
         Group = cfg.group;
 
-        RuntimeDirectory = "/var/lib/rtlamr2mqtt";
+        RuntimeDirectory = "rtlamr2mqtt";
 
         ExecStart = "${cfg.package}/bin/rtlamr2mqtt ${prettyJSON cfg.configuration}";
       };

@@ -11,7 +11,6 @@ in {
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
-    ../../modules/rtlamr2mqtt.nix
   ];
 
   hardware.rtl-sdr.enable = true;
