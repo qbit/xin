@@ -204,8 +204,8 @@
       ] "europa";
       pwntie = buildSys "x86_64-linux" stable [] "pwntie";
       stan = buildSys "x86_64-linux" unstable [] "stan";
-      #weather = buildSys "aarch64-linux" stable
-      #  [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
+      weather = buildSys "aarch64-linux" stable
+        [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
 
       faf = buildSys "x86_64-linux" stable [./configs/hardened.nix] "faf";
       box = buildSys "x86_64-linux" stable [./configs/hardened.nix] "box";
@@ -353,7 +353,7 @@
     };
 
     checks = let
-      buildList = ["europa" "stan" "h" "box" "faf"];
+      buildList = ["europa" "stan" "h" "box" "faf" "weather"];
     in
       with unstable.lib;
         foldl' recursiveUpdate {} (mapAttrsToList (name: system: {
