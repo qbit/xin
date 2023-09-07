@@ -264,13 +264,13 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    doom-emacs
     barrier
     calibre
     chirp
     cider
     clementine
     direwolf
+    doom-emacs
     element-desktop
     elmPackages.elm
     elmPackages.elm-format
@@ -298,6 +298,7 @@ in {
     picocom
     proton-caller
     protonup-ng
+    prusa-slicer
     python3Packages.meshtastic
     qdmr
     rex
