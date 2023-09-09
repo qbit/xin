@@ -19,17 +19,17 @@ in {
 
   boot = {
     initrd.availableKernelModules = ["usbhid" "usb_storage" "vc4" "rtc-ds3232" "rtc-ds1307"];
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = ["raspberrypi_ts" "rtc-ds3232" "rtc-ds1307"];
-    #kernelPatches = [{
-    #  name = "touchscreen";
-    #  patch = null;
-    #  extraConfig = ''
-    #    CONFIG_TOUCHSCREEN_RASPBERRYPI_FW m
-    #    CONFIG_RTC_DRV_DS1307 m
-    #    CONFIG_RTC_DRV_DS3232 m
-    #  '';
-    #}];
+    kernelPatches = [{
+      name = "touchscreen";
+      patch = null;
+      extraConfig = ''
+        CONFIG_RTC_DRV_DS1307 m
+        CONFIG_RTC_DRV_DS3232 m
+        CONFIG_TOUCHSCREEN_RASPBERRYPI_FW m
+      '';
+    }];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
@@ -152,7 +152,7 @@ in {
         myLayoutHook =
           windowNavigation $
           subTabbed $
-          spacingRaw True (Border 20 5 5 5) True (Border 10 10 10 10) True $
+          spacingRaw True (Border 25 5 5 5) True (Border 10 10 10 10) True $
           (tiled ||| Mirror tiled ||| Full)
           where
             tiled =
@@ -175,7 +175,7 @@ in {
         myStartupHook :: X ()
         myStartupHook = do
           spawn "pkill polybar; polybar"
-          spawnOnce "firefox --kiosk https://graph.tapenet.org"
+          spawnOnce "firefox --kiosk https://home.bold.daemon/lovelace/0"
       '';
     };
     #desktopManager.xfce.enable = true;
@@ -188,7 +188,7 @@ in {
   users.users.root = userBase;
 
   environment.systemPackages = with pkgs; [
-    qutebrowser
+    firefox
     dtc
     rofi
     polybar

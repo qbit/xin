@@ -204,8 +204,7 @@
       ] "europa";
       pwntie = buildSys "x86_64-linux" stable [] "pwntie";
       stan = buildSys "x86_64-linux" unstable [] "stan";
-      weather = buildSys "aarch64-linux" stable
-        [ nixos-hardware.nixosModules.raspberry-pi-4 ] "weather";
+      weather = buildSys "aarch64-linux" stable [] "weather";
 
       faf = buildSys "x86_64-linux" stable [./configs/hardened.nix] "faf";
       box = buildSys "x86_64-linux" stable [./configs/hardened.nix] "box";
