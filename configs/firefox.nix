@@ -37,6 +37,14 @@
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
           };
+          "@testpilot-containers" = {
+            "installation_mode" = "force_installed";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
+          };
+          "floccus@handmadeideas.org" = {
+            "installation_mode" = "normal_installed";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/floccus/latest.xpi";
+          };
         };
         FirefoxHome = {
           Search = false;
