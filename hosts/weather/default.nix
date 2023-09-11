@@ -24,15 +24,6 @@ in {
     initrd.availableKernelModules = ["usbhid" "usb_storage" "vc4" "rtc-ds3232" "rtc-ds1307"];
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = ["raspberrypi_ts" "rtc-ds3232" "rtc-ds1307"];
-    kernelPatches = [{
-      name = "touchscreen";
-      patch = null;
-      extraConfig = ''
-        CONFIG_RTC_DRV_DS1307 m
-        CONFIG_RTC_DRV_DS3232 m
-        CONFIG_TOUCHSCREEN_RASPBERRYPI_FW m
-      '';
-    }];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
