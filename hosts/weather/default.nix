@@ -11,11 +11,14 @@
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
+  firefox = import ../../configs/firefox.nix {inherit pkgs;};
 in {
   _module.args.isUnstable = false;
   imports = [./hardware-configuration.nix];
 
   defaultUsers.enable = false;
+
+  programs = {} // firefox.programs;
 
   boot = {
     initrd.availableKernelModules = ["usbhid" "usb_storage" "vc4" "rtc-ds3232" "rtc-ds1307"];
@@ -152,7 +155,7 @@ in {
         myLayoutHook =
           windowNavigation $
           subTabbed $
-          spacingRaw True (Border 25 5 5 5) True (Border 10 10 10 10) True $
+          spacingRaw True (Border 30 5 5 5) True (Border 10 10 10 10) True $
           (tiled ||| Mirror tiled ||| Full)
           where
             tiled =
@@ -188,7 +191,6 @@ in {
   users.users.root = userBase;
 
   environment.systemPackages = with pkgs; [
-    firefox
     dtc
     rofi
     polybar
