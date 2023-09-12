@@ -1,8 +1,8 @@
-{
-  isUnstable,
-  xinlib,
-  ...
-}: let
+{ isUnstable
+, xinlib
+, ...
+}:
+let
   inherit (xinlib) prIsOpen;
   #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
   #openssh = import ./openssh.nix;
@@ -13,7 +13,8 @@
   #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
   #rex = prIsOpen.overlay 0 (import ./rex.nix);
-in {
+in
+{
   nixpkgs.overlays =
     if isUnstable
     then [

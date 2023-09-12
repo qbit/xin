@@ -1,13 +1,13 @@
-{
-  writeShellApplication,
-  diffutils,
-  findutils,
-  coreutils,
-  ...
-}: let
+{ writeShellApplication
+, diffutils
+, findutils
+, coreutils
+, ...
+}:
+let
   genPatches = writeShellApplication {
     name = "gen-patches";
-    runtimeInputs = [diffutils findutils coreutils];
+    runtimeInputs = [ diffutils findutils coreutils ];
     text = ''
       suffix=".orig"
       srcdir=$PWD
@@ -52,4 +52,4 @@
     '';
   };
 in
-  genPatches
+genPatches

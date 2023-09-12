@@ -1,36 +1,42 @@
-{lib, ...}: let
+{ lib, ... }:
+let
   inherit (builtins) toString readFile fromJSON filter;
-  getPrStatus = pr: let
-    prstr = toString pr;
-    prStatus = fromJSON (readFile ../pull_requests/${prstr}.json);
-  in
+  getPrStatus = pr:
+    let
+      prstr = toString pr;
+      prStatus = fromJSON (readFile ../pull_requests/${prstr}.json);
+    in
     prStatus;
   prIsOpen = {
-    option = pr: a: let
-      prStatus = getPrStatus pr;
-    in
+    option = pr: a:
+      let
+        prStatus = getPrStatus pr;
+      in
       if prStatus.status == "open"
       then a
-      else {};
-    pkg = pr: localPkg: upstreamPkg: let
-      prStatus = getPrStatus pr;
-    in
+      else { };
+    pkg = pr: localPkg: upstreamPkg:
+      let
+        prStatus = getPrStatus pr;
+      in
       if prStatus.status == "open"
       then localPkg
       else
         lib.warn
-        "PR: ${toString pr} (${prStatus.title}) is complete, ignoring pkg..."
-        upstreamPkg;
+          "PR: ${toString pr} (${prStatus.title}) is complete, ignoring pkg..."
+          upstreamPkg;
 
-    overlay = pr: overlay: let
-      prStatus = getPrStatus pr;
-    in
+    overlay = pr: overlay:
+      let
+        prStatus = getPrStatus pr;
+      in
       if pr == 0 || prStatus.status == "open"
       then overlay
       else
         lib.warn "PR: ${
           toString pr
-        } (${prStatus.title}) is complete, ignoring overlay..." (_: _: {});
+        } (${prStatus.title}) is complete, ignoring overlay..."
+          (_: _: { });
   };
 
   todo = msg: lib.warn "TODO: ${msg}";
@@ -48,7 +54,7 @@
     value = {
       script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt path;
-      serviceConfig = {Type = "oneshot";};
+      serviceConfig = { Type = "oneshot"; };
     };
   };
   jobToService = job: {
@@ -91,12 +97,14 @@
   # Set our configurationRevison based on the status of our git repo.
   # If the repo is dirty, disable autoUpgrade as it means we are
   # testing something.
-  buildVer = self: let
-    state = self.rev or "DIRTY";
-  in {
-    system.configurationRevision = state;
-    system.autoUpgrade.enable = lib.mkDefault (state != "DIRTY");
-  };
+  buildVer = self:
+    let
+      state = self.rev or "DIRTY";
+    in
+    {
+      system.configurationRevision = state;
+      system.autoUpgrade.enable = lib.mkDefault (state != "DIRTY");
+    };
 
   xinlib = {
     inherit
@@ -111,4 +119,4 @@
       ;
   };
 in
-  xinlib
+xinlib

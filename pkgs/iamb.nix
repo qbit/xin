@@ -1,7 +1,7 @@
-{
-  lib,
-  rustPlatform,
-  fetchFromGitHub,
+{ lib
+, rustPlatform
+, fetchFromGitHub
+,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "iamb";
@@ -20,6 +20,6 @@ rustPlatform.buildRustPackage rec {
     description = "A Matrix client for Vim addicts";
     homepage = "https://github.com/ulyssa/iamb";
     license = licenses.asl20;
-    maintainers = [maintainers.qbit];
+    maintainers = [ maintainers.qbit ];
   };
 }

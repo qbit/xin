@@ -1,9 +1,8 @@
-{
-  lib,
-  fetchurl,
-  stdenv,
-  undmg,
-  ...
+{ lib
+, fetchurl
+, stdenv
+, undmg
+, ...
 }:
 stdenv.mkDerivation rec {
   pname = "nheko";
@@ -14,7 +13,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-t7evlvb+ueJZhtmt4KrOeXv2BZV8/fY4vj4GAmoCR2w=";
   };
 
-  nativeBuildInputs = [undmg];
+  nativeBuildInputs = [ undmg ];
 
   sourceRoot = ".";
 

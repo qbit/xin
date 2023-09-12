@@ -1,13 +1,13 @@
-{
-  config,
-  lib,
-  options,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, ...
+}:
+let
   managementKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
-in {
-  imports = [./configs/colemak.nix ./configs/tmux.nix ./configs/neovim.nix];
+in
+{
+  imports = [ ./configs/colemak.nix ./configs/tmux.nix ./configs/neovim.nix ];
 
   options.myconf = {
     hwPubKeys = lib.mkOption rec {
@@ -74,7 +74,7 @@ in {
   };
 
   config = {
-    sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # from https://github.com/dylanaraps/neofetch
     users.motd = ''
@@ -102,11 +102,13 @@ in {
     '';
     boot.tmp.cleanOnBoot = true;
 
-    environment.systemPackages = with pkgs; [apg inetutils];
+    environment = {
+      systemPackages = with pkgs; [ apg inetutils ];
 
-    environment.interactiveShellInit = ''
-      alias vi=nvim
-    '';
+      interactiveShellInit = ''
+        alias vi=nvim
+      '';
+    };
 
     time.timeZone = "US/Mountain";
 
@@ -114,15 +116,15 @@ in {
       if pkgs.system == "aarch64-linux"
       then {
         description = "Set date on boot";
-        wantedBy = ["network-online.target"];
-        after = ["network-online.target"];
+        wantedBy = [ "network-online.target" ];
+        after = [ "network-online.target" ];
         script = ''
           . /etc/profile;
           ${pkgs.outils}/bin/rdate pool.ntp.org
         '';
         serviceConfig.Type = "oneshot";
       }
-      else {};
+      else { };
 
     programs = {
       zsh.enable = true;
@@ -149,7 +151,7 @@ in {
         settings = {
           PermitRootLogin = lib.mkForce "prohibit-password";
           PasswordAuthentication = false;
-          KexAlgorithms = ["curve25519-sha256" "curve25519-sha256@libssh.org"];
+          KexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
           Macs = [
             "hmac-sha2-512-etm@openssh.com"
             "hmac-sha2-256-etm@openssh.com"

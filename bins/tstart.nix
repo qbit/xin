@@ -1,6 +1,8 @@
-{tmux}: let
+{ tmux }:
+let
   tmuxBin = "${tmux}/bin/tmux";
-in ''
+in
+''
   #!/usr/bin/env sh
 
   set -e

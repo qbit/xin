@@ -1,6 +1,6 @@
-{
-  pkgs,
-  icbirc,
+{ pkgs
+, icbirc
+,
 }: ''
   #!${pkgs.yash}/bin/yash
   ${pkgs.procps}/bin/pkill icbirc

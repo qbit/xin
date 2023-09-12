@@ -1,27 +1,27 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with pkgs; let
   cfg = config.services.gotosocial;
-  gotosocial = callPackage ../pkgs/gotosocial.nix {};
-  settingsFormat = pkgs.formats.json {};
+  gotosocial = callPackage ../pkgs/gotosocial.nix { };
+  settingsFormat = pkgs.formats.json { };
   settingsType = settingsFormat.type;
   prettyJSON = conf:
-    pkgs.runCommandLocal "gotosocial-config.json" {} ''
+    pkgs.runCommandLocal "gotosocial-config.json" { } ''
       echo '${
         builtins.toJSON conf
       }' | ${pkgs.buildPackages.jq}/bin/jq 'del(._module)' > $out
     '';
-in {
+in
+{
   options = with lib; {
     services.gotosocial = {
       enable = mkEnableOption "Enable gotosocial";
 
       user = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "gotosocial";
         description = ''
           The user the service will use.
@@ -29,7 +29,7 @@ in {
       };
 
       group = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "gotosocial";
         description = ''
           The user the service will use.
@@ -53,7 +53,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.gotosocial = {};
+    users.groups.gotosocial = { };
     users.users.gotosocial = {
       description = "Gotosocial service user";
       isSystemUser = true;
@@ -65,8 +65,8 @@ in {
     systemd.services.gotosocial = {
       enable = true;
       description = "GoToSocial server";
-      wantedBy = ["multi-user.target"];
-      after = ["postgresql.service"];
+      wantedBy = [ "multi-user.target" ];
+      after = [ "postgresql.service" ];
 
       serviceConfig = {
         User = cfg.user;

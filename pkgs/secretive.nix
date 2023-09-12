@@ -1,9 +1,8 @@
-{
-  lib,
-  fetchurl,
-  stdenv,
-  unzip,
-  ...
+{ lib
+, fetchurl
+, stdenv
+, unzip
+, ...
 }:
 stdenv.mkDerivation rec {
   pname = "secretive";
@@ -15,7 +14,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-STpyNiiYtEgLqnDxFdlRW0Gyr0pQPK8AJ34rw4JLC70=";
   };
 
-  buildInputs = [unzip];
+  buildInputs = [ unzip ];
 
   installPhase = ''
     mkdir -p $out/Applications

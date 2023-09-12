@@ -1,18 +1,22 @@
-{
-  pkgs,
-  config,
-  lib,
-  modulesPath,
-  ...
+{ pkgs
+, config
+, lib
+, modulesPath
+, ...
 }: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+      kernelModules = [ ];
+      luks.devices."luks-e12e4b82-6f9e-4f80-b3f4-7e9a248e7827".device = "/dev/disk/by-uuid/e12e4b82-6f9e-4f80-b3f4-7e9a248e7827";
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+  };
 
-  system.fsPackages = [pkgs.sshfs];
+  system.fsPackages = [ pkgs.sshfs ];
 
   fileSystems = {
     "/" = {
@@ -30,7 +34,7 @@
         "_netdev"
         "x-systemd.automount"
 
-        (builtins.replaceStrings [" "] ["\\040"]
+        (builtins.replaceStrings [ " " ] [ "\\040" ]
           "ssh_command=${pkgs.openssh}/bin/ssh -F /home/abieber/.ssh/config")
         "reconnect"
         "allow_other"
@@ -43,9 +47,8 @@
     };
   };
 
-  boot.initrd.luks.devices."luks-e12e4b82-6f9e-4f80-b3f4-7e9a248e7827".device = "/dev/disk/by-uuid/e12e4b82-6f9e-4f80-b3f4-7e9a248e7827";
 
-  swapDevices = [{device = "/dev/disk/by-uuid/85a3b559-0c0f-485d-9107-9f6ba5ad31da";}];
+  swapDevices = [{ device = "/dev/disk/by-uuid/85a3b559-0c0f-485d-9107-9f6ba5ad31da"; }];
 
   networking.useDHCP = lib.mkDefault true;
 

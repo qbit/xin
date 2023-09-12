@@ -1,9 +1,8 @@
-{
-  lib,
-  stdenv,
-  fetchurl,
-  pkgs,
-  ...
+{ lib
+, stdenv
+, fetchurl
+, pkgs
+, ...
 }:
 stdenv.mkDerivation rec {
   pname = "icbirc";
@@ -14,9 +13,9 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-aDk0TZPABNqX7Gu12AWh234Kee/DhwRFeIBDYnFiu7E=";
   };
 
-  patches = [./icbirc.diff];
+  patches = [ ./icbirc.diff ];
 
-  buildInputs = with pkgs; [libbsd bsdbuild bmake];
+  buildInputs = with pkgs; [ libbsd bsdbuild bmake ];
 
   meta = with lib; {
     description = "proxy IRC client with ICB server";
@@ -26,6 +25,6 @@ stdenv.mkDerivation rec {
     homepage = "http://www.benzedrine.ch/icbirc.html";
     license = licenses.bsd2;
     platforms = platforms.linux;
-    maintainers = with maintainers; [qbit];
+    maintainers = with maintainers; [ qbit ];
   };
 }

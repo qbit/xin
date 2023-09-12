@@ -7,4 +7,4 @@ let
     });
   };
 in
-  rex
+rex

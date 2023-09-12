@@ -1,20 +1,20 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ config
+, lib
+, pkgs
+, inputs
+, ...
 }:
 with pkgs; let
   cfg = config.services.tsvnstat;
   inherit (inputs.tsvnstat.packages.${pkgs.system}) tsvnstat;
-in {
+in
+{
   options = with lib; {
     services.tsvnstat = {
       enable = mkEnableOption "Enable tsvnstat";
 
       user = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "tsvnstat";
         description = ''
           The user the service will use.
@@ -38,7 +38,7 @@ in {
       };
 
       group = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "tsvnstat";
         description = ''
           The user the service will use.
@@ -53,7 +53,7 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    users.groups.${cfg.group} = {};
+    users.groups.${cfg.group} = { };
     users.users.${cfg.user} = {
       description = "tsvnstat service user";
       isSystemUser = true;
@@ -67,10 +67,10 @@ in {
     systemd.services.tsvnstat = {
       enable = true;
       description = "tsvnstat server";
-      wantedBy = ["network-online.target"];
-      after = ["network-online.target"];
+      wantedBy = [ "network-online.target" ];
+      after = [ "network-online.target" ];
 
-      path = [pkgs.vnstat];
+      path = [ pkgs.vnstat ];
 
       environment = {
         HOME = "/var/lib/tsvnstat";

@@ -1,11 +1,11 @@
-{
-  inputs,
-  config,
-  pkgs,
-  lib,
-  xinlib,
-  ...
-}: let
+{ inputs
+, config
+, pkgs
+, lib
+, xinlib
+, ...
+}:
+let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp;
   restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
     inherit pkgs;
@@ -25,25 +25,26 @@
       name = "brain";
       script = "cd ~/Brain && git sync";
       startAt = "*:0/2";
-      path = [pkgs.git pkgs.git-sync];
+      path = [ pkgs.git pkgs.git-sync ];
     }
     {
       name = "org";
       script = "(cd ~/org && git sync)";
       startAt = "*:0/5";
-      path = [pkgs.git pkgs.git-sync];
+      path = [ pkgs.git pkgs.git-sync ];
     }
     {
       name = "taskobs";
       script = "taskobs";
       startAt = "*:0/30";
-      path = [pkgs.taskobs] ++ pkgs.taskobs.buildInputs;
+      path = [ pkgs.taskobs ] ++ pkgs.taskobs.buildInputs;
     }
   ];
-in {
+in
+{
   _module.args.isUnstable = true;
 
-  imports = [./hardware-configuration.nix ../../pkgs ../../configs/neomutt.nix];
+  imports = [ ./hardware-configuration.nix ../../pkgs ../../configs/neomutt.nix ];
 
   sops.secrets = {
     fastmail = {
@@ -94,7 +95,7 @@ in {
   };
 
   boot = {
-    binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
+    binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
     initrd.systemd.enable = true;
     loader = {
       systemd-boot.enable = true;
@@ -103,7 +104,7 @@ in {
         efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelParams = ["boot.shell_on_fail" "mem_sleep_default=deep"];
+    kernelParams = [ "boot.shell_on_fail" "mem_sleep_default=deep" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
@@ -122,21 +123,21 @@ in {
     hostName = "europa";
     hostId = "87703c3e";
     hosts = {
-      "192.168.122.6" = ["chubs"];
+      "192.168.122.6" = [ "chubs" ];
     };
     wireless.userControlled.enable = true;
     networkmanager.enable = true;
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [22];
+      allowedTCPPorts = [ 22 ];
     };
   };
 
   tsPeerix = {
     enable = false;
     privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
-    interfaces = ["wlp170s0" "ztksevmpn3"];
+    interfaces = [ "wlp170s0" "ztksevmpn3" ];
   };
 
   programs = {
@@ -144,7 +145,7 @@ in {
     _1password.enable = true;
     _1password-gui = {
       enable = true;
-      polkitPolicyOwners = ["qbit"];
+      polkitPolicyOwners = [ "qbit" ];
     };
     dconf.enable = true;
     zsh = {
@@ -162,7 +163,7 @@ in {
     };
   };
 
-  services.xinCA = {enable = false;};
+  services.xinCA = { enable = false; };
 
   services = {
     avahi = {
@@ -178,9 +179,9 @@ in {
           environmentFile = "${config.sops.secrets.restic_env_file.path}";
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
-          paths = ["/home/qbit" "/var/lib/libvirt"];
+          paths = [ "/home/qbit" "/var/lib/libvirt" ];
 
-          pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5"];
+          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5" ];
         };
       };
     };
@@ -231,17 +232,19 @@ in {
     ''
   ];
 
-  systemd.user.services =
-    lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
-  systemd.services."whytailscalewhy" = {
-    description = "Tailscale restart on resume";
-    wantedBy = ["post-resume.target"];
-    after = ["post-resume.target"];
-    script = ''
-      . /etc/profile;
-      ${pkgs.systemd}/bin/systemctl restart tailscaled.service
-    '';
-    serviceConfig.Type = "oneshot";
+  systemd = {
+    user.services =
+      lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
+    services."whytailscalewhy" = {
+      description = "Tailscale restart on resume";
+      wantedBy = [ "post-resume.target" ];
+      after = [ "post-resume.target" ];
+      script = ''
+        . /etc/profile;
+        ${pkgs.systemd}/bin/systemctl restart tailscaled.service
+      '';
+      serviceConfig.Type = "oneshot";
+    };
   };
 
   virtualisation.docker.enable = false;
@@ -259,7 +262,7 @@ in {
     XDG_DATA_HOME = "\${HOME}/.local/share";
 
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-    PATH = ["\${XDG_BIN_HOME}"];
+    PATH = [ "\${XDG_BIN_HOME}" ];
     MUHOME = "\${HOME}/.config/mu";
   };
 
@@ -320,8 +323,8 @@ in {
     #yubioath-flutter
     zig
 
-    (callPackage ../../pkgs/clilol.nix {})
-    (callPackage ../../pkgs/iamb.nix {})
+    (callPackage ../../pkgs/clilol.nix { })
+    (callPackage ../../pkgs/iamb.nix { })
     (callPackage ../../pkgs/kobuddy.nix {
       inherit pkgs;
       inherit
@@ -335,9 +338,9 @@ in {
         alembic
         ;
     })
-    (callPackage ../../pkgs/gokrazy.nix {})
-    (callPackage ../../pkgs/mvoice.nix {})
-    (callPackage ../../pkgs/zutty.nix {})
+    (callPackage ../../pkgs/gokrazy.nix { })
+    (callPackage ../../pkgs/mvoice.nix { })
+    (callPackage ../../pkgs/zutty.nix { })
 
     restic
   ];
@@ -358,7 +361,9 @@ in {
     }
   ];
 
-  system.autoUpgrade.allowReboot = false;
-  system.autoUpgrade.enable = false;
-  system.stateVersion = "21.11";
+  system = {
+    autoUpgrade.allowReboot = false;
+    autoUpgrade.enable = false;
+    stateVersion = "21.11";
+  };
 }

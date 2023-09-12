@@ -1,11 +1,12 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: let
+{ lib
+, config
+, pkgs
+, ...
+}:
+let
   cfg = config.services.tsrevprox;
-in {
+in
+{
   options = with lib; {
     services.tsrevprox = {
       enable = lib.mkEnableOption "Enable tsrevprox";
@@ -35,7 +36,7 @@ in {
       };
 
       user = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "tsrevprox";
         description = ''
           The user the service will use.
@@ -43,7 +44,7 @@ in {
       };
 
       group = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "tsrevprox";
         description = ''
           The group the service will use.
@@ -74,7 +75,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.${cfg.group} = {};
+    users.groups.${cfg.group} = { };
     users.users.${cfg.user} = {
       description = "tsrevprox service user";
       isSystemUser = true;
@@ -86,10 +87,10 @@ in {
     systemd.services.tsrevprox = {
       enable = true;
       description = "tsrevprox server";
-      wantedBy = ["network-online.target"];
-      after = ["network-online.target"];
+      wantedBy = [ "network-online.target" ];
+      after = [ "network-online.target" ];
 
-      environment = {HOME = "${cfg.dataDir}";};
+      environment = { HOME = "${cfg.dataDir}"; };
 
       serviceConfig = {
         User = cfg.user;

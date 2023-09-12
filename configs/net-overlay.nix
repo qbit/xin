@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with lib; {
   options = {
@@ -32,7 +31,7 @@ with lib; {
 
   config = mkMerge [
     (mkIf config.tailscale.enable {
-      services = {tailscale = {enable = mkDefault true;};};
+      services = { tailscale = { enable = mkDefault true; }; };
       networking.firewall.checkReversePath = mkDefault "loose";
     })
     (mkIf (config.tailscale.enable && config.tailscale.sshOnly) {
@@ -45,8 +44,8 @@ with lib; {
       };
       systemd.services = {
         "tailscale-ssh-init" = {
-          wantedBy = ["tailscaled.service"];
-          after = ["tailscaled.service"];
+          wantedBy = [ "tailscaled.service" ];
+          after = [ "tailscaled.service" ];
           serviceConfig = {
             ExecStart = "${pkgs.tailscale}/bin/tailscale up --auth-key file://${config.sops.secrets.ts_sshonly.path}";
           };
@@ -54,11 +53,11 @@ with lib; {
       };
     })
     (mkIf config.zerotier.enable {
-      environment.systemPackages = with pkgs; [zerotierone];
+      environment.systemPackages = with pkgs; [ zerotierone ];
       services = {
         zerotierone = {
           enable = true;
-          joinNetworks = ["db64858fedd3b256"];
+          joinNetworks = [ "db64858fedd3b256" ];
         };
       };
       networking.firewall.checkReversePath = "loose";

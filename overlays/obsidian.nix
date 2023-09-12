@@ -16,4 +16,4 @@ let
     });
   };
 in
-  obsidian
+obsidian

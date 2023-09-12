@@ -1,8 +1,8 @@
-{
-  stdenv,
-  lib,
-  fetchgit,
-  gnumake,
+{ stdenv
+, lib
+, fetchgit
+, gnumake
+,
 }:
 stdenv.mkDerivation {
   pname = "femtolisp";
@@ -14,7 +14,7 @@ stdenv.mkDerivation {
     hash = "sha256-mh7upbCmWXLhudtaaebBf1XTIv4nYPSh0OAJDOqaQnk=";
   };
 
-  buildInputs = [gnumake];
+  buildInputs = [ gnumake ];
 
   installPhase = ''
     mkdir -p $out/bin
@@ -25,7 +25,7 @@ stdenv.mkDerivation {
     description = "A compact interpreter for a minimal lisp/scheme dialect.";
     homepage = "https://git.sr.ht/~ft/femtolisp";
     license = lib.licenses.bsd3;
-    maintainer = with lib.maintainers; [qbit];
+    maintainer = with lib.maintainers; [ qbit ];
     mainProgram = "flisp";
   };
 }

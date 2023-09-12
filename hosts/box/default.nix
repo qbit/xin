@@ -1,11 +1,11 @@
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  isUnstable,
-  ...
-}: let
+{ inputs
+, config
+, lib
+, pkgs
+, isUnstable
+, ...
+}:
+let
   #photoPrismTag = "220901-bullseye";
   httpCacheTime = "720m";
   httpAllow = ''
@@ -38,13 +38,14 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = {openssh.authorizedKeys.keys = pubKeys;};
+  userBase = { openssh.authorizedKeys.keys = pubKeys; };
   mkNginxSecret = {
     sopsFile = config.xin-secrets.box.certs;
     owner = config.users.users.nginx.name;
     mode = "400";
   };
-in {
+in
+{
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
@@ -65,41 +66,45 @@ in {
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.services;
     };
-    "bitwarden_rs.env" = {sopsFile = config.xin-secrets.box.services;};
-    "wireguard_private_key" = {sopsFile = config.xin-secrets.box.services;};
+    "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.services; };
+    "wireguard_private_key" = { sopsFile = config.xin-secrets.box.services; };
+
+    books_cert = mkNginxSecret;
+    books_key = mkNginxSecret;
+    jelly_cert = mkNginxSecret;
+    jelly_key = mkNginxSecret;
+    lidarr_cert = mkNginxSecret;
+    lidarr_key = mkNginxSecret;
+    nzb_cert = mkNginxSecret;
+    nzb_key = mkNginxSecret;
+    prowlarr_cert = mkNginxSecret;
+    prowlarr_key = mkNginxSecret;
+    radarr_cert = mkNginxSecret;
+    radarr_key = mkNginxSecret;
+    reddit_cert = mkNginxSecret;
+    reddit_key = mkNginxSecret;
+    sonarr_cert = mkNginxSecret;
+    sonarr_key = mkNginxSecret;
+    graph_cert = mkNginxSecret;
+    graph_key = mkNginxSecret;
+    bw_cert = mkNginxSecret;
+    bw_key = mkNginxSecret;
+    invidious_cert = mkNginxSecret;
+    invidious_key = mkNginxSecret;
+    readarr_cert = mkNginxSecret;
+    readarr_key = mkNginxSecret;
+    home_cert = mkNginxSecret;
+    home_key = mkNginxSecret;
   };
 
-  sops.secrets.books_cert = mkNginxSecret;
-  sops.secrets.books_key = mkNginxSecret;
-  sops.secrets.jelly_cert = mkNginxSecret;
-  sops.secrets.jelly_key = mkNginxSecret;
-  sops.secrets.lidarr_cert = mkNginxSecret;
-  sops.secrets.lidarr_key = mkNginxSecret;
-  sops.secrets.nzb_cert = mkNginxSecret;
-  sops.secrets.nzb_key = mkNginxSecret;
-  sops.secrets.prowlarr_cert = mkNginxSecret;
-  sops.secrets.prowlarr_key = mkNginxSecret;
-  sops.secrets.radarr_cert = mkNginxSecret;
-  sops.secrets.radarr_key = mkNginxSecret;
-  sops.secrets.reddit_cert = mkNginxSecret;
-  sops.secrets.reddit_key = mkNginxSecret;
-  sops.secrets.sonarr_cert = mkNginxSecret;
-  sops.secrets.sonarr_key = mkNginxSecret;
-  sops.secrets.graph_cert = mkNginxSecret;
-  sops.secrets.graph_key = mkNginxSecret;
-  sops.secrets.bw_cert = mkNginxSecret;
-  sops.secrets.bw_key = mkNginxSecret;
-  sops.secrets.invidious_cert = mkNginxSecret;
-  sops.secrets.invidious_key = mkNginxSecret;
-  sops.secrets.readarr_cert = mkNginxSecret;
-  sops.secrets.readarr_key = mkNginxSecret;
-  sops.secrets.home_cert = mkNginxSecret;
-  sops.secrets.home_key = mkNginxSecret;
-
-  boot.supportedFilesystems = ["zfs"];
-  boot.loader.grub.copyKernels = true;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    loader = {
+      grub.copyKernels = true;
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   doas.enable = true;
 
@@ -111,14 +116,14 @@ in {
     enableIPv6 = false;
 
     hosts = {
-      "127.0.0.1" = ["git.tapenet.org"];
-      "10.6.0.15" = ["jelly.bold.daemon"];
-      "100.122.61.43" = ["nix-binary-cache.humpback-trout.ts.net"];
+      "127.0.0.1" = [ "git.tapenet.org" ];
+      "10.6.0.15" = [ "jelly.bold.daemon" ];
+      "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ];
     };
-    interfaces.enp7s0 = {useDHCP = true;};
+    interfaces.enp7s0 = { useDHCP = true; };
 
     firewall = {
-      interfaces = {"tailscale0" = {allowedTCPPorts = [3030];};};
+      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
       interfaces = {
         "wg0" = {
           allowedTCPPorts = [
@@ -154,12 +159,12 @@ in {
       interfaces = {
         wg0 = {
           listenPort = 7122;
-          ips = ["192.168.112.4/32"];
+          ips = [ "192.168.112.4/32" ];
           peers = [
             {
               publicKey = "IMJ1gVK6KzRghon5Wg1dxv1JCB8IbdSqeFjwQAxJM10=";
               endpoint = "23.29.118.127:7122";
-              allowedIPs = ["192.168.112.3/32"];
+              allowedIPs = [ "192.168.112.3/32" ];
               persistentKeepalive = 25;
             }
           ];
@@ -192,7 +197,7 @@ in {
     glowing-bear
     rtl_433
 
-    (callPackage ../../pkgs/athens.nix {inherit isUnstable;})
+    (callPackage ../../pkgs/athens.nix { inherit isUnstable; })
   ];
 
   security.acme = {
@@ -200,35 +205,34 @@ in {
     defaults.email = "aaron@bolddaemon.com";
   };
 
-  users.groups.media = {
-    name = "media";
-    members = ["qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" "rtorrent" "readarr"];
-  };
+  users = {
+    groups = {
+      media = {
+        name = "media";
+        members = [ "qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" "rtorrent" "readarr" ];
+      };
 
-  users.groups.photos = {
-    name = "photos";
-    members = ["qbit"];
-  };
+      photos = {
+        name = "photos";
+        members = [ "qbit" ];
+      };
 
-  users.groups.photoprism = {
-    name = "photoprism";
-    gid = 986;
-  };
-  users.users.photoprism = {
-    uid = 991;
-    name = "photoprism";
-    isSystemUser = true;
-    hashedPassword = null;
-    group = "photoprism";
-    shell = "/bin/sh";
-    openssh.authorizedKeys.keys = pubKeys;
-  };
-
-  systemd.services.photoprism = {
-    serviceConfig = {
-      WorkingDirectory = lib.mkForce "/media/pictures/photoprism";
+      photoprism = {
+        name = "photoprism";
+        gid = 986;
+      };
     };
-    preStart = lib.mkForce "";
+    users = {
+      photoprism = {
+        uid = 991;
+        name = "photoprism";
+        isSystemUser = true;
+        hashedPassword = null;
+        group = "photoprism";
+        shell = "/bin/sh";
+        openssh.authorizedKeys.keys = pubKeys;
+      };
+    };
   };
 
   hardware.rtl-sdr.enable = true;
@@ -238,7 +242,7 @@ in {
       enable = true;
       listeners = [
         {
-          acl = ["pattern readwrite #"];
+          acl = [ "pattern readwrite #" ];
           omitPasswordAuth = true;
           settings.allow_anonymous = true;
         }
@@ -311,7 +315,7 @@ in {
         ];
         device_tracker = [
         ];
-        default_config = {};
+        default_config = { };
         http = {
           use_x_forwarded_for = true;
           server_host = "127.0.0.1";
@@ -382,23 +386,25 @@ in {
     };
     cron = {
       enable = true;
-      systemCronJobs = let
-        tsCertsScript = pkgs.writeScriptBin "ts-certs.sh" ''
-          #!/usr/bin/env sh
-          . /etc/profile;
-          (
-            mkdir -p /etc/nixos/secrets;
-            chown root /etc/nixos/secrets/box.humpback-trout.ts.net.*;
-            tailscale cert \
-              --cert-file /etc/nixos/secrets/box.humpback-trout.ts.net.crt \
-              --key-file=/etc/nixos/secrets/box.humpback-trout.ts.net.key \
-              box.humpback-trout.ts.net;
-            chown nginx /etc/nixos/secrets/box.humpback-trout.ts.net.*
-          ) >/dev/null 2>&1
-        '';
-      in ["@daily root ${tsCertsScript}/bin/ts-certs.sh"];
+      systemCronJobs =
+        let
+          tsCertsScript = pkgs.writeScriptBin "ts-certs.sh" ''
+            #!/usr/bin/env sh
+            . /etc/profile;
+            (
+              mkdir -p /etc/nixos/secrets;
+              chown root /etc/nixos/secrets/box.humpback-trout.ts.net.*;
+              tailscale cert \
+                --cert-file /etc/nixos/secrets/box.humpback-trout.ts.net.crt \
+                --key-file=/etc/nixos/secrets/box.humpback-trout.ts.net.key \
+                box.humpback-trout.ts.net;
+              chown nginx /etc/nixos/secrets/box.humpback-trout.ts.net.*
+            ) >/dev/null 2>&1
+          '';
+        in
+        [ "@daily root ${tsCertsScript}/bin/ts-certs.sh" ];
     };
-    openssh = {settings.X11Forwarding = true;};
+    openssh = { settings.X11Forwarding = true; };
 
     tor.enable = true;
 
@@ -424,7 +430,7 @@ in {
     nzbget = {
       enable = true;
       group = "media";
-      settings = {MainDir = "/media/downloads";};
+      settings = { MainDir = "/media/downloads"; };
     };
 
     fwupd.enable = true;
@@ -449,7 +455,7 @@ in {
     calibre-web = {
       enable = true;
       group = "media";
-      options = {enableBookUploading = true;};
+      options = { enableBookUploading = true; };
       listen.port = 8909;
       listen.ip = "127.0.0.1";
     };
@@ -501,7 +507,7 @@ in {
           lifecycler = {
             address = "127.0.0.1";
             ring = {
-              kvstore = {store = "inmemory";};
+              kvstore = { store = "inmemory"; };
               replication_factor = 1;
             };
           };
@@ -535,7 +541,7 @@ in {
             shared_store = "filesystem";
           };
 
-          filesystem = {directory = "/var/lib/loki/chunks";};
+          filesystem = { directory = "/var/lib/loki/chunks"; };
         };
 
         limits_config = {
@@ -543,7 +549,7 @@ in {
           reject_old_samples_max_age = "168h";
         };
 
-        chunk_store_config = {max_look_back_period = "0s";};
+        chunk_store_config = { max_look_back_period = "0s"; };
 
         table_manager = {
           retention_deletes_enabled = false;
@@ -553,7 +559,7 @@ in {
         compactor = {
           working_directory = "/var/lib/loki";
           shared_store = "filesystem";
-          compactor_ring = {kvstore = {store = "inmemory";};};
+          compactor_ring = { kvstore = { store = "inmemory"; }; };
         };
       };
     };
@@ -565,7 +571,7 @@ in {
           http_listen_port = 3031;
           grpc_listen_port = 0;
         };
-        positions = {filename = "/tmp/positions.yaml";};
+        positions = { filename = "/tmp/positions.yaml"; };
         clients = [
           {
             url = "http://127.0.0.1:${
@@ -586,7 +592,7 @@ in {
             };
             relabel_configs = [
               {
-                source_labels = ["__journal__systemd_unit"];
+                source_labels = [ "__journal__systemd_unit" ];
                 target_label = "unit";
               }
             ];
@@ -602,11 +608,11 @@ in {
       exporters = {
         node = {
           enable = true;
-          enabledCollectors = ["systemd"];
+          enabledCollectors = [ "systemd" ];
           port = 9002;
         };
 
-        nginx = {enable = true;};
+        nginx = { enable = true; };
 
         rtl_433 = {
           enable = true;
@@ -648,27 +654,27 @@ in {
         }
         {
           job_name = "greenhouse";
-          static_configs = [{targets = ["10.6.0.20:80"];}];
+          static_configs = [{ targets = [ "10.6.0.20:80" ]; }];
         }
         {
           job_name = "house";
-          static_configs = [{targets = ["10.6.0.21:80"];}];
+          static_configs = [{ targets = [ "10.6.0.21:80" ]; }];
         }
         {
           job_name = "outside";
-          static_configs = [{targets = ["10.6.0.22:8811"];}];
+          static_configs = [{ targets = [ "10.6.0.22:8811" ]; }];
         }
         {
           job_name = "faf";
-          static_configs = [{targets = ["10.6.0.245:9002"];}];
+          static_configs = [{ targets = [ "10.6.0.245:9002" ]; }];
         }
         {
           job_name = "h";
-          static_configs = [{targets = ["100.64.247.69:9002"];}];
+          static_configs = [{ targets = [ "100.64.247.69:9002" ]; }];
         }
         {
           job_name = "namish";
-          static_configs = [{targets = ["10.200.0.100:9100"];}];
+          static_configs = [{ targets = [ "10.200.0.100:9100" ]; }];
         }
         {
           job_name = "nginx";
@@ -746,7 +752,7 @@ in {
         backup	root@suah.dev:/var/www/	suah.dev/
         backup_exec	date "+ backup of suah.dev ended at %c"
       '';
-      cronIntervals = {daily = "50 21 * * *";};
+      cronIntervals = { daily = "50 21 * * *"; };
     };
 
     libreddit = {
@@ -1031,7 +1037,7 @@ in {
       #  host all all ::1/128 trust
       #'';
 
-      ensureDatabases = ["nextcloud" "gitea" "invidious"];
+      ensureDatabases = [ "nextcloud" "gitea" "invidious" ];
       ensureUsers = [
         {
           name = "nextcloud";
@@ -1049,23 +1055,35 @@ in {
     };
   };
 
-  systemd.services.nginx.serviceConfig = {
-    ReadWritePaths = ["/backups/nginx_cache"];
-    ReadOnlyPaths = ["/etc/nixos/secrets"];
+  systemd = {
+    services = {
+      photoprism = {
+        serviceConfig = {
+          WorkingDirectory = lib.mkForce "/media/pictures/photoprism";
+        };
+        preStart = lib.mkForce "";
+      };
+
+      nginx.serviceConfig = {
+        ReadWritePaths = [ "/backups/nginx_cache" ];
+        ReadOnlyPaths = [ "/etc/nixos/secrets" ];
+      };
+
+      gitea.environment = {
+        GIT_CONFIG_NOGLOBAL = "true";
+        GIT_CONFIG_NOSYSTEM = "true";
+      };
+      #"nextcloud-setup" = {
+      #  requires = [ "postgresql.service" ];
+      #  after = [ "postgresql.service" ];
+      #};
+    };
   };
 
-  systemd.services.gitea.environment = {
-    GIT_CONFIG_NOGLOBAL = "true";
-    GIT_CONFIG_NOSYSTEM = "true";
+  users.users = {
+    qbit = userBase;
+    root = userBase;
   };
-
-  #systemd.services."nextcloud-setup" = {
-  #  requires = [ "postgresql.service" ];
-  #  after = [ "postgresql.service" ];
-  #};
-
-  users.users.qbit = userBase;
-  users.users.root = userBase;
 
   programs.zsh.enable = true;
 

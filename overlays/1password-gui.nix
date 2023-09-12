@@ -9,4 +9,4 @@ let
     });
   };
 in
-  _1password-gui
+_1password-gui

@@ -1,7 +1,6 @@
-{
-  config,
-  lib,
-  ...
+{ config
+, lib
+, ...
 }:
 with lib; let
   cfg = config.services.xin-monitoring;
@@ -15,16 +14,18 @@ with lib; let
     ;
 
   nginxCfg = config.services.nginx;
-  buildFSChecker = fsList: (concatStringsSep "\n" (attrValues (mapAttrs (f: v:
-    if v.fsType != "sshfs"
-    then ''
-      check filesystem ${replaceStrings ["/"] ["_"] f} with path ${f}
-         if space usage > 90% then alert
-         if inode usage > 90% then alert
-    ''
-    else "")
-  fsList)));
-  buildNginxChecker = vhostList: (concatStringsSep "\n" (attrValues (mapAttrs (f: v: ''
+  buildFSChecker = fsList: (concatStringsSep "\n" (attrValues (mapAttrs
+    (f: v:
+      if v.fsType != "sshfs"
+      then ''
+        check filesystem ${replaceStrings ["/"] ["_"] f} with path ${f}
+           if space usage > 90% then alert
+           if inode usage > 90% then alert
+      ''
+      else "")
+    fsList)));
+  buildNginxChecker = vhostList: (concatStringsSep "\n" (attrValues (mapAttrs
+    (f: v: ''
       check host ${f} with address ${f}
           if failed port 80 protocol http then alert
           ${
@@ -41,7 +42,8 @@ with lib; let
       then (buildNginxChecker nginxCfg.virtualHosts)
       else ""
     else "";
-in {
+in
+{
   options = {
     services.xin-monitoring = {
       enable = mkOption {

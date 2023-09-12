@@ -1,13 +1,14 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
+{ pkgs
+, config
+, ...
+}:
+let
   #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-in {
+in
+{
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
@@ -16,12 +17,18 @@ in {
   hardware.rtl-sdr.enable = true;
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
+    binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
+  };
   nixpkgs.config.allowUnsupportedSystem = true;
 
   networking = {
@@ -29,7 +36,7 @@ in {
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [22];
+      allowedTCPPorts = [ 22 ];
       checkReversePath = "loose";
     };
   };
@@ -43,16 +50,14 @@ in {
     XDG_DATA_HOME = "\${HOME}/.local/share";
 
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-    PATH = ["\${XDG_BIN_HOME}"];
+    PATH = [ "\${XDG_BIN_HOME}" ];
   };
-
-  users.users.qbit.extraGroups = ["dialout" "libvirtd" "docker" "plugdev"];
 
   #nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     rtl-sdr
     direwolf
-    (callPackage ../../pkgs/rtlamr.nix {})
+    (callPackage ../../pkgs/rtlamr.nix { })
   ];
 
   #programs = {
@@ -116,8 +121,15 @@ in {
     };
   };
 
-  users.users.root = {openssh.authorizedKeys.keys = pubKeys;};
-  users.users.qbit = {openssh.authorizedKeys.keys = pubKeys;};
+  users = {
+    users = {
+      root = { openssh.authorizedKeys.keys = pubKeys; };
+      qbit = {
+        openssh.authorizedKeys.keys = pubKeys;
+        extraGroups = [ "dialout" "libvirtd" "docker" "plugdev" ];
+      };
+    };
+  };
 
   system.stateVersion = "22.11";
 }

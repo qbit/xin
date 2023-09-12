@@ -1,4 +1,4 @@
-{perl}: ''
+{ perl }: ''
   #!${perl}/bin/perl
 
   use strict;

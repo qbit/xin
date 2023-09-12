@@ -1,7 +1,6 @@
-{
-  config,
-  lib,
-  ...
+{ config
+, lib
+, ...
 }:
 with lib; {
   options = {
@@ -16,9 +15,11 @@ with lib; {
   };
   config = mkIf config.nixLockdown.enable {
     nix = {
-      settings.sandbox = true;
-      settings.trusted-users = ["@wheel"];
-      settings.allowed-users = ["root" "qbit"];
+      settings = {
+        sandbox = true;
+        trusted-users = [ "@wheel" ];
+        allowed-users = [ "root" "qbit" ];
+      };
     };
   };
 }

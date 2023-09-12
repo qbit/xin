@@ -1,8 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   hardware = {
     deviceTree = {
       enable = true;
-      overlays = ["${pkgs.device-tree_rpi.overlays}/hifiberry-dac.dtbo"];
+      overlays = [ "${pkgs.device-tree_rpi.overlays}/hifiberry-dac.dtbo" ];
     };
 
     enableRedistributableFirmware = true;

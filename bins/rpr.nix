@@ -1,12 +1,14 @@
-{
-  tea,
-  gh,
-  hut,
-}: let
+{ tea
+, gh
+, hut
+,
+}:
+let
   teaBin = "${tea}/bin/tea";
   ghBin = "${gh}/bin/gh";
   htBin = "${hut}/bin/hut";
-in ''
+in
+''
   #!/usr/bin/env sh
 
   set -eu

@@ -1,21 +1,20 @@
-{
-  buildPythonPackage,
-  setuptools-scm,
-  fetchFromGitHub,
-  PyGithub,
-  pytz,
-  ...
+{ buildPythonPackage
+, setuptools-scm
+, fetchFromGitHub
+, PyGithub
+, pytz
+, ...
 }:
 buildPythonPackage rec {
   pname = "ghexport";
   version = "20220828";
 
-  nativeBuildInputs = [setuptools-scm];
-  propagatedBuildInputs = [PyGithub pytz];
+  nativeBuildInputs = [ setuptools-scm ];
+  propagatedBuildInputs = [ PyGithub pytz ];
 
   doCheck = true;
 
-  buildInputs = [];
+  buildInputs = [ ];
 
   preCheck = ''
     export HOME=$(mktemp -d)

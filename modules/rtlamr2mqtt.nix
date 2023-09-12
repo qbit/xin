@@ -1,27 +1,27 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with pkgs; let
   cfg = config.services.rtlamr2mqtt;
-  rtlamr2mqtt = pkgs.python3Packages.callPackage ../pkgs/rtlamr2mqtt.nix {};
-  settingsFormat = pkgs.formats.json {};
+  rtlamr2mqtt = pkgs.python3Packages.callPackage ../pkgs/rtlamr2mqtt.nix { };
+  settingsFormat = pkgs.formats.json { };
   settingsType = settingsFormat.type;
   prettyJSON = conf:
-    pkgs.runCommandLocal "rtlamr2mqtt-config.json" {} ''
+    pkgs.runCommandLocal "rtlamr2mqtt-config.json" { } ''
       echo '${
         builtins.toJSON conf
       }' | ${pkgs.buildPackages.jq}/bin/jq 'del(._module)' > $out
     '';
-in {
+in
+{
   options = with lib; {
     services.rtlamr2mqtt = {
       enable = mkEnableOption "Enable rtlamr2mqtt";
 
       user = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "rtlamr2mqtt";
         description = ''
           The user the service will use.
@@ -29,7 +29,7 @@ in {
       };
 
       group = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "rtlamr2mqtt";
         description = ''
           The user the service will use.
@@ -53,20 +53,20 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.rtlamr2mqtt = {};
+    users.groups.rtlamr2mqtt = { };
     users.users.rtlamr2mqtt = {
       description = "rtlamr2mqtt service user";
       isSystemUser = true;
       home = "/var/lib/rtlamr2mqtt";
       createHome = true;
       group = "rtlamr2mqtt";
-      extraGroups = ["plugdev"];
+      extraGroups = [ "plugdev" ];
     };
 
     systemd.services.rtlamr2mqtt = {
       enable = true;
       description = "rtlamr2mqtt server";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
         User = cfg.user;

@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   nixOptions = {
     gc = {
       automatic = true;
@@ -12,4 +13,5 @@
       experimental-features = nix-command flakes
     '';
   };
-in {nix = {settings.auto-optimise-store = true;} // nixOptions;}
+in
+{ nix = { settings.auto-optimise-store = true; } // nixOptions; }

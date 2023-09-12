@@ -1,19 +1,19 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with pkgs; let
   cfg = config.services.golink;
-  golink = callPackage ../pkgs/golink.nix {};
-in {
+  golink = callPackage ../pkgs/golink.nix { };
+in
+{
   options = with lib; {
     services.golink = {
       enable = mkEnableOption "Enable golink";
 
       user = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "golink";
         description = ''
           The user the service will use.
@@ -37,7 +37,7 @@ in {
       };
 
       group = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "golink";
         description = ''
           The user the service will use.
@@ -53,7 +53,7 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    users.groups.${cfg.group} = {};
+    users.groups.${cfg.group} = { };
     users.users.${cfg.user} = {
       description = "golink service user";
       isSystemUser = true;
@@ -65,10 +65,10 @@ in {
     systemd.services.golink = {
       enable = true;
       description = "golink server";
-      wantedBy = ["network-online.target"];
-      after = ["network-online.target"];
+      wantedBy = [ "network-online.target" ];
+      after = [ "network-online.target" ];
 
-      path = [pkgs.vnstat];
+      path = [ pkgs.vnstat ];
 
       environment = {
         HOME = cfg.dataDir;

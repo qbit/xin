@@ -1,9 +1,9 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, ...
+}:
+let
   perl = "${pkgs.perl}/bin/perl";
   sshAdd = "${pkgs.openssh}/bin/ssh-add";
   pKill = "${pkgs.procps}/bin/pkill";
@@ -45,7 +45,8 @@
     export SSH_AUTH_SOCK="$(echo $XDG_RUNTIME_DIR/ssh-agent)";
     exec ${config.programs.ssh.askPassword} "$@"
   '';
-in {
+in
+{
   options = {
     sshFidoAgent = {
       enable = lib.mkEnableOption "Add FIDO keys to ssh-agent when attached.";
@@ -53,14 +54,14 @@ in {
   };
 
   config = lib.mkIf config.sshFidoAgent.enable {
-    environment.systemPackages = [fidoAddDevice];
+    environment.systemPackages = [ fidoAddDevice ];
     systemd.user.services.sshfidoagent = {
       script = ''
         ${fidoAddDevice}/bin/fido-add-device
       '';
-      wantedBy = ["graphical-session.target"];
-      partOf = ["graphical-session.target"];
-      after = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       environment.DISPLAY = "fake";
       environment.SSH_ASKPASS = askPassWrapper;
       #serviceConfig = { Restart = "on-failure"; };

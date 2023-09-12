@@ -1,9 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  isUnstable,
-  ...
+{ config
+, lib
+, pkgs
+, isUnstable
+, ...
 }:
 with lib; let
   userBase = {
@@ -12,7 +11,8 @@ with lib; let
       config.myconf.hwPubKeys
       ++ config.myconf.managementPubKeys;
   };
-in {
+in
+{
   options = {
     defaultUsers = {
       enable = mkOption {
@@ -32,12 +32,12 @@ in {
         isNormalUser = true;
         description = "Aaron Bieber";
         home = "/home/qbit";
-        extraGroups = ["wheel"];
+        extraGroups = [ "wheel" ];
       };
 
     environment.systemPackages =
       if isUnstable
-      then [pkgs.yash pkgs.go]
-      else [pkgs.go];
+      then [ pkgs.yash pkgs.go ]
+      else [ pkgs.go ];
   };
 }

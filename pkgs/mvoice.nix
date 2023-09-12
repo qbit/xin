@@ -1,9 +1,8 @@
-{
-  lib,
-  stdenv,
-  fetchFromGitHub,
-  pkgs,
-  ...
+{ lib
+, stdenv
+, fetchFromGitHub
+, pkgs
+, ...
 }:
 stdenv.mkDerivation {
   pname = "mvoice";
@@ -46,6 +45,6 @@ stdenv.mkDerivation {
     homepage = "https://github.com/n7tae/mvoice";
     license = licenses.gpl3;
     platforms = platforms.unix;
-    maintainers = with maintainers; [qbit];
+    maintainers = with maintainers; [ qbit ];
   };
 }

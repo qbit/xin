@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 with pkgs; let
   parchment = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
     pname = "parchment";
@@ -30,7 +30,7 @@ with pkgs; let
       sha256 = "sha256-pMYvtNEYoVFaWlj35F1rDlfJkNY4y4S62RNpHBNBgto=";
       fetchSubmodules = true;
     };
-    dependencies = with vimPlugins; [nvim-cmp tabular];
+    dependencies = with vimPlugins; [ nvim-cmp tabular ];
   };
   neogen = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
     pname = "neogen";
@@ -51,10 +51,10 @@ with pkgs; let
       url = "mirror://cpan/authors/id/J/JA/JACQUESG/MsgPack-Raw-0.05.tar.gz";
       sha256 = "8559e2b64cd98d99abc666edf2a4c8724c9534612616af11f4eb0bbd0d422dac";
     };
-    buildInputs = with perlPackages; [TestPod TestPodCoverage];
+    buildInputs = with perlPackages; [ TestPod TestPodCoverage ];
     meta = {
       description = "Perl bindings to the msgpack C library";
-      license = with lib.licenses; [artistic1 gpl1Plus];
+      license = with lib.licenses; [ artistic1 gpl1Plus ];
     };
   };
 
@@ -66,7 +66,7 @@ with pkgs; let
       sha256 = "55a52c233e2dae86113f9f19b34f617edcfc8416f9bece671267bd1811b12111";
     };
 
-    outputs = ["out" "dev"];
+    outputs = [ "out" "dev" ];
 
     meta = {
       description = "Simplified safe evaluation of Perl code";
@@ -99,11 +99,11 @@ with pkgs; let
     # Attempts to download stuff from the internet.
     doCheck = false;
 
-    outputs = ["out" "dev"];
+    outputs = [ "out" "dev" ];
 
     meta = {
       description = "Perl bindings for neovim";
-      license = with lib.licenses; [artistic1 gpl1Plus];
+      license = with lib.licenses; [ artistic1 gpl1Plus ];
     };
   };
 
@@ -139,13 +139,11 @@ with pkgs; let
     parchment
     vacme
   ];
-  myVimPackages =
-    if pkgs.system == "aarch64-linux"
-    then baseVimPackages
-    else baseVimPackages ++ [];
-in {
+  myVimPackages = baseVimPackages;
+in
+{
   environment.systemPackages = with pkgs; [
-    alejandra
+    nixpkgs-fmt
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
@@ -177,7 +175,7 @@ in {
     enable = true;
     defaultEditor = true;
     configure = {
-      packages.myVimPackage = {start = myVimPackages;};
+      packages.myVimPackage = { start = myVimPackages; };
       customRC = ''
         " Restore cursor position
         autocmd BufReadPost *

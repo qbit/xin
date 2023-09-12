@@ -1,41 +1,40 @@
-{
-  lib,
-  buildGoModule,
-  fetchFromGitHub,
-  ...
+{ lib
+, buildGoModule
+, fetchFromGitHub
+, ...
 }:
 with lib;
-  buildGoModule rec {
-    pname = "yarr";
-    version = "2.4";
+buildGoModule rec {
+  pname = "yarr";
+  version = "2.4";
 
-    src = fetchFromGitHub {
-      owner = "nkanaev";
-      repo = pname;
-      rev = "v${version}";
-      sha256 = "sha256-ZMQ+IX8dZuxyxQhD/eWAe4bGGCVcaCeVgF+Wqs79G+k=";
-    };
+  src = fetchFromGitHub {
+    owner = "nkanaev";
+    repo = pname;
+    rev = "v${version}";
+    sha256 = "sha256-ZMQ+IX8dZuxyxQhD/eWAe4bGGCVcaCeVgF+Wqs79G+k=";
+  };
 
-    vendorHash = null;
+  vendorHash = null;
 
-    ldflags = ["-X main.Version=${version}"];
+  ldflags = [ "-X main.Version=${version}" ];
 
-    tags = ["sqlite_foreign_keys" "release"];
+  tags = [ "sqlite_foreign_keys" "release" ];
 
-    proxyVendor = true;
+  proxyVendor = true;
 
-    doCheck = false;
+  doCheck = false;
 
-    subPackages = ["./src/main.go"];
+  subPackages = [ "./src/main.go" ];
 
-    postInstall = ''
-      mv $out/bin/main $out/bin/yarr
-    '';
+  postInstall = ''
+    mv $out/bin/main $out/bin/yarr
+  '';
 
-    meta = {
-      description = "Yet Another RSS Reader";
-      homepage = "https://github.com/nkanaev/yarr";
-      license = licenses.mit;
-      maintainers = with maintainers; [qbit];
-    };
-  }
+  meta = {
+    description = "Yet Another RSS Reader";
+    homepage = "https://github.com/nkanaev/yarr";
+    license = licenses.mit;
+    maintainers = with maintainers; [ qbit ];
+  };
+}

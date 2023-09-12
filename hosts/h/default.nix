@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  isUnstable,
-  inputs,
-  ...
+{ config
+, pkgs
+, isUnstable
+, inputs
+, ...
 }:
 with pkgs; let
   restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
@@ -11,24 +10,24 @@ with pkgs; let
     inherit lib;
     inherit config;
   });
-  gqrss = callPackage ../../pkgs/gqrss.nix {inherit isUnstable;};
-  icbirc = callPackage ../../pkgs/icbirc.nix {inherit isUnstable;};
-  mcchunkie = callPackage ../../pkgs/mcchunkie.nix {inherit isUnstable;};
-  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix {};
+  gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
+  icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
+  mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
+  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
   weepushover =
-    python3Packages.callPackage ../../pkgs/weepushover.nix {inherit pkgs;};
+    python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = {openssh.authorizedKeys.keys = pubKeys;};
+  userBase = { openssh.authorizedKeys.keys = pubKeys; };
   icbIrcTunnel =
     pkgs.writeScriptBin "icb-irc-tunnel"
-    (import ../../bins/icb-irc-tunnel.nix {
-      inherit pkgs;
-      inherit icbirc;
-    });
+      (import ../../bins/icb-irc-tunnel.nix {
+        inherit pkgs;
+        inherit icbirc;
+      });
   goModuleHost = "https://codeberg.org/qbit"; # "https://git.sr.ht/~qbit";
   httpAllow = ''
     allow	10.6.0.0/24;
@@ -44,9 +43,9 @@ with pkgs; let
   matrixServer = "tapenet.org";
   matrixClientConfig = {
     "m.homeserver".base_url = "https://${matrixServer}:443";
-    "org.matrix.msc3575.proxy" = {url = "https://${matrixServer}";};
+    "org.matrix.msc3575.proxy" = { url = "https://${matrixServer}"; };
   };
-  matrixServerConfig = {"m.server" = "${matrixServer}:443";};
+  matrixServerConfig = { "m.server" = "${matrixServer}:443"; };
   mkMatrixWellKnown = p: ''
     return 200 '${builtins.toJSON p}';
   '';
@@ -61,25 +60,30 @@ with pkgs; let
     proxyWebsockets = true;
     proxyPass = "http://${mtxCfg.address}:${toString mtxCfg.port}";
   };
-in {
+in
+{
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
   ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.configurationLimit = 15;
+  boot = {
+    loader.grub = {
+      enable = true;
+      device = "/dev/sda";
+      configurationLimit = 15;
+    };
 
-  boot.kernelParams = ["net.ifnames=0"];
+    kernelParams = [ "net.ifnames=0" ];
+  };
 
   tailscale.sshOnly = true;
 
   nixpkgs.overlays = [
     (_: super: {
       weechat = super.weechat.override {
-        configure = {...}: {
-          scripts = with super.weechatScripts; [highmon weepushover];
+        configure = { ... }: {
+          scripts = with super.weechatScripts; [ highmon weepushover ];
         };
       };
     })
@@ -129,7 +133,7 @@ in {
       sopsFile = config.xin-secrets.h.services;
       owner = config.users.users.gostart.name;
     };
-    wireguard_private_key = {sopsFile = config.xin-secrets.h.services;};
+    wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
     pots_env_file = {
       owner = config.users.users.pots.name;
       mode = "400";
@@ -158,7 +162,7 @@ in {
     useDHCP = false;
     defaultGateway = "23.29.118.1";
     defaultGateway6 = "2602:ff16:3::1";
-    nameservers = ["9.9.9.9"];
+    nameservers = [ "9.9.9.9" ];
 
     interfaces.eth0 = {
       ipv4.addresses = [
@@ -182,11 +186,11 @@ in {
       interfaces = {
         wg0 = {
           listenPort = 7122;
-          ips = ["192.168.112.3/32"];
+          ips = [ "192.168.112.3/32" ];
           peers = [
             {
               publicKey = "gZ16FwqUgzKgEpJgVC9BngJ+Dd0e5LPsDhDuJby0VzY=";
-              allowedIPs = ["192.168.112.4/32"];
+              allowedIPs = [ "192.168.112.4/32" ];
               persistentKeepalive = 25;
             }
           ];
@@ -196,9 +200,9 @@ in {
     };
 
     firewall = {
-      interfaces = {"tailscale0" = {allowedTCPPorts = [9002];};};
-      allowedTCPPorts = [22 80 443 2222 53589];
-      allowedUDPPorts = [7122];
+      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 ]; }; };
+      allowedTCPPorts = [ 22 80 443 2222 53589 ];
+      allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
         {
           from = 60000;
@@ -231,33 +235,39 @@ in {
     defaults.email = "aaron@bolddaemon.com";
   };
 
-  users.groups.mcchunkie = {};
-
-  users.users.mcchunkie = {
-    createHome = true;
-    isSystemUser = true;
-    home = "/var/lib/mcchunkie";
-    group = "mcchunkie";
-  };
-
-  systemd.services.icb-tunnel = {
-    wantedBy = ["network.target"];
-    after = ["network.target" "multi-user.target"];
-    serviceConfig = {
-      User = "qbit";
-      WorkingDirectory = "/home/qbit";
-      ExecStart = "${icbIrcTunnel}/bin/icb-irc-tunnel";
+  users = {
+    users = {
+      qbit = userBase;
+      mcchunkie = {
+        createHome = true;
+        isSystemUser = true;
+        home = "/var/lib/mcchunkie";
+        group = "mcchunkie";
+      };
     };
+    groups.mcchunkie = { };
   };
 
-  systemd.services.mcchunkie = {
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      User = "mcchunkie";
-      Group = "mcchunkie";
-      Restart = "always";
-      WorkingDirectory = "/var/lib/mcchunkie";
-      ExecStart = "${mcchunkie}/bin/mcchunkie";
+  systemd.services = {
+    icb-tunnel = {
+      wantedBy = [ "network.target" ];
+      after = [ "network.target" "multi-user.target" ];
+      serviceConfig = {
+        User = "qbit";
+        WorkingDirectory = "/home/qbit";
+        ExecStart = "${icbIrcTunnel}/bin/icb-irc-tunnel";
+      };
+    };
+
+    mcchunkie = {
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        User = "mcchunkie";
+        Group = "mcchunkie";
+        Restart = "always";
+        WorkingDirectory = "/var/lib/mcchunkie";
+        ExecStart = "${mcchunkie}/bin/mcchunkie";
+      };
     };
   };
 
@@ -277,8 +287,8 @@ in {
             exclusive = true;
           }
         ];
-        aliases = [];
-        rooms = [];
+        aliases = [ ];
+        rooms = [ ];
       };
     };
     tsrevprox = {
@@ -296,7 +306,7 @@ in {
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
     };
-    pr-status = {enable = true;};
+    pr-status = { enable = true; };
     gostart = {
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
@@ -335,7 +345,7 @@ in {
         protocol = "https";
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial";
-        trusted-proxies = ["127.0.0.1/32" "23.29.118.0/24"];
+        trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
         web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
         web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
       };
@@ -347,8 +357,8 @@ in {
           http_listen_port = 3031;
           grpc_listen_port = 0;
         };
-        positions = {filename = "/tmp/positions.yaml";};
-        clients = [{url = "http://box.humpback-trout.ts.net:3030/loki/api/v1/push";}];
+        positions = { filename = "/tmp/positions.yaml"; };
+        clients = [{ url = "http://box.humpback-trout.ts.net:3030/loki/api/v1/push"; }];
         scrape_configs = [
           {
             job_name = "journal";
@@ -361,7 +371,7 @@ in {
             };
             relabel_configs = [
               {
-                source_labels = ["__journal__systemd_unit"];
+                source_labels = [ "__journal__systemd_unit" ];
                 target_label = "unit";
               }
             ];
@@ -377,7 +387,7 @@ in {
       exporters = {
         node = {
           enable = true;
-          enabledCollectors = ["systemd"];
+          enabledCollectors = [ "systemd" ];
           port = 9002;
         };
       };
@@ -386,7 +396,7 @@ in {
       enable = true;
       fqdn = "tasks.suah.dev";
       listenHost = "::";
-      organisations."bolddaemon".users = ["qbit"];
+      organisations."bolddaemon".users = [ "qbit" ];
       openFirewall = false;
     };
     cron = {
@@ -418,9 +428,9 @@ in {
             "/var/lib/writefreely"
           ];
 
-          timerConfig = {OnCalendar = "00:05";};
+          timerConfig = { OnCalendar = "00:05"; };
 
-          pruneOpts = ["--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10"];
+          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
         };
       };
     };
@@ -480,7 +490,7 @@ in {
       '';
 
       upstreams = {
-        "ssh_gitea" = {servers = {"192.168.112.4:2222" = {};};};
+        "ssh_gitea" = { servers = { "192.168.112.4:2222" = { }; }; };
       };
 
       streamConfig = ''
@@ -551,7 +561,7 @@ in {
           forceSSL = true;
           enableACME = true;
 
-          locations."/" = {root = "${pkgs.glowing-bear}";};
+          locations."/" = { root = "${pkgs.glowing-bear}"; };
         };
 
         "git.tapenet.org" = {
@@ -569,15 +579,17 @@ in {
           forceSSL = true;
           enableACME = true;
 
-          locations."/" = {
-            proxyPass = "http://192.168.112.4:8222";
-            proxyWebsockets = true;
-          };
-          locations."/admin" = {
-            extraConfig = ''
-              ${httpAllow}
-               deny	all;
-            '';
+          locations = {
+            "/" = {
+              proxyPass = "http://192.168.112.4:8222";
+              proxyWebsockets = true;
+            };
+            "/admin" = {
+              extraConfig = ''
+                ${httpAllow}
+                 deny	all;
+              '';
+            };
           };
         };
 
@@ -728,29 +740,33 @@ in {
             forceSSL = true;
             enableACME = true;
             root = "/var/www/tapenet.org";
-            locations."/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            locations."/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
+            locations = {
+              "/.well-known/matrix/client".extraConfig =
+                mkMatrixWellKnown matrixClientConfig;
+              "/.well-known/matrix/server".extraConfig =
+                mkMatrixWellKnown matrixServerConfig;
 
-            locations."/client" = mkMatrixSliderLoc;
-            locations."/_matrix/client/unstable/org.matrix.msc3575/sync" =
-              mkMatrixSliderLoc;
+              "/client" = mkMatrixSliderLoc;
+              "/_matrix/client/unstable/org.matrix.msc3575/sync" =
+                mkMatrixSliderLoc;
 
-            locations."/_matrix" = mkMatrixLoc;
-            locations."/_synapse/client" = mkMatrixLoc;
+              "/_matrix" = mkMatrixLoc;
+              "/_synapse/client" = mkMatrixLoc;
+            };
           }
           else {
             forceSSL = true;
             enableACME = true;
             root = "/var/www/tapenet.org";
-            locations."/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            locations."/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
+            locations = {
+              "/.well-known/matrix/client".extraConfig =
+                mkMatrixWellKnown matrixClientConfig;
+              "/.well-known/matrix/server".extraConfig =
+                mkMatrixWellKnown matrixServerConfig;
 
-            locations."/_matrix" = mkMatrixLoc;
-            locations."/_synapse/client" = mkMatrixLoc;
+              "/_matrix" = mkMatrixLoc;
+              "/_synapse/client" = mkMatrixLoc;
+            };
           };
       };
     };
@@ -764,7 +780,7 @@ in {
       enable = true;
       package = pkgs.postgresql_14;
 
-      settings = {};
+      settings = { };
 
       enableTCPIP = true;
       authentication = pkgs.lib.mkOverride 14 ''
@@ -780,7 +796,7 @@ in {
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = ["synapse" "gotosocial" "syncv3"];
+      ensureDatabases = [ "synapse" "gotosocial" "syncv3" ];
       ensureUsers = [
         {
           name = "synapse_user";
@@ -834,7 +850,7 @@ in {
           "porn"
           "csam"
         ];
-        aditionalPrefixes = ["hammer"];
+        aditionalPrefixes = [ "hammer" ];
         confirmWildcardBan = false;
       };
     };
@@ -850,7 +866,7 @@ in {
         server_name = "tapenet.org";
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
-        plugins = with config.services.matrix-synapse.package.plugins; [matrix-synapse-mjolnir-antispam];
+        plugins = with config.services.matrix-synapse.package.plugins; [ matrix-synapse-mjolnir-antispam ];
         app_service_config_files = [
           "/var/lib/heisenbridge/registration.yml"
         ];
@@ -864,15 +880,15 @@ in {
         listeners = [
           {
             inherit (mtxCfg) port;
-            bind_addresses = [mtxCfg.address];
+            bind_addresses = [ mtxCfg.address ];
             resources = [
               {
                 compress = true;
-                names = ["client"];
+                names = [ "client" ];
               }
               {
                 compress = false;
-                names = ["federation"];
+                names = [ "federation" ];
               }
             ];
             tls = false;
@@ -884,7 +900,6 @@ in {
     };
   };
 
-  users.users.qbit = userBase;
 
   system.stateVersion = "22.11";
 }

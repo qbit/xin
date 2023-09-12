@@ -1,20 +1,19 @@
-{
-  buildPythonPackage,
-  fetchPypi,
-  setuptools-scm,
-  appdirs,
-  sqlalchemy,
-  ...
+{ buildPythonPackage
+, fetchPypi
+, setuptools-scm
+, appdirs
+, sqlalchemy
+, ...
 }:
 buildPythonPackage rec {
   pname = "cachew";
   version = "0.11.0";
 
-  nativeBuildInputs = [setuptools-scm];
+  nativeBuildInputs = [ setuptools-scm ];
 
   doCheck = true;
 
-  propagatedBuildInputs = [appdirs sqlalchemy];
+  propagatedBuildInputs = [ appdirs sqlalchemy ];
 
   src = fetchPypi {
     inherit pname version;

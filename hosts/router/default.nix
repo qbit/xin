@@ -1,9 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
   inherit
     (builtins)
     head
@@ -11,7 +11,7 @@
     attrValues
     mapAttrs
     attrNames
-    ; # hasAttr;
+    ;# hasAttr;
   inherit (lib.attrsets) filterAttrsRecursive filterAttrs;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -22,9 +22,9 @@
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
-  dnsServers = ["45.90.28.147" "45.90.30.147"];
+  dnsServers = [ "45.90.28.147" "45.90.30.147" ];
   interfaces = {
-    "${wan}" = {useDHCP = true;};
+    "${wan}" = { useDHCP = true; };
     "${trunk}" = rec {
       ipv4.addresses = [
         {
@@ -96,7 +96,7 @@
           enable = true;
           start = "10.99.1.100";
           end = "10.99.1.155";
-          staticIPs = [];
+          staticIPs = [ ];
         };
       };
     };
@@ -118,7 +118,7 @@
           enable = true;
           start = "10.98.1.100";
           end = "10.98.1.150";
-          staticIPs = [];
+          staticIPs = [ ];
         };
       };
     };
@@ -140,7 +140,7 @@
           enable = true;
           start = "10.10.0.100";
           end = "10.10.0.155";
-          staticIPs = [];
+          staticIPs = [ ];
         };
       };
     };
@@ -162,7 +162,7 @@
           enable = false;
           start = "10.12.0.100";
           end = "10.12.0.155";
-          staticIPs = [];
+          staticIPs = [ ];
         };
       };
     };
@@ -213,7 +213,7 @@
           enable = false;
           start = "10.20.30.100";
           end = "10.20.30.155";
-          staticIPs = [];
+          staticIPs = [ ];
         };
       };
     };
@@ -294,14 +294,15 @@
           enable = false;
           start = "10.7.0.100";
           end = "10.7.0.155";
-          staticIPs = [];
+          staticIPs = [ ];
         };
       };
     };
   };
-in {
+in
+{
   _module.args.isUnstable = false;
-  imports = [./hardware-configuration.nix ../../modules/tsvnstat.nix];
+  imports = [ ./hardware-configuration.nix ../../modules/tsvnstat.nix ];
 
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
@@ -463,7 +464,7 @@ in {
           {
             name = "common";
             advertise = true;
-            prefix = [{prefix = "::/64";}];
+            prefix = [{ prefix = "::/64"; }];
           }
         ];
       };
@@ -514,7 +515,7 @@ in {
     };
   };
 
-  environment.systemPackages = with pkgs; [bmon termshark tcpdump];
+  environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;

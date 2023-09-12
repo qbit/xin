@@ -1,19 +1,25 @@
-{config, ...}: let
+{ config, ... }:
+let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPMaAm4rDxyU975Z54YiNw3itC2fGc3SaE2VaS1fai8 root@box"
   ];
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
-in {
+in
+{
   _module.args.isUnstable = false;
-  imports = [./hardware-configuration.nix];
+  imports = [ ./hardware-configuration.nix ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
 
-  boot.supportedFilesystems = ["zfs"];
-  boot.zfs.devNodes = "/dev/";
+    supportedFilesystems = [ "zfs" ];
+    zfs.devNodes = "/dev/";
+  };
 
   networking = {
     hostName = "faf";
@@ -23,13 +29,17 @@ in {
     interfaces.enp1s0.useDHCP = true;
     interfaces.enp2s0.useDHCP = true;
 
-    firewall.allowedTCPPorts = [22 53 config.services.prometheus.exporters.node.port];
-    firewall.allowedUDPPorts = [53];
-    hosts = {"100.122.61.43" = ["nix-binary-cache.humpback-trout.ts.net"];};
+    firewall = {
+      allowedTCPPorts = [ 22 53 config.services.prometheus.exporters.node.port ];
+      allowedUDPPorts = [ 53 ];
+    };
+    hosts = { "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ]; };
   };
 
-  users.users.root = userBase;
-  users.users.qbit = userBase;
+  users.users = {
+    root = userBase;
+    qbit = userBase;
+  };
 
   services = {
     prometheus = {
@@ -39,7 +49,7 @@ in {
       exporters = {
         node = {
           enable = true;
-          enabledCollectors = ["systemd"];
+          enabledCollectors = [ "systemd" ];
           port = 9002;
         };
       };
@@ -101,8 +111,8 @@ in {
       enable = true;
       settings = {
         server = {
-          interface = ["100.64.130.122"];
-          access-control = ["100.64.0.0/10 allow"];
+          interface = [ "100.64.130.122" ];
+          access-control = [ "100.64.0.0/10 allow" ];
         };
         local-zone = ''"bold.daemon." static'';
         local-data = [

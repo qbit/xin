@@ -10,4 +10,4 @@ let
     });
   };
 in
-  tidal-hifi
+tidal-hifi

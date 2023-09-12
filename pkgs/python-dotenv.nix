@@ -1,13 +1,13 @@
-{
-  lib,
-  buildPythonPackage,
-  click,
-  fetchPypi,
-  ipython,
-  mock,
-  pytestCheckHook,
-  pythonOlder,
-  sh,
+{ lib
+, buildPythonPackage
+, click
+, fetchPypi
+, ipython
+, mock
+, pytestCheckHook
+, pythonOlder
+, sh
+,
 }:
 buildPythonPackage rec {
   pname = "python-dotenv";
@@ -19,18 +19,18 @@ buildPythonPackage rec {
     sha256 = "sha256-t30IJ0Y549NBRd+mxwCOZt8PBLe+enX9DVKSwZHXkEU=";
   };
 
-  propagatedBuildInputs = [click];
+  propagatedBuildInputs = [ click ];
 
-  nativeCheckInputs = [ipython mock pytestCheckHook sh];
+  nativeCheckInputs = [ ipython mock pytestCheckHook sh ];
 
-  disabledTests = ["cli"];
+  disabledTests = [ "cli" ];
 
-  pythonImportsCheck = ["dotenv"];
+  pythonImportsCheck = [ "dotenv" ];
 
   meta = with lib; {
     description = "Add .env support to your django/flask apps in development and deployments";
     homepage = "https://github.com/theskumar/python-dotenv";
     license = licenses.bsdOriginal;
-    maintainers = with maintainers; [erikarvstedt];
+    maintainers = with maintainers; [ erikarvstedt ];
   };
 }

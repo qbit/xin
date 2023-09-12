@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";

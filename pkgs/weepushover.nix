@@ -1,10 +1,9 @@
-{
-  buildPythonPackage,
-  lib,
-  fetchurl,
-  python,
-  weechat,
-  ...
+{ buildPythonPackage
+, lib
+, fetchurl
+, python
+, weechat
+, ...
 }:
 buildPythonPackage {
   pname = "weepushover";
@@ -15,11 +14,11 @@ buildPythonPackage {
     hash = "sha256-msOdNfYg88Wq00UJIRNu1OjKSUO0Kfq5rvLbIET2eo4=";
   };
 
-  propagatedBuildInputs = [];
+  propagatedBuildInputs = [ ];
 
   dontUnpack = true;
 
-  passthru.scripts = ["weepushover.py"];
+  passthru.scripts = [ "weepushover.py" ];
 
   dontBuild = true;
   doCheck = false;
@@ -43,6 +42,6 @@ buildPythonPackage {
     homepage = "https://github.com/adtac/weepushover";
     description = "push notifications from weechat to pushover";
     license = licenses.mit;
-    maintainers = with maintainers; [qbit];
+    maintainers = with maintainers; [ qbit ];
   };
 }

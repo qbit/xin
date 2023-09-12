@@ -1,12 +1,11 @@
-{
-  lib,
-  buildPythonPackage,
-  fetchPypi,
-  pyusb,
-  progressbar2,
-  requests,
-  pycryptodome,
-  ...
+{ lib
+, buildPythonPackage
+, fetchPypi
+, pyusb
+, progressbar2
+, requests
+, pycryptodome
+, ...
 }:
 buildPythonPackage rec {
   pname = "precursorupdater";
@@ -17,7 +16,7 @@ buildPythonPackage rec {
     sha256 = "sha256-YWPWGQLFbHjhYbdhLvbWndsNPfWEPSD7rfN6pJdnZFs=";
   };
 
-  propagatedBuildInputs = [pyusb progressbar2 requests pycryptodome];
+  propagatedBuildInputs = [ pyusb progressbar2 requests pycryptodome ];
 
   doCheck = false;
 
@@ -25,6 +24,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/betrusted-io/betrusted-wiki/wiki/Updating-Your-Device";
     description = "script to automatically updates a Precursor device";
     license = licenses.asl20;
-    maintainers = with maintainers; [qbit];
+    maintainers = with maintainers; [ qbit ];
   };
 }

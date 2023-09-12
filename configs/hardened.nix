@@ -1,4 +1,4 @@
-{lib, ...}:
+{ lib, ... }:
 with lib; {
   environment = {
     memoryAllocator.provider = mkDefault "scudo";

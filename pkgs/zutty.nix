@@ -1,10 +1,9 @@
-{
-  lib,
-  stdenv,
-  fetchFromGitHub,
-  pkgs,
-  go-font,
-  ...
+{ lib
+, stdenv
+, fetchFromGitHub
+, pkgs
+, go-font
+, ...
 }:
 stdenv.mkDerivation rec {
   pname = "zutty";
@@ -17,7 +16,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-b/q7hIi/U/GkKo+MIFX2wWnHZAy5rQGXNul3I1pxo1Q=";
   };
 
-  patches = [./zutty_go.diff];
+  patches = [ ./zutty_go.diff ];
 
   nativeBuildInputs = with pkgs; [
     gcc
@@ -28,7 +27,7 @@ stdenv.mkDerivation rec {
     libGL
   ];
 
-  buildInputs = with pkgs; [freetype fontconfig];
+  buildInputs = with pkgs; [ freetype fontconfig ];
 
   prePatch = ''
     substituteInPlace src/options.h \
@@ -59,6 +58,6 @@ stdenv.mkDerivation rec {
     homepage = "https://tomscii.sig7.se/zutty/";
     license = licenses.gpl3;
     platforms = platforms.linux;
-    maintainers = with maintainers; [qbit];
+    maintainers = with maintainers; [ qbit ];
   };
 }

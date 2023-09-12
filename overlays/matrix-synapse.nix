@@ -20,4 +20,4 @@ let
     });
   };
 in
-  matrix-synapse
+matrix-synapse

@@ -1,23 +1,23 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with pkgs; let
   cfg = config.services.veilid-server;
-in {
+in
+{
   options = with lib; {
     services.veilid-server = {
       enable = mkEnableOption "Enable velid-server";
       user = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "veilid";
         description = "The user veilid-server will run as.";
       };
 
       group = mkOption {
-        type = with types; oneOf [str int];
+        type = with types; oneOf [ str int ];
         default = "veilid";
         description = "The group veilid-server will run with.";
       };
@@ -42,7 +42,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.${cfg.group} = {};
+    users.groups.${cfg.group} = { };
     users.users.${cfg.user} = {
       inherit (cfg) group;
       description = "veilid-server user";
@@ -52,15 +52,15 @@ in {
     };
 
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [5150];
-      allowedUDPPorts = [5150];
+      allowedTCPPorts = [ 5150 ];
+      allowedUDPPorts = [ 5150 ];
     };
 
     systemd.services.veilid-server = {
       enable = true;
       description = "veilid-server";
-      wantedBy = ["network-online.target"];
-      after = ["network-online.target"];
+      wantedBy = [ "network-online.target" ];
+      after = [ "network-online.target" ];
 
       environment = {
         HOME = cfg.dataDir;

@@ -1,19 +1,21 @@
-{config, ...}: let
+{ config, ... }:
+let
   rewriteGitHub =
     if config.networking.hostName != "stan"
     then {
-      url = {"ssh://git@github.com/" = {insteadOf = "https://github.com/";};};
+      url = { "ssh://git@github.com/" = { insteadOf = "https://github.com/"; }; };
     }
     else {
-      url = {};
+      url = { };
     };
-in {
+in
+{
   programs.git = {
     enable = true;
     lfs.enable = true;
     config = [
-      {init = {defaultBranch = "main";};}
-      {advice.detachedHead = false;}
+      { init = { defaultBranch = "main"; }; }
+      { advice.detachedHead = false; }
       {
         user = {
           name = "Aaron Bieber";
@@ -22,7 +24,7 @@ in {
         };
       }
 
-      {branch = {sort = "-committerdate";};}
+      { branch = { sort = "-committerdate"; }; }
       {
         alias = {
           log = "log --color=never";
@@ -32,10 +34,10 @@ in {
             "!f() { git fetch $1 refs/pull/$2/head:refs/remotes/pr/$2; }; f"'';
         };
       }
-      {push = {default = "current";};}
+      { push = { default = "current"; }; }
 
-      {gpg = {format = "ssh";};}
-      {commit = {gpgsign = true;};}
+      { gpg = { format = "ssh"; }; }
+      { commit = { gpgsign = true; }; }
 
       {
         color = {
@@ -47,13 +49,13 @@ in {
         };
       }
 
-      {safe = {directory = "/home/qbit/src/nix-conf";};}
+      { safe = { directory = "/home/qbit/src/nix-conf"; }; }
 
-      {transfer = {fsckobjects = true;};}
-      {fetch = {fsckobjects = true;};}
-      {github = {user = "qbit";};}
+      { transfer = { fsckobjects = true; }; }
+      { fetch = { fsckobjects = true; }; }
+      { github = { user = "qbit"; }; }
 
-      {inherit (rewriteGitHub) url;}
+      { inherit (rewriteGitHub) url; }
 
       {
         sendmail = {
@@ -67,8 +69,8 @@ in {
         };
       }
 
-      {pull = {rebase = false;};}
-      {include = {path = "~/work/git/gitconfig";};}
+      { pull = { rebase = false; }; }
+      { include = { path = "~/work/git/gitconfig"; }; }
     ];
   };
 }

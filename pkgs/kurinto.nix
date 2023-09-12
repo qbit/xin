@@ -1,7 +1,7 @@
-{
-  lib,
-  stdenvNoCC,
-  fetchzip,
+{ lib
+, stdenvNoCC
+, fetchzip
+,
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "kurinto";
@@ -26,8 +26,8 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://www.kurinto.com/index.htm";
     description = "a large collection of free fonts that include most of the characters in every human language";
     license = licenses.ofl;
-    maintainers = with maintainers; [qbit];
+    maintainers = with maintainers; [ qbit ];
     platforms = lib.platforms.all;
-    hydraPlatform = [];
+    hydraPlatform = [ ];
   };
 }

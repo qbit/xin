@@ -1,9 +1,9 @@
-{
-  pkgs,
-  linkFarm,
-  ...
-}: let
-  tomlFmt = pkgs.formats.toml {};
+{ pkgs
+, linkFarm
+, ...
+}:
+let
+  tomlFmt = pkgs.formats.toml { };
   helixBin = "${pkgs.helix}/bin/hx";
 
   helixConfig = tomlFmt.generate "config.toml" {
@@ -15,7 +15,7 @@
         normal = "block";
         select = "underline";
       };
-      lsp = {auto-signature-help = false;};
+      lsp = { auto-signature-help = false; };
     };
   };
 
@@ -38,9 +38,9 @@
     }
   ];
 in
-  pkgs.writeScriptBin "hx" ''
-    # Conf:  ${helixConfig}
-    # Theme:  ${helixTheme}
+pkgs.writeScriptBin "hx" ''
+  # Conf:  ${helixConfig}
+  # Theme:  ${helixTheme}
 
-    env XDG_CONFIG_HOME="${xdgDir}" ${helixBin} "$@"
-  ''
+  env XDG_CONFIG_HOME="${xdgDir}" ${helixBin} "$@"
+''

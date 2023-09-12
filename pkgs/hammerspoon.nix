@@ -1,9 +1,8 @@
-{
-  lib,
-  fetchurl,
-  stdenv,
-  unzip,
-  ...
+{ lib
+, fetchurl
+, stdenv
+, unzip
+, ...
 }:
 stdenv.mkDerivation rec {
   pname = "hammerspoon";
@@ -15,7 +14,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-7y7YZYmB+KMVdHZXLdic5JanXQl6vtaTmqmvkFa8UTM=";
   };
 
-  buildInputs = [unzip];
+  buildInputs = [ unzip ];
 
   installPhase = ''
     mkdir -p $out/Applications
