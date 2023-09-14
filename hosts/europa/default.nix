@@ -255,95 +255,98 @@ in
     #"docker"
   ];
 
-  environment.sessionVariables = {
-    XDG_BIN_HOME = "\${HOME}/.local/bin";
-    XDG_CACHE_HOME = "\${HOME}/.cache";
-    XDG_CONFIG_HOME = "\${HOME}/.config";
-    XDG_DATA_HOME = "\${HOME}/.local/share";
+  environment = {
+    etc."barrier.conf" = { text = builtins.readFile ../../configs/barrier.conf; };
+    sessionVariables = {
+      XDG_BIN_HOME = "\${HOME}/.local/bin";
+      XDG_CACHE_HOME = "\${HOME}/.cache";
+      XDG_CONFIG_HOME = "\${HOME}/.config";
+      XDG_DATA_HOME = "\${HOME}/.local/share";
 
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-    PATH = [ "\${XDG_BIN_HOME}" ];
-    MUHOME = "\${HOME}/.config/mu";
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+      PATH = [ "\${XDG_BIN_HOME}" ];
+      MUHOME = "\${HOME}/.config/mu";
+    };
+
+    systemPackages = with pkgs; [
+      barrier
+      calibre
+      chirp
+      cider
+      clementine
+      direwolf
+      doom-emacs
+      element-desktop
+      elmPackages.elm
+      elmPackages.elm-format
+      elmPackages.elm-language-server
+      elmPackages.elm-live
+      elmPackages.elm-test
+      entr
+      exercism
+      gh
+      gimp
+      git-credential-1password
+      gqrx
+      hackrf
+      isync
+      klavaro
+      minicom
+      mu
+      nheko
+      nix-index
+      nixpkgs-review
+      nix-top
+      nmap
+      nushell
+      obsidian
+      picocom
+      proton-caller
+      protonup-ng
+      prusa-slicer
+      python3Packages.meshtastic
+      qdmr
+      rex
+      rofi
+      rtl-sdr
+      sdrpp
+      signal-desktop
+      taskobs
+      tcpdump
+      tea
+      thunderbird
+      tidal-hifi
+      tigervnc
+      unzip
+      veilid
+      virt-manager
+      w3m
+      yt-dlp
+      #yubioath-flutter
+      zig
+
+      (callPackage ../../pkgs/clilol.nix { })
+      (callPackage ../../pkgs/iamb.nix { })
+      (callPackage ../../pkgs/kobuddy.nix {
+        inherit pkgs;
+        inherit
+          (pkgs.python39Packages)
+          buildPythonPackage
+          fetchPypi
+          setuptools-scm
+          pytz
+          banal
+          sqlalchemy
+          alembic
+          ;
+      })
+      (callPackage ../../pkgs/gokrazy.nix { })
+      (callPackage ../../pkgs/mvoice.nix { })
+      (callPackage ../../pkgs/zutty.nix { })
+
+      restic
+    ];
   };
-
-  environment.systemPackages = with pkgs; [
-    barrier
-    calibre
-    chirp
-    cider
-    clementine
-    direwolf
-    doom-emacs
-    element-desktop
-    elmPackages.elm
-    elmPackages.elm-format
-    elmPackages.elm-language-server
-    elmPackages.elm-live
-    elmPackages.elm-test
-    entr
-    exercism
-    gh
-    gimp
-    git-credential-1password
-    gqrx
-    hackrf
-    isync
-    klavaro
-    minicom
-    mu
-    nheko
-    nix-index
-    nixpkgs-review
-    nix-top
-    nmap
-    nushell
-    obsidian
-    picocom
-    proton-caller
-    protonup-ng
-    prusa-slicer
-    python3Packages.meshtastic
-    qdmr
-    rex
-    rofi
-    rtl-sdr
-    sdrpp
-    signal-desktop
-    taskobs
-    tcpdump
-    tea
-    thunderbird
-    tidal-hifi
-    tigervnc
-    unzip
-    veilid
-    virt-manager
-    w3m
-    yt-dlp
-    #yubioath-flutter
-    zig
-
-    (callPackage ../../pkgs/clilol.nix { })
-    (callPackage ../../pkgs/iamb.nix { })
-    (callPackage ../../pkgs/kobuddy.nix {
-      inherit pkgs;
-      inherit
-        (pkgs.python39Packages)
-        buildPythonPackage
-        fetchPypi
-        setuptools-scm
-        pytz
-        banal
-        sqlalchemy
-        alembic
-        ;
-    })
-    (callPackage ../../pkgs/gokrazy.nix { })
-    (callPackage ../../pkgs/mvoice.nix { })
-    (callPackage ../../pkgs/zutty.nix { })
-
-    restic
-  ];
 
   # for Pharo
   security.pam.loginLimits = [
