@@ -21,6 +21,11 @@ in
       #rex
       heisenbridge
       (_: super: {
+        cloud-hypervisor = super.cloud-hypervisor.overrideAttrs (_: {
+          cargoTestFlags = [ "--bins" ];
+        });
+      })
+      (_: super: {
         clementine = super.clementine.overrideAttrs (_: {
           patches = [
             (super.fetchpatch {
@@ -59,4 +64,3 @@ in
 #     };
 #   };
 # })
-
