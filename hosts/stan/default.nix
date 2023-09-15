@@ -17,9 +17,9 @@ let
     if builtins.hasAttr "peerix" config.users.users
     then config.users.users.peerix.name
     else "root";
-  doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
-    doomPrivateDir = ../../configs/doom.d;
-  };
+  #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
+  #  doomPrivateDir = ../../configs/doom.d;
+  #};
 in
 {
   _module.args.isUnstable = true;
@@ -162,7 +162,6 @@ in
   environment.systemPackages = with pkgs; [
     barrier
     bitwarden
-    doom-emacs
     fzf
     google-chrome-dev
     ispell

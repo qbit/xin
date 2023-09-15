@@ -25,7 +25,6 @@
     #  url = "github:nix-community/emacs-overlay/d54a1521619daa37c9aa8c9e3362abb34e676007";
     #  inputs.nixpkgs.follows = "stable";
     #};
-    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
 
     darwin = {
       url = "github:lnl7/nix-darwin";
