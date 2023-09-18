@@ -302,13 +302,20 @@ in
             resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
             sensor = {
               name = "rtl_433_temperature_celsius";
-              value_template = "{{value_json.data.result[0].value[1]}}";
+              value_template = "{{value_json.data.result[2].value[1]}}";
             };
           }
           {
             resource = "http://127.0.0.1:9001/api/v1/query?query=wstation_temp_c";
             sensor = {
               name = "wstation_garage_temp_c";
+              value_template = "{{value_json.data.result[0].value[1]}}";
+            };
+          }
+          {
+            resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
+            sensor = {
+              name = "rtl_433_printer_temp_celsius";
               value_template = "{{value_json.data.result[0].value[1]}}";
             };
           }
@@ -622,6 +629,11 @@ in
               id = 55;
               name = "LaCrosse-TX141Bv3";
               location = "Kitchen";
+            }
+            {
+              id = 34;
+              name = "Rubicson-Temperature";
+              location = "3D-Printer";
             }
           ];
         };
