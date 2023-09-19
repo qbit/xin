@@ -861,7 +861,7 @@ in
       settings = {
         enable_registration = false;
         media_store_path = "/var/lib/synapse/media_store";
-        presence.enabled = false;
+        presence.enabled = true;
         public_baseurl = "https://tapenet.org";
         server_name = "tapenet.org";
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
