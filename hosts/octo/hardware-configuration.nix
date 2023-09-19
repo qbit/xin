@@ -4,10 +4,6 @@
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
     };
-    "/tmp" = {
-      device = "/dev/disk/by-label/nix-extra";
-      fsType = "ext4";
-    };
   };
 
   hardware.enableRedistributableFirmware = true;
