@@ -39,6 +39,20 @@ in
     ]
     else [
       #rex
+      (_: super: {
+        python3 = super.python3.override {
+          packageOverrides = _: python-super: {
+            pillow = python-super.pillow.overrideAttrs (_: rec {
+              version = "10.0.1";
+              src = python-super.fetchPypi {
+                pname = "Pillow";
+                inherit version;
+                hash = "sha256-1ylnsGvpMA/tXPvItbr87sSL983H2rZrHSVJA1KHGR0=";
+              };
+            });
+          };
+        };
+      })
       matrix-synapse
       heisenbridge
       (_: super: {
