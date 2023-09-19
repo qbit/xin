@@ -13,6 +13,9 @@ iso)
 reform)
 	nix build .#nixosConfigurations.reformInstall.config.system.build.sdImage
 	;;
+octo)
+	nix build .#nixosConfigurations.octo.config.system.build.sdImage
+	;;
 *)
 	echo "Usage: boot [iso|arm64|arm|hass|reform]"
 	;;
