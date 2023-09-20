@@ -74,11 +74,11 @@
     "gqrss": {
       "flake": false,
       "locked": {
-        "lastModified": 1643674728,
-        "narHash": "sha256-1ZGjifDgqA9yk9l0YB4rLpcvwaq9lWxDgItJ7lCVj2I=",
+        "lastModified": 1695225347,
+        "narHash": "sha256-PZZK4L4w+dQZDbVLLhC/YeVUJMRaxNdksUUdyKp3AEU=",
         "owner": "qbit",
         "repo": "gqrss",
-        "rev": "107278bcd497501475435d9a36f0aa91d1f2e1f9",
+        "rev": "029f2c59d3da4d080a340c4cfd834eeacbe1e738",
         "type": "github"
       },
       "original": {
