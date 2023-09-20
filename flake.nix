@@ -37,7 +37,7 @@
     };
     gostart = {
       url = "github:qbit/gostart";
-      inputs.nixpkgs.follows = "stable";
+      inputs.nixpkgs.follows = "unstable";
     };
     pr-status = {
       url = "github:qbit/pr-status-pl";

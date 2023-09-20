@@ -125,10 +125,10 @@ in
       sopsFile = config.xin-secrets.h.services;
       owner = config.users.users.tsvnstat.name;
     };
-    golink = {
-      sopsFile = config.xin-secrets.h.services;
-      owner = config.users.users.golink.name;
-    };
+    #golink = {
+    #  sopsFile = config.xin-secrets.h.services;
+    #  owner = config.users.users.golink.name;
+    #};
     gostart = {
       sopsFile = config.xin-secrets.h.services;
       owner = config.users.users.gostart.name;
@@ -311,10 +311,10 @@ in
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
     };
-    golink = {
-      enable = true;
-      envFile = "${config.sops.secrets.golink.path}";
-    };
+    #golink = {
+    #  enable = true;
+    #  envFile = "${config.sops.secrets.golink.path}";
+    #};
     tsvnstat = {
       enable = true;
       keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
