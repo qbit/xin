@@ -54,15 +54,15 @@
     "gostart": {
       "inputs": {
         "nixpkgs": [
-          "stable"
+          "unstable"
         ]
       },
       "locked": {
-        "lastModified": 1690546436,
-        "narHash": "sha256-6B4i87l+dtGesLvRHuwGEBM8QbQC88iSA+TOB4dQNbs=",
+        "lastModified": 1695224227,
+        "narHash": "sha256-TDjg352UPhxViKSaY6Phe0xfdV4spsRYaB9kZ1T3PHU=",
         "owner": "qbit",
         "repo": "gostart",
-        "rev": "a216e85942325efd61febf8641811ae2c0bd9f2f",
+        "rev": "413d1b5bec3f5272d856681e7c538a60c28d6667",
         "type": "github"
       },
       "original": {
@@ -329,11 +329,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1674772057,
-        "narHash": "sha256-215pVZG+hl9v6szp5MEBUL25Z6lPTdhTz6aNPUTDyG4=",
+        "lastModified": 1695224187,
+        "narHash": "sha256-Hy8DFABe130lv2wIPxusJJrVZsjfSBa5FUAXgS02c50=",
         "owner": "qbit",
         "repo": "tsvnstat",
-        "rev": "b412af4e1c5dd8f6b770743087f3c534652d741f",
+        "rev": "8ccd819f414c31d902bc28af9bc078a1af74268b",
         "type": "github"
       },
       "original": {
