@@ -516,6 +516,28 @@ in
           forceSSL = true;
           enableACME = true;
           root = "/var/www/bolddaemon.com";
+
+          locations = {
+            "/.well-known/webfinger" = {
+              extraConfig = ''
+                add_header Strict-Transport-Security $hsts_header;
+                add_header Referrer-Policy origin-when-cross-origin;
+                add_header X-Frame-Options DENY;
+                add_header X-Content-Type-Options nosniff;
+                add_header Content-Type application/json;
+
+                return 200 '${builtins.toJSON {
+                  subject = "acct:aaron@bolddaemon.com";
+                  links = [
+                    {
+                      rel = "http://openid.net/specs/connect/1.0/issuer";
+                      href = "https://git.tapenet.org/";
+                    }
+                  ];
+                }}';
+              '';
+            };
+          };
         };
         "relay.bolddaemon.com" = {
           forceSSL = true;
@@ -568,10 +590,12 @@ in
           forceSSL = true;
           enableACME = true;
 
-          locations."/" = {
-            proxyPass = "http://192.168.112.4:3000";
-            proxyWebsockets = true;
-            priority = 1000;
+          locations = {
+            "/" = {
+              proxyPass = "http://192.168.112.4:3000";
+              proxyWebsockets = true;
+              priority = 1000;
+            };
           };
         };
 

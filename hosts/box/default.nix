@@ -721,7 +721,7 @@ in
       stateDir = "/media/git";
       appName = "Tape:neT";
 
-      package = inputs.unstable.legacyPackages.${pkgs.system}.forgejo;
+      package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
 
       lfs.enable = true;
 
