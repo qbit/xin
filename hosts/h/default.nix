@@ -458,6 +458,8 @@ in
     nginx = {
       enable = true;
 
+      package = pkgs.openresty;
+
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
@@ -517,27 +519,6 @@ in
           enableACME = true;
           root = "/var/www/bolddaemon.com";
 
-          locations = {
-            "/.well-known/webfinger" = {
-              extraConfig = ''
-                add_header Strict-Transport-Security $hsts_header;
-                add_header Referrer-Policy origin-when-cross-origin;
-                add_header X-Frame-Options DENY;
-                add_header X-Content-Type-Options nosniff;
-                add_header Content-Type application/json;
-
-                return 200 '${builtins.toJSON {
-                  subject = "acct:aaron@bolddaemon.com";
-                  links = [
-                    {
-                      rel = "http://openid.net/specs/connect/1.0/issuer";
-                      href = "https://git.tapenet.org/";
-                    }
-                  ];
-                }}';
-              '';
-            };
-          };
         };
         "relay.bolddaemon.com" = {
           forceSSL = true;
@@ -758,40 +739,61 @@ in
             }";
           };
         };
-        "tapenet.org" =
-          if config.services.sliding-sync.enable
-          then {
-            forceSSL = true;
-            enableACME = true;
-            root = "/var/www/tapenet.org";
-            locations = {
-              "/.well-known/matrix/client".extraConfig =
-                mkMatrixWellKnown matrixClientConfig;
-              "/.well-known/matrix/server".extraConfig =
-                mkMatrixWellKnown matrixServerConfig;
+        "tapenet.org" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/tapenet.org";
+          locations = {
+            "/.well-known/webfinger" = {
+              extraConfig = ''
+                default_type 'application/json';
 
-              "/client" = mkMatrixSliderLoc;
-              "/_matrix/client/unstable/org.matrix.msc3575/sync" =
-                mkMatrixSliderLoc;
-
-              "/_matrix" = mkMatrixLoc;
-              "/_synapse/client" = mkMatrixLoc;
+                content_by_lua_block {
+                  local acct = ngx.unescape_uri(ngx.var.arg_resource)
+                  local json = '${builtins.toJSON {
+                    subject = "%s";
+                    links = [
+                      {
+                        rel = "http://openid.net/specs/connect/1.0/issuer";
+                        href = "https://git.tapenet.org/";
+                      }
+                    ];
+                  }}';
+                  local newjson, n, err = ngx.re.sub(json, "%s", acct)
+                  if not err then
+                    ngx.say(newjson)
+                  else
+                    ngx.say("")
+                  end
+                  return
+                }
+              '';
             };
           }
-          else {
-            forceSSL = true;
-            enableACME = true;
-            root = "/var/www/tapenet.org";
-            locations = {
-              "/.well-known/matrix/client".extraConfig =
-                mkMatrixWellKnown matrixClientConfig;
-              "/.well-known/matrix/server".extraConfig =
-                mkMatrixWellKnown matrixServerConfig;
+          // (if config.services.sliding-sync.enable
+          then {
+            "/.well-known/matrix/client".extraConfig =
+              mkMatrixWellKnown matrixClientConfig;
+            "/.well-known/matrix/server".extraConfig =
+              mkMatrixWellKnown matrixServerConfig;
 
-              "/_matrix" = mkMatrixLoc;
-              "/_synapse/client" = mkMatrixLoc;
-            };
-          };
+            "/client" = mkMatrixSliderLoc;
+            "/_matrix/client/unstable/org.matrix.msc3575/sync" =
+              mkMatrixSliderLoc;
+
+            "/_matrix" = mkMatrixLoc;
+            "/_synapse/client" = mkMatrixLoc;
+          }
+          else {
+            "/.well-known/matrix/client".extraConfig =
+              mkMatrixWellKnown matrixClientConfig;
+            "/.well-known/matrix/server".extraConfig =
+              mkMatrixWellKnown matrixServerConfig;
+
+            "/_matrix" = mkMatrixLoc;
+            "/_synapse/client" = mkMatrixLoc;
+          });
+        };
       };
     };
 
