@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "694150ad92765574ff82a18f4e86322bd3231e68",
-  "hash": "sha256-j0g0hPbAAWIFP0p3wL81heA7IUywznLGMJu4SaVlb3c=",
-  "version": "2023-09-04",
-  "comment": "upstream: trigger keystroke timing obfucation only if the channels"
+  "rev": "b6b49130a0089b297245ee39e769231d7c763014",
+  "hash": "sha256-J1wezrODpufxrcY1E92qVl+2whSIYHtru7xTiyOpcuY=",
+  "version": "2023-09-10",
+  "comment": "upstream: rename remote_glob() -&gt; sftp_glob() to match other API"
 }
