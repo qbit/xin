@@ -278,6 +278,7 @@ in
         "met"
         "mqtt"
         "nextdns"
+        "octoprint"
         "openevse"
         "prometheus"
         "pushover"
