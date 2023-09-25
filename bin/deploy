@@ -47,7 +47,7 @@ if [ "$1" = "watch" ]; then
 		for f in pull_requests/*.json; do
 			pr=$(basename $f .json)
 			if [ "$(jq -r '.status' <$f)" = "open" ]; then
-				curl -s -o - https://pr-status.humpback-trout.ts.net/${pr} | jq -rS 'del(.queryTime)' >pull_requests/${pr}.json
+				curl -s -o - https://pr-status.otter-alligator.ts.net/${pr} | jq -rS 'del(.queryTime)' >pull_requests/${pr}.json
 				msg "Updated watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
 			else
 				msg "$Skipping: ${pr} ($(jq -r .title <pull_requests/${pr}.json)), already complete"
@@ -55,7 +55,7 @@ if [ "$1" = "watch" ]; then
 		done
 	else
 		pr="$2"
-		curl -s -o - https://pr-status.humpback-trout.ts.net/${pr} | jq -rS 'del(.queryTime)' >pull_requests/${pr}.json
+		curl -s -o - https://pr-status.otter-alligator.ts.net/${pr} | jq -rS 'del(.queryTime)' >pull_requests/${pr}.json
 		msg "Added watch for ${pr}: $(jq -r .title <pull_requests/${pr}.json)"
 		git add pull_requests/${pr}.json
 	fi

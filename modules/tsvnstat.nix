@@ -22,7 +22,7 @@ in
       };
 
       keyPath = mkOption {
-        type = types.path;
+        type = with types; oneOf [ path str ];
         default = "";
         description = ''
           Path to the TS API key file
@@ -87,7 +87,9 @@ in
         CacheDirectory = "tsvnstat";
         CacheDirectoryMode = "0755";
 
-        ExecStart = "${cfg.package}/bin/tsvnstat -vnstati ${pkgs.vnstat}/bin/vnstati -name ${cfg.nodeName} -key ${cfg.keyPath}";
+        ExecStart = ''
+          ${cfg.package}/bin/tsvnstat -vnstati ${pkgs.vnstat}/bin/vnstati -name ${cfg.nodeName} ${lib.optionalString (cfg.keyPath != "") "-key ${cfg.keyPath}"}
+        '';
       };
     };
   };

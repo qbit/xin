@@ -118,7 +118,7 @@ in
     hosts = {
       "127.0.0.1" = [ "git.tapenet.org" ];
       "10.6.0.15" = [ "jelly.bold.daemon" ];
-      "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ];
+      "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
     };
     interfaces.enp7s0 = { useDHCP = true; };
 
@@ -348,7 +348,7 @@ in
     #  settings = {
     #    PHOTOPRISM_UPLOAD_NSFW = "true";
     #    PHOTOPRISM_DETECT_NSFW = "false";
-    #    PHOTOPRISM_SITE_URL = "https://box.humpback-trout.ts.net/photos";
+    #    PHOTOPRISM_SITE_URL = "https://box.otter-alligator.ts.net/photos";
     #    PHOTOPRISM_SETTINGS_HIDDEN = "false";
     #    PHOTOPRISM_DATABASE_DRIVER = "sqlite";
     #  };
@@ -356,7 +356,7 @@ in
     #nextcloud = {
     #  enable = true;
     #  enableBrokenCiphersForSSE = false;
-    #  hostName = "box.humpback-trout.ts.net";
+    #  hostName = "box.otter-alligator.ts.net";
     #  home = "/media/nextcloud";
     #  https = true;
 
@@ -401,12 +401,12 @@ in
             . /etc/profile;
             (
               mkdir -p /etc/nixos/secrets;
-              chown root /etc/nixos/secrets/box.humpback-trout.ts.net.*;
+              chown root /etc/nixos/secrets/box.otter-alligator.ts.net.*;
               tailscale cert \
-                --cert-file /etc/nixos/secrets/box.humpback-trout.ts.net.crt \
-                --key-file=/etc/nixos/secrets/box.humpback-trout.ts.net.key \
-                box.humpback-trout.ts.net;
-              chown nginx /etc/nixos/secrets/box.humpback-trout.ts.net.*
+                --cert-file /etc/nixos/secrets/box.otter-alligator.ts.net.crt \
+                --key-file=/etc/nixos/secrets/box.otter-alligator.ts.net.key \
+                box.otter-alligator.ts.net;
+              chown nginx /etc/nixos/secrets/box.otter-alligator.ts.net.*
             ) >/dev/null 2>&1
           '';
         in
@@ -683,7 +683,7 @@ in
         }
         {
           job_name = "h";
-          static_configs = [{ targets = [ "100.64.247.69:9002" ]; }];
+          static_configs = [{ targets = [ "100.83.77.133:9002" ]; }];
         }
         {
           job_name = "namish";
@@ -815,10 +815,10 @@ in
             proxyWebsockets = true;
           };
         };
-        "box.humpback-trout.ts.net" = {
+        "box.otter-alligator.ts.net" = {
           forceSSL = true;
-          sslCertificateKey = "/etc/nixos/secrets/box.humpback-trout.ts.net.key";
-          sslCertificate = "/etc/nixos/secrets/box.humpback-trout.ts.net.crt";
+          sslCertificateKey = "/etc/nixos/secrets/box.otter-alligator.ts.net.key";
+          sslCertificate = "/etc/nixos/secrets/box.otter-alligator.ts.net.crt";
 
           locations."/photos" = {
             proxyPass = "http://localhost:2343";

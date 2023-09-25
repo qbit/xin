@@ -33,7 +33,7 @@ in
       allowedTCPPorts = [ 22 53 config.services.prometheus.exporters.node.port ];
       allowedUDPPorts = [ 53 ];
     };
-    hosts = { "100.122.61.43" = [ "nix-binary-cache.humpback-trout.ts.net" ]; };
+    hosts = { "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ]; };
   };
 
   users.users = {
@@ -111,24 +111,24 @@ in
       enable = true;
       settings = {
         server = {
-          interface = [ "100.64.130.122" ];
+          interface = [ "100.80.94.131" ];
           access-control = [ "100.64.0.0/10 allow" ];
         };
         local-zone = ''"bold.daemon." static'';
         local-data = [
-          ''"books.bold.daemon. IN A 100.120.151.126"''
-          ''"headphones.bold.daemon. IN A 100.120.151.126"''
-          ''"jelly.bold.daemon. IN A 100.120.151.126"''
-          ''"lidarr.bold.daemon. IN A 100.120.151.126"''
-          ''"nzb.bold.daemon. IN A 100.120.151.126"''
-          ''"prowlarr.bold.daemon. IN A 100.120.151.126"''
-          ''"radarr.bold.daemon. IN A 100.120.151.126"''
-          ''"reddit.bold.daemon. IN A 100.120.151.126"''
-          ''"sonarr.bold.daemon. IN A 100.120.151.126"''
-          ''"readarr.bold.daemon. IN A 100.120.151.126"''
-          ''"home.bold.daemon. IN A 100.120.151.126"''
-          ''"graph.bold.daemon. IN A 100.120.151.126"''
-          ''"invidious.bold.daemon. IN A 100.120.151.126"''
+          ''"books.bold.daemon. IN A 100.115.16.150"''
+          ''"headphones.bold.daemon. IN A 100.115.16.150"''
+          ''"jelly.bold.daemon. IN A 100.115.16.150"''
+          ''"lidarr.bold.daemon. IN A 100.115.16.150"''
+          ''"nzb.bold.daemon. IN A 100.115.16.150"''
+          ''"prowlarr.bold.daemon. IN A 100.115.16.150"''
+          ''"radarr.bold.daemon. IN A 100.115.16.150"''
+          ''"reddit.bold.daemon. IN A 100.115.16.150"''
+          ''"sonarr.bold.daemon. IN A 100.115.16.150"''
+          ''"readarr.bold.daemon. IN A 100.115.16.150"''
+          ''"home.bold.daemon. IN A 100.115.16.150"''
+          ''"graph.bold.daemon. IN A 100.115.16.150"''
+          ''"invidious.bold.daemon. IN A 100.115.16.150"''
           ''"router.bold.daemon. IN A 10.6.0.1"''
         ];
       };

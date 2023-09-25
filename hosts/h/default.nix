@@ -295,7 +295,7 @@ in
       enable = true;
       reverseName = "pr-status";
       reversePort = 3003;
-      envFile = config.sops.secrets.pr_status_env.path;
+      #envFile = config.sops.secrets.pr_status_env.path;
     };
     sliding-sync = {
       enable = true;
@@ -317,7 +317,7 @@ in
     #};
     tsvnstat = {
       enable = true;
-      keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
+      #keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
     };
     yarr.enable = true;
     gotosocial = {
@@ -358,7 +358,7 @@ in
           grpc_listen_port = 0;
         };
         positions = { filename = "/tmp/positions.yaml"; };
-        clients = [{ url = "http://box.humpback-trout.ts.net:3030/loki/api/v1/push"; }];
+        clients = [{ url = "http://box.otter-alligator.ts.net:3030/loki/api/v1/push"; }];
         scrape_configs = [
           {
             job_name = "journal";

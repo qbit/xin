@@ -99,7 +99,7 @@ in
         ExecStart = "${cfg.package}/bin/ts-reverse-proxy -name ${cfg.reverseName} -port ${
           toString cfg.reversePort
         } -ip ${cfg.reverseIP}";
-        EnvironmentFile = cfg.envFile;
+        #EnvironmentFile = cfg.envFile;
       };
     };
   };

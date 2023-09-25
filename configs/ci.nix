@@ -91,7 +91,7 @@ with lib; {
       tsrevprox = {
         enable = true;
         reverseName = "nix-binary-cache";
-        envFile = config.sops.secrets.ts_proxy_env.path;
+        #envFile = config.sops.secrets.ts_proxy_env.path;
       };
       harmonia = {
         enable = true;
