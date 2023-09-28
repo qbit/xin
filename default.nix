@@ -147,7 +147,7 @@ in
         else {
           substituters = [ "https://nix-binary-cache.otter-alligator.ts.net/" ];
           trusted-public-keys = [
-            "nix-binary-cache.otter-alligator.ts.net:e9fJhcRtNVp6miW2pffFyK/gZ2et4y6IDigBNrEsAa0="
+            "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
           ];
         };
     };
