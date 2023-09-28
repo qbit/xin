@@ -7,11 +7,6 @@
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp;
-  restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
-    inherit pkgs;
-    inherit lib;
-    inherit config;
-  });
   #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
   #  doomPrivateDir = ../../configs/doom.d;

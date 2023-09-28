@@ -5,11 +5,6 @@
 , ...
 }:
 with pkgs; let
-  restic = pkgs.writeScriptBin "restic" (import ../../bins/restic.nix {
-    inherit pkgs;
-    inherit lib;
-    inherit config;
-  });
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
   mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
