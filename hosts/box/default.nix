@@ -68,6 +68,18 @@ in
     };
     "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.services; };
     "wireguard_private_key" = { sopsFile = config.xin-secrets.box.services; };
+    "restic_htpasswd" = {
+      owner = config.users.users.restic.name;
+      sopsFile = config.xin-secrets.box.services;
+    };
+    restic_cert = {
+      owner = config.users.users.restic.name;
+      sopsFile = config.xin-secrets.box.certs;
+    };
+    restic_key = {
+      owner = config.users.users.restic.name;
+      sopsFile = config.xin-secrets.box.certs;
+    };
 
     books_cert = mkNginxSecret;
     books_key = mkNginxSecret;
@@ -142,6 +154,7 @@ in
           21063 #homekit
           21064 #homekit
           1883 # mosquitto
+          8484 # restic-rest server
         ];
       allowedUDPPorts = [
         5353 #homekit
@@ -238,6 +251,23 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    restic = {
+      server = {
+        enable = true;
+        dataDir = "/backups/restic";
+        privateRepos = true;
+        listenAddress = "10.6.0.15:8484";
+        extraFlags = [
+          "--htpasswd-file"
+          "${config.sops.secrets.restic_htpasswd.path}"
+          "--tls"
+          "--tls-cert"
+          "${config.sops.secrets.restic_cert.path}"
+          "--tls-key"
+          "${config.sops.secrets.restic_key.path}"
+        ];
+      };
+    };
     mosquitto = {
       enable = true;
       listeners = [
