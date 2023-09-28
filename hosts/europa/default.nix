@@ -87,6 +87,21 @@ in
       owner = "root";
       mode = "400";
     };
+    restic_remote_password_file = {
+      sopsFile = config.xin-secrets.europa.services;
+      owner = "root";
+      mode = "400";
+    };
+    restic_remote_env_file = {
+      sopsFile = config.xin-secrets.europa.services;
+      owner = "root";
+      mode = "400";
+    };
+    restic_remote_repo_file = {
+      sopsFile = config.xin-secrets.europa.services;
+      owner = "root";
+      mode = "400";
+    };
   };
 
   nixpkgs.config = {
@@ -173,6 +188,17 @@ in
     printing.enable = true;
     restic = {
       backups = {
+        remote = {
+          initialize = true;
+          #environmentFile = "${config.sops.secrets.restic_remote_env_file.path}";
+          passwordFile = "${config.sops.secrets.restic_remote_password_file.path}";
+          repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
+          #repository = "https://europa@backup.bold.daemon:8484/";
+
+          paths = [ "/home/qbit" "/var/lib/libvirt" ];
+
+          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
+        };
         local = {
           initialize = true;
           repository = "/run/media/qbit/backup/${config.networking.hostName}";
