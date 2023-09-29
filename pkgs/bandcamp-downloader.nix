@@ -75,5 +75,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/easlice/bandcamp-downloader";
     license = licenses.mit;
     maintainers = with maintainers; [ qbit ];
+    mainProgram = "bandcamp-downloader.py";
   };
 }
