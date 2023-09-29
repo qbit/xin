@@ -307,6 +307,9 @@
           kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
             inherit upkgs;
           };
+          bandcamp-downloader = upkgs.python3Packages.callPackage ./pkgs/bandcamp-downloader.nix {
+            inherit upkgs;
+          };
           ghexport = upkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
             inherit upkgs;
           };
