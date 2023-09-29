@@ -1,6 +1,5 @@
-{ pkgs, xinlib, ... }:
+{ pkgs, ... }:
 let
-  inherit (xinlib) todo;
   nixOptions = {
     gc = {
       automatic = true;
@@ -9,7 +8,7 @@ let
     };
 
     # Enable flakes
-    package = todo "nix 2.18 has a regress: https://github.com/NixOS/nix/issues/9052" pkgs.nixVersions.nix_2_17;
+    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
