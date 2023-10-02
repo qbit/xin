@@ -41,6 +41,10 @@
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
           };
+          "jid1-MnnxcxisBPnSXQ@jetpack" = {
+            "installation_mode" = "force_installed";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
+          };
           "floccus@handmadeideas.org" = {
             "installation_mode" = "normal_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/floccus/latest.xpi";
