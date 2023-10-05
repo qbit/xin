@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "b6b49130a0089b297245ee39e769231d7c763014",
-  "hash": "sha256-J1wezrODpufxrcY1E92qVl+2whSIYHtru7xTiyOpcuY=",
-  "version": "2023-09-10",
-  "comment": "upstream: rename remote_glob() -&gt; sftp_glob() to match other API"
+  "rev": "80a2f64b8c1d27383cc83d182b73920d1e6a91f1",
+  "hash": "sha256-nu06Irx6GIZR4tKsHcUo+uhdeaLDrfB38nRPee6xNyc=",
+  "version": "2023-10-04",
+  "comment": "crank version numbers"
 }
