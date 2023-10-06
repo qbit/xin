@@ -121,11 +121,6 @@ in
   sshFidoAgent.enable = true;
 
   sops.secrets = {
-    tskey = {
-      sopsFile = config.xin-secrets.stan.secrets;
-      owner = "root";
-      mode = "400";
-    };
     vm_pass = {
       sopsFile = config.xin-secrets.stan.main;
       owner = "root";
@@ -137,16 +132,6 @@ in
       owner = "${peerixUser}";
       group = "wheel";
       mode = "400";
-    };
-  };
-
-  systemd.services = {
-    "tailscale-init" = {
-      wantedBy = [ "tailscaled.service" ];
-      after = [ "tailscaled.service" ];
-      serviceConfig = {
-        ExecStart = "${pkgs.tailscale}/bin/tailscale up --auth-key file://${config.sops.secrets.tskey.path}";
-      };
     };
   };
 
@@ -163,6 +148,7 @@ in
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    oath-toolkit
     barrier
     bitwarden
     fzf
@@ -180,14 +166,13 @@ in
     openvpn
     remmina
     rex
+    snmpcheck
     sshfs
     tcpdump
     virt-manager
     wireshark
     zig
     rustdesk
-
-    (callPackage ../../pkgs/zutty.nix { })
   ];
 
   virtualisation.libvirtd.enable = true;
