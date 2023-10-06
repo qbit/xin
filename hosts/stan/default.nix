@@ -1,9 +1,10 @@
 { config
-, inputs
 , pkgs
 , ...
 }:
 let
+  testingMode = true;
+  syslogPort = 514;
   pubKeys = [
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0= hosts@secretive.plq.local"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -106,10 +107,12 @@ in
 
     networkmanager.enable = true;
     firewall = {
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [ 22 ] ++ (if testingMode then [ ] else [ ]);
       checkReversePath = "loose";
+      allowedUDPPorts = if testingMode then [ syslogPort ] else [ ];
     };
   };
+
 
   i18n.defaultLocale = "en_US.utf8";
 
@@ -205,6 +208,16 @@ in
   };
 
   services = {
+    rsyslogd = {
+      enable = testingMode;
+      defaultConfig = ''
+        module(load="imudp")
+        input(type="imudp" port="${toString syslogPort}")
+
+        daemon.*          -/var/log/daemon
+        *.warning;*.warn  -/var/log/warning
+      '';
+    };
     printing.enable = true;
     fwupd.enable = true;
     unifi.enable = false;
