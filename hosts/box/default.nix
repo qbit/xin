@@ -298,6 +298,7 @@ in
         "apple_tv"
         #"aprs"
         "brother"
+        "ecobee"
         "esphome"
         "ffmpeg"
         "homekit"
