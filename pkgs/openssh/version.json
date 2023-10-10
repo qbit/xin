@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "80a2f64b8c1d27383cc83d182b73920d1e6a91f1",
-  "hash": "sha256-nu06Irx6GIZR4tKsHcUo+uhdeaLDrfB38nRPee6xNyc=",
-  "version": "2023-10-04",
-  "comment": "crank version numbers"
+  "rev": "8d29ee4115001a02641386ae394992c65ed279e0",
+  "hash": "sha256-g+mSKb0ydLXNWmKijFHAcn3JyRyQl9xNI+zm6jZZ15w=",
+  "version": "2023-10-10",
+  "comment": "upstream: Reserve a range of &quot;local extension&quot; message numbers that"
 }
