@@ -101,5 +101,5 @@ with lib; {
       sopsFile = config.xin-secrets.manager;
     };
   };
-  #systemd.services = mkIf enabled (listToAttrs (builtins.map xinlib.jobToService jobs));
+  systemd.services = mkIf enabled (listToAttrs (builtins.map xinlib.jobToService jobs));
 }

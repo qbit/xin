@@ -1,12 +1,11 @@
 { lib
-, poetry-core
-, fetchFromGitHub
-, buildPythonPackage
 , beautifulsoup4
 , browser-cookie3
+, buildPythonPackage
 , certifi
 , charset-normalizer
 , cryptography
+, fetchFromGitHub
 , idna
 , importlib-metadata
 , jaraco_classes
@@ -15,6 +14,7 @@
 , lz4
 , more-itertools
 , pbkdf2
+, poetry-core
 , pyaes
 , pycparser
 , pycryptodome
@@ -40,7 +40,6 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    setuptools
     beautifulsoup4
     browser-cookie3
     certifi
@@ -54,11 +53,13 @@ buildPythonPackage rec {
     lz4
     more-itertools
     pbkdf2
+    poetry-core
     pyaes
     pycparser
     pycryptodome
     requests
     secretstorage
+    setuptools
     soupsieve
     tqdm
     urllib3

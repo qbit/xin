@@ -25,7 +25,7 @@ with lib; {
     };
   };
 
-  imports = [ ./tailnet.nix ];
+  #imports = [ ./tailnet.nix ];
 
   config = mkIf config.nixManager.enable {
     sops.defaultSopsFile = config.xin-secrets.manager;

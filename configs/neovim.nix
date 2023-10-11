@@ -1,6 +1,8 @@
-{ pkgs, ... }:
-with pkgs; let
-  parchment = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+{ pkgs, isUnstable, ... }:
+with pkgs;
+let
+  vimBuildTool = if isUnstable then pkgs.vimUtils.buildVimPlugin else pkgs.vimUtils.buildVimPluginFrom2Nix;
+  parchment = vimBuildTool rec {
     pname = "parchment";
     version = "0.4.0";
     src = pkgs.fetchFromGitHub {
@@ -10,7 +12,7 @@ with pkgs; let
       sha256 = "sha256-ZphConCGZR3EG6dd8Ji7U9Qtm21SoWMk60XD4X+My1g=";
     };
   };
-  vacme = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+  vacme = vimBuildTool rec {
     pname = "vacme";
     version = "2017-01-14";
     src = pkgs.fetchFromGitHub {
@@ -20,7 +22,7 @@ with pkgs; let
       sha256 = "sha256-eea0Ntr3gCmF6iZ0adZaVswWH70K9IJZ4SAyVSdFp3E=";
     };
   };
-  obsidian = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+  obsidian = vimBuildTool rec {
     pname = "obsidian-nvim";
     version = "1.7.0"; # 1.8.0 has breaking changes
     src = pkgs.fetchFromGitHub {
@@ -32,7 +34,7 @@ with pkgs; let
     };
     dependencies = with vimPlugins; [ nvim-cmp tabular ];
   };
-  neogen = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+  neogen = vimBuildTool rec {
     pname = "neogen";
     version = "2023-01-16";
     src = pkgs.fetchFromGitHub {

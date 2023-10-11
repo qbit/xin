@@ -221,7 +221,7 @@ in
     };
 
     services.logrotate.checkConfig =
-      todo "logrotate disabled: https://github.com/NixOS/nix/issues/8502" false;
+      todo "logrotate.checkConfig disabled: https://github.com/NixOS/nix/issues/8502" false;
 
     services = {
       openssh = {

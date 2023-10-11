@@ -2,6 +2,7 @@
 , lib
 , pkgs
 , xinlib
+, isUnstable
 , ...
 }:
 let
@@ -31,6 +32,10 @@ let
       startAt = "*:0/5";
       path = [ promnesia hpi ];
     }
+  ];
+  fontSet = with pkgs; [
+    go-font
+    #(callPackage ../pkgs/kurinto.nix {})
   ];
 in
 with lib; {
@@ -67,10 +72,7 @@ with lib; {
       # TODO: TEMP FIX
       systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
         lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
-      fonts.fonts = with pkgs; [
-        go-font
-        #(callPackage ../pkgs/kurinto.nix {})
-      ];
+      fonts = if isUnstable then { packages = fontSet; } else { fonts = fontSet; };
       sound.enable = true;
       environment.systemPackages = with pkgs; (xinlib.filterList [
         arcanPackages.all-wrapped
