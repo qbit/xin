@@ -148,7 +148,6 @@ in
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    oath-toolkit
     barrier
     bitwarden
     fzf
@@ -160,19 +159,21 @@ in
     mosh
     mupdf
     nmap
+    oath-toolkit
     oathToolkit
     obsidian
     obs-studio
     openvpn
     remmina
     rex
+    rustdesk
     snmpcheck
     sshfs
     tcpdump
+    unzip
     virt-manager
     wireshark
     zig
-    rustdesk
   ];
 
   virtualisation.libvirtd.enable = true;
