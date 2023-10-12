@@ -21,16 +21,16 @@
   	<$fh>;
   }
 
-  sub sprunge {
+  sub ix {
   	my ($input) = @_;
-  	my $url = "http://sprunge.us";
-  	my $form = [ sprunge => $input ];
+  	my $url = "http://ix.io";
+  	my $form = [ 'f:1' => $input ];
   	my $resp = $http->post_form($url, $form)
   		or die "could not POST: $!";
   	$resp->{content};
   }
 
   my $input = slurp('STDIN');
-  my $url = sprunge($input);
+  my $url = ix($input);
   print $url;
 ''
