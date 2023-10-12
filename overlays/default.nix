@@ -9,7 +9,7 @@ let
   #obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
   #tailscale = prIsOpen.overlay 239176 import ./tailscale.nix;
   #tidal-hifi = prIsOpen.overlay 239732 (import ./tidal-hifi.nix);
-  matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
+  matrix-synapse = prIsOpen.overlay 260704 (import ./matrix-synapse.nix);
   #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
   #rex = prIsOpen.overlay 0 (import ./rex.nix);
