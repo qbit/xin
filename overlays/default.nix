@@ -13,11 +13,13 @@ let
   #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
   #rex = prIsOpen.overlay 0 (import ./rex.nix);
+  signal-desktop = prIsOpen.overlay 260160 (import ./signal-desktop.nix);
 in
 {
   nixpkgs.overlays =
     if isUnstable
     then [
+      signal-desktop
       #rex
       heisenbridge
       (_: super: {
