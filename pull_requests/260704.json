@@ -1,9 +1,20 @@
 {
-  "branches": [],
+  "branches": [
+    "nixos-23.05-small",
+    "nixpkgs-23.05-darwin",
+    "release-23.05",
+    "staging-23.05",
+    "staging-next-23.05"
+  ],
   "error": "",
   "pull_request": 260704,
   "release": "stable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "nixos-23.05-small": false,
+    "release-23.05": true,
+    "staging-23.05": true,
+    "staging-next-23.05": true
+  },
   "title": "matrix-synapse-unwrapped: 1.93.0 -> 1.94.0"
 }
