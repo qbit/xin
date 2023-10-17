@@ -150,6 +150,7 @@ in
   environment.systemPackages = with pkgs; [
     barrier
     bitwarden
+    bruno
     fzf
     google-chrome-dev
     ispell
