@@ -14,11 +14,13 @@ let
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
   #rex = prIsOpen.overlay 0 (import ./rex.nix);
   signal-desktop = prIsOpen.overlay 260160 (import ./signal-desktop.nix);
+  bruno = prIsOpen.overlay 260160 (import ./bruno.nix);
 in
 {
   nixpkgs.overlays =
     if isUnstable
     then [
+      bruno
       signal-desktop
       #rex
       heisenbridge
