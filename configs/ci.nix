@@ -91,19 +91,12 @@ with lib; {
       tsrevprox = {
         enable = true;
         reverseName = "nix-binary-cache";
-        #envFile = config.sops.secrets.ts_proxy_env.path;
       };
       harmonia = {
         enable = true;
         signKeyPath = config.sops.secrets.bin_cache_priv_key.path;
         settings = { bind = "127.0.0.1:5000"; };
       };
-      #nix-serve = {
-      #  package = pkgs.nix-serve-ng;
-      #  enable = true;
-      #  secretKeyFile = config.sops.secrets.bin_cache_priv_key.path;
-      #  bindAddress = "127.0.0.1";
-      #};
     };
 
     boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
