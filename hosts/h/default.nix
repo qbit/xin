@@ -244,6 +244,7 @@ in
   };
 
   systemd.services = {
+    matrix-synapse.after = [ "icbirc.service" ];
     icb-tunnel = {
       wantedBy = [ "network.target" ];
       after = [ "network.target" "multi-user.target" ];
