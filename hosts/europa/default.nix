@@ -311,6 +311,7 @@ in
       hackrf
       isync
       klavaro
+      leiningen
       minicom
       mu
       nheko

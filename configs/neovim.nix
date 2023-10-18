@@ -111,6 +111,7 @@ let
 
   baseVimPackages = with vimPlugins; [
     ale
+    conjure
     elm-vim
     fugitive
     fzf-vim
