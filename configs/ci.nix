@@ -81,6 +81,19 @@ with lib; {
       mosh
     ];
 
+    firewall = {
+      interfaces = {
+        "tailscale0" = {
+          allowedUDPPortRanges = [
+            {
+              from = 60000;
+              to = 61000;
+            }
+          ];
+        };
+      };
+    };
+
     nix = {
       #settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
       settings.allowed-users = [ "root" config.xinCI.user "harmonia" ];
