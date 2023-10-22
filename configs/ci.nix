@@ -78,6 +78,7 @@ with lib; {
     environment.systemPackages = with pkgs; [
       inputs.po.packages.${pkgs.system}.po
       keychain
+      mosh
     ];
 
     nix = {
