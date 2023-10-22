@@ -81,15 +81,17 @@ with lib; {
       mosh
     ];
 
-    firewall = {
-      interfaces = {
-        "tailscale0" = {
-          allowedUDPPortRanges = [
-            {
-              from = 60000;
-              to = 61000;
-            }
-          ];
+    networking = {
+      firewall = {
+        interfaces = {
+          "tailscale0" = {
+            allowedUDPPortRanges = [
+              {
+                from = 60000;
+                to = 61000;
+              }
+            ];
+          };
         };
       };
     };
