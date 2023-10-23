@@ -18,6 +18,7 @@
 , watchfiles
 , websockets
 , setuptools-scm
+, starlette
 , pkgs
 , ...
 }:
@@ -30,20 +31,24 @@ with pkgs; let
 in
 buildPythonPackage rec {
   pname = "promnesia";
-  version = "1.1.20230417";
+  version = "1.1.20231016";
+
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "karlicoss";
     repo = pname;
-    rev = "1f60af17761570b8a6787ebf0753ecfa750cad1b";
-    hash = "sha256-iaMoNEz3bNNEH+K2vXu21T+JLQVGC7iq3PBjm4Vv+24=";
+    rev = "9ff734e6fde9ee42f9e8f895d1de54ee02e95d78";
+    hash = "sha256-TmLyHqa25I6NoTPsmd1AesYdxc8hmGPHdiMuFfw78uQ=";
   };
 
   SETUPTOOLS_SCM_PRETEND_VERSION = version;
 
   doCheck = true;
 
-  nativeBuildInputs = [ setuptools-scm ];
+  nativeBuildInputs = [
+    setuptools-scm
+  ];
 
   # Optional
   # bs4 lxml mistletoe logzero
@@ -53,6 +58,7 @@ buildPythonPackage rec {
     fastapi
     hpi
     httptools
+    starlette
     logzero
     lxml
     mistletoe
