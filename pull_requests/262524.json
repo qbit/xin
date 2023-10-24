@@ -1,9 +1,20 @@
 {
-  "branches": [],
+  "branches": [
+    "master",
+    "staging",
+    "staging-next"
+  ],
   "error": "",
   "pull_request": 262524,
-  "release": "stable",
+  "release": "unstable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": false,
+    "nixpkgs-unstable": false,
+    "staging": true,
+    "staging-next": true
+  },
   "title": "perlPackages.PLS: add missing FutureQueue dependency"
 }

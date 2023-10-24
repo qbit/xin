@@ -1,9 +1,22 @@
 {
-  "branches": [],
+  "branches": [
+    "master",
+    "nixos-unstable-small",
+    "nixpkgs-unstable",
+    "staging",
+    "staging-next"
+  ],
   "error": "",
   "pull_request": 260160,
-  "release": "stable",
+  "release": "unstable",
   "status": "open",
-  "status_info": {},
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": true,
+    "nixpkgs-unstable": true,
+    "staging": true,
+    "staging-next": true
+  },
   "title": "signal-desktop: 6.32.0 -> 6.34.1, signal-desktop-beta: 6.33.0-beta.1 -> 6.35.0-beta.2"
 }
