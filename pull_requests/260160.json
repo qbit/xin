@@ -1,6 +1,7 @@
 {
   "branches": [
     "master",
+    "nixos-unstable",
     "nixos-unstable-small",
     "nixpkgs-unstable",
     "staging",
@@ -9,10 +10,10 @@
   "error": "",
   "pull_request": 260160,
   "release": "unstable",
-  "status": "open",
+  "status": "complete",
   "status_info": {
     "master": true,
-    "nixos-unstable": false,
+    "nixos-unstable": true,
     "nixos-unstable-small": true,
     "nixpkgs-unstable": true,
     "staging": true,
