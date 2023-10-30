@@ -122,7 +122,7 @@ in
 
   nixManager = {
     enable = lib.mkDefault true;
-    user = "qbit";
+    user = "mgr";
   };
 
   kde.enable = lib.mkDefault true;

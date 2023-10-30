@@ -5,6 +5,7 @@
 , ...
 }:
 let
+  cfg = config.nixManager;
   microcaBin = "${pkgs.microca}/bin/microca";
   microca = pkgs.writeScriptBin "microca" ''
     #!/usr/bin/env sh
@@ -17,7 +18,7 @@ with lib; {
       enable = mkEnableOption "Configure host as nix-conf manager.";
       user = mkOption {
         type = types.str;
-        default = "root";
+        default = "mgr";
         description = ''
           User who will own the private key.
         '';
@@ -27,16 +28,23 @@ with lib; {
 
   #imports = [ ./tailnet.nix ];
 
-  config = mkIf config.nixManager.enable {
+  config = mkIf cfg.enable {
+    users.users.mgr = {
+      isNormalUser = true;
+      description = "Nix Manager";
+      home = "/home/mgr";
+      extraGroups = [ "wheel" ];
+      shell = pkgs.zsh;
+    };
     sops.defaultSopsFile = config.xin-secrets.manager;
     sops.secrets = {
-      xin_status_key = { owner = config.nixManager.user; };
-      xin_status_pubkey = { owner = config.nixManager.user; };
-      manager_key = { owner = config.nixManager.user; };
-      manager_pubkey = { owner = config.nixManager.user; };
-      ca_key = { owner = config.nixManager.user; };
-      ca_cert = { owner = config.nixManager.user; };
-      po_env = { owner = config.nixManager.user; };
+      xin_status_key = { owner = cfg.user; };
+      xin_status_pubkey = { owner = cfg.user; };
+      manager_key = { owner = cfg.user; };
+      manager_pubkey = { owner = cfg.user; };
+      ca_key = { owner = cfg.user; };
+      ca_cert = { owner = cfg.user; };
+      po_env = { owner = cfg.user; };
     };
 
     environment.systemPackages = [

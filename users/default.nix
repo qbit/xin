@@ -1,7 +1,6 @@
 { config
 , lib
 , pkgs
-, isUnstable
 , ...
 }:
 with lib; let
@@ -24,20 +23,16 @@ in
     };
   };
 
-  config = mkIf config.defaultUsers.enable {
-    users.users.root = userBase;
-    users.users.qbit =
-      userBase
-      // {
-        isNormalUser = true;
-        description = "Aaron Bieber";
-        home = "/home/qbit";
-        extraGroups = [ "wheel" ];
+  config = mkIf config.defaultUsers.enable
+    {
+      users.users = {
+        root = userBase;
+        qbit = userBase // {
+          isNormalUser = true;
+          description = "Aaron Bieber";
+          home = "/home/qbit";
+          extraGroups = [ "wheel" ];
+        };
       };
-
-    environment.systemPackages =
-      if isUnstable
-      then [ pkgs.yash pkgs.go ]
-      else [ pkgs.go ];
-  };
+    };
 }
