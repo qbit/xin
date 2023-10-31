@@ -170,6 +170,7 @@ in
     rustdesk
     snmpcheck
     sshfs
+    step-cli
     tcpdump
     unzip
     virt-manager
