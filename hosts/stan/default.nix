@@ -152,7 +152,7 @@ in
     bitwarden
     bruno
     fzf
-    google-chrome-dev
+    google-chrome
     ispell
     keychain
     libreoffice
