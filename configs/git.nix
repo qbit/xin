@@ -58,13 +58,13 @@ in
       { inherit (rewriteGitHub) url; }
 
       {
-        sendmail = {
+        sendemail = {
           smtpserver = "mail.messagingengine.com";
           smtpuser = "qbit@fastmail.com";
           smtpauth = "PLAIN";
           smtpencryption = "tls";
           smtpserverport = 587;
-          cc = "aaron@bolddaemon.com";
+          cc = "git@bolddaemon.com";
           confirm = "auto";
         };
       }
