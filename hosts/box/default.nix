@@ -289,6 +289,7 @@ in
         with python3Packages; [
           pyipp
           pymetno
+          ical
         ];
       extraComponents = [
         "airthings"
