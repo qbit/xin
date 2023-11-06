@@ -378,7 +378,7 @@ in
     prometheus = {
       enable = true;
       port = 9001;
-      listenAddress = "100.64.247.69";
+      listenAddress = "100.83.77.133";
 
       exporters = {
         node = {
