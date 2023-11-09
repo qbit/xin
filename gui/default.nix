@@ -84,6 +84,7 @@ with lib; {
         govulncheck
         hpi
         pcsctools
+        plan9port
         promnesia
         rage
         rpr
