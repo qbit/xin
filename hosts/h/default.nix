@@ -222,7 +222,6 @@ in
     matrix-synapse-tools.rust-synapse-compress-state
     mcchunkie
 
-    restic
   ];
 
   security.acme = {
