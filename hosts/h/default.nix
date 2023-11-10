@@ -598,34 +598,34 @@ in
           enableACME = true;
           root = "/var/www/suah.dev";
           extraConfig = ''
-                      location ~ ^/api {
-                              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                              proxy_set_header Host $host:$server_port;
-                              proxy_set_header X-Forwarded-Proto $scheme;
-                              proxy_set_header X-Forwarded-Ssl on;
-                              proxy_read_timeout 300;
-                              proxy_connect_timeout 300;
-                              proxy_pass http://127.0.0.1:8888; # pots
-                      }
-                      location ~ ^/_got {
-                              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                              proxy_set_header Host $host:$server_port;
-                              proxy_set_header X-Forwarded-Proto $scheme;
-                              proxy_set_header X-Forwarded-Ssl on;
-                              proxy_read_timeout 300;
-                              proxy_connect_timeout 300;
-                              proxy_pass http://127.0.0.1:8043;
-                      }
+            location ~ ^/api {
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $host:$server_port;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header X-Forwarded-Ssl on;
+                proxy_read_timeout 300;
+                proxy_connect_timeout 300;
+                proxy_pass http://127.0.0.1:8888; # pots
+            }
+            location ~ ^/_got {
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $host:$server_port;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header X-Forwarded-Ssl on;
+                proxy_read_timeout 300;
+                proxy_connect_timeout 300;
+                proxy_pass http://127.0.0.1:8043;
+            }
 
-                      location ~ ^/_sms {
-                              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                              proxy_set_header Host $host:$server_port;
-                              proxy_set_header X-Forwarded-Proto $scheme;
-                              proxy_set_header X-Forwarded-Ssl on;
-                              proxy_read_timeout 300;
-                              proxy_connect_timeout 300;
-                              proxy_pass http://127.0.0.1:8044;
-                      }
+            location ~ ^/_sms {
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $host:$server_port;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header X-Forwarded-Ssl on;
+                proxy_read_timeout 300;
+                proxy_connect_timeout 300;
+                proxy_pass http://127.0.0.1:8044;
+            }
             location ~ ^/p/ {
             	autoindex		on;
             }
@@ -634,55 +634,59 @@ in
             	autoindex		on;
             }
 
+            location ~ ^/_matrix/|^/_synapse/ {
+                return 404;
+            }
+
             location ~* .(xml)$ {
             	autoindex		on;
             	root			/var/www/suah.dev/rss;
             }
 
-                      location ~ "([^/\s]+)(/.*)?" {
-                            set $not_serving 1;
+            location ~ "([^/\s]+)(/.*)?" {
+                set $not_serving 1;
 
-                            if ($request_filename = 'index.html') {
-                                    set $not_serving 0;
-                            }
+                if ($request_filename = 'index.html') {
+                        set $not_serving 0;
+                }
 
-                            if (-f $request_filename) {
-                                    set $not_serving 0;
-                            }
+                if (-f $request_filename) {
+                        set $not_serving 0;
+                }
 
-                            if ($args = "go-get=1") {
-                                    add_header Strict-Transport-Security $hsts_header;
-                                    add_header Referrer-Policy origin-when-cross-origin;
-                                    add_header X-Frame-Options DENY;
-                                    add_header X-Content-Type-Options nosniff;
-                                    add_header Content-Type text/html;
-                                    return 200 '<html><head>
-                                      <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
-                                      <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
-                                      <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
-                                      </head>
-                                      <body>
-                                      Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
-                                      </body>
-                                      </html>';
-                            }
-                            if ($not_serving) {
-                                    add_header Strict-Transport-Security $hsts_header;
-                                    add_header Referrer-Policy origin-when-cross-origin;
-                                    add_header X-Frame-Options DENY;
-                                    add_header X-Content-Type-Options nosniff;
-                                    add_header Content-Type text/html;
-                                    return 200 '<html><head>
-                                      <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
-                                      <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
-                                      <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
-                                      </head>
-                                      <body>
-                                      Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
-                                      </body>
-                                      </html>';
-                            }
-                          }
+                if ($args = "go-get=1") {
+                    add_header Strict-Transport-Security $hsts_header;
+                    add_header Referrer-Policy origin-when-cross-origin;
+                    add_header X-Frame-Options DENY;
+                    add_header X-Content-Type-Options nosniff;
+                    add_header Content-Type text/html;
+                    return 200 '<html><head>
+                      <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
+                      <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
+                      <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
+                      </head>
+                      <body>
+                      Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
+                      </body>
+                      </html>';
+                }
+                if ($not_serving) {
+                    add_header Strict-Transport-Security $hsts_header;
+                    add_header Referrer-Policy origin-when-cross-origin;
+                    add_header X-Frame-Options DENY;
+                    add_header X-Content-Type-Options nosniff;
+                    add_header Content-Type text/html;
+                    return 200 '<html><head>
+                      <meta name="go-import" content="$host/$1 git ${goModuleHost}/$1">
+                      <meta name="go-source" content="$host/$1 _ ${goModuleHost}/$1/tree/master{/dir} ${goModuleHost}/$1/tree/master{/dir}/{file}#L{line}">
+                      <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/mod/suah.dev/$1">
+                      </head>
+                      <body>
+                      Redirecting to docs at <a href="https://pkg.go.dev/mod/suah.dev/$1">pkg.go.dev/mod/suah.dev/$1</a>...
+                      </body>
+                      </html>';
+                }
+              }
           '';
         };
         "qbit.io" = {
