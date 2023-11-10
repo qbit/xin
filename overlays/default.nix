@@ -4,28 +4,15 @@
 }:
 let
   inherit (xinlib) prIsOpen;
-  #_1password-gui = prIsOpen.overlay 235900 (import ./1password-gui.nix);
-  #openssh = import ./openssh.nix;
-  #obsidian = prIsOpen.overlay 235408 (import ./obsidian.nix);
   tailscale = prIsOpen.overlay 0 import ./tailscale.nix;
-  #tidal-hifi = prIsOpen.overlay 239732 (import ./tidal-hifi.nix);
   matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
-  #nixd = prIsOpen.overlay 238779 (import ./nixd.nix);
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
-  #rex = prIsOpen.overlay 0 (import ./rex.nix);
-  signal-desktop = prIsOpen.overlay 260160 (import ./signal-desktop.nix);
-  bruno = prIsOpen.overlay 260160 (import ./bruno.nix);
-  pls = prIsOpen.overlay 262524 (import ./PLS.nix);
 in
 {
   nixpkgs.overlays =
     if isUnstable
     then [
       tailscale
-      pls
-      bruno
-      signal-desktop
-      #rex
       heisenbridge
       (_: super: {
         cloud-hypervisor = super.cloud-hypervisor.overrideAttrs (_: {
