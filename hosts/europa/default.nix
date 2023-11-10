@@ -17,12 +17,12 @@ let
     }
     {
       command_path = "${pkgs.kdialog}/bin/kdialog";
-      command_args = [ "--passivepopup" "SSH Key Added" "5" ];
+      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Added" "5" ];
       event = "added";
     }
     {
       command_path = "${pkgs.kdialog}/bin/kdialog";
-      command_args = [ "--passivepopup" "SSH Key Removed" "5" ];
+      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Removed" "5" ];
       event = "removed";
     }
   ];
