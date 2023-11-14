@@ -107,9 +107,9 @@ in
 
     networkmanager.enable = true;
     firewall = {
-      allowedTCPPorts = [ 22 ] ++ (if testingMode then [ ] else [ ]);
-      checkReversePath = "loose";
+      allowedTCPPorts = [ 22 ] ++ (if testingMode then [ 8080 ] else [ ]);
       allowedUDPPorts = if testingMode then [ syslogPort ] else [ ];
+      checkReversePath = "loose";
     };
   };
 
