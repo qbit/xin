@@ -280,6 +280,9 @@
             inherit spkgs;
             isUnstable = true;
           };
+          himitsu = upkgs.callPackage ./pkgs/himitsu.nix {
+            inherit upkgs;
+          };
           iamb = upkgs.callPackage ./pkgs/iamb.nix { };
           icbirc = spkgs.callPackage ./pkgs/icbirc.nix {
             inherit spkgs;
