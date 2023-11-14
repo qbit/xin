@@ -307,6 +307,7 @@ in
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
       PATH = [ "\${XDG_BIN_HOME}" ];
       MUHOME = "\${HOME}/.config/mu";
+      SSH_AUTH_SOCK = "/tmp/traygent";
     };
 
     systemPackages = with pkgs; [
