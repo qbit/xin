@@ -19,7 +19,7 @@ let
       hash = "sha256-bqxWFP3/aw7kRoD6ictbFcjzijktHvh4AgWAXBIODW8=";
     };
   });
-  harec' = stdenv.mkDerivation (finalAttrs: {
+  harec' = stdenv.mkDerivation (_: {
     pname = "harec";
     version = "unstable-2023-10-22";
 
@@ -63,7 +63,7 @@ let
     };
   });
 
-  hare' = stdenv.mkDerivation (finalAttrs: {
+  hare' = stdenv.mkDerivation (_: {
     pname = "hare";
     version = "unstable-2023-10-23";
 
