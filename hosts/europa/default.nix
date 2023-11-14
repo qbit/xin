@@ -329,6 +329,7 @@ in
       git-credential-1password
       gqrx
       hackrf
+      himitsu
       isync
       klavaro
       leiningen
@@ -336,8 +337,8 @@ in
       mu
       nheko
       nix-index
-      nixpkgs-review
       nix-top
+      nixpkgs-review
       nmap
       nushell
       obsidian
