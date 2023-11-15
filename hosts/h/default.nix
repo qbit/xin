@@ -195,7 +195,7 @@ in
     };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 ]; }; };
+      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 config.services.shiori.port ]; }; };
       allowedTCPPorts = [ 22 80 443 2222 53589 ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
