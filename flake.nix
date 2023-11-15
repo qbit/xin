@@ -19,8 +19,6 @@
       inputs.sops-nix.follows = "sops-nix";
     };
 
-    nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
-
     #emacs-overlay = {
     #  url = "github:nix-community/emacs-overlay/d54a1521619daa37c9aa8c9e3362abb34e676007";
     #  inputs.nixpkgs.follows = "stable";
@@ -203,9 +201,7 @@
       devShells.aarch64-darwin.default = xinlib.buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable [
-          nixos-hardware.nixosModules.framework
-        ] "europa";
+        europa = buildSys "x86_64-linux" unstable [ ] "europa";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
         weather = buildSys "aarch64-linux" stable [ ] "weather";
@@ -213,8 +209,6 @@
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
         box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
-        #luna = buildSys "x86_64-linux" stable
-        #  [ "${nixos-hardware}/common/cpu/intel" ] "luna";
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule

@@ -39,9 +39,10 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware = {
+    acpilight.enable = true;
+    bluetooth.enable = true;
     cpu.intel.updateMicrocode =
       lib.mkDefault config.hardware.enableRedistributableFirmware;
-    bluetooth.enable = true;
     rtl-sdr.enable = true;
   };
 }

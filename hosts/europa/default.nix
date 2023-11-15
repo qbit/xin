@@ -195,6 +195,7 @@ in
   services.xinCA = { enable = false; };
 
   services = {
+    fprintd.enable = true;
     avahi = {
       enable = true;
       openFirewall = true;
