@@ -17,7 +17,7 @@ buildGoModule rec {
     sha256 = "sha256-3kozp6jq0xGllxoK2lGCNUahy/FvXyq11vNSxfDehKE=";
   };
 
-  vendorSha256 = "sha256-YJ74SeZAMS+dXyoPhPTJ3L+5uL5bF8gumhMOqfvmlms=";
+  vendorHash = "sha256-YJ74SeZAMS+dXyoPhPTJ3L+5uL5bF8gumhMOqfvmlms=";
 
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ libayatana-appindicator gtk3 ];

@@ -17,7 +17,7 @@ buildGoModule rec {
 
   proxyVendor = false;
 
-  vendorSha256 = null;
+  vendorHash = null;
 
   meta = {
     description = "gosignify is a Go reimplementation of OpenBSD's signify";

@@ -15,7 +15,7 @@ buildGoModule rec {
     sha256 = "sha256-AhqW+AAEBbAPJO0hnZnC5a/u4IKyLII6OWYEQzoX0C8=";
   };
 
-  vendorSha256 = "sha256-7XFvghT411YE+Y9bYEFOKR655EaFS4GZiDzUYiYRbMY=";
+  vendorHash = "sha256-7XFvghT411YE+Y9bYEFOKR655EaFS4GZiDzUYiYRbMY=";
 
   meta = {
     description = "tiny static site generator";

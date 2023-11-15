@@ -36,7 +36,7 @@ buildGoModule rec {
 
   subPackages = [ "cmd/proxy" ];
 
-  vendorSha256 = vendorHash;
+  inherit vendorHash;
 
   postInstall = lib.optionalString stdenv.isLinux ''
     mv $out/bin/proxy $out/bin/athens
