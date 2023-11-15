@@ -271,6 +271,7 @@ in
       enable = true;
       port = 8967;
       address = "100.83.77.133";
+      package = inputs.unstable.legacyPackages.${pkgs.system}.shiori;
     };
     veilid-server = {
       enable = true;
