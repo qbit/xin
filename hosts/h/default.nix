@@ -267,6 +267,11 @@ in
   };
 
   services = {
+    shiori = {
+      enable = true;
+      port = 8967;
+      address = "100.83.77.133";
+    };
     veilid-server = {
       enable = true;
       package = inputs.unstable.legacyPackages.${pkgs.system}.veilid;
@@ -416,6 +421,7 @@ in
             "/var/www"
             "/home"
             "/var/lib/yarr"
+            "/var/lib/shiori"
             "/var/lib/gotosocial"
             "/var/lib/mcchunkie"
             "/var/lib/taskserver"
