@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "c8ed7cc545879ac15f6ce428be4b29c35598bb2a",
-  "hash": "sha256-Q5EDWkMkqF8r695MLjg2xpZKqGIKl/onab1LGUVX/6M=",
-  "version": "2023-11-01",
-  "comment": "upstream: Specify ssh binary to use"
+  "rev": "64e0600f23c6dec36c3875392ac95b8a9100c2d6",
+  "hash": "sha256-wvg2fqstTiKuaH9efh8TF97XXpZilF8F0ZMtzfsQNmA=",
+  "version": "2023-11-13",
+  "comment": "Test current releases of LibreSSL and OpenSSL."
 }
