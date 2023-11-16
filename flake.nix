@@ -81,7 +81,6 @@
     { self
     , darwin
     , gostart
-    , nixos-hardware
     , peerix
     , po
     , pots
