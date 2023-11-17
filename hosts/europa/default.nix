@@ -369,6 +369,7 @@ in
       #yubioath-flutter
       zig
 
+      (callPackage ../../pkgs/ttfs.nix { })
       (callPackage ../../pkgs/clilol.nix { })
       (callPackage ../../pkgs/iamb.nix { })
       (callPackage ../../pkgs/kobuddy.nix {
