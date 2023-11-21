@@ -304,6 +304,8 @@
           kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
             inherit upkgs;
           };
+          hiprompt-gtk-py = upkgs.callPackage ./pkgs/hiprompt-gtk-py.nix { };
+          himitsu-keyring = upkgs.callPackage ./pkgs/himitsu-keyring.nix { };
           bandcamp-downloader = upkgs.python3Packages.callPackage ./pkgs/bandcamp-downloader.nix {
             inherit upkgs;
           };

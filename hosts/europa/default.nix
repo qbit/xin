@@ -195,6 +195,12 @@ in
   services.xinCA = { enable = false; };
 
   services = {
+    rimgo = {
+      enable = true;
+      settings = {
+        FORCE_WEPP = "1";
+      };
+    };
     fprintd.enable = true;
     avahi = {
       enable = true;
@@ -331,7 +337,6 @@ in
       git-credential-1password
       gqrx
       hackrf
-      himitsu
       isync
       klavaro
       leiningen
@@ -369,6 +374,9 @@ in
       #yubioath-flutter
       zig
 
+      (callPackage ../../pkgs/himitsu.nix { })
+      (callPackage ../../pkgs/hiprompt-gtk-py.nix {})
+      (callPackage ../../pkgs/himitsu-keyring.nix {})
       (callPackage ../../pkgs/ttfs.nix { })
       (callPackage ../../pkgs/clilol.nix { })
       (callPackage ../../pkgs/iamb.nix { })

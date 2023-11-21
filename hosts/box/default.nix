@@ -135,7 +135,13 @@ in
     interfaces.enp7s0 = { useDHCP = true; };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [
+            3030 # loki
+          ];
+        };
+      };
       interfaces = {
         "wg0" = {
           allowedTCPPorts = [
