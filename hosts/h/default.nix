@@ -222,6 +222,7 @@ in
     matrix-synapse-tools.rust-synapse-compress-state
     mcchunkie
 
+    zonemaster-cli
   ];
 
   security.acme = {
