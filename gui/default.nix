@@ -3,9 +3,12 @@
 , pkgs
 , xinlib
 , isUnstable
+, inputs
 , ...
 }:
 let
+  inherit (builtins) toJSON;
+  inherit (inputs.traygent.packages.${pkgs.system}) traygent;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr =
@@ -36,6 +39,24 @@ let
   fontSet = with pkgs; [
     go-font
     #(callPackage ../pkgs/kurinto.nix {})
+  ];
+  traygentCmds = toJSON [
+    {
+      command_path = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
+      event = "sign";
+      msg_format = "Allow access to key %q?";
+      exit_code = 0;
+    }
+    {
+      command_path = "${pkgs.kdialog}/bin/kdialog";
+      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Added" "5" ];
+      event = "added";
+    }
+    {
+      command_path = "${pkgs.kdialog}/bin/kdialog";
+      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Removed" "5" ];
+      event = "removed";
+    }
   ];
 in
 with lib; {
@@ -74,25 +95,32 @@ with lib; {
         lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
       fonts = if isUnstable then { packages = fontSet; } else { fonts = fontSet; };
       sound.enable = true;
-      environment.systemPackages = with pkgs; (xinlib.filterList [
-        arcanPackages.all-wrapped
-        bc
-        black
-        drawterm
-        exiftool
-        go-font
-        govulncheck
-        hpi
-        pcsctools
-        plan9port
-        promnesia
-        rage
-        rpr
-        vlc
-        zeal
+      environment = {
+        etc."traygent.json" = { text = traygentCmds; };
+        sessionVariables = {
+          SSH_AUTH_SOCK = "$HOME/.traygent";
+        };
+        systemPackages = with pkgs; (xinlib.filterList [
+          arcanPackages.all-wrapped
+          bc
+          black
+          drawterm
+          exiftool
+          go-font
+          govulncheck
+          hpi
+          pcsctools
+          plan9port
+          promnesia
+          rage
+          rpr
+          traygent
+          vlc
+          zeal
 
-        (callPackage ../configs/helix.nix { })
-      ]);
+          (callPackage ../configs/helix.nix { })
+        ]);
+      };
 
       programs = { } // firefox.programs;
 

@@ -65,6 +65,10 @@
       url = "github:qbit/ts-reverse-proxy";
       inputs.nixpkgs.follows = "unstable";
     };
+    traygent = {
+      url = "github:qbit/traygent";
+      inputs.nixpkgs.follows = "unstable";
+    };
 
     gqrss = {
       url = "github:qbit/gqrss";
@@ -87,6 +91,7 @@
     , pr-status
     , stable
     , tsRevProx
+    , traygent
     , tsvnstat
     , unstable
     , unstableSmall
@@ -333,6 +338,7 @@
           inherit (pots.packages.${system}) pots;
           inherit (po.packages.${system}) po;
           inherit (tsRevProx.packages.${system}) ts-reverse-proxy;
+          inherit (traygent.packages.${system}) traygent;
 
           inherit (spkgs) matrix-synapse;
         });

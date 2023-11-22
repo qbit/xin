@@ -7,25 +7,7 @@
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp;
-  inherit (builtins) toJSON readFile;
-  traygentCmds = toJSON [
-    {
-      command_path = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
-      event = "sign";
-      msg_format = "Allow access to key %q?";
-      exit_code = 0;
-    }
-    {
-      command_path = "${pkgs.kdialog}/bin/kdialog";
-      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Added" "5" ];
-      event = "added";
-    }
-    {
-      command_path = "${pkgs.kdialog}/bin/kdialog";
-      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Removed" "5" ];
-      event = "removed";
-    }
-  ];
+  inherit (builtins) readFile;
   #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
   #  doomPrivateDir = ../../configs/doom.d;
@@ -298,7 +280,6 @@ in
 
   environment = {
     etc."barrier.conf" = { text = readFile ../../configs/barrier.conf; };
-    etc."traygent.json" = { text = traygentCmds; };
     sessionVariables = {
       XDG_BIN_HOME = "\${HOME}/.local/bin";
       XDG_CACHE_HOME = "\${HOME}/.cache";
@@ -308,7 +289,6 @@ in
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
       PATH = [ "\${XDG_BIN_HOME}" ];
       MUHOME = "\${HOME}/.config/mu";
-      SSH_AUTH_SOCK = "/tmp/traygent";
     };
 
     systemPackages = with pkgs; [

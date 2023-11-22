@@ -202,6 +202,7 @@
         "sops-nix": "sops-nix",
         "stable": "stable",
         "taskobs": "taskobs",
+        "traygent": "traygent",
         "tsRevProx": "tsRevProx",
         "tsvnstat": "tsvnstat",
         "unstable": "unstable",
@@ -279,6 +280,26 @@
       "original": {
         "owner": "qbit",
         "repo": "taskobs",
+        "type": "github"
+      }
+    },
+    "traygent": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1700668857,
+        "narHash": "sha256-EN5Q07M7hDAcuL3k96DUlJ9XNBPupzT/RbKjjCZBYGY=",
+        "owner": "qbit",
+        "repo": "traygent",
+        "rev": "f2b39308c16c0559f9eeb4d3d3ff0921009a8aac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "traygent",
         "type": "github"
       }
     },
