@@ -311,7 +311,6 @@ in
       git-credential-1password
       gqrx
       hackrf
-      himitsu
       isync
       klavaro
       leiningen
