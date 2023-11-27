@@ -43,6 +43,9 @@
     bluetooth.enable = true;
     cpu.intel.updateMicrocode =
       lib.mkDefault config.hardware.enableRedistributableFirmware;
+    sensor = {
+      iio.enable = true;
+    };
     rtl-sdr.enable = true;
   };
 }
