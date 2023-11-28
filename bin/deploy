@@ -127,7 +127,7 @@ fi
 if [ "$1" = "update" ]; then
 	single="$2"
 	can_sign=0
-	for i in $(ssh-add -L | awk '{print $NF}'); do
+	for i in $(ssh-add -L | awk '{print $2}'); do
 		grep -q $i .allowed_signers && can_sign=1
 	done
 
