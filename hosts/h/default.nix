@@ -144,9 +144,9 @@ in
       owner = config.services.tsrevprox.user;
       sopsFile = config.xin-secrets.h.services;
     };
-    writefreely = {
+    qbit_at_suah_pass_file = {
       mode = "400";
-      owner = config.services.writefreely.user;
+      owner = "root";
       sopsFile = config.xin-secrets.h.services;
     };
   };
@@ -267,6 +267,28 @@ in
         WorkingDirectory = "/var/lib/mcchunkie";
         ExecStart = "${mcchunkie}/bin/mcchunkie";
       };
+    };
+  };
+
+  mailserver = {
+    enable = true;
+    fqdn = "mail.suah.dev";
+    domains = [ "suah.dev" ];
+
+    certificateScheme = "acme-nginx";
+
+    loginAccounts = {
+      "qbit@suah.dev" = {
+        hashedPasswordFile = "${config.sops.secrets.qbit_at_suah_pass_file.path}";
+        aliases = [ "postmaster@suah.dev" "aaron@suah.dev" ];
+      };
+    };
+
+    fullTextSearch = {
+      enable = true;
+      autoIndex = true;
+      indexAttachments = true;
+      enforced = "body";
     };
   };
 
@@ -431,33 +453,14 @@ in
             "/var/lib/mcchunkie"
             "/var/lib/taskserver"
             "/var/lib/heisenbridge"
-            "/var/lib/writefreely"
+            "/var/vmail"
+            "/var/dkim"
           ];
 
           timerConfig = { OnCalendar = "00:05"; };
 
           pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
         };
-      };
-    };
-
-    writefreely = {
-      enable = true;
-      host = "arst.lol";
-      settings = {
-        server.port = 3287;
-        app = {
-          single_user = true;
-          min_username_len = 4;
-          federation = true;
-          monetization = false;
-          wf_modesty = true;
-        };
-      };
-      database.migrate = true;
-      admin = {
-        name = "qbit";
-        initialPasswordFile = "${config.sops.secrets.writefreely.path}";
       };
     };
 
@@ -526,31 +529,6 @@ in
           root = "/var/www/bolddaemon.com";
 
         };
-        "relay.bolddaemon.com" = {
-          forceSSL = true;
-          enableACME = true;
-          root = "/var/www/bolddaemon.com";
-          locations."/weechat" = {
-            proxyWebsockets = true;
-            proxyPass = "http://localhost:9009/weechat";
-          };
-        };
-        "arst.lol" = {
-          forceSSL = true;
-          enableACME = true;
-          root = "/var/www/arst.lol";
-          locations."/" = {
-            proxyWebsockets = true;
-            proxyPass = "http://127.0.0.1:${
-              toString config.services.writefreely.settings.server.port
-            }";
-          };
-        };
-        #"embracethe.lol" = {
-        #  forceSSL = true;
-        #  enableACME = true;
-        #  root = "/var/www/embracethe.lol";
-        #};
         "notes.suah.dev" = {
           forceSSL = true;
           enableACME = true;
@@ -564,13 +542,6 @@ in
               proxy_ssl_server_name on;
             }
           '';
-        };
-
-        "bear.tapenet.org" = {
-          forceSSL = true;
-          enableACME = true;
-
-          locations."/" = { root = "${pkgs.glowing-bear}"; };
         };
 
         "git.tapenet.org" = {
@@ -722,14 +693,14 @@ in
             else "";
           locations."/" = {
             extraConfig = ''
-              proxy_pass http://127.0.0.1:${
-                toString config.services.gotosocial.configuration.port
+                      proxy_pass http://127.0.0.1:${
+              toString config.services.gotosocial.configuration.port
               };
-              proxy_set_header Host $host;
-              proxy_set_header Upgrade $http_upgrade;
-              proxy_set_header Connection "upgrade";
-              proxy_set_header X-Forwarded-For $remote_addr;
-              proxy_set_header X-Forwarded-Proto $scheme;
+                      proxy_set_header Host $host;
+                      proxy_set_header Upgrade $http_upgrade;
+                      proxy_set_header Connection "upgrade";
+                      proxy_set_header X-Forwarded-For $remote_addr;
+                      proxy_set_header X-Forwarded-Proto $scheme;
             '';
           };
         };
@@ -745,8 +716,8 @@ in
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://${config.services.yarr.address}:${
-              toString config.services.yarr.port
-            }";
+      toString config.services.yarr.port
+      }";
           };
         };
         "tapenet.org" = {

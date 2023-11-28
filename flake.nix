@@ -29,6 +29,8 @@
       inputs.nixpkgs.follows = "unstableSmall";
     };
 
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.05";
+
     microca = {
       url = "github:qbit/microca";
       inputs.nixpkgs.follows = "unstable";
@@ -97,6 +99,7 @@
     , unstableSmall
     , xin-secrets
     , xintray
+    , simple-nixos-mailserver
     , ...
     } @ inputs:
     let
@@ -218,6 +221,7 @@
           gostart.nixosModule
           pots.nixosModule
           pr-status.nixosModule
+          simple-nixos-mailserver.nixosModule
         ] "h";
         #router =
         #  buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
