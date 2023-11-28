@@ -207,23 +207,26 @@ in
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    inetutils
+  environment = {
+    memoryAllocator.provider = "mimalloc";
+    systemPackages = with pkgs; [
+      inetutils
 
-    # irc
-    weechat
-    weechatScripts.highmon
-    aspell
-    aspellDicts.en
-    icbirc
+      # irc
+      weechat
+      weechatScripts.highmon
+      aspell
+      aspellDicts.en
+      icbirc
 
-    # matrix things
-    matrix-synapse-tools.synadm
-    matrix-synapse-tools.rust-synapse-compress-state
-    mcchunkie
+      # matrix things
+      matrix-synapse-tools.synadm
+      matrix-synapse-tools.rust-synapse-compress-state
+      mcchunkie
 
-    zonemaster-cli
-  ];
+      zonemaster-cli
+    ];
+  };
 
   security.acme = {
     acceptTerms = true;
