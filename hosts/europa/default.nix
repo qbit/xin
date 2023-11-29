@@ -318,8 +318,8 @@ in
       mu
       nheko
       nix-index
-      nix-top
       nixpkgs-review
+      nix-top
       nmap
       nushell
       obsidian
@@ -331,6 +331,7 @@ in
       qdmr
       rex
       rofi
+      rsibreak
       rtl-sdr
       sdrpp
       signal-desktop
