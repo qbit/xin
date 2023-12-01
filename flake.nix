@@ -5,7 +5,7 @@
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    stable.url = "github:NixOS/nixpkgs/nixos-23.05-small";
+    stable.url = "github:NixOS/nixpkgs/nixos-23.11-small";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -210,7 +210,7 @@
         europa = buildSys "x86_64-linux" unstable [ ] "europa";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
-        weather = buildSys "aarch64-linux" stable [ ] "weather";
+        #weather = buildSys "aarch64-linux" stable [ ] "weather";
         octo = buildSys "aarch64-linux" stable [ ] "octo";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
@@ -371,7 +371,7 @@
 
       checks =
         let
-          buildList = [ "europa" "stan" "h" "box" "faf" "weather" ];
+          buildList = [ "europa" "stan" "h" "box" "faf" ];
         in
         with unstable.lib;
         foldl' recursiveUpdate { } (mapAttrsToList

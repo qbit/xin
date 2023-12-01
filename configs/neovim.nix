@@ -1,7 +1,7 @@
-{ pkgs, isUnstable, ... }:
+{ pkgs, ... }:
 with pkgs;
 let
-  vimBuildTool = if isUnstable then pkgs.vimUtils.buildVimPlugin else pkgs.vimUtils.buildVimPluginFrom2Nix;
+  vimBuildTool = pkgs.vimUtils.buildVimPlugin;
   parchment = vimBuildTool rec {
     pname = "parchment";
     version = "0.4.0";
