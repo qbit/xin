@@ -293,6 +293,7 @@ in
 
     systemPackages = with pkgs; [
       barrier
+      beets
       calibre
       chirp
       cider
