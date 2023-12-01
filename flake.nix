@@ -5,7 +5,7 @@
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    stable.url = "github:NixOS/nixpkgs/nixos-23.11-small";
+    stable.url = "github:NixOS/nixpkgs/nixos-23.05-small";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
