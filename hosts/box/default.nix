@@ -1073,7 +1073,9 @@ in
     };
     postgresql = {
       enable = true;
-      dataDir = "/db/postgres";
+      #dataDir = "/db/postgres";
+
+      package = pkgs.postgresql_15;
 
       #enableTCPIP = true;
       #authentication = pkgs.lib.mkOverride 14 ''
