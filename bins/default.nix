@@ -1,4 +1,5 @@
 { pkgs
+, config
 , isUnstable
 , ...
 }:
@@ -19,6 +20,10 @@ let
     inherit (pkgs) curl;
   });
   genPatches = pkgs.callPackage ./gen-patches.nix { };
+  upgrade-pg = pkgs.writeScriptBin "upgrade-pg" (import ./upgrade-pg.nix {
+    inherit pkgs;
+    inherit config;
+  });
 in
 {
   environment.systemPackages = with pkgs; [
@@ -29,7 +34,9 @@ in
     tstart
     xclip
     xinStatus
-  ];
+  ] ++ (if config.services.postgresql.enable then
+    [ upgrade-pg ]
+  else [ ]);
   environment.etc = {
     "signify/openbsd-70-base.pub".text =
       builtins.readFile ./pubs/openbsd-70-base.pub;
