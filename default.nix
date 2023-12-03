@@ -177,6 +177,7 @@ in
           nix-top
           pass
           ripgrep
+          sshfs
           taskwarrior
           tmux
         ]
