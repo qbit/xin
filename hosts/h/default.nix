@@ -293,6 +293,14 @@ in
   };
 
   services = {
+    navidrome = {
+      enable = true;
+      settings = {
+        Address = "127.0.0.1";
+        Port = 4533;
+        MusicFolder = "/var/lib/music";
+      };
+    };
     shiori = {
       enable = true;
       port = 8967;
@@ -542,6 +550,19 @@ in
               proxy_ssl_server_name on;
             }
           '';
+        };
+
+        "music.tapenet.org" = {
+          forceSSL = true;
+          enableACME = true;
+
+          locations = {
+            "/" = {
+              proxyPass = "http://${config.services.navidrome.settings.Address}:${toString config.services.navidrome.settings.Port}";
+              proxyWebsockets = true;
+              priority = 1000;
+            };
+          };
         };
 
         "git.tapenet.org" = {
