@@ -1088,15 +1088,15 @@ in
       ensureUsers = [
         {
           name = "nextcloud";
-          ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
+          ensureDBOwnership = true;
         }
         {
           name = "gitea";
-          ensurePermissions."DATABASE gitea" = "ALL PRIVILEGES";
+          ensureDBOwnership = true;
         }
         {
           name = "invidious";
-          ensurePermissions."DATABASE invidious" = "ALL PRIVILEGES";
+          ensureDBOwnership = true;
         }
       ];
     };

@@ -828,15 +828,14 @@ in
       ensureUsers = [
         {
           name = "synapse_user";
-          ensurePermissions."DATABASE synapse" = "ALL PRIVILEGES";
         }
         {
           name = "gotosocial";
-          ensurePermissions."DATABASE gotosocial" = "ALL PRIVILEGES";
+          ensureDBOwnership = true;
         }
         {
           name = "syncv3";
-          ensurePermissions."DATABASE syncv3" = "ALL PRIVILEGES";
+          ensureDBOwnership = true;
         }
       ];
     };
