@@ -320,6 +320,18 @@ in
       ];
       config = {
         mqtt.sensor = [
+          {
+            name = "Greenhouse Temperature";
+            unique_id = "greenhouse_temp_c";
+            state_topic = "greenhouse/temp";
+            unit_of_measurement = "°C";
+          }
+          {
+            name = "Greenhouse Humidity";
+            unique_id = "greenhouse_humidity_pct";
+            state_topic = "greenhouse/humidity";
+            unit_of_measurement = "%";
+          }
         ];
         logger = {
           default = "warning";
