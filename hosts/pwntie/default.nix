@@ -91,7 +91,7 @@ in
           port = 1883;
           tls_enabled = false;
           ha_autodiscovery = true;
-          base_topec = "rtlamr";
+          base_topic = "rtlamr";
         };
         custom_parameters = {
           rtltcp = "-s 2048000";
