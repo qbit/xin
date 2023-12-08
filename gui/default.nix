@@ -60,7 +60,7 @@ let
   ];
 in
 with lib; {
-  imports = [ ./gnome.nix ./kde.nix ./xfce.nix ./arcan.nix ];
+  imports = [ ./gnome.nix ./kde.nix ./xfce.nix ];
 
   options = {
     pulse = {
@@ -101,7 +101,6 @@ with lib; {
           SSH_AUTH_SOCK = "$HOME/.traygent";
         };
         systemPackages = with pkgs; (xinlib.filterList [
-          arcanPackages.all-wrapped
           bc
           black
           drawterm
