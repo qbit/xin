@@ -303,8 +303,6 @@ in
       beets
       calibre
       chirp
-      cider
-      clementine
       direwolf
       element-desktop
       elmPackages.elm
@@ -313,24 +311,18 @@ in
       elmPackages.elm-live
       elmPackages.elm-test
       entr
-      exercism
       gh
       gimp
       git-credential-1password
       gqrx
       hackrf
-      isync
       klavaro
-      leiningen
       minicom
-      mu
       nheko
       nix-index
       nixpkgs-review
       nix-top
       nmap
-      nushell
-      obsidian
       picocom
       proton-caller
       protonup-ng
@@ -348,14 +340,12 @@ in
       tcpdump
       tea
       thunderbird
-      tidal-hifi
       tigervnc
       unzip
       veilid
       virt-manager
       w3m
       yt-dlp
-      #yubioath-flutter
       zig
 
       (callPackage ../../pkgs/ttfs.nix { })

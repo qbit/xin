@@ -149,8 +149,6 @@ in
 
   environment.systemPackages = with pkgs; [
     barrier
-    bitwarden
-    bruno
     fzf
     google-chrome
     ispell
@@ -162,7 +160,6 @@ in
     nmap
     oath-toolkit
     oathToolkit
-    obsidian
     obs-studio
     openvpn
     remmina
