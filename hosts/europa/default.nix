@@ -299,6 +299,7 @@ in
     };
 
     systemPackages = with pkgs; [
+      arduino
       barrier
       beets
       calibre
