@@ -6,9 +6,9 @@
 , ...
 }:
 let
-  gotosocialVersion = "0.13.0-rc1";
-  gtswaHash = "sha256:0zgay30ywas6ybspx5hn6w0jb5dcchvf8a69v1wyxw35krzqw06r";
-  gtssHash = "sha256-Ppnv35Iq3tk3qGlBAQJbTy4HA8piqK2hTLNLWREMN18=";
+  gotosocialVersion = "0.13.0-rc2";
+  gtswaHash = "sha256:0vimnzn8sps6n7fwvjdplvs0gw3b6dkd2dyq4k06175favcx3m04";
+  gtssHash = "sha256-f1aU29S9JiAkMUfAXJnzddHAS6bE4YFRfvwWg6exFo0=";
   gotosocialWebAssets = builtins.fetchurl {
     url = "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
     sha256 = gtswaHash;
