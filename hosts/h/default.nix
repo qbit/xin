@@ -90,6 +90,11 @@ in
       mode = "600";
       sopsFile = config.xin-secrets.h.services;
     };
+    synapse_shared_secret = {
+      owner = config.users.users.matrix-synapse.name;
+      mode = "600";
+      sopsFile = config.xin-secrets.h.services;
+    };
     hammer_access_token = {
       owner = config.users.users.mjolnir.name;
       mode = "600";
@@ -887,6 +892,7 @@ in
       dataDir = "/var/lib/synapse";
       settings = {
         enable_registration = false;
+        registration_shared_secret_path = "${config.sops.secrets.synapse_shared_secret.path}";
         media_store_path = "/var/lib/synapse/media_store";
         presence.enabled = true;
         public_baseurl = "https://tapenet.org";
