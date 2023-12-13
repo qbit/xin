@@ -1,11 +1,12 @@
-{ inputs
-, config
+{ config
 , lib
 , pkgs
 , isUnstable
+, xinlib
 , ...
 }:
 let
+  inherit (xinlib) todo;
   #photoPrismTag = "220901-bullseye";
   httpCacheTime = "720m";
   httpAllow = ''
@@ -189,7 +190,12 @@ in
   };
 
   nixpkgs = {
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = todo "figure out what is using openssl-1.1.1w" [
+        "openssl-1.1.1w"
+      ];
+    };
     #overlays = [
     #  (_: _: {
     #    inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
