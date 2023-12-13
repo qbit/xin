@@ -214,7 +214,7 @@
         octo = buildSys "aarch64-linux" stable [ ] "octo";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
-        box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
+        box = buildSys "x86_64-linux" unstable [ ./configs/hardened.nix ] "box";
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule

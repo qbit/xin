@@ -49,7 +49,7 @@ in
   _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
-    "${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
+    #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
   ];
 
   sops.secrets = {
@@ -190,16 +190,16 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [
-      (_: _: {
-        inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
-      })
-    ];
+    #overlays = [
+    #  (_: _: {
+    #    inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
+    #  })
+    #];
   };
 
-  disabledModules = [
-    "services/home-automation/home-assistant.nix"
-  ];
+  #disabledModules = [
+  #  "services/home-automation/home-assistant.nix"
+  #];
 
   environment.systemPackages = with pkgs; [
     tmux
@@ -766,7 +766,7 @@ in
       stateDir = "/media/git";
       appName = "Tape:neT";
 
-      package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
+      #package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
 
       lfs.enable = true;
 
