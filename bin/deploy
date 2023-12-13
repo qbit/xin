@@ -134,7 +134,7 @@ if [ "$1" = "update" ]; then
 	# TODO: capture commit message and wrap it with what is being updated.
 	if [ $can_sign = 1 ]; then
 		if [ "$single" != "" ]; then
-			nix flake lock --commit-lock-file --update-input "$single"
+			nix flake update --commit-lock-file "$single"
 		else
 			nix flake update --commit-lock-file
 		fi
