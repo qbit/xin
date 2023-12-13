@@ -98,7 +98,7 @@ po_error() {
 
 start() {
 	agentHasKey "$(cat /run/secrets/manager_pubkey | awk '{print $2}')" ||
-		ssh-add /run/secrets/manager_key
+		ssh-add -t 500 /run/secrets/manager_key
 }
 
 start_ci() {
