@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "64e0600f23c6dec36c3875392ac95b8a9100c2d6",
-  "hash": "sha256-wvg2fqstTiKuaH9efh8TF97XXpZilF8F0ZMtzfsQNmA=",
-  "version": "2023-11-13",
-  "comment": "Test current releases of LibreSSL and OpenSSL."
+  "rev": "aa7b21708511a6d4aed3839fc9f6e82e849dd4a1",
+  "hash": "sha256-mjfPflH+Sk9Q0loO8i6hxcAPV0qCeg1S1j4Zm0SXOsE=",
+  "version": "2023-12-13",
+  "comment": "upstream: when invoking KnownHostsCommand to determine the order of"
 }
