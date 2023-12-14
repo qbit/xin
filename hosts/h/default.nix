@@ -230,6 +230,7 @@ in
       mcchunkie
 
       zonemaster-cli
+      sqlite
     ];
   };
 
