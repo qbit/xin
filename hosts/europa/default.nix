@@ -115,7 +115,10 @@ in
         efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelParams = [ "boot.shell_on_fail" "mem_sleep_default=deep" ];
+    kernelParams = [
+      "boot.shell_on_fail"
+      #"mem_sleep_default=deep"
+    ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
