@@ -117,7 +117,7 @@ in
     };
     kernelParams = [
       "boot.shell_on_fail"
-      #"mem_sleep_default=deep"
+      "acpi_osi=\"!Windows 2020\""
     ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
