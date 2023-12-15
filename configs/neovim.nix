@@ -146,7 +146,6 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
-    nixpkgs-fmt
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
@@ -160,9 +159,14 @@ in
     luaformatter
     luajitPackages.lua-lsp
     manix
+    nixpkgs-fmt
     nodejs
     nodePackages.prettier
     nodePackages.typescript-language-server
+    ocaml
+    ocamlPackages.ocamlformat
+    ocamlPackages.utop
+    opam
     perl
     perlPackages.PerlCritic
     perlPackages.PLS
