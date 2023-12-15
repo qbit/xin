@@ -285,6 +285,7 @@
             inherit upkgs;
           };
           iamb = upkgs.callPackage ./pkgs/iamb.nix { };
+          tic-80 = upkgs.callPackage ./pkgs/tic-80.nix { };
           icbirc = spkgs.callPackage ./pkgs/icbirc.nix {
             inherit spkgs;
             isUnstable = true;
