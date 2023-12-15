@@ -303,7 +303,8 @@ in
     systemPackages = with pkgs; [
       arduino
       barrier
-      beets
+      # TODO: https://github.com/NixOS/nixpkgs/issues/273907
+      #beets
       calibre
       chirp
       direwolf
