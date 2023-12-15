@@ -333,6 +333,7 @@ in
       python3Packages.meshtastic
       qdmr
       rex
+      rhythmbox
       rofi
       rsibreak
       rtl-sdr
