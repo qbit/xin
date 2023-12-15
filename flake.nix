@@ -30,6 +30,8 @@
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.05";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     microca = {
       url = "github:qbit/microca";
       inputs.nixpkgs.follows = "unstable";
@@ -99,6 +101,7 @@
     , xin-secrets
     , xintray
     , simple-nixos-mailserver
+    , nixos-hardware
     , ...
     } @ inputs:
     let
@@ -207,7 +210,9 @@
       devShells.aarch64-darwin.default = xinlib.buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable [ ] "europa";
+        europa = buildSys "x86_64-linux" unstable [
+          nixos-hardware.nixosModules.framework-11th-gen-intel
+        ] "europa";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [ ] "stan";
         weather = buildSys "aarch64-linux" stable [ ] "weather";

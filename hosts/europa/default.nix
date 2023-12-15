@@ -117,7 +117,6 @@ in
     };
     kernelParams = [
       "boot.shell_on_fail"
-      "acpi_osi=\"!Windows 2020\""
     ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
