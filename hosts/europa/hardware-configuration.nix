@@ -1,5 +1,4 @@
-{ config
-, lib
+{ lib
 , modulesPath
 , ...
 }: {
@@ -39,13 +38,13 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware = {
-    acpilight.enable = true;
+    #acpilight.enable = true;
     bluetooth.enable = true;
-    cpu.intel.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
-    sensor = {
-      iio.enable = true;
-    };
+    #cpu.intel.updateMicrocode =
+    #  lib.mkDefault config.hardware.enableRedistributableFirmware;
+    #sensor = {
+    #  iio.enable = true;
+    #};
     rtl-sdr.enable = true;
   };
 }
