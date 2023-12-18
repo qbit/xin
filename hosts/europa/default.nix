@@ -345,8 +345,8 @@ in
       prusa-slicer
       python3Packages.meshtastic
       qdmr
+      quodlibet-full
       rex
-      rhythmbox
       rofi
       rsibreak
       rtl-sdr
