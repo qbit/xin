@@ -6,9 +6,9 @@
 , ...
 }:
 let
-  gotosocialVersion = "0.13.0-rc2";
-  gtswaHash = "sha256:0vimnzn8sps6n7fwvjdplvs0gw3b6dkd2dyq4k06175favcx3m04";
-  gtssHash = "sha256-f1aU29S9JiAkMUfAXJnzddHAS6bE4YFRfvwWg6exFo0=";
+  gotosocialVersion = "0.13.0";
+  gtswaHash = "sha256:0zd7vxh5c9kwjkhw7npqzwm7y7dirfp1y0gw0ma8hzxlxxyn7z38";
+  gtssHash = "sha256-+/x3CAGF/cjK1/7fHgC8EzlGR/Xmq3aFL5Ogc/QZCpA=";
   gotosocialWebAssets = builtins.fetchurl {
     url = "https://github.com/superseriousbusiness/gotosocial/releases/download/v${gotosocialVersion}/gotosocial_${gotosocialVersion}_web-assets.tar.gz";
     sha256 = gtswaHash;
@@ -37,7 +37,6 @@ buildGoModule rec {
   propagatedBuildInputs = [ ffmpeg ];
 
   proxyVendor = false;
-
   vendorHash = null;
 
   doCheck = false;
