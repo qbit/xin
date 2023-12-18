@@ -179,6 +179,17 @@ in
   services.xinCA = { enable = false; };
 
   services = {
+    logind = {
+      lidSwitch = "suspend-then-hibernate";
+      lidSwitchExternalPower = "lock";
+
+      extraConfig = ''
+        HandlePowerKey=suspend-then-hibernate
+        HandlePowerKeyLongPress=poweroff
+        IdleAction=suspend-then-hibernate
+        IdleActionSec=300
+      '';
+    };
     rimgo = {
       enable = true;
       settings = {
@@ -267,15 +278,17 @@ in
   systemd = {
     user.services =
       lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
-    services."whytailscalewhy" = {
-      description = "Tailscale restart on resume";
-      wantedBy = [ "post-resume.target" ];
-      after = [ "post-resume.target" ];
-      script = ''
-        . /etc/profile;
-        ${pkgs.systemd}/bin/systemctl restart tailscaled.service
-      '';
-      serviceConfig.Type = "oneshot";
+    services = {
+      "whytailscalewhy" = {
+        description = "Tailscale restart on resume";
+        wantedBy = [ "post-resume.target" ];
+        after = [ "post-resume.target" ];
+        script = ''
+          . /etc/profile;
+          ${pkgs.systemd}/bin/systemctl restart tailscaled.service
+        '';
+        serviceConfig.Type = "oneshot";
+      };
     };
   };
 
