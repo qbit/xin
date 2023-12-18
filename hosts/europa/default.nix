@@ -103,6 +103,7 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
+    permittedInsecurePackages = [ ] ++ (if (pkgs.obsidian.version == "1.4.16") then [ "electron-25.9.0" ] else [ ]);
   };
 
   boot = {
@@ -339,6 +340,7 @@ in
       nixpkgs-review
       nix-top
       nmap
+      obsidian
       picocom
       proton-caller
       protonup-ng
