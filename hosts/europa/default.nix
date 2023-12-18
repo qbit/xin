@@ -6,7 +6,7 @@
 , ...
 }:
 let
-  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp;
+  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
   inherit (builtins) readFile;
   #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
@@ -303,10 +303,9 @@ in
     systemPackages = with pkgs; [
       arduino
       barrier
-      # TODO: https://github.com/NixOS/nixpkgs/issues/273907
-      #beets
+      beets # stable
       calibre
-      chirp
+      chirp # stable
       direwolf
       element-desktop
       elmPackages.elm
