@@ -28,7 +28,7 @@
       inputs.nixpkgs.follows = "unstableSmall";
     };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.05";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/008d78cc21959e33d0d31f375b88353a7d7121ae";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
