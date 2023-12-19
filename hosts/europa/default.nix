@@ -40,7 +40,7 @@ in
 {
   _module.args.isUnstable = true;
 
-  imports = [ ./hardware-configuration.nix ../../pkgs ../../configs/neomutt.nix ];
+  imports = [ ./hardware-configuration.nix ../../pkgs ];
 
   sops.secrets = {
     fastmail = {
@@ -171,8 +171,6 @@ in
         "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token) nixpkgs-review";
         "clilol" = "env CLILOL_APIKEY=$(op item get omglol-cli --field credential) clilol";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
-        "mutt" = "neomutt -F /etc/neomuttrc";
-        "neomutt" = "neomutt -F /etc/neomuttrc";
       };
     };
   };
