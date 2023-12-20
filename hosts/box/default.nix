@@ -432,6 +432,7 @@ in
     #};
     invidious = {
       enable = true;
+      database.createLocally = true;
       settings = {
         port = lib.mkForce 1538;
         host_binding = "127.0.0.1";
