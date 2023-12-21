@@ -431,8 +431,10 @@ in
     #  };
     #};
     invidious = {
-      enable = true;
-      database.createLocally = true;
+      enable = false;
+      database = {
+        createLocally = true;
+      };
       settings = {
         port = lib.mkForce 1538;
         host_binding = "127.0.0.1";
@@ -1096,12 +1098,12 @@ in
 
       package = pkgs.postgresql_15;
 
-      #enableTCPIP = true;
-      #authentication = pkgs.lib.mkOverride 14 ''
-      #  local all all trust
-      #  host all all 127.0.0.1/32 trust
-      #  host all all ::1/128 trust
-      #'';
+      enableTCPIP = true;
+      authentication = pkgs.lib.mkOverride 14 ''
+        local all all trust
+        host all all 127.0.0.1/32 trust
+        host all all ::1/128 trust
+      '';
 
       ensureDatabases = [ "nextcloud" "gitea" "invidious" ];
       ensureUsers = [
