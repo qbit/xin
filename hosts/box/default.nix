@@ -431,13 +431,20 @@ in
     #  };
     #};
     invidious = {
-      enable = false;
+      enable = true;
       database = {
         createLocally = true;
       };
+      address = "127.0.0.1";
+      port = 1538;
       settings = {
-        port = lib.mkForce 1538;
-        host_binding = "127.0.0.1";
+        db = {
+          user = "invidious";
+          password = lib.mkForce "invidious";
+          dbname = "invidious";
+          host = lib.mkForce "127.0.0.1";
+          port = 5432;
+        };
         domain = "invidious.bold.daemon";
         https_only = true;
         popular_enabled = false;
@@ -863,7 +870,7 @@ in
           sslCertificate = "${config.sops.secrets.invidious_cert.path}";
           locations."/" = {
             proxyPass = "http://127.0.0.1:${
-              toString config.services.invidious.settings.port
+              toString config.services.invidious.port
             }";
             proxyWebsockets = true;
           };
