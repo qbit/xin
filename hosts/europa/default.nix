@@ -337,6 +337,7 @@ in
       elmPackages.elm-live
       elmPackages.elm-test
       entr
+      fossil
       gh
       gimp
       git-credential-1password
