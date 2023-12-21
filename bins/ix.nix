@@ -23,8 +23,8 @@
 
   sub ix {
   	my ($input) = @_;
-  	my $url = "http://ix.io";
-  	my $form = [ 'f:1' => $input ];
+  	my $url = "http://sprunge.us";
+  	my $form = [ sprunge => $input ];
   	my $resp = $http->post_form($url, $form)
   		or die "could not POST: $!";
   	$resp->{content};
