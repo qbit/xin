@@ -325,6 +325,21 @@ in
         "zeroconf"
       ];
       config = {
+        sensor = [
+          {
+            platform = "openevse";
+            host = "10.6.0.166";
+            monitored_variables = [
+              "status"
+              "charge_time"
+              "rtc_temp"
+              "ir_temp"
+              "ambient_temp"
+              "usage_session"
+              "usage_total"
+            ];
+          }
+        ];
         mqtt.sensor = [
           {
             name = "Greenhouse Temperature";
@@ -338,11 +353,23 @@ in
             state_topic = "greenhouse/humidity";
             unit_of_measurement = "%";
           }
+          {
+            name = "OpenEVSE Temperature";
+            unique_id = "c55719a7-3e16-4249-9f9f-d93e8f0b10f1";
+            icon = "mdi:thermometer";
+            state_topic = "openevse/temp";
+            device_class = "temperature";
+            state_class = "measurement";
+            unit_of_measurement = "°C";
+            value_template = "{{ value|float / 10.0 }}";
+            expire_after = 40;
+          }
         ];
         logger = {
           default = "warning";
           logs = {
             #"homeassistant.components.aprs" = "debug";
+            "homeassistant.components.openevse" = "debug";
           };
         };
         "automation manual" = [
