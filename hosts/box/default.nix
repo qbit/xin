@@ -356,22 +356,29 @@ in
           {
             resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
             sensor = {
-              name = "rtl_433_temperature_celsius";
-              value_template = "{{value_json.data.result[2].value[1]}}";
-            };
-          }
-          {
-            resource = "http://127.0.0.1:9001/api/v1/query?query=wstation_temp_c";
-            sensor = {
-              name = "wstation_garage_temp_c";
-              value_template = "{{value_json.data.result[0].value[1]}}";
+              name = "rtl_433_outside";
+              unique_id = "f36fc559-268f-489d-9454-56000d42ebf3";
+              value_template = ''
+                {% for entry in value_json.data.result %}
+                  {% if entry.metric.model == 'LaCrosse-TX141Bv3' %}
+                    {{ entry.value[1] }}
+                  {% endif %}
+                {% endfor %}
+              '';
             };
           }
           {
             resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
             sensor = {
-              name = "rtl_433_printer_temp_celsius";
-              value_template = "{{value_json.data.result[0].value[1]}}";
+              unique_id = "6720a3dc-658e-496f-b321-fc9c161e6620";
+              name = "rtl_433_printer_enclosure";
+              value_template = ''
+                {% for entry in value_json.data.result %}
+                  {% if entry.metric.model == 'Solight-TE44' %}
+                    {{ entry.value[1] }}
+                  {% endif %}
+                {% endfor %}
+              '';
             };
           }
         ];
