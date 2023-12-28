@@ -52,15 +52,8 @@
 
   networking.useDHCP = lib.mkDefault true;
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware = {
-    acpilight.enable = true;
     bluetooth.enable = true;
-    cpu.intel.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
-    sensor = {
-      iio.enable = true;
-    };
     rtl-sdr.enable = true;
   };
 }

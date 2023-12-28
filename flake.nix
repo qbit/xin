@@ -214,7 +214,9 @@
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "europa";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
-        stan = buildSys "x86_64-linux" unstable [ ] "stan";
+        stan = buildSys "x86_64-linux" unstable [
+          nixos-hardware.nixosModules.framework-11th-gen-intel
+        ] "stan";
         weather = buildSys "aarch64-linux" stable [ ] "weather";
         octo = buildSys "aarch64-linux" stable [ ] "octo";
 
