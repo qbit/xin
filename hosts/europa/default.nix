@@ -103,7 +103,7 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
-    permittedInsecurePackages = if (pkgs.obsidian.version == "1.4.16") then [ "electron-25.9.0" ] else [ ];
+    permittedInsecurePackages = if (pkgs.obsidian.version == "1.5.3") then [ "electron-25.9.0" ] else [ ];
   };
 
   boot = {
