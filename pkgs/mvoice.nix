@@ -27,6 +27,7 @@ stdenv.mkDerivation {
     paprefs
     pavucontrol
     pulseaudio
+    fmt.dev
   ];
 
   prePatch = ''
