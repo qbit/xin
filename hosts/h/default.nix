@@ -154,6 +154,11 @@ in
       owner = "root";
       sopsFile = config.xin-secrets.h.services;
     };
+    wallabag_secret = {
+      mode = "400";
+      owner = "wallabag";
+      sopsFile = config.xin-secrets.h.services;
+    };
   };
 
   networking = {
@@ -213,7 +218,7 @@ in
   };
 
   environment = {
-    memoryAllocator.provider = "mimalloc";
+    memoryAllocator.provider = "libc";
     systemPackages = with pkgs; [
       inetutils
 
@@ -299,6 +304,11 @@ in
   };
 
   services = {
+    wallabag = {
+      enable = true;
+      secretPath = config.sops.secrets.wallabag_secret.path;
+      domain = "bookmarks.tapenet.org";
+    };
     navidrome = {
       enable = true;
       settings = {
@@ -830,7 +840,7 @@ in
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = [ "synapse" "gotosocial" "syncv3" ];
+      ensureDatabases = [ "synapse" "gotosocial" "syncv3" "wallabag" ];
       ensureUsers = [
         {
           name = "synapse_user";
@@ -841,6 +851,10 @@ in
         }
         {
           name = "syncv3";
+          ensureDBOwnership = true;
+        }
+        {
+          name = "wallabag";
           ensureDBOwnership = true;
         }
       ];

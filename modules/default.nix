@@ -8,6 +8,7 @@
     ./ts-rev-prox.nix
     ./tsvnstat.nix
     ./veilid-server.nix
+    ./wallabag.nix
     ./yarr.nix
   ];
 }
