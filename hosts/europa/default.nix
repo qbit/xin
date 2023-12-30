@@ -8,6 +8,7 @@
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
   inherit (builtins) readFile;
+  inherit (xinlib) jobToUserService todo;
   #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
   #  doomPrivateDir = ../../configs/doom.d;
@@ -103,7 +104,7 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
-    permittedInsecurePackages = if (pkgs.obsidian.version == "1.5.3") then [ "electron-25.9.0" ] else [ ];
+    permittedInsecurePackages = todo "Obsidian is using insecure electron!" [ "electron-25.9.0" ];
   };
 
   boot = {
@@ -287,7 +288,7 @@ in
 
   systemd = {
     user.services =
-      lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
+      lib.listToAttrs (builtins.map jobToUserService jobs);
     services = {
       "whytailscalewhy" = {
         description = "Tailscale restart on resume";
