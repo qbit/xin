@@ -154,11 +154,11 @@ in
       owner = "root";
       sopsFile = config.xin-secrets.h.services;
     };
-    wallabag_secret = {
-      mode = "400";
-      owner = "wallabag";
-      sopsFile = config.xin-secrets.h.services;
-    };
+    #wallabag_secret = {
+    #  mode = "400";
+    #  owner = "wallabag";
+    #  sopsFile = config.xin-secrets.h.services;
+    #};
   };
 
   networking = {
@@ -305,7 +305,7 @@ in
 
   services = {
     wallabag = {
-      enable = true;
+      enable = false;
       secretPath = config.sops.secrets.wallabag_secret.path;
       domain = "bookmarks.tapenet.org";
     };
@@ -320,7 +320,7 @@ in
     shiori = {
       enable = true;
       port = 8967;
-      address = "100.83.77.133";
+      address = "127.0.0.1";
       package = inputs.unstable.legacyPackages.${pkgs.system}.shiori;
     };
     veilid-server = {
@@ -575,6 +575,19 @@ in
           locations = {
             "/" = {
               proxyPass = "http://${config.services.navidrome.settings.Address}:${toString config.services.navidrome.settings.Port}";
+              proxyWebsockets = true;
+              priority = 1000;
+            };
+          };
+        };
+
+        "bookmarks.tapenet.org" = {
+          forceSSL = true;
+          enableACME = true;
+
+          locations = {
+            "/" = {
+              proxyPass = "http://${config.services.shiori.address}:${toString config.services.shiori.port}";
               proxyWebsockets = true;
               priority = 1000;
             };
