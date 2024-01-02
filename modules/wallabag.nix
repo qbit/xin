@@ -16,16 +16,26 @@ let
   });
   wallabagConfig = toJSON {
     parameters = {
-      database_driver = "pdo_sqlite";
-      database_driver_class = "~";
-      database_host = "127.0.0.1";
-      database_port = "~";
+      #database_driver = "pdo_sqlite";
+      #database_driver_class = "~";
+      #database_host = "127.0.0.1";
+      #database_port = "~";
+      #database_name = "wallabag";
+      #database_user = "root";
+      #database_password = "~";
+      #database_table_prefix = "wallabag_";
+      #database_socket = "~";
+      #database_path = "${cfg.dataDir}/data/db/wallabag.sqlite";
+      #database_charset = "utf8";
+      database_driver = "pdo_pgsql";
+      database_host = "";
+      database_port = 5432;
       database_name = "wallabag";
-      database_user = "root";
-      database_password = "~";
+      database_user = "wallabag";
+      database_password = "";
+      database_path = "";
       database_table_prefix = "wallabag_";
-      database_socket = "~";
-      database_path = "${cfg.dataDir}/data/db/wallabag.sqlite";
+      database_socket = "/run/postgresql/.s.PGSQL.5432";
       database_charset = "utf8";
 
       domain_name = "https://${cfg.domain}";
