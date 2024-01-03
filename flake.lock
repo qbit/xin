@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "beyt": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1704303300,
+        "narHash": "sha256-GkXbdEy+T62DmUOced/W+epQy1jU8vWWmgcW+GiE2VI=",
+        "owner": "qbit",
+        "repo": "beyt",
+        "rev": "4fe287d31b80655d7fc4ed024e26294d38b5fb7f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "beyt",
+        "type": "github"
+      }
+    },
     "blobs": {
       "flake": false,
       "locked": {
@@ -284,6 +304,7 @@
     },
     "root": {
       "inputs": {
+        "beyt": "beyt",
         "darwin": "darwin",
         "gostart": "gostart",
         "gqrss": "gqrss",

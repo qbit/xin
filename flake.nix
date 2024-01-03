@@ -52,6 +52,10 @@
       url = "github:qbit/xintray";
       inputs.nixpkgs.follows = "unstable";
     };
+    beyt = {
+      url = "github:qbit/beyt";
+      inputs.nixpkgs.follows = "unstable";
+    };
     tsvnstat = {
       url = "github:qbit/tsvnstat";
       inputs.nixpkgs.follows = "unstable";
@@ -102,6 +106,7 @@
     , xintray
     , simple-nixos-mailserver
     , nixos-hardware
+    , beyt
     , ...
     } @ inputs:
     let
@@ -346,6 +351,7 @@
             inherit upkgs;
           };
           inherit (xintray.packages.${system}) xintray;
+          inherit (beyt.packages.${system}) beyt;
           inherit (tsvnstat.packages.${system}) tsvnstat;
           inherit (pots.packages.${system}) pots;
           inherit (po.packages.${system}) po;
