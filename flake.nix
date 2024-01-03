@@ -364,6 +364,10 @@
           path = ./templates/go;
           description = "Go template.";
         };
+        "go-fyne" = {
+          path = ./templates/go-fyne;
+          description = "Go template.";
+        };
         "perl" = {
           path = ./templates/perl;
           description = "Perl template.";
