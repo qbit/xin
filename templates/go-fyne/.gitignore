@@ -1,0 +1,4 @@
+.direnv
+*.bak
+result
+tags
