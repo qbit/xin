@@ -31,6 +31,8 @@ in
   };
   nixpkgs.config.allowUnsupportedSystem = true;
 
+  preDNS.enable = false;
+
   networking = {
     hostName = "pwntie";
     networkmanager.enable = true;
