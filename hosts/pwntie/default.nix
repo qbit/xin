@@ -78,6 +78,19 @@ in
   };
 
   services = {
+    prometheus = {
+      enable = true;
+      port = 9001;
+      listenAddress = "100.84.170.57";
+
+      exporters = {
+        node = {
+          enable = true;
+          enabledCollectors = [ "systemd" ];
+          port = 9002;
+        };
+      };
+    };
     rtlamr2mqtt = {
       enable = true;
       configuration = {

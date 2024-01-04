@@ -745,6 +745,10 @@ in
           static_configs = [{ targets = [ "100.83.77.133:9002" ]; }];
         }
         {
+          job_name = "pwntie";
+          static_configs = [{ targets = [ "100.84.170.57:9002" ]; }];
+        }
+        {
           job_name = "namish";
           static_configs = [{ targets = [ "10.200.0.100:9100" ]; }];
         }
