@@ -737,18 +737,6 @@ in
           ];
         }
         {
-          job_name = "greenhouse";
-          static_configs = [{ targets = [ "10.6.0.20:80" ]; }];
-        }
-        {
-          job_name = "house";
-          static_configs = [{ targets = [ "10.6.0.21:80" ]; }];
-        }
-        {
-          job_name = "outside";
-          static_configs = [{ targets = [ "10.6.0.22:8811" ]; }];
-        }
-        {
           job_name = "faf";
           static_configs = [{ targets = [ "10.6.0.245:9002" ]; }];
         }
