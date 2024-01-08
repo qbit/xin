@@ -288,6 +288,8 @@ in
 
     certificateScheme = "acme-nginx";
 
+    localDnsResolver = false;
+
     loginAccounts = {
       "qbit@suah.dev" = {
         hashedPasswordFile = "${config.sops.secrets.qbit_at_suah_pass_file.path}";
