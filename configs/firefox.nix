@@ -147,7 +147,7 @@
         "network.IDN_show_punycode" = true;
         "network.predictor.enabled" = false;
         "network.prefetch-next" = false;
-        "security.OCSP.enabled" = false;
+        "security.OCSP.enabled" = 0;
         "security.ssl.errorReporting.enabled" = false;
 
         # Not yet working:
