@@ -514,7 +514,13 @@ in
 
     fwupd.enable = true;
     zfs = {
-      autoSnapshot.enable = true;
+      autoSnapshot={
+        enable = true;
+        daily = 3;
+        hourly = 8;
+        monthly = 3;
+        weekly = 2;
+      };
       autoReplication = {
         enable = true;
         host = "10.6.0.245";
