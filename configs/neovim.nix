@@ -110,7 +110,7 @@ let
   };
 
   baseVimPackages = with vimPlugins; [
-    ale
+    #ale
     conjure
     elm-vim
     fugitive
