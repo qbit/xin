@@ -12,5 +12,7 @@
     ./tmux.nix
     ./net-overlay.nix
     ./zsh.nix
+    ./nix.nix
+    ./update.nix
   ];
 }

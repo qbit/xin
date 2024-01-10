@@ -28,9 +28,6 @@ in
     ./overlays
     ./pkgs
     ./services
-    ./system/nix-config.nix
-    ./system/nix-lockdown.nix
-    ./system/update.nix
     ./users
 
     ./monitoring
