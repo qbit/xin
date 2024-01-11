@@ -13,6 +13,17 @@ let
         inherit hash;
       };
 
+      patches = [
+        # Stop synapse from calculating the badge count per missed convo
+        # reverts https://github.com/matrix-org/synapse/pull/793/files
+        # fixes https://github.com/matrix-org/matrix-spec-proposals/pull/4076
+        (super.fetchpatch {
+          name = "revert-per-convo-badge.diff";
+          url = "https://patch-diff.githubusercontent.com/raw/matrix-org/synapse/pull/793.patch";
+          hash = "sha256-ir0iqAYtxCDx9tyX1AGwXwFzk4lpI7kaVvC7gPCMMMI=";
+        })
+      ];
+
       cargoDeps = super.rustPlatform.fetchCargoTarball {
         inherit src sha256;
         name = "${pname}-${version}";
