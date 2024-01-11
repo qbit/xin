@@ -364,7 +364,6 @@ in
       rofi
       rsibreak
       rtl-sdr
-      sayonara
       sdrpp
       signal-desktop
       taskobs
