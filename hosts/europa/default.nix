@@ -358,6 +358,7 @@ in
       protonup-ng
       prusa-slicer
       python3Packages.meshtastic
+      python3Packages.nomadnet
       qdmr
       quodlibet-full
       rex
