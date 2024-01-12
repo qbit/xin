@@ -1,19 +1,18 @@
 { lib
 , stdenv
-, fetchFromGitHub
+, fetchurl
 , pkgs
 , go-font
 , ...
 }:
 stdenv.mkDerivation rec {
   pname = "zutty";
-  version = "0.14";
+  version = "unstable-2024-01-10";
+  rev = "8453f9f251dfcc14e0ba2d819b5367cbc5c9c47e";
 
-  src = fetchFromGitHub {
-    owner = "tomszilagyi";
-    repo = "zutty";
-    rev = version;
-    sha256 = "sha256-b/q7hIi/U/GkKo+MIFX2wWnHZAy5rQGXNul3I1pxo1Q=";
+  src = fetchurl {
+    url = "https://git.hq.sig7.se/zutty.git/snapshot/${rev}.tar.gz";
+    hash = "sha256-iRAr1QEZj1UvKBHRJmhZkbEq/Uq0gEAMNTtCpx/nz5w=";
   };
 
   patches = [ ./zutty_go.diff ];
