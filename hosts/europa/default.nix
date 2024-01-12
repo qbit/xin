@@ -367,6 +367,7 @@ in
       rtl-sdr
       sdrpp
       signal-desktop
+      signal-desktop-beta
       taskobs
       tcpdump
       tea
