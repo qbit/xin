@@ -359,6 +359,7 @@ in
       prusa-slicer
       python3Packages.meshtastic
       python3Packages.nomadnet
+      python3Packages.rns
       qdmr
       quodlibet-full
       rex
