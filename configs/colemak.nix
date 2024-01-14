@@ -29,6 +29,14 @@ with lib; {
           Option "XkbLayout" "us"
           Option "XkbVariant" "basic"
         ''
+        ''
+          Identifier "atreus"
+          MatchIsKeyboard "on"
+          MatchProduct "Keyboardio Atreus"
+          MatchVendor "Keyboardio"
+          Option "XkbLayout" "us"
+          Option "XkbVariant" "basic"
+        ''
       ];
     };
   };
