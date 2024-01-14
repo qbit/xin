@@ -4,16 +4,22 @@
 , setuptools
 , fetchFromGitHub
 , fetchPypi
+, aiohttp
+, requests
 , ...
 }:
 let
-  python-openevse-http = buildPythonPackage rec {
+  my-python-openevse-http = buildPythonPackage rec {
     pname = "python-openevse-http";
     version = "0.1.58";
 
     pyproject = true;
 
     nativeBuildInputs = [ setuptools ];
+    propagatedBuildInputs = [
+      requests
+      aiohttp
+    ];
 
     src = fetchPypi {
       inherit pname version;
@@ -31,7 +37,7 @@ buildHomeAssistantComponent rec {
   ];
 
   propagatedBuildInputs = [
-    python-openevse-http
+    my-python-openevse-http
   ];
 
   buildInputs = [ setuptools-scm ];
