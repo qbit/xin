@@ -343,7 +343,7 @@ in
       gh
       gimp
       git-credential-1password
-      gqrx
+      #gqrx
       hackrf
       klavaro
       minicom
