@@ -430,11 +430,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1704298335,
-        "narHash": "sha256-/9+4JXzjDdUqbCTbVVu0pA/bsqcFnEtNqXGeVzMYT2k=",
+        "lastModified": 1705345486,
+        "narHash": "sha256-d8x4+YpBJoFCwnDzcUH1CaLfteso7mFyOCnNgbMCX5w=",
         "owner": "qbit",
         "repo": "traygent",
-        "rev": "0c1609d71069a4c7b95c2c65c728695e820adb00",
+        "rev": "54c626df91557d18fb5d0619fd85255ac3e7013c",
         "type": "github"
       },
       "original": {
