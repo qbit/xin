@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "8241b9c0529228b4b86d88b1a6076fb9f97e4a99",
-  "hash": "sha256-j5ftoGRwjdqZVuxjkA5m5gAPUR4GAfehYX+dv0o5kG0=",
-  "version": "2023-12-18",
-  "comment": "crank versions"
+  "rev": "0d96b1506b2f4757fefa5d1f884d49e96a6fd4c3",
+  "hash": "sha256-O+cpKXaEV19512EiWW1V847wkoB4EjXDdyAewUqO+CE=",
+  "version": "2024-01-16",
+  "comment": "skip tests that use multiplexing on Windows"
 }
