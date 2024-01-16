@@ -1,6 +1,8 @@
 #!/bin/sh
 
-ATOM="$(curl -s https://github.com/openssh/openssh-portable/commits/master.atom)"
+set -e
+
+ATOM="$(curl -H "Accept: application/atom+xml" -s https://github.com/openssh/openssh-portable/commits/master.atom)"
 CURRENT="$(cat pkgs/openssh/version.json)"
 
 COMMIT="$(echo $ATOM | dasel -rxml 'feed.entry.[0].id' | awk -F/ '{print $NF}')"
