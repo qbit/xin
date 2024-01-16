@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   nix = {
-    #package = pkgs.nixVersions.nix_2_17;
+    package = pkgs.nixVersions.nix_2_19;
     gc = {
       automatic = true;
       dates = "daily";
