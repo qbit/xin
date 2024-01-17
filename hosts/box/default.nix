@@ -47,7 +47,7 @@ let
   };
 in
 {
-  _module.args.isUnstable = false;
+  _module.args.isUnstable = true;
   imports = [
     ./hardware-configuration.nix
     #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
@@ -215,8 +215,6 @@ in
     signify
     glowing-bear
     rtl_433
-
-    (callPackage ../../pkgs/athens.nix { inherit isUnstable; })
   ];
 
   security.acme = {
