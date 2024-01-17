@@ -391,8 +391,8 @@ in
         homeassistant = {
           name = "Home";
           time_zone = "America/Denver";
-          temperature_unit = "F";
-          unit_system = "metric";
+          temperature_unit = "C";
+          unit_system = "imperial";
           longitude = -104.72;
           latitude = 38.35;
         };
