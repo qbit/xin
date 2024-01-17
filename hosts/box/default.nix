@@ -307,7 +307,7 @@ in
         "airvisual_pro"
         "apple_tv"
         #"aprs"
-        #"brother"
+        "brother"
         "ecobee"
         "esphome"
         "ffmpeg"

@@ -343,7 +343,7 @@ in
       gh
       gimp
       git-credential-1password
-      #gqrx
+      gqrx
       hackrf
       klavaro
       minicom
@@ -381,7 +381,7 @@ in
       yt-dlp
       zig
 
-      #(callPackage ../../pkgs/ttfs.nix { })
+      (callPackage ../../pkgs/ttfs.nix { })
       (callPackage ../../pkgs/clilol.nix { })
       (callPackage ../../pkgs/iamb.nix { })
       (callPackage ../../pkgs/kobuddy.nix {
