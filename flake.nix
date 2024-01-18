@@ -218,6 +218,7 @@
         europa = buildSys "x86_64-linux" unstable [
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "europa";
+        clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [
           nixos-hardware.nixosModules.framework-11th-gen-intel
@@ -390,7 +391,7 @@
 
       checks =
         let
-          buildList = [ "europa" "stan" "h" "box" "faf" "weather" ];
+          buildList = [ "europa" "stan" "h" "box" "faf" "weather" "clunk" ];
         in
         with unstable.lib;
         foldl' recursiveUpdate { } (mapAttrsToList
