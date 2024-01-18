@@ -306,6 +306,45 @@ in
   };
 
   services = {
+    rnsd = {
+      enable = true;
+      settings = {
+        reticulum = {
+          enable_transport = true;
+        };
+        logging = {
+          loglevel = 4;
+        };
+        interfaces = {
+          "Default Interface" = {
+            type = "AutoInterface";
+            enabled = true;
+          };
+          "UDP Interface" = {
+            type = "UDPInterface";
+            enabled = true;
+            listen_ip = "0.0.0.0";
+            listen_port = 4242;
+            forward_ip = "255.255.255.255";
+            forward_port = 4242;
+          };
+          "TCP Interface" = {
+            type = "TCPServerInterface";
+            enabled = true;
+            listen_ip = "0.0.0.0";
+            listen_port = 4242;
+            forward_ip = "255.255.255.255";
+            forward_port = 4242;
+          };
+          "RNS Testnet BetweenTheBorders" = {
+            type = "TCPClientInterface";
+            enabled = true;
+            target_host = "betweentheborders.com";
+            target_port = 4242;
+          };
+        };
+      };
+    };
     wallabag = {
       enable = false;
       secretPath = config.sops.secrets.wallabag_secret.path;

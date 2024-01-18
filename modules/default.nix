@@ -2,6 +2,7 @@
   imports = [
     ./golink.nix
     ./gotosocial.nix
+    ./rnsd.nix
     ./rtlamr2mqtt.nix
     ./sliding-sync.nix
     ./ssh-fido-agent.nix
