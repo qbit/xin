@@ -38,6 +38,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    alacritty
     direwolf
     polybar
     python3Packages.nomadnet

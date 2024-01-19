@@ -1,6 +1,13 @@
 { pkgs, ... }:
 let
-  theme = {
+  settings = {
+    font = {
+      normal = {
+        family = "Go Mono";
+      };
+      size = 6;
+    };
+
     colors = {
       primary = {
         background = "#ffffea";
@@ -8,28 +15,32 @@ let
       };
     };
   };
-  themeFormat = pkgs.formats.toml { };
-  themeFile = themeFormat.generate "plan9.toml" theme;
-  settings = {
-    import = [
-      "${themeFile}"
-    ];
-
-    font = {
-      normal = {
-        family = "Go";
-        style = "Mono";
-      };
-    };
-  };
   settingsFormat = pkgs.formats.toml { };
   settingsFile = settingsFormat.generate "alacritty.toml" settings;
+  script = pkgs.writeScriptBin "alacritty-etc" ''
+    ${pkgs.alacritty}/bin/alacritty --config-file ${settingsFile}
+  '';
 in
 {
   config = {
-    environment.etc = {
-      "alacritty/alacritty.toml".text = builtins.readFile settingsFile;
-      "alacritty/theme.yml".text = builtins.readFile themeFile;
+    nixpkgs.overlays = [
+      (self: super: {
+        alacritty = super.alacritty.overrideAttrs (old: {
+          postInstall = old.postInstall + ''
+            ${super.gnused}/bin/sed -i 's#^Exec=alacritty#Exec=alacritty --config-file ${settingsFile}#g' \
+              extra/linux/Alacritty.desktop
+            install -D extra/linux/Alacritty.desktop -t $out/share/applications/
+          '';
+        });
+      })
+    ];
+    environment = {
+      systemPackages = [
+        script
+      ];
+      etc = {
+        " alacritty/alacritty.toml ".text = builtins.readFile settingsFile;
+      };
     };
   };
 }
