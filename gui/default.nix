@@ -102,6 +102,7 @@ with lib; {
           SSH_AUTH_SOCK = "$HOME/.traygent";
         };
         systemPackages = with pkgs; (xinlib.filterList [
+          alacritty
           bc
           beyt
           black
