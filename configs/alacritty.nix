@@ -39,7 +39,7 @@ in
         script
       ];
       etc = {
-        " alacritty/alacritty.toml ".text = builtins.readFile settingsFile;
+        "xdg/alacritty/alacritty.toml ".text = builtins.readFile settingsFile;
       };
     };
   };
