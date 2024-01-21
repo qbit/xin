@@ -25,8 +25,6 @@ in
         "xdg/alacritty/alacritty.toml".text = builtins.readFile settingsFile;
       };
     };
-    fontSet = with pkgs; [
-      go-font
-    ];
+    fonts = { packages = with pkgs; [ go-font ]; };
   };
 }
