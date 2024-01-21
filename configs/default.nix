@@ -7,13 +7,14 @@
     ./dns.nix
     ./doas.nix
     ./git.nix
-    ./neovim.nix
-    ./peerix.nix
     ./manager.nix
-    ./tmux.nix
+    ./neovim.nix
     ./net-overlay.nix
-    ./zsh.nix
     ./nix.nix
+    ./peerix.nix
+    ./polybar.nix
+    ./tmux.nix
     ./update.nix
+    ./zsh.nix
   ];
 }
