@@ -307,7 +307,7 @@ in
 
   services = {
     rnsd = {
-      enable = true;
+      enable = false;
       settings = {
         reticulum = {
           enable_transport = true;
