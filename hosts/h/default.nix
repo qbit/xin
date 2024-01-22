@@ -236,6 +236,7 @@ in
 
       zonemaster-cli
       sqlite
+      python3Packages.nomadnet
     ];
   };
 
