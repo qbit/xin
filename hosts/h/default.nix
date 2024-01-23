@@ -72,6 +72,13 @@ in
     kernelParams = [ "net.ifnames=0" ];
   };
 
+  nix = {
+    settings = {
+      allowed-users = lib.mkForce [ "root" ];
+      trusted-users = lib.mkForce [ "root" ];
+    };
+  };
+
   tailscale.sshOnly = true;
 
   nixpkgs.overlays = [
