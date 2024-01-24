@@ -68,7 +68,7 @@ in
 
       windowManager.xmonad = {
         enable = true;
-        extraPackages = haskellPackages: [ haskellPackages.xmonad-contrib ];
+        extraPackages = haskellPackages: with haskellPackages; [ xmonad-contrib hostname ];
         config = builtins.readFile ./xmonad.hs;
       };
     };

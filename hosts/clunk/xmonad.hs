@@ -2,6 +2,7 @@
 
 import qualified Data.Map as M
 import Data.Monoid
+import Network.HostName
 import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Hooks.EwmhDesktops
@@ -32,6 +33,7 @@ instance UrgencyHook LibNotifyUrgencyHook where
 
 main :: IO ()
 main = do
+  hostname <- getHostName
   xmonad $
     ewmh $
     withUrgencyHook LibNotifyUrgencyHook $
@@ -41,7 +43,7 @@ main = do
       , focusFollowsMouse = False
       , terminal = "alacritty"
       , workspaces = myWorkspaces
-      , startupHook = myStartupHook
+      , startupHook = myStartupHook hostname
       , layoutHook = myLayoutHook
       , keys = \c -> myKeys c `M.union` XMonad.keys def c
       , manageHook = manageDocks <+> myManageHook <+> manageHook def
@@ -136,6 +138,5 @@ myManageHook =
     , className =? "XConsole" --> doF (W.shift (myWorkspaces !! 8))
     ]
 
-myStartupHook :: X ()
-myStartupHook = do
-  spawn "pkill polybar; polybar"
+myStartupHook hostname = do
+  spawn ("pkill polybar; polybar " ++ hostname)
