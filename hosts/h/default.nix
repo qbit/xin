@@ -225,7 +225,7 @@ in
   };
 
   environment = {
-    memoryAllocator.provider = "libc";
+    memoryAllocator.provider = "mimalloc";
     systemPackages = with pkgs; [
       inetutils
 
