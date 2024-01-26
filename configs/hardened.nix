@@ -1,7 +1,7 @@
 { lib, ... }:
 with lib; {
   environment = {
-    memoryAllocator.provider = mkDefault "scudo";
+    memoryAllocator.provider = mkDefault "libc";
     variables.SCUDO_OPTIONS = mkDefault "ZeroContents=1";
   };
 
