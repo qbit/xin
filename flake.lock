@@ -392,10 +392,10 @@
     },
     "stable_2": {
       "locked": {
-        "lastModified": 1702161203,
-        "narHash": "sha256-nq40oP9Pk/bC9/3ShxUah2FWsyHcObtS2NU5rV8shXY=",
-        "path": "/nix/store/2mk1z2xf4v5rnpml75gbmgv6bv6i4nig-source",
-        "rev": "901fc6ea49ca9e9bbf636c48e2611588802e7b16",
+        "lastModified": 1706176172,
+        "narHash": "sha256-+kOLrH4DNw6EMITqXosMqoQUyIGWTMYVYcqALP8+PPc=",
+        "path": "/nix/store/a2y0kc4g4xlxg5r50565y45734q4mssd-source",
+        "rev": "72d28a6d71c30f0242c18317520bc3f4d822e794",
         "type": "path"
       },
       "original": {
@@ -516,11 +516,11 @@
     },
     "unstable_2": {
       "locked": {
-        "lastModified": 1702397419,
-        "narHash": "sha256-CBMSwZHT7GLq2JdOPWAVDBaYFbUHWD1+jPFrYk0JeLM=",
+        "lastModified": 1706278372,
+        "narHash": "sha256-SYceUQX1wjDQQsdws5MjNOWXE79GESFp/9uc4w3tZDo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "73ca2df642228129df7a968bad6499732dbc7ddd",
+        "rev": "6081df2649d246e60d9d0165c79bea8ac3a97816",
         "type": "github"
       },
       "original": {
@@ -553,11 +553,11 @@
         "unstable": "unstable_2"
       },
       "locked": {
-        "lastModified": 1705613028,
-        "narHash": "sha256-YeZWRn1sqFFtBp1HgDSJAVczlPGS62TMUA0ruB8d+CQ=",
+        "lastModified": 1706280764,
+        "narHash": "sha256-hvqQwniv9DTXHHf9wXdSus5aaZUMX+cPjm0BU5sT4cI=",
         "ref": "main",
-        "rev": "f6ef694e6d8a6bc9af28996238bc379b6348ea88",
-        "revCount": 122,
+        "rev": "28c6b8651be883f28933d2646221098394c1fdab",
+        "revCount": 125,
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
