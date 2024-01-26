@@ -216,7 +216,7 @@ in
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
           repositoryFile = "${config.sops.secrets.restic_repo_file.path}";
 
-          paths = [ "/home/abieber" "/var/lib/libvirt" ];
+          paths = [ "/home/abieber" ];
 
           pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
         };
