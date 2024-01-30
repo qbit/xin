@@ -44,6 +44,7 @@ in
     python3Packages.rns
     rofi
     rtl-sdr
+    tncattach
 
     # no GLSL ES 3.10
     # (callPackage ../../pkgs/zutty.nix { })

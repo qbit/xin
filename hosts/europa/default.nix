@@ -374,6 +374,7 @@ in
       tea
       thunderbird
       tigervnc
+      tncattach
       unzip
       veilid
       virt-manager
