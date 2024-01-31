@@ -133,6 +133,21 @@ in
       group = "wheel";
       mode = "400";
     };
+    restic_password_file = {
+      sopsFile = config.xin-secrets.stan.main;
+      owner = "root";
+      mode = "400";
+    };
+    restic_env_file = {
+      sopsFile = config.xin-secrets.stan.main;
+      owner = "root";
+      mode = "400";
+    };
+    restic_repo_file = {
+      sopsFile = config.xin-secrets.stan.main;
+      owner = "root";
+      mode = "400";
+    };
   };
 
   users.users.root = userBase;
@@ -193,6 +208,20 @@ in
   };
 
   services = {
+    restic = {
+      backups = {
+        remote = {
+          initialize = true;
+          environmentFile = "${config.sops.secrets.restic_env_file.path}";
+          passwordFile = "${config.sops.secrets.restic_password_file.path}";
+          repositoryFile = "${config.sops.secrets.restic_repo_file.path}";
+
+          paths = [ "/home/abieber" ];
+
+          pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
+        };
+      };
+    };
     rsyslogd = {
       enable = testingMode;
       defaultConfig = ''

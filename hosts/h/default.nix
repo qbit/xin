@@ -72,6 +72,13 @@ in
     kernelParams = [ "net.ifnames=0" ];
   };
 
+  nix = {
+    settings = {
+      allowed-users = lib.mkForce [ "root" ];
+      trusted-users = lib.mkForce [ "root" ];
+    };
+  };
+
   tailscale.sshOnly = true;
 
   nixpkgs.overlays = [
@@ -218,7 +225,6 @@ in
   };
 
   environment = {
-    memoryAllocator.provider = "libc";
     systemPackages = with pkgs; [
       inetutils
 
@@ -236,6 +242,7 @@ in
 
       zonemaster-cli
       sqlite
+      python3Packages.nomadnet
     ];
   };
 

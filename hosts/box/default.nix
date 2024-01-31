@@ -1,7 +1,6 @@
 { config
 , lib
 , pkgs
-, isUnstable
 , xinlib
 , ...
 }:
@@ -207,15 +206,17 @@ in
   #  "services/home-automation/home-assistant.nix"
   #];
 
-  environment.systemPackages = with pkgs; [
-    tmux
-    mosh
-    apg
-    git
-    signify
-    glowing-bear
-    rtl_433
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      tmux
+      mosh
+      apg
+      git
+      signify
+      glowing-bear
+      rtl_433
+    ];
+  };
 
   security.acme = {
     acceptTerms = true;
@@ -512,7 +513,7 @@ in
 
     fwupd.enable = true;
     zfs = {
-      autoSnapshot={
+      autoSnapshot = {
         enable = true;
         daily = 3;
         hourly = 8;
