@@ -181,40 +181,54 @@ in
 
   services = {
     rnsd = {
-      enable = false;
+      enable = true;
       settings = {
         reticulum = {
           enable_transport = true;
+          shared_instance = true;
+          shared_instance_port = 37428;
+          instance_control_port = 37429;
+
+          panic_on_interface_error = true;
         };
         logging = {
-          loglevel = 4;
+          loglevel = 8;
         };
         interfaces = {
           "Default Interface" = {
+            enabled = true;
             type = "AutoInterface";
-            enabled = true;
-          };
-          "UDP Interface" = {
-            type = "UDPInterface";
-            enabled = true;
-            listen_ip = "0.0.0.0";
-            listen_port = 4242;
-            forward_ip = "255.255.255.255";
-            forward_port = 4242;
-          };
-          "TCP Interface" = {
-            type = "TCPServerInterface";
-            enabled = true;
-            listen_ip = "0.0.0.0";
-            listen_port = 4242;
-            forward_ip = "255.255.255.255";
-            forward_port = 4242;
           };
           "RNS Testnet BetweenTheBorders" = {
-            type = "TCPClientInterface";
             enabled = true;
+            mode = "boundary";
             target_host = "betweentheborders.com";
             target_port = 4242;
+            type = "TCPClientInterface";
+          };
+          "RNode LoRa Interface" = {
+            bandwidth = 125000;
+            codingrate = 5;
+            enabled = false;
+            flow_control = false;
+            frequency = 915000000;
+            mode = "ap";
+            port = "/dev/ttyACM0";
+            spreadingfactor = 9;
+            txpower = 7;
+            type = "RNodeInterface";
+          };
+          "RNode BT LoRa Interface" = {
+            bandwidth = 125000;
+            codingrate = 5;
+            enabled = true;
+            flow_control = false;
+            frequency = 915000000;
+            mode = "ap";
+            port = "/dev/rfcomm0";
+            spreadingfactor = 9;
+            txpower = 7;
+            type = "RNodeInterface";
           };
         };
       };

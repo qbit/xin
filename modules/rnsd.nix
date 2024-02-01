@@ -6,8 +6,8 @@
 let
   cfg = config.services.rnsd;
   defaultSettings = { };
-  settingsFormat = pkgs.formats.toml { };
-  settingsFile = settingsFormat.generate "config.toml" cfg.settings;
+  settingsFormat = pkgs.formats.json { };
+  settingsFile = settingsFormat.generate "rnsd-config.json" cfg.settings;
 in
 {
   options = with lib; {
@@ -51,10 +51,17 @@ in
         '';
       };
 
+      #port = lib.mkOption {
+      #  type = types.int;
+      #  defautl = 4242;
+      #  defaultText = "4242";
+      #  description = "Port to use for establishing an isolated net";
+      #};
+
       openFirewall = mkOption {
         type = types.bool;
         default = false;
-        description = "enable veilid-server in the firewall";
+        description = "enable rnsd in the firewall";
       };
     };
   };
@@ -73,6 +80,7 @@ in
       home = "${cfg.dataDir}";
       createHome = true;
       group = "${cfg.group}";
+      extraGroups = [ "dialout" ];
     };
     systemd.services.rnsd = {
       enable = true;
@@ -81,15 +89,10 @@ in
       after = [ "network-online.target" ];
 
       serviceConfig = {
-        #DynamicUser = true;
-        #User = "rnsd";
-        #Group = "rnsd";
-        #StateDirectory = "rnsd";
-        #CacheDirectory = "rnsd";
-        #LogsDirectory = "rnsd";
-        #ProtectHome = true;
+        User = cfg.user;
+        Group = cfg.group;
         ExecStartPre = "${pkgs.coreutils}/bin/ln -sf ${settingsFile} ${cfg.dataDir}/config";
-        ExecStart = "${cfg.package}/bin/rnsd -v --config ${cfg.dataDir}";
+        ExecStart = "${cfg.package}/bin/rnsd -s -v --config ${cfg.dataDir}";
       };
     };
   };
