@@ -6,16 +6,16 @@
 with lib;
 buildGoModule rec {
   pname = "mcchunkie";
-  version = "1.0.13";
+  version = "1.0.14";
 
   src = fetchFromGitHub {
     owner = "qbit";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-/vPiwrNSdGDZtnnZTCxrkvRLP45c/c2/rYhBQNsddsg=";
+    hash = "sha256-biKmKulVV4ed0x/3KLESNDXBkihk7OlPcQPeAZmVNPU=";
   };
 
-  vendorHash = "sha256-OWIjq8Qsr1UEOrdDZlYG6qlVKs51R6xNhCqXSqAE2Mk=";
+  vendorHash = "sha256-OGSJeyGxXdKCD7nNRsJcKEKqBQOBKEc6RdtJfoIgR+0=";
 
   ldflags = [ "-X suah.dev/mcchunkie/plugins.version=${version}" ];
 
