@@ -1,13 +1,13 @@
 let
-  hash = "sha256-irPExb8rwQjkPp0b3x5hJG4Ay6OnITWIGRPxBSoP/Dk=";
-  sha256 = "sha256-DHKhEFXquWfHfk54mTehjchg3KsB4CfzElXMt5Mp+Vg=";
+  hash = "sha256-6YK/VV0ELvMJoA5ipmoB4S13HqA0UEOnQ6JbQdlkYWU=";
+  sha256 = "sha256-oXIraayA6Dd8aYirRhM9Av8x7bj+WZI6o7dEr9OCtdk=";
   matrix-synapse = _: super: {
     matrix-synapse = super.matrix-synapse.overrideAttrs (_: rec {
-      version = "1.98.0";
+      version = "1.100.0";
       pname = "matrix-synapse";
 
       src = super.fetchFromGitHub {
-        owner = "matrix-org";
+        owner = "element-hq";
         repo = "synapse";
         rev = "v${version}";
         inherit hash;
