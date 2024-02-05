@@ -1,6 +1,7 @@
 { callPackage
 , lib
 , fetchFromGitHub
+, config
 ,
 }:
 let
@@ -18,6 +19,12 @@ in
       owner = "openssh";
       repo = "openssh-portable";
     };
+
+    doCheck =
+      if config.xinCI.enable
+      then
+        true
+      else false;
 
     extraPatches = [ ./ssh-keysign-8.5.patch ];
     extraMeta.maintainers = with lib.maintainers; [ qbit ];

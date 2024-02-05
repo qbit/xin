@@ -2,6 +2,7 @@
 , version
 , extraDesc ? ""
 , src
+, doCheck
 , extraPatches ? [ ]
 , extraNativeBuildInputs ? [ ]
 , extraConfigureFlags ? [ ]
@@ -101,7 +102,6 @@ stdenv.mkDerivation {
 
   hardeningEnable = [ "pie" ];
 
-  doCheck = true;
   enableParallelChecking = false;
   nativeCheckInputs = [ libressl ] ++ lib.optional (!stdenv.isDarwin) hostname;
   preCheck = lib.optionalString (stdenv.hostPlatform == stdenv.buildPlatform) ''
