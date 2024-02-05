@@ -30,12 +30,9 @@ in
 
     initrd = {
       kernelModules = [
-        "pwm-lpss"
-        "pwm-lpss-platform"
         "g_serial"
         "bq24190_charger"
         "i915"
-        "fusb302"
       ];
 
       availableKernelModules = [
