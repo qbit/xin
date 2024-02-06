@@ -205,7 +205,7 @@ in
     rimgo = {
       enable = true;
       settings = {
-        PORT = 3000;
+        PORT = 3001;
         ADDRESS = "127.0.0.1";
       };
     };
