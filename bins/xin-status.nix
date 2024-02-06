@@ -17,6 +17,8 @@
   $sys_diff =~ s/\e\[[0-9;]*m(?:\e\[K)?//g;
 
   $info->{system_diff} = encode_base64($sys_diff);
+  $info->{uname_a} = `uname -a`;
+  chomp $info->{uname_a};
 
   print encode_json $info;
 ''
