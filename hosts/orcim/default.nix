@@ -12,7 +12,12 @@ in
     ./hardware-configuration.nix
   ];
 
-  hardware.rtl-sdr.enable = true;
+  hardware = {
+    rtl-sdr.enable = true;
+  };
+
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+  console.earlySetup = true;
 
   boot = {
     loader = {
@@ -22,8 +27,9 @@ in
 
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
-      "gpd-pocket-fan.speed_on_ac=0"
       "fbcon=rotate:1"
+      "gpd-pocket-fan.speed_on_ac=0"
+      "video=DSI-1:panel_orientation=right_side_up"
     ];
 
     kernelModules = [ "btusb" "kvm-intel" ];
@@ -49,6 +55,7 @@ in
     };
 
   };
+
   nixpkgs.config.allowUnsupportedSystem = true;
 
   networking = {
@@ -76,6 +83,7 @@ in
   kde.enable = true;
 
   services = {
+    xserver.dpi = 200;
     power-profiles-daemon.enable = false;
     tlp = {
       enable = true;
