@@ -83,7 +83,16 @@ in
   kde.enable = true;
 
   services = {
-    xserver.dpi = 200;
+    xserver = {
+      dpi = 200;
+      xrandrHeads = [{
+        output = "DSI-1";
+        primary = true;
+        monitorConfig = ''
+          Option  "Rotate"  "right"
+        '';
+      }];
+    };
     power-profiles-daemon.enable = false;
     tlp = {
       enable = true;
