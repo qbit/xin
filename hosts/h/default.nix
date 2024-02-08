@@ -266,20 +266,18 @@ in
   };
 
   systemd = {
-    user.services = {
+    services = {
       nomadnet = {
-        enable = true;
         description = "nomadnet";
         after = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
+          User = "qbit";
           Type = "forking";
           ExecStart = "${pkgs.tmux}/bin/tmux new-session -s NomadNet -d '${pkgs.python3Packages.nomadnet}/bin/nomadnet'";
           ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t NomadNet";
         };
       };
-    };
-    services = {
       matrix-synapse.after = [ "icbirc.service" ];
       icb-tunnel = {
         wantedBy = [ "network.target" ];
