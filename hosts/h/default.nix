@@ -265,26 +265,41 @@ in
     groups.mcchunkie = { };
   };
 
-  systemd.services = {
-    matrix-synapse.after = [ "icbirc.service" ];
-    icb-tunnel = {
-      wantedBy = [ "network.target" ];
-      after = [ "network.target" "multi-user.target" ];
-      serviceConfig = {
-        User = "qbit";
-        WorkingDirectory = "/home/qbit";
-        ExecStart = "${icbIrcTunnel}/bin/icb-irc-tunnel";
+  systemd = {
+    user.services = {
+      nomadnet = {
+        enable = true;
+        description = "nomadnet";
+        after = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "forking";
+          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s NomadNet -d '${pkgs.python3Packages.nomadnet}/bin/nomadnet'";
+          ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t NomadNet";
+        };
       };
     };
+    services = {
+      matrix-synapse.after = [ "icbirc.service" ];
+      icb-tunnel = {
+        wantedBy = [ "network.target" ];
+        after = [ "network.target" "multi-user.target" ];
+        serviceConfig = {
+          User = "qbit";
+          WorkingDirectory = "/home/qbit";
+          ExecStart = "${icbIrcTunnel}/bin/icb-irc-tunnel";
+        };
+      };
 
-    mcchunkie = {
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        User = "mcchunkie";
-        Group = "mcchunkie";
-        Restart = "always";
-        WorkingDirectory = "/var/lib/mcchunkie";
-        ExecStart = "${mcchunkie}/bin/mcchunkie";
+      mcchunkie = {
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          User = "mcchunkie";
+          Group = "mcchunkie";
+          Restart = "always";
+          WorkingDirectory = "/var/lib/mcchunkie";
+          ExecStart = "${mcchunkie}/bin/mcchunkie";
+        };
       };
     };
   };
