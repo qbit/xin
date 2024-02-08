@@ -2,15 +2,12 @@
 , emacsWithPackagesFromUsePackage
 , pkgs
 , makeWrapper
-, mu
 , writeTextDir
 , emacs
 , emacsPkg ? pkgs.emacs-gtk
 , ...
 }:
 let
-  muDir = "${mu}/share/emacs/site-lisp/mu4e";
-
   # Generate a .el file from our emacs.org.
   emacsConfig = runCommand "emacsConfig" { } ''
     mkdir -p $out
