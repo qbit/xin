@@ -1,12 +1,11 @@
 { runCommand
 , emacsWithPackagesFromUsePackage
 , pkgs
-, lib
 , makeWrapper
 , mu
 , writeTextDir
 , emacs
-, emacsPkg ? pkgs.emacsPgtkNativeComp
+, emacsPkg ? pkgs.emacs-gtk
 , ...
 }:
 let
@@ -31,10 +30,6 @@ let
 
   # init.el to load my config and other dependencies.
   emacsInit = writeTextDir "share/emacs/site-lisp/init.el" ''
-    (message "Loading my 'mu4e' from: ${muDir}")
-    (add-to-list 'load-path "${muDir}")
-    (load "${muDir}/mu4e.el")
-
     (message "Loading my 'emacs.org' config from: ${emacsConfig}")
     (load "${emacsConfig}/emacs.el")
   '';
@@ -45,8 +40,6 @@ let
     go-font
     graphviz
     ispell
-    isync
-    mu
     texlive.combined.scheme-full
   ];
 in

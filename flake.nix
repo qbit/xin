@@ -18,10 +18,10 @@
       inputs.sops-nix.follows = "sops-nix";
     };
 
-    #emacs-overlay = {
-    #  url = "github:nix-community/emacs-overlay/d54a1521619daa37c9aa8c9e3362abb34e676007";
-    #  inputs.nixpkgs.follows = "stable";
-    #};
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay/64a633659fab447f12c898a32c451f88b5c3c048";
+      inputs.nixpkgs.follows = "unstable";
+    };
 
     darwin = {
       url = "github:lnl7/nix-darwin";
@@ -137,7 +137,7 @@
       };
 
       overlays = [
-        #inputs.emacs-overlay.overlay
+        inputs.emacs-overlay.overlay
         inputs.gostart.overlay
         inputs.microca.overlay
         inputs.peerix.overlay

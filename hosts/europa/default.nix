@@ -9,7 +9,6 @@ let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
   inherit (builtins) readFile;
   inherit (xinlib) jobToUserService todo;
-  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
   #  doomPrivateDir = ../../configs/doom.d;
   #};
@@ -243,11 +242,6 @@ in
     pcscd.enable = true;
     vnstat.enable = true;
     clamav.updater.enable = true;
-    #emacs = {
-    #  enable = true;
-    #  package = myEmacs;
-    #  install = true;
-    #};
     tor = {
       enable = true;
       client.enable = true;
