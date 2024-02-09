@@ -911,6 +911,7 @@ in
         "https://matrix.to/#/#gosec:tapenet.org"
         "https://matrix.to/#/#gophers-offtopic:matrix.org"
         "https://matrix.to/#/#devious:tapenet.org"
+        "https://matrix.to/#/#gotk4:matrix.org"
       ];
       settings = {
         verboseLogging = false;
