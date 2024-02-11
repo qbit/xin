@@ -53,7 +53,6 @@ in
   services = {
     fwupd = {
       enable = true;
-      enableTestRemote = true;
     };
     xserver = {
       enable = true;

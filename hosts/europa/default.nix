@@ -248,7 +248,6 @@ in
     };
     fwupd = {
       enable = true;
-      enableTestRemote = true;
     };
 
     udev.extraRules = ''

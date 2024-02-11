@@ -105,7 +105,6 @@ in
     };
     fwupd = {
       enable = true;
-      enableTestRemote = true;
     };
   };
 

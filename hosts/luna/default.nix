@@ -32,7 +32,6 @@ in
   services = {
     fwupd = {
       enable = true;
-      enableTestRemote = true;
     };
   };
 
