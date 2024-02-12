@@ -13,8 +13,6 @@ let
   xinStatus =
     pkgs.writeScriptBin "xin-status"
       (import ./xin-status.nix { inherit (pkgs) perl perlPackages; });
-  tstart =
-    pkgs.writeScriptBin "tstart" (import ./tstart.nix { inherit (pkgs) tmux; });
   sfetch = pkgs.writeScriptBin "sfetch" (import ./sfetch.nix {
     inherit gosignify;
     inherit (pkgs) curl;
@@ -31,7 +29,6 @@ in
     genPatches
     ix
     sfetch
-    tstart
     xclip
     xinStatus
   ] ++ (if config.services.postgresql.enable then

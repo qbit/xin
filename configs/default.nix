@@ -3,6 +3,7 @@
     ./alacritty.nix
     ./ca.nix
     ./ci.nix
+    ./smug.nix
     ./colemak.nix
     ./dns.nix
     ./doas.nix
