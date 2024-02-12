@@ -15,9 +15,6 @@ in
       etc."smug/ci.yml".text = builtins.readFile (tmuxFormat.generate "ci.yml" {
         session = "CI";
         root = "~/";
-        before_start = [
-          "ssh-add"
-        ];
         windows = [
           {
             name = "CI Status";
@@ -40,7 +37,9 @@ in
       etc."smug/main.yml".text = builtins.readFile (tmuxFormat.generate "main.yml" {
         session = "Main";
         root = "~/";
-
+        before_start = [
+          "ssh-add"
+        ];
         windows = [
           {
             name = "Status";
