@@ -170,7 +170,6 @@ in
       shellAliases = {
         "gh" = "op plugin run -- gh";
         "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token) nixpkgs-review";
-        "clilol" = "env CLILOL_APIKEY=$(op item get omglol-cli --field credential) clilol";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
       };
     };
@@ -376,8 +375,6 @@ in
       zig
 
       (callPackage ../../pkgs/ttfs.nix { })
-      (callPackage ../../pkgs/clilol.nix { })
-      (callPackage ../../pkgs/iamb.nix { })
       (callPackage ../../pkgs/kobuddy.nix {
         inherit pkgs;
         inherit

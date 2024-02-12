@@ -290,7 +290,6 @@
           alire = spkgs.callPackage ./pkgs/alire.nix { inherit spkgs; };
           bearclaw = spkgs.callPackage ./pkgs/bearclaw.nix { inherit spkgs; };
           rtlamr = spkgs.callPackage ./pkgs/rtlamr.nix { inherit spkgs; };
-          clilol = spkgs.callPackage ./pkgs/clilol.nix { inherit spkgs; };
           gqrss = spkgs.callPackage ./pkgs/gqrss.nix {
             inherit spkgs;
             isUnstable = true;
@@ -298,7 +297,6 @@
           himitsu = upkgs.callPackage ./pkgs/himitsu.nix {
             inherit upkgs;
           };
-          iamb = upkgs.callPackage ./pkgs/iamb.nix { };
           icbirc = spkgs.callPackage ./pkgs/icbirc.nix {
             inherit spkgs;
             isUnstable = true;
