@@ -48,7 +48,7 @@ in
             ];
             panes = [
               {
-                commands = [ "mosh pwntie" ];
+                commands = [ "mosh pwntie 'cistart'" ];
               }
             ];
           }
