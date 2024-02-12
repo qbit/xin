@@ -18,16 +18,19 @@ in
         windows = [
           {
             name = "CI Status";
+            layout = "even-vertical";
             commands = [
               "journalctl -xef -u xin-ci-update.service"
             ];
             panes = [
               {
+                type = "even-vertical";
                 commands = [ "journalctl -xef -u xin-ci.service" ];
               }
             ];
           }
           {
+            name = "btop";
             commands = [
               "btop"
             ];
