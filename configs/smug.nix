@@ -1,7 +1,4 @@
-{ config
-, pkgs
-, ...
-}:
+{ pkgs, ... }:
 let
   tmuxFormat = pkgs.formats.yaml { };
 in
@@ -18,6 +15,9 @@ in
       etc."smug/ci.yml".text = builtins.readFile (tmuxFormat.generate "ci.yml" {
         session = "CI";
         root = "~/";
+        before_start = [
+          "ssh-add"
+        ];
         windows = [
           {
             name = "CI Status";
