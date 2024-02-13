@@ -32,7 +32,7 @@
    ,
    }:
 stdenv.mkDerivation {
-  inherit pname version src;
+  inherit pname version src doCheck;
 
   patches =
     [
