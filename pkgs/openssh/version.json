@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "0d96b1506b2f4757fefa5d1f884d49e96a6fd4c3",
-  "hash": "sha256-O+cpKXaEV19512EiWW1V847wkoB4EjXDdyAewUqO+CE=",
-  "version": "2024-01-16",
-  "comment": "skip tests that use multiplexing on Windows"
+  "rev": "cbbdf868bce431a59e2fa36ca244d5739429408d",
+  "hash": "sha256-3v8giSpqJx990DtqXP3f57cuDdu8xsShZ2kYOyY1Sf0=",
+  "version": "2024-02-07",
+  "comment": "Interop test against PuTTY snapshot and releases."
 }
