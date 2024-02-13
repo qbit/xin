@@ -1,5 +1,5 @@
 {
-  description = "bold.daemon";
+  description = "xin";
 
   inputs = {
     unstable.url = "github:NixOS/nixpkgs";
@@ -9,18 +9,27 @@
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs-stable.follows = "stable";
-      inputs.nixpkgs.follows = "unstable";
+      inputs = {
+        nixpkgs-stable.follows = "stable";
+        nixpkgs.follows = "unstable";
+      };
     };
 
     xin-secrets = {
       url = "git+ssh://xin-secrets-ro/qbit/xin-secrets.git?ref=main";
-      inputs.sops-nix.follows = "sops-nix";
+      inputs = {
+        sops-nix.follows = "sops-nix";
+        stable.follows = "stable";
+        unstable.follows = "unstable";
+      };
     };
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay/64a633659fab447f12c898a32c451f88b5c3c048";
-      inputs.nixpkgs.follows = "unstable";
+      inputs = {
+        nixpkgs.follows = "unstable";
+        nixpkgs-stable.follows = "stable";
+      };
     };
 
     darwin = {
@@ -28,7 +37,13 @@
       inputs.nixpkgs.follows = "unstableSmall";
     };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/008d78cc21959e33d0d31f375b88353a7d7121ae";
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
+      inputs = {
+        nixpkgs.follows = "stable";
+        nixpkgs-23_11.follows = "stable";
+      };
+    };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 

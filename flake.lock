@@ -62,7 +62,9 @@
         "nixpkgs": [
           "unstable"
         ],
-        "nixpkgs-stable": "nixpkgs-stable"
+        "nixpkgs-stable": [
+          "stable"
+        ]
       },
       "locked": {
         "lastModified": 1707411167,
@@ -216,36 +218,6 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1670751203,
-        "narHash": "sha256-XdoH1v3shKDGlrwjgrNX/EN8s3c+kQV7xY6cLCE8vcI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "64e0bf055f9d25928c31fb12924e59ff8ce71e60",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs-22_11": {
-      "locked": {
-        "lastModified": 1669558522,
-        "narHash": "sha256-yqxn+wOiPqe6cxzOo4leeJOp1bXE/fjPEi/3F/bBHv8=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "ce5fe99df1f15a09a91a86be9738d68fadfbad82",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-22.11",
-        "type": "indirect"
-      }
-    },
     "nixpkgs-23_05": {
       "locked": {
         "lastModified": 1684782344,
@@ -259,22 +231,6 @@
         "id": "nixpkgs",
         "ref": "nixos-23.05",
         "type": "indirect"
-      }
-    },
-    "nixpkgs-stable": {
-      "locked": {
-        "lastModified": 1707238373,
-        "narHash": "sha256-WKxT0yLzWbFZwYi92lI0yWJpYtRaFSWHGX8QXzejapw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "fb0c047e30b69696acc42e669d02452ca1b55755",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.11",
-        "repo": "nixpkgs",
-        "type": "github"
       }
     },
     "peerix": {
@@ -389,23 +345,27 @@
       "inputs": {
         "blobs": "blobs",
         "flake-compat": "flake-compat_2",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-22_11": "nixpkgs-22_11",
+        "nixpkgs": [
+          "stable"
+        ],
         "nixpkgs-23_05": "nixpkgs-23_05",
+        "nixpkgs-23_11": [
+          "stable"
+        ],
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1700085753,
-        "narHash": "sha256-qtib7f3eRwfaUF+VziJXiBcZFqpHCAXS4HlrFsnzzl4=",
+        "lastModified": 1706219574,
+        "narHash": "sha256-qO+8UErk+bXCq2ybHU4GzXG4Ejk4Tk0rnnTPNyypW4g=",
         "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "008d78cc21959e33d0d31f375b88353a7d7121ae",
+        "rev": "e47f3719f1db3e0961a4358d4cb234a0acaa7baf",
         "type": "gitlab"
       },
       "original": {
         "owner": "simple-nixos-mailserver",
+        "ref": "nixos-23.11",
         "repo": "nixos-mailserver",
-        "rev": "008d78cc21959e33d0d31f375b88353a7d7121ae",
         "type": "gitlab"
       }
     },
@@ -446,19 +406,6 @@
         "ref": "nixos-23.11-small",
         "repo": "nixpkgs",
         "type": "github"
-      }
-    },
-    "stable_2": {
-      "locked": {
-        "lastModified": 1706176172,
-        "narHash": "sha256-+kOLrH4DNw6EMITqXosMqoQUyIGWTMYVYcqALP8+PPc=",
-        "path": "/nix/store/a2y0kc4g4xlxg5r50565y45734q4mssd-source",
-        "rev": "72d28a6d71c30f0242c18317520bc3f4d822e794",
-        "type": "path"
-      },
-      "original": {
-        "id": "stable",
-        "type": "indirect"
       }
     },
     "systems": {
@@ -587,21 +534,6 @@
         "type": "github"
       }
     },
-    "unstable_2": {
-      "locked": {
-        "lastModified": 1706278372,
-        "narHash": "sha256-SYceUQX1wjDQQsdws5MjNOWXE79GESFp/9uc4w3tZDo=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "6081df2649d246e60d9d0165c79bea8ac3a97816",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "utils": {
       "locked": {
         "lastModified": 1605370193,
@@ -622,8 +554,12 @@
         "sops-nix": [
           "sops-nix"
         ],
-        "stable": "stable_2",
-        "unstable": "unstable_2"
+        "stable": [
+          "stable"
+        ],
+        "unstable": [
+          "unstable"
+        ]
       },
       "locked": {
         "lastModified": 1707101062,
