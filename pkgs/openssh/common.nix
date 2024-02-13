@@ -2,12 +2,11 @@
 , version
 , extraDesc ? ""
 , src
-, doCheck
 , extraPatches ? [ ]
 , extraNativeBuildInputs ? [ ]
 , extraConfigureFlags ? [ ]
 , extraMeta ? { }
-,
+, ...
 }: { lib
    , stdenv
    , # This *is* correct, though unusual. as a way of getting krb5-config from the
@@ -32,7 +31,7 @@
    ,
    }:
 stdenv.mkDerivation {
-  inherit pname version src doCheck;
+  inherit pname version src;
 
   patches =
     [

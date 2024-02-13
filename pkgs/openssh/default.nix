@@ -12,6 +12,7 @@ in
 {
   openssh = common {
     pname = "openssh";
+    inherit config;
     inherit (verStr) version;
 
     src = fetchFromGitHub {
