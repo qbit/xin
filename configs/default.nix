@@ -4,6 +4,7 @@
     ./ca.nix
     ./ci.nix
     ./smug.nix
+    ./konsole.nix
     ./colemak.nix
     ./dns.nix
     ./doas.nix
