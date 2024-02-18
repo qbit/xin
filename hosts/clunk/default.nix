@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}:
+{ pkgs, ... }:
 let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -8,18 +6,14 @@ let
 in
 {
   _module.args.isUnstable = true;
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   hardware.rtl-sdr.enable = true;
 
   boot = {
     loader.grub = {
       enable = true;
-      devices = [
-        "/dev/disk/by-id/wwn-0x5001b448be78d64a"
-      ];
+      devices = [ "/dev/disk/by-id/wwn-0x5001b448be78d64a" ];
     };
     kernelPackages = pkgs.linuxPackages_latest;
   };
@@ -69,7 +63,11 @@ in
 
       windowManager.xmonad = {
         enable = true;
-        extraPackages = haskellPackages: with haskellPackages; [ xmonad-contrib hostname ];
+        extraPackages =
+          haskellPackages: with haskellPackages; [
+            xmonad-contrib
+            hostname
+          ];
         config = builtins.readFile ./xmonad.hs;
       };
     };
@@ -77,10 +75,16 @@ in
 
   users = {
     users = {
-      root = { openssh.authorizedKeys.keys = pubKeys; };
+      root = {
+        openssh.authorizedKeys.keys = pubKeys;
+      };
       qbit = {
         openssh.authorizedKeys.keys = pubKeys;
-        extraGroups = [ "dialout" "libvirtd" "plugdev" ];
+        extraGroups = [
+          "dialout"
+          "libvirtd"
+          "plugdev"
+        ];
       };
     };
   };

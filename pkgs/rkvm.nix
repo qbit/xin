@@ -1,12 +1,13 @@
-{ lib
-, fetchFromGitHub
-, rustPlatform
-, pkg-config
-, openssl_1_1
-, llvmPackages
-, libevdev
-, linuxHeaders
-, ...
+{
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+  pkg-config,
+  openssl_1_1,
+  llvmPackages,
+  libevdev,
+  linuxHeaders,
+  ...
 }:
 rustPlatform.buildRustPackage {
   pname = "rkvm";
@@ -24,8 +25,16 @@ rustPlatform.buildRustPackage {
   BINDGEN_EXTRA_CLANG_ARGS = "-I${lib.getDev libevdev}/include/libevdev-1.0";
   LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
 
-  nativeBuildInputs = [ llvmPackages.clang pkg-config openssl_1_1 ];
-  buildInputs = [ libevdev openssl_1_1 linuxHeaders ];
+  nativeBuildInputs = [
+    llvmPackages.clang
+    pkg-config
+    openssl_1_1
+  ];
+  buildInputs = [
+    libevdev
+    openssl_1_1
+    linuxHeaders
+  ];
 
   doCheck = false;
 

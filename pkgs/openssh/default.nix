@@ -1,8 +1,8 @@
-{ callPackage
-, lib
-, fetchFromGitHub
-, config
-,
+{
+  callPackage,
+  lib,
+  fetchFromGitHub,
+  config,
 }:
 let
   inherit (builtins) readFile fromJSON;
@@ -21,11 +21,7 @@ in
       repo = "openssh-portable";
     };
 
-    doCheck =
-      if config.xinCI.enable
-      then
-        true
-      else false;
+    doCheck = if config.xinCI.enable then true else false;
 
     extraPatches = [ ./ssh-keysign-8.5.patch ];
     extraMeta.maintainers = with lib.maintainers; [ qbit ];

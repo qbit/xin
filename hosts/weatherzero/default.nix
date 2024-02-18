@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   pubKeys = [
@@ -14,9 +15,7 @@ let
 in
 {
   _module.args.isUnstable = false;
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   defaultUsers.enable = false;
 
@@ -35,7 +34,9 @@ in
 
   networking = {
     hostName = "wzero";
-    networkmanager = { enable = true; };
+    networkmanager = {
+      enable = true;
+    };
     wireless.userControlled.enable = true;
     hosts."100.120.151.126" = [ "graph.tapenet.org" ];
   };

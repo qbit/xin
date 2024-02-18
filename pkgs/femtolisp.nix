@@ -1,8 +1,8 @@
-{ stdenv
-, lib
-, fetchgit
-, gnumake
-,
+{
+  stdenv,
+  lib,
+  fetchgit,
+  gnumake,
 }:
 stdenv.mkDerivation {
   pname = "femtolisp";

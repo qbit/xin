@@ -1,9 +1,10 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, go
-, ffmpeg
-, ...
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  go,
+  ffmpeg,
+  ...
 }:
 let
   gotosocialVersion = "0.13.3";

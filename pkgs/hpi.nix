@@ -1,23 +1,25 @@
-{ pkgs
-, buildPythonPackage
-, setuptools-scm
-, pytest
-, fetchPypi
-, appdirs
-, click
-, decorator
-, geopy
-, logzero
-, lxml
-, more-itertools
-, mypy
-, orjson
-, pandas
-, pytz
-, simplejson
-, ...
+{
+  pkgs,
+  buildPythonPackage,
+  setuptools-scm,
+  pytest,
+  fetchPypi,
+  appdirs,
+  click,
+  decorator,
+  geopy,
+  logzero,
+  lxml,
+  more-itertools,
+  mypy,
+  orjson,
+  pandas,
+  pytz,
+  simplejson,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   orgparse = pkgs.python3Packages.callPackage ./orgparse.nix { inherit pkgs; };
   kobuddy = pkgs.python3Packages.callPackage ./kobuddy.nix { inherit pkgs; };
   ghexport = pkgs.python3Packages.callPackage ./ghexport.nix { inherit pkgs; };
@@ -48,7 +50,10 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  buildInputs = [ mypy kobuddy ];
+  buildInputs = [
+    mypy
+    kobuddy
+  ];
 
   makeWrapperArgs = [
     # Add the installed directories to the python path so the daemon can find them

@@ -1,9 +1,11 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with lib; {
+with lib;
+{
   options = {
     tsPeerix = {
       enable = mkOption {
@@ -27,7 +29,9 @@ with lib; {
   };
 
   config = mkIf config.tsPeerix.enable {
-    users.groups.peerix = { name = "peerix"; };
+    users.groups.peerix = {
+      name = "peerix";
+    };
     users.users.peerix = {
       name = "peerix";
       group = "peerix";
@@ -54,14 +58,18 @@ with lib; {
 
     environment.systemPackages = [ pkgs.zerotierone ];
 
-    networking.firewall.interfaces = listToAttrs (flatten (map
-      (i: {
-        name = i;
-        value = {
-          allowedUDPPorts = [ 12304 ];
-          allowedTCPPorts = [ 12304 ];
-        };
-      })
-      config.tsPeerix.interfaces));
+    networking.firewall.interfaces = listToAttrs (
+      flatten (
+        map
+          (i: {
+            name = i;
+            value = {
+              allowedUDPPorts = [ 12304 ];
+              allowedTCPPorts = [ 12304 ];
+            };
+          })
+          config.tsPeerix.interfaces
+      )
+    );
   };
 }

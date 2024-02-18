@@ -1,9 +1,11 @@
-{ config
-, lib
-, ...
-}:
-with lib; {
-  options = { gnome = { enable = mkEnableOption "Enable GNOME desktop."; }; };
+{ config, lib, ... }:
+with lib;
+{
+  options = {
+    gnome = {
+      enable = mkEnableOption "Enable GNOME desktop.";
+    };
+  };
 
   config = mkIf config.gnome.enable {
     services.xserver.displayManager.gdm.enable = true;

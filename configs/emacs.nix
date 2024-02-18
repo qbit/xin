@@ -1,11 +1,12 @@
-{ runCommand
-, emacsWithPackagesFromUsePackage
-, pkgs
-, makeWrapper
-, writeTextDir
-, emacs
-, emacsPkg ? pkgs.emacs-gtk
-, ...
+{
+  runCommand,
+  emacsWithPackagesFromUsePackage,
+  pkgs,
+  makeWrapper,
+  writeTextDir,
+  emacs,
+  emacsPkg ? pkgs.emacs-gtk,
+  ...
 }:
 let
   # Generate a .el file from our emacs.org.
@@ -46,13 +47,18 @@ emacsWithPackagesFromUsePackage {
   alwaysEnsure = true;
   alwaysTangle = true;
 
-  package = emacsPkg.overrideAttrs (oa: {
-    nativeBuildInputs = oa.nativeBuildInputs ++ [ makeWrapper emacsConfig ];
-    postInstall = ''
-      ${oa.postInstall}
-      wrapProgram $out/bin/emacs \
-        --prefix PATH : ${pkgs.lib.makeBinPath emacsDepList} \
-        --add-flags '--init-directory ${emacsInitDir}'
-    '';
-  });
+  package = emacsPkg.overrideAttrs (
+    oa: {
+      nativeBuildInputs = oa.nativeBuildInputs ++ [
+        makeWrapper
+        emacsConfig
+      ];
+      postInstall = ''
+        ${oa.postInstall}
+        wrapProgram $out/bin/emacs \
+          --prefix PATH : ${pkgs.lib.makeBinPath emacsDepList} \
+          --add-flags '--init-directory ${emacsInitDir}'
+      '';
+    }
+  );
 }

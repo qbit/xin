@@ -1,8 +1,9 @@
-{ lib
-, stdenv
-, fetchurl
-, pkgs
-, ...
+{
+  lib,
+  stdenv,
+  fetchurl,
+  pkgs,
+  ...
 }:
 stdenv.mkDerivation rec {
   pname = "icbirc";
@@ -15,7 +16,11 @@ stdenv.mkDerivation rec {
 
   patches = [ ./icbirc.diff ];
 
-  buildInputs = with pkgs; [ libbsd bsdbuild bmake ];
+  buildInputs = with pkgs; [
+    libbsd
+    bsdbuild
+    bmake
+  ];
 
   meta = with lib; {
     description = "proxy IRC client with ICB server";

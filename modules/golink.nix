@@ -1,9 +1,11 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   cfg = config.services.golink;
   golink = callPackage ../pkgs/golink.nix { };
 in
@@ -13,7 +15,12 @@ in
       enable = mkEnableOption "Enable golink";
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "golink";
         description = ''
           The user the service will use.
@@ -37,7 +44,12 @@ in
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "golink";
         description = ''
           The user the service will use.

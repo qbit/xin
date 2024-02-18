@@ -15,7 +15,10 @@
     settings = {
       sandbox = true;
       trusted-users = [ "@wheel" ];
-      allowed-users = [ "root" "qbit" ];
+      allowed-users = [
+        "root"
+        "qbit"
+      ];
     };
   };
 }

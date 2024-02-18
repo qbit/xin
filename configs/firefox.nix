@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs = {
     firefox = {
       enable = true;
@@ -107,17 +108,12 @@
 
         "browser.aboutConfig.showWarning" = false;
         "browser.contentblocking.category" = "strict";
-        "browser.newtabpage.activity-stream.feeds.recommendationprovider" =
-          false;
+        "browser.newtabpage.activity-stream.feeds.recommendationprovider" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-        "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" =
-          false;
-        "browser.newtabpage.activity-stream.section.highlights.includeDownloads" =
-          false;
-        "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-          false;
-        "browser.newtabpage.activity-stream.section.highlights.includeVisited" =
-          false;
+        "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
         "browser.newtabpage.activity-stream.showSearch" = false;
         "browser.newtabpage.activity-stream.showSponsored" = false;
         "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;

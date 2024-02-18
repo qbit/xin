@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   hardware = {
     deviceTree = {
       enable = true;
@@ -7,8 +8,6 @@
 
     enableRedistributableFirmware = true;
     i2c.enable = true;
-    firmware = with pkgs; [
-      raspberrypiWirelessFirmware
-    ];
+    firmware = with pkgs; [ raspberrypiWirelessFirmware ];
   };
 }

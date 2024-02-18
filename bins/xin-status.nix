@@ -1,7 +1,5 @@
-{ perl
-, perlPackages
-, ...
-}: ''
+{ perl, perlPackages, ... }:
+''
   #!${perl}/bin/perl
 
   use strict;

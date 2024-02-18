@@ -1,7 +1,8 @@
-{ fetchurl
-, appimageTools
-, desktop-file-utils
-, ...
+{
+  fetchurl,
+  appimageTools,
+  desktop-file-utils,
+  ...
 }:
 let
   name = "cinny-desktop";
@@ -32,8 +33,8 @@ appimageTools.wrapType2 rec {
     rm -rf usr/lib/* AppRun* *.desktop
   '';
 
-  extraPkgs = pkgs:
-    with pkgs; [
+  extraPkgs =
+    pkgs: with pkgs; [
       atk
       avahi
       brotli

@@ -120,6 +120,8 @@ in
         "xdg/polybar/config.ini".text = builtins.readFile settingsFile;
       };
     };
-    fonts = { packages = [ pkgs.go-font ]; };
+    fonts = {
+      packages = [ pkgs.go-font ];
+    };
   };
 }

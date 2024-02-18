@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 let
   microcaBin = "${pkgs.microca}/bin/microca";
@@ -11,7 +12,8 @@ let
     ${microcaBin} -ca-key /run/secrets/ca_key -ca-cert /run/secrets/ca_cert $@
   '';
 in
-with lib; {
+with lib;
+{
   options = {
     nixManager = {
       enable = mkEnableOption "Configure host as nix-conf manager.";
@@ -30,13 +32,27 @@ with lib; {
   config = mkIf config.nixManager.enable {
     sops.defaultSopsFile = config.xin-secrets.manager;
     sops.secrets = {
-      xin_status_key = { owner = config.nixManager.user; };
-      xin_status_pubkey = { owner = config.nixManager.user; };
-      manager_key = { owner = config.nixManager.user; };
-      manager_pubkey = { owner = config.nixManager.user; };
-      ca_key = { owner = config.nixManager.user; };
-      ca_cert = { owner = config.nixManager.user; };
-      po_env = { owner = config.nixManager.user; };
+      xin_status_key = {
+        owner = config.nixManager.user;
+      };
+      xin_status_pubkey = {
+        owner = config.nixManager.user;
+      };
+      manager_key = {
+        owner = config.nixManager.user;
+      };
+      manager_pubkey = {
+        owner = config.nixManager.user;
+      };
+      ca_key = {
+        owner = config.nixManager.user;
+      };
+      ca_cert = {
+        owner = config.nixManager.user;
+      };
+      po_env = {
+        owner = config.nixManager.user;
+      };
     };
 
     environment.systemPackages = [

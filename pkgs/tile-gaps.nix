@@ -1,11 +1,11 @@
-{ lib
-, mkDerivation
-, fetchFromGitHub
-, kcoreaddons
-, kwindowsystem
-, plasma-framework
-, systemsettings
-,
+{
+  lib,
+  mkDerivation,
+  fetchFromGitHub,
+  kcoreaddons,
+  kwindowsystem,
+  plasma-framework,
+  systemsettings,
 }:
 mkDerivation rec {
   pname = "tile-gaps";
@@ -18,7 +18,12 @@ mkDerivation rec {
     sha256 = "sha256-IqmRazguCLSBe27Sy94gABCL+9lJFhFRYe1SPLF8jT8=";
   };
 
-  buildInputs = [ kcoreaddons kwindowsystem plasma-framework systemsettings ];
+  buildInputs = [
+    kcoreaddons
+    kwindowsystem
+    plasma-framework
+    systemsettings
+  ];
 
   dontBuild = true;
 

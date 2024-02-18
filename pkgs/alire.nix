@@ -1,9 +1,10 @@
-{ stdenv
-, lib
-, fetchurl
-, unzip
-, autoPatchelfHook
-, ...
+{
+  stdenv,
+  lib,
+  fetchurl,
+  unzip,
+  autoPatchelfHook,
+  ...
 }:
 with lib;
 stdenv.mkDerivation rec {
@@ -15,7 +16,10 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-bN/H5CPN7uvUH9+p+y/sg01qTJI3asToxVSVnKVNHuM=";
   };
 
-  nativeBuildInputs = [ unzip autoPatchelfHook ];
+  nativeBuildInputs = [
+    unzip
+    autoPatchelfHook
+  ];
 
   dontBuild = true;
   doCheck = false;

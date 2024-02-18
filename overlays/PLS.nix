@@ -13,24 +13,29 @@ let
           propagatedBuildInputs = with super.perlPackages; [ Future ];
           meta = {
             description = "A FIFO queue of values that uses L<Future>s";
-            license = with super.lib.licenses; [ artistic1 gpl1Plus ];
+            license = with super.lib.licenses; [
+              artistic1
+              gpl1Plus
+            ];
           };
         };
       in
-      super.PLS.overrideAttrs (_: {
-        propagatedBuildInputs = with super.perlPackages; [
-          Future
-          FutureQueue
-          IOAsync
-          PPI
-          PPR
-          PathTiny
-          PerlCritic
-          PerlTidy
-          PodMarkdown
-          URI
-        ];
-      });
+      super.PLS.overrideAttrs (
+        _: {
+          propagatedBuildInputs = with super.perlPackages; [
+            Future
+            FutureQueue
+            IOAsync
+            PPI
+            PPR
+            PathTiny
+            PerlCritic
+            PerlTidy
+            PodMarkdown
+            URI
+          ];
+        }
+      );
   };
 in
 perlPackages

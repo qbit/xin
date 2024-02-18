@@ -26,7 +26,11 @@ let
       sha256 = "sha256-VIc5qgzqJjSv2A0v8tM25pWh+smX9DYXVsyFNTGMPbQ=";
       fetchSubmodules = true;
     };
-    dependencies = with vimPlugins; [ nvim-cmp tabular plenary-nvim ];
+    dependencies = with vimPlugins; [
+      nvim-cmp
+      tabular
+      plenary-nvim
+    ];
   };
 
   baseVimPackages = with vimPlugins; [
@@ -96,7 +100,9 @@ in
     enable = true;
     defaultEditor = true;
     configure = {
-      packages.myVimPackage = { start = myVimPackages; };
+      packages.myVimPackage = {
+        start = myVimPackages;
+      };
       customRC = ''
         " Restore cursor position
         autocmd BufReadPost *

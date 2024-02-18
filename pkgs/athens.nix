@@ -1,18 +1,16 @@
-{ stdenv
-, lib
-, buildGoModule
-, fetchFromGitHub
-, isUnstable
-, makeWrapper
-, go
-, git
-, ...
+{
+  stdenv,
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  isUnstable,
+  makeWrapper,
+  go,
+  git,
+  ...
 }:
 let
-  vendorHash =
-    if isUnstable
-    then ""
-    else "sha256-7CnkKMZ1so1lflmp4D9EAESR6/u9ys5CTuVOsYetp0I=";
+  vendorHash = if isUnstable then "" else "sha256-7CnkKMZ1so1lflmp4D9EAESR6/u9ys5CTuVOsYetp0I=";
 in
 with lib;
 buildGoModule rec {
@@ -30,7 +28,10 @@ buildGoModule rec {
 
   ldflags = [ "-X github.com/gomods/athens/pkg/build.version=${version}" ];
 
-  nativeBuildInputs = lib.optionals stdenv.isLinux [ makeWrapper go ];
+  nativeBuildInputs = lib.optionals stdenv.isLinux [
+    makeWrapper
+    go
+  ];
 
   proxyVendor = true;
 
@@ -40,7 +41,7 @@ buildGoModule rec {
 
   postInstall = lib.optionalString stdenv.isLinux ''
     mv $out/bin/proxy $out/bin/athens
-    wrapProgram $out/bin/athens --prefix PATH : ${lib.makeBinPath [git]}
+    wrapProgram $out/bin/athens --prefix PATH : ${lib.makeBinPath [ git ]}
   '';
 
   meta = {

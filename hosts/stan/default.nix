@@ -1,7 +1,4 @@
-{ config
-, pkgs
-, ...
-}:
+{ config, pkgs, ... }:
 let
   inherit (pkgs.vscode-utils) buildVscodeMarketplaceExtension;
   testingMode = true;
@@ -16,13 +13,11 @@ let
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
   };
   peerixUser =
-    if builtins.hasAttr "peerix" config.users.users
-    then config.users.users.peerix.name
-    else "root";
-  #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
-  #  doomPrivateDir = ../../configs/doom.d;
-  #};
+    if builtins.hasAttr "peerix" config.users.users then config.users.users.peerix.name else "root";
 in
+#doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
+#  doomPrivateDir = ../../configs/doom.d;
+#};
 {
   _module.args.isUnstable = true;
   imports = [ ./hardware-configuration.nix ];
@@ -37,7 +32,9 @@ in
     initrd = {
       luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".device = "/dev/disk/by-uuid/23b20980-eb1e-4390-b706-f0f42a623ddf";
       luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".keyFile = "/crypto_keyfile.bin";
-      secrets = { "/crypto_keyfile.bin" = null; };
+      secrets = {
+        "/crypto_keyfile.bin" = null;
+      };
     };
     kernelParams = [ "intel_idle.max_cstate=4" ];
     kernelPackages = pkgs.linuxPackages;
@@ -101,9 +98,18 @@ in
 
     hosts = {
       "172.16.30.253" = [ "proxmox-02.vm.calyptix.local" ];
-      "127.0.0.1" = [ "borg.calyptix.dev" "localhost" ];
-      "192.168.122.249" = [ "arst.arst" "vm" ];
-      "192.168.8.194" = [ "router.arst" "router" ];
+      "127.0.0.1" = [
+        "borg.calyptix.dev"
+        "localhost"
+      ];
+      "192.168.122.249" = [
+        "arst.arst"
+        "vm"
+      ];
+      "192.168.8.194" = [
+        "router.arst"
+        "router"
+      ];
     };
 
     networkmanager.enable = true;
@@ -113,7 +119,6 @@ in
       checkReversePath = "loose";
     };
   };
-
 
   i18n.defaultLocale = "en_US.utf8";
 
@@ -152,14 +157,16 @@ in
   };
 
   users.users.root = userBase;
-  users.users.abieber =
-    {
-      isNormalUser = true;
-      description = "Aaron Bieber";
-      shell = pkgs.zsh;
-      extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-    }
-    // userBase;
+  users.users.abieber = {
+    isNormalUser = true;
+    description = "Aaron Bieber";
+    shell = pkgs.zsh;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "libvirtd"
+    ];
+  } // userBase;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -261,7 +268,10 @@ in
   tsPeerix = {
     enable = false;
     privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
-    interfaces = [ "wlp170s0" "ztksevmpn3" ];
+    interfaces = [
+      "wlp170s0"
+      "ztksevmpn3"
+    ];
   };
 
   services = {
@@ -275,7 +285,11 @@ in
 
           paths = [ "/home/abieber" ];
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 2"
+            "--keep-monthly 2"
+          ];
         };
       };
     };
@@ -298,7 +312,6 @@ in
       dnssec = "allow-downgrade";
     };
   };
-
 
   system.autoUpgrade.allowReboot = false;
   system.stateVersion = "22.05"; # Did you read the comment?

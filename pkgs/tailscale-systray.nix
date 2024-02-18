@@ -1,8 +1,9 @@
-{ pkgs
-, lib
-, buildGoModule
-, fetchFromGitHub
-, ...
+{
+  pkgs,
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  ...
 }:
 with lib;
 with pkgs;
@@ -20,7 +21,10 @@ buildGoModule rec {
   vendorHash = "sha256-YJ74SeZAMS+dXyoPhPTJ3L+5uL5bF8gumhMOqfvmlms=";
 
   nativeBuildInputs = [ pkg-config ];
-  buildInputs = [ libayatana-appindicator gtk3 ];
+  buildInputs = [
+    libayatana-appindicator
+    gtk3
+  ];
 
   proxyVendor = true;
 

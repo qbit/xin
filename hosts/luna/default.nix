@@ -4,7 +4,9 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPMaAm4rDxyU975Z54YiNw3itC2fGc3SaE2VaS1fai8 root@box"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys; };
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys;
+  };
 in
 {
   _module.args.isUnstable = false;

@@ -1,7 +1,4 @@
-{ pkgs
-, linkFarm
-, ...
-}:
+{ pkgs, linkFarm, ... }:
 let
   tomlFmt = pkgs.formats.toml { };
   helixBin = "${pkgs.helix}/bin/hx";
@@ -15,7 +12,9 @@ let
         normal = "block";
         select = "underline";
       };
-      lsp = { auto-signature-help = false; };
+      lsp = {
+        auto-signature-help = false;
+      };
     };
   };
 

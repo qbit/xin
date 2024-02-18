@@ -1,9 +1,10 @@
-{ buildPythonPackage
-, lib
-, fetchurl
-, python
-, weechat
-, ...
+{
+  buildPythonPackage,
+  lib,
+  fetchurl,
+  python,
+  weechat,
+  ...
 }:
 buildPythonPackage {
   pname = "weepushover";

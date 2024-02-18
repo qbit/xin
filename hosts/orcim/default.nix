@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}:
+{ pkgs, ... }:
 let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -8,9 +6,7 @@ let
 in
 {
   _module.args.isUnstable = true;
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   hardware = {
     rtl-sdr.enable = true;
@@ -32,7 +28,10 @@ in
       "video=DSI-1:panel_orientation=right_side_up"
     ];
 
-    kernelModules = [ "btusb" "kvm-intel" ];
+    kernelModules = [
+      "btusb"
+      "kvm-intel"
+    ];
 
     initrd = {
       kernelModules = [
@@ -53,7 +52,6 @@ in
         "rtsx_pci_sdmmc"
       ];
     };
-
   };
 
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -85,13 +83,15 @@ in
   services = {
     xserver = {
       dpi = 200;
-      xrandrHeads = [{
-        output = "DSI-1";
-        primary = true;
-        monitorConfig = ''
-          Option  "Rotate"  "right"
-        '';
-      }];
+      xrandrHeads = [
+        {
+          output = "DSI-1";
+          primary = true;
+          monitorConfig = ''
+            Option  "Rotate"  "right"
+          '';
+        }
+      ];
     };
     power-profiles-daemon.enable = false;
     tlp = {
@@ -110,10 +110,16 @@ in
 
   users = {
     users = {
-      root = { openssh.authorizedKeys.keys = pubKeys; };
+      root = {
+        openssh.authorizedKeys.keys = pubKeys;
+      };
       qbit = {
         openssh.authorizedKeys.keys = pubKeys;
-        extraGroups = [ "dialout" "libvirtd" "plugdev" ];
+        extraGroups = [
+          "dialout"
+          "libvirtd"
+          "plugdev"
+        ];
       };
     };
   };

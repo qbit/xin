@@ -1,7 +1,8 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 let
   cfg = config.services.tsrevprox;
@@ -36,7 +37,12 @@ in
       };
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "tsrevprox";
         description = ''
           The user the service will use.
@@ -44,7 +50,12 @@ in
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "tsrevprox";
         description = ''
           The group the service will use.
@@ -90,15 +101,15 @@ in
       wantedBy = [ "network-online.target" ];
       after = [ "network-online.target" ];
 
-      environment = { HOME = "${cfg.dataDir}"; };
+      environment = {
+        HOME = "${cfg.dataDir}";
+      };
 
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;
 
-        ExecStart = "${cfg.package}/bin/ts-reverse-proxy -name ${cfg.reverseName} -port ${
-          toString cfg.reversePort
-        } -ip ${cfg.reverseIP}";
+        ExecStart = "${cfg.package}/bin/ts-reverse-proxy -name ${cfg.reverseName} -port ${toString cfg.reversePort} -ip ${cfg.reverseIP}";
         #EnvironmentFile = cfg.envFile;
       };
     };

@@ -1,13 +1,14 @@
-{ lib
-, fetchFromGitHub
-, buildPythonPackage
-, fetchPypi
-, setuptools-scm
-, pytz
-, alembic
-, banal
-, sqlalchemy
-, ...
+{
+  lib,
+  fetchFromGitHub,
+  buildPythonPackage,
+  fetchPypi,
+  setuptools-scm,
+  pytz,
+  alembic,
+  banal,
+  sqlalchemy,
+  ...
 }:
 let
   myDataset = buildPythonPackage rec {
@@ -24,7 +25,11 @@ let
 
     patches = [ ./kobuddy.diff ];
 
-    propagatedBuildInputs = [ alembic banal sqlalchemy ];
+    propagatedBuildInputs = [
+      alembic
+      banal
+      sqlalchemy
+    ];
 
     # checks attempt to import nonexistent module 'test.test' and fail
     doCheck = false;
@@ -52,7 +57,10 @@ buildPythonPackage rec {
 
   nativeBuildInputs = [ setuptools-scm ];
 
-  propagatedBuildInputs = [ myDataset pytz ];
+  propagatedBuildInputs = [
+    myDataset
+    pytz
+  ];
 
   meta = with lib; {
     homepage = "https://github.com/karlicoss/promnesia";

@@ -1,11 +1,11 @@
-{ stdenv
-, lib
-, fetchgit
-, gnumake
-, pkg-config
-, SDL2
-, SDL2_ttf
-,
+{
+  stdenv,
+  lib,
+  fetchgit,
+  gnumake,
+  pkg-config,
+  SDL2,
+  SDL2_ttf,
 }:
 stdenv.mkDerivation {
   pname = "ttfs";

@@ -1,10 +1,11 @@
-{ config
-, lib
-, options
-, pkgs
-, xinlib
-, isUnstable
-, ...
+{
+  config,
+  lib,
+  options,
+  pkgs,
+  xinlib,
+  isUnstable,
+  ...
 }:
 let
   inherit (xinlib) todo;
@@ -35,14 +36,16 @@ in
     ./bins
   ];
 
-  disabledModules = [
-    "services/web-apps/gotosocial.nix"
-  ];
+  disabledModules = [ "services/web-apps/gotosocial.nix" ];
 
   options.myconf = {
     managementPubKeys = lib.mkOption rec {
       type = lib.types.listOf lib.types.str;
-      default = [ managementKey statusKey breakGlassKey ];
+      default = [
+        managementKey
+        statusKey
+        breakGlassKey
+      ];
       example = default;
       description = "List of management public keys to use";
     };
@@ -127,7 +130,9 @@ in
     '';
 
     boot = {
-      loader = { systemd-boot.configurationLimit = 15; };
+      loader = {
+        systemd-boot.configurationLimit = 15;
+      };
       kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
       kernel.sysctl = {
         "net.ipv4.tcp_keepalive_time" = 60;
@@ -138,23 +143,27 @@ in
 
     nix = {
       settings =
-        if config.xinCI.enable
-        then { }
-        else {
-          substituters = lib.mkForce [
-            "https://cache.nixos.org"
-            "https://nix-binary-cache.otter-alligator.ts.net/"
-          ];
-          trusted-public-keys = [
-            "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
-            "nix-binary-cache.humpback-trout.ts.net:e9fJhcRtNVp6miW2pffFyK/gZ2et4y6IDigBNrEsAa0="
-          ];
-        };
+        if config.xinCI.enable then
+          { }
+        else
+          {
+            substituters = lib.mkForce [
+              "https://cache.nixos.org"
+              "https://nix-binary-cache.otter-alligator.ts.net/"
+            ];
+            trusted-public-keys = [
+              "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
+              "nix-binary-cache.humpback-trout.ts.net:e9fJhcRtNVp6miW2pffFyK/gZ2et4y6IDigBNrEsAa0="
+            ];
+          };
     };
 
     environment = {
-      etc."ssh/ca.pub" = { text = caPubKeys; };
-      systemPackages = with pkgs;
+      etc."ssh/ca.pub" = {
+        text = caPubKeys;
+      };
+      systemPackages =
+        with pkgs;
         [
           age
           apg
@@ -179,11 +188,7 @@ in
           taskwarrior
           tmux
         ]
-        ++ (
-          if isUnstable
-          then [ nil ]
-          else [ ]
-        );
+        ++ (if isUnstable then [ nil ] else [ ]);
 
       interactiveShellInit = ''
         alias vi=nvim
@@ -221,8 +226,7 @@ in
       };
     };
 
-    services.logrotate.checkConfig =
-      todo "logrotate.checkConfig disabled: https://github.com/NixOS/nix/issues/8502" false;
+    services.logrotate.checkConfig = todo "logrotate.checkConfig disabled: https://github.com/NixOS/nix/issues/8502" false;
 
     services = {
       openssh = {
@@ -233,7 +237,10 @@ in
         settings = {
           PermitRootLogin = "prohibit-password";
           PasswordAuthentication = false;
-          KexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
+          KexAlgorithms = [
+            "curve25519-sha256"
+            "curve25519-sha256@libssh.org"
+          ];
           Macs = [
             "hmac-sha2-512-etm@openssh.com"
             "hmac-sha2-256-etm@openssh.com"

@@ -1,12 +1,13 @@
-{ buildPythonPackage
-, buildHomeAssistantComponent
-, setuptools-scm
-, setuptools
-, fetchFromGitHub
-, fetchPypi
-, aiohttp
-, requests
-, ...
+{
+  buildPythonPackage,
+  buildHomeAssistantComponent,
+  setuptools-scm,
+  setuptools,
+  fetchFromGitHub,
+  fetchPypi,
+  aiohttp,
+  requests,
+  ...
 }:
 let
   my-python-openevse-http = buildPythonPackage rec {
@@ -32,13 +33,9 @@ buildHomeAssistantComponent rec {
   domain = "openevse";
   version = "2.1.33";
 
-  nativeBuildInputs = [
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ setuptools-scm ];
 
-  propagatedBuildInputs = [
-    my-python-openevse-http
-  ];
+  propagatedBuildInputs = [ my-python-openevse-http ];
 
   buildInputs = [ setuptools-scm ];
 

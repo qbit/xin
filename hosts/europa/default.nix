@@ -1,9 +1,10 @@
-{ inputs
-, config
-, pkgs
-, lib
-, xinlib
-, ...
+{
+  inputs,
+  config,
+  pkgs,
+  lib,
+  xinlib,
+  ...
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
@@ -13,21 +14,25 @@ let
   #  doomPrivateDir = ../../configs/doom.d;
   #};
   peerixUser =
-    if builtins.hasAttr "peerix" config.users.users
-    then config.users.users.peerix.name
-    else "root";
+    if builtins.hasAttr "peerix" config.users.users then config.users.users.peerix.name else "root";
   jobs = [
     {
       name = "brain";
       script = "cd ~/Brain && git sync";
       startAt = "*:0/2";
-      path = [ pkgs.git pkgs.git-sync ];
+      path = [
+        pkgs.git
+        pkgs.git-sync
+      ];
     }
     {
       name = "org";
       script = "(cd ~/org && git sync)";
       startAt = "*:0/5";
-      path = [ pkgs.git pkgs.git-sync ];
+      path = [
+        pkgs.git
+        pkgs.git-sync
+      ];
     }
     {
       name = "taskobs";
@@ -40,7 +45,10 @@ in
 {
   _module.args.isUnstable = true;
 
-  imports = [ ./hardware-configuration.nix ../../pkgs ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../pkgs
+  ];
 
   sops.secrets = {
     fastmail = {
@@ -107,7 +115,10 @@ in
   };
 
   boot = {
-    binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "riscv64-linux"
+    ];
     initrd.systemd.enable = true;
     loader = {
       systemd-boot.enable = true;
@@ -116,9 +127,7 @@ in
         efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelParams = [
-      "boot.shell_on_fail"
-    ];
+    kernelParams = [ "boot.shell_on_fail" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
@@ -145,14 +154,21 @@ in
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 8384 ]; }; };
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 8384 ];
+        };
+      };
     };
   };
 
   tsPeerix = {
     enable = false;
     privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
-    interfaces = [ "wlp170s0" "ztksevmpn3" ];
+    interfaces = [
+      "wlp170s0"
+      "ztksevmpn3"
+    ];
   };
 
   programs = {
@@ -175,7 +191,9 @@ in
     };
   };
 
-  services.xinCA = { enable = false; };
+  services.xinCA = {
+    enable = false;
+  };
 
   services = {
     power-profiles-daemon.enable = false;
@@ -222,9 +240,16 @@ in
           repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
           #repository = "https://europa@backup.bold.daemon:8484/";
 
-          paths = [ "/home/qbit" "/var/lib/libvirt" ];
+          paths = [
+            "/home/qbit"
+            "/var/lib/libvirt"
+          ];
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 5"
+            "--keep-yearly 4"
+          ];
         };
         local = {
           initialize = true;
@@ -232,9 +257,16 @@ in
           environmentFile = "${config.sops.secrets.restic_env_file.path}";
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
-          paths = [ "/home/qbit" "/var/lib/libvirt" ];
+          paths = [
+            "/home/qbit"
+            "/var/lib/libvirt"
+          ];
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5" ];
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 5"
+            "--keep-yearly 5"
+          ];
         };
       };
     };
@@ -280,8 +312,7 @@ in
   ];
 
   systemd = {
-    user.services =
-      lib.listToAttrs (builtins.map jobToUserService jobs);
+    user.services = lib.listToAttrs (builtins.map jobToUserService jobs);
     services = {
       "whytailscalewhy" = {
         description = "Tailscale restart on resume";
@@ -305,7 +336,9 @@ in
   ];
 
   environment = {
-    etc."barrier.conf" = { text = readFile ../../configs/barrier.conf; };
+    etc."barrier.conf" = {
+      text = readFile ../../configs/barrier.conf;
+    };
     sessionVariables = {
       XDG_BIN_HOME = "\${HOME}/.local/bin";
       XDG_CACHE_HOME = "\${HOME}/.cache";
@@ -377,8 +410,7 @@ in
       (callPackage ../../pkgs/ttfs.nix { })
       (callPackage ../../pkgs/kobuddy.nix {
         inherit pkgs;
-        inherit
-          (pkgs.python39Packages)
+        inherit (pkgs.python39Packages)
           buildPythonPackage
           fetchPypi
           setuptools-scm

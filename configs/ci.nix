@@ -1,9 +1,10 @@
-{ config
-, lib
-, pkgs
-, inputs
-, xinlib
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  xinlib,
+  ...
 }:
 let
   #inherit (xinlib) prIsOpen;
@@ -24,7 +25,8 @@ let
     }
   ];
 in
-with lib; {
+with lib;
+{
   options = {
     xinCI = {
       enable = mkEnableOption "Configure host as a xin CI host.";
@@ -43,7 +45,9 @@ with lib; {
   config = mkIf config.xinCI.enable {
     sops.defaultSopsFile = config.xin-secrets.ci;
     sops.secrets = {
-      po_env = { owner = config.xinCI.user; };
+      po_env = {
+        owner = config.xinCI.user;
+      };
       ci_ed25519_key = {
         mode = "400";
         owner = config.xinCI.user;
@@ -98,7 +102,11 @@ with lib; {
 
     nix = {
       #settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
-      settings.allowed-users = [ "root" config.xinCI.user "harmonia" ];
+      settings.allowed-users = [
+        "root"
+        config.xinCI.user
+        "harmonia"
+      ];
     };
 
     systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
@@ -111,10 +119,15 @@ with lib; {
       harmonia = {
         enable = true;
         signKeyPath = config.sops.secrets.bin_cache_priv_key.path;
-        settings = { bind = "127.0.0.1:5000"; };
+        settings = {
+          bind = "127.0.0.1:5000";
+        };
       };
     };
 
-    boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
+    boot.binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "armv6l-linux"
+    ];
   };
 }

@@ -1,31 +1,32 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, beautifulsoup4
-, fastapi
-, httptools
-, logzero
-, lxml
-, mistletoe
-, more-itertools
-, mypy
-, pytz
-, setuptools
-, tzlocal
-, urlextract
-, uvicorn
-, uvloop
-, watchfiles
-, websockets
-, setuptools-scm
-, starlette
-, pkgs
-, ...
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  beautifulsoup4,
+  fastapi,
+  httptools,
+  logzero,
+  lxml,
+  mistletoe,
+  more-itertools,
+  mypy,
+  pytz,
+  setuptools,
+  tzlocal,
+  urlextract,
+  uvicorn,
+  uvloop,
+  watchfiles,
+  websockets,
+  setuptools-scm,
+  starlette,
+  pkgs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   hpi = pkgs.python3Packages.callPackage ./hpi.nix { inherit pkgs; };
-  sqlcipher3 =
-    pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
+  sqlcipher3 = pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
   cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
   python-dotenv = pkgs.python3Packages.callPackage ./python-dotenv.nix { };
 in
@@ -46,9 +47,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  nativeBuildInputs = [
-    setuptools-scm
-  ];
+  nativeBuildInputs = [ setuptools-scm ];
 
   # Optional
   # bs4 lxml mistletoe logzero

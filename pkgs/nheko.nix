@@ -1,8 +1,9 @@
-{ lib
-, fetchurl
-, stdenv
-, undmg
-, ...
+{
+  lib,
+  fetchurl,
+  stdenv,
+  undmg,
+  ...
 }:
 stdenv.mkDerivation rec {
   pname = "nheko";

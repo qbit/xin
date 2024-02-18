@@ -1,8 +1,9 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, pkgs
-, ...
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  pkgs,
+  ...
 }:
 let
   libadalang = stdenv.mkDerivation rec {
@@ -38,7 +39,10 @@ let
       sha256 = "sha256-IDPcIJfavlqMsxLOGrvXYv98FdYVWkCiimLcMFp3ees=";
     };
 
-    buildInputs = with pkgs; [ gnat12 gprbuild ];
+    buildInputs = with pkgs; [
+      gnat12
+      gprbuild
+    ];
 
     makeFlags = [ "PREFIX=$(out)" ];
   };
@@ -53,7 +57,11 @@ let
       sha256 = "sha256-kA5yOd3NDkRl08o38F5CyeFrihBZktNF6di3PC+/ZLU=";
     };
 
-    buildInputs = with pkgs; [ gnat12 gprbuild libadalang ];
+    buildInputs = with pkgs; [
+      gnat12
+      gprbuild
+      libadalang
+    ];
 
     makeFlags = [ "PREFIX=$(out)" ];
   };
@@ -69,7 +77,13 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-ZUzym0aMjq14W9h/lDL5hVCF/i+1SFu6kccGqzmGO3E=";
   };
 
-  buildInputs = with pkgs; [ gnat12 gprbuild python3 vss gnatdoc ];
+  buildInputs = with pkgs; [
+    gnat12
+    gprbuild
+    python3
+    vss
+    gnatdoc
+  ];
 
   meta = with lib; {
     description = "Language server for Ada and SPARK";

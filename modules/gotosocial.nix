@@ -1,18 +1,19 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   cfg = config.services.gotosocial;
   gotosocial = callPackage ../pkgs/gotosocial.nix { };
   settingsFormat = pkgs.formats.json { };
   settingsType = settingsFormat.type;
-  prettyJSON = conf:
+  prettyJSON =
+    conf:
     pkgs.runCommandLocal "gotosocial-config.json" { } ''
-      echo '${
-        builtins.toJSON conf
-      }' | ${pkgs.buildPackages.jq}/bin/jq 'del(._module)' > $out
+      echo '${builtins.toJSON conf}' | ${pkgs.buildPackages.jq}/bin/jq 'del(._module)' > $out
     '';
 in
 {
@@ -21,7 +22,12 @@ in
       enable = mkEnableOption "Enable gotosocial";
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "gotosocial";
         description = ''
           The user the service will use.
@@ -29,7 +35,12 @@ in
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "gotosocial";
         description = ''
           The user the service will use.
@@ -74,9 +85,7 @@ in
 
         RuntimeDirectory = "/var/lib/gotosocial";
 
-        ExecStart = "${cfg.package}/bin/gotosocial --config-path ${
-          prettyJSON cfg.configuration
-        } server start";
+        ExecStart = "${cfg.package}/bin/gotosocial --config-path ${prettyJSON cfg.configuration} server start";
       };
     };
   };

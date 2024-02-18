@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, xinlib
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  xinlib,
+  ...
 }:
 let
   inherit (xinlib) todo;
@@ -38,7 +39,9 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys; };
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys;
+  };
   mkNginxSecret = {
     sopsFile = config.xin-secrets.box.certs;
     owner = config.users.users.nginx.name;
@@ -66,8 +69,12 @@ in
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.services;
     };
-    "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.services; };
-    "wireguard_private_key" = { sopsFile = config.xin-secrets.box.services; };
+    "bitwarden_rs.env" = {
+      sopsFile = config.xin-secrets.box.services;
+    };
+    "wireguard_private_key" = {
+      sopsFile = config.xin-secrets.box.services;
+    };
     "restic_htpasswd" = {
       owner = config.users.users.restic.name;
       sopsFile = config.xin-secrets.box.services;
@@ -132,10 +139,16 @@ in
       "10.6.0.15" = [ "jelly.bold.daemon" ];
       "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
     };
-    interfaces.enp7s0 = { useDHCP = true; };
+    interfaces.enp7s0 = {
+      useDHCP = true;
+    };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 3030 ];
+        };
+      };
       interfaces = {
         "wg0" = {
           allowedTCPPorts = [
@@ -145,19 +158,17 @@ in
           ];
         };
       };
-      allowedTCPPorts =
-        config.services.openssh.ports
-        ++ [
-          80
-          443
-          config.services.gitea.settings.server.SSH_PORT
-          21063 #homekit
-          21064 #homekit
-          1883 # mosquitto
-          8484 # restic-rest server
-        ];
+      allowedTCPPorts = config.services.openssh.ports ++ [
+        80
+        443
+        config.services.gitea.settings.server.SSH_PORT
+        21063 # homekit
+        21064 # homekit
+        1883 # mosquitto
+        8484 # restic-rest server
+      ];
       allowedUDPPorts = [
-        5353 #homekit
+        5353 # homekit
       ];
       allowedUDPPortRanges = [
         {
@@ -191,9 +202,7 @@ in
   nixpkgs = {
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = todo "figure out what is using openssl-1.1.1w" [
-        "openssl-1.1.1w"
-      ];
+      permittedInsecurePackages = todo "figure out what is using openssl-1.1.1w" [ "openssl-1.1.1w" ];
     };
     #overlays = [
     #  (_: _: {
@@ -227,7 +236,17 @@ in
     groups = {
       media = {
         name = "media";
-        members = [ "qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" "rtorrent" "readarr" ];
+        members = [
+          "qbit"
+          "sonarr"
+          "radarr"
+          "lidarr"
+          "nzbget"
+          "jellyfin"
+          "headphones"
+          "rtorrent"
+          "readarr"
+        ];
       };
 
       photos = {
@@ -290,8 +309,8 @@ in
     };
     home-assistant = {
       enable = true;
-      extraPackages = python3Packages:
-        with python3Packages; [
+      extraPackages =
+        python3Packages: with python3Packages; [
           pyipp
           pymetno
           ical
@@ -326,8 +345,7 @@ in
         "zeroconf"
       ];
       config = {
-        sensor = [
-        ];
+        sensor = [ ];
         mqtt.sensor = [
           {
             name = "Greenhouse Temperature";
@@ -348,8 +366,7 @@ in
             #"homeassistant.components.aprs" = "debug";
           };
         };
-        "automation manual" = [
-        ];
+        "automation manual" = [ ];
         "automation ui" = "!include automations.yaml";
         rest = [
           {
@@ -381,8 +398,7 @@ in
             };
           }
         ];
-        device_tracker = [
-        ];
+        device_tracker = [ ];
         default_config = { };
         http = {
           use_x_forwarded_for = true;
@@ -482,7 +498,9 @@ in
         in
         [ "@daily root ${tsCertsScript}/bin/ts-certs.sh" ];
     };
-    openssh = { settings.X11Forwarding = true; };
+    openssh = {
+      settings.X11Forwarding = true;
+    };
 
     tor.enable = true;
 
@@ -508,7 +526,9 @@ in
     nzbget = {
       enable = true;
       group = "media";
-      settings = { MainDir = "/media/downloads"; };
+      settings = {
+        MainDir = "/media/downloads";
+      };
     };
 
     fwupd.enable = true;
@@ -539,7 +559,9 @@ in
     calibre-web = {
       enable = true;
       group = "media";
-      options = { enableBookUploading = true; };
+      options = {
+        enableBookUploading = true;
+      };
       listen.port = 8909;
       listen.ip = "127.0.0.1";
     };
@@ -570,10 +592,7 @@ in
             name = "Loki";
             type = "loki";
             access = "proxy";
-            url = "http://127.0.0.1:${
-              toString
-              config.services.loki.configuration.server.http_listen_port
-            }";
+            url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}";
           }
         ];
       };
@@ -591,7 +610,9 @@ in
           lifecycler = {
             address = "127.0.0.1";
             ring = {
-              kvstore = { store = "inmemory"; };
+              kvstore = {
+                store = "inmemory";
+              };
               replication_factor = 1;
             };
           };
@@ -625,7 +646,9 @@ in
             shared_store = "filesystem";
           };
 
-          filesystem = { directory = "/var/lib/loki/chunks"; };
+          filesystem = {
+            directory = "/var/lib/loki/chunks";
+          };
         };
 
         limits_config = {
@@ -633,7 +656,9 @@ in
           reject_old_samples_max_age = "168h";
         };
 
-        chunk_store_config = { max_look_back_period = "0s"; };
+        chunk_store_config = {
+          max_look_back_period = "0s";
+        };
 
         table_manager = {
           retention_deletes_enabled = false;
@@ -643,7 +668,11 @@ in
         compactor = {
           working_directory = "/var/lib/loki";
           shared_store = "filesystem";
-          compactor_ring = { kvstore = { store = "inmemory"; }; };
+          compactor_ring = {
+            kvstore = {
+              store = "inmemory";
+            };
+          };
         };
       };
     };
@@ -655,13 +684,12 @@ in
           http_listen_port = 3031;
           grpc_listen_port = 0;
         };
-        positions = { filename = "/tmp/positions.yaml"; };
+        positions = {
+          filename = "/tmp/positions.yaml";
+        };
         clients = [
           {
-            url = "http://127.0.0.1:${
-              toString
-              config.services.loki.configuration.server.http_listen_port
-            }/loki/api/v1/push";
+            url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push";
           }
         ];
         scrape_configs = [
@@ -696,7 +724,9 @@ in
           port = 9002;
         };
 
-        nginx = { enable = true; };
+        nginx = {
+          enable = true;
+        };
 
         rtl_433 = {
           enable = true;
@@ -720,53 +750,35 @@ in
         {
           job_name = "rtl_433";
           static_configs = [
-            {
-              targets = [
-                "127.0.0.1:${
-                  toString config.services.prometheus.exporters.rtl_433.port
-                }"
-              ];
-            }
+            { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.rtl_433.port}" ]; }
           ];
         }
         {
           job_name = "box";
           static_configs = [
-            {
-              targets = [
-                "127.0.0.1:${
-                  toString config.services.prometheus.exporters.node.port
-                }"
-              ];
-            }
+            { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
           ];
         }
         {
           job_name = "faf";
-          static_configs = [{ targets = [ "10.6.0.245:9002" ]; }];
+          static_configs = [ { targets = [ "10.6.0.245:9002" ]; } ];
         }
         {
           job_name = "h";
-          static_configs = [{ targets = [ "100.83.77.133:9002" ]; }];
+          static_configs = [ { targets = [ "100.83.77.133:9002" ]; } ];
         }
         {
           job_name = "pwntie";
-          static_configs = [{ targets = [ "100.84.170.57:9002" ]; }];
+          static_configs = [ { targets = [ "100.84.170.57:9002" ]; } ];
         }
         {
           job_name = "namish";
-          static_configs = [{ targets = [ "10.200.0.100:9100" ]; }];
+          static_configs = [ { targets = [ "10.200.0.100:9100" ]; } ];
         }
         {
           job_name = "nginx";
           static_configs = [
-            {
-              targets = [
-                "127.0.0.1:${
-                  toString config.services.prometheus.exporters.nginx.port
-                }"
-              ];
-            }
+            { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.nginx.port}" ]; }
           ];
         }
       ];
@@ -833,7 +845,9 @@ in
         backup	root@suah.dev:/var/www/	suah.dev/
         backup_exec	date "+ backup of suah.dev ended at %c"
       '';
-      cronIntervals = { daily = "50 21 * * *"; };
+      cronIntervals = {
+        daily = "50 21 * * *";
+      };
     };
 
     libreddit = {
@@ -877,9 +891,7 @@ in
           sslCertificateKey = "${config.sops.secrets.invidious_key.path}";
           sslCertificate = "${config.sops.secrets.invidious_cert.path}";
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${
-              toString config.services.invidious.port
-            }";
+            proxyPass = "http://127.0.0.1:${toString config.services.invidious.port}";
             proxyWebsockets = true;
           };
         };
@@ -941,9 +953,7 @@ in
           sslCertificate = "${config.sops.secrets.books_cert.path}";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://localhost:${
-              toString config.services.calibre-web.listen.port
-            }";
+            proxyPass = "http://localhost:${toString config.services.calibre-web.listen.port}";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
@@ -1047,9 +1057,7 @@ in
           forceSSL = true;
 
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${
-              toString config.services.grafana.settings.server.http_port
-            }";
+            proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
@@ -1072,17 +1080,13 @@ in
                        end
 
                        local sock = ngx.socket.tcp()
-                       local ok, err = sock:connect("127.0.0.1", ${
-                toString config.services.prometheus.port
-              })
+                       local ok, err = sock:connect("127.0.0.1", ${toString config.services.prometheus.port})
                        if not ok then
                            ngx.say("failed to connect to backend: ", err)
                            return
                        end
 
-                       local bytes = sock:send("GET /api/v1/query?query=wstation_temp_c HTTP/1.1\nHost: 127.0.0.1:${
-                toString config.services.prometheus.port
-              }\n\n")
+                       local bytes = sock:send("GET /api/v1/query?query=wstation_temp_c HTTP/1.1\nHost: 127.0.0.1:${toString config.services.prometheus.port}\n\n")
 
                        sock:settimeouts(1000, 1000, 1000)
 
@@ -1120,7 +1124,11 @@ in
         host all all ::1/128 trust
       '';
 
-      ensureDatabases = [ "nextcloud" "gitea" "invidious" ];
+      ensureDatabases = [
+        "nextcloud"
+        "gitea"
+        "invidious"
+      ];
       ensureUsers = [
         {
           name = "nextcloud";

@@ -1,9 +1,10 @@
-{ config
-, pkgs
-, lib
-, inputs
-, xinlib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  xinlib,
+  ...
 }:
 let
   tailnetACLs =
@@ -44,8 +45,16 @@ let
           }
           {
             action = "accept";
-            src = [ "tag:minservice" "tag:sshonly" ];
-            dst = [ "*:22" "box:3030" "nbc:443" "console:2222" ];
+            src = [
+              "tag:minservice"
+              "tag:sshonly"
+            ];
+            dst = [
+              "*:22"
+              "box:3030"
+              "nbc:443"
+              "console:2222"
+            ];
           }
           {
             action = "accept";
@@ -90,7 +99,8 @@ let
   ];
   enabled = config.nixManager.enable;
 in
-with lib; {
+with lib;
+{
   sops.secrets = mkIf enabled {
     tailnet_acl_manager = {
       owner = config.nixManager.user;

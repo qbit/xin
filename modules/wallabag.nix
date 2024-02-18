@@ -1,19 +1,29 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 
 let
   cfg = config.services.wallabag;
   inherit (builtins) toJSON;
-  inherit (lib) mkOption mkEnableOption types mkIf;
-  wallabag = pkgs.wallabag.overrideAttrs (old: {
-    patches = builtins.filter (patch: builtins.baseNameOf patch != "wallabag-data.patch") old.patches ++ [
-      # https://github.com/jtojnar/nixfiles/commit/662ac88e3358e9b50468c4bbf124aa821e22cae4
-      ./wallabag-data-location.patch
-    ];
-  });
+  inherit (lib)
+    mkOption
+    mkEnableOption
+    types
+    mkIf
+    ;
+  wallabag = pkgs.wallabag.overrideAttrs (
+    old: {
+      patches =
+        builtins.filter (patch: builtins.baseNameOf patch != "wallabag-data.patch") old.patches
+        ++ [
+          # https://github.com/jtojnar/nixfiles/commit/662ac88e3358e9b50468c4bbf124aa821e22cae4
+          ./wallabag-data-location.patch
+        ];
+    }
+  );
   wallabagConfig = toJSON {
     parameters = {
       #database_driver = "pdo_sqlite";
@@ -80,10 +90,14 @@ let
       sentry_dsn = null;
     };
   };
-  php = pkgs.php.withExtensions ({ enabled, all }: enabled ++ (with all; [
-    imagick
-    tidy
-  ]));
+  php = pkgs.php.withExtensions (
+    { enabled, all }:
+    enabled
+    ++ (with all; [
+      imagick
+      tidy
+    ])
+  );
   wallabagServiceConfig = {
     CacheDirectory = "wallabag";
     CacheDirectoryMode = "700";
@@ -123,17 +137,26 @@ in
       description = "wallabag data directory";
     };
     user = mkOption {
-      type = with types; oneOf [ str int ];
+      type =
+        with types;
+        oneOf [
+          str
+          int
+        ];
       default = "wallabag";
       description = "The user wallabag will run as.";
     };
 
     group = mkOption {
-      type = with types; oneOf [ str int ];
+      type =
+        with types;
+        oneOf [
+          str
+          int
+        ];
       default = "wallabag";
       description = "The group wallabag will run with.";
     };
-
   };
 
   config = mkIf cfg.enable {
@@ -214,7 +237,11 @@ in
       wantedBy = [ "multi-user.target" ];
       before = [ "phpfpm-wallabag.service" ];
       after = [ "postgresql.service" ];
-      path = with pkgs; [ coreutils php phpPackages.composer ];
+      path = with pkgs; [
+        coreutils
+        php
+        phpPackages.composer
+      ];
       serviceConfig = {
         User = cfg.user;
         Type = "oneshot";

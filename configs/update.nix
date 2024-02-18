@@ -1,8 +1,6 @@
-{ config
-, lib
-, ...
-}:
-with lib; {
+{ config, lib, ... }:
+with lib;
+{
   options = {
     autoUpdate = {
       enable = mkOption {

@@ -1,9 +1,11 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   cfg = config.services.veilid-server;
 in
 {
@@ -11,13 +13,23 @@ in
     services.veilid-server = {
       enable = mkEnableOption "Enable velid-server";
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "veilid";
         description = "The user veilid-server will run as.";
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "veilid";
         description = "The group veilid-server will run with.";
       };

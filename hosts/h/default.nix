@@ -1,28 +1,31 @@
-{ config
-, pkgs
-, isUnstable
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  isUnstable,
+  inputs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
   mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
   slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
-  weepushover =
-    python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
+  weepushover = python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys; };
-  icbIrcTunnel =
-    pkgs.writeScriptBin "icb-irc-tunnel"
-      (import ../../bins/icb-irc-tunnel.nix {
-        inherit pkgs;
-        inherit icbirc;
-      });
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys;
+  };
+  icbIrcTunnel = pkgs.writeScriptBin "icb-irc-tunnel" (
+    import ../../bins/icb-irc-tunnel.nix {
+      inherit pkgs;
+      inherit icbirc;
+    }
+  );
   goModuleHost = "https://codeberg.org/qbit"; # "https://git.sr.ht/~qbit";
   httpAllow = ''
     allow	10.6.0.0/24;
@@ -38,18 +41,20 @@ with pkgs; let
   matrixServer = "tapenet.org";
   matrixClientConfig = {
     "m.homeserver".base_url = "https://${matrixServer}:443";
-    "org.matrix.msc3575.proxy" = { url = "https://${matrixServer}"; };
+    "org.matrix.msc3575.proxy" = {
+      url = "https://${matrixServer}";
+    };
   };
-  matrixServerConfig = { "m.server" = "${matrixServer}:443"; };
+  matrixServerConfig = {
+    "m.server" = "${matrixServer}:443";
+  };
   mkMatrixWellKnown = p: ''
     return 200 '${builtins.toJSON p}';
   '';
 
   mkMatrixSliderLoc = {
     proxyWebsockets = true;
-    proxyPass = "http://${config.services.sliding-sync.address}:${
-      toString config.services.sliding-sync.port
-    }";
+    proxyPass = "http://${config.services.sliding-sync.address}:${toString config.services.sliding-sync.port}";
   };
   mkMatrixLoc = {
     proxyWebsockets = true;
@@ -58,9 +63,7 @@ with pkgs; let
 in
 {
   _module.args.isUnstable = false;
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot = {
     loader.grub = {
@@ -84,9 +87,14 @@ in
   nixpkgs.overlays = [
     (_: super: {
       weechat = super.weechat.override {
-        configure = { ... }: {
-          scripts = with super.weechatScripts; [ highmon weepushover ];
-        };
+        configure =
+          { ... }:
+          {
+            scripts = with super.weechatScripts; [
+              highmon
+              weepushover
+            ];
+          };
       };
     })
   ];
@@ -140,7 +148,9 @@ in
       sopsFile = config.xin-secrets.h.services;
       owner = config.users.users.gostart.name;
     };
-    wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
+    wireguard_private_key = {
+      sopsFile = config.xin-secrets.h.services;
+    };
     pots_env_file = {
       owner = config.users.users.pots.name;
       mode = "400";
@@ -212,8 +222,21 @@ in
     };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 config.services.shiori.port ]; }; };
-      allowedTCPPorts = [ 22 80 443 2222 53589 ];
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [
+            9002
+            config.services.shiori.port
+          ];
+        };
+      };
+      allowedTCPPorts = [
+        22
+        80
+        443
+        2222
+        53589
+      ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
         {
@@ -281,7 +304,10 @@ in
       matrix-synapse.after = [ "icbirc.service" ];
       icb-tunnel = {
         wantedBy = [ "network.target" ];
-        after = [ "network.target" "multi-user.target" ];
+        after = [
+          "network.target"
+          "multi-user.target"
+        ];
         serviceConfig = {
           User = "qbit";
           WorkingDirectory = "/home/qbit";
@@ -314,7 +340,10 @@ in
     loginAccounts = {
       "qbit@suah.dev" = {
         hashedPasswordFile = "${config.sops.secrets.qbit_at_suah_pass_file.path}";
-        aliases = [ "postmaster@suah.dev" "aaron@suah.dev" ];
+        aliases = [
+          "postmaster@suah.dev"
+          "aaron@suah.dev"
+        ];
       };
     };
 
@@ -380,7 +409,9 @@ in
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
     };
-    pr-status = { enable = true; };
+    pr-status = {
+      enable = true;
+    };
     gostart = {
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
@@ -419,7 +450,10 @@ in
         protocol = "https";
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial";
-        trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
+        trusted-proxies = [
+          "127.0.0.1/32"
+          "23.29.118.0/24"
+        ];
         web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
         web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
       };
@@ -431,8 +465,10 @@ in
           http_listen_port = 3031;
           grpc_listen_port = 0;
         };
-        positions = { filename = "/tmp/positions.yaml"; };
-        clients = [{ url = "http://box.otter-alligator.ts.net:3030/loki/api/v1/push"; }];
+        positions = {
+          filename = "/tmp/positions.yaml";
+        };
+        clients = [ { url = "http://box.otter-alligator.ts.net:3030/loki/api/v1/push"; } ];
         scrape_configs = [
           {
             job_name = "journal";
@@ -476,8 +512,7 @@ in
     cron = {
       enable = true;
       systemCronJobs = [
-        ''
-          @hourly qbit  (export GH_AUTH_TOKEN=$(cat /run/secrets/gqrss_token); cd /var/www/suah.dev/rss; ${gqrss}/bin/gqrss ; ${gqrss}/bin/gqrss -search "LibreSSL" -prefix libressl_ ) >/dev/null 2>&1''
+        ''@hourly qbit  (export GH_AUTH_TOKEN=$(cat /run/secrets/gqrss_token); cd /var/www/suah.dev/rss; ${gqrss}/bin/gqrss ; ${gqrss}/bin/gqrss -search "LibreSSL" -prefix libressl_ ) >/dev/null 2>&1''
       ];
     };
 
@@ -504,9 +539,15 @@ in
             "/var/dkim"
           ];
 
-          timerConfig = { OnCalendar = "00:05"; };
+          timerConfig = {
+            OnCalendar = "00:05";
+          };
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 5"
+            "--keep-yearly 10"
+          ];
         };
       };
     };
@@ -548,7 +589,11 @@ in
       '';
 
       upstreams = {
-        "ssh_gitea" = { servers = { "192.168.112.4:2222" = { }; }; };
+        "ssh_gitea" = {
+          servers = {
+            "192.168.112.4:2222" = { };
+          };
+        };
       };
 
       streamConfig = ''
@@ -574,7 +619,6 @@ in
           forceSSL = true;
           enableACME = true;
           root = "/var/www/bolddaemon.com";
-
         };
         "notes.suah.dev" = {
           forceSSL = true;
@@ -753,27 +797,26 @@ in
           forceSSL = true;
           enableACME = true;
           extraConfig =
-            if config.services.gotosocial.package.version == "0.7.1"
-            then ''
-              # TODO: This can be removed next release
-              # https://github.com/superseriousbusiness/gotosocial/issues/1419
-              # Workaround for missing API + Ice Cubes
-              location ~ ^/api/v1/accounts/[0-9A-Z]+/featured_tags {
-                  default_type application/json;
-                  return 200 '[]';
-              }
-            ''
-            else "";
+            if config.services.gotosocial.package.version == "0.7.1" then
+              ''
+                # TODO: This can be removed next release
+                # https://github.com/superseriousbusiness/gotosocial/issues/1419
+                # Workaround for missing API + Ice Cubes
+                location ~ ^/api/v1/accounts/[0-9A-Z]+/featured_tags {
+                    default_type application/json;
+                    return 200 '[]';
+                }
+              ''
+            else
+              "";
           locations."/" = {
             extraConfig = ''
-                      proxy_pass http://127.0.0.1:${
-              toString config.services.gotosocial.configuration.port
-              };
-                      proxy_set_header Host $host;
-                      proxy_set_header Upgrade $http_upgrade;
-                      proxy_set_header Connection "upgrade";
-                      proxy_set_header X-Forwarded-For $remote_addr;
-                      proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_pass http://127.0.0.1:${toString config.services.gotosocial.configuration.port};
+              proxy_set_header Host $host;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+              proxy_set_header X-Forwarded-For $remote_addr;
+              proxy_set_header X-Forwarded-Proto $scheme;
             '';
           };
         };
@@ -788,65 +831,64 @@ in
           root = "/var/www/rss.bolddaemon.com";
           locations."/" = {
             proxyWebsockets = true;
-            proxyPass = "http://${config.services.yarr.address}:${
-      toString config.services.yarr.port
-      }";
+            proxyPass = "http://${config.services.yarr.address}:${toString config.services.yarr.port}";
           };
         };
         "tapenet.org" = {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/tapenet.org";
-          locations = {
-            "/.well-known/webfinger" = {
-              extraConfig = ''
-                default_type 'application/json';
+          locations =
+            {
+              "/.well-known/webfinger" = {
+                extraConfig = ''
+                  default_type 'application/json';
 
-                content_by_lua_block {
-                  local acct = ngx.unescape_uri(ngx.var.arg_resource)
-                  local json = '${builtins.toJSON {
-                    subject = "%s";
-                    links = [
-                      {
-                        rel = "http://openid.net/specs/connect/1.0/issuer";
-                        href = "https://git.tapenet.org/";
+                  content_by_lua_block {
+                    local acct = ngx.unescape_uri(ngx.var.arg_resource)
+                    local json = '${
+                      builtins.toJSON {
+                        subject = "%s";
+                        links = [
+                          {
+                            rel = "http://openid.net/specs/connect/1.0/issuer";
+                            href = "https://git.tapenet.org/";
+                          }
+                        ];
                       }
-                    ];
-                  }}';
-                  local newjson, n, err = ngx.re.sub(json, "%s", acct)
-                  if not err then
-                    ngx.say(newjson)
-                  else
-                    ngx.say("")
-                  end
-                  return
+                    }';
+                    local newjson, n, err = ngx.re.sub(json, "%s", acct)
+                    if not err then
+                      ngx.say(newjson)
+                    else
+                      ngx.say("")
+                    end
+                    return
+                  }
+                '';
+              };
+            }
+            // (
+              if config.services.sliding-sync.enable then
+                {
+                  "/.well-known/matrix/client".extraConfig = mkMatrixWellKnown matrixClientConfig;
+                  "/.well-known/matrix/server".extraConfig = mkMatrixWellKnown matrixServerConfig;
+
+                  "/client" = mkMatrixSliderLoc;
+                  "/_matrix/client/unstable/org.matrix.msc3575/sync" = mkMatrixSliderLoc;
+
+                  "/_matrix" = mkMatrixLoc;
+                  "/_synapse/client" = mkMatrixLoc;
                 }
-              '';
-            };
-          }
-          // (if config.services.sliding-sync.enable
-          then {
-            "/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            "/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
+              else
+                {
+                  "/.well-known/matrix/client".extraConfig = mkMatrixWellKnown matrixClientConfig;
+                  "/.well-known/matrix/server".extraConfig = mkMatrixWellKnown matrixServerConfig;
 
-            "/client" = mkMatrixSliderLoc;
-            "/_matrix/client/unstable/org.matrix.msc3575/sync" =
-              mkMatrixSliderLoc;
-
-            "/_matrix" = mkMatrixLoc;
-            "/_synapse/client" = mkMatrixLoc;
-          }
-          else {
-            "/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            "/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
-
-            "/_matrix" = mkMatrixLoc;
-            "/_synapse/client" = mkMatrixLoc;
-          });
+                  "/_matrix" = mkMatrixLoc;
+                  "/_synapse/client" = mkMatrixLoc;
+                }
+            );
         };
       };
     };
@@ -876,11 +918,14 @@ in
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = [ "synapse" "gotosocial" "syncv3" "wallabag" ];
+      ensureDatabases = [
+        "synapse"
+        "gotosocial"
+        "syncv3"
+        "wallabag"
+      ];
       ensureUsers = [
-        {
-          name = "synapse_user";
-        }
+        { name = "synapse_user"; }
         {
           name = "gotosocial";
           ensureDBOwnership = true;
@@ -953,9 +998,7 @@ in
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
         plugins = with config.services.matrix-synapse.package.plugins; [ matrix-synapse-mjolnir-antispam ];
-        app_service_config_files = [
-          "/var/lib/heisenbridge/registration.yml"
-        ];
+        app_service_config_files = [ "/var/lib/heisenbridge/registration.yml" ];
         database = {
           name = "psycopg2";
           args = {
@@ -985,7 +1028,6 @@ in
       };
     };
   };
-
 
   system.stateVersion = "22.11";
 }

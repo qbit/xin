@@ -1,8 +1,6 @@
-{ config
-, lib
-, ...
-}:
-with lib; {
+{ config, lib, ... }:
+with lib;
+{
   options = {
     buildServer = {
       enable = mkEnableOption "Server will be used as part of the build infra";

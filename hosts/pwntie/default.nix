@@ -1,7 +1,4 @@
-{ pkgs
-, config
-, ...
-}:
+{ pkgs, config, ... }:
 let
   #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
@@ -10,9 +7,7 @@ let
 in
 {
   _module.args.isUnstable = false;
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   hardware.rtl-sdr.enable = true;
 
@@ -27,7 +22,10 @@ in
     };
     kernelPackages = pkgs.linuxPackages_latest;
 
-    binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "riscv64-linux"
+    ];
   };
   nixpkgs.config.allowUnsupportedSystem = true;
 
@@ -135,10 +133,17 @@ in
 
   users = {
     users = {
-      root = { openssh.authorizedKeys.keys = pubKeys; };
+      root = {
+        openssh.authorizedKeys.keys = pubKeys;
+      };
       qbit = {
         openssh.authorizedKeys.keys = pubKeys;
-        extraGroups = [ "dialout" "libvirtd" "docker" "plugdev" ];
+        extraGroups = [
+          "dialout"
+          "libvirtd"
+          "docker"
+          "plugdev"
+        ];
       };
     };
   };

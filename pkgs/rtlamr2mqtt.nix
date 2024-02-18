@@ -1,12 +1,13 @@
-{ buildPythonPackage
-, callPackage
-, fetchFromGitHub
-, paho-mqtt
-, pyusb
-, pyyaml
-, requests
-, rtl-sdr
-, ...
+{
+  buildPythonPackage,
+  callPackage,
+  fetchFromGitHub,
+  paho-mqtt,
+  pyusb,
+  pyyaml,
+  requests,
+  rtl-sdr,
+  ...
 }:
 let
   rtlamr = callPackage ./rtlamr.nix { };
@@ -18,7 +19,14 @@ buildPythonPackage {
   format = "none";
 
   nativeBuildInputs = [ ];
-  propagatedBuildInputs = [ paho-mqtt pyyaml requests pyusb rtlamr rtl-sdr ];
+  propagatedBuildInputs = [
+    paho-mqtt
+    pyyaml
+    requests
+    pyusb
+    rtlamr
+    rtl-sdr
+  ];
 
   doCheck = false;
   doBuild = false;
