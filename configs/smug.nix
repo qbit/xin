@@ -51,7 +51,7 @@ in
             ];
             panes = [
               {
-                commands = [ "mosh pwntie 'smug -f /etc/smug/ci.yml start'" ];
+                commands = [ "mosh pwntie" ];
               }
             ];
           }
