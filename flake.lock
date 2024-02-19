@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1704303300,
-        "narHash": "sha256-GkXbdEy+T62DmUOced/W+epQy1jU8vWWmgcW+GiE2VI=",
+        "lastModified": 1708300902,
+        "narHash": "sha256-+ewAWfLMcM8wIrmvqj6GTYfikDJjsM1i2gm+3NctHcI=",
         "owner": "qbit",
         "repo": "beyt",
-        "rev": "4fe287d31b80655d7fc4ed024e26294d38b5fb7f",
+        "rev": "81757614834454b5bae1fe0347a97f8b26d529db",
         "type": "github"
       },
       "original": {
