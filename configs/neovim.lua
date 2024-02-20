@@ -9,10 +9,6 @@ cmd("set t_Co=256");
 
 -- Theme / overrides
 cmd("colorscheme vacme");
-cmd("hi Normal ctermbg=none ctermfg=none");
-cmd("hi SignColumn none");
-cmd("hi LineNr none");
-cmd("hi Search cterm=none ctermbg=yellow");
 
 require("compe").setup {
     enabled = true,

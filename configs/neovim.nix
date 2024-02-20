@@ -5,15 +5,27 @@ let
 
   vacme = vimBuildTool rec {
     pname = "vacme";
-    # https://github.com/overvale/vacme (archived)
+    # https://github.com/qbit/vacme
     version = "2017-01-14";
     src = pkgs.fetchFromGitHub {
-      owner = "olivertaylor";
+      owner = "qbit";
       repo = pname;
-      rev = "2f0b284b5bc1c9dd5b7f0b89ac880959e61b0be4";
-      sha256 = "sha256-eea0Ntr3gCmF6iZ0adZaVswWH70K9IJZ4SAyVSdFp3E=";
+      rev = "3715958cc23195e0224efe4cb5ba5cfe129bd592";
+      hash = "sha256-vwqCa/iC01SY68seZ4/WarXDVjyi1FO5XHJglZr4l+8=";
     };
   };
+
+  nofrils = vimBuildTool rec {
+    pname = "nofrils";
+    version = "unstable-2020-10-08";
+    src = pkgs.fetchFromGitHub {
+      owner = "robertmeta";
+      repo = pname;
+      rev = "bad6e490846e098866136ef20fff31e99f428bb9";
+      hash = "sha256-BVBX2sFyTTqqgUmP0o77SKP1xrraJvCqkF+73rs0fLk=";
+    };
+  };
+
 
   obsidian = vimBuildTool rec {
     pname = "obsidian-nvim";
@@ -23,7 +35,7 @@ let
       owner = "epwalsh";
       repo = "obsidian.nvim";
       rev = "v${version}";
-      sha256 = "sha256-VIc5qgzqJjSv2A0v8tM25pWh+smX9DYXVsyFNTGMPbQ=";
+      hash = "sha256-VIc5qgzqJjSv2A0v8tM25pWh+smX9DYXVsyFNTGMPbQ=";
       fetchSubmodules = true;
     };
     dependencies = with vimPlugins; [ nvim-cmp tabular plenary-nvim ];
@@ -58,6 +70,7 @@ let
     neogen
     obsidian
     vacme
+    nofrils
   ];
   myVimPackages = baseVimPackages;
 in
