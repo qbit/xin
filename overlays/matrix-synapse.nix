@@ -1,8 +1,8 @@
 let
   hash = "sha256-QOU539tMpAi/WIbDOF4u2L7OJ3Wk3tkGqmPbMe91pk8=";
   sha256 = "sha256-vl1ouJsHcclOZlQ+s959bh8Qn0I/d0B/XYP+Lmdi4fg=";
-  matrix-synapse = _: super: {
-    matrix-synapse = super.matrix-synapse.overrideAttrs (_: rec {
+  matrix-synapse-unwrapped = _: super: {
+    matrix-synapse-unwrapped = super.matrix-synapse-unwrapped.overrideAttrs (_: rec {
       version = "1.102.0rc1";
       pname = "matrix-synapse";
 
@@ -20,4 +20,4 @@ let
     });
   };
 in
-matrix-synapse
+matrix-synapse-unwrapped
