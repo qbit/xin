@@ -13,6 +13,13 @@ let
         inherit hash;
       };
 
+      patches = [
+        (super.fetchpatch {
+          url = "https://github.com/element-hq/synapse/pull/16954.patch";
+          sha256 = "sha256-/hm4yKAGw30Z903v4TBDuO+AmxNOMKMK8VtNPegW/VA=";
+        })
+      ];
+
       cargoDeps = super.rustPlatform.fetchCargoTarball {
         inherit src sha256;
         name = "${pname}-${version}";
