@@ -103,7 +103,6 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
-    permittedInsecurePackages = todo "Obsidian is using insecure electron!" [ "electron-25.9.0" ];
   };
 
   boot = {
