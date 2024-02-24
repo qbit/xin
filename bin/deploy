@@ -27,7 +27,7 @@ rebuild() {
 		return 0
 	fi
 
-	nixos-rebuild ${TRACE} --flake .#${1} --build-host root@${host} --target-host root@${host} switch |& nom
+	nixos-rebuild ${TRACE} --flake .#${1} --build-host root@${host} --target-host root@${host} switch 2>&1 | nom
 	return $?
 }
 
@@ -120,7 +120,7 @@ if [ "$1" = "install" ]; then
 fi
 
 if [ "$1" = "local" ]; then
-	sudo nixos-rebuild ${TRACE} --flake .#$(uname -n) switch |& nom
+	sudo nixos-rebuild ${TRACE} --flake .#$(uname -n) switch 2>&1 | nom
 	exit $?
 fi
 
