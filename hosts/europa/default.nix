@@ -2,13 +2,11 @@
 , config
 , pkgs
 , lib
-, xinlib
 , ...
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
   inherit (builtins) readFile;
-  inherit (xinlib) jobToUserService todo;
   #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
   #  doomPrivateDir = ../../configs/doom.d;
   #};
