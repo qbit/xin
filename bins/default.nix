@@ -4,6 +4,16 @@
 , ...
 }:
 let
+  mkPubs = ver: {
+    "signify/openbsd-${toString ver}-base.pub".text =
+      builtins.readFile ./pubs/openbsd-${toString ver}-base.pub;
+    "signify/openbsd-${toString ver}-fw.pub".text =
+      builtins.readFile ./pubs/openbsd-${toString ver}-fw.pub;
+    "signify/openbsd-${toString ver}-pkg.pub".text =
+      builtins.readFile ./pubs/openbsd-${toString ver}-pkg.pub;
+    "signify/openbsd-${toString ver}-syspatch.pub".text =
+      builtins.readFile ./pubs/openbsd-${toString ver}-syspatch.pub;
+  };
   gosignify = pkgs.callPackage ../pkgs/gosignify.nix { inherit isUnstable; };
 
   ix = pkgs.writeScriptBin "ix" (import ./ix.nix { inherit (pkgs) perl; });
@@ -34,50 +44,9 @@ in
   ] ++ (if config.services.postgresql.enable then
     [ upgrade-pg ]
   else [ ]);
-  environment.etc = {
-    "signify/openbsd-70-base.pub".text =
-      builtins.readFile ./pubs/openbsd-70-base.pub;
-    "signify/openbsd-70-fw.pub".text =
-      builtins.readFile ./pubs/openbsd-70-fw.pub;
-    "signify/openbsd-70-pkg.pub".text =
-      builtins.readFile ./pubs/openbsd-70-pkg.pub;
-    "signify/openbsd-70-syspatch.pub".text =
-      builtins.readFile ./pubs/openbsd-70-syspatch.pub;
-
-    "signify/openbsd-71-base.pub".text =
-      builtins.readFile ./pubs/openbsd-71-base.pub;
-    "signify/openbsd-71-fw.pub".text =
-      builtins.readFile ./pubs/openbsd-71-fw.pub;
-    "signify/openbsd-71-pkg.pub".text =
-      builtins.readFile ./pubs/openbsd-71-pkg.pub;
-    "signify/openbsd-71-syspatch.pub".text =
-      builtins.readFile ./pubs/openbsd-71-syspatch.pub;
-
-    "signify/openbsd-72-base.pub".text =
-      builtins.readFile ./pubs/openbsd-72-base.pub;
-    "signify/openbsd-72-fw.pub".text =
-      builtins.readFile ./pubs/openbsd-72-fw.pub;
-    "signify/openbsd-72-pkg.pub".text =
-      builtins.readFile ./pubs/openbsd-72-pkg.pub;
-    "signify/openbsd-72-syspatch.pub".text =
-      builtins.readFile ./pubs/openbsd-72-syspatch.pub;
-
-    "signify/openbsd-73-base.pub".text =
-      builtins.readFile ./pubs/openbsd-73-base.pub;
-    "signify/openbsd-73-fw.pub".text =
-      builtins.readFile ./pubs/openbsd-73-fw.pub;
-    "signify/openbsd-73-pkg.pub".text =
-      builtins.readFile ./pubs/openbsd-73-pkg.pub;
-    "signify/openbsd-73-syspatch.pub".text =
-      builtins.readFile ./pubs/openbsd-73-syspatch.pub;
-
-    "signify/openbsd-74-base.pub".text =
-      builtins.readFile ./pubs/openbsd-74-base.pub;
-    "signify/openbsd-74-fw.pub".text =
-      builtins.readFile ./pubs/openbsd-74-fw.pub;
-    "signify/openbsd-74-pkg.pub".text =
-      builtins.readFile ./pubs/openbsd-74-pkg.pub;
-    "signify/openbsd-74-syspatch.pub".text =
-      builtins.readFile ./pubs/openbsd-74-syspatch.pub;
-  };
+  environment.etc =
+    (mkPubs 72) //
+    (mkPubs 73) //
+    (mkPubs 74) //
+    (mkPubs 75);
 }
