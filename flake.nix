@@ -125,19 +125,31 @@
     , ...
     } @ inputs:
     let
+      patches = [
+        {
+          url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/286522.patch";
+          hash = "sha256-wgIdZUTMz5HvJ63zh8JuOw2OYbhdP7pJqqre2yx7HwY=";
+        }
+      ];
+      patchedUnstableSrc = unstable.legacyPackages."x86_64-linux".applyPatches {
+        name = "unstable-patched";
+        src = inputs.unstable;
+        patches = map unstable.legacyPackages."x86_64-linux".fetchpatch patches;
+      };
+      patchedUnstable = unstable.lib.fix (self:
+        (import "${patchedUnstableSrc}/flake.nix").outputs {
+          inherit self unstable;
+        });
       xinlib = import ./lib { inherit (unstable) lib; };
       supportedSystems = [ "x86_64-linux" ];
-      #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
       unstablePkgsFor = forAllSystems (system:
         import unstable {
           inherit system;
-          #imports = [ ./overlays ];
         });
       stablePkgsFor = forAllSystems (system:
         import stable {
           inherit system;
-          #imports = [ ./overlays ];
         });
       hostBase = {
         modules = [
@@ -230,7 +242,7 @@
       devShells.aarch64-darwin.default = xinlib.buildShell darwinPkgs;
 
       nixosConfigurations = {
-        europa = buildSys "x86_64-linux" unstable [
+        europa = buildSys "x86_64-linux" patchedUnstable [
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "europa";
         clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
