@@ -19,7 +19,6 @@ let
     if builtins.hasAttr "peerix" config.users.users
     then config.users.users.peerix.name
     else "root";
-  rkvmTomlFmt = pkgs.formats.toml { };
 in
 {
   _module.args.isUnstable = true;
