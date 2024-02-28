@@ -254,6 +254,7 @@ in
 
   users = {
     users = {
+      root = userBase;
       qbit = userBase;
       mcchunkie = {
         createHome = true;
