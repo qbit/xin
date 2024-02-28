@@ -19,9 +19,7 @@ let
     if builtins.hasAttr "peerix" config.users.users
     then config.users.users.peerix.name
     else "root";
-  #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
-  #  doomPrivateDir = ../../configs/doom.d;
-  #};
+  rkvmTomlFmt = pkgs.formats.toml { };
 in
 {
   _module.args.isUnstable = true;
@@ -122,6 +120,12 @@ in
   sshFidoAgent.enable = true;
 
   sops.secrets = {
+    rkvm_cert = {
+      sopsFile = config.xin-secrets.stan.main;
+      owner = "root";
+      group = "wheel";
+      mode = "400";
+    };
     vm_pass = {
       sopsFile = config.xin-secrets.stan.main;
       owner = "root";
@@ -177,7 +181,6 @@ in
       };
     };
     systemPackages = with pkgs; [
-      barrier
       fzf
       google-chrome
       ispell
@@ -265,6 +268,14 @@ in
   };
 
   services = {
+    rkvm.client = {
+      enable = true;
+      settings = {
+        certificate = "${config.sops.secrets.rkvm_cert.path}";
+        password = "fake";
+        server = "127.0.0.1:24800";
+      };
+    };
     restic = {
       backups = {
         remote = {

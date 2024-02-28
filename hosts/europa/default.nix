@@ -9,9 +9,6 @@ let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
   inherit (builtins) readFile;
   inherit (xinlib) jobToUserService;
-  #doom-emacs = inputs.nix-doom-emacs.packages.${pkgs.system}.default.override {
-  #  doomPrivateDir = ../../configs/doom.d;
-  #};
   peerixUser =
     if builtins.hasAttr "peerix" config.users.users
     then config.users.users.peerix.name
@@ -36,6 +33,7 @@ let
       path = [ pkgs.taskobs ] ++ pkgs.taskobs.buildInputs;
     }
   ];
+  rkvmTomlFmt = pkgs.formats.toml { };
 in
 {
   _module.args.isUnstable = true;
@@ -43,6 +41,18 @@ in
   imports = [ ./hardware-configuration.nix ../../pkgs ];
 
   sops.secrets = {
+    rkvm_cert = {
+      sopsFile = config.xin-secrets.europa.qbit;
+      owner = "root";
+      group = "wheel";
+      mode = "400";
+    };
+    rkvm_key = {
+      sopsFile = config.xin-secrets.europa.qbit;
+      owner = "root";
+      group = "wheel";
+      mode = "400";
+    };
     fastmail = {
       sopsFile = config.xin-secrets.europa.qbit;
       owner = "qbit";
@@ -304,7 +314,19 @@ in
   ];
 
   environment = {
-    etc."barrier.conf" = { text = readFile ../../configs/barrier.conf; };
+    etc."rkvm/server.toml" = {
+      text = readFile
+        (rkvmTomlFmt.generate "server.toml" {
+          listen = "127.0.0.1:24800";
+          switch-keys = [
+            "caps-lock"
+            "left-alt"
+          ];
+          certificate = "${config.sops.secrets.rkvm_cert.path}";
+          key = "${config.sops.secrets.rkvm_key.path}";
+          password = "fake";
+        });
+    };
     sessionVariables = {
       XDG_BIN_HOME = "\${HOME}/.local/bin";
       XDG_CACHE_HOME = "\${HOME}/.cache";
@@ -318,7 +340,6 @@ in
 
     systemPackages = with pkgs; [
       arduino
-      barrier
       beets # stable
       calibre
       chirp # stable

@@ -56,9 +56,9 @@ in
             ];
           }
           {
-            name = "Barrier";
+            name = "KVM";
             commands = [
-              "barriers -a 127.0.0.1 -f --disable-crypto"
+              "sudo rkvm-server /etc/rkvm/server.toml"
             ];
             panes = [
               {
