@@ -375,6 +375,7 @@ in
       qdmr
       quodlibet-full
       rex
+      rkvm
       rofi
       rsibreak
       rtl-sdr
