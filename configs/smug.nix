@@ -58,7 +58,7 @@ in
           {
             name = "KVM";
             commands = [
-              "sudo rkvm-server /etc/rkvm/server.toml"
+              "journalctl -xef -u rkvm-server"
             ];
             panes = [
               {

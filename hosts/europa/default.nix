@@ -7,7 +7,6 @@
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
-  inherit (builtins) readFile;
   inherit (xinlib) jobToUserService;
   peerixUser =
     if builtins.hasAttr "peerix" config.users.users
@@ -33,7 +32,6 @@ let
       path = [ pkgs.taskobs ] ++ pkgs.taskobs.buildInputs;
     }
   ];
-  rkvmTomlFmt = pkgs.formats.toml { };
 in
 {
   _module.args.isUnstable = true;
@@ -187,6 +185,19 @@ in
   services.xinCA = { enable = false; };
 
   services = {
+    rkvm.server = {
+      enable = true;
+      settings = {
+        listen = "127.0.0.1:24800";
+        switch-keys = [
+          "caps-lock"
+          "left-alt"
+        ];
+        certificate = "${config.sops.secrets.rkvm_cert.path}";
+        key = "${config.sops.secrets.rkvm_key.path}";
+        password = "fake";
+      };
+    };
     power-profiles-daemon.enable = false;
     tlp = {
       enable = true;
@@ -314,19 +325,6 @@ in
   ];
 
   environment = {
-    etc."rkvm/server.toml" = {
-      text = readFile
-        (rkvmTomlFmt.generate "server.toml" {
-          listen = "127.0.0.1:24800";
-          switch-keys = [
-            "caps-lock"
-            "left-alt"
-          ];
-          certificate = "${config.sops.secrets.rkvm_cert.path}";
-          key = "${config.sops.secrets.rkvm_key.path}";
-          password = "fake";
-        });
-    };
     sessionVariables = {
       XDG_BIN_HOME = "\${HOME}/.local/bin";
       XDG_CACHE_HOME = "\${HOME}/.cache";
@@ -375,7 +373,6 @@ in
       qdmr
       quodlibet-full
       rex
-      rkvm
       rofi
       rsibreak
       rtl-sdr
