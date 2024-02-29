@@ -172,6 +172,7 @@ in
           nb
           nix-diff
           nix-index
+          nix-output-monitor
           nix-top
           pass
           ripgrep
