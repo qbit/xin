@@ -1,17 +1,21 @@
 { config
 , lib
-, pkgs
+, isUnstable
 , ...
 }:
-let
-  inherit (pkgs.libsForQt5) callPackage;
-in
 {
   options = { kde = { enable = lib.mkEnableOption "Enable KDE desktop."; }; };
 
   config = lib.mkIf config.kde.enable {
-    services.xserver.displayManager.sddm.enable = true;
-    services.xserver.desktopManager.plasma5.enable = true;
+    services.xserver =
+      if isUnstable then {
+        desktopManager.plasma6.enable = true;
+      }
+      else {
+        desktopManager.plasma5.enable = true;
+      } // {
+        displayManager.sddm.enable = true;
+      };
 
     # Listen for KDE Connect connections on the tailnet
     networking.firewall.interfaces = {
@@ -21,11 +25,6 @@ in
       };
     };
 
-    environment.systemPackages = with pkgs; [
-      (callPackage ../pkgs/tile-gaps.nix { })
-      libsForQt5.bismuth
-      plasma5Packages.kdeconnect-kde
-      waynergy
-    ];
+    programs.kdeconnect.enable = true;
   };
 }
