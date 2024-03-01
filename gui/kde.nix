@@ -10,6 +10,7 @@
     services.xserver =
       if isUnstable then {
         desktopManager.plasma6.enable = true;
+        displayManager.sddm.wayland.enable = true;
       }
       else {
         desktopManager.plasma5.enable = true;
