@@ -202,6 +202,27 @@
         "type": "github"
       }
     },
+    "microca_2": {
+      "inputs": {
+        "nixpkgs": [
+          "xin-secrets",
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709331966,
+        "narHash": "sha256-kNUWf6Ka5bkKNQ1AUnKc4PbqTNlaWxXxeC7OsliqFXI=",
+        "owner": "qbit",
+        "repo": "microca",
+        "rev": "111df20104e6aa45892625327692d17a5986c76d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "microca",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1709147990,
@@ -551,6 +572,7 @@
     },
     "xin-secrets": {
       "inputs": {
+        "microca": "microca_2",
         "sops-nix": [
           "sops-nix"
         ],
@@ -562,11 +584,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1709320806,
-        "narHash": "sha256-kpKZ29nsollufrO2f9QkH/23QFIv3t9Zz6eOKbnf4h8=",
+        "lastModified": 1709347422,
+        "narHash": "sha256-Q2O0XPXhS1SgJrpr21dRP+lg8UST964g0wc2RFDBgPY=",
         "ref": "main",
-        "rev": "dd8d5bfcc6adce30f7d0cc6658515353ff1a53ac",
-        "revCount": 129,
+        "rev": "c7f9fb7242a8008722c7fd6f58512adf2d394ac1",
+        "revCount": 131,
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
