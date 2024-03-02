@@ -189,11 +189,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1675861164,
-        "narHash": "sha256-WKFaORWZhmGWL6ZsnQ0ff4Ui5lASU0Y0p5Zf5jT2BWs=",
+        "lastModified": 1709331966,
+        "narHash": "sha256-kNUWf6Ka5bkKNQ1AUnKc4PbqTNlaWxXxeC7OsliqFXI=",
         "owner": "qbit",
         "repo": "microca",
-        "rev": "335467bed57a23dfb6d49e30eb854be187931ab3",
+        "rev": "111df20104e6aa45892625327692d17a5986c76d",
         "type": "github"
       },
       "original": {
