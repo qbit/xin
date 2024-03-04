@@ -169,7 +169,6 @@ in
           lz4
           minisign
           mosh
-          nb
           nix-diff
           nix-index
           nix-output-monitor
