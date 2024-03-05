@@ -1,9 +1,9 @@
 let
-  hash = "sha256-QOU539tMpAi/WIbDOF4u2L7OJ3Wk3tkGqmPbMe91pk8=";
-  sha256 = "sha256-vl1ouJsHcclOZlQ+s959bh8Qn0I/d0B/XYP+Lmdi4fg=";
+  hash = "sha256-RJsuvNqqUiiVw6uKkG81rqo1ZoszUHK4UIJh8MReFqo=";
+  sha256 = "sha256-PoPJnSZ9QpcpVbqDMlqwgAqu0K8oornpihErLHXb6Gc=";
   matrix-synapse-unwrapped = _: super: {
     matrix-synapse-unwrapped = super.matrix-synapse-unwrapped.overrideAttrs (_: rec {
-      version = "1.102.0rc1";
+      version = "1.102.0";
       pname = "matrix-synapse";
 
       src = super.fetchFromGitHub {
@@ -12,13 +12,6 @@ let
         rev = "v${version}";
         inherit hash;
       };
-
-      patches = [
-        (super.fetchpatch {
-          url = "https://github.com/element-hq/synapse/pull/16954.patch";
-          sha256 = "sha256-/hm4yKAGw30Z903v4TBDuO+AmxNOMKMK8VtNPegW/VA=";
-        })
-      ];
 
       cargoDeps = super.rustPlatform.fetchCargoTarball {
         inherit src sha256;
