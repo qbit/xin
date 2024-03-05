@@ -1,23 +1,29 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
+  inherit (lib) mkMerge;
   tmuxFormat = pkgs.formats.yaml { };
+  mkSmugEntry = name: cfg:
+    {
+      environment = {
+        systemPackages = [
+          (pkgs.writeScriptBin name ''
+            ${pkgs.smug}/bin/smug -f /etc/smug/${name}.yml start
+          '')
+        ];
+        etc."smug/${name}.yml".text = builtins.readFile
+          (tmuxFormat.generate "${name}.yml" cfg);
+      };
+    };
 in
 {
-  config = {
-    programs.zsh.promptInit = ''
-      alias tstart='smug -f /etc/smug/main.yml start';
-      alias cistart='smug -f /etc/smug/ci.yml start';
-    '';
-    environment = {
-      systemPackages = with pkgs; [
-        smug
-      ];
-      etc."smug/ci.yml".text = builtins.readFile (tmuxFormat.generate "ci.yml" {
+  config = mkMerge [
+    (mkSmugEntry "cistart"
+      {
         session = "CI";
         root = "~/";
         windows = [
           {
-            name = "CI Status";
+            name = "Status";
             layout = "even-vertical";
             commands = [
               "journalctl -xef -u xin-ci-update.service"
@@ -36,8 +42,9 @@ in
             ];
           }
         ];
-      });
-      etc."smug/main.yml".text = builtins.readFile (tmuxFormat.generate "main.yml" {
+      })
+    (mkSmugEntry "tstart"
+      {
         session = "Main";
         root = "~/";
         before_start = [
@@ -83,7 +90,6 @@ in
             root = "reticulum";
           }
         ];
-      });
-    };
-  };
+      })
+  ];
 }
