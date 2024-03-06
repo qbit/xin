@@ -41,6 +41,9 @@ in
               "btop"
             ];
           }
+          {
+            name = "admin";
+          }
         ];
       })
     (mkSmugEntry "tstart"
