@@ -1,7 +1,22 @@
 { config
 , lib
+, isUnstable
 , ...
 }:
+let
+  unstableVariant =
+    if isUnstable then {
+      xkb = {
+        options = "ctrl:swapcaps,compose:ralt";
+        variant = "colemak";
+        layout = "us";
+      };
+    } else {
+      xkbVariant = "colemak";
+      xkbOptions = "ctrl:swapcaps,compose:ralt";
+      layout = "us";
+    };
+in
 with lib; {
   options = {
     colemak = {
@@ -17,9 +32,6 @@ with lib; {
   config = mkIf config.colemak.enable {
     console = { keyMap = "colemak"; };
     services.xserver = {
-      layout = "us";
-      xkbVariant = "colemak";
-      xkbOptions = "ctrl:swapcaps,compose:ralt";
       inputClassSections = [
         ''
           Identifier "precursor"
@@ -38,6 +50,6 @@ with lib; {
           Option "XkbVariant" "basic"
         ''
       ];
-    };
+    } // unstableVariant;
   };
 }

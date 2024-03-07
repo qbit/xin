@@ -254,16 +254,16 @@
         #router =
         #  buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
 
-        arm64Install = stable.lib.nixosSystem {
-          system = "aarch64-linux";
+        #arm64Install = stable.lib.nixosSystem {
+        #  system = "aarch64-linux";
 
-          modules = [
-            (import ./installer.nix)
-            xin-secrets.nixosModules.sops
+        #  modules = [
+        #    (import ./installer.nix)
+        #    xin-secrets.nixosModules.sops
 
-            "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
-          ];
-        };
+        #    "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
+        #  ];
+        #};
 
         #weatherzero = buildSys "armv6l" stable [
         #  "${stable}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
@@ -281,17 +281,17 @@
         #  }
         #] "weatherzero";
 
-        isoInstall = stable.lib.nixosSystem {
-          system = "x86_64-linux";
+        #isoInstall = stable.lib.nixosSystem {
+        #  system = "x86_64-linux";
 
-          modules = [
-            (xinlib.buildVer self)
-            (import ./installer.nix)
-            xin-secrets.nixosModules.sops
+        #  modules = [
+        #    (xinlib.buildVer self)
+        #    (import ./installer.nix)
+        #    xin-secrets.nixosModules.sops
 
-            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
-          ];
-        };
+        #    "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
+        #  ];
+        #};
       };
 
       packages = forAllSystems (system:

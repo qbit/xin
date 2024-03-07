@@ -96,12 +96,12 @@ in
     power-profiles-daemon.enable = false;
     tlp = {
       enable = true;
-      extraConfig = ''
-        DISK_DEVICES="mmcblk0"
-        DISK_IOSCHED = "deadline"
-        WIFI_PWR_ON_AC = off
-        WIFI_PWR_ON_BAT = off
-      '';
+      settings = {
+        DISK_DEVICES = "mmcblk0";
+        DISK_IOSCHED = "deadline";
+        WIFI_PWR_ON_AC = false;
+        WIFI_PWR_ON_BAT = false;
+      };
     };
     fwupd = {
       enable = true;
