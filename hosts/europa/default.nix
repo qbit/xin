@@ -363,6 +363,7 @@ in
       nix-top
       nmap
       obsidian
+      openscad
       picocom
       proton-caller
       protonup-ng
