@@ -14,7 +14,6 @@
 , stdenv
 , withFIDO ? stdenv.hostPlatform.isUnix && !stdenv.hostPlatform.isMusl
 , withPAM ? stdenv.hostPlatform.isLinux
-, xinlib
 , zlib
 , ...
 }:
@@ -22,9 +21,9 @@ let
   inherit (builtins) readFile fromJSON;
   verStr = fromJSON (readFile ./openssh/version.json);
   hostStr = lib.strings.concatStrings [
-    "CI not configured on '"
+    "CI configured on '"
     config.networking.hostName
-    "': skipping OpenSSH tests"
+    "': running OpenSSH tests"
   ];
 in
 stdenv.mkDerivation {
@@ -40,8 +39,9 @@ stdenv.mkDerivation {
   doCheck =
     if config.xinCI.enable
     then
-      true
-    else (lib.warn hostStr false);
+      (lib.warn hostStr true)
+    else
+      true;
 
   patches =
     [
