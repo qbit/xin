@@ -3,6 +3,7 @@
 , options
 , pkgs
 , isUnstable
+, xinlib
 , ...
 }:
 let
@@ -15,7 +16,7 @@ let
     command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
   gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit isUnstable; };
-  myOpenSSH = pkgs.callPackage ./pkgs/openssh { };
+  myOpenSSH = pkgs.callPackage ./pkgs/openssh.nix { inherit config xinlib; };
 in
 {
   imports = [
@@ -198,7 +199,7 @@ in
       zsh.enable = true;
       gnupg.agent.enable = true;
       ssh = {
-        package = myOpenSSH.openssh;
+        package = myOpenSSH;
         agentPKCS11Whitelist = "${pkgs.opensc}/lib/opensc-pkcs11.so";
         knownHosts = {
           "[namish.otter-alligator.ts.net]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF9jlU5XATs8N90mXuCqrflwOJ+s3s7LefDmFZBx8cCk";

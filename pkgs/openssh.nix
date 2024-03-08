@@ -1,46 +1,56 @@
-{ pname
-, version
-, extraDesc ? ""
-, src
-, extraPatches ? [ ]
-, extraNativeBuildInputs ? [ ]
-, extraConfigureFlags ? [ ]
-, extraMeta ? { }
+{ autoreconfHook
+, config
+, etcDir ? "/etc/ssh"
+, fetchFromGitHub
+, hostname
+, lib
+, libedit
+, libfido2
+, libredirect
+, libressl
+, linkOpenssl ? true
+, pam
+, pkg-config
+, stdenv
+, withFIDO ? stdenv.hostPlatform.isUnix && !stdenv.hostPlatform.isMusl
+, withPAM ? stdenv.hostPlatform.isLinux
+, xinlib
+, zlib
 , ...
-}: { lib
-   , stdenv
-   , # This *is* correct, though unusual. as a way of getting krb5-config from the
-     # package without splicing See: https://github.com/NixOS/nixpkgs/pull/107606
-     pkgs
-   , autoreconfHook
-   , zlib
-   , libressl
-   , libedit
-   , pkg-config
-   , pam
-   , libredirect
-   , etcDir ? "/etc/ssh"
-   , withKerberos ? true
-   , libkrb5
-   , libfido2
-   , hostname
-   , nixosTests
-   , withFIDO ? stdenv.hostPlatform.isUnix && !stdenv.hostPlatform.isMusl
-   , withPAM ? stdenv.hostPlatform.isLinux
-   , linkOpenssl ? true
-   ,
-   }:
+}:
+let
+  inherit (builtins) readFile fromJSON;
+  verStr = fromJSON (readFile ./openssh/version.json);
+  hostStr = lib.strings.concatStrings [
+    "CI not configured on '"
+    config.networking.hostName
+    "': skipping OpenSSH tests"
+  ];
+in
 stdenv.mkDerivation {
-  inherit pname version src;
+  pname = "openssh";
+  inherit (verStr) version;
+
+  src = fetchFromGitHub {
+    inherit (verStr) rev hash;
+    owner = "openssh";
+    repo = "openssh-portable";
+  };
+
+  doCheck =
+    if config.xinCI.enable
+    then
+      true
+    else (lib.warn hostStr false);
 
   patches =
     [
-      ./locale_archive.patch
+      ./openssh/locale_archive.patch
+      ./openssh/ssh-keysign-8.5.patch
 
       # See discussion in https://github.com/NixOS/nixpkgs/pull/16966
-      ./dont_create_privsep_path.patch
-    ]
-    ++ extraPatches;
+      ./openssh/dont_create_privsep_path.patch
+    ];
 
   postPatch =
     # On Hydra this makes installation fail (sometimes?),
@@ -51,16 +61,10 @@ stdenv.mkDerivation {
 
   strictDeps = true;
   nativeBuildInputs =
-    [ autoreconfHook pkg-config ]
-    # This is not the same as the libkrb5 from the inputs! pkgs.libkrb5 is
-    # needed here to access krb5-config in order to cross compile. See:
-    # https://github.com/NixOS/nixpkgs/pull/107606
-    ++ lib.optional withKerberos pkgs.libkrb5
-    ++ extraNativeBuildInputs;
+    [ autoreconfHook pkg-config ];
   buildInputs =
     [ zlib libressl libedit ]
     ++ lib.optional withFIDO libfido2
-    ++ lib.optional withKerberos libkrb5
     ++ lib.optional withPAM pam;
 
   preConfigure = ''
@@ -83,17 +87,15 @@ stdenv.mkDerivation {
     ]
     ++ lib.optional (etcDir != null) "--sysconfdir=${etcDir}"
     ++ lib.optional withFIDO "--with-security-key-builtin=yes"
-    ++ lib.optional withKerberos (assert libkrb5 != null; "--with-kerberos5=${libkrb5}")
     ++ lib.optional stdenv.isDarwin "--disable-libutil"
-    ++ lib.optional (!linkOpenssl) "--without-openssl"
-    ++ extraConfigureFlags;
+    ++ lib.optional (!linkOpenssl) "--without-openssl";
 
   ${
-  if stdenv.hostPlatform.isStatic
-  then "NIX_LDFLAGS"
-  else null
-  } =
-    [ "-laudit" ] ++ lib.optionals withKerberos [ "-lkeyutils" ];
+  if stdenv.hostPlatform.isStatic then
+    "NIX_LDFLAGS"
+  else
+    null
+  } = [ "-laudit" ];
 
   buildFlags = [ "SSH_KEYSIGN=ssh-keysign" ];
 
@@ -147,32 +149,21 @@ stdenv.mkDerivation {
     # set up NIX_REDIRECTS for direct invocations
     set -a; source ~/.ssh/environment.base; set +a
   '';
-  # integration tests hard to get working on darwin with its shaky
-  # sandbox
-  # t-exec tests fail on musl
-  checkTarget =
-    lib.optional (!stdenv.isDarwin && !stdenv.hostPlatform.isMusl) "t-exec"
-    # other tests are less demanding of the environment
-    ++ [ "unit" "file-tests" "interop-tests" ];
+
+  checkTarget = [ "t-exec" "unit" "file-tests" "interop-tests" ];
 
   installTargets = [ "install-nokeys" ];
   installFlags = [
     "sysconfdir=\${out}/etc/ssh"
   ];
 
-  passthru.tests = {
-    borgbackup-integration = nixosTests.borgbackup;
+  meta = with lib; {
+    description = "An implementation of the SSH protocol";
+    homepage = "https://www.openssh.com/";
+    changelog = "https://www.openssh.com/releasenotes.html";
+    license = licenses.bsd2;
+    platforms = platforms.unix ++ platforms.windows;
+    maintainers = with maintainers; [ qbit ];
+    mainProgram = "ssh";
   };
-
-  meta = with lib;
-    {
-      description = "An implementation of the SSH protocol${extraDesc}";
-      homepage = "https://www.openssh.com/";
-      changelog = "https://www.openssh.com/releasenotes.html";
-      license = licenses.bsd2;
-      platforms = platforms.unix ++ platforms.windows;
-      maintainers = (extraMeta.maintainers or [ ]) ++ (with maintainers; [ eelco aneeshusa ]);
-      mainProgram = "ssh";
-    }
-    // extraMeta;
 }
