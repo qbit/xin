@@ -348,7 +348,7 @@
           hpi =
             upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
           openevse =
-            upkgs.python3Packages.callPackage ./pkgs/openevse.nix { inherit upkgs; };
+            upkgs.python312Packages.callPackage ./pkgs/openevse.nix { inherit upkgs; };
           promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
             inherit upkgs;
           };

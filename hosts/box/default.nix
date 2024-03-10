@@ -297,7 +297,7 @@ in
           ical
         ];
       customComponents = [
-        (pkgs.python3Packages.callPackage ../../pkgs/openevse.nix { inherit (pkgs.home-assistant) pkgs; })
+        (pkgs.python312Packages.callPackage ../../pkgs/openevse.nix { inherit (pkgs.home-assistant) pkgs; })
       ];
       extraComponents = [
         "airthings"
