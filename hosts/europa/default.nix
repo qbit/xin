@@ -341,6 +341,7 @@ in
       beets # stable
       calibre
       chirp # stable
+      deluge
       direwolf
       element-desktop
       elmPackages.elm
