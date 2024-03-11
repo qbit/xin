@@ -25,6 +25,20 @@ in
       efi.canTouchEfiVariables = true;
     };
 
+    kernelPatches = [
+      {
+        name = "pwm-lpss";
+        patch = null;
+        extraConfig = ''
+          PWM y
+          PWM_LPSS m
+          PWM_LPSS_PCI m
+          PWM_LPSS_PLATFORM m
+          PWM_SYSFS y
+        '';
+      }
+    ];
+
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "fbcon=rotate:1"
@@ -32,13 +46,15 @@ in
       "video=DSI-1:panel_orientation=right_side_up"
     ];
 
-    kernelModules = [ "btusb" "kvm-intel" ];
+    kernelModules = [ "btusb" "kvm-intel" "i915" "pwm-lpss" "pwm-lpss-platform" ];
 
     initrd = {
       kernelModules = [
         "g_serial"
         "bq24190_charger"
         "i915"
+        "pwm-lpss"
+        "pwm-lpss-platform"
       ];
 
       availableKernelModules = [
