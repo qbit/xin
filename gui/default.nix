@@ -127,6 +127,7 @@ with lib; {
           zeal
 
           (callPackage ../configs/helix.nix { })
+          (callPackage ../pkgs/gitu.nix {})
         ]);
       };
 
