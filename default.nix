@@ -3,6 +3,7 @@
 , options
 , pkgs
 , isUnstable
+, xinlib
 , ...
 }:
 let
@@ -219,8 +220,8 @@ in
       };
     };
 
-    #services.logrotate.checkConfig =
-    #  todo "logrotate.checkConfig disabled: https://github.com/NixOS/nix/issues/8502" false;
+    services.logrotate.checkConfig =
+      xinlib.todo "logrotate.checkConfig disabled: https://github.com/NixOS/nix/issues/8502" false;
 
     services = {
       openssh = {
