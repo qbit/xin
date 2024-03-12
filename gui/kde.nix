@@ -8,15 +8,18 @@
 
   config = lib.mkIf config.kde.enable {
     services.xserver =
-      if isUnstable then {
-        desktopManager.plasma6.enable = true;
-        displayManager.sddm.wayland.enable = true;
-      }
-      else {
-        desktopManager.plasma5.enable = true;
-      } // {
-        displayManager.sddm.enable = true;
-      };
+      lib.mkMerge [
+        (if isUnstable then {
+          desktopManager.plasma6.enable = true;
+          displayManager.sddm.wayland.enable = true;
+        }
+        else {
+          desktopManager.plasma5.enable = true;
+        })
+        ({
+          displayManager.sddm.enable = true;
+        })
+      ];
 
     # Listen for KDE Connect connections on the tailnet
     networking.firewall.interfaces = {
