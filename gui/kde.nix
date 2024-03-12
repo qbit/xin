@@ -16,9 +16,9 @@
         else {
           desktopManager.plasma5.enable = true;
         })
-        ({
+        {
           displayManager.sddm.enable = true;
-        })
+        }
       ];
 
     # Listen for KDE Connect connections on the tailnet
