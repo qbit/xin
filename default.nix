@@ -60,16 +60,19 @@ in
   };
 
   config = {
-    sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    sops = {
+      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-    sops.secrets = {
-      xin_secrets_deploy_key = {
-        sopsFile = config.xin-secrets.deploy;
-        owner = "root";
-        group = "wheel";
-        mode = "400";
+      secrets = {
+        xin_secrets_deploy_key = {
+          sopsFile = config.xin-secrets.deploy;
+          owner = "root";
+          group = "wheel";
+          mode = "400";
+        };
       };
     };
+
 
     security.pki.certificates = [
       ''

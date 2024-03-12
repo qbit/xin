@@ -14,6 +14,7 @@ let
 
   userBase = {
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
+    shell = pkgs.zsh;
   };
   peerixUser =
     if builtins.hasAttr "peerix" config.users.users
@@ -152,17 +153,26 @@ in
       owner = "root";
       mode = "400";
     };
+    abieber_hash = {
+      sopsFile = config.xin-secrets.user_passwords;
+      owner = "root";
+      mode = "400";
+      neededForUsers = true;
+    };
   };
 
-  users.users.root = userBase;
-  users.users.abieber =
-    {
-      isNormalUser = true;
-      description = "Aaron Bieber";
-      shell = pkgs.zsh;
-      extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-    }
-    // userBase;
+  users = {
+    mutableUsers = false;
+    users = {
+      root = userBase;
+      abieber = userBase // {
+        isNormalUser = true;
+        description = "Aaron Bieber";
+        extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+        hashedPasswordFile = config.sops.secrets.abieber_hash.path;
+      };
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
 
