@@ -213,7 +213,7 @@ in
       apg
       git
       signify
-      glowing-bear
+      git-annex
       rtl_433
     ];
   };

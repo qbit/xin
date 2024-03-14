@@ -353,6 +353,7 @@ in
       fossil
       gh
       gimp
+      git-annex
       git-credential-1password
       gqrx
       hackrf
