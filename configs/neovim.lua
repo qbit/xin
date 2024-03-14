@@ -43,12 +43,6 @@ require("nvim-tree").setup({
     }
 })
 
-require('obsidian').setup({
-    dir = "~/Brain",
-    daily_notes = {folder = "Daily"},
-    completion = {nvim_cmp = false}
-})
-
 require'nvim-treesitter.configs'.setup({})
 require('neogen').setup({})
 
