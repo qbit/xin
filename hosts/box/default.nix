@@ -787,7 +787,7 @@ in
 
     gitea = {
       enable = true;
-      stateDir = "/media/git";
+      stateDir = "/media/git/gitea";
       appName = "Tape:neT";
 
       #package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
