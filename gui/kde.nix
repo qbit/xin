@@ -3,12 +3,30 @@
 , isUnstable
 , ...
 }:
+let
+  inherit (lib) mkIf mkEnableOption mkMerge mkOption types;
+in
 {
-  options = { kde = { enable = lib.mkEnableOption "Enable KDE desktop."; }; };
+  options = {
+    kde = { enable = mkEnableOption "Enable KDE desktop."; };
+    kdeConnect = {
+      enable = mkEnableOption {
+        description = "Enable PipeWire";
+        default = false;
+        example = true;
+      };
 
-  config = lib.mkIf config.kde.enable {
+      interface = mkOption {
+        description = "listen interface for kde connect";
+        default = "tailscale0";
+        type = types.str;
+      };
+    };
+  };
+
+  config = mkIf config.kde.enable {
     services.xserver =
-      lib.mkMerge [
+      mkMerge [
         (if isUnstable then {
           desktopManager.plasma6.enable = true;
           displayManager.sddm.wayland.enable = true;
@@ -22,13 +40,19 @@
       ];
 
     # Listen for KDE Connect connections on the tailnet
-    networking.firewall.interfaces = {
-      "tailscale0" = {
-        allowedTCPPorts = lib.range 1714 1764;
-        allowedUDPPorts = lib.range 1714 1764;
-      };
+    networking.firewall.interfaces = mkIf config.kdeConnect.enable {
+      "${config.kdeConnect.interface}" =
+        let
+          range = {
+            from = 1714;
+            to = 1764;
+          };
+        in
+        {
+          allowedUDPPortRanges = [ range ];
+          allowedTCPPortRanges = [ range ];
+        };
     };
-
-    programs.kdeconnect.enable = true;
+    programs.kdeconnect.enable = config.kdeConnect.enable;
   };
 }

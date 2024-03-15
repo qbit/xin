@@ -137,6 +137,7 @@ in
   };
 
   kde.enable = lib.mkDefault true;
+  kdeConnect.enable = true;
 
   virtualisation.libvirtd.enable = lib.mkDefault true;
 
@@ -152,7 +153,12 @@ in
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 8384 ]; }; };
+      interfaces = {
+        "tailscale0" =
+          {
+            allowedTCPPorts = [ 8384 ];
+          };
+      };
     };
   };
 
