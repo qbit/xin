@@ -363,6 +363,8 @@ in
       git-credential-1password
       gqrx
       hackrf
+      inkscape
+      jujutsu
       klavaro
       minicom
       nheko
