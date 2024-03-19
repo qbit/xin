@@ -83,6 +83,7 @@ stdenv.mkDerivation {
       "--with-mantype=man"
       "--with-libedit=yes"
       "--disable-strip"
+      "--disable-dsa-keys"
       (lib.withFeature withPAM "pam")
     ]
     ++ lib.optional (etcDir != null) "--sysconfdir=${etcDir}"

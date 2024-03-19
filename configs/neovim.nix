@@ -26,21 +26,6 @@ let
     };
   };
 
-
-  obsidian = vimBuildTool rec {
-    pname = "obsidian-nvim";
-    # https://github.com/epwalsh/obsidian.nvim/tags
-    version = "3.2.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "epwalsh";
-      repo = "obsidian.nvim";
-      rev = "v${version}";
-      hash = "sha256-VIc5qgzqJjSv2A0v8tM25pWh+smX9DYXVsyFNTGMPbQ=";
-      fetchSubmodules = true;
-    };
-    dependencies = with vimPlugins; [ nvim-cmp tabular plenary-nvim ];
-  };
-
   baseVimPackages = with vimPlugins; [
     elm-vim
     fugitive
@@ -69,7 +54,6 @@ let
     zig-vim
 
     neogen
-    obsidian
     vacme
     nofrils
   ];

@@ -234,6 +234,7 @@ in
       aspell
       aspellDicts.en
       icbirc
+      irssi
 
       # matrix things
       matrix-synapse-tools.synadm
