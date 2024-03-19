@@ -99,6 +99,8 @@
           MoreFromMozilla = false;
         };
       };
+      # NOTE: https://mozilla.github.io/policy-templates/
+      # Items can be found here ^
       preferences = {
         # TODO: confirm no issues
         "dom.event.clipboardevents.enabled" = false;
@@ -151,7 +153,6 @@
         "security.ssl.errorReporting.enabled" = false;
 
         # Not yet working:
-        # https://github.com/mozilla/policy-templates/blob/master/README.md#preferences
         "beacon.enabled" = false;
         "privacy.resistFingerprinting" = true;
         "services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.highlights.includePocket" =
