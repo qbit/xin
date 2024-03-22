@@ -25,8 +25,10 @@ in
 
   config =
     let
+      inherit (config.networking) hostName;
+      secretAttrs = config.xin-secrets.${hostName}.user_passwords;
       hasQbit =
-        if builtins.hasAttr "qbit" config.xin-secrets.${config.networking.hostName}.user_passwords then
+        if builtins.hasAttr "qbit" secretAttrs then
           true
         else false;
     in
@@ -39,7 +41,7 @@ in
               root_hash =
                 {
                   name = "hash";
-                  sopsFile = config.xin-secrets.${config.networking.hostName}.user_passwords.root;
+                  sopsFile = secretAttrs.root;
                   owner = "root";
                   mode = "400";
                   neededForUsers = true;
@@ -47,7 +49,7 @@ in
             }
             (mkIf hasQbit {
               qbit_hash = {
-                sopsFile = config.xin-secrets.${config.networking.hostName}.user_passwords.qbit;
+                sopsFile = secretAttrs.qbit;
                 owner = "root";
                 mode = "400";
                 neededForUsers = true;
