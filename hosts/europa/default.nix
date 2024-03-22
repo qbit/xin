@@ -364,6 +364,7 @@ in
       gqrx
       hackrf
       inkscape
+      jan
       jujutsu
       klavaro
       minicom
