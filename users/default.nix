@@ -35,15 +35,16 @@ in
         {
           age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
           secrets = mkMerge [
-            ({
+            {
               root_hash =
                 {
+                  name = "hash";
                   sopsFile = config.xin-secrets.${config.networking.hostName}.user_passwords.root;
                   owner = "root";
                   mode = "400";
                   neededForUsers = true;
                 };
-            })
+            }
             (mkIf hasQbit {
               qbit_hash = {
                 sopsFile = config.xin-secrets.${config.networking.hostName}.user_passwords.qbit;
@@ -57,12 +58,11 @@ in
       users = {
         mutableUsers = false;
         users = mkMerge [
-          (
-            {
-              root = userBase // {
-                hashedPasswordFile = config.sops.secrets.root_hash.path;
-              };
-            })
+          {
+            root = userBase // {
+              hashedPasswordFile = config.sops.secrets.root_hash.path;
+            };
+          }
           (mkIf hasQbit {
             qbit = userBase // {
               isNormalUser = true;

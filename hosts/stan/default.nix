@@ -159,12 +159,20 @@ in
       mode = "400";
       neededForUsers = true;
     };
+    root_hash = {
+      sopsFile = config.xin-secrets.stan.user_passwords.root;
+      owner = "root";
+      mode = "400";
+      neededForUsers = true;
+    };
   };
 
   users = {
     mutableUsers = false;
     users = {
-      root = userBase;
+      root = userBase // {
+        hashedPasswordFile = config.sops.secrets.root_hash.path;
+      };
       abieber = userBase // {
         isNormalUser = true;
         description = "Aaron Bieber";
