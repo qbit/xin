@@ -1,7 +1,6 @@
 { config
 , lib
 , pkgs
-, isUnstable
 , ...
 }:
 with lib; let
@@ -24,43 +23,56 @@ in
     };
   };
 
-  config = mkIf config.defaultUsers.enable {
-    sops = {
-      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      secrets = {
-        "${config.networking.hostName}_hash" = {
-          sopsFile = config.xin-secrets.root_passwords;
-          owner = "root";
-          mode = "400";
-          neededForUsers = true;
+  config =
+    let
+      hasQbit =
+        if builtins.hasAttr "qbit" config.xin-secrets.${config.networking.hostName}.user_passwords then
+          true
+        else false;
+    in
+    mkIf config.defaultUsers.enable {
+      sops =
+        {
+          age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+          secrets = mkMerge [
+            ({
+              root_hash =
+                {
+                  sopsFile = config.xin-secrets.${config.networking.hostName}.user_passwords.root;
+                  owner = "root";
+                  mode = "400";
+                  neededForUsers = true;
+                };
+            })
+            (mkIf hasQbit {
+              qbit_hash = {
+                sopsFile = config.xin-secrets.${config.networking.hostName}.user_passwords.qbit;
+                owner = "root";
+                mode = "400";
+                neededForUsers = true;
+              };
+            })
+          ];
         };
-        qbit_hash = {
-          sopsFile = config.xin-secrets.user_passwords;
-          owner = "root";
-          mode = "400";
-          neededForUsers = true;
-        };
-      };
-    };
-    users = {
-      mutableUsers = false;
       users = {
-        root = userBase // {
-          hashedPasswordFile = config.sops.secrets."${config.networking.hostName}_hash".path;
-        };
-        qbit = userBase // {
-          isNormalUser = true;
-          description = "Aaron Bieber";
-          home = "/home/qbit";
-          extraGroups = [ "wheel" ];
-          hashedPasswordFile = config.sops.secrets.qbit_hash.path;
-        };
+        mutableUsers = false;
+        users = mkMerge [
+          (
+            {
+              root = userBase // {
+                hashedPasswordFile = config.sops.secrets.root_hash.path;
+              };
+            })
+          (mkIf hasQbit {
+            qbit = userBase // {
+              isNormalUser = true;
+              description = "Aaron Bieber";
+              home = "/home/qbit";
+              extraGroups = [ "wheel" ];
+              hashedPasswordFile = config.sops.secrets.qbit_hash.path;
+            };
+          })
+        ];
       };
     };
-
-    environment.systemPackages =
-      if isUnstable
-      then [ pkgs.yash pkgs.go ]
-      else [ pkgs.go ];
-  };
 }

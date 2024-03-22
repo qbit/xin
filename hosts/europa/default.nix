@@ -40,69 +40,69 @@ in
 
   sops.secrets = {
     rkvm_cert = {
-      sopsFile = config.xin-secrets.europa.qbit;
+      sopsFile = config.xin-secrets.europa.secrets.qbit;
       owner = "root";
       group = "wheel";
       mode = "400";
     };
     rkvm_key = {
-      sopsFile = config.xin-secrets.europa.qbit;
+      sopsFile = config.xin-secrets.europa.secrets.qbit;
       owner = "root";
       group = "wheel";
       mode = "400";
     };
     fastmail = {
-      sopsFile = config.xin-secrets.europa.qbit;
+      sopsFile = config.xin-secrets.europa.secrets.qbit;
       owner = "qbit";
       group = "wheel";
       mode = "400";
     };
     fastmail_user = {
-      sopsFile = config.xin-secrets.europa.qbit;
+      sopsFile = config.xin-secrets.europa.secrets.qbit;
       owner = "qbit";
       group = "wheel";
       mode = "400";
     };
     nix_review = {
-      sopsFile = config.xin-secrets.europa.qbit;
+      sopsFile = config.xin-secrets.europa.secrets.qbit;
       owner = "qbit";
       group = "wheel";
       mode = "400";
     };
     netrc = {
-      sopsFile = config.xin-secrets.europa.qbit;
+      sopsFile = config.xin-secrets.europa.secrets.qbit;
       owner = "qbit";
       group = "wheel";
       mode = "400";
     };
     peerix_private_key = {
-      sopsFile = config.xin-secrets.europa.peerix;
+      sopsFile = config.xin-secrets.europa.secrets.peerix;
       owner = "${peerixUser}";
       group = "wheel";
       mode = "400";
     };
     restic_password_file = {
-      sopsFile = config.xin-secrets.europa.services;
+      sopsFile = config.xin-secrets.europa.secrets.services;
       owner = "root";
       mode = "400";
     };
     restic_env_file = {
-      sopsFile = config.xin-secrets.europa.services;
+      sopsFile = config.xin-secrets.europa.secrets.services;
       owner = "root";
       mode = "400";
     };
     restic_remote_password_file = {
-      sopsFile = config.xin-secrets.europa.services;
+      sopsFile = config.xin-secrets.europa.secrets.services;
       owner = "root";
       mode = "400";
     };
     restic_remote_env_file = {
-      sopsFile = config.xin-secrets.europa.services;
+      sopsFile = config.xin-secrets.europa.secrets.services;
       owner = "root";
       mode = "400";
     };
     restic_remote_repo_file = {
-      sopsFile = config.xin-secrets.europa.services;
+      sopsFile = config.xin-secrets.europa.secrets.services;
       owner = "root";
       mode = "400";
     };

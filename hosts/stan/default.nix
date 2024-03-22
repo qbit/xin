@@ -121,40 +121,40 @@ in
 
   sops.secrets = {
     rkvm_cert = {
-      sopsFile = config.xin-secrets.stan.main;
+      sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
       group = "wheel";
       mode = "400";
     };
     vm_pass = {
-      sopsFile = config.xin-secrets.stan.main;
+      sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
       group = "wheel";
       mode = "400";
     };
     peerix_private_key = {
-      sopsFile = config.xin-secrets.stan.peerix;
+      sopsFile = config.xin-secrets.stan.secrets.peerix;
       owner = "${peerixUser}";
       group = "wheel";
       mode = "400";
     };
     restic_password_file = {
-      sopsFile = config.xin-secrets.stan.main;
+      sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
       mode = "400";
     };
     restic_env_file = {
-      sopsFile = config.xin-secrets.stan.main;
+      sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
       mode = "400";
     };
     restic_repo_file = {
-      sopsFile = config.xin-secrets.stan.main;
+      sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
       mode = "400";
     };
     abieber_hash = {
-      sopsFile = config.xin-secrets.user_passwords;
+      sopsFile = config.xin-secrets.stan.user_passwords.abieber;
       owner = "root";
       mode = "400";
       neededForUsers = true;

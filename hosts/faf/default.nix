@@ -38,7 +38,6 @@ in
 
   users.users = {
     root = userBase;
-    qbit = userBase;
   };
 
   services = {

@@ -240,7 +240,7 @@
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "stan";
         weather = buildSys "aarch64-linux" stable [ ] "weather";
-        octo = buildSys "aarch64-linux" stable [ ] "octo";
+        #octo = buildSys "aarch64-linux" stable [ ] "octo";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
         box = buildSys "x86_64-linux" unstable [ ./configs/hardened.nix ] "box";

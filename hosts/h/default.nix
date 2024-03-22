@@ -95,76 +95,76 @@ in
     synapse_signing_key = {
       owner = config.users.users.matrix-synapse.name;
       mode = "600";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     synapse_shared_secret = {
       owner = config.users.users.matrix-synapse.name;
       mode = "600";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     hammer_access_token = {
       owner = config.users.users.mjolnir.name;
       mode = "600";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     gqrss_token = {
       owner = config.users.users.qbit.name;
       mode = "400";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     restic_env_file = {
       owner = config.users.users.root.name;
       mode = "400";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     restic_password_file = {
       owner = config.users.users.root.name;
       mode = "400";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     yarr_auth = {
       owner = config.users.users.yarr.name;
       mode = "400";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     # TODO: rename
     router_stats_ts_key = {
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
       owner = config.users.users.tsvnstat.name;
     };
     #golink = {
-    #  sopsFile = config.xin-secrets.h.services;
+    #  sopsFile = config.xin-secrets.h.secrets.services;
     #  owner = config.users.users.golink.name;
     #};
     gostart = {
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
       owner = config.users.users.gostart.name;
     };
-    wireguard_private_key = { sopsFile = config.xin-secrets.h.services; };
+    wireguard_private_key = { sopsFile = config.xin-secrets.h.secrets.services; };
     pots_env_file = {
       owner = config.users.users.pots.name;
       mode = "400";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     sliding_sync_env = {
       owner = config.services.sliding-sync.user;
       mode = "400";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     pr_status_env = {
       mode = "400";
       owner = config.services.tsrevprox.user;
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     qbit_at_suah_pass_file = {
       mode = "400";
       owner = "root";
-      sopsFile = config.xin-secrets.h.services;
+      sopsFile = config.xin-secrets.h.secrets.services;
     };
     #wallabag_secret = {
     #  mode = "400";
     #  owner = "wallabag";
-    #  sopsFile = config.xin-secrets.h.services;
+    #  sopsFile = config.xin-secrets.h.secrets.services;
     #};
   };
 

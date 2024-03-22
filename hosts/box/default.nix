@@ -40,7 +40,7 @@ let
   ];
   userBase = { openssh.authorizedKeys.keys = pubKeys; };
   mkNginxSecret = {
-    sopsFile = config.xin-secrets.box.certs;
+    sopsFile = config.xin-secrets.box.secrets.certs;
     owner = config.users.users.nginx.name;
     mode = "400";
   };
@@ -55,30 +55,30 @@ in
   sops.secrets = {
     #nextcloud_db_pass = {
     #  owner = config.users.users.nextcloud.name;
-    #  sopsFile = config.xin-secrets.box.services;
+    #  sopsFile = config.xin-secrets.box.secrets.services;
     #};
     #nextcloud_admin_pass = {
     #  owner = config.users.users.nextcloud.name;
-    #  sopsFile = config.xin-secrets.box.services;
+    #  sopsFile = config.xin-secrets.box.secrets.services;
     #};
-    #photoprism_admin_password = {sopsFile = config.xin-secrets.box.services;};
+    #photoprism_admin_password = {sopsFile = config.xin-secrets.box.secrets.services;};
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
-      sopsFile = config.xin-secrets.box.services;
+      sopsFile = config.xin-secrets.box.secrets.services;
     };
-    "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.services; };
-    "wireguard_private_key" = { sopsFile = config.xin-secrets.box.services; };
+    "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.secrets.services; };
+    "wireguard_private_key" = { sopsFile = config.xin-secrets.box.secrets.services; };
     "restic_htpasswd" = {
       owner = config.users.users.restic.name;
-      sopsFile = config.xin-secrets.box.services;
+      sopsFile = config.xin-secrets.box.secrets.services;
     };
     restic_cert = {
       owner = config.users.users.restic.name;
-      sopsFile = config.xin-secrets.box.certs;
+      sopsFile = config.xin-secrets.box.secrets.certs;
     };
     restic_key = {
       owner = config.users.users.restic.name;
-      sopsFile = config.xin-secrets.box.certs;
+      sopsFile = config.xin-secrets.box.secrets.certs;
     };
 
     books_cert = mkNginxSecret;
