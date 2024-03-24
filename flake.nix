@@ -318,7 +318,6 @@
           };
           femtolisp = upkgs.callPackage ./pkgs/femtolisp.nix { };
           ttfs = upkgs.callPackage ./pkgs/ttfs.nix { };
-          gitu = upkgs.callPackage ./pkgs/gitu.nix { };
           fyne = upkgs.callPackage ./pkgs/fyne.nix { inherit upkgs; };
           flake-warn =
             spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
