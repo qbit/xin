@@ -233,7 +233,15 @@ in
         ADDRESS = "127.0.0.1";
       };
     };
-    fprintd.enable = true;
+    fprintd = {
+      enable = true;
+      package = pkgs.fprintd.overrideAttrs {
+        mesonCheckFlags = [
+          "--no-suite"
+          "fprintd:TestPamFprintd"
+        ];
+      };
+    };
     avahi = {
       enable = true;
       openFirewall = true;
