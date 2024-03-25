@@ -510,6 +510,10 @@ in
       group = "media";
       settings = { MainDir = "/media/downloads"; };
     };
+    sabnzbd = {
+      enable = true;
+      group = "media";
+    };
 
     fwupd.enable = true;
     zfs = {
