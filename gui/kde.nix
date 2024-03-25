@@ -1,5 +1,6 @@
 { config
 , lib
+, pkgs
 , isUnstable
 , ...
 }:
@@ -53,6 +54,6 @@ in
           allowedTCPPortRanges = [ range ];
         };
     };
-    programs.kdeconnect.enable = config.kdeConnect.enable;
+    environment.systemPackages = mkIf config.kdeConnect.enable [ pkgs.kdeconnect ];
   };
 }
