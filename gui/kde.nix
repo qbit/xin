@@ -54,6 +54,10 @@ in
           allowedTCPPortRanges = [ range ];
         };
     };
-    environment.systemPackages = mkIf config.kdeConnect.enable [ pkgs.kdeconnect ];
+    environment.systemPackages = mkIf config.kdeConnect.enable
+      (if isUnstable then
+        [ pkgs.kdePackages.kdeconnect-kde ]
+      else
+        [ pkgs.plasma5Packages.kdeconnect-kde ]);
   };
 }
