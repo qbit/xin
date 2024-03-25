@@ -1000,7 +1000,7 @@ in
           sslCertificate = "${config.sops.secrets.nzb_cert.path}";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://localhost:6789";
+            proxyPass = "http://localhost:8080";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
