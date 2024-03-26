@@ -375,6 +375,7 @@ in
       jan
       jujutsu
       klavaro
+      koreader
       minicom
       nheko
       nix-index
