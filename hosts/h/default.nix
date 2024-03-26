@@ -946,6 +946,7 @@ in
       enable = true;
       dataDir = "/var/lib/synapse";
       settings = {
+        federation_client_minimum_tls_version = "1.2";
         enable_registration = false;
         registration_shared_secret_path = "${config.sops.secrets.synapse_shared_secret.path}";
         media_store_path = "/var/lib/synapse/media_store";
