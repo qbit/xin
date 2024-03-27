@@ -234,10 +234,7 @@ in
       };
     };
     fprintd = {
-      enable = false;
-      package = pkgs.fprintd.overrideAttrs {
-        doCheck = false;
-      };
+      enable = true;
     };
     avahi = {
       enable = true;
