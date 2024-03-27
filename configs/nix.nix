@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   nix = {
-    package = pkgs.nixVersions.nix_2_19;
+    package = inputs.unstable.legacyPackages.${pkgs.system}.nixVersions.nix_2_21;
     gc = {
       automatic = true;
       dates = "daily";

@@ -234,12 +234,9 @@ in
       };
     };
     fprintd = {
-      enable = true;
+      enable = false;
       package = pkgs.fprintd.overrideAttrs {
-        mesonCheckFlags = [
-          "--no-suite"
-          "fprintd:TestPamFprintd"
-        ];
+        doCheck = false;
       };
     };
     avahi = {
