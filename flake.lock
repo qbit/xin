@@ -182,6 +182,26 @@
         "type": "github"
       }
     },
+    "kogs": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1711505980,
+        "narHash": "sha256-p0sp+MqzSOTaO1e12d9lOjfnIq2U9KcRkj92AF1yq5Y=",
+        "owner": "qbit",
+        "repo": "kogs",
+        "rev": "6d4bcb2ff2706b4c486251b3cb1d6ae049db7790",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "kogs",
+        "type": "github"
+      }
+    },
     "microca": {
       "inputs": {
         "nixpkgs": [
@@ -343,6 +363,7 @@
         "emacs-overlay": "emacs-overlay",
         "gostart": "gostart",
         "gqrss": "gqrss",
+        "kogs": "kogs",
         "microca": "microca",
         "nixos-hardware": "nixos-hardware",
         "peerix": "peerix",

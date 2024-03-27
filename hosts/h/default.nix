@@ -387,6 +387,11 @@ in
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
     };
+    kogs = {
+      enable = true;
+      #registration = false;
+      listen = "127.0.0.1:8383";
+    };
     #golink = {
     #  enable = true;
     #  envFile = "${config.sops.secrets.golink.path}";
@@ -502,6 +507,7 @@ in
             "/var/lib/mcchunkie"
             "/var/lib/taskserver"
             "/var/lib/heisenbridge"
+            "/var/lib/kogs"
             "/var/vmail"
             "/var/dkim"
           ];
@@ -577,6 +583,18 @@ in
           enableACME = true;
           root = "/var/www/bolddaemon.com";
 
+        };
+        "sync.suah.dev" = {
+          forceSSL = true;
+          enableACME = true;
+
+          locations = {
+            "/" = {
+              proxyPass = "http://${config.services.kogs.listen}";
+              proxyWebsockets = true;
+              priority = 1000;
+            };
+          };
         };
         "notes.suah.dev" = {
           forceSSL = true;

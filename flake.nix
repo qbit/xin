@@ -55,6 +55,10 @@
       url = "github:qbit/gostart";
       inputs.nixpkgs.follows = "unstable";
     };
+    kogs = {
+      url = "github:qbit/kogs";
+      inputs.nixpkgs.follows = "unstable";
+    };
     pr-status = {
       url = "github:qbit/pr-status-pl";
       inputs.nixpkgs.follows = "stable";
@@ -107,6 +111,7 @@
     { self
     , darwin
     , gostart
+    , kogs
     , peerix
     , po
     , pots
@@ -154,6 +159,7 @@
       overlays = [
         inputs.emacs-overlay.overlay
         inputs.gostart.overlay
+        inputs.kogs.overlay
         inputs.microca.overlay
         inputs.peerix.overlay
         inputs.pots.overlay
@@ -247,6 +253,7 @@
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule
+          kogs.nixosModule
           pots.nixosModule
           pr-status.nixosModule
           simple-nixos-mailserver.nixosModule
