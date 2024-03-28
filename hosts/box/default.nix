@@ -370,7 +370,7 @@ in
             resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
             sensor = {
               unique_id = "6720a3dc-658e-496f-b321-fc9c161e6620";
-              name = "rtl_433_printer_enclosure";
+              name = "rtl_433_greenhouse";
               value_template = ''
                 {% for entry in value_json.data.result %}
                   {% if entry.metric.model == 'Solight-TE44' %}
