@@ -260,6 +260,11 @@ in
 
   systemd = {
     services = {
+      mcchunkie = {
+        serviceConfig = {
+          ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
+        };
+      };
       nomadnet = {
         description = "nomadnet";
         after = [ "network-online.target" ];
