@@ -47,6 +47,10 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    mcchunkie = {
+      url = "github:qbit/mcchunkie";
+      inputs.nixpkgs.follows = "unstable";
+    };
     microca = {
       url = "github:qbit/microca";
       inputs.nixpkgs.follows = "unstable";
@@ -111,6 +115,7 @@
     { self
     , darwin
     , gostart
+    , mcchunkie
     , kogs
     , peerix
     , po
@@ -159,6 +164,7 @@
       overlays = [
         inputs.emacs-overlay.overlay
         inputs.gostart.overlay
+        inputs.mcchunkie.overlay
         inputs.kogs.overlay
         inputs.microca.overlay
         inputs.peerix.overlay
@@ -253,6 +259,7 @@
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule
+          mcchunkie.nixosModule
           kogs.nixosModule
           pots.nixosModule
           pr-status.nixosModule
@@ -329,7 +336,6 @@
           flake-warn =
             spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
           #kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
-          mcchunkie = spkgs.callPackage ./pkgs/mcchunkie.nix { inherit spkgs; };
           yaegi = spkgs.callPackage ./pkgs/yaegi.nix { inherit spkgs; };
           gen-patches =
             spkgs.callPackage ./bins/gen-patches.nix { inherit spkgs; };

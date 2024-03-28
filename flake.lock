@@ -202,6 +202,26 @@
         "type": "github"
       }
     },
+    "mcchunkie": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1711641721,
+        "narHash": "sha256-/C5ibcEv9QodpxSTa6G2MMzWVKjoUX9tPJTEMBcsaV8=",
+        "owner": "qbit",
+        "repo": "mcchunkie",
+        "rev": "d41b55e44c41824d11f85bfeb0637aa061dbfbc0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "mcchunkie",
+        "type": "github"
+      }
+    },
     "microca": {
       "inputs": {
         "nixpkgs": [
@@ -364,6 +384,7 @@
         "gostart": "gostart",
         "gqrss": "gqrss",
         "kogs": "kogs",
+        "mcchunkie": "mcchunkie",
         "microca": "microca",
         "nixos-hardware": "nixos-hardware",
         "peerix": "peerix",

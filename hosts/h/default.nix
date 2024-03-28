@@ -7,7 +7,6 @@
 with pkgs; let
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
-  mcchunkie = callPackage ../../pkgs/mcchunkie.nix { inherit isUnstable; };
   slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
   weepushover =
     python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
@@ -239,7 +238,6 @@ in
       # matrix things
       matrix-synapse-tools.synadm
       matrix-synapse-tools.rust-synapse-compress-state
-      mcchunkie
 
       zonemaster-cli
       sqlite
@@ -257,14 +255,7 @@ in
     users = {
       root = userBase;
       qbit = userBase;
-      mcchunkie = {
-        createHome = true;
-        isSystemUser = true;
-        home = "/var/lib/mcchunkie";
-        group = "mcchunkie";
-      };
     };
-    groups.mcchunkie = { };
   };
 
   systemd = {
@@ -288,17 +279,6 @@ in
           User = "qbit";
           WorkingDirectory = "/home/qbit";
           ExecStart = "${icbIrcTunnel}/bin/icb-irc-tunnel";
-        };
-      };
-
-      mcchunkie = {
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          User = "mcchunkie";
-          Group = "mcchunkie";
-          Restart = "always";
-          WorkingDirectory = "/var/lib/mcchunkie";
-          ExecStart = "${mcchunkie}/bin/mcchunkie";
         };
       };
     };
@@ -329,6 +309,7 @@ in
   };
 
   services = {
+    mcchunkie.enable = true;
     wallabag = {
       enable = false;
       secretPath = config.sops.secrets.wallabag_secret.path;
