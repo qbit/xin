@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "86bdd3853f4d32c85e295e6216a2fe0953ad93f0",
-  "hash": "sha256-IU/cu/CkujePNJL7Iry49uGsDs/OyaFwgYJGisQ/jOk=",
-  "version": "2024-03-11",
-  "comment": "version number in README"
+  "rev": "7844705b0364574cc70b941be72036c2c2966363",
+  "hash": "sha256-qfyaFFGSYL97Wp1uPv3XEurdWf/vknBlnLP46/MaK1Y=",
+  "version": "2024-03-29",
+  "comment": "upstream: Use egrep instead of grep -E."
 }
