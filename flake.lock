@@ -189,11 +189,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1711506567,
-        "narHash": "sha256-8bzG8R3s7OOsDcsxfJ9LCW3Zq/z/Bf4LNUsoWoPHYbI=",
+        "lastModified": 1711914336,
+        "narHash": "sha256-AmU5DbOhBSzpt3T2ZMLSr1QY9nYeT0A7jE6z3OaJ388=",
         "owner": "qbit",
         "repo": "kogs",
-        "rev": "7b05cb38a6fc2ca62a1d7fdac3c5d0ad1b47dffc",
+        "rev": "d1704af06393c9736adb898e913122cd8e56da2d",
         "type": "github"
       },
       "original": {
