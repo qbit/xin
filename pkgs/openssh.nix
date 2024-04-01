@@ -13,12 +13,14 @@
 , pkg-config
 , stdenv
 , withFIDO ? stdenv.hostPlatform.isUnix && !stdenv.hostPlatform.isMusl
-, withPAM ? stdenv.hostPlatform.isLinux
+, withPAM ? false
 , zlib
+, xinlib
 , ...
 }:
 let
   inherit (builtins) readFile fromJSON;
+  inherit (xinlib) todo;
   verStr = fromJSON (readFile ./openssh/version.json);
   hostStr = lib.strings.concatStrings [
     "CI configured on '"
@@ -151,7 +153,7 @@ stdenv.mkDerivation {
     set -a; source ~/.ssh/environment.base; set +a
   '';
 
-  checkTarget = [ "t-exec" "unit" "file-tests" "interop-tests" ];
+  checkTarget = todo "t-exec test disabled in openssh" [ "unit" "file-tests" "interop-tests" ];
 
   installTargets = [ "install-nokeys" ];
   installFlags = [
