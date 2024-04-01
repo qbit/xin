@@ -216,7 +216,7 @@ in
       rustdesk
       snmpcheck
       sshfs
-      step-cli
+      #step-cli
       tcpdump
       unzip
       virt-manager

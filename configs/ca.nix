@@ -71,7 +71,7 @@ with lib; {
 
     environment.sessionVariables = { STEPPATH = "/var/lib/step-ca"; };
     environment.systemPackages = with pkgs; [
-      step-cli
+      #step-cli
       step-kms-plugin
       opensc
       libressl
