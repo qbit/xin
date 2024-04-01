@@ -1,0 +1,18 @@
+{
+  "branches": [
+    "master"
+  ],
+  "error": "",
+  "pull_request": 300643,
+  "release": "unstable",
+  "status": "open",
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": false,
+    "nixpkgs-unstable": false,
+    "staging": false,
+    "staging-next": false
+  },
+  "title": "invidious: 0.20.1-unstable-2024-03-08 -> 0.20.1-unstable-2024-03-31"
+}
