@@ -26,18 +26,17 @@ in
   };
 
   config = mkIf config.kde.enable {
-    services.xserver =
+    services =
       mkMerge [
         (if isUnstable then {
           desktopManager.plasma6.enable = true;
-          displayManager.sddm.wayland.enable = true;
         }
         else {
-          desktopManager.plasma5.enable = true;
+          xserver = {
+            desktopManager.plasma5.enable = true;
+            displayManager.sddm.enable = true;
+          };
         })
-        {
-          displayManager.sddm.enable = true;
-        }
       ];
 
     # Listen for KDE Connect connections on the tailnet
