@@ -117,6 +117,7 @@ with lib; {
           go-font
           govulncheck
           hpi
+          keepassxc
           pcsctools
           plan9port
           promnesia

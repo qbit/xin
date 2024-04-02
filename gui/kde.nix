@@ -30,6 +30,7 @@ in
       mkMerge [
         (if isUnstable then {
           desktopManager.plasma6.enable = true;
+          xserver.displayManager.sddm.enable = true;
         }
         else {
           xserver = {
