@@ -1,9 +1,9 @@
 let
-  hash = "sha256-NwHX4pOM2PUf2MldaPTOzP9gOcTmILxM1Sx2HPkLBcw=";
-  sha256 = "sha256-AyV0JPPJkJ4jdaw0FUXPqGF3Qkce1+RK70FkXAw+bLA=";
+  hash = "sha256-/P7EBtXSYygUrqKQ4niI8J5zkBPZDgHCW/j2rFxRlsY=";
+  sha256 = "sha256-0lCbIlEM4wIG7W5BXWIZWkS6c/BkEG13xtcnPm3LjgY=";
   matrix-synapse-unwrapped = _: super: {
     matrix-synapse-unwrapped = super.matrix-synapse-unwrapped.overrideAttrs (_: rec {
-      version = "1.103.0";
+      version = "1.104.0";
       pname = "matrix-synapse";
 
       src = super.fetchFromGitHub {
