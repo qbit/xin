@@ -8,13 +8,13 @@
 let
   #inherit (xinlib) prIsOpen;
   jobs = [
-    #{
-    #  name = "xin-ci-update";
-    #  user = "qbit";
-    #  script = "cd ~/src/xin && ./bin/ci update";
-    #  startAt = "23:00";
-    #  path = [ ];
-    #}
+    {
+      name = "xin-ci-update";
+      user = "qbit";
+      script = "cd ~/src/xin && ./bin/ci update";
+      startAt = "23:00";
+      path = [ ];
+    }
     {
       name = "xin-ci";
       user = "qbit";
