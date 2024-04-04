@@ -21,10 +21,6 @@
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/simple-tab-groups/latest.xpi";
           };
-          "{07c6b8e1-94f7-4bbf-8e91-26c0a8992ab5}" = {
-            "installation_mode" = "force_installed";
-            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/promnesia/latest.xpi";
-          };
           "7esoorv3@alefvanoon.anonaddy.me" = {
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
