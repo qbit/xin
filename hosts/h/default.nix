@@ -131,10 +131,6 @@ in
       sopsFile = config.xin-secrets.h.secrets.services;
       owner = config.users.users.tsvnstat.name;
     };
-    #golink = {
-    #  sopsFile = config.xin-secrets.h.secrets.services;
-    #  owner = config.users.users.golink.name;
-    #};
     gostart = {
       sopsFile = config.xin-secrets.h.secrets.services;
       owner = config.users.users.gostart.name;
@@ -378,10 +374,6 @@ in
       #registration = false;
       listen = "127.0.0.1:8383";
     };
-    #golink = {
-    #  enable = true;
-    #  envFile = "${config.sops.secrets.golink.path}";
-    #};
     tsvnstat = {
       enable = true;
       #keyPath = "${config.sops.secrets.router_stats_ts_key.path}";
