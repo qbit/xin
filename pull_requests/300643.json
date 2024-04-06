@@ -1,18 +1,23 @@
 {
   "branches": [
-    "master"
+    "master",
+    "nixos-unstable",
+    "nixos-unstable-small",
+    "nixpkgs-unstable",
+    "staging",
+    "staging-next"
   ],
   "error": "",
   "pull_request": 300643,
   "release": "unstable",
-  "status": "open",
+  "status": "complete",
   "status_info": {
     "master": true,
-    "nixos-unstable": false,
-    "nixos-unstable-small": false,
-    "nixpkgs-unstable": false,
-    "staging": false,
-    "staging-next": false
+    "nixos-unstable": true,
+    "nixos-unstable-small": true,
+    "nixpkgs-unstable": true,
+    "staging": true,
+    "staging-next": true
   },
   "title": "invidious: 0.20.1-unstable-2024-03-08 -> 0.20.1-unstable-2024-03-31"
 }
