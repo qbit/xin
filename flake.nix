@@ -208,7 +208,6 @@
           system = "aarch64-darwin";
           specialArgs = { inherit xinlib; };
           modules = [
-            xin-secrets.nixosModules.sops
             ./overlays
 
             ./hosts/plq
