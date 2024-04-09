@@ -181,7 +181,6 @@ in
           pass
           ripgrep
           sshfs
-          taskwarrior
           tmux
         ]
         ++ (

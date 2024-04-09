@@ -394,7 +394,6 @@
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "stable": "stable",
-        "taskobs": "taskobs",
         "traygent": "traygent",
         "tsRevProx": "tsRevProx",
         "tsvnstat": "tsvnstat",
@@ -483,26 +482,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "taskobs": {
-      "inputs": {
-        "nixpkgs": [
-          "unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1673627256,
-        "narHash": "sha256-r5aMEiVtBrzcBEzUwpuYlsr518p0PGVR5+LhtLy+iZI=",
-        "owner": "qbit",
-        "repo": "taskobs",
-        "rev": "1b615b1af5cb2ea08b041b3190ce2b67bd56c2f3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "qbit",
-        "repo": "taskobs",
         "type": "github"
       }
     },

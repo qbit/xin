@@ -25,12 +25,6 @@ let
       startAt = "*:0/5";
       path = [ pkgs.git pkgs.git-sync ];
     }
-    {
-      name = "taskobs";
-      script = "taskobs";
-      startAt = "*:0/30";
-      path = [ pkgs.taskobs ] ++ pkgs.taskobs.buildInputs;
-    }
   ];
 in
 {
@@ -395,7 +389,6 @@ in
       sdrpp
       signal-desktop
       signal-desktop-beta
-      taskobs
       tcpdump
       tea
       thunderbird

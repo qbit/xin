@@ -67,10 +67,6 @@
       url = "github:qbit/pr-status-pl";
       inputs.nixpkgs.follows = "stable";
     };
-    taskobs = {
-      url = "github:qbit/taskobs";
-      inputs.nixpkgs.follows = "unstable";
-    };
     xintray = {
       url = "github:qbit/xintray";
       inputs.nixpkgs.follows = "unstable";
@@ -170,7 +166,6 @@
         inputs.peerix.overlay
         inputs.pots.overlay
         inputs.pr-status.overlay
-        inputs.taskobs.overlay
         inputs.tsRevProx.overlay
       ];
 

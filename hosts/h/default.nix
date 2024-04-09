@@ -451,13 +451,6 @@ in
         };
       };
     };
-    taskserver = {
-      enable = true;
-      fqdn = "tasks.suah.dev";
-      listenHost = "::";
-      organisations."bolddaemon".users = [ "qbit" ];
-      openFirewall = false;
-    };
     cron = {
       enable = true;
       systemCronJobs = [
@@ -483,7 +476,6 @@ in
             "/var/lib/shiori"
             "/var/lib/gotosocial"
             "/var/lib/mcchunkie"
-            "/var/lib/taskserver"
             "/var/lib/heisenbridge"
             "/var/lib/kogs"
             "/var/vmail"
