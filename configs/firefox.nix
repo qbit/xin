@@ -94,6 +94,9 @@
           SkipOnboarding = false;
           MoreFromMozilla = false;
         };
+        PDFjs = {
+          Enabled = false;
+        };
       };
       # NOTE: https://mozilla.github.io/policy-templates/
       # Items can be found here ^
