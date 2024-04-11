@@ -348,7 +348,7 @@ in
         logger = {
           default = "warning";
           logs = {
-            "homeassistant.components.starlink" = "debug";
+            #"homeassistant.components.starlink" = "debug";
           };
         };
         "automation manual" = [
