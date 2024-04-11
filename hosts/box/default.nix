@@ -295,6 +295,8 @@ in
           pyipp
           pymetno
           ical
+          (pkgs.python312Packages.callPackage ../../pkgs/starlink-grpc.nix { inherit (pkgs.home-assistant) pkgs; })
+          grpcio
         ];
       customComponents = [
         (pkgs.python312Packages.callPackage ../../pkgs/openevse.nix { inherit (pkgs.home-assistant) pkgs; })
@@ -323,6 +325,7 @@ in
         "pushover"
         "rest"
         "snmp"
+        "starlink"
         "zeroconf"
       ];
       config = {
@@ -345,7 +348,7 @@ in
         logger = {
           default = "warning";
           logs = {
-            #"homeassistant.components.aprs" = "debug";
+            "homeassistant.components.starlink" = "debug";
           };
         };
         "automation manual" = [
