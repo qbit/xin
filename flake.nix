@@ -237,7 +237,7 @@
 
       nixosConfigurations = {
         europa = buildSys "x86_64-linux" unstable [
-          nixos-hardware.nixosModules.framework-11th-gen-intel
+          nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
         clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
         orcim = buildSys "x86_64-linux" unstable [ ] "orcim";
