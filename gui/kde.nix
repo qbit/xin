@@ -6,11 +6,11 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption mkMerge mkOption types;
-  kconnect = (mkIf config.kdeConnect.enable
+  kconnect = mkIf config.kdeConnect.enable
     (if isUnstable then
       pkgs.kdePackages.kdeconnect-kde
     else
-      pkgs.plasma5Packages.kdeconnect-kde));
+      pkgs.plasma5Packages.kdeconnect-kde);
 in
 with pkgs;
 {
