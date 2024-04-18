@@ -6,7 +6,13 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption mkMerge mkOption types;
+  kconnect = (mkIf config.kdeConnect.enable
+    (if isUnstable then
+      pkgs.kdePackages.kdeconnect-kde
+    else
+      pkgs.plasma5Packages.kdeconnect-kde));
 in
+with pkgs;
 {
   options = {
     kde = { enable = mkEnableOption "Enable KDE desktop."; };
@@ -54,10 +60,9 @@ in
           allowedTCPPortRanges = [ range ];
         };
     };
-    environment.systemPackages = mkIf config.kdeConnect.enable
-      (if isUnstable then
-        [ pkgs.kdePackages.kdeconnect-kde ]
-      else
-        [ pkgs.plasma5Packages.kdeconnect-kde ]);
+    environment.systemPackages = [
+      kcolorchooser
+      kconnect
+    ];
   };
 }
