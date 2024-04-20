@@ -2,6 +2,12 @@
 
 set -e
 
+. ./common.sh
+
+trap error INT TERM
+
+start
+
 ATOM="$(curl -H "Accept: application/atom+xml" -s https://github.com/openssh/openssh-portable/commits/master.atom)"
 CURRENT="$(cat pkgs/openssh/version.json)"
 
@@ -19,6 +25,8 @@ if [ "${CURRENT_COMMIT}" != "${COMMIT}" ]; then
 		--arg c "${COMMENT}" \
 		'. |= . + {"version": $v, "comment": $c}' \
 		> pkgs/openssh/version.json
+	echo "Updated to '${COMMIT}': '${COMMENT}'"
+	git add pkgs/openssh/version.json && git commit -m "pkgs/openssh: update to ${COMMIT}"
 else
 	echo "No updates."
 fi

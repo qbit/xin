@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "43e7c1c07cf6aae7f4394ca8ae91a3efc46514e2",
-  "hash": "sha256-vyoWiG6pAZgm27pfKu536RMxVhHZEuFxObD/ogtqFdU=",
-  "version": "2024-03-31",
-  "comment": "Port changes from selfhosted to upstream tests."
+  "rev": "88351eca17dcc55189991ba60e50819b6d4193c1",
+  "hash": "sha256-CHpMXOsVBQhIwQYyltVPi+PdCdYOE/yWKMRLKeBHi0w=",
+  "version": "2024-04-05",
+  "comment": "Fix missing header for systemd notification"
 }
