@@ -235,6 +235,7 @@ in
       xinlib.todo "logrotate.checkConfig disabled: https://github.com/NixOS/nix/issues/8502" false;
 
     services = {
+      smartd.enable = true;
       openssh = {
         enable = true;
         extraConfig = ''
