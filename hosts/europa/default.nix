@@ -190,6 +190,7 @@ in
   services.xinCA = { enable = false; };
 
   services = {
+    smartd.enable = true;
     rkvm.server = {
       enable = true;
       settings = {
