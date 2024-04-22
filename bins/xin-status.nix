@@ -18,7 +18,10 @@
 
   $info->{system_diff} = encode_base64($sys_diff);
   $info->{uname_a} = `uname -a`;
+  $info->{uptime} = `uptime`;
+
   chomp $info->{uname_a};
+  chomp $info->{uptime};
 
   print encode_json $info;
 ''
