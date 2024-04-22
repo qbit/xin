@@ -230,29 +230,31 @@ in
     };
     printing.enable = true;
     restic = {
-      backups = {
-        remote = {
-          initialize = true;
-          #environmentFile = "${config.sops.secrets.restic_remote_env_file.path}";
-          passwordFile = "${config.sops.secrets.restic_remote_password_file.path}";
-          repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
-          #repository = "https://europa@backup.bold.daemon:8484/";
+      backups =
+        let
+          paths = [ "/home/qbit" "/var/lib/libvirt" "/etc" ];
+        in
+        {
+          remote = {
+            initialize = true;
+            passwordFile = "${config.sops.secrets.restic_remote_password_file.path}";
+            repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
 
-          paths = [ "/home/qbit" "/var/lib/libvirt" ];
+            inherit paths;
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
+            pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
+          };
+          local = {
+            initialize = true;
+            repository = "/run/media/qbit/backup/${config.networking.hostName}";
+            environmentFile = "${config.sops.secrets.restic_env_file.path}";
+            passwordFile = "${config.sops.secrets.restic_password_file.path}";
+
+            inherit paths;
+
+            pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5" ];
+          };
         };
-        local = {
-          initialize = true;
-          repository = "/run/media/qbit/backup/${config.networking.hostName}";
-          environmentFile = "${config.sops.secrets.restic_env_file.path}";
-          passwordFile = "${config.sops.secrets.restic_password_file.path}";
-
-          paths = [ "/home/qbit" "/var/lib/libvirt" ];
-
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5" ];
-        };
-      };
     };
     pcscd.enable = true;
     vnstat.enable = true;
