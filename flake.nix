@@ -246,7 +246,6 @@
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "stan";
         weather = buildSys "aarch64-linux" stable [ ] "weather";
-        #octo = buildSys "aarch64-linux" stable [ ] "octo";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
         box = buildSys "x86_64-linux" unstable [ ./configs/hardened.nix ] "box";
@@ -262,44 +261,35 @@
         #router =
         #  buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "router";
 
-        #arm64Install = stable.lib.nixosSystem {
-        #  system = "aarch64-linux";
+        arm64Install = stable.lib.nixosSystem {
+          system = "aarch64-linux";
 
-        #  modules = [
-        #    (import ./installer.nix)
-        #    xin-secrets.nixosModules.sops
+          modules = [
+            {
+              _module.args.isUnstable = false;
+            }
 
-        #    "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
-        #  ];
-        #};
+            (import ./installer.nix)
+            xin-secrets.nixosModules.sops
 
-        #weatherzero = buildSys "armv6l" stable [
-        #  "${stable}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
-        #  {
-        #    nixpkgs = {
-        #      buildPlatform = {
-        #        system = "x86_64-linux";
-        #        config = "x86_64-unknown-linux-gnu";
-        #      };
-        #      hostPlatform = {
-        #        system = "armv6l-linux";
-        #        config = "armv6l-unknown-linux-gnueabihf";
-        #      };
-        #    };
-        #  }
-        #] "weatherzero";
+            "${stable}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
+          ];
+        };
 
-        #isoInstall = stable.lib.nixosSystem {
-        #  system = "x86_64-linux";
+        isoInstall = stable.lib.nixosSystem {
+          system = "x86_64-linux";
 
-        #  modules = [
-        #    (xinlib.buildVer self)
-        #    (import ./installer.nix)
-        #    xin-secrets.nixosModules.sops
+          modules = [
+            {
+              _module.args.isUnstable = false;
+            }
+            (xinlib.buildVer self)
+            (import ./installer.nix)
+            xin-secrets.nixosModules.sops
 
-        #    "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
-        #  ];
-        #};
+            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
+          ];
+        };
       };
 
       packages = forAllSystems (system:
