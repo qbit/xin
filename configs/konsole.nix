@@ -1,5 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 let
+  inherit (lib) mkIf;
   profile = {
     Appearance = {
       AntiAliasFonts = true;
@@ -47,7 +48,7 @@ let
   };
 in
 {
-  config = {
+  config = mkIf config.kde.enable {
     environment = {
       systemPackages = [
         profilePkg

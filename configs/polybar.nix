@@ -1,5 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 let
+  inherit (lib) mkIf;
   barBase = {
     background = "\${colors.background}";
     foreground = "\${colors.foreground}";
@@ -113,7 +114,7 @@ let
   settingsFile = settingsFormat.generate "polybar-config.ini" settings;
 in
 {
-  config = {
+  config = mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
     environment = {
       systemPackages = [ pkgs.polybar ];
       etc = {
