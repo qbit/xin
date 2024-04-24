@@ -7,7 +7,7 @@
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
-  inherit (xinlib) jobToUserService;
+  inherit (xinlib) jobToUserService prIsOpen;
   peerixUser =
     if builtins.hasAttr "peerix" config.users.users
     then config.users.users.peerix.name
@@ -190,6 +190,10 @@ in
   services.xinCA = { enable = false; };
 
   services = {
+    ollama = {
+      enable = true;
+      acceleration = prIsOpen.str 306375 "rocm";
+    };
     rkvm.server = {
       enable = true;
       settings = {
@@ -301,6 +305,11 @@ in
     user.services =
       lib.listToAttrs (builtins.map jobToUserService jobs);
     services = {
+      ollama = {
+        environment = {
+          OLLAMA_ORIGINS = "*";
+        };
+      };
       "whytailscalewhy" = {
         description = "Tailscale restart on resume";
         wantedBy = [ "post-resume.target" ];
@@ -367,6 +376,7 @@ in
       nix-top
       nmap
       obsidian
+      ollama
       openscad
       picocom
       proton-caller

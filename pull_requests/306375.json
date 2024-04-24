@@ -1,0 +1,20 @@
+{
+  "branches": [
+    "master",
+    "staging",
+    "staging-next"
+  ],
+  "error": "",
+  "pull_request": 306375,
+  "release": "unstable",
+  "status": "open",
+  "status_info": {
+    "master": true,
+    "nixos-unstable": false,
+    "nixos-unstable-small": false,
+    "nixpkgs-unstable": false,
+    "staging": true,
+    "staging-next": true
+  },
+  "title": "rocmPackages: use CMake 3.9.2 when building clr"
+}
