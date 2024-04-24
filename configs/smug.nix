@@ -17,6 +17,27 @@ let
 in
 {
   config = mkMerge [
+    (mkSmugEntry "work"
+      {
+        session = "Work";
+        root = "~/";
+        before_start = [
+          "ssh-add"
+        ];
+        windows = [
+          {
+            name = "VM";
+            layout = "even-vertical";
+            commands = [
+              "ssh vm"
+            ];
+          }
+          {
+            name = "aef100";
+            root = "~/aef100";
+          }
+        ];
+      })
     (mkSmugEntry "cistart"
       {
         session = "CI";
