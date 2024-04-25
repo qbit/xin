@@ -13,9 +13,10 @@ let
         prStatus = getPrStatus pr;
       in
       if prStatus.status == "open"
-      then 
+      then
         lib.warn
-          "PR: ${toString pr} (${prStatus.title}) is open.. disabling option" null 
+          "PR: ${toString pr} (${prStatus.title}) is open.. disabling option"
+          null
       else a;
     option = pr: a:
       let
