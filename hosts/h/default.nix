@@ -310,6 +310,7 @@ in
   };
 
   services = {
+    smartd.enable = false;
     mcchunkie.enable = true;
     wallabag = {
       enable = false;
