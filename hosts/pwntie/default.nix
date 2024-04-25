@@ -3,6 +3,7 @@
 , ...
 }:
 let
+  tsAddr = "100.84.170.57";
   #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -38,6 +39,12 @@ in
       enable = true;
       allowedTCPPorts = [ 22 ];
       checkReversePath = "loose";
+      interfaces = {
+        "tailscale0" =
+          {
+            allowedTCPPorts = [ 11434 ];
+          };
+      };
     };
   };
 
@@ -75,11 +82,26 @@ in
     enable = true;
   };
 
+  systemd = {
+    services = {
+      ollama = {
+        environment = {
+          OLLAMA_ORIGINS = "*";
+        };
+      };
+    };
+  };
+
   services = {
+    ollama = {
+      enable = true;
+      acceleration = "rocm";
+      listenAddress = "${tsAddr}:11434";
+    };
     prometheus = {
       enable = true;
       port = 9001;
-      listenAddress = "100.84.170.57";
+      listenAddress = tsAddr;
 
       exporters = {
         node = {
