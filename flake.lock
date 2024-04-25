@@ -363,11 +363,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714058181,
-        "narHash": "sha256-BAqZIvY76o1nf1DvIYL6qmPF4wVF2rLKXwBRdqfPK60=",
+        "lastModified": 1714062398,
+        "narHash": "sha256-m8HSYJPgekZr9LdQ+Ep8QMemaBIMAO5QsBgY2XheDmI=",
         "owner": "qbit",
         "repo": "pr-status-pl",
-        "rev": "a65335bf31430452eb4505cda496b06bbdb14840",
+        "rev": "3930d1f978a0b3cc506897e1bb8951c7551b36d7",
         "type": "github"
       },
       "original": {
@@ -456,11 +456,11 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1713958888,
-        "narHash": "sha256-QZh6ag1mnQslIdXZOY3a0TTKIYnKcQax9zmCVp+2e10=",
+        "lastModified": 1714053620,
+        "narHash": "sha256-s2Rm+ERVk0vk3tGR48nCmtHzNiMMydgglc3KiaqKRpc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ecc5586a0b9716f457f7974cbc890d68b3e92282",
+        "rev": "4c268f5790f5e697d7e377dfdf21605d3aa123c3",
         "type": "github"
       },
       "original": {
@@ -547,11 +547,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1714020206,
-        "narHash": "sha256-pOhiceIhkg5bI4HJ479jZaxlyY9Cw2wtDWXXnZJXU10=",
+        "lastModified": 1714075989,
+        "narHash": "sha256-PT/aZI0C4lkp1T7m05Yvw8U5UmUQubJ0wHtbxPLnR9s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6b78a949091c51385c46c7e8e7ce9293b5098fc8",
+        "rev": "ceb59e436e95d759377caa5cd9130c8ef58017af",
         "type": "github"
       },
       "original": {
@@ -562,11 +562,11 @@
     },
     "unstableSmall": {
       "locked": {
-        "lastModified": 1713960115,
-        "narHash": "sha256-cgDgQ76uwzyiQ1jc326Oabfxfl9NeBfQeQ/MQCoLQl8=",
+        "lastModified": 1714053995,
+        "narHash": "sha256-mgnyhE2ccqcp4gBxgQhoTxIt7avgf8FkZL6zkpGdWWY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8a30b52c5641c4317321c74efeae696341421267",
+        "rev": "9a4f20210147ecaec0269ec02506be2696635ee7",
         "type": "github"
       },
       "original": {
@@ -605,11 +605,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1713665282,
-        "narHash": "sha256-RyeWJVvS2W2RNJuleWwdzhkuzH2LakvphEgFdgo8GP4=",
+        "lastModified": 1714072046,
+        "narHash": "sha256-JxCtk8F2wnNxlk0wRFfoNVzLGLpAxOZWwJgkMQMECMw=",
         "ref": "main",
-        "rev": "dedc2b7d38e155a25bcadca1f13d82480c8780f6",
-        "revCount": 146,
+        "rev": "202c33887caffaa31cf2a2ff5edcc60538e1954f",
+        "revCount": 147,
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
