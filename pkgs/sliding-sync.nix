@@ -6,13 +6,13 @@
 with lib;
 buildGoModule rec {
   pname = "sliding-sync";
-  version = "0.99.15";
+  version = "0.99.16";
 
   src = fetchFromGitHub {
     owner = "matrix-org";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-9JYR9fBxtv+3E+l+l26jryqEstnOUm657VsKsDRzD9g=";
+    hash = "sha256-RMA6Nwdajd1ABaNGq4iGNhX+/FCVy8HcNPpcW/mWtcc=";
   };
 
   vendorHash = "sha256-THjvc0TepIBFOTte7t63Dmadf3HMuZ9m0YzQMI5e5Pw=";
