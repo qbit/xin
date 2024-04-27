@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, isUnstable, ... }:
 with pkgs;
 let
   vimBuildTool = pkgs.vimUtils.buildVimPlugin;
@@ -26,6 +26,7 @@ let
     };
   };
 
+  unstablePkgs = if isUnstable then [ htmx-lsp ] else [ ];
   baseVimPackages = with vimPlugins; [
     elm-vim
     fugitive
@@ -88,7 +89,7 @@ in
     sumneko-lua-language-server
     tree-sitter
     zls
-  ];
+  ] ++ unstablePkgs;
 
   programs.neovim = {
     enable = true;
