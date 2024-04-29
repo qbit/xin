@@ -61,7 +61,7 @@ lspc.perlpls.setup {};
 lspc.solargraph.setup {};
 lspc.tsserver.setup {};
 lspc.zls.setup {};
-lspc.htmx.setup{};
+lspc.htmx.setup {};
 
 o.hlsearch = true;
 
