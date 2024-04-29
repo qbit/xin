@@ -6,6 +6,7 @@ let
   inherit (xinlib) prIsOpen todo;
   matrix-synapse-unwrapped = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
+  invidious = prIsOpen.overlay 0 (import ./invidious.nix);
 in
 {
   nixpkgs.overlays = [
@@ -19,6 +20,7 @@ in
   ] ++
   (if isUnstable
   then [
+    invidious
   ]
   else [
   ]);
