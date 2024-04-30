@@ -62,6 +62,7 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
+    djlint
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
