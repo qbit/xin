@@ -1,20 +1,20 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 case $1 in
 arm | arm64)
-	nix build .#nixosConfigurations.arm64Install.config.system.build.sdImage
+	nix build .#nixosConfigurations.arm64Install.config.system.build.sdImage |& nom
 	;;
 haas)
-	nix build .#nixosConfigurations.hassInstall.config.system.build.isoImage
+	nix build .#nixosConfigurations.hassInstall.config.system.build.isoImage |& nom
 	;;
 iso)
-	nix build .#nixosConfigurations.isoInstall.config.system.build.isoImage
+	nix build .#nixosConfigurations.isoInstall.config.system.build.isoImage |& nom
 	;;
 reform)
-	nix build .#nixosConfigurations.reformInstall.config.system.build.sdImage
+	nix build .#nixosConfigurations.reformInstall.config.system.build.sdImage |& nom
 	;;
 octo)
-	nix build .#nixosConfigurations.octo.config.system.build.sdImage
+	nix build .#nixosConfigurations.octo.config.system.build.sdImage |& nom
 	;;
 *)
 	echo "Usage: boot [iso|arm64|arm|hass|reform]"
