@@ -45,6 +45,12 @@
         go mod tidy
       }
 
+      xin-update() {
+        SUDO_CMD=""
+        [[ $(id -u) == 0 ]] || SUDO_CMD="sudo"
+        $SUDO_CMD nixos-rebuild switch --flake github:qbit/xin --refresh |& nom
+      }
+
       mkhash() {
         nix hash to-sri --type sha256 $(nix-prefetch-url --type sha256 "$1")
       }
