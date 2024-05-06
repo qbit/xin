@@ -106,8 +106,8 @@ if [ "${1}" = "update" ]; then
 		exit 1
 	fi
 else
-	if ! nix flake check --print-build-logs; then
-		handle_check_fail
+	if ! nix flake check --print-build-logs 2>/tmp/ci-flake-check; then
+		handle_check_fail /tmp/ci-flake-check
 		exit 1
 	fi
 fi
