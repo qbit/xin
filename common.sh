@@ -142,7 +142,7 @@ handle_check_fail() {
 }
 
 handle_update_check_fail() {
-	_po "CI: flake checks failed while updating $1!" "$(get_journal xin-ci-update)"
+	_po "CI: checks for $1 failed!" "$(tail -n 30 $2)"
 }
 
 handle_merge_fail() {

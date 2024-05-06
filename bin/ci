@@ -64,8 +64,8 @@ if [ "${1}" = "update" ]; then
 		maybe_new_hash="$(git rev-parse HEAD)"
 
 		if [ "${current_hash}" != "${maybe_new_hash}" ]; then
-			if ! nix flake check --print-build-logs; then
-				handle_update_check_fail "$inp"
+			if ! nix flake check --print-build-logs 2>/tmp/ci-flake-check-${inp}; then
+				handle_update_check_fail "$inp" /tmp/ci-flake-check-${inp}
 				continue
 			fi
 		else
@@ -83,8 +83,8 @@ if [ "${1}" = "update" ]; then
 		fi
 	done
 
-	if ! nix flake check --print-build-logs; then
-		handle_update_check_fail "$ci_branch"
+	if ! nix flake check --print-build-logs 2>/tmp/ci-flake-check; then
+		handle_update_check_fail "$ci_branch" /tmp/ci-flake-check
 		exit 1
 	fi
 
