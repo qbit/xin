@@ -386,7 +386,8 @@ in
       python3Packages.nomadnet
       python3Packages.rns
       qdmr
-      quodlibet-full
+      #quodlibet-full
+      deadbeef-with-plugins
       rex
       rofi
       rsibreak
