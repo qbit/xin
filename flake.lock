@@ -456,11 +456,11 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1714995731,
-        "narHash": "sha256-f9ZM5BGwiaHiQPZd0V+Ds98dBUpss5qxLjtX7809l5Q=",
+        "lastModified": 1715123187,
+        "narHash": "sha256-0czuu757t53lK6uWeo1a5/jJbCd9t4sOtLDFpts60DM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e13f3602fb31a0985f212ae75d4aadda17ad8c85",
+        "rev": "0c592f9a288bdf764b6f24c757277c0e49757a46",
         "type": "github"
       },
       "original": {
