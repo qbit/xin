@@ -24,7 +24,8 @@ let
   ];
   traygentCmds = toJSON [
     {
-      command_path = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
+      command_path = "${pkgs.ksshaskpass}/bin/ksshaskpass";
+      #command_path = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
       event = "sign";
       msg_format = "Allow access to key %q?";
       exit_code = 0;
