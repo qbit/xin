@@ -850,7 +850,6 @@ in
 
     nginx = {
       enable = true;
-      package = pkgs.openresty;
 
       statusPage = true;
 
@@ -1061,49 +1060,6 @@ in
             extraConfig = ''
               ${httpAllow}
                deny	all;
-            '';
-          };
-
-          locations."/_pub" = {
-            extraConfig = ''
-               default_type 'application/json';
-
-              content_by_lua_block {
-                       function lsplit (str, sep)
-                         sep = "\n"
-                         local t={}
-                         for str in string.gmatch(str, "([^"..sep.."]+)") do
-                           table.insert(t, str)
-                         end
-                         return t
-                       end
-
-                       local sock = ngx.socket.tcp()
-                       local ok, err = sock:connect("127.0.0.1", ${
-                toString config.services.prometheus.port
-              })
-                       if not ok then
-                           ngx.say("failed to connect to backend: ", err)
-                           return
-                       end
-
-                       local bytes = sock:send("GET /api/v1/query?query=wstation_temp_c HTTP/1.1\nHost: 127.0.0.1:${
-                toString config.services.prometheus.port
-              }\n\n")
-
-                       sock:settimeouts(1000, 1000, 1000)
-
-                       local data, err = sock:receiveany(10 * 1024)
-                       if not data then
-                         ngx.say("failed to read weather data: ", err)
-                         return
-                       end
-
-               local b = lsplit(data)
-                       ngx.say(b[#b])
-
-                       sock:close()
-              }
             '';
           };
         };
