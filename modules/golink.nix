@@ -1,11 +1,12 @@
 { config
 , lib
 , pkgs
+, inputs
 , ...
 }:
 with pkgs; let
+  inherit (inputs.unstable.legacyPackages.${pkgs.system}) golink;
   cfg = config.services.golink;
-  golink = callPackage ../pkgs/golink.nix { };
 in
 {
   options = with lib; {
