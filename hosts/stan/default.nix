@@ -187,8 +187,7 @@ in
   environment = {
     etc = {
       "vscode-settings.json".text = builtins.toJSON {
-        "telemetry.enableTelemetry" = false;
-        "telemetry.enableCrashReporter" = false;
+        "telemetry.telemetryLevel" = "off";
         "editor.formatOnSave" = true;
         "extensions.ignoreRecommendations" = true;
         "extensions.autoUpdate" = false;
