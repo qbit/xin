@@ -433,7 +433,6 @@ in
 
   system = {
     autoUpgrade.allowReboot = false;
-    autoUpgrade.enable = false;
     stateVersion = "21.11";
   };
 }
