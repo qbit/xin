@@ -56,7 +56,7 @@ if [ "${1}" = "update" ]; then
 
 		current_hash="$(git rev-parse HEAD)"
 
-		if ! nix flake lock --commit-lock-file --update-input "$inp"; then
+		if ! nix flake update --commit-lock-file "$inp"; then
 			handle_update_fail "$inp"
 			continue
 		fi
