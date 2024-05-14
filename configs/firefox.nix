@@ -8,6 +8,11 @@
         DisableFormHistory = true;
         DisablePocket = true;
         DisableTelemetry = true;
+        EnableTrackingProtection = {
+          Fingerprinting = true;
+          Cryptomining = true;
+          EmailTracking = true;
+        };
         ExtensionSettings = {
           "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
             "installation_mode" = "force_installed";
@@ -101,24 +106,20 @@
       # NOTE: https://mozilla.github.io/policy-templates/
       # Items can be found here ^
       preferences = {
-        # TODO: confirm no issues
         "dom.event.clipboardevents.enabled" = false;
         "dom.serviceWorkers.enabled" = false;
+
+        # This causes some issues with a few things I use
         #"media.peerconnection.enabled" = false;
 
         "browser.aboutConfig.showWarning" = false;
         "browser.contentblocking.category" = "strict";
-        "browser.newtabpage.activity-stream.feeds.recommendationprovider" =
-          false;
+        "browser.newtabpage.activity-stream.feeds.recommendationprovider" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-        "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" =
-          false;
-        "browser.newtabpage.activity-stream.section.highlights.includeDownloads" =
-          false;
-        "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-          false;
-        "browser.newtabpage.activity-stream.section.highlights.includeVisited" =
-          false;
+        "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
         "browser.newtabpage.activity-stream.showSearch" = false;
         "browser.newtabpage.activity-stream.showSponsored" = false;
         "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
@@ -131,9 +132,14 @@
         "browser.search.suggest.enabled" = false;
         "browser.search.update" = false;
         "browser.topsites.contile.enabled" = false;
+        "browser.urlbar.suggest.calculator" = true;
+        "browser.urlbar.suggest.pocket" = false;
         "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
         "browser.urlbar.suggest.quicksuggest.sponsored" = false;
         "browser.urlbar.suggest.searches" = false;
+        "browser.urlbar.suggest.topsites" = false;
+        "browser.urlbar.suggest.trending" = false;
+        "browser.urlbar.suggest.yelp" = false;
         "browser.urlbar.trimURLs" = false;
         "browser.vpn_promo.enabled" = false;
         "datareporting.healthreport.uploadEnabled" = false;
@@ -153,9 +159,6 @@
 
         # Not yet working:
         "beacon.enabled" = false;
-        "privacy.resistFingerprinting" = true;
-        "services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.highlights.includePocket" =
-          false;
       };
     };
   };
