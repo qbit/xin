@@ -13,7 +13,6 @@
     ./neovim.nix
     ./net-overlay.nix
     ./nix.nix
-    ./peerix.nix
     ./polybar.nix
     ./tmux.nix
     ./update.nix

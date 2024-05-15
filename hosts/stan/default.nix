@@ -16,10 +16,6 @@ let
     openssh.authorizedKeys.keys = pubKeys ++ config.myconf.managementPubKeys;
     shell = pkgs.zsh;
   };
-  peerixUser =
-    if builtins.hasAttr "peerix" config.users.users
-    then config.users.users.peerix.name
-    else "root";
 in
 {
   _module.args.isUnstable = true;
@@ -129,12 +125,6 @@ in
     vm_pass = {
       sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
-      group = "wheel";
-      mode = "400";
-    };
-    peerix_private_key = {
-      sopsFile = config.xin-secrets.stan.secrets.peerix;
-      owner = "${peerixUser}";
       group = "wheel";
       mode = "400";
     };
@@ -275,12 +265,6 @@ in
     ssh.knownHosts = {
       "[192.168.122.249]:7022".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
     };
-  };
-
-  tsPeerix = {
-    enable = false;
-    privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
-    interfaces = [ "wlp170s0" "ztksevmpn3" ];
   };
 
   services = {

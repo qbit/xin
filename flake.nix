@@ -100,11 +100,6 @@
       url = "github:qbit/gqrss";
       flake = false;
     };
-
-    peerix = {
-      url = "github:cid-chan/peerix";
-      inputs.nixpkgs.follows = "stable";
-    };
   };
 
   outputs =
@@ -113,7 +108,6 @@
     , gostart
     , mcchunkie
     , kogs
-    , peerix
     , po
     , pots
     , pr-status
@@ -152,8 +146,6 @@
 
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
-
-          peerix.nixosModules.peerix
         ];
       };
 
@@ -163,7 +155,6 @@
         inputs.mcchunkie.overlay
         inputs.kogs.overlay
         inputs.microca.overlay
-        inputs.peerix.overlay
         inputs.pots.overlay
         inputs.pr-status.overlay
         inputs.tsRevProx.overlay

@@ -8,10 +8,6 @@
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
   inherit (xinlib) jobToUserService prIsOpen;
-  peerixUser =
-    if builtins.hasAttr "peerix" config.users.users
-    then config.users.users.peerix.name
-    else "root";
   jobs = [
     {
       name = "brain";
@@ -66,12 +62,6 @@ in
     netrc = {
       sopsFile = config.xin-secrets.europa.secrets.qbit;
       owner = "qbit";
-      group = "wheel";
-      mode = "400";
-    };
-    peerix_private_key = {
-      sopsFile = config.xin-secrets.europa.secrets.peerix;
-      owner = "${peerixUser}";
       group = "wheel";
       mode = "400";
     };
@@ -157,12 +147,6 @@ in
           };
       };
     };
-  };
-
-  tsPeerix = {
-    enable = false;
-    privateKeyFile = "${config.sops.secrets.peerix_private_key.path}";
-    interfaces = [ "wlp170s0" "ztksevmpn3" ];
   };
 
   programs = {
