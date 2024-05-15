@@ -38,6 +38,21 @@
 
       PROMPT='%n@%m[%(?.%{$fg[default]%}.%{$fg[red]%})%?%{$reset_color%}]:%~$vcs_info_msg_0_$(prompt_char) '
 
+      ni() {
+        if [ "$#" -eq 0 ]; then
+          echo "please specify packages to install"
+          return 1
+        fi
+
+        opts=()
+        for i in $@; do
+          opts+="nixpkgs#$i"
+        done
+
+        echo "==> Installing: $opts"
+        nix shell $opts
+      }
+
       go_update_deps() {
         for i in $(go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all); do
           go get -u $i
