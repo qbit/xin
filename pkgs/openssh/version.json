@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "385ecb31e147dfea59c1c488a1d2011d3867e60e",
-  "hash": "sha256-pIrIcZy7UUeSyYm2CPYKsvEQ+NllfSbLBpgHcLCq5wQ=",
-  "version": "2024-04-30",
-  "comment": "upstream: fix home-directory extension implementation, it always"
+  "rev": "1c0d81357921f8d3bab06841df649edac515ae5b",
+  "hash": "sha256-ZxK981eI+TBDr3CUlt78bapM3E346derX3NhtBjie0o=",
+  "version": "2024-05-10",
+  "comment": "upstream: simplify exit message handling, which was more complicated"
 }
