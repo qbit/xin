@@ -388,6 +388,7 @@ in
       veilid
       virt-manager
       w3m
+      workrave
       yt-dlp
       zig
 
