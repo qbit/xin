@@ -46,6 +46,8 @@ require("nvim-tree").setup({
 require'nvim-treesitter.configs'.setup({})
 require('neogen').setup({})
 
+require('neogit').setup({})
+
 require('todo-comments').setup {};
 
 cmd [[highlight NvimTreeOpenedFolderName guifg=default]]

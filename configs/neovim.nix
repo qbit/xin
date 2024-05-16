@@ -34,6 +34,7 @@ let
     gleam-vim
     haskell-vim
     neoformat
+    neogit
     nvim-compe
     nvim-lspconfig
     nvim-tree-lua
