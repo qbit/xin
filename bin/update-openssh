@@ -25,8 +25,11 @@ if [ "${CURRENT_COMMIT}" != "${COMMIT}" ]; then
 		--arg c "${COMMENT}" \
 		'. |= . + {"version": $v, "comment": $c}' \
 		> pkgs/openssh/version.json
-	echo "Updated to '${COMMIT}': '${COMMENT}'"
-	git add pkgs/openssh/version.json && git commit -m "pkgs/openssh: update to ${COMMIT}"
+	FN=$(mktemp)
+	echo "Updated to '${COMMIT}': '${COMMENT}'" > ${FN}
+	echo >> ${FN}
+	echo "${COMMENT}" >> ${FN}
+	git add pkgs/openssh/version.json && git commit -F $FN
 else
 	echo "No updates."
 fi
