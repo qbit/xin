@@ -175,7 +175,7 @@ in
 
   services = {
     ollama = {
-      enable = true;
+      enable = false;
       acceleration = prIsOpen.str 306375 "rocm";
     };
     rkvm.server = {
