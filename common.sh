@@ -138,7 +138,7 @@ handle_update_fail() {
 }
 
 handle_check_fail() {
-	po_error "CI: checks failed!" "$(tail -n 30 $1)"
+	po_error "CI: checks failed!" "$(get_journal xin-ci)"
 }
 
 handle_update_check_fail() {
