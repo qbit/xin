@@ -4,7 +4,6 @@
 }:
 let
   tsAddr = "100.84.170.57";
-  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -145,11 +144,6 @@ in
         ];
       };
     };
-    #emacs = {
-    #  enable = true;
-    #  package = myEmacs;
-    #  install = true;
-    #};
     fwupd = {
       enable = true;
     };

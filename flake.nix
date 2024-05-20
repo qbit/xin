@@ -24,14 +24,6 @@
       };
     };
 
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay/64a633659fab447f12c898a32c451f88b5c3c048";
-      inputs = {
-        nixpkgs.follows = "unstable";
-        nixpkgs-stable.follows = "stable";
-      };
-    };
-
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "unstableSmall";
@@ -150,7 +142,6 @@
       };
 
       overlays = [
-        inputs.emacs-overlay.overlay
         inputs.gostart.overlay
         inputs.mcchunkie.overlay
         inputs.kogs.overlay
