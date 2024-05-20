@@ -54,6 +54,9 @@ in
     fwupd = {
       enable = true;
     };
+
+    libinput.enable = true;
+
     xserver = {
       enable = true;
 
@@ -65,7 +68,6 @@ in
         Option "TearFree" "true"
       '';
 
-      libinput.enable = true;
 
       windowManager.xmonad = {
         enable = true;

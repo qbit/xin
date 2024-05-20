@@ -587,7 +587,7 @@ in
     };
 
     loki = {
-      enable = true;
+      enable = false;
       configuration = {
         analytics.reporting_enabled = false;
         server.http_listen_port = 3030;

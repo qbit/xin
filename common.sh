@@ -142,7 +142,7 @@ handle_check_fail() {
 }
 
 handle_update_check_fail() {
-	_po "CI: checks for $1 failed!" "$(tail -n 30 $2)"
+	_po "CI: checks for $1 failed!" "$(get_journal xin-ci-update)"
 }
 
 handle_merge_fail() {
