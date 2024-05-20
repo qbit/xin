@@ -345,7 +345,6 @@ in
       gh
       gimp
       git-annex
-      git-credential-1password
       gqrx
       hackrf
       inkscape
