@@ -34,18 +34,19 @@ let
 
   # Binaries that are needed in emacs
   emacsDepList = with pkgs; [
-    go-font
-    graphviz
-    ispell
-    texlive.combined.scheme-full
     deno
+    elmPackages.elm
+    elmPackages.elm-format
+    elmPackages.elm-language-server
+    go-font
     gopls
     gotools
-    elmPackages.elm-language-server
-    elmPackages.elm-format
-    elmPackages.elm
+    graphviz
+    ispell
+    nodePackages.typescript-language-server
     nodejs
     perlPackages.PLS
+    texlive.combined.scheme-full
   ];
 in
 emacsWithPackagesFromUsePackage {
