@@ -1017,9 +1017,7 @@ Elpher is a nice little gemini / gopher client.
 This lets one select a ~struct~ or similar and auto add the ~`json:"NAME"`~ bits.
 
 #+begin_src emacs-lisp
-(use-package go-add-tags
-  :bind
-  ("C-c t" . go-add-tags))
+  (use-package go-add-tags)
 #+end_src
 
 *** go-mode
@@ -1419,12 +1417,10 @@ Custom agenda commands for various things.
 ** GOT
 
 #+begin_src emacs-lisp
-  (setq vc-got-dir (expand-file-name "~/.emacs.d/site-lisp/vc-got-1.0"))
-  (if (file-directory-p vc-got-dir)
-      (use-package vc-got
-        :load-path vc-got-dir
-        :defer t
-        :init
-        (add-to-list 'vc-handled-backends 'Got)
-        (add-to-list 'vc-directory-exclusion-list ".got")))
+  (use-package vc-got
+    :load-path vc-got-dir
+    :defer t
+    :init
+    (add-to-list 'vc-handled-backends 'Got)
+    (add-to-list 'vc-directory-exclusion-list ".got"))
 #+end_src
