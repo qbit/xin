@@ -343,15 +343,20 @@ Speedbar is almost perfect.. If it only ran in the current frame!! :D
   (global-set-key (kbd "C-x C-n") 'sr-speedbar-toggle)
 #+end_src
 
-** Elpher
+* Language Configurations
 
-Elpher is a nice little gemini / gopher client.
+** Shell
 
 #+begin_src emacs-lisp
-  (use-package elpher)
+  (use-package shfmt)
+  (add-hook 'sh-mode-hook 'shfmt-on-save-mode)
 #+end_src
 
-* Language Configurations
+** Typescript
+
+#+begin_src emacs-lisp
+  (use-package typescript-mode)
+#+end_src
 
 ** Nix
 
