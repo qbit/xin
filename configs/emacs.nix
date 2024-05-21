@@ -37,7 +37,6 @@ let
 
   # Binaries that are needed in emacs
   emacsDepList = with pkgs; [
-    deno
     elmPackages.elm
     elmPackages.elm-format
     elmPackages.elm-language-server
@@ -59,6 +58,7 @@ let
     sumneko-lua-language-server
     texlive.combined.scheme-full
     tree-sitter
+    typescript
   ] ++ unstablePkgs;
 in
 emacsWithPackagesFromUsePackage {
