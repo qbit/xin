@@ -48,10 +48,11 @@ let
     ispell
     luaformatter
     luajitPackages.lua-lsp
+    nil
     nixpkgs-fmt
+    nodejs
     nodePackages.prettier
     nodePackages.typescript-language-server
-    nodejs
     perlPackages.PLS
     rubyPackages.solargraph
     sleek

@@ -269,6 +269,7 @@ Magit is a awesome. Not sure what else to say about it. :P
            (typescript-mode . lsp)
            (elm-mode        . lsp)
            (perl-mode       . lsp)
+           (nix-mode        . lsp)
            (lua-mode        . lsp))
     :commands (lsp lsp-deferred))
 
