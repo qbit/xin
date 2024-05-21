@@ -316,14 +316,6 @@ easier for me to treat it like a regular shell.
     (kill-buffer))
 #+end_src
 
-** pinboard
-
-A pinboard.in client
-
-#+begin_src emacs-lisp
-(use-package pinboard)
-#+end_src
-
 ** restclient
 
 #+begin_src emacs-lisp
@@ -1006,12 +998,28 @@ Elpher is a nice little gemini / gopher client.
   (use-package elpher)
 #+end_src
 
-* Language Configs
+* Language Configurations
+
+** Nix
+
+#+begin_src emacs-lisp
+  (use-package nix-mode
+    :mode "\\.nix\\'")
+#+end_src
+
+** Elm
+
+#+begin_src emacs-lisp
+  (use-package elm-mode)
+#+end_src
+
 ** Ada
 #+begin_src emacs-lisp
   ;;(use-package ada-mode)
 #+end_src
-** Go configuration
+
+** Go
+
 *** go-add-tags
 
 This lets one select a ~struct~ or similar and auto add the ~`json:"NAME"`~ bits.
@@ -1057,7 +1065,7 @@ Some go tools use this.
   :hook (go-mode . yas-minor-mode))
 #+end_src
 
-** Zig configuration
+** Zig
 #+begin_src emacs-lisp
   (use-package zig-mode)
 #+end_src
@@ -1067,6 +1075,7 @@ Some go tools use this.
 #+begin_src emacs-lisp
   (use-package lua-mode)
 #+end_src
+
 * Mail
 
 ~mu~ has been the best mail client for me on emacs.
