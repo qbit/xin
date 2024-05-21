@@ -5,6 +5,7 @@
 , writeTextDir
 , emacs
 , emacsPkg ? pkgs.emacs-gtk
+, isUnstable
 , ...
 }:
 let
@@ -32,6 +33,8 @@ let
   '';
   emacsInitDir = "${emacsInit}/share/emacs/site-lisp";
 
+  unstablePkgs = if isUnstable then with pkgs; [ htmx-lsp ] else [ ];
+
   # Binaries that are needed in emacs
   emacsDepList = with pkgs; [
     deno
@@ -43,11 +46,19 @@ let
     gotools
     graphviz
     ispell
+    luaformatter
+    luajitPackages.lua-lsp
+    nixpkgs-fmt
+    nodePackages.prettier
     nodePackages.typescript-language-server
     nodejs
     perlPackages.PLS
+    rubyPackages.solargraph
+    sleek
+    sumneko-lua-language-server
     texlive.combined.scheme-full
-  ];
+    tree-sitter
+  ] ++ unstablePkgs;
 in
 emacsWithPackagesFromUsePackage {
   config = ./emacs.org;
