@@ -38,6 +38,14 @@ let
     graphviz
     ispell
     texlive.combined.scheme-full
+    deno
+    gopls
+    gotools
+    elmPackages.elm-language-server
+    elmPackages.elm-format
+    elmPackages.elm
+    nodejs
+    perlPackages.PLS
   ];
 in
 emacsWithPackagesFromUsePackage {

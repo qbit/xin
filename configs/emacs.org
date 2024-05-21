@@ -260,14 +260,18 @@ Magit is a awesome. Not sure what else to say about it. :P
 
 ** lsp-mode
 
-~lsp-mode~ supports language servers for various things. I pretty much only
-care about Go and Ruby.
+~lsp-mode~ supports language servers for various things.
 
 #+begin_src emacs-lisp
   (use-package lsp-mode
-    :hook ((go-mode    . lsp-deferred)
-           (ruby-mode  . lsp))
+    :hook ((go-mode         . lsp-deferred)
+           (ruby-mode       . lsp)
+           (typescript-mode . lsp)
+           (elm-mode        . lsp)
+           (perl-mode       . lsp))
     :commands (lsp lsp-deferred))
+
+  (use-package lsp-ui :commands lsp-ui-mode)
 #+end_src
 
 ** company and friends
@@ -781,13 +785,3 @@ Custom agenda commands for various things.
 	  (org-agenda-log-mode-items '(state))))))
 #+end_src
 
-** GOT
-
-#+begin_src emacs-lisp
-  (use-package vc-got
-    :load-path vc-got-dir
-    :defer t
-    :init
-    (add-to-list 'vc-handled-backends 'Got)
-    (add-to-list 'vc-directory-exclusion-list ".got"))
-#+end_src
