@@ -11,6 +11,7 @@ let
   inherit (inputs.traygent.packages.${pkgs.system}) traygent;
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
+  myEmacs = pkgs.callPackage ../configs/emacs.nix { };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr =
     pkgs.writeScriptBin "rpr"
@@ -68,6 +69,11 @@ with lib; {
       services = {
         xserver.enable = true;
         pcscd.enable = true;
+        emacs = {
+          enable = true;
+          package = myEmacs;
+          install = true;
+        };
       };
 
       documentation.enable = true;
