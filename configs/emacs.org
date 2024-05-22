@@ -276,6 +276,16 @@ Magit is a awesome. Not sure what else to say about it. :P
   (use-package lsp-ui :commands lsp-ui-mode)
 #+end_src
 
+** projectile
+
+#+begin_src emacs-lisp
+  (use-package projectile
+    :init
+    (projectile-mode +1)
+    :bind (:map projectile-mode-map
+                ("C-c C-p" . projectile-command-map)))
+#+end_src
+
 ** company and friends
 
 ~company~ allows for auto-completion of various things. It can interface with ~lsp-mode~ to complete
