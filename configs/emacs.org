@@ -61,8 +61,7 @@ For some reason OpenBSD hangs, these seem to help a bit
 
 Global font
 #+begin_src emacs-lisp
-  ;; This is currently set in ~/.Xresources - for some reason emacs doesn't like the line below
-  (set-frame-font "Go Mono")
+  (set-frame-font "Go Mono 11")
 #+end_src
 
 Use 80 columns, this helps keep things readable when windows are split
