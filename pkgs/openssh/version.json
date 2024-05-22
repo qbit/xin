@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "24a1f3e5ad6f4a49377d4c74c36637e9a239efd0",
-  "hash": "sha256-9xzcNDMspL8L2hbTdXhwVOg6sxvDv6/FlY6+/AEjqKs=",
-  "version": "2024-05-17",
-  "comment": "attempt at updating RPM specs for sshd-session"
+  "rev": "fc5dc092830de23767c6ef67baa18310a64ee533",
+  "hash": "sha256-rXMrutir6pI11y84a4KAKwSd7HFifkJ/s8sVlZ7e63A=",
+  "version": "2024-05-22",
+  "comment": "upstream: this test has been broken since 2014, and has been"
 }
