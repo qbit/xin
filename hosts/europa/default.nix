@@ -7,6 +7,7 @@
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
+  inherit (inputs.unstableSmall.legacyPackages.${pkgs.system}) quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
   jobs = [
     {
@@ -369,7 +370,7 @@ in
       python3Packages.nomadnet
       python3Packages.rns
       qdmr
-      #quodlibet-full
+      quodlibet-full # unstableSmall
       deadbeef-with-plugins
       rex
       rofi
