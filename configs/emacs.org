@@ -498,6 +498,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
                               (sequence "|" "CANCELED(c)")))
     (setq org-publish-project-alist my-org-publish-alist)
     (setq org-capture-templates my-org-capture-templates))
+  (use-package org-contrib)
 
 #+end_src
 
