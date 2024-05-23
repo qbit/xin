@@ -93,7 +93,7 @@ with lib; {
           bc
           beyt
           black
-          drawterm
+          drawterm-wayland
           exiftool
           go-font
           govulncheck
