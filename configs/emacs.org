@@ -279,6 +279,7 @@ Magit is a awesome. Not sure what else to say about it. :P
 
 #+begin_src emacs-lisp
   (use-package eglot)
+  (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
 #+end_src
 
 ** company and friends
