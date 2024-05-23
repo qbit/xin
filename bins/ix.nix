@@ -1,4 +1,4 @@
 { perl }: ''
-#!${perl}/bin/perl
-${builtins.readFile ./ix/ix.pl}
+  #!${perl}/bin/perl
+  ${builtins.readFile ./ix/ix.pl}
 '' 
