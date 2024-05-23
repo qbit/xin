@@ -257,22 +257,28 @@ Magit is a awesome. Not sure what else to say about it. :P
 (define-key flycheck-mode-map (kbd "C-c !") 'org-time-stamp-inactive)
 #+end_src
 
-** lsp-mode
+** lsp
 
 ~lsp-mode~ supports language servers for various things.
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode
-    :hook ((go-mode         . lsp-deferred)
-           (ruby-mode       . lsp)
-           (typescript-mode . lsp)
-           (elm-mode        . lsp)
-           (perl-mode       . lsp)
-           (nix-mode        . lsp)
-           (lua-mode        . lsp))
-    :commands (lsp lsp-deferred))
+  ;; (use-package lsp-mode
+  ;;   :hook ((go-mode         . lsp-deferred)
+  ;;          (ruby-mode       . lsp)
+  ;;          (typescript-mode . lsp)
+  ;;          (elm-mode        . lsp)
+  ;;          (perl-mode       . lsp)
+  ;;          (nix-mode        . lsp)
+  ;;          (lua-mode        . lsp))
+  ;;   :commands (lsp lsp-deferred))
 
-  (use-package lsp-ui :commands lsp-ui-mode)
+  ;; (use-package lsp-ui :commands lsp-ui-mode)
+#+end_src
+
+~elgot~ seems to have better defaults
+
+#+begin_src emacs-lisp
+  (use-package elgot)
 #+end_src
 
 ** projectile
@@ -407,7 +413,6 @@ This allows for things like ~gofmt~ and auto adding / removing of imports.
 
 #+begin_src emacs-lisp
   (use-package go-mode
-    :after (go-add-tags lsp-mode)
     :bind
     ("C-c t" . go-add-tags))
   (defun lsp-go-install-save-hooks ()
@@ -423,7 +428,6 @@ up what things do.
 
 #+begin_src emacs-lisp
 (use-package go-eldoc
-  :after (go-mode lsp-mode)
   :hook
   (go-mode . go-eldoc-setup))
 #+end_src
