@@ -275,10 +275,10 @@ Magit is a awesome. Not sure what else to say about it. :P
   ;; (use-package lsp-ui :commands lsp-ui-mode)
 #+end_src
 
-~elgot~ seems to have better defaults
+~eglot~ seems to have better defaults
 
 #+begin_src emacs-lisp
-  (use-package elgot)
+  (use-package eglot)
 #+end_src
 
 ** projectile
