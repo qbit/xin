@@ -20,6 +20,7 @@ let
     inherit config;
     inherit xinlib;
   };
+  myEmacs = pkgs.callPackage ./configs/emacs.nix { inherit isUnstable; };
 in
 {
   imports = [
@@ -180,6 +181,7 @@ in
           lz4
           minisign
           mosh
+          myEmacs
           nix-diff
           nix-index
           nix-output-monitor
@@ -196,7 +198,7 @@ in
         );
 
       interactiveShellInit = ''
-        alias vi=nvim
+        alias vi=emacsclient
       '';
     };
 
