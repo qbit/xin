@@ -5,38 +5,6 @@
 I can never rembember what various configs do. Jumping on this literate emacs
 config to see if it helps!
 
-** Set some ENV vars
-
-These are needed to make emacs aware of various things (like Go binaries,
-etc). I have them here because sometimes when emacs is launched from ~rofi~
-or similar it doesn't have the same ENV as it does when launching from the
-shell.
-
-#+begin_src emacs-lisp
-  (defun expand-if-exists (d)
-    ;; expand-if-exists(d) expands d only if d exists
-    (if (file-exists-p d)
-        (expand-file-name d)))
-
-  (let ((paths
-         '(
-           "/usr/local/bin"
-           "/usr/local/go/bin"
-           "/usr/local/MacGPG2/bin"
-           "/Library/TeX/texbin"
-           "/usr/local/jdk-11/bin"
-           "/usr/ports/infrastructure/bin"
-           "~/bin"
-           "~/.nix-profile/bin"
-           "~/go/bin"
-           "~/opt/bin"
-           "/usr/local/plan9/bin"
-           )))
-
-    (setenv "PATH" (concat (getenv "PATH") (mapconcat 'expand-if-exists (remove nil paths) ":")))
-    (setq exec-path (append exec-path (remove "" (split-string (getenv "PATH") ":")))))
-#+end_src
-
 ** Start the emacs server
 
 Starting as a server lets me connect externally to do things like change
@@ -45,15 +13,6 @@ themes, save buffers via cron and other such dumbary!
 #+begin_src emacs-lisp
 (load "server")
 (unless (server-running-p) (server-start))
-#+end_src
-
-** OpenBSD Lockups
-
-For some reason OpenBSD hangs, these seem to help a bit
-#+begin_src emacs-lisp
-(setq x-select-enable-clipboard-manager nil)
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-(setf x-selection-timeout 500)
 #+end_src
 
 ** Interface and Behavior
@@ -76,16 +35,6 @@ I know I am in emacs, don't need to see the startup screen.
 (setq inhibit-startup-screen t)
 #+end_src
 
-If we are on OpenBSD, fill the scratch buffer with fortune \o/.
-
-#+begin_src emacs-lisp
-(if (file-executable-p "/usr/games/fortune")
-    (setq initial-scratch-message
-	  (concat
-	   (shell-command-to-string "fortune | sed -e 's/^/;; /g'")
-	   "\n\n")))
-#+end_src
-
 **** Use UTF8 where ever possible
 #+begin_src emacs-lisp
 (prefer-coding-system 'utf-8)
@@ -103,10 +52,10 @@ If we are on OpenBSD, fill the scratch buffer with fortune \o/.
 (global-font-lock-mode 1)
 #+end_src
 
-**** No GNU ls here
+**** direnv
+
 #+begin_src emacs-lisp
-  (setq ls-lisp-use-insert-directory-program nil)
-  (require 'ls-lisp)
+  (use-package direnv)
 #+end_src
 
 *** Behavior
@@ -146,32 +95,6 @@ Use spelling and auto-fill when we are in text mode.
 			    (turn-on-flyspell)))
 #+end_src
 
-This fixes some tramp "waiting for prompt" errors.
-#+begin_src emacs-lisp
-  ;;(setq trarmp-shell-prompt-pattern "\\(?:^\\|\r\\)[^]#$%>λ\n]*#?[]#$%>λ].* *\\(^[\\[[0-9;]*[a-zA-Z] *\\)*")
-  ;;(require 'tramp-sh nil t)
-  ;;(setf tramp-ssh-controlmaster-options
-  ;;      (concat
-  ;;       "-o ControlPath=/tmp/ssh-%%r@%%h:%%p "
-  ;;       "-o ControlMaster=auto -o ControlPersist=yes"))
-#+end_src
-
-If things _aren't_ working the way we want:
-
-#+begin_src emacs-lisp
-(setq tramp-verbose 6)
-#+end_src
-
-** Include ports site-lisp
-
-On OpenBSD various packages (mu, git.. etc) install elisp things into a global
-directory, this makes sure we include it.
-
-#+begin_src emacs-lisp
-(if (file-directory-p "/usr/local/share/emacs/site-lisp")
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/"))
-#+end_src
-
 ** Unset custom-file
 
 The customization file mostly just causes churn in the SCM so we disable it
@@ -180,17 +103,8 @@ here.
 (setq custom-file (make-temp-file ""))
 #+end_src
 
-** Ensure packages are pinned and installed
-
-This makes sure ~use-package~ installs things (and makes it so we don't need
-~:ensure t~ set for every package.
-
-#+begin_src emacs-lisp
-(setq use-package-always-ensure t)
-;;(setq use-package-always-pin "melpa-stable")
-#+end_src
-
 * Packages
+
 ** parchment-theme
 This is a nice theme that resembles acme in plan9. Minimal.
 
@@ -259,23 +173,8 @@ Magit is a awesome. Not sure what else to say about it. :P
 
 ** lsp
 
-~lsp-mode~ supports language servers for various things.
-
-#+begin_src emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :hook ((go-mode         . lsp-deferred)
-  ;;          (ruby-mode       . lsp)
-  ;;          (typescript-mode . lsp)
-  ;;          (elm-mode        . lsp)
-  ;;          (perl-mode       . lsp)
-  ;;          (nix-mode        . lsp)
-  ;;          (lua-mode        . lsp))
-  ;;   :commands (lsp lsp-deferred))
-
-  ;; (use-package lsp-ui :commands lsp-ui-mode)
-#+end_src
-
-~eglot~ seems to have better defaults
+Use ~eglot~ for lsp stuff. It's built in and shows a bit more information for
+auto-completion stuff. 
 
 #+begin_src emacs-lisp
   (use-package eglot)
@@ -306,16 +205,6 @@ This gives me a nice in-ui way to see modifications and what not.
   (after-init . global-git-gutter-mode))
 #+end_src
 
-** nix
-
-Add support for nix files. I don't use nix much atm, but it was recently
-ported to OpenBSD, so I am hopeful I can start using it there more!
-
-#+begin_src emacs-lisp
-(use-package nix-mode
-  :mode "\\.nix\\'")
-#+end_src
-
 ** shell
 
 I don't often use the shell from emacs, but when I do these bits make it
@@ -326,14 +215,6 @@ easier for me to treat it like a regular shell.
   (defadvice term-handle-exit
       (after term-kill-buffer-on-exit activate)
     (kill-buffer))
-#+end_src
-
-** restclient
-
-#+begin_src emacs-lisp
-(use-package restclient
-  ;;:pin "melpa"
-  :mode (("\\.http$" . restclient-mode)))
 #+end_src
 
 ** sr-speedbar
@@ -383,9 +264,10 @@ Speedbar is almost perfect.. If it only ran in the current frame!! :D
   (use-package elm-mode)
 #+end_src
 
-** Ada
+** Haskell
+
 #+begin_src emacs-lisp
-  ;;(use-package ada-mode)
+  (use-package haskell-mode)
 #+end_src
 
 ** Go
@@ -421,127 +303,6 @@ up what things do.
 (use-package go-eldoc
   :hook
   (go-mode . go-eldoc-setup))
-#+end_src
-
-*** yasnippet
-
-Some go tools use this.
-
-#+begin_src emacs-lisp
-(use-package yasnippet
-  :commands yas-minor-mode
-  :hook (go-mode . yas-minor-mode))
-#+end_src
-
-** Zig
-#+begin_src emacs-lisp
-  (use-package zig-mode)
-#+end_src
-
-** Lua
-
-#+begin_src emacs-lisp
-  (use-package lua-mode)
-#+end_src
-
-* Mail
-
-~mu~ has been the best mail client for me on emacs.
-
-** Initializing mu
-
-The defaults ~mu~ uses make no sense. ~~/.cache~ is for .. caching data, not
-persistent databases.. So we init things with sane defaults:
-
-#+begin_src shell
-mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aaron@bolddaemon.com"
-#+end_src
-
-** General mail configuration
-
-#+begin_src emacs-lisp
-  (require 'smtpmail)
-  (setq user-mail-address              "aaron@bolddaemon.com"
-        user-full-name                 "Aaron Bieber"
-        message-send-mail-function     'smtpmail-send-it
-        message-kill-buffer-on-exit    t
-        smtpmail-smtp-user             "qbit@fastmail.com"
-        smtpmail-smtp-server           "smtp.fastmail.com"
-        smtpmail-smtp-service          465
-        smtpmail-default-smtp-server   "smtp.fastmail.com"
-        smtpmail-stream-type           'ssl)
-#+end_src
-
-** mu4e specific configs
-#+begin_src emacs-lisp
-        ;;(require 'mu4e)
-        ;;(require 'mu4e-speedbar)
-        ;;(require 'org-mu4e)
-        ;;(setq mail-user-agent 'mu4e-user-agent
-        ;;      mu4e-get-mail-command "mbsync fastmail"
-        ;;      mu4e-update-interval 420
-        ;;      mu4e-compose-context-policy nil
-        ;;      mu4e-context-policy 'pick-first
-        ;;      mu4e-drafts-folder "/Drafts"
-        ;;      mu4e-sent-folder   "/Sent Items"
-        ;;      mu4e-trash-folder  "/Trash"
-        ;;      mu4e-maildir-shortcuts
-        ;;      '( ("/INBOX"        . ?i)
-        ;;         ("/Archive"      . ?a)
-        ;;         ("/Sent Items"   . ?s))
-        ;;      org-mu4e-link-query-in-headers-mode nil
-        ;;      mu4e-attachment-dir
-        ;;      (lambda (fname mtype)
-        ;;        (cond
-        ;;         ((and fname (string-match "\\.diff$" fname))  "~/patches")
-        ;;         ((and fname (string-match "\\.patch$" fname))  "~/patches")
-        ;;         ((and fname (string-match "\\.diff.gz$" fname))  "~/patches")
-        ;;         (t "~/Downloads")))
-        ;;      mu4e-bookmarks
-        ;;      `(( :name "Inbox"
-        ;;          :query "maildir:/Inbox AND NOT flag:trashed"
-        ;;          :key ?i)
-        ;;        ( :name "TODO"
-        ;;          :query "maildir:/TODO AND NOT flag:trashed"
-        ;;          :key ?T)
-        ;;        ( :name  "Unread messages"
-        ;;          :query "flag:unread AND NOT flag:trashed AND NOT list:ports-changes.openbsd.org AND NOT list:source-changes.openbsd.org"
-        ;;          :key ?u)
-        ;;        ( :name  "Today's messages"
-        ;;          :query (concat
-        ;;                  "date:today..now"
-        ;;                  " AND NOT flag:trashed"
-        ;;                  " AND NOT list:ports-changes.openbsd.org"
-        ;;                  " AND NOT list:source-changes.openbsd.org")
-        ;;          :key ?d)
-        ;;        ( :name  "Last 7 days"
-        ;;          :query (concat
-        ;;                  "date:6d..now"
-        ;;                  " AND NOT flag:trashed"
-        ;;                  " AND NOT list:ports-changes.openbsd.org"
-        ;;                  " AND NOT list:source-changes.openbsd.org")
-        ;;          :key ?w)
-        ;;        ( :name  "Hackers"
-        ;;          :query "list:hackers.openbsd.org AND NOT flag:trashed"
-        ;;          :key ?h)
-        ;;        ( :name   "Bugs"
-        ;;          :query  "list:bugs.openbsd.org AND NOT flag:trashed"
-        ;;          :key ?b)
-        ;;        ( :name  "Tech"
-        ;;          :query "list:tech.openbsd.org AND NOT flag:trashed"
-        ;;          :key ?t)
-        ;;        ( :name  "Ports"
-        ;;          :query "list:ports.openbsd.org AND NOT flag:trashed"
-        ;;          :key ?p)
-        ;;        ( :name "Misc"
-        ;;          :query "list:misc.openbsd.org AND NOT flag:trashed"
-        ;;          :key ?m)
-        ;;        ( :name "9front"
-        ;;          :query "list:9front.9front.org AND NOT flag:trashed"
-        ;;          :key ?9)
-        ;;        ( :name "GOT"
-        ;;          :query "list:gameoftrees.openbsd.org AND NOT flag:trashed"
-        ;;          :key ?g)))
 #+end_src
 
 * org-mode
@@ -759,24 +520,7 @@ Add in some org-mode helpers:
     headline. (properties can be set via ~C-c C-x d~
 #+begin_src emacs-lisp
 (require 'org-habit)
-;(require 'org-checklist)
-#+end_src
-
-Found this bad boy to integrate pinboard with org-mode:
-- https://gist.github.com/khinsen/7ed357eed9b27f142e4fa6f5c4ad45dd
-#+begin_src emacs-lisp
-(defun org-pinboard-store-link ()
-  "Store a link taken from a pinboard buffer."
-  (when (eq major-mode 'pinboard-mode)
-    (pinboard-with-current-pin pin
-      (org-store-link-props
-       :type "pinboard"
-       :link (alist-get 'href pin)
-       :description (alist-get 'description pin)))))
-
-(org-link-set-parameters "pinboard"
-			 :follow #'browse-url
-			 :store #'org-pinboard-store-link)
+(require 'org-checklist)
 #+end_src
 
 Custom agenda commands for various things.
@@ -790,4 +534,3 @@ Custom agenda commands for various things.
 	  (org-agenda-ndays 7)
 	  (org-agenda-log-mode-items '(state))))))
 #+end_src
-

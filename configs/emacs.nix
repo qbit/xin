@@ -44,9 +44,8 @@ let
     gopls
     gotools
     graphviz
+    haskellPackages.lsp
     ispell
-    luaformatter
-    luajitPackages.lua-lsp
     nil
     nixpkgs-fmt
     nodejs
