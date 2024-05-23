@@ -55,7 +55,9 @@ I know I am in emacs, don't need to see the startup screen.
 **** direnv
 
 #+begin_src emacs-lisp
-  (use-package direnv)
+  (use-package direnv
+    :config
+    (direnv-mode))
 #+end_src
 
 *** Behavior
