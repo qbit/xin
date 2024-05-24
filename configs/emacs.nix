@@ -48,9 +48,9 @@ let
     ispell
     nil
     nixpkgs-fmt
-    nodejs
     nodePackages.prettier
     nodePackages.typescript-language-server
+    nodejs
     perlPackages.PLS
     rubyPackages.solargraph
     sleek
