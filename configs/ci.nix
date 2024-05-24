@@ -99,6 +99,11 @@ with lib; {
     nix = {
       #settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
       settings.allowed-users = [ "root" config.xinCI.user "harmonia" ];
+      gc = {
+        automatic = true;
+        dates = "daily";
+        options = "--delete-older-than 60d";
+      };
     };
 
     systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);

@@ -4,7 +4,7 @@
     let myPkgs = inputs.unstableSmall.legacyPackages.${pkgs.system};
     in {
       package = if lib.hasAttr "lix" myPkgs then myPkgs.lix else myPkgs.nixVersions.nix_2_21;
-      gc = {
+      gc = lib.mkDefault {
         automatic = true;
         dates = "daily";
         options = "--delete-older-than 10d";
