@@ -46,6 +46,7 @@ let
     graphviz
     haskellPackages.lsp
     ispell
+    isync
     nil
     nixpkgs-fmt
     nodePackages.prettier
@@ -54,7 +55,6 @@ let
     perlPackages.PLS
     rubyPackages.solargraph
     sleek
-    sumneko-lua-language-server
     texlive.combined.scheme-full
     tree-sitter
     typescript

@@ -349,11 +349,13 @@ in
       gqrx
       hackrf
       inkscape
+      isync
       jan
       jujutsu
       klavaro
       koreader
       minicom
+      mu
       nheko
       nix-index
       nixpkgs-review

@@ -679,6 +679,8 @@ in
                 proxy_set_header Host $host:$server_port;
                 proxy_set_header X-Forwarded-Proto $scheme;
                 proxy_set_header X-Forwarded-Ssl on;
+                proxy_set_header Authorization $http_authorization;
+                proxy_pass_header Authorization;
                 proxy_read_timeout 300;
                 proxy_connect_timeout 300;
                 proxy_pass http://127.0.0.1:8044;
