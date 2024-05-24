@@ -4,7 +4,7 @@
 , makeWrapper
 , writeTextDir
 , emacs
-, emacsPkg ? pkgs.emacs
+, emacsPkg ? pkgs.emacs-gtk
 , isUnstable
 , ...
 }:
