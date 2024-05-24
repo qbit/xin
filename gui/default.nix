@@ -12,7 +12,7 @@ let
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
-  myEmacs = pkgs.callPackage ./configs/emacs.nix { inherit isUnstable; };
+  myEmacs = pkgs.callPackage ../configs/emacs.nix { inherit isUnstable; };
   rpr =
     pkgs.writeScriptBin "rpr"
       (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
