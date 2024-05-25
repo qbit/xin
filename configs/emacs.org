@@ -179,8 +179,18 @@ Use ~eglot~ for lsp stuff. It's built in and shows a bit more information for
 auto-completion stuff. 
 
 #+begin_src emacs-lisp
-  (use-package eglot)
-  (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
+  (defun my-eglot-organize-imports () (interactive)
+         (eglot-code-actions nil nil "source.organizeImports" t))
+
+  (use-package eglot
+    :config
+    (add-hook 'go-mode-hook 'eglot-ensure)
+    (add-hook 'elm-mode-hook 'eglot-ensure)
+    (add-hook 'nix-mode-hook 'eglot-ensure)
+    (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
+    (add-hook 'before-save-hook 'my-eglot-organize-imports nil t)
+    (add-hook 'before-save-hook 'eglot-format-buffer))
+
 #+end_src
 
 ** company and friends
