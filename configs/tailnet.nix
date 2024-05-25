@@ -79,7 +79,7 @@ let
           {
             # ollama
             "action" = "accept";
-            "src" = [ "europa" ];
+            "src" = [ "europa" "h" ];
             "dst" = [ "pwntie:11434" ];
             "proto" = "tcp";
           }
