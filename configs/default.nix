@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ./alacritty.nix
+    ./beet.nix
     ./ca.nix
     ./ci.nix
     ./smug.nix
