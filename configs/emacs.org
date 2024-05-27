@@ -179,9 +179,6 @@ Use ~eglot~ for lsp stuff. It's built in and shows a bit more information for
 auto-completion stuff. 
 
 #+begin_src emacs-lisp
-  (defun my-eglot-organize-imports () (interactive)
-         (eglot-code-actions nil nil "source.organizeImports" t))
-
   (use-package eglot
     :config
     (add-hook 'go-mode-hook 'eglot-ensure)
@@ -190,7 +187,6 @@ auto-completion stuff.
     (add-hook 'typescript-mode-hook 'eglot-ensure)
     (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
     (define-key eglot-mode-map (kbd "C-c f") 'eglot-format)
-    (add-hook 'before-save-hook 'my-eglot-organize-imports nil t)
     (add-hook 'before-save-hook 'eglot-format-buffer))
 
 #+end_src
@@ -302,9 +298,10 @@ This allows for things like ~gofmt~ and auto adding / removing of imports.
   (use-package go-mode
     :bind
     ("C-c t" . go-add-tags))
+  (defun xin-eglot-organize-imports () (interactive)
+         (eglot-code-actions nil nil "source.organizeImports" t))
   (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+    (add-hook 'before-save-hook 'xin-eglot-organize-imports nil t))
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 #+end_src
 
