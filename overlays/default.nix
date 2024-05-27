@@ -16,17 +16,6 @@ in
         doCheck = todo "libressl tests disabled when building with musl" false;
       });
     })
-    (_: super: {
-      neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (_: rec {
-        version = "0.9.5";
-        src = super.fetchFromGitHub {
-          owner = "neovim";
-          repo = "neovim";
-          rev = "v${version}";
-          hash = "sha256-CcaBqA0yFCffNPmXOJTo8c9v1jrEBiqAl8CG5Dj5YxE=";
-        };
-      });
-    })
   ] ++
   (if isUnstable
   then [
