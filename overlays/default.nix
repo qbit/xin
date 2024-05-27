@@ -19,16 +19,6 @@ in
   ] ++
   (if isUnstable
   then [
-    (_: super: {
-      drawterm-wayland = super.drawterm-wayland.overrideAttrs (_: rec {
-        patches = [
-          (super.fetchpatch {
-            url = "http://okturing.com/src/19729/body";
-            sha256 = "sha256-DKmxC2HA/PlhZFd0P54CzPufURDyx4bA04OmFess974=";
-          })
-        ];
-      });
-    })
   ]
   else [
   ]);
