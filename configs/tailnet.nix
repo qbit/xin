@@ -21,6 +21,7 @@ let
           sputnik = "100.78.154.31";
           europa = "100.64.26.122";
           il = "100.86.182.99";
+          tv = "100.118.196.38";
         };
 
         tagOwners = {
@@ -81,6 +82,13 @@ let
             "action" = "accept";
             "src" = [ "europa" "h" ];
             "dst" = [ "pwntie:11434" ];
+            "proto" = "tcp";
+          }
+          {
+            # jellyfin for tv
+            "action" = "accept";
+            "src" = [ "tv" ];
+            "dst" = [ "box:443" ];
             "proto" = "tcp";
           }
         ];
@@ -162,6 +170,11 @@ let
             "src" = "europa";
             "proto" = "tcp";
             "allow" = [ "pwntie:11434" ];
+          }
+          {
+            "src" = "tv";
+            "proto" = "tcp";
+            "allow" = [ "box:443" ];
           }
         ];
       };

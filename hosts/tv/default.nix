@@ -1,29 +1,33 @@
 { pkgs
+, config
 , ...
 }:
 let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
-  ];
+  ] ++ config.myconf.managementPubKeys;
   myKodi = pkgs.kodi.withPackages (kp: [
     kp.somafm
     kp.jellyfin
     kp.invidious
+    kp.infotagger
+    kp.certifi
+    kp.jellycon
+    kp.requests
   ]);
 in
 {
-  _module.args.isUnstable = false;
+  _module.args.isUnstable = true;
   imports = [
     ./hardware-configuration.nix
   ];
 
   boot = {
-    loader.grub = {
-      enable = true;
-      devices = [
-        "/dev/disk/by-id/wwn-0x5001b448be78d64a"
-      ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
+
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
@@ -45,9 +49,18 @@ in
     xserver = {
       libinput.enable = true;
       enable = true;
-      desktopManager.kodi = {
-        enable = true;
-        package = myKodi;
+      desktopManager = {
+        kodi = {
+          enable = true;
+          package = myKodi;
+        };
+
+      };
+      displayManager = {
+        autoLogin = {
+          user = "tv";
+          enable = true;
+        };
       };
       videoDrivers = [ "intel" ];
     };
