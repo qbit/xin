@@ -60,6 +60,12 @@ I know I am in emacs, don't need to see the startup screen.
     (direnv-mode))
 #+end_src
 
+**** project.el
+
+#+begin_src emacs-lisp
+  (setq project-list-file (expand-file-name "~/.emacs.d/projects"))
+#+end_src
+
 *** Behavior
 
 Switch various defaults to be more comfortable for myself.
