@@ -191,6 +191,8 @@ auto-completion stuff.
     (add-hook 'elm-mode-hook 'eglot-ensure)
     (add-hook 'nix-mode-hook 'eglot-ensure)
     (add-hook 'typescript-mode-hook 'eglot-ensure)
+    (add-hook 'ruby-mode-hook 'eglot-ensure)
+    (add-hook 'perl-mode-hook 'eglot-ensure)
     (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
     (define-key eglot-mode-map (kbd "C-c f") 'eglot-format)
     (add-hook 'before-save-hook 'eglot-format-buffer))

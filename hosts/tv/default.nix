@@ -6,14 +6,14 @@ let
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ] ++ config.myconf.managementPubKeys;
-  myKodi = pkgs.kodi.withPackages (kp: [
-    kp.somafm
-    kp.jellyfin
-    kp.invidious
-    kp.infotagger
-    kp.certifi
-    kp.jellycon
-    kp.requests
+  myKodi = pkgs.kodi.withPackages (kp: with kp; [
+    certifi
+    infotagger
+    invidious
+    jellycon
+    jellyfin
+    requests
+    somafm
   ]);
 in
 {
