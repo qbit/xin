@@ -231,6 +231,9 @@
           nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
         clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
+        tv = buildSys "x86_64-linux" stable [
+          nixos-hardware.nixosModules.framework-11th-gen-intel
+        ] "tv";
         orcim = buildSys "x86_64-linux" unstable [ ] "orcim";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [
@@ -367,7 +370,7 @@
 
       checks =
         let
-          buildList = [ "europa" "stan" "h" "box" "faf" "weather" "clunk" "orcim" ];
+          buildList = [ "europa" "stan" "h" "box" "faf" "weather" "clunk" "orcim" "tv" ];
         in
         with unstable.lib;
         foldl' recursiveUpdate { } (mapAttrsToList
