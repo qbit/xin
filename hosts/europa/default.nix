@@ -333,6 +333,7 @@ in
       beets # stable
       calibre
       chirp # stable
+      deltachat-desktop
       deluge
       direwolf
       element-desktop
