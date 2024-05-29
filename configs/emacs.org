@@ -163,22 +163,6 @@ Magit is a awesome. Not sure what else to say about it. :P
   (setq magit-completing-read-function 'ivy-completing-read))
 #+end_src
 
-** flycheck
-
-~flycheck~ does automatic syntax checking for most things
-
-#+begin_src emacs-lisp
-(use-package flycheck
-  :init (global-flycheck-mode))
-#+end_src
-
-- [2020-05-29 Fri] Unfortunately it clobbers the "C-c !" prefix, so we need
-  to add this to get it back:
-
-#+begin_src emacs-lisp
-(define-key flycheck-mode-map (kbd "C-c !") 'org-time-stamp-inactive)
-#+end_src
-
 ** lsp
 
 Use ~eglot~ for lsp stuff. It's built in and shows a bit more information for
