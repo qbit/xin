@@ -41,6 +41,10 @@ in
     };
   };
 
+  environment.sessionVariables = {
+    NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
+  };
+
   services = {
     fwupd = {
       enable = true;
