@@ -12,6 +12,7 @@ let
     invidious
     jellyfin
     keymap
+    sendtokodi
     somafm
   ]);
 in
@@ -49,6 +50,7 @@ in
   pipewire.enable = true;
 
   services = {
+    avahi.enable = true;
     openssh.settings.X11Forwarding = true;
     fwupd = {
       enable = true;
