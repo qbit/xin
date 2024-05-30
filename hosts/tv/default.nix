@@ -10,9 +10,8 @@ let
     certifi
     infotagger
     invidious
-    jellycon
     jellyfin
-    requests
+    keymap
     somafm
   ]);
 in
@@ -29,11 +28,13 @@ in
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "snd-intel-dspcfg.dsp_driver=3" ];
   };
 
   networking = {
     hostName = "tv";
     networkmanager.enable = true;
+    wireless.userControlled.enable = true;
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
@@ -45,28 +46,28 @@ in
     NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
   };
 
+  pipewire.enable = true;
+
   services = {
+    openssh.settings.X11Forwarding = true;
     fwupd = {
       enable = true;
     };
-
+    libinput.enable = true;
     xserver = {
-      libinput.enable = true;
       enable = true;
       desktopManager = {
         kodi = {
           enable = true;
           package = myKodi;
         };
-
       };
-      displayManager = {
-        autoLogin = {
-          user = "tv";
-          enable = true;
-        };
+    };
+    displayManager = {
+      autoLogin = {
+        user = "tv";
+        enable = true;
       };
-      videoDrivers = [ "intel" ];
     };
   };
 
@@ -79,6 +80,16 @@ in
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    pavucontrol
+  ];
+
+  hardware.firmware = with pkgs; [
+    sof-firmware
+  ];
+
+  programs.ssh.package = pkgs.openssh;
 
   system = {
     stateVersion = "22.11";
