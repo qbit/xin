@@ -210,7 +210,7 @@ in
       zsh.enable = true;
       gnupg.agent.enable = true;
       ssh = {
-        package = myOpenSSH;
+        package = lib.mkDefault myOpenSSH;
         agentPKCS11Whitelist = "${pkgs.opensc}/lib/opensc-pkcs11.so";
         knownHosts = {
           "[namish.otter-alligator.ts.net]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF9jlU5XATs8N90mXuCqrflwOJ+s3s7LefDmFZBx8cCk";
