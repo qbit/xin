@@ -93,8 +93,6 @@ in
     sof-firmware
   ];
 
-  programs.ssh.package = pkgs.openssh;
-
   system = {
     stateVersion = "22.11";
   };
