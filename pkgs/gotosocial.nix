@@ -54,7 +54,7 @@ buildGoModule rec {
   meta = {
     description = "Fast, fun, ActivityPub server, powered by Go.";
     homepage = "https://github.com/superseriousbusiness/gotosocial";
-    license = licenses.agpl3;
+    license = licenses.agpl3Only;
     maintainers = with maintainers; [ qbit ];
   };
 }
