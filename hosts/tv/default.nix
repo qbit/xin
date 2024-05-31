@@ -22,6 +22,8 @@ in
     ./hardware-configuration.nix
   ];
 
+  needsDeploy.enable = false;
+
   boot = {
     loader = {
       systemd-boot.enable = true;
