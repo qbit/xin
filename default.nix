@@ -66,14 +66,15 @@ in
     sops = {
       age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-      secrets = {
-        xin_secrets_deploy_key = {
-          sopsFile = config.xin-secrets.deploy;
-          owner = "root";
-          group = "wheel";
-          mode = "400";
-        };
-      };
+      secrets =
+        if config.needsDeploy.enable then {
+          xin_secrets_deploy_key = {
+            sopsFile = config.xin-secrets.deploy;
+            owner = "root";
+            group = "wheel";
+            mode = "400";
+          };
+        } else { };
     };
 
 
