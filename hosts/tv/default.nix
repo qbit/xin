@@ -81,6 +81,7 @@ in
       tv = {
         openssh.authorizedKeys.keys = pubKeys;
         isNormalUser = true;
+        extraGroups = [ "dialout" "plugdev" ];
       };
     };
   };
