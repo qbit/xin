@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "ef878d58798f6688c7f4d4e417dc0c29023ea831",
-  "hash": "sha256-/+jiR8HyPp1Ch27DgU8dgLEHfAtL6yLCC+ds3dNSQdA=",
+  "rev": "cfe243cd9fde148ed060637876e27bb55ac78be9",
+  "hash": "sha256-ousmR2mElDborw8L9pNOZwQGATciVPyURx53HBfEACY=",
   "version": "2024-06-11",
-  "comment": "upstream: a little more RB_TREE paranoia"
+  "comment": "upstream: reap preauth net child if it hangs up during privsep message"
 }
