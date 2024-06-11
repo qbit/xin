@@ -308,12 +308,11 @@ in
     };
   };
 
-  virtualisation.docker.enable = false;
   users.users.qbit.extraGroups = [
     "dialout"
     "libvirtd"
     "plugdev"
-    #"docker"
+    "cdrom"
   ];
 
   environment = {
