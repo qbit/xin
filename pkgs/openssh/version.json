@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "fc5dc092830de23767c6ef67baa18310a64ee533",
-  "hash": "sha256-rXMrutir6pI11y84a4KAKwSd7HFifkJ/s8sVlZ7e63A=",
-  "version": "2024-05-22",
-  "comment": "upstream: this test has been broken since 2014, and has been"
+  "rev": "ef878d58798f6688c7f4d4e417dc0c29023ea831",
+  "hash": "sha256-/+jiR8HyPp1Ch27DgU8dgLEHfAtL6yLCC+ds3dNSQdA=",
+  "version": "2024-06-11",
+  "comment": "upstream: a little more RB_TREE paranoia"
 }
