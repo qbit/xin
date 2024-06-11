@@ -38,7 +38,7 @@
     };
 
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/0d51a32e4799d081f260eb4db37145f5f4ee7456";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
       inputs = {
         nixpkgs.follows = "stable";
       };
