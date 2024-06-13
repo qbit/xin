@@ -30,7 +30,7 @@ buildPythonPackage {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp plot.py $out/bin/watchplot
+    cp plot.py $out/bin/watchmap
   '';
 
   meta = with lib; {
