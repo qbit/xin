@@ -53,7 +53,7 @@ in
   pipewire.enable = true;
 
   programs.zsh.enable = true;
-  
+
   services = {
     avahi.enable = true;
     openssh.settings.X11Forwarding = true;
