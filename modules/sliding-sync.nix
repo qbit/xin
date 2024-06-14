@@ -81,8 +81,7 @@ in
     systemd.services.sliding-sync = {
       enable = true;
       description = "sliding-sync server";
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" "matrix-synapse.service" ];
+      wants = [ "network-online.target" "matrix-synapse.service" ];
 
       environment = {
         HOME = "${cfg.dataDir}";

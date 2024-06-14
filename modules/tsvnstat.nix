@@ -67,8 +67,7 @@ in
     systemd.services.tsvnstat = {
       enable = true;
       description = "tsvnstat server";
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
 
       path = [ pkgs.vnstat ];
 

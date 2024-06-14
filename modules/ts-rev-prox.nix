@@ -87,8 +87,7 @@ in
     systemd.services.tsrevprox = {
       enable = true;
       description = "tsrevprox server";
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
 
       environment = { HOME = "${cfg.dataDir}"; };
 

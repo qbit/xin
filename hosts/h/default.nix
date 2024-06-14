@@ -269,8 +269,7 @@ in
       };
       nomadnet = {
         description = "nomadnet";
-        after = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
+        wants = [ "multi-user.target" "multi-user.target" ];
         serviceConfig = {
           User = "qbit";
           Type = "forking";
@@ -280,8 +279,7 @@ in
       };
       matrix-synapse.after = [ "icbirc.service" ];
       icb-tunnel = {
-        wantedBy = [ "network.target" ];
-        after = [ "network.target" "multi-user.target" ];
+        wants = [ "network.target" "multi-user.target" ];
         serviceConfig = {
           User = "qbit";
           WorkingDirectory = "/home/qbit";

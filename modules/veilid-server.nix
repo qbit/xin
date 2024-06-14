@@ -59,8 +59,7 @@ in
     systemd.services.veilid-server = {
       enable = true;
       description = "veilid-server";
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
 
       environment = {
         HOME = cfg.dataDir;
