@@ -20,6 +20,7 @@ in
   _module.args.isUnstable = true;
   imports = [
     ./hardware-configuration.nix
+    ../../configs/zsh.nix
   ];
 
   needsDeploy.enable = false;
@@ -51,6 +52,8 @@ in
 
   pipewire.enable = true;
 
+  programs.zsh.enable = true;
+  
   services = {
     avahi.enable = true;
     openssh.settings.X11Forwarding = true;
@@ -77,9 +80,13 @@ in
 
   users = {
     users = {
-      root = { openssh.authorizedKeys.keys = pubKeys; };
+      root = {
+        openssh.authorizedKeys.keys = pubKeys;
+        shell = pkgs.zsh;
+      };
       tv = {
         openssh.authorizedKeys.keys = pubKeys;
+        shell = pkgs.zsh;
         isNormalUser = true;
         extraGroups = [ "dialout" "plugdev" ];
       };
