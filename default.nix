@@ -159,7 +159,11 @@ in
     };
 
     environment = {
-      etc."ssh/ca.pub" = { text = caPubKeys; };
+      etc = {
+        "ssh/ca.pub" = { text = caPubKeys; };
+        motd = { text = config.users.motd; };
+      };
+      
       systemPackages = with pkgs;
         [
           age
@@ -243,6 +247,7 @@ in
           TrustedUserCAKeys = /etc/ssh/ca.pub
         '';
         settings = {
+          PrintMotd = true;
           PermitRootLogin = "prohibit-password";
           PasswordAuthentication = false;
           KexAlgorithms = [ "curve25519-sha256" "curve25519-sha256@libssh.org" ];
