@@ -12,9 +12,9 @@
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-      kernelModules = [ ];
+      kernelModules = [ "cdc-acm" ];
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "cdc-acm" ];
     extraModulePackages = [ ];
   };
 
