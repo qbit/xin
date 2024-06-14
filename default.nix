@@ -163,7 +163,7 @@ in
         "ssh/ca.pub" = { text = caPubKeys; };
         motd = { text = config.users.motd; };
       };
-      
+
       systemPackages = with pkgs;
         [
           age
