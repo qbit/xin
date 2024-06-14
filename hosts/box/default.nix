@@ -316,6 +316,7 @@ in
         "homekit_controller"
         "icloud"
         "jellyfin"
+        "kodi"
         "logger"
         "met"
         "mqtt"

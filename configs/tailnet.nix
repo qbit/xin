@@ -91,6 +91,12 @@ let
             "dst" = [ "box:443" ];
             "proto" = "tcp";
           }
+          {
+            "action" = "accept";
+            "src" = [ "box" ];
+            "dst" = [ "tv:8080" "tv:9090" ];
+            "proto" = "tcp";
+          }
         ];
 
         tests = [
