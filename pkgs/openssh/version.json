@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "dd7807bbe80a93ffb4616f2bd5cf83ad5a5595fb",
-  "hash": "sha256-ZqIw+7vDvVSNsnlTenUBkuLvp8lfw69zxb6mjOAYPnU=",
-  "version": "2024-06-14",
-  "comment": "upstream: clarify KEXAlgorithms supported vs available. Inspired by"
+  "rev": "48443d202eaec52d4d39defdd709a4499a7140c6",
+  "hash": "sha256-M7+D9vlrNotI3Rygbq8fVP00iz5qbwxnI/sHkDPA9yM=",
+  "version": "2024-06-16",
+  "comment": "upstream: same treatment for this test"
 }
