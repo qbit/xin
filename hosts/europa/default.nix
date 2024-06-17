@@ -354,6 +354,7 @@ in
       jujutsu
       klavaro
       koreader
+      linphone
       minicom
       mu
       nheko
