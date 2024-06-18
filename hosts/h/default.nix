@@ -156,6 +156,11 @@ in
       owner = "root";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
+    mcchunkie_at_suah_pass_file = {
+      mode = "400";
+      owner = "root";
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
     golink = {
       mode = "400";
       owner = config.services.golink.user;
@@ -302,6 +307,9 @@ in
       "qbit@suah.dev" = {
         hashedPasswordFile = "${config.sops.secrets.qbit_at_suah_pass_file.path}";
         aliases = [ "postmaster@suah.dev" "aaron@suah.dev" ];
+      };
+      "mcchunkie@suah.dev" = {
+        hashedPasswordFile = "${config.sops.secrets.mcchunkie_at_suah_pass_file.path}";
       };
     };
 
