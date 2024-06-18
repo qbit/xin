@@ -95,7 +95,6 @@ in
 
   programs.neovim = {
     enable = true;
-    defaultEditor = true;
     configure = {
       packages.myVimPackage = { start = myVimPackages; };
       customRC = ''
