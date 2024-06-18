@@ -1116,6 +1116,10 @@ in
         ReadOnlyPaths = [ "/etc/nixos/secrets" ];
       };
 
+      jellyfin.serviceConfig = let cfg = config.services.jellyfin; in {
+        ExecStart = lib.mkForce "${lib.getExe cfg.package} --datadir '${cfg.dataDir}' --configdir '${cfg.configDir}' --cachedir '${cfg.cacheDir}' --logdir '${cfg.logDir}' --nowebclient";
+      };
+
       gitea.environment = {
         GIT_CONFIG_NOGLOBAL = "true";
         GIT_CONFIG_NOSYSTEM = "true";
