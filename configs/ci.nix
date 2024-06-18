@@ -39,7 +39,6 @@ with lib; {
     };
   };
 
-  imports = [ ../modules/ts-rev-prox.nix ];
   config = mkIf config.xinCI.enable {
     sops.defaultSopsFile = config.xin-secrets.ci;
     sops.secrets = {
@@ -72,7 +71,7 @@ with lib; {
       };
       ts_proxy_env = {
         mode = "400";
-        owner = config.services.tsrevprox.user;
+        owner = config.services.ts-reverse-proxy.servers."nix-binary-cache".user;
       };
     };
     environment.systemPackages = with pkgs; [
@@ -97,7 +96,6 @@ with lib; {
     };
 
     nix = {
-      #settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
       settings.allowed-users = [ "root" config.xinCI.user "harmonia" ];
       gc = {
         automatic = true;
@@ -109,9 +107,8 @@ with lib; {
     systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
 
     services = {
-      tsrevprox = {
+      ts-reverse-proxy.servers."nix-binary-cache" = {
         enable = true;
-        reverseName = "nix-binary-cache";
       };
       harmonia = {
         enable = true;

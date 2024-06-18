@@ -148,7 +148,7 @@ in
     };
     pr_status_env = {
       mode = "400";
-      owner = config.services.tsrevprox.user;
+      owner = config.services.ts-reverse-proxy.servers."pr-status-reverse".user;
       sopsFile = config.xin-secrets.h.secrets.services;
     };
     qbit_at_suah_pass_file = {
@@ -367,11 +367,14 @@ in
         rooms = [ ];
       };
     };
-    tsrevprox = {
-      enable = true;
-      reverseName = "pr-status";
-      reversePort = 3003;
-      #envFile = config.sops.secrets.pr_status_env.path;
+    ts-reverse-proxy = {
+      servers = {
+        "pr-status-reverse" = {
+          enable = true;
+          reverseName = "pr-status";
+          reversePort = 3003;
+        };
+      };
     };
     sliding-sync = {
       enable = true;
