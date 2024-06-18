@@ -109,6 +109,9 @@ Use spelling and auto-fill when we are in text mode.
 			    (turn-on-flyspell)))
 #+end_src
 
+#+begin_src emacs-lisp
+  (setq eshell-history-file-name (expand-file-name "~/.emacs.d/eshell/history"))
+#+end_src
 ** Unset custom-file
 
 The customization file mostly just causes churn in the SCM so we disable it
