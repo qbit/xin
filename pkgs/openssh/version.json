@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "48443d202eaec52d4d39defdd709a4499a7140c6",
-  "hash": "sha256-M7+D9vlrNotI3Rygbq8fVP00iz5qbwxnI/sHkDPA9yM=",
-  "version": "2024-06-16",
-  "comment": "upstream: same treatment for this test"
+  "rev": "d5f83cfd852b14a25f347f082ab539a9454702ad",
+  "hash": "sha256-XRnXh3HNZ1qwMHP8OGPbsaF0qocMxyYjdwrk21bnJ8c=",
+  "version": "2024-06-19",
+  "comment": "Need to supply &quot;-f&quot; to restart sshd."
 }
