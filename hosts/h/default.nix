@@ -575,6 +575,11 @@ in
           root = "/var/www/bolddaemon.com";
 
         };
+        "paste.suah.dev" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/paste";
+        };
         "sync.suah.dev" = {
           forceSSL = true;
           enableACME = true;

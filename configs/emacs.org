@@ -122,6 +122,17 @@ here.
 
 * Packages
 
+** scpaste
+
+Post pastes to https://paste.suah.dev
+
+#+begin_src emacs-lisp
+  (use-package scpaste
+    :custom ((scpaste-scp-destination "suah.dev:/var/www/paste")
+             (scpaste-http-destination "https://paste.suah.dev")
+             (scpaste-footer "")))
+#+end_src
+
 ** htmlize
 
 This is needed for publishing org stuff
