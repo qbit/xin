@@ -122,6 +122,14 @@ here.
 
 * Packages
 
+** htmlize
+
+This is needed for publishing org stuff
+
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
+
 ** parchment-theme
 This is a nice theme that resembles acme in plan9. Minimal.
 
