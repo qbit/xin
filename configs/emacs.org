@@ -230,9 +230,13 @@ things like Go.
 This gives me a nice in-ui way to see modifications and what not.
 
 #+begin_src emacs-lisp
-(use-package git-gutter
-  :hook
-  (after-init . global-git-gutter-mode))
+  (use-package git-gutter
+    :hook
+    (after-init . global-git-gutter-mode)
+    :config
+    (global-set-key (kbd "C-x g r") 'git-gutter:revert-hunk)
+    (global-set-key (kbd "C-x g p") 'git-gutter:previous-hunk)
+    (global-set-key (kbd "C-x g n") 'git-gutter:next-hunk))
 #+end_src
 
 ** shell
