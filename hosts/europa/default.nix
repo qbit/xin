@@ -113,6 +113,8 @@ in
     };
     kernelParams = [
       "boot.shell_on_fail"
+      # https://gitlab.freedesktop.org/upower/power-profiles-daemon#panel-power-savings
+      "amdgpu.abmlevel=0"
     ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
