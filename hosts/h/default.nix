@@ -322,6 +322,9 @@ in
   };
 
   services = {
+    postfix.extraConfig = ''
+      smtputf8_enable = no
+    '';
     golink = {
       enable = true;
       envFile = config.sops.secrets.golink.path;
