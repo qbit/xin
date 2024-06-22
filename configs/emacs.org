@@ -124,13 +124,16 @@ here.
 
 ** obsidian
 
+This package is a thoughtful approach to integrating obsidian and emacs.
+
 #+begin_src emacs-lisp
   (use-package obsidian
-    (obsidian-specify-path "~/Brain")
+    :config
+    (obsidian-specify-path (expand-file-name "~/Brain"))
     (global-obsidian-mode t)
     :custom
     (obsidian-inbox-directory "Inbox")
-    (obsidian-daily-notes-directory "Daily Notes")
+    (obsidian-daily-notes-directory "Daily")
     (obsidian-templates-directory "Templates")
     (obsidian-daily-note-template "Daily.md")
     :bind (:map obsidian-mode-map
