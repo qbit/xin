@@ -122,6 +122,23 @@ here.
 
 * Packages
 
+** obsidian
+
+#+begin_src emacs-lisp
+  (use-package obsidian
+    (obsidian-specify-path "~/Brain")
+    (global-obsidian-mode t)
+    :custom
+    (obsidian-inbox-directory "Inbox")
+    (obsidian-daily-notes-directory "Daily Notes")
+    (obsidian-templates-directory "Templates")
+    (obsidian-daily-note-template "Daily.md")
+    :bind (:map obsidian-mode-map
+  	      ("C-c C-o" . obsidian-follow-link-at-point)
+  	      ("C-c C-b" . obsidian-backlink-jump)
+  	      ("C-c C-l" . obsidian-insert-wikilink)))
+#+end_src
+
 ** scpaste
 
 Post pastes to https://paste.suah.dev
