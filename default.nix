@@ -201,7 +201,7 @@ in
         );
 
       interactiveShellInit = ''
-        alias vi=emacsclient
+        alias vi='emacsclient -ct'
       '';
     };
 
