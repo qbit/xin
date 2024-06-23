@@ -186,7 +186,6 @@ in
     dtc
     rofi
     polybar
-    nix-top
   ];
 
   system.stateVersion = "21.11";

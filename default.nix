@@ -188,7 +188,6 @@ in
           nix-diff
           nix-index
           nix-output-monitor
-          nix-top
           pass
           ripgrep
           sshfs

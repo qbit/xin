@@ -362,7 +362,6 @@ in
       nheko
       nix-index
       nixpkgs-review
-      nix-top
       nmap
       obsidian
       ollama
