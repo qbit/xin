@@ -7,6 +7,11 @@
 
     stable.url = "github:NixOS/nixpkgs/nixos-24.05-small";
 
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0-rc1.tar.gz";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
@@ -121,6 +126,7 @@
     , simple-nixos-mailserver
     , nixos-hardware
     , beyt
+    , lix-module
     , ...
     } @ inputs:
     let
@@ -145,6 +151,7 @@
 
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
+          lix-module.nixosModules.default
         ];
       };
 
