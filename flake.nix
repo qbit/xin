@@ -348,6 +348,8 @@
           inherit (traygent.packages.${system}) traygent;
 
           inherit (spkgs) matrix-synapse;
+
+          xin = upkgs.callPackage ./bins/xin { inherit upkgs; };
         });
 
       templates = {

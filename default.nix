@@ -13,13 +13,14 @@ let
   breakGlassKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6CO4aa8ymIgPgHRMwVLPnkUXwFQRKJa66R3wGXrAS0 BreakGlass";
   managementKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
   statusKey = ''
-    command="/run/current-system/sw/bin/xin-status",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
+    command="/run/current-system/sw/bin/xin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
   gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit isUnstable; };
   myOpenSSH = pkgs.pkgsMusl.callPackage ./pkgs/openssh.nix {
     inherit config;
     inherit xinlib;
   };
+  xin = pkgs.perlPackages.callPackage ./bins/xin { inherit pkgs; };
 in
 {
   imports = [
@@ -192,6 +193,8 @@ in
           ripgrep
           sshfs
           tmux
+
+          xin
         ]
         ++ (
           if isUnstable
