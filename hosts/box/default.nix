@@ -128,6 +128,7 @@ in
     enableIPv6 = false;
 
     hosts = {
+      "10.6.0.1" = [ "router.bold.daemon" ];
       "127.0.0.1" = [ "git.tapenet.org" ];
       "10.6.0.15" = [ "jelly.bold.daemon" ];
       "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
@@ -314,7 +315,6 @@ in
         "homekit"
         "homekit_controller"
         "icloud"
-        "jellyfin"
         "kodi"
         "logger"
         "met"
