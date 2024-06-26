@@ -1,28 +1,28 @@
-{pkgs, lib, config, ...}:
+{ pkgs, lib, config, ... }:
 let
   cfg = config.services.lock-action;
   dbus-monitor = "${pkgs.dbus}/bin/dbus-monitor";
   awk = "${pkgs.gawk}/bin/awk";
   ssh-add = "${pkgs.openssh}/bin/ssh-add";
   action-script = pkgs.writeScript "action-script" ''
-  export DBUS_SESSION_BUS_ADDRESS="$(systemctl --user show-environment | ${awk} -F= '/^DBUS_SESSION_BUS_ADDRESS/ {print $(NF-1) "=" $NF}')"
-  export SSH_AUTH_SOCK="$(systemctl --user show-environment | ${awk} -F= '/^SSH_AUTH_SOCK/ {print $NF}')"
+    export DBUS_SESSION_BUS_ADDRESS="$(systemctl --user show-environment | ${awk} -F= '/^DBUS_SESSION_BUS_ADDRESS/ {print $(NF-1) "=" $NF}')"
+    export SSH_AUTH_SOCK="$(systemctl --user show-environment | ${awk} -F= '/^SSH_AUTH_SOCK/ {print $NF}')"
 
-  echo $DBUS_SESSION_BUS_ADDRESS
-  echo $SSH_AUTH_SOCK
+    echo $DBUS_SESSION_BUS_ADDRESS
+    echo $SSH_AUTH_SOCK
 
-  ${dbus-monitor} --session "type='signal',interface='org.freedesktop.ScreenSaver'" | \
-  while read x; do
-    case "$x" in
-      *"boolean true"*)
-        echo "Screen Locked";
-        ${ssh-add} -D
-        /run/wrappers/bin/sudo -K
-    esac
-  done
+    ${dbus-monitor} --session "type='signal',interface='org.freedesktop.ScreenSaver'" | \
+    while read x; do
+      case "$x" in
+        *"boolean true"*)
+          echo "Screen Locked";
+          ${ssh-add} -D
+          /run/wrappers/bin/sudo -K
+      esac
+    done
 
-'';
-    in
+  '';
+in
 {
   options = {
     services.lock-action = {
