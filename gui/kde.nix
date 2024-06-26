@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption mkMerge mkOption types;
+  inherit (lib) mkIf mkEnableOption mkOption types;
   kconnect = mkIf config.kdeConnect.enable
     (if isUnstable then
       pkgs.kdePackages.kdeconnect-kde
@@ -32,20 +32,13 @@ with pkgs;
   };
 
   config = mkIf config.kde.enable {
-    services =
-      mkMerge [
-        (if isUnstable then {
-          desktopManager.plasma6.enable = true;
-          displayManager.sddm.enable = true;
-        }
-        else {
-          xserver = {
-            desktopManager.plasma5.enable = true;
-            displayManager.sddm.enable = true;
-          };
-        })
-      ];
-
+    services = {
+      desktopManager.plasma6.enable = true;
+      displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
+    };
     # Listen for KDE Connect connections on the tailnet
     networking.firewall.interfaces = mkIf config.kdeConnect.enable {
       "${config.kdeConnect.interface}" =
