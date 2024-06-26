@@ -14,14 +14,15 @@ my $VERSION = 'v0.0.1';
 my @command_list;
 my @ssh_cmd;
 
-if (defined $ENV{SSH_ORIGINAL_COMMAND}) {
-    @ssh_cmd = split(" ", $ENV{SSH_ORIGINAL_COMMAND});
+if ( defined $ENV{SSH_ORIGINAL_COMMAND} ) {
+    @ssh_cmd = split( " ", $ENV{SSH_ORIGINAL_COMMAND} );
     shift @ssh_cmd;
 }
 
-if (@ARGV > @ssh_cmd) {
+if ( @ARGV > @ssh_cmd ) {
     @command_list = @ARGV;
-} else {
+}
+else {
     @command_list = @ssh_cmd;
 }
 
