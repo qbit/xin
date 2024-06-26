@@ -295,7 +295,6 @@ in
           pyipp
           pymetno
           ical
-          (pkgs.python312Packages.callPackage ../../pkgs/starlink-grpc.nix { inherit (pkgs.home-assistant) pkgs; })
           grpcio
         ];
       customComponents = [
@@ -326,7 +325,6 @@ in
         "pushover"
         "rest"
         "snmp"
-        "starlink"
         "zeroconf"
       ];
       config = {

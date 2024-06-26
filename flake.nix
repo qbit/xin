@@ -328,8 +328,6 @@
           };
           openevse =
             upkgs.python312Packages.callPackage ./pkgs/openevse.nix { inherit upkgs; };
-          starlink-grpc-core =
-            upkgs.python312Packages.callPackage ./pkgs/starlink-grpc.nix { inherit upkgs; };
           sliding-sync =
             spkgs.callPackage ./pkgs/sliding-sync.nix { inherit spkgs; };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
