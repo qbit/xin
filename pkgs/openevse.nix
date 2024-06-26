@@ -30,7 +30,7 @@ in
 buildHomeAssistantComponent rec {
   owner = "firstof9";
   domain = "openevse";
-  version = "2.1.41";
+  version = "2.1.42";
 
   nativeBuildInputs = [
     setuptools-scm
@@ -46,6 +46,6 @@ buildHomeAssistantComponent rec {
     inherit owner;
     repo = domain;
     rev = version;
-    hash = "sha256-s57U6+DcfWqaH9wj0lJ41ss/jmhR74YKJZ3W3qoajRM=";
+    hash = "sha256-TbBp6MQOsveCt/P3CnMwBm0xPxkWYEQdOPbT2us28d4=";
   };
 }
