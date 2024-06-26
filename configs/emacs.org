@@ -261,25 +261,6 @@ easier for me to treat it like a regular shell.
     (kill-buffer))
 #+end_src
 
-** sr-speedbar
-
-Speedbar is almost perfect.. If it only ran in the current frame!! :D
-
-**** Enter sr-speedbar
-
-#+begin_src emacs-lisp
-  (use-package sr-speedbar)
-#+end_src
-
-*** Speedbar options
-#+begin_src emacs-lisp
-  (setq
-   speedbar-show-unknown-files t
-   sr-speedbar-right-side nil)
-
-  (global-set-key (kbd "C-x C-n") 'sr-speedbar-toggle)
-#+end_src
-
 * Language Configurations
 
 ** Shell
@@ -612,7 +593,6 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
 #+begin_src emacs-lisp
   (use-package mu4e
     :init
-    (require 'mu4e-speedbar)
     (setq mail-user-agent 'mu4e-user-agent
           read-mail-command 'mu4e
           mu4e-get-mail-command "mbsync fastmail"
