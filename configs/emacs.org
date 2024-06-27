@@ -142,7 +142,6 @@ Post pastes to https://paste.suah.dev
   (use-package scpaste
     :config (setq scpaste-scp-destination "suah.dev:/var/www/paste"
   		scpaste-http-destination "https://paste.suah.dev"))
-
 #+end_src
 
 ** htmlize
