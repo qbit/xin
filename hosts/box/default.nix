@@ -820,24 +820,18 @@ in
     };
 
     rsnapshot = {
-      enable = false;
+      enable = true;
       enableManualRsnapshot = true;
       extraConfig = ''
-        snapshot_root	/backups/snapshots/
+        snapshot_root	/external/snapshots/
         retain	daily	7
         retain	manual	3
-        backup_exec	date "+ backup of suah.dev started at %c"
-        backup	root@suah.dev:/home/	suah.dev/
-        backup	root@suah.dev:/etc/	suah.dev/
-        backup	root@suah.dev:/var/synapse/	suah.dev/
-        backup	root@suah.dev:/var/dendrite/	suah.dev/
-        backup	root@suah.dev:/var/hammer/	suah.dev/
-        backup	root@suah.dev:/var/go-ipfs/	suah.dev/
-        backup	root@suah.dev:/var/gopher/	suah.dev/
-        backup	root@suah.dev:/var/honk/	suah.dev/
-        backup	root@suah.dev:/var/mcchunkie/	suah.dev/
-        backup	root@suah.dev:/var/www/	suah.dev/
-        backup_exec	date "+ backup of suah.dev ended at %c"
+        backup_exec	date "+ backup of /media started at %c"
+        backup	/media/	media/
+        backup_exec	date "+ backup of /media ended at %c"
+        backup_exec	date "+ backup of /var started at %c"
+        backup	/var/	var/
+        backup_exec	date "+ backup of /var ended at %c"
       '';
       cronIntervals = { daily = "50 21 * * *"; };
     };

@@ -16,6 +16,11 @@
       fsType = "ext4";
     };
 
+    "/external" = {
+      device = "/dev/disk/by-uuid/e73b7f14-a921-4d06-813a-0655583d8948";
+      fsType = "ext4";
+    };
+
     "/home" = {
       device = "rpool/home";
       fsType = "zfs";
