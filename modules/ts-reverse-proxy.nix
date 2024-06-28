@@ -44,6 +44,14 @@ in
               '';
             };
 
+            hostHeader = mkOption {
+              type = types.str;
+              default = "";
+              description = ''
+                Manually set the Host header
+              '';
+            };
+
             user = mkOption {
               type = with types; oneOf [ str int ];
               default = name;
@@ -99,7 +107,9 @@ in
       (name: conf: nameValuePair name {
         description = "ts-reverse-proxy instance ${name}";
         enable = true;
+        after = [ "network-online.target" ];
         wants = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
 
         environment = { HOME = "${conf.dataDir}"; };
 
@@ -107,7 +117,7 @@ in
           User = conf.user;
           Group = conf.group;
 
-          ExecStart = "${cfg.package}/bin/ts-reverse-proxy -name ${conf.reverseName} -port ${
+          ExecStart = "${cfg.package}/bin/ts-reverse-proxy ${lib.optionalString (conf.hostHeader != "") "-host-header '${conf.hostHeader}'"} -name ${conf.reverseName} -port ${
           toString conf.reversePort
         } -ip ${conf.reverseIP}";
           #EnvironmentFile = conf.envFile;

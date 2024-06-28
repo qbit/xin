@@ -409,7 +409,7 @@
         "sops-nix": "sops-nix",
         "stable": "stable",
         "traygent": "traygent",
-        "tsRevProx": "tsRevProx",
+        "ts-reverse-proxy": "ts-reverse-proxy",
         "tsvnstat": "tsvnstat",
         "unstable": "unstable",
         "unstableSmall": "unstableSmall",
@@ -546,18 +546,18 @@
         "type": "github"
       }
     },
-    "tsRevProx": {
+    "ts-reverse-proxy": {
       "inputs": {
         "nixpkgs": [
           "unstable"
         ]
       },
       "locked": {
-        "lastModified": 1718734761,
-        "narHash": "sha256-pzzq+tTx6Pp5BqulZjcVrnxbqBe91aYfS4tKkI/VULg=",
+        "lastModified": 1719582611,
+        "narHash": "sha256-w1JrCWzygoUb52teJ3M59YMi0+as2vkQmnyU70Pd17w=",
         "owner": "qbit",
         "repo": "ts-reverse-proxy",
-        "rev": "ba7b61a85bb2291bd4972dc5f89b647b523c9284",
+        "rev": "f537ecf2328c2486f12a4cc42a5d3c768cbca4f4",
         "type": "github"
       },
       "original": {

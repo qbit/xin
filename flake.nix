@@ -91,7 +91,7 @@
       url = "github:qbit/po";
       inputs.nixpkgs.follows = "unstable";
     };
-    tsRevProx = {
+    ts-reverse-proxy = {
       url = "github:qbit/ts-reverse-proxy";
       inputs.nixpkgs.follows = "unstable";
     };
@@ -116,7 +116,7 @@
     , pots
     , pr-status
     , stable
-    , tsRevProx
+    , ts-reverse-proxy
     , traygent
     , tsvnstat
     , unstable
@@ -163,7 +163,7 @@
         inputs.microca.overlay
         inputs.pots.overlay
         inputs.pr-status.overlay
-        inputs.tsRevProx.overlay
+        inputs.ts-reverse-proxy.overlay
       ];
 
       buildSys = sys: sysBase: extraMods: name:
@@ -342,7 +342,7 @@
           inherit (tsvnstat.packages.${system}) tsvnstat;
           inherit (pots.packages.${system}) pots;
           inherit (po.packages.${system}) po;
-          inherit (tsRevProx.packages.${system}) ts-reverse-proxy;
+          inherit (ts-reverse-proxy.packages.${system}) ts-reverse-proxy;
           inherit (traygent.packages.${system}) traygent;
 
           inherit (spkgs) matrix-synapse;
