@@ -9,11 +9,11 @@
 }:
 buildPythonPackage rec {
   pname = "precursorupdater";
-  version = "0.1.1";
+  version = "0.1.5";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-YWPWGQLFbHjhYbdhLvbWndsNPfWEPSD7rfN6pJdnZFs=";
+    sha256 = "sha256-m2uqfwVH2ekmIPQAfS43CGXE20+v6W1tB9m8x2sYcK0=";
   };
 
   propagatedBuildInputs = [ pyusb progressbar2 requests pycryptodome ];
