@@ -317,6 +317,7 @@ in
         "icloud"
         "kodi"
         "logger"
+        "matter"
         "met"
         "mqtt"
         "nextdns"
