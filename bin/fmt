@@ -2,12 +2,4 @@
 
 set -e
 
-find . -name \*.nix -exec nix fmt {} \+
-find . -name \*.sh -exec shfmt -w {} \+
-
-deadnix -f .
-shfmt -w bin/deploy
-shfmt -w bin/mkboot
-# TODO: https://github.com/nerdypepper/statix/issues/68
-#statix check --ignore lib/default.nix .
-statix check .
+treefmt
