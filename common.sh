@@ -56,7 +56,7 @@ resolveAlias() {
 agentHasKey() {
 	checkKey="$(echo $1 | awk '{print $NF}')"
 	for i in $AgentKeys; do
-		if [[ "$i" == $checkKey ]]; then
+		if [[ $i == $checkKey ]]; then
 			return 0
 		fi
 	done

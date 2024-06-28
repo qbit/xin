@@ -20,15 +20,15 @@ CURRENT_COMMIT="$(echo $CURRENT | jq -r .rev)"
 if [ "${CURRENT_COMMIT}" != "${COMMIT}" ]; then
 	nix-prefetch-github openssh openssh-portable \
 		--rev "${COMMIT}" \
-		--json  | \
+		--json |
 		jq -r --arg v "${UPDATED}" \
-		--arg c "${COMMENT}" \
-		'. |= . + {"version": $v, "comment": $c}' \
-		> pkgs/openssh/version.json
+			--arg c "${COMMENT}" \
+			'. |= . + {"version": $v, "comment": $c}' \
+			>pkgs/openssh/version.json
 	FN=$(mktemp)
-	echo "pkgs/openssh: update to '${COMMIT}'" > ${FN}
-	echo >> ${FN}
-	echo "${COMMENT}" >> ${FN}
+	echo "pkgs/openssh: update to '${COMMIT}'" >${FN}
+	echo >>${FN}
+	echo "${COMMENT}" >>${FN}
 	git add pkgs/openssh/version.json && git commit -F $FN
 else
 	echo "No updates."
