@@ -1,10 +1,11 @@
 { pkgs
 , config
+, lib
 , ...
 }:
 let
   tsAddr = "100.84.170.57";
-  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  oLlamaPort = 11434;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -39,12 +40,6 @@ in
       enable = true;
       allowedTCPPorts = [ 22 ];
       checkReversePath = "loose";
-      interfaces = {
-        "tailscale0" =
-          {
-            allowedTCPPorts = [ 11434 ];
-          };
-      };
     };
   };
 
@@ -60,22 +55,11 @@ in
     PATH = [ "\${XDG_BIN_HOME}" ];
   };
 
-  #nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     rtl-sdr
     direwolf
     (callPackage ../../pkgs/rtlamr.nix { })
   ];
-
-  #programs = {
-  #  steam.enable = true;
-  #  _1password.enable = true;
-  #  _1password-gui = {
-  #    enable = true;
-  #    polkitPolicyOwners = [ "qbit" ];
-  #  };
-  #  dconf.enable = true;
-  #};
 
   xinCI = {
     user = "qbit";
@@ -87,16 +71,26 @@ in
       ollama = {
         environment = {
           OLLAMA_ORIGINS = "*";
+          OLLAMA_HOST = lib.mkForce "0.0.0.0";
         };
       };
     };
   };
 
   services = {
+    ts-reverse-proxy = {
+      servers = {
+        "ollama-reverse" = {
+          enable = true;
+          reverseName = "ollama";
+          reversePort = oLlamaPort;
+        };
+      };
+    };
     ollama = {
       enable = true;
       acceleration = "rocm";
-      listenAddress = "${tsAddr}:11434";
+      listenAddress = "localhost:${toString oLlamaPort}";
     };
     prometheus = {
       enable = true;
@@ -145,11 +139,6 @@ in
         ];
       };
     };
-    #emacs = {
-    #  enable = true;
-    #  package = myEmacs;
-    #  install = true;
-    #};
     fwupd = {
       enable = true;
     };
