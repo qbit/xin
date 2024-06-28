@@ -289,6 +289,9 @@ in
       enable = true;
       openFirewall = true;
     };
+    matter-server = {
+      enable = true;
+    };
     home-assistant = {
       enable = true;
       extraPackages = python3Packages:
