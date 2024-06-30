@@ -67,6 +67,7 @@ with lib; {
   config = mkMerge [
     (mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
       services = {
+        xserver.enable = true;
         lock-action.enable = true;
         pcscd.enable = true;
       };
