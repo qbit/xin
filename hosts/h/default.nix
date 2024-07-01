@@ -274,7 +274,9 @@ in
       };
       nomadnet = {
         description = "nomadnet";
-        wants = [ "multi-user.target" "multi-user.target" ];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           User = "qbit";
           Type = "forking";
