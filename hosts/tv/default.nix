@@ -21,6 +21,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../configs/zsh.nix
+    ../../configs/ssh.nix
   ];
 
   needsDeploy.enable = false;

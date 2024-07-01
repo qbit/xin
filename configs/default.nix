@@ -14,6 +14,7 @@
     ./net-overlay.nix
     ./nix.nix
     ./polybar.nix
+    ./ssh.nix
     ./tmux.nix
     ./update.nix
     ./zsh.nix
