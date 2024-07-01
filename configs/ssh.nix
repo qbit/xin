@@ -28,9 +28,9 @@ in
             controlmaster         auto
             controlpath           /tmp/ssh-%r@%h:%p
 
-          VerifyHostKeyDNS	yes
-          AddKeysToAgent	90m
-          CanonicalizeHostname	always
+          VerifyHostKeyDNS        yes
+          AddKeysToAgent          90m
+          CanonicalizeHostname    always
         '';
       };
     };
@@ -42,6 +42,7 @@ in
           TrustedUserCAKeys = /etc/ssh/ca.pub
         '';
         settings = {
+          UsePAM = false;
           PrintMotd = true;
           PermitRootLogin = "prohibit-password";
           PasswordAuthentication = false;
