@@ -77,7 +77,9 @@ with lib; {
       # TODO: TEMP FIX
       systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
         lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
-      fonts = if isUnstable then { packages = fontSet; } else { fonts = fontSet; };
+      fonts = {
+        packages = fontSet;
+      };
       sound.enable = true;
       environment = {
         etc."traygent.json" = { text = traygentCmds; };
