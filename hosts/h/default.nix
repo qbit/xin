@@ -289,6 +289,7 @@ in
         wants = [ "network.target" "multi-user.target" ];
         before = [ "matrix-synapse.service" ];
         wantedBy = [ "multi-user.target" ];
+        after = [ "network-online.target" ];
         serviceConfig = {
           User = "qbit";
           WorkingDirectory = "/home/qbit";
