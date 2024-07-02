@@ -288,6 +288,7 @@ in
       icb-tunnel = {
         wants = [ "network.target" "multi-user.target" ];
         before = [ "matrix-synapse.service" ];
+        wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           User = "qbit";
           WorkingDirectory = "/home/qbit";
