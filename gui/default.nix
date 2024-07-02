@@ -108,7 +108,9 @@ with lib; {
         ]);
       };
 
-      programs = { } // firefox.programs;
+      programs = {
+        ladybird.enable = true;
+      } // firefox.programs;
 
       systemd.user.services =
         lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
