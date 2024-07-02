@@ -344,6 +344,7 @@ in
       elmPackages.elm-live
       elmPackages.elm-test
       entr
+      ferdium
       fossil
       gh
       gimp
