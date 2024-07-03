@@ -41,8 +41,7 @@ in
         SSH_AUTH_SOCK = "fake";
       };
 
-      wants = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
     };
   };
