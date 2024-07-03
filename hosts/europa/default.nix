@@ -153,6 +153,7 @@ in
   };
 
   programs = {
+    nix-ld.enable = lib.mkIf config.programs.ladybird.enable true;
     steam.enable = true;
     _1password.enable = true;
     _1password-gui = {
