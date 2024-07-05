@@ -2,7 +2,6 @@
   programs = {
     firefox = {
       enable = true;
-      #package = pkgs.firefox-esr;
       policies = {
         DisableFirefoxStudies = true;
         DisableFormHistory = true;
@@ -144,6 +143,7 @@
         "browser.vpn_promo.enabled" = false;
         "datareporting.healthreport.uploadEnabled" = false;
         "devtools.cache.disabled" = true;
+        "dom.block_download_insecure" = false;
         "extensions.pocket.enabled" = false;
         "extensions.screenshots.disabled" = true;
         "geo.enabled" = false;
