@@ -354,6 +354,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
         '(("notes" :components ("org-notes" "notes-static" "notes-rss"))
           ("deftly" :components ("deftly-blog" "deftly-static"))
           ("ohmyksh" :components ("ohmy-web" "ohmy-static"))
+  	("bolddaemon" :components ("bolddaemon-web" "bolddaemon-static"))
           ("org-notes"
            :auto-preamble t
            :auto-sitemap t
@@ -433,14 +434,6 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
            :include ("index.org")
            :table-of-contents nil
            :base-directory "~/org/notes")
-          ("mammoth"
-           :publishing-directory "/ssh:suah.dev:/var/www/mammothcircus.com/"
-           :publishing-function org-html-publish-to-html
-           :author-info nil
-           :creator-info nil
-           :section-numbers nil
-           :recursive t
-           :base-directory "~/org/mammoth")
           ("recipes"
            :auto-preamble t
            :auto-sitemap t
@@ -459,6 +452,28 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
            :author-info nil
            :creator-info nil
            :base-directory "~/org/recipes")
+  	("bolddaemon-web"
+           :auto-preamble t
+           :auto-sitemap nil
+           :headline-levels 2
+           :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
+           :publishing-function org-html-publish-to-html
+           :recursive t
+           :section-numbers nil
+           :html-head "<link rel=\"stylesheet\" href=\"/.static/css/stylesheet.css\" type=\"text/css\" />"
+           :html-link-home "http://bolddaemon.com"
+           :html-link-up "../"
+           :style-include-default nil
+           :with-title t
+           :author-info t
+           :creator-info nil
+           :base-directory "~/org/bold.daemon")
+  	("bolddaemon-static"
+           :base-directory "~/org/bold.daemon"
+           :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+           :recursive t
+           :publishing-function org-publish-attachment)
           ))
 #+end_src
 
