@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "fa41f6592ff1b6ead4a652ac75af31eabb05b912",
-  "hash": "sha256-WUUwDEJmKcdVnZVKRyOxOw8Z5hRxBuC7nYtDkbK0mf4=",
-  "version": "2024-07-01",
-  "comment": "version numbers"
+  "rev": "30c8c81da2169e78357d08dbb0ddd823b60e93bc",
+  "hash": "sha256-SJzedRkZUbzyz7PLezRIB+KuNUHoIzT6seZYm+cXDs0=",
+  "version": "2024-07-04",
+  "comment": "Add 9.8 branch to ci-status page."
 }
