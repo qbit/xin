@@ -12,7 +12,7 @@ let
       name = "xin-ci-update";
       user = "qbit";
       script = "cd ~/src/xin && ./bin/ci update";
-      startAt = "Sun 23:00";
+      startAt = "Mon,Thu 23:00";
       path = [ ];
     }
     {
