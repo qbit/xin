@@ -9,6 +9,7 @@ let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
   inherit (inputs.unstableSmall.legacyPackages.${pkgs.system}) quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
+  thunderbird = import ../../configs/thunderbird.nix { inherit pkgs; };
   jobs = [
     {
       name = "brain";
@@ -173,7 +174,7 @@ in
         "load-agent" = ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
       };
     };
-  };
+  } // thunderbird.programs;
 
   services.xinCA = { enable = false; };
 
@@ -387,7 +388,7 @@ in
       signal-desktop-beta
       tcpdump
       tea
-      thunderbird
+      # thunderbird
       tigervnc
       tncattach
       unzip
