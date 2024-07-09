@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "30c8c81da2169e78357d08dbb0ddd823b60e93bc",
-  "hash": "sha256-SJzedRkZUbzyz7PLezRIB+KuNUHoIzT6seZYm+cXDs0=",
-  "version": "2024-07-04",
-  "comment": "Add 9.8 branch to ci-status page."
+  "rev": "f2b78bb8f149d6b4d1f62c21aa1f06995dccf4ce",
+  "hash": "sha256-O0zxyJasaYReFINKt7uOz6bQls/phYXaFgT2Jza2D9I=",
+  "version": "2024-07-08",
+  "comment": "upstream: don&apos;t need return at end of void function"
 }
