@@ -361,6 +361,7 @@ in
       klavaro
       koreader
       linphone
+      ltunify
       minicom
       mu
       nheko
