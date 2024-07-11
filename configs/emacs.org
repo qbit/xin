@@ -11,6 +11,7 @@ Starting as a server lets me connect externally to do things like change
 themes, save buffers via cron and other such dumbary!
 
 #+begin_src emacs-lisp
+(require 'bind-key)
 (load "server")
 (unless (server-running-p) (server-start))
 #+end_src
