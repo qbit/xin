@@ -89,6 +89,7 @@ with lib; {
         };
         systemPackages = with pkgs; (xinlib.filterList [
           alacritty
+          (aspellWithDicts (dicts: with dicts; [ en en-computers en-science es de ]))
           bc
           beyt
           black
