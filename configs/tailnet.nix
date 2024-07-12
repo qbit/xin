@@ -22,6 +22,7 @@ let
           europa = "100.64.26.122";
           il = "100.86.182.99";
           tv = "100.118.196.38";
+          ollama = "100.121.227.121";
         };
 
         tagOwners = {
@@ -81,7 +82,7 @@ let
             # ollama
             "action" = "accept";
             "src" = [ "europa" "h" ];
-            "dst" = [ "pwntie:11434" ];
+            "dst" = [ "ollama:443" ];
             "proto" = "tcp";
           }
           {
@@ -96,6 +97,12 @@ let
             "src" = [ "box" ];
             "dst" = [ "tv:8080" "tv:9090" ];
             "proto" = "tcp";
+          }
+          {
+            action = "accept";
+            src = [ "h" ];
+            dst = [ "ollama:443" ];
+            proto = "tcp";
           }
         ];
 
@@ -175,7 +182,7 @@ let
           {
             "src" = "europa";
             "proto" = "tcp";
-            "allow" = [ "pwntie:11434" ];
+            "allow" = [ "ollama:443" ];
           }
           {
             "src" = "tv";
@@ -209,6 +216,8 @@ let
         if [ "$RESP" != "null" ]; then
           $PO -title "Failed to update TailNet!" -body "$RESP"
         fi
+      else
+        $PO -title "Failed to update TailNet!" -body "$RESP"
       fi
     '';
   jobs = [
