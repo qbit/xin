@@ -80,7 +80,6 @@ with lib; {
       fonts = {
         packages = fontSet;
       };
-      sound.enable = true;
       environment = {
         etc."traygent.json" = { text = traygentCmds; };
         sessionVariables = {
