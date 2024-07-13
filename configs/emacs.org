@@ -230,6 +230,7 @@ auto-completion stuff.
     (add-hook 'typescript-mode-hook 'eglot-ensure)
     (add-hook 'ruby-mode-hook 'eglot-ensure)
     (add-hook 'perl-mode-hook 'eglot-ensure)
+    (add-hook 'haskell-mode-hook 'eglot-ensure)
 
     (add-to-list 'eglot-server-programs '(c-mode    . ("clangd")))
     (add-to-list 'eglot-server-programs '(c++-mode  . ("clangd")))
@@ -240,8 +241,6 @@ auto-completion stuff.
 
     :hook
     (eglot-managed-mode . (lambda() (add-hook 'before-save-hook 'eglot-format-buffer nil 'local))))
-
-
 #+end_src
 
 ** company and friends
