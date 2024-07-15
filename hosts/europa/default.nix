@@ -375,7 +375,6 @@ in
       proton-caller
       protonup-ng
       prusa-slicer
-      python3Packages.meshtastic
       python3Packages.nomadnet
       python3Packages.rns
       qdmr
