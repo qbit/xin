@@ -378,7 +378,7 @@ in
       python3Packages.nomadnet
       python3Packages.rns
       qdmr
-      #quodlibet-full # unstableSmall
+      quodlibet-full # unstableSmall
       deadbeef-with-plugins
       rex
       rofi
@@ -389,6 +389,7 @@ in
       signal-desktop-beta
       tcpdump
       tea
+      # thunderbird
       tigervnc
       tncattach
       unzip
@@ -429,4 +430,3 @@ in
     stateVersion = "21.11";
   };
 }
-  
