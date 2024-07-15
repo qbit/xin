@@ -172,13 +172,6 @@ in
           git-bug
           git-sync
           gosignify
-          (got.overrideAttrs {
-            # https://github.com/NixOS/nixpkgs/pull/297154 thanks jrick
-            CFLAGS = [
-              ''-DGOT_DIAL_PATH_SSH=\"${pkgs.openssh}/bin/ssh\"''
-              ''-DGOT_TAG_PATH_SSH_KEYGEN=\"${pkgs.openssh}/bin/ssh-keygen\"''
-            ];
-          })
           jq
           lz4
           minisign
