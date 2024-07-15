@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "f2b78bb8f149d6b4d1f62c21aa1f06995dccf4ce",
-  "hash": "sha256-O0zxyJasaYReFINKt7uOz6bQls/phYXaFgT2Jza2D9I=",
-  "version": "2024-07-08",
-  "comment": "upstream: don&apos;t need return at end of void function"
+  "rev": "7717b9e9155209916cc6b4b4b54f4e8fa578e889",
+  "hash": "sha256-MWX2jJ7LynMRWDeQhl9WKDKe+5sEcJ+Q1f5lfvnOKkg=",
+  "version": "2024-07-10",
+  "comment": "upstream: correct keyword; from Yatao Su via GHPR509"
 }
