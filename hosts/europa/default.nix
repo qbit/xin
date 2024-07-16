@@ -7,7 +7,6 @@
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
-  inherit (inputs.unstableSmall.legacyPackages.${pkgs.system}) quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
   thunderbird = import ../../configs/thunderbird.nix { inherit pkgs; };
   jobs = [
@@ -378,7 +377,6 @@ in
       python3Packages.nomadnet
       python3Packages.rns
       qdmr
-      quodlibet-full # unstableSmall
       deadbeef-with-plugins
       rex
       rofi
