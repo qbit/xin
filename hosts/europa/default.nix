@@ -116,7 +116,7 @@ in
       # https://gitlab.freedesktop.org/upower/power-profiles-daemon#panel-power-savings
       "amdgpu.abmlevel=0"
     ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_9;
   };
 
   sshFidoAgent.enable = lib.mkDefault true;
@@ -250,7 +250,7 @@ in
     };
     pcscd.enable = true;
     vnstat.enable = true;
-    clamav.updater.enable = true;
+    # clamav.updater.enable = true;
     tor = {
       enable = true;
       client.enable = true;
