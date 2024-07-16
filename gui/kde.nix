@@ -18,7 +18,7 @@ with pkgs;
     kde = { enable = mkEnableOption "Enable KDE desktop."; };
     kdeConnect = {
       enable = mkEnableOption {
-        description = "Enable PipeWire";
+        description = "Enable KDE Connect";
         default = false;
         example = true;
       };
