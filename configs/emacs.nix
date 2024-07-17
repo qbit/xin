@@ -1,6 +1,6 @@
 { emacsWithPackagesFromUsePackage
 , pkgs
-, emacsPkg ? pkgs.emacs-gtk
+, emacsPkg ? pkgs.emacs-pgtk
 , ...
 }:
 emacsWithPackagesFromUsePackage {
