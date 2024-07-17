@@ -119,8 +119,6 @@ in
     kernelPackages = pkgs.linuxPackages_6_9;
   };
 
-  sshFidoAgent.enable = lib.mkDefault true;
-
   nixManager = {
     enable = lib.mkDefault true;
     user = "qbit";

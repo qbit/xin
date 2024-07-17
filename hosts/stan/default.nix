@@ -113,8 +113,7 @@ in
 
   kde.enable = true;
   defaultUsers.enable = false;
-  sshFidoAgent.enable = true;
-
+  
   sops.secrets = {
     rkvm_cert = {
       sopsFile = config.xin-secrets.stan.secrets.main;
