@@ -97,6 +97,7 @@ with lib; {
           go-font
           govulncheck
           keepassxc
+          mpv
           pcsctools
           plan9port
           rage
