@@ -6,7 +6,7 @@
 , ...
 }:
 let
-  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
+  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
   thunderbird = import ../../configs/thunderbird.nix { inherit pkgs; };
   jobs = [
@@ -331,11 +331,12 @@ in
     };
 
     systemPackages = with pkgs; [
+      #deltachat-desktop
       arduino
       beets # stable
       calibre
       chirp # stable
-      #deltachat-desktop
+      deadbeef-with-plugins
       deluge
       direwolf
       element-desktop
@@ -377,7 +378,11 @@ in
       python3Packages.nomadnet
       python3Packages.rns
       qdmr
-      deadbeef-with-plugins
+      # Don't do it, don't switch to another music player. They all suck!
+      # this one works the least sucky!
+      quodlibet-full #stable
+      # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      #
       rex
       rofi
       rsibreak
@@ -387,7 +392,6 @@ in
       signal-desktop-beta
       tcpdump
       tea
-      # thunderbird
       tigervnc
       tncattach
       unzip
