@@ -405,7 +405,7 @@ in
       (callPackage ../../pkgs/ttfs.nix { })
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/zutty.nix { })
-      (python3Packages.callPackage ../../pkgs/watchmap.nix { })
+      #(python3Packages.callPackage ../../pkgs/watchmap.nix { })
 
       restic
     ];
