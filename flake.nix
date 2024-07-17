@@ -320,9 +320,9 @@
           precursorupdater = spkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
             inherit spkgs;
           };
-          # watchmap = spkgs.python3Packages.callPackage ./pkgs/watchmap.nix {
-          #   inherit spkgs;
-          # };
+          watchmap = spkgs.python3Packages.callPackage ./pkgs/watchmap.nix {
+            inherit spkgs;
+          };
           rtlamr2mqtt = spkgs.python3Packages.callPackage ./pkgs/rtlamr2mqtt.nix {
             inherit spkgs;
           };
