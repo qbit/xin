@@ -1,5 +1,4 @@
 { autoreconfHook
-, config
 , etcDir ? "/etc/ssh"
 , fetchFromGitHub
 , hostname
@@ -8,24 +7,14 @@
 , libfido2
 , libredirect
 , libressl
-, pam
 , pkg-config
 , stdenv
-, withFIDO ? stdenv.hostPlatform.isUnix
-, withPAM ? false
 , zlib
-, xinlib
 , ...
 }:
 let
   inherit (builtins) readFile fromJSON;
-  inherit (xinlib) todo;
   verStr = fromJSON (readFile ./openssh/version.json);
-  hostStr = lib.strings.concatStrings [
-    "CI configured on '"
-    config.networking.hostName
-    "': running OpenSSH tests"
-  ];
 in
 stdenv.mkDerivation {
   pname = "openssh";
@@ -36,13 +25,6 @@ stdenv.mkDerivation {
     owner = "openssh";
     repo = "openssh-portable";
   };
-
-  doCheck =
-    if config.xinCI.enable
-    then
-      (lib.warn hostStr true)
-    else
-      true;
 
   patches =
     [
@@ -64,10 +46,8 @@ stdenv.mkDerivation {
   nativeBuildInputs =
     [ autoreconfHook pkg-config ];
   buildInputs =
-    [ zlib libressl libedit ]
-    ++ lib.optional withFIDO libfido2
-    ++ lib.optional withPAM pam;
-
+    [ zlib libedit libfido2 ];
+  
   preConfigure = ''
     # Setting LD causes `configure' and `make' to disagree about which linker
     # to use: `configure' wants `gcc', but `make' wants `ld'.
@@ -85,11 +65,9 @@ stdenv.mkDerivation {
       "--with-libedit=yes"
       "--disable-strip"
       "--disable-dsa-keys"
-      "--without-openssl"
-      (lib.withFeature withPAM "pam")
+      "--with-security-key-builtin=yes"
     ]
     ++ lib.optional (etcDir != null) "--sysconfdir=${etcDir}"
-    ++ lib.optional withFIDO "--with-security-key-builtin=yes"
     ++ lib.optional stdenv.isDarwin "--disable-libutil";
 
   ${
@@ -152,11 +130,11 @@ stdenv.mkDerivation {
     set -a; source ~/.ssh/environment.base; set +a
   '';
 
-  checkTarget = todo "t-exec test disabled in openssh" [ "unit" "file-tests" "interop-tests" ];
+  checkTarget = [ "t-exec" "unit" "file-tests" "interop-tests" ];
 
   installTargets = [ "install-nokeys" ];
   installFlags = [
-    "sysconfdir=\${out}/etc/ssh"
+    "sysconfdir=\${out}${etcDir}"
   ];
 
   meta = with lib; {
