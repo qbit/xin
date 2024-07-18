@@ -47,7 +47,7 @@ stdenv.mkDerivation {
     [ autoreconfHook pkg-config ];
   buildInputs =
     [ zlib libedit libfido2 ];
-  
+
   preConfigure = ''
     # Setting LD causes `configure' and `make' to disagree about which linker
     # to use: `configure' wants `gcc', but `make' wants `ld'.
