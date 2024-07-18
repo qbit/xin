@@ -8,11 +8,10 @@
 , libfido2
 , libredirect
 , libressl
-, linkOpenssl ? true
 , pam
 , pkg-config
 , stdenv
-, withFIDO ? stdenv.hostPlatform.isUnix && !stdenv.hostPlatform.isMusl
+, withFIDO ? stdenv.hostPlatform.isUnix
 , withPAM ? false
 , zlib
 , xinlib
@@ -86,12 +85,12 @@ stdenv.mkDerivation {
       "--with-libedit=yes"
       "--disable-strip"
       "--disable-dsa-keys"
+      "--without-openssl"
       (lib.withFeature withPAM "pam")
     ]
     ++ lib.optional (etcDir != null) "--sysconfdir=${etcDir}"
     ++ lib.optional withFIDO "--with-security-key-builtin=yes"
-    ++ lib.optional stdenv.isDarwin "--disable-libutil"
-    ++ lib.optional (!linkOpenssl) "--without-openssl";
+    ++ lib.optional stdenv.isDarwin "--disable-libutil";
 
   ${
   if stdenv.hostPlatform.isStatic then
