@@ -123,6 +123,14 @@ here.
 
 * Packages
 
+** breadcrumb
+
+Handy breadcrumbs for seeing where things are in the LSP.
+
+#+begin_src emacs-lisp
+  (use-package breadcrumb)
+#+end_src
+
 ** ollama
 
 Simple wrapper for ~ollama~ that lets me pipe regions and what not into various buffers.
