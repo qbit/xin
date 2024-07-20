@@ -201,7 +201,7 @@ in
       openvpn
       remmina
       rex
-      rustdesk
+      #rustdesk
       snmpcheck
       sshfs
       #step-cli
