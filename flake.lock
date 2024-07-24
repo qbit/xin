@@ -357,11 +357,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1695225249,
-        "narHash": "sha256-kfxwVNmxVIgXvl/OfVeDJ9zHZMRWJETQs0nxCcGmSas=",
+        "lastModified": 1721833216,
+        "narHash": "sha256-Gw93Sy95HLlF6oT/oK/W+UkRJlmTUgTjcysS8YGqKpY=",
         "owner": "qbit",
         "repo": "pots",
-        "rev": "3b864fc12d90d5dc37e61a316d157f29d8b97772",
+        "rev": "a11f254768d2197ee72becbfaab15f58ff678478",
         "type": "github"
       },
       "original": {
