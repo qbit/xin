@@ -840,7 +840,7 @@ in
       cronIntervals = { daily = "50 21 * * *"; };
     };
 
-    libreddit = {
+    redlib = {
       enable = true;
       port = 8482;
     };
@@ -930,7 +930,7 @@ in
           sslCertificate = "${config.sops.secrets.reddit_cert.path}";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://localhost:${toString config.services.libreddit.port}";
+            proxyPass = "http://localhost:${toString config.services.redlib.port}";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}

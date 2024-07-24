@@ -116,7 +116,10 @@ in
       if pkgs.system == "aarch64-linux"
       then {
         description = "Set date on boot";
-        wantedBy = [ "network-online.target" ];
+        wants =
+          [ "network-online.target" "multi-user.target" ];
+        before = [ "matrix-synapse.service" ];
+        wantedBy = [ "multi-user.target" ];
         after = [ "network-online.target" ];
         script = ''
           . /etc/profile;
