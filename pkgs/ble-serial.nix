@@ -23,7 +23,7 @@ buildPythonPackage rec {
   buildInputs = [ setuptools-scm ];
 
   src = fetchFromGitHub {
-    owner= "jakeler";
+    owner = "jakeler";
     repo = "ble-serial";
     rev = "v${version}";
     hash = "sha256-KQCnrloBrY7hRt2cFcWiFUg5GgrdbXbcTCNcIuVryZw=";
