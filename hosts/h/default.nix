@@ -286,7 +286,8 @@ in
       };
       matrix-synapse.after = [ "icbirc.service" ];
       icb-tunnel = {
-        wants = [ "network.target" "multi-user.target" ];
+        wants =
+          [ "network-online.target" "multi-user.target" ];
         before = [ "matrix-synapse.service" ];
         wantedBy = [ "multi-user.target" ];
         after = [ "network-online.target" ];
