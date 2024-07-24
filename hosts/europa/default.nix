@@ -404,6 +404,7 @@ in
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/zutty.nix { })
       #(python3Packages.callPackage ../../pkgs/watchmap.nix { })
+      (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
 
       restic
     ];
