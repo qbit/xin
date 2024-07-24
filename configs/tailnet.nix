@@ -243,4 +243,5 @@ with lib; {
     };
   };
   systemd.services = mkIf enabled (listToAttrs (builtins.map xinlib.jobToService jobs));
+  environment.systemPackages = mkIf enabled [ aclUpdateScript ];
 }
