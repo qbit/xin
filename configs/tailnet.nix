@@ -23,6 +23,7 @@ let
           il = "100.86.182.99";
           tv = "100.118.196.38";
           ollama = "100.121.227.121";
+          display = "100.77.35.34";
         };
 
         tagOwners = {
@@ -88,7 +89,7 @@ let
           {
             # jellyfin for tv
             "action" = "accept";
-            "src" = [ "tv" ];
+            "src" = [ "tv" "display" ];
             "dst" = [ "box:443" ];
             "proto" = "tcp";
           }
@@ -188,6 +189,11 @@ let
             "src" = "tv";
             "proto" = "tcp";
             "allow" = [ "box:443" ];
+          }
+          {
+            src = "display";
+            proto = "tcp";
+            allow = [ "box:443" ];
           }
         ];
       };
