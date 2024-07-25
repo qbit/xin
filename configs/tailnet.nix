@@ -223,7 +223,7 @@ let
           $PO -title "Failed to update TailNet!" -body "$RESP"
         fi
       else
-        $PO -title "Failed to update TailNet!" -body "$RESP"
+        $PO -title "Failed to update TailNet!" -body "$ERROR"
       fi
     '';
   jobs = [
