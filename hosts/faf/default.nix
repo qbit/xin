@@ -130,6 +130,7 @@ in
           ''"invidious.bold.daemon. IN A 100.115.16.150"''
           ''"backup.bold.daemon. IN A 10.6.0.15"''
           ''"router.bold.daemon. IN A 10.6.0.1"''
+          ''"cake.bold.daemon. IN A 10.6.0.144"''
         ];
       };
     };
