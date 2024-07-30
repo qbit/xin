@@ -257,6 +257,16 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    ts-reverse-proxy = {
+      servers = {
+        "evse-service" = {
+          enable = true;
+          reverseName = "evse";
+          reversePort = 80;
+          reverseIP = "10.6.0.166";
+        };
+      };
+    };
     restic = {
       server = {
         enable = true;
