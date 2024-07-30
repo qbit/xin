@@ -108,25 +108,27 @@
 
   outputs =
     { self
+    , beyt
     , darwin
+    , emacs-overlay
     , gostart
-    , mcchunkie
     , kogs
+    , lix-module
+    , mcchunkie
+    , microca
+    , nixos-hardware
     , po
     , pots
     , pr-status
+    , simple-nixos-mailserver
     , stable
-    , ts-reverse-proxy
     , traygent
+    , ts-reverse-proxy
     , tsvnstat
     , unstable
     , unstableSmall
     , xin-secrets
     , xintray
-    , simple-nixos-mailserver
-    , nixos-hardware
-    , beyt
-    , lix-module
     , ...
     } @ inputs:
     let
@@ -152,18 +154,19 @@
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
           lix-module.nixosModules.default
+          ts-reverse-proxy.nixosModule
         ];
       };
 
       overlays = [
-        inputs.emacs-overlay.overlay
-        inputs.gostart.overlay
-        inputs.mcchunkie.overlay
-        inputs.kogs.overlay
-        inputs.microca.overlay
-        inputs.pots.overlay
-        inputs.pr-status.overlay
-        inputs.ts-reverse-proxy.overlay
+        emacs-overlay.overlay
+        gostart.overlay
+        kogs.overlay
+        mcchunkie.overlay
+        microca.overlay
+        pots.overlay
+        pr-status.overlay
+        ts-reverse-proxy.overlay
       ];
 
       buildSys = sys: sysBase: extraMods: name:
