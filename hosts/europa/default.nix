@@ -219,33 +219,31 @@ in
       openFirewall = true;
     };
     printing.enable = true;
-    restic = {
-      backups =
-        let
-          paths = [ "/home/qbit" "/var/lib/libvirt" "/etc" ];
-        in
-        {
-          remote = {
-            initialize = true;
-            passwordFile = "${config.sops.secrets.restic_remote_password_file.path}";
-            repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
+    backups =
+      let
+        paths = [ "/home/qbit" "/etc" ];
+        pruneOpts = [ "--keep-hourly 12" "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
+        timerConfig = { OnCalendar = "*-*-* 00:30:00"; };
+      in
+      {
+        remote = {
+          enable = true;
+          passwordFile = "${config.sops.secrets.restic_remote_password_file.path}";
+          repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
 
-            inherit paths;
-
-            pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
-          };
-          local = {
-            initialize = true;
-            repository = "/run/media/qbit/backup/${config.networking.hostName}";
-            environmentFile = "${config.sops.secrets.restic_env_file.path}";
-            passwordFile = "${config.sops.secrets.restic_password_file.path}";
-
-            inherit paths;
-
-            pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5" ];
-          };
+          # Don't send libvirt over the air-wire
+          inherit paths pruneOpts timerConfig;
         };
-    };
+        local = {
+          enable = true;
+          repository = "/run/media/qbit/backup/${config.networking.hostName}";
+          environmentFile = "${config.sops.secrets.restic_env_file.path}";
+          passwordFile = "${config.sops.secrets.restic_password_file.path}";
+
+          paths = paths ++ [ "/var/lib/libvirt" ];
+          inherit pruneOpts timerConfig;
+        };
+      };
     pcscd.enable = true;
     vnstat.enable = true;
     # clamav.updater.enable = true;

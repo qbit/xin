@@ -489,33 +489,31 @@ in
       ];
     };
 
-    restic = {
-      backups = {
-        b2 = {
-          initialize = true;
-          repository = "b2:cyaspanJicyeemJedMarlEjcasOmos";
-          environmentFile = "${config.sops.secrets.restic_env_file.path}";
-          passwordFile = "${config.sops.secrets.restic_password_file.path}";
+    backups = {
+      b2 = {
+        enable = true;
+        repository = "b2:cyaspanJicyeemJedMarlEjcasOmos";
+        environmentFile = "${config.sops.secrets.restic_env_file.path}";
+        passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
-          paths = [
-            pgBackupDir
-            "/var/lib/synapse/media_store"
-            "/var/www"
-            "/home"
-            "/var/lib/yarr"
-            "/var/lib/shiori"
-            "/var/lib/gotosocial"
-            "/var/lib/mcchunkie"
-            "/var/lib/heisenbridge"
-            "/var/lib/kogs"
-            "/var/vmail"
-            "/var/dkim"
-          ];
+        paths = [
+          pgBackupDir
+          "/var/lib/synapse/media_store"
+          "/var/www"
+          "/home"
+          "/var/lib/yarr"
+          "/var/lib/shiori"
+          "/var/lib/gotosocial"
+          "/var/lib/mcchunkie"
+          "/var/lib/heisenbridge"
+          "/var/lib/kogs"
+          "/var/vmail"
+          "/var/dkim"
+        ];
 
-          timerConfig = { OnCalendar = "00:05"; };
+        timerConfig = { OnCalendar = "00:05"; };
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
-        };
+        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
       };
     };
 

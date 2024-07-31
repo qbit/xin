@@ -275,18 +275,16 @@ in
         server = "127.0.0.1:24800";
       };
     };
-    restic = {
-      backups = {
-        remote = {
-          initialize = true;
-          environmentFile = "${config.sops.secrets.restic_env_file.path}";
-          passwordFile = "${config.sops.secrets.restic_password_file.path}";
-          repositoryFile = "${config.sops.secrets.restic_repo_file.path}";
+    backups = {
+      remote = {
+        enable = true;
+        environmentFile = "${config.sops.secrets.restic_env_file.path}";
+        passwordFile = "${config.sops.secrets.restic_password_file.path}";
+        repositoryFile = "${config.sops.secrets.restic_repo_file.path}";
 
-          paths = [ "/home/abieber" ];
+        paths = [ "/home/abieber" ];
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
-        };
+        pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
       };
     };
     rsyslogd = {

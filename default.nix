@@ -65,6 +65,11 @@ in
 
       secrets =
         if config.needsDeploy.enable then {
+          po_env = {
+            sopsFile = config.xin-secrets.deploy;
+            owner = "root";
+            mode = "444";
+          };
           xin_secrets_deploy_key = {
             sopsFile = config.xin-secrets.deploy;
             owner = "root";

@@ -42,7 +42,6 @@ with lib; {
   config = mkIf config.xinCI.enable {
     sops.defaultSopsFile = config.xin-secrets.ci;
     sops.secrets = {
-      po_env = { owner = config.xinCI.user; };
       ci_ed25519_key = {
         mode = "400";
         owner = config.xinCI.user;

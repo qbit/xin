@@ -36,7 +36,6 @@ with lib; {
       manager_pubkey = { owner = config.nixManager.user; };
       ca_key = { owner = config.nixManager.user; };
       ca_cert = { owner = config.nixManager.user; };
-      po_env = { owner = config.nixManager.user; };
     };
 
     environment.systemPackages = [

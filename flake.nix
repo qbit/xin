@@ -132,7 +132,10 @@
     , ...
     } @ inputs:
     let
-      xinlib = import ./lib { inherit (unstable) lib; };
+      xinlib = import ./lib {
+        inherit (unstable) lib;
+        inherit inputs;
+      };
       supportedSystems = [ "x86_64-linux" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;

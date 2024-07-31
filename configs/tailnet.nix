@@ -243,10 +243,6 @@ with lib; {
       owner = config.nixManager.user;
       sopsFile = config.xin-secrets.manager;
     };
-    po_env = {
-      owner = config.nixManager.user;
-      sopsFile = config.xin-secrets.manager;
-    };
   };
   systemd.services = mkIf enabled (listToAttrs (builtins.map xinlib.jobToService jobs));
   environment.systemPackages = mkIf enabled [ aclUpdateScript ];

@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./backup.nix
     ./golink.nix
     ./gotosocial.nix
     ./lock-action.nix
