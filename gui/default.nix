@@ -16,6 +16,14 @@ let
   rpr =
     pkgs.writeScriptBin "rpr"
       (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
+
+  editorScript = pkgs.writeShellScriptBin "emacseditor" ''
+    if [ -z "$1" ]; then
+      exec ${myEmacs}/bin/emacsclient --create-frame --alternate-editor ${myEmacs}/bin/emacs
+    else
+      exec ${myEmacs}/bin/emacsclient --alternate-editor ${myEmacs}/bin/emacs "$@"
+    fi
+  '';
   jobs = [
   ];
   fontSet = with pkgs; [
@@ -86,6 +94,7 @@ with lib; {
           SSH_AUTH_SOCK = "$HOME/.traygent";
           OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
         };
+        variables.EDITOR = mkOverride 900 "emacseditor";
         systemPackages = with pkgs; (xinlib.filterList [
           alacritty
           (aspellWithDicts (dicts: with dicts; [ en en-computers es de ]))
@@ -107,6 +116,7 @@ with lib; {
           zeal
 
           myEmacs
+          editorScript
           (callPackage ../configs/helix.nix { })
         ]);
       };
