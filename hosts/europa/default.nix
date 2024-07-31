@@ -241,7 +241,8 @@ in
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
           paths = paths ++ [ "/var/lib/libvirt" ];
-          inherit pruneOpts timerConfig;
+          inherit pruneOpts;
+          timerConfig = { OnCalendar = "hourly"; };
         };
       };
     pcscd.enable = true;
