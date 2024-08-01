@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "0bf6e5bb750b66b25c20a1c5a471f91850de3748",
-  "hash": "sha256-f6vPb//f+bbL7z4aqm3o4XHtwsQwpe1dbvuzZE8aF5E=",
-  "version": "2024-07-25",
-  "comment": "upstream: reduce logingrace penalty."
+  "rev": "1ec0a64c5dc57b8a2053a93b5ef0d02ff8598e5c",
+  "hash": "sha256-aXJ+TfRMdzNnOxhT3bgwz++Y9HViPXXbtLUd/G9ivb0=",
+  "version": "2024-07-28",
+  "comment": "Explicitly install libssl-devel cygwin."
 }
