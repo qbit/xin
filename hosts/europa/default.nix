@@ -141,12 +141,6 @@ in
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
-      interfaces = {
-        "tailscale0" =
-          {
-            allowedTCPPorts = [ 8384 ];
-          };
-      };
     };
   };
 
