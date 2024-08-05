@@ -122,7 +122,7 @@ with lib; {
       };
 
       programs = {
-        ladybird.enable = true;
+        ladybird.enable = xinlib.todo "ladybird disabled until 331105 lands" false;
       } // firefox.programs;
 
       systemd.user.services =
