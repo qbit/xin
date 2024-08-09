@@ -257,8 +257,21 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    rimgo = {
+      enable = true;
+      settings = {
+        PORT = 3001;
+        ADDRESS = "127.0.0.1";
+      };
+    };
     ts-reverse-proxy = {
       servers = {
+        "rimgo-service" = {
+          enable = true;
+          reverseName = "rimgo";
+          reversePort = config.services.rimgo.settings.PORT;
+          reverseIP = config.services.rimgo.settings.ADDRESS;
+        };
         "evse-service" = {
           enable = true;
           reverseName = "evse";

@@ -201,13 +201,6 @@ in
         IdleActionSec=300
       '';
     };
-    rimgo = {
-      enable = true;
-      settings = {
-        PORT = 3001;
-        ADDRESS = "127.0.0.1";
-      };
-    };
     fprintd = {
       enable = true;
     };
