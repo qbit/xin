@@ -127,7 +127,10 @@ in
   kde.enable = lib.mkDefault true;
   kdeConnect.enable = true;
 
-  virtualisation.libvirtd.enable = lib.mkDefault true;
+  virtualisation = {
+    libvirtd.enable = lib.mkDefault true;
+    podman.enable = true;
+  };
 
   networking = {
     hostName = "europa";
