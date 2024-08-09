@@ -101,8 +101,6 @@ in
     graph_key = mkNginxSecret;
     bw_cert = mkNginxSecret;
     bw_key = mkNginxSecret;
-    invidious_cert = mkNginxSecret;
-    invidious_key = mkNginxSecret;
     readarr_cert = mkNginxSecret;
     readarr_key = mkNginxSecret;
     home_cert = mkNginxSecret;
@@ -266,6 +264,12 @@ in
     };
     ts-reverse-proxy = {
       servers = {
+        "invidious-service" = {
+          enable = true;
+          reverseName = "invidious";
+          reversePort = config.services.invidious.port;
+          reverseIP = config.services.invidious.address;
+        };
         "rimgo-service" = {
           enable = true;
           reverseName = "rimgo";
@@ -484,7 +488,7 @@ in
           host = lib.mkForce "127.0.0.1";
           port = 5432;
         };
-        domain = "invidious.bold.daemon";
+        domain = "invidious.otter-alligator.ts.net";
         https_only = true;
         popular_enabled = false;
         statistics_enabled = false;
@@ -895,17 +899,6 @@ in
           '';
           locations."/" = {
             proxyPass = "http://127.0.0.1:8123";
-            proxyWebsockets = true;
-          };
-        };
-        "invidious.bold.daemon" = {
-          forceSSL = true;
-          sslCertificateKey = "${config.sops.secrets.invidious_key.path}";
-          sslCertificate = "${config.sops.secrets.invidious_cert.path}";
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${
-              toString config.services.invidious.port
-            }";
             proxyWebsockets = true;
           };
         };

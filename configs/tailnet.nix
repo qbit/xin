@@ -24,6 +24,8 @@ let
           tv = "100.118.196.38";
           ollama = "100.121.227.121";
           display = "100.77.35.34";
+          rimgo = "100.121.77.91";
+          invidious = "100.71.57.99";
         };
 
         tagOwners = {
@@ -59,7 +61,7 @@ let
           {
             "action" = "accept";
             "src" = [ "tag:work" ];
-            "dst" = [ "console:2222" "startpage:443" ];
+            "dst" = [ "console:2222" "startpage:443" "rimgo:443" "invidious:443" ];
           }
           {
             "action" = "accept";
