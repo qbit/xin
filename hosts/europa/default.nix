@@ -346,6 +346,7 @@ in
       gqrx
       hackrf
       inkscape
+      intiface-central
       isync
       jan
       jujutsu
