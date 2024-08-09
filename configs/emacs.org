@@ -123,6 +123,12 @@ here.
 
 * Packages
 
+** uxntal
+
+#+begin_src emacs-lisp
+  (use-package uxntal-mode)
+#+end_src
+
 ** breadcrumb
 
 Handy breadcrumbs for seeing where things are in the LSP.
