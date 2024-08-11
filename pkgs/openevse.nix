@@ -11,7 +11,7 @@
 let
   my-python-openevse-http = buildPythonPackage rec {
     pname = "python-openevse-http";
-    version = "0.1.60";
+    version = "0.1.61";
 
     pyproject = true;
 
@@ -23,14 +23,14 @@ let
 
     src = fetchPypi {
       inherit pname version;
-      hash = "sha256-y2ZB8dQhWjaFslaAqfvXbEE20Isa0I02qVk50O8nJJI=";
+      hash = "sha256-wwo5D2kaPb4LfI8N3k0L+4FFZBlq2qG+d3sk/OpoExA=";
     };
   };
 in
 buildHomeAssistantComponent rec {
   owner = "firstof9";
   domain = "openevse";
-  version = "2.1.42";
+  version = "2.1.45";
 
   nativeBuildInputs = [
     setuptools-scm
@@ -46,6 +46,6 @@ buildHomeAssistantComponent rec {
     inherit owner;
     repo = domain;
     rev = version;
-    hash = "sha256-TbBp6MQOsveCt/P3CnMwBm0xPxkWYEQdOPbT2us28d4=";
+    hash = "sha256-Z+YX9JdfmcZPrD6KHg5ZjLJY9vtR4VQM0l1Vu5SZ+m8=";
   };
 }
