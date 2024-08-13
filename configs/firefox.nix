@@ -29,10 +29,6 @@
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
           };
-          "{b86e4813-687a-43e6-ab65-0bde4ab75758}" = {
-            "installation_mode" = "force_installed";
-            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/localcdn-fork-of-decentraleyes/latest.xpi";
-          };
           "uBlock0@raymondhill.net" = {
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
