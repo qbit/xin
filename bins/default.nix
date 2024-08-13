@@ -44,5 +44,6 @@ in
     (mkPubs 72) //
     (mkPubs 73) //
     (mkPubs 74) //
-    (mkPubs 75);
+    (mkPubs 75) //
+    (mkPubs 76);
 }
