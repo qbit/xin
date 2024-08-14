@@ -84,7 +84,7 @@ let
           {
             # ollama
             "action" = "accept";
-            "src" = [ "europa" "h" ];
+            "src" = [ "europa" "h" "tag:work" ];
             "dst" = [ "ollama:443" ];
             "proto" = "tcp";
           }
