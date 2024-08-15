@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "1ec0a64c5dc57b8a2053a93b5ef0d02ff8598e5c",
-  "hash": "sha256-aXJ+TfRMdzNnOxhT3bgwz++Y9HViPXXbtLUd/G9ivb0=",
-  "version": "2024-07-28",
-  "comment": "Explicitly install libssl-devel cygwin."
+  "rev": "4da2a1a7f648979bea6eaf3b17f5f250faed4afc",
+  "hash": "sha256-8s9IFANRLFK7hp1aahcRCFMxGcLIMSmanEFyFJCnX24=",
+  "version": "2024-08-15",
+  "comment": "fix merge botch that broke !OPENSSL_HAS_ECC"
 }
