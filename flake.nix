@@ -314,6 +314,7 @@
             isUnstable = true;
           };
           ttfs = upkgs.callPackage ./pkgs/ttfs.nix { };
+          intiface-engine = upkgs.callPackage ./pkgs/intiface-engine.nix { };
           flake-warn =
             spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
           #kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
