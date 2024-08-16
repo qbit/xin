@@ -123,6 +123,11 @@ here.
 
 * Packages
 
+** rust-mode
+#+begin_src emacs-lisp
+  (use-package rust-mode)
+#+end_src
+
 ** uxntal
 
 #+begin_src emacs-lisp
@@ -238,13 +243,14 @@ auto-completion stuff.
 #+begin_src emacs-lisp
   (use-package eglot
     :config
-    (add-hook 'go-mode-hook 'eglot-ensure)
     (add-hook 'elm-mode-hook 'eglot-ensure)
-    (add-hook 'nix-mode-hook 'eglot-ensure)
-    (add-hook 'typescript-mode-hook 'eglot-ensure)
-    (add-hook 'ruby-mode-hook 'eglot-ensure)
-    (add-hook 'perl-mode-hook 'eglot-ensure)
+    (add-hook 'go-mode-hook 'eglot-ensure)
     (add-hook 'haskell-mode-hook 'eglot-ensure)
+    (add-hook 'nix-mode-hook 'eglot-ensure)
+    (add-hook 'perl-mode-hook 'eglot-ensure)
+    (add-hook 'ruby-mode-hook 'eglot-ensure)
+    (add-hook 'rust-mode-hook 'eglot-ensure)
+    (add-hook 'typescript-mode-hook 'eglot-ensure)
 
     (add-to-list 'eglot-server-programs '(c-mode    . ("clangd")))
     (add-to-list 'eglot-server-programs '(c++-mode  . ("clangd")))
