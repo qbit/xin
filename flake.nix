@@ -361,6 +361,10 @@
         });
 
       templates = {
+        "shell" = {
+          path = ./templates/shell;
+          description = "A bare bones shell template.";
+        };
         "ada" = {
           path = ./templates/ada;
           description = "Ada template.";
@@ -371,7 +375,11 @@
         };
         "go-fyne" = {
           path = ./templates/go-fyne;
-          description = "Go template.";
+          description = "Go + fyne template.";
+        };
+        "go-fyne-shell" = {
+          path = ./templates/go-fyne;
+          description = "Go + fyne template for shell usage.";
         };
         "perl" = {
           path = ./templates/perl;
