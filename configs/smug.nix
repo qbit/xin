@@ -63,6 +63,12 @@ in
             ];
           }
           {
+            name = "nix-binary-cache";
+            commands = [
+              "journalctl -xef -u nix-binary-cache.service"
+            ];
+          }
+          {
             name = "admin";
           }
         ];
