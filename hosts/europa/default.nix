@@ -352,7 +352,6 @@ in
       ltunify
       minicom
       mu
-      nheko
       nix-index
       nixpkgs-review
       nmap
