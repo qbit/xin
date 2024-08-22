@@ -99,7 +99,7 @@ Switch various defaults to be more comfortable for myself.
           )
          auto-mode-alist))
   (setq auth-sources
-        '((:source "~/.netrc")))
+        '("/run/secrets/netrc"))
 #+end_src
 
 Use spelling and auto-fill when we are in text mode.
@@ -634,6 +634,32 @@ Custom agenda commands for various things.
 
   	    ;; If using org-roam-protocol
   	    (require 'org-roam-protocol))
+#+end_src
+
+* gnus
+
+[2024-08-22 Thu] Might need to switch go gnus. mu4e has been not showing new
+mail for some things and having to sync state between two sources is a pita.
+
+#+begin_src emacs-lisp
+  (setq gnus-fetch-old-headers t
+        gnus-select-method '(nnimap "imap.fastmail.com")
+        gnus-secondary-select-methods '((nntp "news.gwene.org"))
+        gnus-sum-thread-tree-false-root ""
+        gnus-sum-thread-tree-indent " "
+        gnus-sum-thread-tree-leaf-with-other "├► "
+        gnus-sum-thread-tree-root ""
+        gnus-sum-thread-tree-single-leaf "╰► "
+        gnus-sum-thread-tree-vertical "│"
+        gnus-summary-line-format "%U%R%z %(%&user-date>;  %-15,15f  %B%s%)\n"
+        gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
+        gnus-thread-sort-functions '(gnus-thread-sort-by-date)
+        gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M")))
+
+  (with-eval-after-load 'gnus
+    (setq gnus-select-method '(nnimap "imap.fastmail.com")
+  	gnus-secondary-select-methods '((nntp "news.gwene.org"))))
+
 #+end_src
 
 * mu4e
