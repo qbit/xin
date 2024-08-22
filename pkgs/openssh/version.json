@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "4da2a1a7f648979bea6eaf3b17f5f250faed4afc",
-  "hash": "sha256-8s9IFANRLFK7hp1aahcRCFMxGcLIMSmanEFyFJCnX24=",
-  "version": "2024-08-15",
-  "comment": "fix merge botch that broke !OPENSSL_HAS_ECC"
+  "rev": "ebc890b8b4ba08c84cd1066b7b94b2b11f6c4cb4",
+  "hash": "sha256-d360w0x6iZMiR7DWAJG7bJfJBXvRV8nxjwuiuU74DNs=",
+  "version": "2024-08-21",
+  "comment": "fix incorrect default for PasswordAuthentication"
 }
