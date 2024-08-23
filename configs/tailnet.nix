@@ -26,6 +26,7 @@ let
           display = "100.77.35.34";
           rimgo = "100.121.77.91";
           invidious = "100.71.57.99";
+          tsns = "100.103.1.111";
         };
 
         tagOwners = {
@@ -42,6 +43,12 @@ let
         };
 
         acls = [
+          {
+            action = "accept";
+            src = [ "*" ];
+            dst = [ "tsns:53" ];
+            proto = "udp";
+          }
           {
             # Allow laptops and mobile devices to ssh to everything
             action = "accept";
@@ -110,6 +117,11 @@ let
         ];
 
         tests = [
+          {
+            src = "gitle";
+            allow = [ "tsns:53" ];
+            proto = "udp";
+          }
           {
             # RO service can't access things
             "src" = "tag:ro-service";
