@@ -45,6 +45,11 @@ let
         acls = [
           {
             action = "accept";
+            src = [ "europa" ];
+            dst = [ "tsns:443" ];
+          }
+          {
+            action = "accept";
             src = [ "*" ];
             dst = [ "tsns:53" ];
             proto = "udp";
@@ -117,6 +122,10 @@ let
         ];
 
         tests = [
+          {
+            src = "gitle";
+            deny = [ "tsns:443" ];
+          }
           {
             src = "gitle";
             allow = [ "tsns:53" ];
