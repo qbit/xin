@@ -255,6 +255,9 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    tsns = {
+      enable = true;
+    };
     rimgo = {
       enable = true;
       settings = {

@@ -91,6 +91,10 @@
       url = "github:qbit/po";
       inputs.nixpkgs.follows = "unstable";
     };
+    tsns = {
+      url = "github:qbit/tsns";
+      inputs.nixpkgs.follows = "unstable";
+    };
     ts-reverse-proxy = {
       url = "github:qbit/ts-reverse-proxy";
       inputs.nixpkgs.follows = "unstable";
@@ -124,6 +128,7 @@
     , stable
     , traygent
     , ts-reverse-proxy
+    , tsns
     , tsvnstat
     , unstable
     , unstableSmall
@@ -158,6 +163,7 @@
           xin-secrets.nixosModules.xin-secrets
           lix-module.nixosModules.default
           ts-reverse-proxy.nixosModule
+          tsns.nixosModule
         ];
       };
 
@@ -170,6 +176,7 @@
         pots.overlay
         pr-status.overlay
         ts-reverse-proxy.overlay
+        tsns.overlay
       ];
 
       buildSys = sys: sysBase: extraMods: name:
@@ -352,6 +359,7 @@
           inherit (pots.packages.${system}) pots;
           inherit (po.packages.${system}) po;
           inherit (ts-reverse-proxy.packages.${system}) ts-reverse-proxy;
+          inherit (tsns.packages.${system}) tsns;
           inherit (traygent.packages.${system}) traygent;
 
           inherit (spkgs) matrix-synapse;
