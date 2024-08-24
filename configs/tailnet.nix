@@ -61,57 +61,57 @@ let
             dst = [ "*:*" ];
           }
           {
-            "action" = "accept";
-            "src" = [ "tag:internal-server" "tag:external-server" "tag:work" "tag:laptop" ];
-            "dst" = [ "nbc:443" ];
+            action = "accept";
+            src = [ "tag:internal-server" "tag:external-server" "tag:work" "tag:laptop" ];
+            dst = [ "nbc:443" ];
           }
           {
-            "action" = "accept";
-            "src" = [ "tag:untrusted" "tag:internal-server" ];
-            "dst" = [ "tag:ro-service:443" ];
+            action = "accept";
+            src = [ "tag:untrusted" "tag:internal-server" ];
+            dst = [ "tag:ro-service:443" ];
           }
           {
-            "action" = "accept";
-            "src" = [ "tag:work" ];
-            "dst" = [ "console:2222" "startpage:443" "rimgo:443" "invidious:443" ];
+            action = "accept";
+            src = [ "tag:work" ];
+            dst = [ "console:2222" "startpage:443" "rimgo:443" "invidious:443" ];
           }
           {
-            "action" = "accept";
-            "src" = [ "tag:openbsd" ];
-            "dst" = [ "box:443" ];
+            action = "accept";
+            src = [ "tag:openbsd" ];
+            dst = [ "box:443" ];
           }
           {
             # prometheus
-            "action" = "accept";
-            "src" = [ "box" ];
-            "dst" = [ "h:9002" "pwntie:9002" ];
+            action = "accept";
+            src = [ "box" ];
+            dst = [ "h:9002" "pwntie:9002" ];
           }
           {
             # DNS
-            "action" = "accept";
-            "src" = [ "*" ];
-            "dst" = [ "faf:53" ];
-            "proto" = "udp";
+            action = "accept";
+            src = [ "*" ];
+            dst = [ "faf:53" ];
+            proto = "udp";
           }
           {
             # ollama
-            "action" = "accept";
-            "src" = [ "europa" "h" "tag:work" ];
-            "dst" = [ "ollama:443" ];
-            "proto" = "tcp";
+            action = "accept";
+            src = [ "europa" "h" "tag:work" ];
+            dst = [ "ollama:443" ];
+            proto = "tcp";
           }
           {
             # jellyfin for tv
-            "action" = "accept";
-            "src" = [ "tv" "display" ];
-            "dst" = [ "box:443" ];
-            "proto" = "tcp";
+            action = "accept";
+            src = [ "tv" "display" ];
+            dst = [ "box:443" ];
+            proto = "tcp";
           }
           {
-            "action" = "accept";
-            "src" = [ "box" ];
-            "dst" = [ "tv:8080" "tv:9090" ];
-            "proto" = "tcp";
+            action = "accept";
+            src = [ "box" ];
+            dst = [ "tv:8080" "tv:9090" ];
+            proto = "tcp";
           }
           {
             action = "accept";
@@ -133,85 +133,85 @@ let
           }
           {
             # RO service can't access things
-            "src" = "tag:ro-service";
-            "deny" = [ "tag:laptop:443" "tag:mobile:80" "tag:laptop:22" ];
+            src = "tag:ro-service";
+            deny = [ "tag:laptop:443" "tag:mobile:80" "tag:laptop:22" ];
           }
           {
-            "src" = "tag:external-server";
-            "deny" = [ "tag:laptop:22" ];
+            src = "tag:external-server";
+            deny = [ "tag:laptop:22" ];
           }
           {
-            "src" = "tag:laptop";
-            "allow" = [ "tag:ro-service:443" "tag:ro-service:80" "tag:external-server:22" ];
+            src = "tag:laptop";
+            allow = [ "tag:ro-service:443" "tag:ro-service:80" "tag:external-server:22" ];
           }
           {
-            "src" = "tag:laptop";
-            "allow" = [ "qbit@tapenet.org:22" ];
+            src = "tag:laptop";
+            allow = [ "qbit@tapenet.org:22" ];
           }
           {
-            "src" = "tag:untrusted";
-            "deny" = [ "tag:laptop:22" ];
-            "allow" = [ "tag:ro-service:443" ];
+            src = "tag:untrusted";
+            deny = [ "tag:laptop:22" ];
+            allow = [ "tag:ro-service:443" ];
           }
           {
-            "src" = "tag:laptop";
-            "allow" = [ "tag:untrusted:22" "tag:untrusted:2222" "tag:work:22" ];
+            src = "tag:laptop";
+            allow = [ "tag:untrusted:22" "tag:untrusted:2222" "tag:work:22" ];
           }
           {
-            "src" = "tag:work";
-            "deny" = [ "tag:laptop:22" ];
+            src = "tag:work";
+            deny = [ "tag:laptop:22" ];
           }
 
           # Gitle shouldn't be able to access things, but things should access it
           {
-            "src" = "gitle";
-            "deny" = [ "tag:laptop:22" ];
+            src = "gitle";
+            deny = [ "tag:laptop:22" ];
+          }
+          {
+            src = "tag:laptop";
+            allow = [ "gitle:22" ];
+          }
+          {
+            src = "tag:laptop";
+            allow = [ "faf:53" ];
+          }
+          {
+            src = "tag:internal-server";
+            allow = [ "nbc:443" "tag:ro-service:443" ];
           }
           {
             "src" = "tag:laptop";
-            "allow" = [ "gitle:22" ];
+            allow = [ "h:8967" ];
           }
           {
-            "src" = "tag:laptop";
-            "allow" = [ "faf:53" ];
+            src = "h";
+            proto = "udp";
+            allow = [ "faf:53" ];
           }
           {
-            "src" = "tag:internal-server";
-            "allow" = [ "nbc:443" "tag:ro-service:443" ];
+            src = "tag:openbsd";
+            proto = "tcp";
+            allow = [ "box:443" ];
           }
           {
-            "src" = "tag:laptop";
-            "allow" = [ "h:8967" ];
+            src = "sputnik";
+            proto = "tcp";
+            allow = [ "europa:1714" ];
           }
           {
-            "src" = "h";
-            "proto" = "udp";
-            "allow" = [ "faf:53" ];
+            src = "sputnik";
+            proto = "udp";
+            allow = [ "europa:1714" ];
           }
           {
-            "src" = "tag:openbsd";
-            "proto" = "tcp";
-            "allow" = [ "box:443" ];
+            src = "europa";
+            proto = "tcp";
+            allow = [ "ollama:443" ];
           }
           {
-            "src" = "sputnik";
-            "proto" = "tcp";
-            "allow" = [ "europa:1714" ];
-          }
-          {
-            "src" = "sputnik";
-            "proto" = "udp";
-            "allow" = [ "europa:1714" ];
-          }
-          {
-            "src" = "europa";
-            "proto" = "tcp";
-            "allow" = [ "ollama:443" ];
-          }
-          {
-            "src" = "tv";
-            "proto" = "tcp";
-            "allow" = [ "box:443" ];
+            src = "tv";
+            proto = "tcp";
+            allow = [ "box:443" ];
           }
           {
             src = "display";
