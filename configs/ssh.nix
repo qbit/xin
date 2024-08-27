@@ -29,6 +29,7 @@ in
             controlpath           /tmp/ssh-%r@%h:%p
 
           VerifyHostKeyDNS        yes
+          AddKeysToAgent          yes
           CanonicalizeHostname    always
         '';
       };
