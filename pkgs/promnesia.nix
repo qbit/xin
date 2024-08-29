@@ -1,27 +1,28 @@
 { lib
-, buildPythonPackage
-, fetchFromGitHub
 , beautifulsoup4
+, buildPythonPackage
 , fastapi
+, fetchFromGitHub
 , httptools
 , logzero
 , lxml
 , mistletoe
 , more-itertools
 , mypy
-, magic
+, pkgs
+, python-dotenv
+, python-magic
 , pytz
 , setuptools
+, setuptools-scm
+, sqlitebrowser
+, starlette
 , tzlocal
 , urlextract
 , uvicorn
 , uvloop
 , watchfiles
 , websockets
-, setuptools-scm
-, starlette
-, python-dotenv
-, pkgs
 , ...
 }:
 with pkgs; let
@@ -29,7 +30,7 @@ with pkgs; let
   sqlcipher3 =
     pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
   cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
-  # python-dotenv = pkgs.python3Packages.callPackage ./python-dotenv.nix { };
+  google_takeout_parser = pkgs.python3Packages.callPackage ./google-takeout-parser.nix { inherit pkgs; };
 in
 buildPythonPackage rec {
   pname = "promnesia";
@@ -59,7 +60,8 @@ buildPythonPackage rec {
     cachew
     fastapi
     hpi
-    magic
+    google_takeout_parser
+    python-magic
     httptools
     starlette
     logzero
@@ -77,6 +79,7 @@ buildPythonPackage rec {
     uvloop
     watchfiles
     websockets
+    sqlitebrowser
   ];
 
   makeWrapperArgs = [

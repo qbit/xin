@@ -9,15 +9,19 @@
 , logzero
 , lxml
 , more-itertools
+, hypothesis
 , mypy
 , orjson
 , pandas
 , pytz
 , simplejson
+, colorlog
 , ...
 }:
 with pkgs; let
   orgparse = pkgs.python3Packages.callPackage ./orgparse.nix { inherit pkgs; };
+  cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
+  google_takeout_parser = pkgs.python3Packages.callPackage ./google-takeout-parser.nix { inherit pkgs; };
   kobuddy = pkgs.python3Packages.callPackage ./kobuddy.nix { inherit pkgs; };
   ghexport = pkgs.python3Packages.callPackage ./ghexport.nix { inherit pkgs; };
   kompress = buildPythonPackage rec {
@@ -48,12 +52,16 @@ buildPythonPackage rec {
     click
     decorator
     geopy
+    cachew
+    hypothesis
+    colorlog
     kompress
     kobuddy
     logzero
     lxml
     ghexport
     more-itertools
+    google_takeout_parser
     mypy
     orgparse
     orjson

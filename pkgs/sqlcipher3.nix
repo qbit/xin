@@ -2,6 +2,7 @@
 , setuptools-scm
 , sqlcipher
 , fetchFromGitHub
+, sqlite
 , ...
 }:
 buildPythonPackage rec {
@@ -9,7 +10,7 @@ buildPythonPackage rec {
   version = "0.5.3";
 
   nativeBuildInputs = [ setuptools-scm ];
-  propagatedBuildInputs = [ sqlcipher ];
+  propagatedBuildInputs = [ sqlcipher sqlite ];
 
   doCheck = true;
 
