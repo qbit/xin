@@ -356,7 +356,6 @@
           };
           sliding-sync =
             spkgs.callPackage ./pkgs/sliding-sync.nix { inherit spkgs; };
-          golink = spkgs.callPackage ./pkgs/golink.nix { inherit spkgs; };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
           gotosocial =

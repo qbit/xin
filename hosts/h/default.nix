@@ -161,17 +161,6 @@ in
       owner = "root";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
-    golink = {
-      mode = "400";
-      owner = config.services.golink.user;
-      sopsFile = config.xin-secrets.h.secrets.services;
-    };
-
-    #wallabag_secret = {
-    #  mode = "400";
-    #  owner = "wallabag";
-    #  sopsFile = config.xin-secrets.h.secrets.services;
-    #};
   };
 
   networking = {
@@ -331,10 +320,6 @@ in
     postfix.extraConfig = ''
       smtputf8_enable = no
     '';
-    golink = {
-      enable = true;
-      envFile = config.sops.secrets.golink.path;
-    };
     smartd.enable = false;
     mcchunkie.enable = true;
     wallabag = {
