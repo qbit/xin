@@ -1,13 +1,15 @@
 { buildPythonPackage
 , setuptools-scm
 , pytest
-, fetchPypi
+, fetchFromGitHub
 , ...
 }:
 buildPythonPackage rec {
   pname = "orgparse";
-  version = "0.3.2";
+  version = "0.4.20231004";
 
+  pyproject = true;
+  
   nativeBuildInputs = [ setuptools-scm ];
   #propagatedBuildInputs = [ ];
 
@@ -15,8 +17,10 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  src = fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-RRBQ55rLelHGXcmbkJXq5NUL1ZhUE1T552PLTL31mlU=";
+  src = fetchFromGitHub {
+    owner = "karlicoss";
+    repo = pname;
+    rev = "da56aae64a6373ae8bab2dde9dc756f904f1d8f8";
+    sha256 = "sha256-Vx7WDL6svMtlhuxXBQsh9gcCZTnVD4RV8lz6ijK6qbw=";
   };
 }

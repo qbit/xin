@@ -7,8 +7,10 @@
 }:
 buildPythonPackage rec {
   pname = "ghexport";
-  version = "20220828";
+  version = "20231020";
 
+  pyproject = true;
+  
   nativeBuildInputs = [ setuptools-scm ];
   propagatedBuildInputs = [ PyGithub pytz ];
 
@@ -25,7 +27,7 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "karlicoss";
     repo = pname;
-    rev = "e7704dc5b984731a53e74cbcadcbc3dd9c3024cd";
-    hash = "sha256-m/iqeBvCXHlN7GsNW6A2AX1g+ZaH3W62+Ulcfgup0KQ=";
+    rev = "03207b63da4a0f570700f373867ff67deb4f43d1";
+    hash = "sha256-QfYpi59q5uqOEAcxLC72972HMsgRlMngjuRULwRbmUc=";
   };
 }

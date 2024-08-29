@@ -9,6 +9,7 @@
 , mistletoe
 , more-itertools
 , mypy
+, magic
 , pytz
 , setuptools
 , tzlocal
@@ -19,6 +20,7 @@
 , websockets
 , setuptools-scm
 , starlette
+, python-dotenv
 , pkgs
 , ...
 }:
@@ -27,7 +29,7 @@ with pkgs; let
   sqlcipher3 =
     pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
   cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
-  python-dotenv = pkgs.python3Packages.callPackage ./python-dotenv.nix { };
+  # python-dotenv = pkgs.python3Packages.callPackage ./python-dotenv.nix { };
 in
 buildPythonPackage rec {
   pname = "promnesia";
@@ -57,6 +59,7 @@ buildPythonPackage rec {
     cachew
     fastapi
     hpi
+    magic
     httptools
     starlette
     logzero
