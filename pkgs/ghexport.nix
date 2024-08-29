@@ -10,7 +10,7 @@ buildPythonPackage rec {
   version = "20231020";
 
   pyproject = true;
-  
+
   nativeBuildInputs = [ setuptools-scm ];
   propagatedBuildInputs = [ PyGithub pytz ];
 

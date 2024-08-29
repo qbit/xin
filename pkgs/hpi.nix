@@ -25,9 +25,9 @@ with pkgs; let
     version = "0.1.20240829";
 
     pyproject = true;
-    
+
     nativeBuildInputs = [ setuptools-scm ];
-    
+
     src = fetchFromGitHub {
       owner = "karlicoss";
       repo = pname;
@@ -41,7 +41,7 @@ buildPythonPackage rec {
   version = "0.5.20240824";
 
   pyproject = true;
-  
+
   nativeBuildInputs = [ setuptools-scm ];
   propagatedBuildInputs = [
     appdirs

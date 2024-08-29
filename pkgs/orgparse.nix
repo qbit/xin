@@ -9,7 +9,7 @@ buildPythonPackage rec {
   version = "0.4.20231004";
 
   pyproject = true;
-  
+
   nativeBuildInputs = [ setuptools-scm ];
   #propagatedBuildInputs = [ ];
 
