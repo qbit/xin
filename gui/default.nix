@@ -16,7 +16,6 @@ let
   rpr =
     pkgs.writeScriptBin "rpr"
       (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
-
   editorScript = pkgs.writeShellScriptBin "emacseditor" ''
     if [ -z "$1" ]; then
       exec ${myEmacs}/bin/emacsclient --create-frame --alternate-editor ${myEmacs}/bin/emacs
@@ -24,7 +23,27 @@ let
       exec ${myEmacs}/bin/emacsclient --alternate-editor ${myEmacs}/bin/emacs "$@"
     fi
   '';
+  promnesia =
+    pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
+  hpi = pkgs.python3Packages.callPackage ../pkgs/hpi.nix { inherit pkgs; };
+  promnesiaService = {
+    promnesia = {
+      description = "Service for promnesia.server";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      script = ''
+        ${promnesia}/bin/promnesia serve
+      '';
+    };
+  };
   jobs = [
+    {
+      name = "promnesia-index";
+      script = "${promnesia}/bin/promnesia index";
+      startAt = "*:0/5";
+      path = [ promnesia hpi ];
+    }
   ];
   fontSet = with pkgs; [
     go-font
@@ -105,10 +124,12 @@ with lib; {
           exiftool
           go-font
           govulncheck
+          hpi
           keepassxc
           mpv
           pcsctools
           plan9port
+          promnesia
           rage
           rpr
           traygent
@@ -126,7 +147,8 @@ with lib; {
       } // firefox.programs;
 
       systemd.user.services =
-        lib.listToAttrs (builtins.map xinlib.jobToUserService jobs);
+        (lib.listToAttrs (builtins.map xinlib.jobToUserService jobs))
+        // promnesiaService;
       security.rtkit.enable = true;
     })
     (mkIf config.pipewire.enable {

@@ -324,7 +324,6 @@
           intiface-engine = upkgs.callPackage ./pkgs/intiface-engine.nix { };
           flake-warn =
             spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
-          #kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
           gen-patches =
             spkgs.callPackage ./bins/gen-patches.nix { inherit spkgs; };
           yarr = spkgs.callPackage ./pkgs/yarr.nix {
@@ -340,17 +339,35 @@
           rtlamr2mqtt = spkgs.python3Packages.callPackage ./pkgs/rtlamr2mqtt.nix {
             inherit spkgs;
           };
+          kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
+            inherit upkgs;
+          };
+          bandcamp-downloader = upkgs.python3Packages.callPackage ./pkgs/bandcamp-downloader.nix {
+            inherit upkgs;
+          };
+          ghexport = upkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
+            inherit upkgs;
+          };
+          hpi =
+            upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
           openevse =
             upkgs.python312Packages.callPackage ./pkgs/openevse.nix { inherit upkgs; };
           ble-serial =
             upkgs.python312Packages.callPackage ./pkgs/ble-serial.nix { inherit upkgs; };
+          promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
+            inherit upkgs;
+          };
           sliding-sync =
             spkgs.callPackage ./pkgs/sliding-sync.nix { inherit spkgs; };
+          golink = spkgs.callPackage ./pkgs/golink.nix { inherit spkgs; };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
           gotosocial =
             spkgs.callPackage ./pkgs/gotosocial.nix { inherit spkgs; };
           zutty = upkgs.callPackage ./pkgs/zutty.nix {
+            inherit upkgs;
+          };
+          mvoice = upkgs.callPackage ./pkgs/mvoice.nix {
             inherit upkgs;
           };
           inherit (xintray.packages.${system}) xintray;
