@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "ebc890b8b4ba08c84cd1066b7b94b2b11f6c4cb4",
-  "hash": "sha256-d360w0x6iZMiR7DWAJG7bJfJBXvRV8nxjwuiuU74DNs=",
-  "version": "2024-08-21",
-  "comment": "fix incorrect default for PasswordAuthentication"
+  "rev": "05f2b141cfcc60c7cdedf9450d2b9d390c19eaad",
+  "hash": "sha256-Cwosw50omcig8a5R9B52shR9MkQyrxiCsj3w9t7cbWA=",
+  "version": "2024-08-28",
+  "comment": "Don&apos;t skip audit before exitting cleanup_exit"
 }
