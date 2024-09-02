@@ -187,6 +187,7 @@ in
           ripgrep
           sshfs
           tmux
+          uxn
 
           xin
         ]
