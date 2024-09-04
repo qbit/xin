@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "05f2b141cfcc60c7cdedf9450d2b9d390c19eaad",
-  "hash": "sha256-Cwosw50omcig8a5R9B52shR9MkQyrxiCsj3w9t7cbWA=",
-  "version": "2024-08-28",
-  "comment": "Don&apos;t skip audit before exitting cleanup_exit"
+  "rev": "13cc78d016b67a74a67f1c97c7c348084cd9212c",
+  "hash": "sha256-H9fu4tl2KLexzYMq1Iijpw0TnydhRT+/fFuVCJa8Dfs=",
+  "version": "2024-09-04",
+  "comment": "upstream: be more strict in parsing key type names. Only allow"
 }
