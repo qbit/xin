@@ -135,6 +135,7 @@ with lib; {
           traygent
           vlc
           zeal
+          trayscale
 
           myEmacs
           editorScript
