@@ -322,11 +322,6 @@ in
     '';
     smartd.enable = false;
     mcchunkie.enable = true;
-    wallabag = {
-      enable = false;
-      secretPath = config.sops.secrets.wallabag_secret.path;
-      domain = "bookmarks.tapenet.org";
-    };
     navidrome = {
       enable = true;
       settings = {

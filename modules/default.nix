@@ -9,7 +9,6 @@
     ./ssh-fido-agent.nix
     ./tsvnstat.nix
     ./veilid-server.nix
-    ./wallabag.nix
     ./yarr.nix
   ];
 }
