@@ -2,7 +2,6 @@
 , lib
 , pkgs
 , xinlib
-, isUnstable
 , inputs
 , ...
 }:
@@ -12,17 +11,9 @@ let
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
-  myEmacs = pkgs.callPackage ../configs/emacs.nix { inherit isUnstable; };
   rpr =
     pkgs.writeScriptBin "rpr"
       (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
-  editorScript = pkgs.writeShellScriptBin "emacseditor" ''
-    if [ -z "$1" ]; then
-      exec ${myEmacs}/bin/emacsclient --create-frame --alternate-editor ${myEmacs}/bin/emacs
-    else
-      exec ${myEmacs}/bin/emacsclient --alternate-editor ${myEmacs}/bin/emacs "$@"
-    fi
-  '';
   promnesia =
     pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
   hpi = pkgs.python3Packages.callPackage ../pkgs/hpi.nix { inherit pkgs; };
@@ -113,10 +104,8 @@ with lib; {
           SSH_AUTH_SOCK = "$HOME/.traygent";
           OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
         };
-        variables.EDITOR = mkOverride 900 "emacseditor";
         systemPackages = with pkgs; (xinlib.filterList [
           alacritty
-          (aspellWithDicts (dicts: with dicts; [ en en-computers es de ]))
           bc
           beyt
           black
@@ -137,8 +126,6 @@ with lib; {
           zeal
           trayscale
 
-          myEmacs
-          editorScript
           (callPackage ../configs/helix.nix { })
         ]);
       };
