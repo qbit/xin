@@ -627,12 +627,9 @@ Custom agenda commands for various things.
   		   ("C-c n g" . org-roam-graph)
   		   ("C-c n i" . org-roam-node-insert)
   		   ("C-c n c" . org-roam-capture)
-  		   ;; Dailies
   		   ("C-c n j" . org-roam-dailies-capture-today))
   	    :config
-  	    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-
-  	    ;; If using org-roam-protocol
+  	    (setq org-roam-completion-everywhere t)
   	    (require 'org-roam-protocol))
 #+end_src
 

@@ -22,6 +22,7 @@ in
         (aspellWithDicts (dicts: with dicts; [ en en-computers es de ]))
         go-font
         texlive.combined.scheme-full
+        graphviz
 
         myEmacs
         editorScript
