@@ -22,6 +22,12 @@ let
       startAt = "*:0/5";
       path = [ pkgs.git pkgs.git-sync ];
     }
+    {
+      name = "org-roam";
+      script = "(cd ~/org-roam && git sync)";
+      startAt = "*:0/5";
+      path = [ pkgs.git pkgs.git-sync ];
+    }
   ];
 in
 {
