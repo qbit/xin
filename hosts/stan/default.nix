@@ -208,6 +208,7 @@ in
       tcpdump
       unzip
       virt-manager
+      virt-viewer
       (vscode-with-extensions.override {
         vscodeExtensions = with vscode-extensions; [
           golang.go
