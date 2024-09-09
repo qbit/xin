@@ -4,15 +4,18 @@ let
   tmuxFormat = pkgs.formats.yaml { };
   mkSmugEntry = name: cfg:
     {
-      environment = {
-        systemPackages = [
-          (pkgs.writeScriptBin name ''
-            ${pkgs.smug}/bin/smug -f /etc/smug/${name}.yml start
-          '')
-        ];
-        etc."smug/${name}.yml".text = builtins.readFile
-          (tmuxFormat.generate "${name}.yml" cfg);
-      };
+      environment =
+        let
+          yamlFile = tmuxFormat.generate "${name}.yml" cfg;
+          startScript = pkgs.writeScriptBin name ''
+            ${pkgs.smug}/bin/smug -f ${yamlFile} start
+          '';
+        in
+        {
+          systemPackages = [
+            startScript
+          ];
+        };
     };
 in
 {

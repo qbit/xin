@@ -1,6 +1,5 @@
 { ... }: {
   imports = [
-    ./alacritty.nix
     ./ca.nix
     ./ci.nix
     ./colemak.nix
