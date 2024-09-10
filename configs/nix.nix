@@ -3,7 +3,7 @@
   nix =
     let myPkgs = inputs.unstableSmall.legacyPackages.${pkgs.system};
     in {
-      package = if lib.hasAttr "lix" myPkgs then myPkgs.lix else myPkgs.nixVersions.nix_2_21;
+      package = myPkgs.lix;
       gc = lib.mkDefault {
         automatic = true;
         dates = "daily";
