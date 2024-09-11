@@ -183,6 +183,22 @@
         "type": "github"
       }
     },
+    "immich-module": {
+      "locked": {
+        "lastModified": 1723391208,
+        "narHash": "sha256-/XYgMUFCTx1oMt4Yrw9xO9BkkiVzhufCEJPOGaIby5g=",
+        "owner": "jvanbruegge",
+        "repo": "nixpkgs",
+        "rev": "c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jvanbruegge",
+        "repo": "nixpkgs",
+        "rev": "c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf",
+        "type": "github"
+      }
+    },
     "kogs": {
       "inputs": {
         "nixpkgs": [
@@ -397,6 +413,7 @@
         "emacs-overlay": "emacs-overlay",
         "gostart": "gostart",
         "gqrss": "gqrss",
+        "immich-module": "immich-module",
         "kogs": "kogs",
         "lix-module": "lix-module",
         "mcchunkie": "mcchunkie",

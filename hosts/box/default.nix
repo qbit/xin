@@ -2,6 +2,7 @@
 , lib
 , pkgs
 , xinlib
+, inputs
 , ...
 }:
 let
@@ -50,6 +51,7 @@ in
   imports = [
     ./hardware-configuration.nix
     #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
+    "${inputs.immich-module}/nixos/modules/services/web-apps/immich.nix"
   ];
 
   sops.secrets = {
@@ -255,6 +257,12 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    immich = {
+      enable = true;
+      mediaLocation = "/media/pictures/immich";
+      machine-learning.enable = true;
+      package = inputs.immich-module.legacyPackages."${pkgs.system}".pkgs.immich;
+    };
     tsns = {
       enable = true;
     };
