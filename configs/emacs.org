@@ -391,130 +391,146 @@ can't quit!
 I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some recipes.
 
 #+begin_src emacs-lisp
+  (setq org-export-with-broken-links t)
   (setq my-org-publish-alist
         '(("bolddaemon" :components ("bolddaemon-web" "bolddaemon-static"))
   	("notes" :components ("org-notes" "notes-static" "notes-rss"))
-          ("deftly" :components ("deftly-blog" "deftly-static"))
-          ("ohmyksh" :components ("ohmy-web" "ohmy-static"))
-          ("org-notes"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 4
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://suah.dev/p/"
-           :html-link-up "../"
-           :style-include-default nil
-           :sitemap-filename "index.org"
-           :sitemap-title "Notes"
-           :with-title t
-           :author-info nil
-           :creator-info nil
-           :base-directory "~/org/notes")
-          ("deftly-blog"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 1
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/new/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://deftly.net/new"
-           :html-link-up "../"
-           :style-include-default nil
-           :sitemap-title "Deftly.net"
-           :with-title t
-           :author-info t
-           :creator-info nil
-           :base-directory "~/org/deftly")
-          ("ohmy-web"
-           :auto-preamble t
-           :auto-sitemap nil
-           :headline-levels 2
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/ohmyksh/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://deftly.net/ohmyksh"
-           :html-link-up "../"
-           :style-include-default nil
-           :with-title t
-           :author-info t
-           :creator-info nil
-           :base-directory "~/src/ohmyksh")
-          ("notes-static"
-           :base-directory "~/org/notes"
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("deftly-static"
-           :base-directory "~/org/deftly"
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("ohmy-static"
-           :base-directory "~/src/ohmyksh"
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("notes-rss"
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
-           :publishing-function org-rss-publish-to-rss
-           :recursive t
-           :rss-extension "xml"
-           :section-numbers nil
-           :exclude ".*"
-           :include ("index.org")
-           :table-of-contents nil
-           :base-directory "~/org/notes")
-          ("recipes"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 4
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/recipes/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://suah.dev/recipes/"
-           :html-link-up "../"
-           :style-include-default nil
-           :sitemap-filename "index.org"
-           :sitemap-title "Recipes"
-           :with-title t
-           :author-info nil
-           :creator-info nil
-           :base-directory "~/org/recipes")
+  	("exo" :components ("org-roam" "org-roam-static" "org-roam-rss"))
+  	("deftly" :components ("deftly-blog" "deftly-static"))
+  	("ohmyksh" :components ("ohmy-web" "ohmy-static"))
+  	("org-roam"
+  	 :publishing-directory "/tmp/exo"
+  	 :publishing-function org-html-publish-to-html
+  	 :base-directory "~/org-roam")
+  	("org-roam-static"
+  	 :base-directory "~/org-roam"
+  	 :publishing-directory "/tmp/exo"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
+  	 :publishing-function org-publish-attachment)
+  	("org-roam-rss"
+  	 :publishing-directory "/tmp/exo"
+  	 :publishing-function org-rss-publish-to-rss
+  	 :rss-extension "xml"
+  	 :base-directory "~/org-roam")
+  	("org-notes"
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 4
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://suah.dev/p/"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :sitemap-filename "index.org"
+  	 :sitemap-title "Notes"
+  	 :with-title t
+  	 :author-info nil
+  	 :creator-info nil
+  	 :base-directory "~/org/notes")
+  	("deftly-blog"
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 1
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/new/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://deftly.net/new"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :sitemap-title "Deftly.net"
+  	 :with-title t
+  	 :author-info t
+  	 :creator-info nil
+  	 :base-directory "~/org/deftly")
+  	("ohmy-web"
+  	 :auto-preamble t
+  	 :auto-sitemap nil
+  	 :headline-levels 2
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/ohmyksh/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://deftly.net/ohmyksh"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :with-title t
+  	 :author-info t
+  	 :creator-info nil
+  	 :base-directory "~/src/ohmyksh")
+  	("notes-static"
+  	 :base-directory "~/org/notes"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	("deftly-static"
+  	 :base-directory "~/org/deftly"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	("ohmy-static"
+  	 :base-directory "~/src/ohmyksh"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	("notes-rss"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
+  	 :publishing-function org-rss-publish-to-rss
+  	 :recursive t
+  	 :rss-extension "xml"
+  	 :section-numbers nil
+  	 :exclude ".*"
+  	 :include ("index.org")
+  	 :table-of-contents nil
+  	 :base-directory "~/org/notes")
+  	("recipes"
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 4
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/recipes/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://suah.dev/recipes/"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :sitemap-filename "index.org"
+  	 :sitemap-title "Recipes"
+  	 :with-title t
+  	 :author-info nil
+  	 :creator-info nil
+  	 :base-directory "~/org/recipes")
   	("bolddaemon-web"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 4
-           :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-link-home "http://bolddaemon.com"
-           :html-link-up "../"
-           :style-include-default nil
-           :with-title t
-           :author-info nil
-           :creator-info nil
-           :base-directory "~/org/bold.daemon")
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 4
+  	 :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-link-home "http://bolddaemon.com"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :with-title t
+  	 :author-info nil
+  	 :creator-info nil
+  	 :base-directory "~/org/bold.daemon")
   	("bolddaemon-static"
-           :base-directory "~/org/bold.daemon"
-           :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ))
+  	 :base-directory "~/org/bold.daemon"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	))
 #+end_src
 
 ** Capture templates
@@ -620,17 +636,24 @@ Custom agenda commands for various things.
 
 #+begin_src emacs-lisp
   (use-package org-roam
-  	    :custom
-  	    (org-roam-directory (file-truename "~/org-roam/"))
-  	    :bind (("C-c n l" . org-roam-buffer-toggle)
-  		   ("C-c n f" . org-roam-node-find)
-  		   ("C-c n g" . org-roam-graph)
-  		   ("C-c n i" . org-roam-node-insert)
-  		   ("C-c n c" . org-roam-capture)
-  		   ("C-c n j" . org-roam-dailies-capture-today))
-  	    :config
-  	    (setq org-roam-completion-everywhere t)
-  	    (require 'org-roam-protocol))
+    :after org
+    :custom
+    (org-roam-directory (file-truename "~/org-roam/"))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+  	 ("C-c n f" . org-roam-node-find)
+  	 ("C-c n g" . org-roam-graph)
+  	 ("C-c n i" . org-roam-node-insert)
+  	 ("C-c n c" . org-roam-capture)
+  	 ("C-c n j" . org-roam-dailies-capture-today))
+    :config
+    (setq org-roam-completion-everywhere t)
+    (require 'org-roam-protocol))
+#+end_src
+
+Extending org with the ability to transclude makes for a powerhouse!
+#+begin_src emacs-lisp
+  (use-package org-transclusion
+    :after org)
 #+end_src
 
 * gnus
