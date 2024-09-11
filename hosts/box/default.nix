@@ -259,6 +259,7 @@ in
   services = {
     immich = {
       enable = true;
+      port = 3301;
       mediaLocation = "/media/pictures/immich";
       machine-learning.enable = true;
       package = inputs.immich-module.legacyPackages."${pkgs.system}".pkgs.immich;
@@ -292,6 +293,12 @@ in
           reverseName = "evse";
           reversePort = 80;
           reverseIP = "10.6.0.166";
+        };
+        "immich-service" = {
+          enable = true;
+          reverseName = "immich";
+          reversePort = config.services.immich.port;
+          reverseIP = config.services.immich.host;
         };
       };
     };
@@ -1089,7 +1096,7 @@ in
       enable = true;
       #dataDir = "/db/postgres";
 
-      package = pkgs.postgresql_15;
+      package = pkgs.postgresql_16;
 
       enableTCPIP = true;
       authentication = pkgs.lib.mkOverride 14 ''

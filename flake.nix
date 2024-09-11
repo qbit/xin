@@ -14,7 +14,6 @@
 
     immich-module = {
       url = "github:jvanbruegge/nixpkgs/c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf";
-      inputs.nixpkgs.follows = "unstable";
     };
 
     sops-nix = {
