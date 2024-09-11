@@ -245,9 +245,26 @@ in
   security.acme = {
     acceptTerms = true;
     defaults.email = "aaron@bolddaemon.com";
+    certs = {
+      "suah.dev" = {
+        group = "prognx";
+        extraDomainNames = [
+          "upload.suah.dev"
+          "conference.suah.dev"
+        ];
+      };
+    };
   };
 
   users = {
+    groups = {
+      prognx = {
+        members = [
+          config.services.prosody.user
+          config.services.nginx.user
+        ];
+      };
+    };
     users = {
       root = userBase;
       qbit = userBase;
@@ -317,6 +334,39 @@ in
   };
 
   services = {
+    prosody = {
+      enable = true;
+
+      httpPorts = [ 5280 ];
+      httpsPorts = [ 5281 ];
+
+      virtualHosts."suah.dev" = {
+        enabled = true;
+        domain = "suah.dev";
+        ssl = {
+          cert = "/var/lib/acme/suah.dev/fullchain.pem";
+          key = "/var/lib/acme/suah.dev/key.pem";
+        };
+      };
+
+      uploadHttp = {
+        domain = "upload.suah.dev";
+        uploadExpireAfter = "60 * 60 * 24 * 7 * 4";
+      };
+
+      muc = [
+        {
+          domain = "conference.suah.dev";
+          maxHistoryMessages = 1024;
+        }
+      ];
+
+      allowRegistration = false;
+
+      admins = [
+        "qbit@suah.dev"
+      ];
+    };
     postfix.extraConfig = ''
       smtputf8_enable = no
     '';
@@ -489,6 +539,7 @@ in
           "/var/lib/kogs"
           "/var/vmail"
           "/var/dkim"
+          config.services.prosody.dataDir
         ];
 
         timerConfig = { OnCalendar = "00:05"; };

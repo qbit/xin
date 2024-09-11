@@ -331,6 +331,7 @@ in
       chirp # stable
       deadbeef-with-plugins
       deluge
+      dino
       direwolf
       element-desktop
       element-desktop-wayland
