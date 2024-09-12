@@ -7,7 +7,6 @@
 }:
 let
   inherit (xinlib) todo;
-  #photoPrismTag = "220901-bullseye";
   httpCacheTime = "720m";
   httpAllow = ''
     allow	10.6.0.0/24;
@@ -63,7 +62,6 @@ in
     #  owner = config.users.users.nextcloud.name;
     #  sopsFile = config.xin-secrets.box.secrets.services;
     #};
-    #photoprism_admin_password = {sopsFile = config.xin-secrets.box.secrets.services;};
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.secrets.services;
@@ -234,22 +232,6 @@ in
       photos = {
         name = "photos";
         members = [ "qbit" ];
-      };
-
-      photoprism = {
-        name = "photoprism";
-        gid = 986;
-      };
-    };
-    users = {
-      photoprism = {
-        uid = 991;
-        name = "photoprism";
-        isSystemUser = true;
-        hashedPassword = null;
-        group = "photoprism";
-        shell = "/bin/sh";
-        openssh.authorizedKeys.keys = pubKeys;
       };
     };
   };
@@ -450,47 +432,7 @@ in
         };
       };
     };
-    #photoprism = {
-    #  enable = true;
-    #  port = 2343;
-    #  storagePath = "/media/pictures/photoprism/storage";
-    #  originalsPath = "/media/pictures/photoprism/originals";
-    #  importPath = "/media/pictures/photoprism/import";
-    #  settings = {
-    #    PHOTOPRISM_UPLOAD_NSFW = "true";
-    #    PHOTOPRISM_DETECT_NSFW = "false";
-    #    PHOTOPRISM_SITE_URL = "https://box.otter-alligator.ts.net/photos";
-    #    PHOTOPRISM_SETTINGS_HIDDEN = "false";
-    #    PHOTOPRISM_DATABASE_DRIVER = "sqlite";
-    #  };
-    #};
-    #nextcloud = {
-    #  enable = true;
-    #  enableBrokenCiphersForSSE = false;
-    #  hostName = "box.otter-alligator.ts.net";
-    #  home = "/media/nextcloud";
-    #  https = true;
 
-    #  package = pkgs.nextcloud27;
-    #  extraApps = with config.services.nextcloud.package.packages.apps; {
-    #    inherit bookmarks calendar contacts notes tasks twofactor_webauthn;
-    #  };
-
-    #  extraAppsEnable = true;
-
-    #  config = {
-    #    overwriteProtocol = "https";
-
-    #    dbtype = "pgsql";
-    #    dbuser = "nextcloud";
-    #    dbhost = "/run/postgresql";
-    #    dbname = "nextcloud";
-    #    dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
-
-    #    adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
-    #    adminuser = "admin";
-    #  };
-    #};
     invidious = {
       enable = true;
       database = {
@@ -1125,13 +1067,6 @@ in
 
   systemd = {
     services = {
-      photoprism = {
-        serviceConfig = {
-          WorkingDirectory = lib.mkForce "/media/pictures/photoprism";
-        };
-        preStart = lib.mkForce "";
-      };
-
       nginx.serviceConfig = {
         ReadWritePaths = [ "/backups/nginx_cache" ];
         ReadOnlyPaths = [ "/etc/nixos/secrets" ];
