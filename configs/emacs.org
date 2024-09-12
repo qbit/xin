@@ -597,6 +597,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
     (setq org-publish-project-alist my-org-publish-alist)
     (setq org-capture-templates my-org-capture-templates))
   (use-package org-contrib)
+  (use-package ox-rss)
 
 #+end_src
 
