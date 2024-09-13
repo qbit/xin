@@ -218,7 +218,7 @@ code.. etc. Combined with ~smex~ for sorting (shows last used things first) and
   (use-package ivy
     :hook (after-init . ivy-mode)
     :bind
-    ("C-s"     . swiper)
+    ("C-s"     . swiper-isearch)
     ("M-x"     . counsel-M-x)
     ("C-x C-f" . counsel-find-file)
     ("C-x b"   . ivy-switch-buffer))
@@ -651,6 +651,10 @@ Custom agenda commands for various things.
   	 ("C-c n j" . org-roam-dailies-capture-today))
     :config
     (setq org-roam-completion-everywhere t)
+    (setq org-roam-node-display-template
+  	(concat "${title:40} "
+  		(propertize "${tags:40}" 'face 'org-tag)
+  		"${file}"))
     (require 'org-roam-protocol))
 #+end_src
 
