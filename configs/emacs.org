@@ -393,22 +393,24 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
 #+begin_src emacs-lisp
   (setq org-export-with-broken-links t)
   (setq my-org-publish-alist
-        '(("bolddaemon" :components ("bolddaemon-web" "bolddaemon-static"))
+        '(("exo" :components ("org-roam" "org-roam-static"))
+  	("bolddaemon" :components ("bolddaemon-web" "bolddaemon-static"))
   	("notes" :components ("org-notes" "notes-static" "notes-rss"))
-  	("exo" :components ("org-roam" "org-roam-static" "org-roam-rss"))
   	("deftly" :components ("deftly-blog" "deftly-static"))
   	("ohmyksh" :components ("ohmy-web" "ohmy-static"))
   	("org-roam"
-  	 :publishing-directory "/tmp/exo"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
+  	 :recursive t
   	 :publishing-function org-html-publish-to-html
   	 :base-directory "~/org-roam")
   	("org-roam-static"
   	 :base-directory "~/org-roam"
-  	 :publishing-directory "/tmp/exo"
+  	 :recursive t
+  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
   	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
   	 :publishing-function org-publish-attachment)
   	("org-roam-rss"
-  	 :publishing-directory "/tmp/exo"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
   	 :publishing-function org-rss-publish-to-rss
   	 :rss-extension "xml"
   	 :base-directory "~/org-roam")

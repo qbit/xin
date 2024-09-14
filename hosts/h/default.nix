@@ -593,6 +593,11 @@ in
             }
           '';
         };
+        "exo.suah.dev" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/exo.suah.dev";
+        };
 
         "music.tapenet.org" = {
           forceSSL = true;
