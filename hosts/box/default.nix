@@ -1067,6 +1067,12 @@ in
 
   systemd = {
     services = {
+      tsns = {
+        serviceConfig = {
+          Restart = "always";
+          RestartSecs = 15;
+        };
+      };
       nginx.serviceConfig = {
         ReadWritePaths = [ "/backups/nginx_cache" ];
         ReadOnlyPaths = [ "/etc/nixos/secrets" ];
