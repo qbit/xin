@@ -105,7 +105,6 @@ with lib; {
           OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
         };
         systemPackages = with pkgs; (xinlib.filterList [
-          alacritty
           bc
           beyt
           black
@@ -120,13 +119,12 @@ with lib; {
           plan9port
           promnesia
           rage
+          recoll
           rpr
           traygent
+          trayscale
           vlc
           zeal
-          trayscale
-
-          (callPackage ../configs/helix.nix { })
         ]);
       };
 
