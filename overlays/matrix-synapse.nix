@@ -1,7 +1,7 @@
 let
-  version = "1.113.0";
-  hash = "sha256-8Ts2QOSugPU8Do1Mpusez9tSqiaB+UzCWWY4XJk/KRM=";
-  sha256 = "sha256-Jlnv3GAobrXaO5fBq6oI9Gq8phz2/jFc+QIUYsUyeNo=";
+  version = "1.115.0";
+  hash = "sha256-R7TAuAdEGvk/cAttxbrOZkZfsfbrsPujt0zVcp3aDZQ=";
+  sha256 = "sha256-h84Hp+vhGfunbD3nRb1EXPnGhnMXncjk3ASKdRr805Y=";
   matrix-synapse-unwrapped = _: super: {
     matrix-synapse-unwrapped = super.matrix-synapse-unwrapped.overrideAttrs (_: rec {
       inherit version;
