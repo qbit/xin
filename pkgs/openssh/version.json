@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "0c1165fc78e8fe69b5df71f81a8f944554a68b53",
-  "hash": "sha256-lgpEgMes0x07baiuOm3nkEL2i2CA35/FNE+b6ZQ2eUc=",
-  "version": "2024-09-15",
-  "comment": "avoid gcc warning in fuzz test"
+  "rev": "5fb2b5ad0e748732a27fd8cc16a7ca3c21770806",
+  "hash": "sha256-fuPpdR5WPVKlLW0XOJMQeTZGnJ7pyy1eWyKhPnCJ+HI=",
+  "version": "2024-09-17",
+  "comment": "fix bug in recently-added sntrup761 fuzzer"
 }
