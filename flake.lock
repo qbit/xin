@@ -185,18 +185,18 @@
     },
     "immich-module": {
       "locked": {
-        "lastModified": 1723391208,
-        "narHash": "sha256-/XYgMUFCTx1oMt4Yrw9xO9BkkiVzhufCEJPOGaIby5g=",
-        "owner": "jvanbruegge",
-        "repo": "nixpkgs",
-        "rev": "c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf",
-        "type": "github"
+        "lastModified": 1726592196,
+        "narHash": "sha256-rdIc5lys3d5z4tGsHKPfIEpfDULnTwdkyDpxrflJ4yM=",
+        "ref": "main",
+        "rev": "baa2ebcc8007f15a4780b7f79f1edc259cb00d76",
+        "revCount": 2,
+        "type": "git",
+        "url": "https://git.tapenet.org/qbit/nixpkgs-immich"
       },
       "original": {
-        "owner": "jvanbruegge",
-        "repo": "nixpkgs",
-        "rev": "c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf",
-        "type": "github"
+        "ref": "main",
+        "type": "git",
+        "url": "https://git.tapenet.org/qbit/nixpkgs-immich"
       }
     },
     "kogs": {
