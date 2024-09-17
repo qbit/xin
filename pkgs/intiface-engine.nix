@@ -1,19 +1,19 @@
 { lib, rustPlatform, fetchFromGitHub, pkg-config, dbus, simpleDBus, openssl, libudev-zero }:
 rustPlatform.buildRustPackage rec {
   pname = "intiface-engine";
-  version = "1.4.8";
+  version = "3.0.2";
 
   src = fetchFromGitHub {
     owner = "intiface";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-qhCvD1po1fXaGLxGv5/amCYKUakOf1VGu7KHfKPyDGI=";
+    hash = "sha256-8voURSl4l5AJrXNCLl9BXbUJNLvNphk7kosJVdgqhRI=";
   };
 
   VERGEN_GIT_SHA_SHORT = "98df405";
   VERGEN_BUILD_TIMESTAMP = "2024-09-08";
 
-  cargoHash = "sha256-JbZsNTysnryQO/+hzCLBFXh79O/kQeW+GRldMF5blxw=";
+  cargoHash = "sha256-Y0J2ZKa7MPaTbLrlsD6mdu6mrBIGKG6cXBj/a0Qeb3Q=";
 
   nativeBuildInputs = [
     pkg-config
