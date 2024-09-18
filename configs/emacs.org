@@ -656,6 +656,16 @@ Custom agenda commands for various things.
     :after org
     :custom
     (org-roam-directory (file-truename "~/org-roam/"))
+    (org-roam-capture-templates
+     '(("d" "default" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+        :unnarrowed t)
+       ("b" "book" plain
+        "- Author: /%^{Author}/\n- Year: /%^{Year}/\n\n* Highlights / Notes\n"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :Book:\n")
+        :unnarrowed t)
+       ))
     :bind (("C-c n l" . org-roam-buffer-toggle)
   	 ("C-c n f" . org-roam-node-find)
   	 ("C-c n g" . org-roam-graph)
