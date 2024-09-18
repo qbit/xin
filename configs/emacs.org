@@ -696,7 +696,8 @@ Extending org with the ability to transclude makes for a powerhouse!
 mail for some things and having to sync state between two sources is a pita.
 
 #+begin_src emacs-lisp
-  (setq gnus-fetch-old-headers t
+  (setq gnus-use-full-window nil
+        gnus-fetch-old-headers t
         gnus-select-method '(nnimap "imap.fastmail.com")
         gnus-secondary-select-methods '((nntp "news.gwene.org"))
         gnus-sum-thread-tree-false-root ""
