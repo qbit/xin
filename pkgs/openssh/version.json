@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "5fb2b5ad0e748732a27fd8cc16a7ca3c21770806",
-  "hash": "sha256-fuPpdR5WPVKlLW0XOJMQeTZGnJ7pyy1eWyKhPnCJ+HI=",
-  "version": "2024-09-17",
-  "comment": "fix bug in recently-added sntrup761 fuzzer"
+  "rev": "46d1fb16b20e971b9ac15e86a3d3e350b49c9ad6",
+  "hash": "sha256-qYDPVqc4medediq7TH0c+x1udbQRaY7qR+y4LP1f4Zw=",
+  "version": "2024-09-19",
+  "comment": "update version numbers"
 }
