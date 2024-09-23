@@ -61,6 +61,7 @@ with pkgs;
         kdePackages.kzones
         kcolorchooser
         kconnect
+        rofi-wayland
       ];
     };
   };

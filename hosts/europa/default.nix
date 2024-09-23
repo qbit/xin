@@ -377,7 +377,6 @@ in
       # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       #
       rex
-      rofi
       rsibreak
       rtl-sdr
       sdrpp
