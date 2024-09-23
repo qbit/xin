@@ -13,7 +13,7 @@
     };
 
     immich-module = {
-      url = "github:jvanbruegge/nixpkgs/c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf";
+      url = "github:jvanbruegge/nixpkgs/a46534f3c9982c7f7b8a302b97d868f682e3560e";
     };
 
     sops-nix = {

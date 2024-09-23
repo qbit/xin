@@ -185,17 +185,17 @@
     },
     "immich-module": {
       "locked": {
-        "lastModified": 1723391208,
-        "narHash": "sha256-/XYgMUFCTx1oMt4Yrw9xO9BkkiVzhufCEJPOGaIby5g=",
+        "lastModified": 1727094224,
+        "narHash": "sha256-gYM/bahzeGOzG6MylzwRv+fZpd4cMQV51+kfEGbRVPE=",
         "owner": "jvanbruegge",
         "repo": "nixpkgs",
-        "rev": "c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf",
+        "rev": "a46534f3c9982c7f7b8a302b97d868f682e3560e",
         "type": "github"
       },
       "original": {
         "owner": "jvanbruegge",
         "repo": "nixpkgs",
-        "rev": "c0ee4c1770aa1ef998c977c4cc653a07ec95d9bf",
+        "rev": "a46534f3c9982c7f7b8a302b97d868f682e3560e",
         "type": "github"
       }
     },
