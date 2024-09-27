@@ -2,7 +2,6 @@
 , lib
 , pkgs
 , xinlib
-, inputs
 , ...
 }:
 let
@@ -243,7 +242,6 @@ in
       port = 3301;
       mediaLocation = "/media/pictures/immich";
       machine-learning.enable = true;
-      package = inputs.immich-module.legacyPackages."${pkgs.system}".pkgs.immich;
     };
     tsns = {
       enable = true;
