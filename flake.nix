@@ -12,10 +12,6 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
-    immich-module = {
-      url = "github:jvanbruegge/nixpkgs/a46534f3c9982c7f7b8a302b97d868f682e3560e";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
@@ -151,9 +147,6 @@
       unstablePkgsFor = forAllSystems (system:
         import unstable {
           inherit system;
-          imports = [
-            "${inputs.immich-module}/nixos/modules/services/web-apps/immich.nix"
-          ];
         });
       stablePkgsFor = forAllSystems (system:
         import stable {
