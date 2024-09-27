@@ -252,7 +252,7 @@ in
         ];
       })
       wireshark
-      zig
+      zeek
     ];
   };
 
