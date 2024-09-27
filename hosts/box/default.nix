@@ -50,7 +50,6 @@ in
   imports = [
     ./hardware-configuration.nix
     #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
-    "${inputs.immich-module}/nixos/modules/services/web-apps/immich.nix"
   ];
 
   sops.secrets = {
