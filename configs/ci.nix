@@ -102,7 +102,15 @@ with lib; {
       };
     };
 
-    systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+    systemd = {
+      services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+      oomd = {
+        extraConfig = {
+          DefaultMemoryPressureLimit = "80%";
+          DefaultMemoryPressureDurationSec = "60";
+        };
+      };
+    };
 
     services = {
       ts-reverse-proxy.servers."nix-binary-cache" = {
