@@ -1,9 +1,8 @@
 { pkgs
-, lib
 , ...
 }:
 {
-  _module.args.isUnstable = true;
+  _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
   ];
@@ -23,11 +22,7 @@
   };
 
   preDNS.enable = false;
-  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
-    lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
-  services = {
-    libinput.enable = true;
-  };
+
   environment.systemPackages = with pkgs; [
     python3Packages.rns
     python3Packages.nomadnet

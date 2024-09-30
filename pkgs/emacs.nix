@@ -1,8 +1,13 @@
 { emacsWithPackagesFromUsePackage
 , pkgs
-, emacsPkg ? pkgs.emacs-pgtk
 , ...
 }:
+let
+  emacsPkg = (if (pkgs.system == "x86_64-linux") then
+    pkgs.emacs-pgtk
+  else
+    pkgs.emacs);
+in
 emacsWithPackagesFromUsePackage {
   config = ../configs/emacs.org;
 
