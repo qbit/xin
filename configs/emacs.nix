@@ -1,5 +1,4 @@
-{ config
-, pkgs
+{ pkgs
 , isUnstable
 , lib
 , ...
@@ -21,12 +20,13 @@ in
       systemPackages = with pkgs; [
         (aspellWithDicts (dicts: with dicts; [ en en-computers es de ]))
         go-font
-        texlive.combined.scheme-full
+
         graphviz
 
         myEmacs
         editorScript
-      ];
+      ]
+      ++ lib.optionals (pkgs.system == "x86_64-linux") [ texlive.combined.scheme-full ];
     };
   };
 }

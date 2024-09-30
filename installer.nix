@@ -141,9 +141,14 @@ in
       openssh.authorizedKeys.keys = config.myconf.hwPubKeys;
     };
 
-    environment.etc."configuration-template.nix" = {
-      source = ./install_template.nix;
-      mode = "0644";
+    environment = {
+      etc."configuration-template.nix" = {
+        source = ./install_template.nix;
+        mode = "0644";
+      };
+      systemPackages = [
+        jq
+      ];
     };
 
     services = {
