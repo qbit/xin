@@ -103,7 +103,16 @@ in
     boot.tmp.cleanOnBoot = true;
 
     environment = {
-      systemPackages = with pkgs; [ apg inetutils ];
+      etc."configuration-template.nix" = {
+        source = ./install_template.nix;
+        mode = "0644";
+      };
+      systemPackages = with pkgs; [
+        apg
+        inetutils
+        jq
+        jo
+      ];
 
       interactiveShellInit = ''
         alias vi=nvim
@@ -141,15 +150,7 @@ in
       openssh.authorizedKeys.keys = config.myconf.hwPubKeys;
     };
 
-    environment = {
-      etc."configuration-template.nix" = {
-        source = ./install_template.nix;
-        mode = "0644";
-      };
-      systemPackages = [
-        jq
-      ];
-    };
+    environment = { };
 
     services = {
       openntpd.enable = true;
