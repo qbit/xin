@@ -418,7 +418,7 @@
 
       checks =
         let
-          buildList = [ "europa" "stan" "h" "box" "orcim" "tv" ];
+          buildList = [ "europa" "stan" "h" "box" "orcim" "tv" "retic" ];
         in
         with unstable.lib;
         foldl' recursiveUpdate { } (mapAttrsToList
