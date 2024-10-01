@@ -2,15 +2,29 @@
 , ...
 }:
 {
-  _module.args.isUnstable = false;
+  _module.args.isUnstable = true;
   imports = [
     ./hardware-configuration.nix
   ];
 
+  nixpkgs.overlays = [
+    (_: super: {
+      boehmgc = super.boehmgc.overrideAttrs (_: {
+        doCheck = false;
+      });
+    })
+    (_: super: {
+      libuv = super.libuv.overrideAttrs (_: {
+        doCheck = false;
+      });
+    })
+  ];
+
+  myEmacs.enable = false;
+
   boot = {
     initrd.availableKernelModules = [ "usbhid" "usb_storage" "vc4" ];
     kernelPackages = pkgs.linuxPackages;
-    #kernelModules = [ "raspberrypi_ts" "rtc-ds3232" "rtc-ds1307" ];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
