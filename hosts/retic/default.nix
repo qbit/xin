@@ -18,6 +18,11 @@
         doCheck = false;
       });
     })
+    (_: super: {
+      elfutils = super.elfutils.overrideAttrs (_: {
+        doCheck = false;
+      });
+    })
   ];
 
   myEmacs.enable = false;
