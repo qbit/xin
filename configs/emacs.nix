@@ -18,8 +18,10 @@ in
 {
   options = {
     myEmacs = {
-      enable = lib.mkEnableOption "Enable my emacs stuff";
-      default = true;
+      enable = lib.mkOption {
+        description = "Enable my emacs stuff";
+        default = true;
+      };
     };
   };
   config = lib.mkIf cfg.enable {
