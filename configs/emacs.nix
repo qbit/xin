@@ -1,10 +1,12 @@
 { pkgs
 , isUnstable
 , lib
+, config
 , ...
 }:
 let
   myEmacs = pkgs.callPackage ../pkgs/emacs.nix { inherit isUnstable; };
+  cfg = config.myEmacs;
   editorScript = pkgs.writeShellScriptBin "emacseditor" ''
     if [ -z "$1" ]; then
       exec ${myEmacs}/bin/emacsclient --create-frame --alternate-editor ${myEmacs}/bin/emacs
@@ -14,7 +16,13 @@ let
   '';
 in
 {
-  config = {
+  options = {
+    myEmacs = {
+      enable = lib.mkEnableOption "Enable my emacs stuff";
+      default = true;
+    };
+  };
+  config = lib.mkIf cfg.enable {
     environment = {
       variables.EDITOR = lib.mkOverride 900 "emacseditor";
       systemPackages = with pkgs; [
