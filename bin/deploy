@@ -12,24 +12,9 @@ rebuild() {
 
 	msg "Rebuilding: ${host}"
 
-	if ! tsAlive $host; then
-		msg "can't reach ${1}.. skipping.."
-		return
-	else
-		host="${host}.otter-alligator.ts.net"
-	fi
-
-	hostVersion=$(${SSH} root@${host} 'nixos-version --json | jq -r .configurationRevision')
-	if [ $? != 0 ]; then
-		return $?
-	fi
-
-	if [ "$hostVersion" = "$CurrentVersion" ] && [ $skip_check = false ]; then
-		msg "Up-to-date: ${host}"
-		return 0
-	fi
-
-	nixos-rebuild ${TRACE} --flake .#${1} --build-host root@${host} --target-host root@${host} switch 2>&1 | nom
+	set -x
+	build_host=${BUILD_HOST:-$host}
+	nixos-rebuild ${TRACE} --flake .#${1} --build-host "root@${build_host}" --target-host "root@${host}" switch 2>&1 | nom
 	return $?
 }
 
