@@ -10,10 +10,8 @@ rebuild() {
 	host="$(resolveAlias $1)"
 	skip_check=$2
 
-	msg "Rebuilding: ${host}"
-
-	set -x
 	build_host=${BUILD_HOST:-$host}
+	msg "Rebuilding: ${host} using ${build_host}"
 	nixos-rebuild ${TRACE} --flake .#${1} --build-host "root@${build_host}" --target-host "root@${host}" switch 2>&1 | nom
 	return $?
 }
@@ -119,17 +117,17 @@ if [ "$1" = "update" ]; then
 	done
 
 	# TODO: capture commit message and wrap it with what is being updated.
-	if [ $can_sign = 1 ]; then
-		if [ "$single" != "" ]; then
-			nix flake update --commit-lock-file "$single"
-		else
-			nix flake update --commit-lock-file
-		fi
-		exit
-	else
+	if [ $can_sign != 1 ]; then
 		echo "Can't find signing key."
 		exit 1
 	fi
+
+	if [ "$single" != "" ]; then
+		nix flake update --commit-lock-file "$single"
+	else
+		nix flake update --commit-lock-file
+	fi
+	nix flake archive
 fi
 
 if [ "$1" = "installer" ]; then
