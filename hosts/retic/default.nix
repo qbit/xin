@@ -1,6 +1,13 @@
 { pkgs
 , ...
 }:
+let
+  checkKill = p: (_: super: {
+    "${p}" = super."${p}".overrideAttrs (_: {
+      doCheck = false;
+    });
+  });
+in
 {
   _module.args.isUnstable = true;
   imports = [
@@ -8,21 +15,9 @@
   ];
 
   nixpkgs.overlays = [
-    (_: super: {
-      boehmgc = super.boehmgc.overrideAttrs (_: {
-        doCheck = false;
-      });
-    })
-    (_: super: {
-      libuv = super.libuv.overrideAttrs (_: {
-        doCheck = false;
-      });
-    })
-    (_: super: {
-      elfutils = super.elfutils.overrideAttrs (_: {
-        doCheck = false;
-      });
-    })
+    (checkKill "boehmgc")
+    (checkKill "libuv")
+    (checkKill "elfutils")
   ];
 
   myEmacs.enable = false;
