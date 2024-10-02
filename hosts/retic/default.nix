@@ -6,6 +6,7 @@ let
     "${p}" = super."${p}".overrideAttrs (_: {
       doCheck = false;
       doInstallCheck = false;
+      checkPhase = "";
     });
   });
 in
