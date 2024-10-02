@@ -17,6 +17,7 @@ in
   nixpkgs.overlays = [
     (checkKill "boehmgc")
     (checkKill "libuv")
+    (checkKill "llvm")
     (checkKill "elfutils")
   ];
 
