@@ -5,6 +5,7 @@ let
   checkKill = p: (_: super: {
     "${p}" = super."${p}".overrideAttrs (_: {
       doCheck = false;
+      doInstallCheck = false;
     });
   });
 in
