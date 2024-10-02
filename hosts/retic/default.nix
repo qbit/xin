@@ -2,6 +2,13 @@
 , ...
 }:
 let
+  checkKillAll = p: (_: super: {
+    "${p}" = super."${p}".overrideAttrs (_: {
+      doCheck = false;
+      doInstallCheck = false;
+      checkPhase = "";
+    });
+  });
   checkKill = p: (_: super: {
     "${p}" = super."${p}".overrideAttrs (_: {
       doCheck = false;
@@ -19,7 +26,7 @@ in
   nixpkgs.overlays = [
     (checkKill "boehmgc")
     (checkKill "libuv")
-    (checkKill "llvm")
+    (checkKillAll "llvm")
     (checkKill "elfutils")
   ];
 
