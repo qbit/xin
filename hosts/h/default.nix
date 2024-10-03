@@ -923,6 +923,7 @@ in
         "https://matrix.to/#/#devious:tapenet.org"
         "https://matrix.to/#/#gotk4:matrix.org"
         "https://matrix.to/#/#aerc:matrix.org"
+        "https://matrix.to/#/#pueblo-nerds:tapenet.org"
       ];
       settings = {
         verboseLogging = false;
