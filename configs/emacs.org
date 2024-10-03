@@ -410,6 +410,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
   	 :recursive t
   	 :html-link-home "http://exo.suah.dev/"
   	 :html-link-up "../"
+  	 :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
   	 :publishing-function exo-touch-and-publish
   	 :base-directory "~/org-roam")
   	("org-roam-org"
