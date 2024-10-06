@@ -924,6 +924,9 @@ in
         "https://matrix.to/#/#gotk4:matrix.org"
         "https://matrix.to/#/#aerc:matrix.org"
         "https://matrix.to/#/#pueblo-nerds:tapenet.org"
+
+        "https://matrix.to/#/#nixhub-home:matrix.org"
+        "https://matrix.to/#/#nixhub-devnull:matrix.org"
       ];
       settings = {
         verboseLogging = false;
