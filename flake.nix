@@ -213,6 +213,7 @@
           specialArgs = { inherit xinlib; };
           modules = [
             ./overlays
+            lix-module.nixosModules.default
 
             ./hosts/plq
           ];
