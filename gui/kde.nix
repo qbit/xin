@@ -57,11 +57,12 @@ with pkgs;
       sessionVariables = {
         NIXOS_OZONE_WL = 1;
       };
-      systemPackages = [
-        kdePackages.kzones
+      systemPackages = with kdePackages; [
         kcolorchooser
         kconnect
-        rofi-wayland
+        kontact
+        korganizer
+        kzones
       ];
     };
   };
