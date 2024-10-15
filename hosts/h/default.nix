@@ -508,7 +508,7 @@ in
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
 
-      clientMaxBodySize = "50M";
+      clientMaxBodySize = "150M";
 
       commonHttpConfig = ''
         # Add HSTS header with preloading to HTTPS requests.
