@@ -5,6 +5,7 @@
 , ...
 }:
 with pkgs; let
+  maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
   slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
@@ -508,7 +509,7 @@ in
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
 
-      clientMaxBodySize = "150M";
+      clientMaxBodySize = maxUploadSize;
 
       commonHttpConfig = ''
         # Add HSTS header with preloading to HTTPS requests.
@@ -968,6 +969,7 @@ in
         server_name = "tapenet.org";
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
+        max_upload_size = maxUploadSize;
         plugins = with config.services.matrix-synapse.package.plugins; [ matrix-synapse-mjolnir-antispam ];
         app_service_config_files = [
           "/var/lib/heisenbridge/registration.yml"
