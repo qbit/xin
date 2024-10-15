@@ -417,6 +417,7 @@ in
         trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
         web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
         web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
+        landing-page-user = "qbit";
       };
     };
     promtail = {
