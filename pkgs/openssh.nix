@@ -33,6 +33,7 @@ stdenv.mkDerivation {
 
       # See discussion in https://github.com/NixOS/nixpkgs/pull/16966
       ./openssh/dont_create_privsep_path.patch
+      ./openssh/fix-164ea4380564a2a83713eacf71908e3946e5e4e4.diff
     ];
 
   postPatch =

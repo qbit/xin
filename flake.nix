@@ -379,7 +379,7 @@
           inherit (spkgs) matrix-synapse;
 
           xin = upkgs.callPackage ./bins/xin { inherit upkgs; };
-          openssh = upkgs.callPackage ./pkgs/openssh.nix { inherit upkgs; };
+          openssh = upkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit upkgs; };
         });
 
       templates = {
