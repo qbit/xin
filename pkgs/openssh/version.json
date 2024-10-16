@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "c537eeb1ae5f069450053b0027e64efe5bdb37d2",
-  "hash": "sha256-KOpGa0+ISKtlGn83sVw4olURKBysIlbUUjgvLjhAmRk=",
-  "version": "2024-10-15",
-  "comment": "fix breakage; missing saved_argc symbol"
+  "rev": "fe6c6330c1a94c7a537efe9069853ce7a275c50a",
+  "hash": "sha256-ttAenj5SJ0Bi7HoJQtChbYSelpp5aAuPoT07E38asl0=",
+  "version": "2024-10-13",
+  "comment": "upstream: don&apos;t start the ObscureKeystrokeTiming mitigations if"
 }
