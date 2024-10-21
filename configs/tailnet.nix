@@ -22,10 +22,16 @@ let
               "drive:share"
             ];
           }
+          {
+            target = [ "namish" ];
+            attr = [
+              "drive:share"
+            ];
+          }
         ];
         grants = [
           {
-            src = [ "europa" "sputnik" "skunk" "graphy" ];
+            src = [ "europa" "sputnik" "skunk" "graphy" "plq" ];
             dst = [ "box" ];
             app = {
               "tailscale.com/cap/drive" = [{
@@ -46,8 +52,10 @@ let
           h = "100.83.77.133";
           il = "100.86.182.99";
           invidious = "100.71.57.99";
+          namish = "100.86.184.141";
           nbc = "100.74.8.55";
           ollama = "100.121.227.121";
+          plq = "100.90.214.142";
           pwntie = "100.84.170.57";
           rimgo = "100.121.77.91";
           skunk = "100.79.26.78";
