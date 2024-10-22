@@ -148,6 +148,10 @@ in
         };
     };
 
+    system.nixos = {
+      distroName = "XinOS";
+    };
+
     environment = {
       etc = {
         "ssh/ca.pub" = { text = caPubKeys; };
