@@ -305,6 +305,14 @@ easier for me to treat it like a regular shell.
 
 * Language Configurations
 
+** firewall stuff
+
+*** nftables
+
+#+begin_src emacs-lisp
+  (use-package nftables-mode)
+#+end_src
+
 ** Shell
 
 #+begin_src emacs-lisp
