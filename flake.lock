@@ -147,6 +147,26 @@
         "type": "github"
       }
     },
+    "fynado": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1730228098,
+        "narHash": "sha256-YU+s4NeNZcWs6LKWpXMHqPtDmWf+UIPk62X0xKAp1/4=",
+        "owner": "qbit",
+        "repo": "fynado",
+        "rev": "e99ff2754956a6a9b1f4470c46cf1377817fafe8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "fynado",
+        "type": "github"
+      }
+    },
     "gostart": {
       "inputs": {
         "nixpkgs": [
@@ -395,6 +415,7 @@
         "beyt": "beyt",
         "darwin": "darwin",
         "emacs-overlay": "emacs-overlay",
+        "fynado": "fynado",
         "gostart": "gostart",
         "gqrss": "gqrss",
         "kogs": "kogs",

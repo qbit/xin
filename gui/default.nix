@@ -8,6 +8,7 @@
 let
   inherit (builtins) toJSON;
   inherit (inputs.traygent.packages.${pkgs.system}) traygent;
+  inherit (inputs.fynado.packages.${pkgs.system}) fynado;
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
@@ -122,6 +123,7 @@ with lib; {
           recoll
           rpr
           traygent
+          fynado
           trayscale
           vlc
           zeal

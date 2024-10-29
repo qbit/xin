@@ -103,7 +103,10 @@
       url = "github:qbit/traygent";
       inputs.nixpkgs.follows = "unstable";
     };
-
+    fynado = {
+      url = "github:qbit/fynado";
+      inputs.nixpkgs.follows = "unstable";
+    };
     gqrss = {
       url = "github:qbit/gqrss";
       flake = false;
@@ -127,6 +130,7 @@
     , simple-nixos-mailserver
     , stable
     , traygent
+    , fynado
     , ts-reverse-proxy
     , tsns
     , tsvnstat
@@ -375,6 +379,7 @@
           inherit (ts-reverse-proxy.packages.${system}) ts-reverse-proxy;
           inherit (tsns.packages.${system}) tsns;
           inherit (traygent.packages.${system}) traygent;
+          inherit (fynado.packages.${system}) fynado;
 
           inherit (spkgs) matrix-synapse;
 
