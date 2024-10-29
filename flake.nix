@@ -380,6 +380,7 @@
 
           xin = upkgs.callPackage ./bins/xin { inherit upkgs; };
           openssh = upkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit upkgs; };
+          matrix = self.nixosConfigurations.h.pkgs.matrix-synapse;
         });
 
       templates = {
