@@ -21,7 +21,7 @@
           pkgs = nixpkgsFor.${system};
         in
         {
-          thing = pkgs.buildGoModule {
+          thing = pkgs.buildGoModule rec {
             pname = "thing";
             version = "v0.0.0";
             src = ./.;
@@ -31,6 +31,7 @@
 
             nativeBuildInputs = with pkgs; [ pkg-config ];
             buildInputs = with pkgs; [
+              fyne
               git
               glfw
               libGL
@@ -44,6 +45,17 @@
               xorg.libXxf86vm
               xorg.xinput
             ];
+
+            buildPhase = ''
+              ${fyne}/bin/fyne package
+            '';
+
+            installPhase = ''
+              mkdir -p $out
+              pkg="$PWD/${pname}.tar.xz"
+              cd $out
+              tar --strip-components=1 -xvf $pkg
+            '';
           };
         });
 
@@ -60,6 +72,7 @@
               echo "Go `${pkgs.go}/bin/go version`"
             '';
             buildInputs = with pkgs; [
+              fyne
               git
               go_1_20
               gopls
