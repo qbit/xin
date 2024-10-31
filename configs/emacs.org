@@ -305,6 +305,21 @@ easier for me to treat it like a regular shell.
 
 * Language Configurations
 
+** OCaml
+
+#+begin_src emacs-lisp
+  (use-package ocamlformat
+    :custom (ocamlformat-enable 'enable-outside-detected-project)
+    :hook (before-save . ocamlformat-before-save))
+
+  (use-package tuareg
+     :mode ("\\.ml$" . tuareg-mode))
+
+  (use-package merlin
+    :config
+    (add-hook 'tuareg-mode-hook #'merlin-mode))
+#+end_src
+
 ** firewall stuff
 
 *** nftables
