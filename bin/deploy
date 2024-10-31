@@ -71,6 +71,7 @@ if [ "$1" = "update" ]; then
 		nix flake update --commit-lock-file
 	fi
 	nix flake archive
+	exit $?
 fi
 
 if [ "$1" = "diff" ]; then
