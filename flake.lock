@@ -154,11 +154,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1730228098,
-        "narHash": "sha256-YU+s4NeNZcWs6LKWpXMHqPtDmWf+UIPk62X0xKAp1/4=",
+        "lastModified": 1730383344,
+        "narHash": "sha256-IJoDX8N048FUPTD1xqzAMCpwvVrhPxWj6B/mpT0E7I8=",
         "owner": "qbit",
         "repo": "fynado",
-        "rev": "e99ff2754956a6a9b1f4470c46cf1377817fafe8",
+        "rev": "981d34dbc1c397c09a1eceb0d9d81527f29e4876",
         "type": "github"
       },
       "original": {
