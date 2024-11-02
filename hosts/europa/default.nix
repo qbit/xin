@@ -395,19 +395,7 @@ in
       zig
 
       (callPackage ../../pkgs/ttfs.nix { })
-      (callPackage ../../pkgs/kobuddy.nix {
-        inherit pkgs;
-        inherit
-          (pkgs.python39Packages)
-          buildPythonPackage
-          fetchPypi
-          setuptools-scm
-          pytz
-          banal
-          sqlalchemy
-          alembic
-          ;
-      })
+      (python3Packages.callPackage ../../pkgs/kobuddy.nix { })
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/mvoice.nix { })
       (callPackage ../../pkgs/zutty.nix { })
