@@ -123,6 +123,12 @@ here.
 
 * Packages
 
+** yaml
+
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
+#+end_src
+
 ** rust-mode
 #+begin_src emacs-lisp
   (use-package rust-mode)
