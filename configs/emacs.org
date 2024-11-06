@@ -720,46 +720,39 @@ Extending org with the ability to transclude makes for a powerhouse!
     :after org)
 #+end_src
 
-* gnus
+* Mail
+
+** gnus
 
 [2024-08-22 Thu] Might need to switch go gnus. mu4e has been not showing new
 mail for some things and having to sync state between two sources is a pita.
 
 #+begin_src emacs-lisp
-  (setq gnus-use-full-window nil
-        gnus-fetch-old-headers t
-        gnus-select-method '(nnimap "imap.fastmail.com")
-        gnus-secondary-select-methods '((nntp "news.gwene.org"))
-        gnus-sum-thread-tree-false-root ""
-        gnus-sum-thread-tree-indent " "
-        gnus-sum-thread-tree-leaf-with-other "├► "
-        gnus-sum-thread-tree-root ""
-        gnus-sum-thread-tree-single-leaf "╰► "
-        gnus-sum-thread-tree-vertical "│"
-        gnus-summary-line-format "%U%R%z %(%&user-date>;  %-15,15f  %B%s%)\n"
-        gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
-        gnus-thread-sort-functions '(gnus-thread-sort-by-date)
-        gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M")))
-
-  (with-eval-after-load 'gnus
-    (setq gnus-select-method '(nnimap "imap.fastmail.com")
-  	gnus-secondary-select-methods '((nntp "news.gwene.org"))))
-
+  (use-package gnus
+    :custom
+    (gnus-use-cache t)
+    (gnus-use-full-window nil)
+    (gnus-suppress-duplicates t)
+    (gnus-inhibit-startup-message t)
+    (gnus-asynchronous t)
+    (gnus-sum-thread-tree-false-root "")
+    (gnus-sum-thread-tree-indent " ")
+    (gnus-sum-thread-tree-leaf-with-other "├► ")
+    (gnus-sum-thread-tree-root "")
+    (gnus-sum-thread-tree-single-leaf "╰► ")
+    (gnus-sum-thread-tree-vertical "│")
+    (gnus-summary-line-format "%U%R%z %(%&user-date>;  %-15,15f  %B%s%)\n")
+    (gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
+    (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
+    (gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M")))
+    (gnus-select-method '(nnimap "imap.fastmail.com"
+                                 (nnimap-server-port "imaps")
+                                 (nnimap-stream ssl)
+                                 (nnimap-expunge 'on-exit)))
+    (gnus-secondary-select-methods '((nntp "news.gmane.io"))))
 #+end_src
 
-* mu4e
-~mu~ has been the best mail client for me on emacs.
-
-** Initializing mu
-
-The defaults ~mu~ uses make no sense. ~~/.cache~ is for .. caching data, not
-persistent databases.. So we init things with sane defaults:
-
-#+begin_src shell
-mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aaron@bolddaemon.com"
-#+end_src
-
-** General mail configuration
+** SMTP
 
 #+begin_src emacs-lisp
   (require 'smtpmail)
@@ -772,65 +765,4 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
         smtpmail-smtp-service          465
         smtpmail-default-smtp-server   "smtp.fastmail.com"
         smtpmail-stream-type           'ssl)
-#+end_src
-
-** mu4e specific configs
-#+begin_src emacs-lisp
-  (use-package mu4e
-    :init
-    (setq mail-user-agent 'mu4e-user-agent
-          read-mail-command 'mu4e
-          mu4e-get-mail-command "mbsync fastmail"
-          mu4e-update-interval 420
-          mu4e-compose-context-policy nil
-          mu4e-context-policy 'pick-first
-          mu4e-drafts-folder "/Drafts"
-          mu4e-sent-folder   "/Sent Items"
-          mu4e-trash-folder  "/Trash"
-          mu4e-maildir-shortcuts
-          '( ("/INBOX"        . ?i)
-             ("/Archive"      . ?a)
-             ("/Sent Items"   . ?s))
-          org-mu4e-link-query-in-headers-mode nil
-          mu4e-attachment-dir
-          (lambda (fname mtype)
-            (cond
-             ((and fname (string-match "\\.diff$" fname))  "~/patches")
-             ((and fname (string-match "\\.patch$" fname))  "~/patches")
-             ((and fname (string-match "\\.diff.gz$" fname))  "~/patches")
-             (t "~/Downloads")))
-          mu4e-bookmarks
-               `(( :name "Inbox"
-                   :query "maildir:/Inbox AND NOT flag:trashed"
-                   :key ?i)
-                 ( :name "TODO"
-                   :query "maildir:/TODO AND NOT flag:trashed"
-                   :key ?T)
-                 ( :name  "Unread messages"
-                   :query "flag:unread AND NOT flag:trashed AND NOT list:ports-changes.openbsd.org AND NOT list:source-changes.openbsd.org"
-                   :key ?u)
-                 ( :name  "Today's messages"
-                   :query "date:today..now"
-                   :key ?d)
-                 ( :name  "Hackers"
-                   :query "list:hackers.openbsd.org AND NOT flag:trashed"
-                   :key ?h)
-                 ( :name   "Bugs"
-                   :query  "list:bugs.openbsd.org AND NOT flag:trashed"
-                   :key ?b)
-                 ( :name  "Tech"
-                   :query "list:tech.openbsd.org AND NOT flag:trashed"
-                   :key ?t)
-                 ( :name  "Ports"
-                   :query "list:ports.openbsd.org AND NOT flag:trashed"
-                   :key ?p)
-                 ( :name "Misc"
-                   :query "list:misc.openbsd.org AND NOT flag:trashed"
-                   :key ?m)
-                 ( :name "9front"
-                   :query "list:9front.9front.org AND NOT flag:trashed"
-                   :key ?9)
-                 ( :name "GOT"
-                   :query "list:gameoftrees.openbsd.org AND NOT flag:trashed"
-                   :key ?g))))
 #+end_src
