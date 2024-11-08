@@ -168,7 +168,7 @@ in
       '';
       shellAliases = {
         "gh" = "op plugin run -- gh";
-        "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token) nixpkgs-review";
+        "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token --reveal) nixpkgs-review";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "sync-music" = "rsync -av --progress --delete ~/Music/ suah.dev:/var/lib/music/";
         "load-agent" = ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
@@ -399,7 +399,7 @@ in
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/mvoice.nix { })
       (callPackage ../../pkgs/zutty.nix { })
-      #(python3Packages.callPackage ../../pkgs/watchmap.nix { })
+      (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
 
       restic
