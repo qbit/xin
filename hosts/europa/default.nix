@@ -243,7 +243,7 @@ in
       };
     pcscd.enable = true;
     vnstat.enable = true;
-    # clamav.updater.enable = true;
+    clamav.updater.enable = true;
     tor = {
       enable = true;
       client.enable = true;
