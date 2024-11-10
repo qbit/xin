@@ -1,6 +1,9 @@
 [formatter.statix]
-command = "statix"
-options = ["check"]
+#command = "statix"
+#options = ["check"]
+command = "sh"
+options = ["-euc", "for file in \"$@\"; do statix check \"$file\"; done"]
+includes = [ "*.nix" ]
 priority = 1
 
 [formatter.deadnix]
