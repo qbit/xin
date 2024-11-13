@@ -822,7 +822,7 @@ in
               mkMatrixWellKnown matrixClientConfig;
             "/.well-known/matrix/server".extraConfig =
               mkMatrixWellKnown matrixServerConfig;
-            
+
             "/_matrix" = mkMatrixLoc;
             "/_synapse/client" = mkMatrixLoc;
           };
