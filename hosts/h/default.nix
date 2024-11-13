@@ -8,7 +8,6 @@ with pkgs; let
   maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
-  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
   weepushover =
     python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
@@ -44,13 +43,6 @@ with pkgs; let
   mkMatrixWellKnown = p: ''
     return 200 '${builtins.toJSON p}';
   '';
-
-  mkMatrixSliderLoc = {
-    proxyWebsockets = true;
-    proxyPass = "http://${config.services.sliding-sync.address}:${
-      toString config.services.sliding-sync.port
-    }";
-  };
   mkMatrixLoc = {
     proxyWebsockets = true;
     proxyPass = "http://${mtxCfg.address}:${toString mtxCfg.port}";
@@ -139,11 +131,6 @@ in
     wireguard_private_key = { sopsFile = config.xin-secrets.h.secrets.services; };
     pots_env_file = {
       owner = config.users.users.pots.name;
-      mode = "400";
-      sopsFile = config.xin-secrets.h.secrets.services;
-    };
-    sliding_sync_env = {
-      owner = config.services.sliding-sync.user;
       mode = "400";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
@@ -365,11 +352,6 @@ in
           reversePort = 3003;
         };
       };
-    };
-    sliding-sync = {
-      enable = true;
-      server = "https://tapenet.org";
-      package = slidingSyncPkg;
     };
     pots = {
       enable = true;
@@ -835,30 +817,15 @@ in
                 }
               '';
             };
-          }
-          // (if config.services.sliding-sync.enable
-          then {
+
             "/.well-known/matrix/client".extraConfig =
               mkMatrixWellKnown matrixClientConfig;
             "/.well-known/matrix/server".extraConfig =
               mkMatrixWellKnown matrixServerConfig;
-
-            "/client" = mkMatrixSliderLoc;
-            "/_matrix/client/unstable/org.matrix.msc3575/sync" =
-              mkMatrixSliderLoc;
-
+            
             "/_matrix" = mkMatrixLoc;
             "/_synapse/client" = mkMatrixLoc;
-          }
-          else {
-            "/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            "/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
-
-            "/_matrix" = mkMatrixLoc;
-            "/_synapse/client" = mkMatrixLoc;
-          });
+          };
         };
       };
     };
