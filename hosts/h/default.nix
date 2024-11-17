@@ -5,6 +5,7 @@
 , ...
 }:
 with pkgs; let
+  sojuUser = "soju";
   maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
@@ -149,6 +150,16 @@ in
       owner = "root";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
+    bounce_cert = {
+      mode = "400";
+      owner = sojuUser;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
+    bounce_key = {
+      mode = "400";
+      owner = sojuUser;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
   };
 
   networking = {
@@ -195,7 +206,11 @@ in
     };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 config.services.shiori.port ]; }; };
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 9002 config.services.shiori.port 6697 ];
+        };
+      };
       allowedTCPPorts = [ 22 80 443 2222 53589 ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
@@ -236,14 +251,25 @@ in
   };
 
   users = {
+    groups.${sojuUser} = {};
     users = {
       root = userBase;
       qbit = userBase;
+      "${sojuUser}" = {
+        isSystemUser = true;
+        group = sojuUser;
+      };
     };
   };
 
   systemd = {
     services = {
+      soju = {
+        serviceConfig = {
+          User = sojuUser;
+          Group = sojuUser;
+        };
+      };
       mcchunkie = {
         serviceConfig = {
           ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
@@ -305,6 +331,13 @@ in
   };
 
   services = {
+    soju = {
+      enable = true;
+      listen = [ "100.83.77.133:6697" ];
+      hostName = "bounce.bold.daemon";
+      tlsCertificate = config.sops.secrets.bounce_cert.path;
+      tlsCertificateKey = config.sops.secrets.bounce_key.path;
+    };
     postfix.extraConfig = ''
       smtputf8_enable = no
     '';

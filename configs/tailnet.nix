@@ -81,6 +81,11 @@ let
         acls = [
           {
             action = "accept";
+            src = [ "tag:mobile" "tag:laptop" ];
+            dst = [ "h:6697" ];
+          }
+          {
+            action = "accept";
             src = [ "europa" ];
             dst = [ "tsns:443" ];
           }
