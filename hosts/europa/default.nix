@@ -401,6 +401,7 @@ in
       (callPackage ../../pkgs/zutty.nix { })
       (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
+      (tclPackages.callPackage ../../pkgs/irken.nix { })
 
       restic
     ];

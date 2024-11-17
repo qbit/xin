@@ -325,6 +325,7 @@
             inherit spkgs;
             isUnstable = true;
           };
+          irken = upkgs.tclPackages.callPackage ./pkgs/irken.nix { };
           ttfs = upkgs.callPackage ./pkgs/ttfs.nix { };
           intiface-engine = upkgs.callPackage ./pkgs/intiface-engine.nix { };
           flake-warn =
