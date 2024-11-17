@@ -251,7 +251,7 @@ in
   };
 
   users = {
-    groups.${sojuUser} = {};
+    groups.${sojuUser} = { };
     users = {
       root = userBase;
       qbit = userBase;
