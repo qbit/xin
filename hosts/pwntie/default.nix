@@ -90,7 +90,8 @@ in
     ollama = {
       enable = true;
       acceleration = "rocm";
-      listenAddress = "localhost:${toString oLlamaPort}";
+      host = "localhost";
+      port = oLlamaPort;
     };
     prometheus = {
       enable = true;
