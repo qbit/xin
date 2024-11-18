@@ -268,6 +268,7 @@ in
         serviceConfig = {
           User = sojuUser;
           Group = sojuUser;
+          after = [ "network-online.target" "tailscaled.service" ];
         };
       };
       mcchunkie = {
