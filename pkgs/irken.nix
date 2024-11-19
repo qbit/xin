@@ -3,13 +3,13 @@
 mkTclDerivation {
 
   pname = "irken";
-  version = "2024-11-16";
+  version = "2024-11-19";
 
   src = fetchFromGitHub {
     owner = "dlowe-net";
     repo = "irken";
-    rev = "659a185de9b6c5a48f46a4535911123c91c7c866";
-    hash = "sha256-Sti6id6aT9QFug6QkNPHf4LisBCuF4LqLNlNEaIUNI8=";
+    rev = "66bfa30b6933f5347bb301b8e5ea63eef5d446a6";
+    hash = "sha256-rPpmcaAeEVFhT2EERYXsXVsj+w//bBX+gJHRSa3mph0=";
   };
 
   buildInputs = [
