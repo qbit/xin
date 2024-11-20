@@ -1,4 +1,4 @@
-{ lib, mkTclDerivation, fetchFromGitHub, tcltls, bwidget, tk }:
+{ lib, mkTclDerivation, fetchFromGitHub, tcltls, bwidget, tk, libnotify }:
 
 mkTclDerivation {
 
@@ -16,6 +16,7 @@ mkTclDerivation {
     tcltls
     bwidget
     tk
+    libnotify
   ];
 
   installPhase = ''
