@@ -58,12 +58,14 @@ with pkgs;
         NIXOS_OZONE_WL = 1;
       };
       systemPackages = with kdePackages; [
+        akonadi-calendar-tools
         kcolorchooser
         kconnect
         kontact
         konversation
         korganizer
         kzones
+        merkuro
       ];
     };
   };
