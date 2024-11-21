@@ -1,4 +1,12 @@
-{ lib, mkTclDerivation, fetchFromGitHub, tcltls, bwidget, tk, libnotify }:
+{ lib
+, mkTclDerivation
+, fetchFromGitHub
+, bwidget
+, libnotify
+, tclcurl
+, tcltls
+, tk
+}:
 
 mkTclDerivation {
 
@@ -8,15 +16,16 @@ mkTclDerivation {
   src = fetchFromGitHub {
     owner = "dlowe-net";
     repo = "irken";
-    rev = "66bfa30b6933f5347bb301b8e5ea63eef5d446a6";
-    hash = "sha256-rPpmcaAeEVFhT2EERYXsXVsj+w//bBX+gJHRSa3mph0=";
+    rev = "2196a9c0d4549d43972fbc56ef38a06b2b569c4f";
+    hash = "sha256-vK7eoJDMh9D/+BJMyGaDAsQSC8ENgu4D9ZNV5d1zLr0=";
   };
 
   buildInputs = [
-    tcltls
     bwidget
-    tk
     libnotify
+    tclcurl
+    tcltls
+    tk
   ];
 
   installPhase = ''
