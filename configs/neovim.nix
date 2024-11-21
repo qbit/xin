@@ -35,7 +35,7 @@ let
     haskell-vim
     neoformat
     neogit
-    nvim-compe
+    nvim-cmp
     nvim-lspconfig
     nvim-tree-lua
     nvim-treesitter.withAllGrammars
