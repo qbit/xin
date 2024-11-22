@@ -381,7 +381,6 @@ in
       rtl-sdr
       sdrpp
       signal-desktop
-      signal-desktop-beta
       tcpdump
       tea
       tigervnc
