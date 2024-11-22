@@ -362,8 +362,6 @@
           };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
-          gotosocial =
-            spkgs.callPackage ./pkgs/gotosocial.nix { inherit spkgs; };
           zutty = upkgs.callPackage ./pkgs/zutty.nix {
             inherit upkgs;
           };

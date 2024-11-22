@@ -409,7 +409,7 @@ in
     gotosocial = {
       enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.2/example/config.yaml
-      configuration = {
+      settings = {
         account-domain = "mammothcirc.us";
         accounts-approval-required = false;
         accounts-reason-required = false;
@@ -432,8 +432,6 @@ in
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial";
         trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
-        web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
-        web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
         landing-page-user = "qbit";
       };
     };
@@ -800,7 +798,7 @@ in
           locations."/" = {
             extraConfig = ''
                       proxy_pass http://127.0.0.1:${
-              toString config.services.gotosocial.configuration.port
+              toString config.services.gotosocial.settings.port
               };
                       proxy_set_header Host $host;
                       proxy_set_header Upgrade $http_upgrade;

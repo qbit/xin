@@ -35,9 +35,9 @@ in
     ./bins
   ];
 
-  disabledModules = [
-    "services/web-apps/gotosocial.nix"
-  ];
+  # disabledModules = [
+  #   "services/web-apps/gotosocial.nix"
+  # ];
 
   options.myconf = {
     managementPubKeys = lib.mkOption rec {
