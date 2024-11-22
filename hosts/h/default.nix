@@ -777,6 +777,11 @@ in
           enableACME = true;
           root = "/var/www/qbit.io";
         };
+        "segfault.rodeo" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/segfault.rodeo";
+        };
         "mammothcirc.us" = {
           forceSSL = true;
           enableACME = true;
