@@ -15,7 +15,6 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
-        nixpkgs-stable.follows = "stable";
         nixpkgs.follows = "unstable";
       };
     };
