@@ -36,6 +36,26 @@
         "type": "gitlab"
       }
     },
+    "calnow": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1732392602,
+        "narHash": "sha256-KEU7yKYk+qBFjpkU66YUtQCWGL3bckB81Uos6JSbOM4=",
+        "owner": "qbit",
+        "repo": "calnow",
+        "rev": "636dc7ac12a325806f9303ee5836cfb2ab1a574f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qbit",
+        "repo": "calnow",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -394,6 +414,7 @@
     "root": {
       "inputs": {
         "beyt": "beyt",
+        "calnow": "calnow",
         "darwin": "darwin",
         "emacs-overlay": "emacs-overlay",
         "fynado": "fynado",

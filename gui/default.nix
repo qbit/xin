@@ -10,6 +10,7 @@ let
   inherit (inputs.traygent.packages.${pkgs.system}) traygent;
   inherit (inputs.fynado.packages.${pkgs.system}) fynado;
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
+  inherit (inputs.calnow.packages.${pkgs.system}) calnow;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr =
@@ -109,6 +110,7 @@ with lib; {
           bc
           beyt
           black
+          calnow
           drawterm-wayland
           exiftool
           go-font

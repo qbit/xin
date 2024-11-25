@@ -106,6 +106,10 @@
       url = "github:qbit/fynado";
       inputs.nixpkgs.follows = "unstable";
     };
+    calnow = {
+      url = "github:qbit/calnow";
+      inputs.nixpkgs.follows = "unstable";
+    };
     gqrss = {
       url = "github:qbit/gqrss";
       flake = false;
@@ -115,6 +119,7 @@
   outputs =
     { self
     , beyt
+    , calnow
     , darwin
     , emacs-overlay
     , gostart
@@ -376,6 +381,7 @@
           inherit (tsns.packages.${system}) tsns;
           inherit (traygent.packages.${system}) traygent;
           inherit (fynado.packages.${system}) fynado;
+          inherit (calnow.packages.${system}) calnow;
 
           inherit (spkgs) matrix-synapse;
 
