@@ -133,7 +133,7 @@ with lib; {
       };
 
       programs = {
-        ladybird.enable = false;
+        ladybird.enable = true;
       } // firefox.programs;
 
       systemd.user.services =
