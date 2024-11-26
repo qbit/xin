@@ -190,6 +190,7 @@ in
       allowUnfree = true;
       permittedInsecurePackages = todo "figure out what is using openssl-1.1.1w" [
         "openssl-1.1.1w"
+        "aspnetcore-runtime-wrapped-6.0.36"
       ];
     };
     #overlays = [
