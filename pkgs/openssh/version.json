@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "da4b84845e874f12af7e0686170fa391c919d1df",
-  "hash": "sha256-rMl2JZx1pAiCyKu/iC+Lv3rUOuUX1IB/fQQwPI+PWgY=",
-  "version": "2024-11-01",
-  "comment": "Correct path to c-cpp.yml file in workflow config."
+  "rev": "8eabd2ae2ca1d7756417a1ee5b41f09c5d997634",
+  "hash": "sha256-sdGdWulAM9+EIf816DQ0Y7edJDJrH0EHTr87qy7prAI=",
+  "version": "2024-11-27",
+  "comment": "upstream: fix argument of &quot;Compression&quot; directive in ssh -G config"
 }
