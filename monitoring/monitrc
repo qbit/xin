@@ -4,9 +4,9 @@ set logfile /var/log/monit.log
 
 include /run/secrets/monit_cfg
 
- set mail-format {
+set mail-format {
  from: alerts@bolddaemon.com
- subject: $SERVICE $EVENT on $DATE
+ subject: $SERVICE @ $HOST $EVENT on $DATE
  message: $DESCRIPTION
 }
 
