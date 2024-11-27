@@ -439,6 +439,7 @@ in
       database = {
         createLocally = true;
       };
+      sig-helper.enable = true;
       address = "127.0.0.1";
       port = 1538;
       settings = {
