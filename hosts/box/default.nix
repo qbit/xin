@@ -78,6 +78,11 @@ in
       owner = config.users.users.restic.name;
       sopsFile = config.xin-secrets.box.secrets.certs;
     };
+    invidious_extra = {
+      owner = "root";
+      mode = "444";
+      sopsFile = config.xin-secrets.box.secrets.services;
+    };
 
     books_cert = mkNginxSecret;
     books_key = mkNginxSecret;
@@ -440,6 +445,7 @@ in
         createLocally = true;
       };
       sig-helper.enable = true;
+      extraSettingsFile = "/run/secrets/invidious_extra";
       address = "127.0.0.1";
       port = 1538;
       settings = {
