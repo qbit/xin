@@ -790,8 +790,10 @@ in
           START_SSH_SERVER = true;
           SSH_SERVER_HOST_KEYS = "ssh/gitea-ed25519";
           SSH_PORT = 2222;
-          DISABLE_REGISTRATION = true;
           COOKIE_SECURE = true;
+        };
+        service = {
+          DISABLE_REGISTRATION = true;
         };
       };
 
