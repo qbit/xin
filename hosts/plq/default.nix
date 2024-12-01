@@ -84,4 +84,5 @@ in
     rage
     statix
   ];
+  system.stateVersion = 5;
 }

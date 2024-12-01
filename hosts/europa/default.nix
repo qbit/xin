@@ -168,7 +168,7 @@ in
       '';
       shellAliases = {
         "gh" = "op plugin run -- gh";
-        "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token) nixpkgs-review";
+        "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token --reveal) nixpkgs-review";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "sync-music" = "rsync -av --progress --delete ~/Music/ suah.dev:/var/lib/music/";
         "load-agent" = ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
@@ -243,7 +243,7 @@ in
       };
     pcscd.enable = true;
     vnstat.enable = true;
-    # clamav.updater.enable = true;
+    clamav.updater.enable = true;
     tor = {
       enable = true;
       client.enable = true;
@@ -378,12 +378,10 @@ in
       # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       #
       rex
-      rofi
       rsibreak
       rtl-sdr
       sdrpp
       signal-desktop
-      signal-desktop-beta
       tcpdump
       tea
       tigervnc
@@ -397,24 +395,13 @@ in
       zig
 
       (callPackage ../../pkgs/ttfs.nix { })
-      (callPackage ../../pkgs/kobuddy.nix {
-        inherit pkgs;
-        inherit
-          (pkgs.python39Packages)
-          buildPythonPackage
-          fetchPypi
-          setuptools-scm
-          pytz
-          banal
-          sqlalchemy
-          alembic
-          ;
-      })
+      (python3Packages.callPackage ../../pkgs/kobuddy.nix { })
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/mvoice.nix { })
       (callPackage ../../pkgs/zutty.nix { })
-      #(python3Packages.callPackage ../../pkgs/watchmap.nix { })
+      (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
+      (tclPackages.callPackage ../../pkgs/irken.nix { })
 
       restic
     ];

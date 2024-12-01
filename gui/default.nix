@@ -8,7 +8,9 @@
 let
   inherit (builtins) toJSON;
   inherit (inputs.traygent.packages.${pkgs.system}) traygent;
+  inherit (inputs.fynado.packages.${pkgs.system}) fynado;
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
+  inherit (inputs.calnow.packages.${pkgs.system}) calnow;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr =
@@ -42,7 +44,7 @@ let
   ];
   traygentCmds = toJSON [
     {
-      command_path = "${pkgs.ksshaskpass}/bin/ksshaskpass";
+      command_path = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
       #command_path = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
       event = "sign";
       msg_format = "Allow access to key %q?";
@@ -105,10 +107,10 @@ with lib; {
           OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
         };
         systemPackages = with pkgs; (xinlib.filterList [
-          alacritty
           bc
           beyt
           black
+          calnow
           drawterm-wayland
           exiftool
           go-font
@@ -120,13 +122,13 @@ with lib; {
           plan9port
           promnesia
           rage
+          recoll
           rpr
           traygent
+          fynado
+          trayscale
           vlc
           zeal
-          trayscale
-
-          (callPackage ../configs/helix.nix { })
         ]);
       };
 

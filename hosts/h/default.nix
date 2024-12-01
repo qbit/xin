@@ -5,9 +5,10 @@
 , ...
 }:
 with pkgs; let
+  sojuUser = "soju";
+  maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
-  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
   weepushover =
     python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
@@ -43,13 +44,6 @@ with pkgs; let
   mkMatrixWellKnown = p: ''
     return 200 '${builtins.toJSON p}';
   '';
-
-  mkMatrixSliderLoc = {
-    proxyWebsockets = true;
-    proxyPass = "http://${config.services.sliding-sync.address}:${
-      toString config.services.sliding-sync.port
-    }";
-  };
   mkMatrixLoc = {
     proxyWebsockets = true;
     proxyPass = "http://${mtxCfg.address}:${toString mtxCfg.port}";
@@ -141,11 +135,6 @@ in
       mode = "400";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
-    sliding_sync_env = {
-      owner = config.services.sliding-sync.user;
-      mode = "400";
-      sopsFile = config.xin-secrets.h.secrets.services;
-    };
     pr_status_env = {
       mode = "400";
       owner = config.services.ts-reverse-proxy.servers."pr-status-reverse".user;
@@ -159,6 +148,16 @@ in
     mcchunkie_at_suah_pass_file = {
       mode = "400";
       owner = "root";
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
+    bounce_cert = {
+      mode = "400";
+      owner = sojuUser;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
+    bounce_key = {
+      mode = "400";
+      owner = sojuUser;
       sopsFile = config.xin-secrets.h.secrets.services;
     };
   };
@@ -207,7 +206,11 @@ in
     };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 config.services.shiori.port ]; }; };
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 9002 config.services.shiori.port 6697 ];
+        };
+      };
       allowedTCPPorts = [ 22 80 443 2222 53589 ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
@@ -258,6 +261,7 @@ in
 
   users = {
     groups = {
+      ${sojuUser} = { };
       prognx = {
         members = [
           config.services.prosody.user
@@ -268,11 +272,22 @@ in
     users = {
       root = userBase;
       qbit = userBase;
+      "${sojuUser}" = {
+        isSystemUser = true;
+        group = sojuUser;
+      };
     };
   };
 
   systemd = {
     services = {
+      soju = {
+        serviceConfig = {
+          User = sojuUser;
+          Group = sojuUser;
+          after = [ "network-online.target" "tailscaled.service" ];
+        };
+      };
       mcchunkie = {
         serviceConfig = {
           ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
@@ -367,6 +382,13 @@ in
         "qbit@suah.dev"
       ];
     };
+    soju = {
+      enable = true;
+      listen = [ "100.83.77.133:6697" ];
+      hostName = "bounce.bold.daemon";
+      tlsCertificate = config.sops.secrets.bounce_cert.path;
+      tlsCertificateKey = config.sops.secrets.bounce_key.path;
+    };
     postfix.extraConfig = ''
       smtputf8_enable = no
     '';
@@ -415,11 +437,6 @@ in
         };
       };
     };
-    sliding-sync = {
-      enable = true;
-      server = "https://tapenet.org";
-      package = slidingSyncPkg;
-    };
     pots = {
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
@@ -442,7 +459,7 @@ in
     gotosocial = {
       enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.2/example/config.yaml
-      configuration = {
+      settings = {
         account-domain = "mammothcirc.us";
         accounts-approval-required = false;
         accounts-reason-required = false;
@@ -465,8 +482,7 @@ in
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial";
         trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
-        web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
-        web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
+        landing-page-user = "qbit";
       };
     };
     promtail = {
@@ -558,7 +574,7 @@ in
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
 
-      clientMaxBodySize = "50M";
+      clientMaxBodySize = maxUploadSize;
 
       commonHttpConfig = ''
         # Add HSTS header with preloading to HTTPS requests.
@@ -643,6 +659,11 @@ in
               proxy_ssl_server_name on;
             }
           '';
+        };
+        "exo.suah.dev" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/exo.suah.dev";
         };
 
         "music.tapenet.org" = {
@@ -805,6 +826,11 @@ in
           enableACME = true;
           root = "/var/www/qbit.io";
         };
+        "segfault.rodeo" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/segfault.rodeo";
+        };
         "mammothcirc.us" = {
           forceSSL = true;
           enableACME = true;
@@ -823,7 +849,7 @@ in
           locations."/" = {
             extraConfig = ''
                       proxy_pass http://127.0.0.1:${
-              toString config.services.gotosocial.configuration.port
+              toString config.services.gotosocial.settings.port
               };
                       proxy_set_header Host $host;
                       proxy_set_header Upgrade $http_upgrade;
@@ -879,22 +905,7 @@ in
                 }
               '';
             };
-          }
-          // (if config.services.sliding-sync.enable
-          then {
-            "/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            "/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
 
-            "/client" = mkMatrixSliderLoc;
-            "/_matrix/client/unstable/org.matrix.msc3575/sync" =
-              mkMatrixSliderLoc;
-
-            "/_matrix" = mkMatrixLoc;
-            "/_synapse/client" = mkMatrixLoc;
-          }
-          else {
             "/.well-known/matrix/client".extraConfig =
               mkMatrixWellKnown matrixClientConfig;
             "/.well-known/matrix/server".extraConfig =
@@ -902,7 +913,7 @@ in
 
             "/_matrix" = mkMatrixLoc;
             "/_synapse/client" = mkMatrixLoc;
-          });
+          };
         };
       };
     };
@@ -969,6 +980,10 @@ in
         "https://matrix.to/#/#devious:tapenet.org"
         "https://matrix.to/#/#gotk4:matrix.org"
         "https://matrix.to/#/#aerc:matrix.org"
+        "https://matrix.to/#/#pueblo-nerds:tapenet.org"
+
+        "https://matrix.to/#/#nixhub-home:matrix.org"
+        "https://matrix.to/#/#nixhub-devnull:matrix.org"
       ];
       settings = {
         verboseLogging = false;
@@ -1009,6 +1024,7 @@ in
         server_name = "tapenet.org";
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
+        max_upload_size = maxUploadSize;
         plugins = with config.services.matrix-synapse.package.plugins; [ matrix-synapse-mjolnir-antispam ];
         app_service_config_files = [
           "/var/lib/heisenbridge/registration.yml"

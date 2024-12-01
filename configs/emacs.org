@@ -123,6 +123,12 @@ here.
 
 * Packages
 
+** yaml
+
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
+#+end_src
+
 ** rust-mode
 #+begin_src emacs-lisp
   (use-package rust-mode)
@@ -218,7 +224,7 @@ code.. etc. Combined with ~smex~ for sorting (shows last used things first) and
   (use-package ivy
     :hook (after-init . ivy-mode)
     :bind
-    ("C-s"     . swiper)
+    ("C-s"     . swiper-isearch)
     ("M-x"     . counsel-M-x)
     ("C-x C-f" . counsel-find-file)
     ("C-x b"   . ivy-switch-buffer))
@@ -305,6 +311,29 @@ easier for me to treat it like a regular shell.
 
 * Language Configurations
 
+** OCaml
+
+#+begin_src emacs-lisp
+  (use-package ocamlformat
+    :custom (ocamlformat-enable 'enable-outside-detected-project)
+    :hook (before-save . ocamlformat-before-save))
+
+  (use-package tuareg
+     :mode ("\\.ml$" . tuareg-mode))
+
+  (use-package merlin
+    :config
+    (add-hook 'tuareg-mode-hook #'merlin-mode))
+#+end_src
+
+** firewall stuff
+
+*** nftables
+
+#+begin_src emacs-lisp
+  (use-package nftables-mode)
+#+end_src
+
 ** Shell
 
 #+begin_src emacs-lisp
@@ -384,6 +413,7 @@ can't quit!
    'org-babel-load-languages
    '((plantuml . t)
      (dot      . t)
+     (shell    . t)
      (latex    . t)))
 #+end_src
 ** Publish bits
@@ -391,130 +421,162 @@ can't quit!
 I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some recipes.
 
 #+begin_src emacs-lisp
+  (setq org-export-with-broken-links t)
+
+  (defun exo-touch-and-publish (plist filename dir)
+    (progn
+      (set-file-times "~/org-roam/index.org")
+      (org-html-publish-to-html plist filename dir)))
+
   (setq my-org-publish-alist
-        '(("bolddaemon" :components ("bolddaemon-web" "bolddaemon-static"))
+        '(("exo" :components ("org-roam" "org-roam-static" "org-roam-org"))
+  	("bolddaemon" :components ("bolddaemon-web" "bolddaemon-static"))
   	("notes" :components ("org-notes" "notes-static" "notes-rss"))
-          ("deftly" :components ("deftly-blog" "deftly-static"))
-          ("ohmyksh" :components ("ohmy-web" "ohmy-static"))
-          ("org-notes"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 4
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://suah.dev/p/"
-           :html-link-up "../"
-           :style-include-default nil
-           :sitemap-filename "index.org"
-           :sitemap-title "Notes"
-           :with-title t
-           :author-info nil
-           :creator-info nil
-           :base-directory "~/org/notes")
-          ("deftly-blog"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 1
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/new/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://deftly.net/new"
-           :html-link-up "../"
-           :style-include-default nil
-           :sitemap-title "Deftly.net"
-           :with-title t
-           :author-info t
-           :creator-info nil
-           :base-directory "~/org/deftly")
-          ("ohmy-web"
-           :auto-preamble t
-           :auto-sitemap nil
-           :headline-levels 2
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/ohmyksh/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://deftly.net/ohmyksh"
-           :html-link-up "../"
-           :style-include-default nil
-           :with-title t
-           :author-info t
-           :creator-info nil
-           :base-directory "~/src/ohmyksh")
-          ("notes-static"
-           :base-directory "~/org/notes"
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("deftly-static"
-           :base-directory "~/org/deftly"
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("ohmy-static"
-           :base-directory "~/src/ohmyksh"
-           :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("notes-rss"
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
-           :publishing-function org-rss-publish-to-rss
-           :recursive t
-           :rss-extension "xml"
-           :section-numbers nil
-           :exclude ".*"
-           :include ("index.org")
-           :table-of-contents nil
-           :base-directory "~/org/notes")
-          ("recipes"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 4
-           :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/recipes/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
-           :html-link-home "http://suah.dev/recipes/"
-           :html-link-up "../"
-           :style-include-default nil
-           :sitemap-filename "index.org"
-           :sitemap-title "Recipes"
-           :with-title t
-           :author-info nil
-           :creator-info nil
-           :base-directory "~/org/recipes")
+  	("deftly" :components ("deftly-blog" "deftly-static"))
+  	("ohmyksh" :components ("ohmy-web" "ohmy-static"))
+  	("org-roam"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
+  	 :recursive t
+  	 :html-link-home "http://exo.suah.dev/"
+  	 :html-link-up "../"
+  	 :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
+  	 :publishing-function exo-touch-and-publish
+  	 :base-directory "~/org-roam")
+  	("org-roam-org"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
+  	 :publishing-function org-org-publish-to-org
+  	 :recursive t
+  	 :base-directory "~/org-roam")
+  	("org-roam-static"
+  	 :base-directory "~/org-roam"
+  	 :recursive t
+  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
+  	 :publishing-function org-publish-attachment)
+  	("org-roam-rss"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
+  	 :publishing-function org-rss-publish-to-rss
+  	 :rss-extension "xml"
+  	 :base-directory "~/org-roam")
+  	("org-notes"
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 4
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://suah.dev/p/"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :sitemap-filename "index.org"
+  	 :sitemap-title "Notes"
+  	 :with-title t
+  	 :author-info nil
+  	 :creator-info nil
+  	 :base-directory "~/org/notes")
+  	("deftly-blog"
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 1
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/new/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://deftly.net/new"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :sitemap-title "Deftly.net"
+  	 :with-title t
+  	 :author-info t
+  	 :creator-info nil
+  	 :base-directory "~/org/deftly")
+  	("ohmy-web"
+  	 :auto-preamble t
+  	 :auto-sitemap nil
+  	 :headline-levels 2
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://deftly.net/ohmyksh/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://deftly.net/ohmyksh"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :with-title t
+  	 :author-info t
+  	 :creator-info nil
+  	 :base-directory "~/src/ohmyksh")
+  	("notes-static"
+  	 :base-directory "~/org/notes"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	("deftly-static"
+  	 :base-directory "~/org/deftly"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/new/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	("ohmy-static"
+  	 :base-directory "~/src/ohmyksh"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/deftly.net/ohmyksh/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	("notes-rss"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/p/"
+  	 :publishing-function org-rss-publish-to-rss
+  	 :recursive t
+  	 :rss-extension "xml"
+  	 :section-numbers nil
+  	 :exclude ".*"
+  	 :include ("index.org")
+  	 :table-of-contents nil
+  	 :base-directory "~/org/notes")
+  	("recipes"
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 4
+  	 :publishing-directory "/ssh:suah.dev:/var/www/suah.dev/recipes/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-head "<link rel=\"stylesheet\" href=\"https://suah.dev/p/css/stylesheet.css\" type=\"text/css\" />"
+  	 :html-link-home "http://suah.dev/recipes/"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :sitemap-filename "index.org"
+  	 :sitemap-title "Recipes"
+  	 :with-title t
+  	 :author-info nil
+  	 :creator-info nil
+  	 :base-directory "~/org/recipes")
   	("bolddaemon-web"
-           :auto-preamble t
-           :auto-sitemap t
-           :headline-levels 4
-           :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
-           :publishing-function org-html-publish-to-html
-           :recursive t
-           :section-numbers nil
-           :html-link-home "http://bolddaemon.com"
-           :html-link-up "../"
-           :style-include-default nil
-           :with-title t
-           :author-info nil
-           :creator-info nil
-           :base-directory "~/org/bold.daemon")
+  	 :auto-preamble t
+  	 :auto-sitemap t
+  	 :headline-levels 4
+  	 :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
+  	 :publishing-function org-html-publish-to-html
+  	 :recursive t
+  	 :section-numbers nil
+  	 :html-link-home "http://bolddaemon.com"
+  	 :html-link-up "../"
+  	 :style-include-default nil
+  	 :with-title t
+  	 :author-info nil
+  	 :creator-info nil
+  	 :base-directory "~/org/bold.daemon")
   	("bolddaemon-static"
-           :base-directory "~/org/bold.daemon"
-           :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ))
+  	 :base-directory "~/org/bold.daemon"
+  	 :publishing-directory "/ssh:suah.dev:/var/www/bolddaemon.com/"
+  	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+  	 :recursive t
+  	 :publishing-function org-publish-attachment)
+  	))
 #+end_src
 
 ** Capture templates
@@ -581,6 +643,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
     (setq org-publish-project-alist my-org-publish-alist)
     (setq org-capture-templates my-org-capture-templates))
   (use-package org-contrib)
+  (use-package ox-rss)
 
 #+end_src
 
@@ -620,58 +683,76 @@ Custom agenda commands for various things.
 
 #+begin_src emacs-lisp
   (use-package org-roam
-  	    :custom
-  	    (org-roam-directory (file-truename "~/org-roam/"))
-  	    :bind (("C-c n l" . org-roam-buffer-toggle)
-  		   ("C-c n f" . org-roam-node-find)
-  		   ("C-c n g" . org-roam-graph)
-  		   ("C-c n i" . org-roam-node-insert)
-  		   ("C-c n c" . org-roam-capture)
-  		   ("C-c n j" . org-roam-dailies-capture-today))
-  	    :config
-  	    (setq org-roam-completion-everywhere t)
-  	    (require 'org-roam-protocol))
+    :after org
+    :custom
+    (org-roam-directory (file-truename "~/org-roam/"))
+    (org-roam-capture-templates
+     '(("d" "default" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+        :unnarrowed t)
+       ("b" "book" plain
+        "- Author: /%^{Author}/\n- Year: /%^{Year}/\n\n* Highlights / Notes\n"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :Book:\n")
+        :unnarrowed t)
+       ))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+  	 ("C-c n f" . org-roam-node-find)
+  	 ("C-c n g" . org-roam-graph)
+  	 ("C-c n r" . org-roam-ref-add)
+  	 ("C-c n s" . org-roam-db-sync)
+  	 ("C-c n t" . org-roam-tag-add)
+  	 ("C-c n i" . org-roam-node-insert)
+  	 ("C-c n c" . org-roam-capture)
+  	 ("C-c n j" . org-roam-dailies-capture-today))
+    :config
+    (setq org-roam-completion-everywhere t)
+    (setq org-roam-node-display-template
+  	(concat "${title:40} "
+  		(propertize "${tags:40}" 'face 'org-tag)
+  		"${file}"))
+    (require 'org-roam-protocol))
 #+end_src
 
-* gnus
+Extending org with the ability to transclude makes for a powerhouse!
+#+begin_src emacs-lisp
+  (use-package org-transclusion
+    :after org)
+#+end_src
+
+* Mail
+
+** gnus
 
 [2024-08-22 Thu] Might need to switch go gnus. mu4e has been not showing new
 mail for some things and having to sync state between two sources is a pita.
 
 #+begin_src emacs-lisp
-  (setq gnus-fetch-old-headers t
-        gnus-select-method '(nnimap "imap.fastmail.com")
-        gnus-secondary-select-methods '((nntp "news.gwene.org"))
-        gnus-sum-thread-tree-false-root ""
-        gnus-sum-thread-tree-indent " "
-        gnus-sum-thread-tree-leaf-with-other "├► "
-        gnus-sum-thread-tree-root ""
-        gnus-sum-thread-tree-single-leaf "╰► "
-        gnus-sum-thread-tree-vertical "│"
-        gnus-summary-line-format "%U%R%z %(%&user-date>;  %-15,15f  %B%s%)\n"
-        gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
-        gnus-thread-sort-functions '(gnus-thread-sort-by-date)
-        gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M")))
-
-  (with-eval-after-load 'gnus
-    (setq gnus-select-method '(nnimap "imap.fastmail.com")
-  	gnus-secondary-select-methods '((nntp "news.gwene.org"))))
-
+  (use-package gnus
+    :custom
+    (gnus-use-cache t)
+    (gnus-use-full-window nil)
+    (gnus-suppress-duplicates t)
+    (gnus-inhibit-startup-message t)
+    (gnus-asynchronous t)
+    (gnus-sum-thread-tree-false-root "")
+    (gnus-sum-thread-tree-indent " ")
+    (gnus-sum-thread-tree-leaf-with-other "├► ")
+    (gnus-sum-thread-tree-root "")
+    (gnus-sum-thread-tree-single-leaf "╰► ")
+    (gnus-sum-thread-tree-vertical "│")
+    (gnus-summary-line-format "%U%R%z %(%&user-date>;  %-15,15f  %B%s%)\n")
+    (gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
+    (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
+    (gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M")))
+    (gnus-select-method '(nnimap "imap.fastmail.com"
+                                 (nnimap-server-port "imaps")
+                                 (nnimap-stream ssl)
+                                 (nnimap-expunge 'on-exit)))
+    (gnus-secondary-select-methods '((nntp "news.gmane.io"))))
 #+end_src
 
-* mu4e
-~mu~ has been the best mail client for me on emacs.
-
-** Initializing mu
-
-The defaults ~mu~ uses make no sense. ~~/.cache~ is for .. caching data, not
-persistent databases.. So we init things with sane defaults:
-
-#+begin_src shell
-mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aaron@bolddaemon.com"
-#+end_src
-
-** General mail configuration
+** SMTP
 
 #+begin_src emacs-lisp
   (require 'smtpmail)
@@ -684,65 +765,4 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
         smtpmail-smtp-service          465
         smtpmail-default-smtp-server   "smtp.fastmail.com"
         smtpmail-stream-type           'ssl)
-#+end_src
-
-** mu4e specific configs
-#+begin_src emacs-lisp
-  (use-package mu4e
-    :init
-    (setq mail-user-agent 'mu4e-user-agent
-          read-mail-command 'mu4e
-          mu4e-get-mail-command "mbsync fastmail"
-          mu4e-update-interval 420
-          mu4e-compose-context-policy nil
-          mu4e-context-policy 'pick-first
-          mu4e-drafts-folder "/Drafts"
-          mu4e-sent-folder   "/Sent Items"
-          mu4e-trash-folder  "/Trash"
-          mu4e-maildir-shortcuts
-          '( ("/INBOX"        . ?i)
-             ("/Archive"      . ?a)
-             ("/Sent Items"   . ?s))
-          org-mu4e-link-query-in-headers-mode nil
-          mu4e-attachment-dir
-          (lambda (fname mtype)
-            (cond
-             ((and fname (string-match "\\.diff$" fname))  "~/patches")
-             ((and fname (string-match "\\.patch$" fname))  "~/patches")
-             ((and fname (string-match "\\.diff.gz$" fname))  "~/patches")
-             (t "~/Downloads")))
-          mu4e-bookmarks
-               `(( :name "Inbox"
-                   :query "maildir:/Inbox AND NOT flag:trashed"
-                   :key ?i)
-                 ( :name "TODO"
-                   :query "maildir:/TODO AND NOT flag:trashed"
-                   :key ?T)
-                 ( :name  "Unread messages"
-                   :query "flag:unread AND NOT flag:trashed AND NOT list:ports-changes.openbsd.org AND NOT list:source-changes.openbsd.org"
-                   :key ?u)
-                 ( :name  "Today's messages"
-                   :query "date:today..now"
-                   :key ?d)
-                 ( :name  "Hackers"
-                   :query "list:hackers.openbsd.org AND NOT flag:trashed"
-                   :key ?h)
-                 ( :name   "Bugs"
-                   :query  "list:bugs.openbsd.org AND NOT flag:trashed"
-                   :key ?b)
-                 ( :name  "Tech"
-                   :query "list:tech.openbsd.org AND NOT flag:trashed"
-                   :key ?t)
-                 ( :name  "Ports"
-                   :query "list:ports.openbsd.org AND NOT flag:trashed"
-                   :key ?p)
-                 ( :name "Misc"
-                   :query "list:misc.openbsd.org AND NOT flag:trashed"
-                   :key ?m)
-                 ( :name "9front"
-                   :query "list:9front.9front.org AND NOT flag:trashed"
-                   :key ?9)
-                 ( :name "GOT"
-                   :query "list:gameoftrees.openbsd.org AND NOT flag:trashed"
-                   :key ?g))))
 #+end_src

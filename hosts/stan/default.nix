@@ -252,7 +252,7 @@ in
         ];
       })
       wireshark
-      zig
+      zeek
     ];
   };
 
@@ -268,6 +268,7 @@ in
   };
 
   services = {
+    avahi.enable = true;
     rkvm.client = {
       enable = true;
       settings = {

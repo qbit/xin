@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "509b757c052ea969b3a41fc36818b44801caf1cf",
-  "hash": "sha256-bN+KfG2Nyw39Iu6Z3rqgIE6SLz0xsDI5NvON/sv9nXE=",
-  "version": "2024-09-09",
-  "comment": "stubs for ML-KEM KEX functions"
+  "rev": "8eabd2ae2ca1d7756417a1ee5b41f09c5d997634",
+  "hash": "sha256-sdGdWulAM9+EIf816DQ0Y7edJDJrH0EHTr87qy7prAI=",
+  "version": "2024-11-27",
+  "comment": "upstream: fix argument of &quot;Compression&quot; directive in ssh -G config"
 }

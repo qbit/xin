@@ -102,7 +102,7 @@ in
             ];
             panes = [
               {
-                commands = [ "ssh stan" ];
+                commands = [ "ssh stan-kvm" ];
               }
             ];
           }

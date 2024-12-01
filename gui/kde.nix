@@ -57,10 +57,15 @@ with pkgs;
       sessionVariables = {
         NIXOS_OZONE_WL = 1;
       };
-      systemPackages = [
-        kdePackages.kzones
+      systemPackages = with kdePackages; [
+        akonadi-calendar-tools
         kcolorchooser
         kconnect
+        kontact
+        konversation
+        korganizer
+        kzones
+        merkuro
       ];
     };
   };

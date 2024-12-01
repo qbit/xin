@@ -9,24 +9,60 @@ let
   tailnetACLs =
     let
       acls = {
+        nodeAttrs = [
+          {
+            target = [ "tag:laptop" "tag:mobile" ];
+            attr = [
+              "drive:access"
+            ];
+          }
+          {
+            target = [ "tag:internal-server" ];
+            attr = [
+              "drive:share"
+            ];
+          }
+          {
+            target = [ "namish" ];
+            attr = [
+              "drive:share"
+            ];
+          }
+        ];
+        grants = [
+          {
+            src = [ "europa" "sputnik" "skunk" "graphy" "plq" ];
+            dst = [ "box" ];
+            app = {
+              "tailscale.com/cap/drive" = [{
+                shares = [ "*" ];
+                access = "rw";
+              }];
+            };
+          }
+        ];
         hosts = {
-          console = "100.83.166.33";
-          nbc = "100.74.8.55";
-          startpage = "127.0.0.1";
-          gitle = "100.111.162.87";
-          faf = "100.80.94.131";
-          h = "100.83.77.133";
           box = "100.115.16.150";
-          pwntie = "100.84.170.57";
-          sputnik = "100.78.154.31";
-          europa = "100.64.26.122";
-          il = "100.86.182.99";
-          tv = "100.118.196.38";
-          ollama = "100.121.227.121";
+          console = "100.83.166.33";
           display = "100.77.35.34";
-          rimgo = "100.121.77.91";
+          europa = "100.64.26.122";
+          faf = "100.80.94.131";
+          gitle = "100.111.162.87";
+          graphy = "100.123.184.55";
+          h = "100.83.77.133";
+          il = "100.86.182.99";
           invidious = "100.71.57.99";
+          namish = "100.86.184.141";
+          nbc = "100.74.8.55";
+          ollama = "100.121.227.121";
+          plq = "100.90.214.142";
+          pwntie = "100.84.170.57";
+          rimgo = "100.121.77.91";
+          skunk = "100.79.26.78";
+          sputnik = "100.78.154.31";
+          startpage = "127.0.0.1";
           tsns = "100.73.115.100";
+          tv = "100.118.196.38";
         };
 
         tagOwners = {
@@ -43,6 +79,11 @@ let
         };
 
         acls = [
+          {
+            action = "accept";
+            src = [ "tag:mobile" "tag:laptop" ];
+            dst = [ "h:6697" ];
+          }
           {
             action = "accept";
             src = [ "europa" ];

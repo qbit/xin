@@ -6,7 +6,6 @@
 }:
 let
   inherit (xinlib) todo;
-  #photoPrismTag = "220901-bullseye";
   httpCacheTime = "720m";
   httpAllow = ''
     allow	10.6.0.0/24;
@@ -61,7 +60,6 @@ in
     #  owner = config.users.users.nextcloud.name;
     #  sopsFile = config.xin-secrets.box.secrets.services;
     #};
-    #photoprism_admin_password = {sopsFile = config.xin-secrets.box.secrets.services;};
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.secrets.services;
@@ -79,6 +77,11 @@ in
     restic_key = {
       owner = config.users.users.restic.name;
       sopsFile = config.xin-secrets.box.secrets.certs;
+    };
+    invidious_extra = {
+      owner = "root";
+      mode = "444";
+      sopsFile = config.xin-secrets.box.secrets.services;
     };
 
     books_cert = mkNginxSecret;
@@ -192,6 +195,10 @@ in
       allowUnfree = true;
       permittedInsecurePackages = todo "figure out what is using openssl-1.1.1w" [
         "openssl-1.1.1w"
+        "aspnetcore-runtime-wrapped-6.0.36"
+        "aspnetcore-runtime-6.0.36"
+        "dotnet-sdk-wrapped-6.0.428"
+        "dotnet-sdk-6.0.428"
       ];
     };
     #overlays = [
@@ -233,28 +240,18 @@ in
         name = "photos";
         members = [ "qbit" ];
       };
-
-      photoprism = {
-        name = "photoprism";
-        gid = 986;
-      };
-    };
-    users = {
-      photoprism = {
-        uid = 991;
-        name = "photoprism";
-        isSystemUser = true;
-        hashedPassword = null;
-        group = "photoprism";
-        shell = "/bin/sh";
-        openssh.authorizedKeys.keys = pubKeys;
-      };
     };
   };
 
   hardware.rtl-sdr.enable = true;
 
   services = {
+    immich = {
+      enable = true;
+      port = 3301;
+      mediaLocation = "/media/pictures/immich";
+      machine-learning.enable = true;
+    };
     tsns = {
       enable = true;
     };
@@ -284,6 +281,12 @@ in
           reverseName = "evse";
           reversePort = 80;
           reverseIP = "10.6.0.166";
+        };
+        "immich-service" = {
+          enable = true;
+          reverseName = "immich";
+          reversePort = config.services.immich.port;
+          reverseIP = config.services.immich.host;
         };
       };
     };
@@ -435,52 +438,14 @@ in
         };
       };
     };
-    #photoprism = {
-    #  enable = true;
-    #  port = 2343;
-    #  storagePath = "/media/pictures/photoprism/storage";
-    #  originalsPath = "/media/pictures/photoprism/originals";
-    #  importPath = "/media/pictures/photoprism/import";
-    #  settings = {
-    #    PHOTOPRISM_UPLOAD_NSFW = "true";
-    #    PHOTOPRISM_DETECT_NSFW = "false";
-    #    PHOTOPRISM_SITE_URL = "https://box.otter-alligator.ts.net/photos";
-    #    PHOTOPRISM_SETTINGS_HIDDEN = "false";
-    #    PHOTOPRISM_DATABASE_DRIVER = "sqlite";
-    #  };
-    #};
-    #nextcloud = {
-    #  enable = true;
-    #  enableBrokenCiphersForSSE = false;
-    #  hostName = "box.otter-alligator.ts.net";
-    #  home = "/media/nextcloud";
-    #  https = true;
 
-    #  package = pkgs.nextcloud27;
-    #  extraApps = with config.services.nextcloud.package.packages.apps; {
-    #    inherit bookmarks calendar contacts notes tasks twofactor_webauthn;
-    #  };
-
-    #  extraAppsEnable = true;
-
-    #  config = {
-    #    overwriteProtocol = "https";
-
-    #    dbtype = "pgsql";
-    #    dbuser = "nextcloud";
-    #    dbhost = "/run/postgresql";
-    #    dbname = "nextcloud";
-    #    dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
-
-    #    adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
-    #    adminuser = "admin";
-    #  };
-    #};
     invidious = {
       enable = true;
       database = {
         createLocally = true;
       };
+      sig-helper.enable = true;
+      extraSettingsFile = "/run/secrets/invidious_extra";
       address = "127.0.0.1";
       port = 1538;
       settings = {
@@ -832,8 +797,10 @@ in
           START_SSH_SERVER = true;
           SSH_SERVER_HOST_KEYS = "ssh/gitea-ed25519";
           SSH_PORT = 2222;
-          DISABLE_REGISTRATION = true;
           COOKIE_SECURE = true;
+        };
+        service = {
+          DISABLE_REGISTRATION = true;
         };
       };
 
@@ -1081,7 +1048,7 @@ in
       enable = true;
       #dataDir = "/db/postgres";
 
-      package = pkgs.postgresql_15;
+      package = pkgs.postgresql_16;
 
       enableTCPIP = true;
       authentication = pkgs.lib.mkOverride 14 ''
@@ -1110,13 +1077,12 @@ in
 
   systemd = {
     services = {
-      photoprism = {
+      tsns = {
         serviceConfig = {
-          WorkingDirectory = lib.mkForce "/media/pictures/photoprism";
+          Restart = "always";
+          RestartSecs = 15;
         };
-        preStart = lib.mkForce "";
       };
-
       nginx.serviceConfig = {
         ReadWritePaths = [ "/backups/nginx_cache" ];
         ReadOnlyPaths = [ "/etc/nixos/secrets" ];
