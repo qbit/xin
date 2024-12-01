@@ -256,6 +256,13 @@ in
           "conference.suah.dev"
         ];
       };
+      "segfault.rodeo" = {
+        group = "prognx";
+        extraDomainNames = [
+          "upload.segfault.rodeo"
+          "conference.segfault.rodeo"
+        ];
+      };
     };
   };
 
@@ -364,6 +371,15 @@ in
         };
       };
 
+      virtualHosts."segfault.rodeo" = {
+        enabled = true;
+        domain = "segfault.rodeo";
+        ssl = {
+          cert = "/var/lib/acme/segfault.rodeo/fullchain.pem";
+          key = "/var/lib/acme/segfault.rodeo/key.pem";
+        };
+      };
+
       uploadHttp = {
         domain = "upload.suah.dev";
         uploadExpireAfter = "60 * 60 * 24 * 7 * 4";
@@ -374,12 +390,17 @@ in
           domain = "conference.suah.dev";
           maxHistoryMessages = 1024;
         }
+        {
+          domain = "conference.segfault.rodeo";
+          maxHistoryMessages = 2048;
+        }
       ];
 
       allowRegistration = false;
 
       admins = [
         "qbit@suah.dev"
+        "qbit@segfault.rodeo"
       ];
     };
     soju = {
