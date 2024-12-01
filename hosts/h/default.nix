@@ -211,7 +211,7 @@ in
           allowedTCPPorts = [ 9002 config.services.shiori.port 6697 ];
         };
       };
-      allowedTCPPorts = [ 22 80 443 2222 53589 ];
+      allowedTCPPorts = [ 22 80 443 2222 53589 5222 5269 ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
         {
