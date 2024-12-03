@@ -178,6 +178,7 @@ in
           pass
           ripgrep
           sshfs
+          tcl
           tmux
           uxn
 
