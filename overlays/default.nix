@@ -5,12 +5,12 @@
 let
   inherit (xinlib) prIsOpen;
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
-  matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
+  #  matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
 in
 {
   nixpkgs.overlays = [
     heisenbridge
-    matrix-synapse
+    #   matrix-synapse
     (_: super: {
       smug = super.smug.overrideAttrs (_: rec {
         version = "0.3.3";
