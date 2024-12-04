@@ -16,6 +16,28 @@
     extraModulePackages = [ ];
   };
 
+  environment.etc."davfs2/secrets" = {
+    text = ''
+'';
+    user = "root";
+    group = "root";
+    mode = "600";
+  };
+
+  services.davfs2 = {
+    enable = true;
+    settings = {
+      globalSection = {
+        ask_auth = false;
+      };
+      sections = {
+        "/home/qbit/TailDrive" = {
+          gui_optimize = true;
+        };
+      };
+    };
+  };
+
   fileSystems = {
     "/" =
       {
@@ -33,6 +55,19 @@
       device = "/dev/disk/by-uuid/6e71eeea-6437-46f4-88d0-126c92af42ef";
       fsType = "ext4";
       label = "backup";
+      neededForBoot = false;
+    };
+    "/home/qbit/TailDrive" = {
+      device = "http://100.100.100.100:8080/tapenet.org/box/media";
+      fsType = "davfs";
+      options = [
+        "_netdev"
+        "x-systemd.automount"
+        # "reconnect"
+        # "cache=yes"
+        # "auto_cache"
+        "rw"
+      ];
       neededForBoot = false;
     };
   };

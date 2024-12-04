@@ -309,6 +309,7 @@ in
     "libvirtd"
     "plugdev"
     "cdrom"
+    "davfs2"
   ];
 
   environment = {
@@ -329,6 +330,7 @@ in
       beets # stable
       calibre
       chirp # stable
+      davfs2
       deadbeef-with-plugins
       deluge
       dino
