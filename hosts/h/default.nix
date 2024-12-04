@@ -211,7 +211,22 @@ in
           allowedTCPPorts = [ 9002 config.services.shiori.port 6697 ];
         };
       };
-      allowedTCPPorts = [ 22 80 443 2222 53589 5222 5269 ];
+      allowedTCPPorts = [
+        22
+        80
+        443
+
+        #gitea
+        2222
+
+        # 53589
+
+        #xmpp
+        5222
+        5269
+        5223
+        5270
+      ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
         {
@@ -249,13 +264,6 @@ in
     acceptTerms = true;
     defaults.email = "aaron@bolddaemon.com";
     certs = {
-      "suah.dev" = {
-        group = "prognx";
-        extraDomainNames = [
-          "upload.suah.dev"
-          "conference.suah.dev"
-        ];
-      };
       "segfault.rodeo" = {
         group = "prognx";
         extraDomainNames = [
@@ -359,16 +367,14 @@ in
     prosody = {
       enable = true;
 
-      httpPorts = [ 5280 ];
-      httpsPorts = [ 5281 ];
+      extraConfig = ''
+        c2s_direct_tls_ports = { 5223 }
+        s2s_direct_tls_ports = { 5270 }
+      '';
 
-      virtualHosts."suah.dev" = {
-        enabled = true;
-        domain = "suah.dev";
-        ssl = {
-          cert = "/var/lib/acme/suah.dev/fullchain.pem";
-          key = "/var/lib/acme/suah.dev/key.pem";
-        };
+      ssl = {
+        cert = "/var/lib/acme/segfault.rodeo/fullchain.pem";
+        key = "/var/lib/acme/segfault.rodeo/key.pem";
       };
 
       virtualHosts."segfault.rodeo" = {
@@ -381,15 +387,11 @@ in
       };
 
       uploadHttp = {
-        domain = "upload.suah.dev";
+        domain = "upload.segfault.rodeo";
         uploadExpireAfter = "60 * 60 * 24 * 7 * 4";
       };
 
       muc = [
-        {
-          domain = "conference.suah.dev";
-          maxHistoryMessages = 1024;
-        }
         {
           domain = "conference.segfault.rodeo";
           maxHistoryMessages = 2048;
@@ -399,7 +401,6 @@ in
       allowRegistration = false;
 
       admins = [
-        "qbit@suah.dev"
         "qbit@segfault.rodeo"
       ];
     };
