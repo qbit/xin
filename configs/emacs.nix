@@ -32,6 +32,7 @@ in
         go-font
 
         graphviz
+        mermaid-cli
 
         myEmacs
         editorScript

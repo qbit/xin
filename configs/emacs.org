@@ -123,6 +123,13 @@ here.
 
 * Packages
 
+** ob-mermaid
+
+#+begin_src emacs-lisp
+  (use-package ob-mermaid)
+  (use-package mermaid-mode)
+#+end_src
+
 ** yaml
 
 #+begin_src emacs-lisp
