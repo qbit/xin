@@ -160,6 +160,11 @@ in
       owner = sojuUser;
       sopsFile = config.xin-secrets.h.secrets.services;
     };
+    "ejabberd_matrix_key.yaml" = {
+      mode = "400";
+      owner = config.services.ejabberd.user;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
   };
 
   networking = {
@@ -226,6 +231,7 @@ in
         5269
         5223
         5270
+        8448
       ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
@@ -269,7 +275,11 @@ in
         extraDomainNames = [
           "upload.segfault.rodeo"
           "conference.segfault.rodeo"
+          "pubsub.segfault.rodeo"
+          "matrix.segfault.rodeo"
+          "xmpp.segfault.rodeo"
         ];
+        reloadServices = [ "ejabberd.services" "nginx.service" ];
       };
     };
   };
@@ -279,8 +289,9 @@ in
       ${sojuUser} = { };
       prognx = {
         members = [
-          config.services.prosody.user
+          # config.services.prosody.user
           config.services.nginx.user
+          config.services.ejabberd.user
         ];
       };
     };
@@ -364,8 +375,151 @@ in
   };
 
   services = {
-    prosody = {
+    ejabberd = {
       enable = true;
+      package = pkgs.ejabberd.override {
+        withSqlite = true;
+      };
+      configFile = pkgs.writeText "ejabberd.yaml" (builtins.toJSON {
+        hosts = [ "segfault.rodeo" ];
+        certfiles = [
+          (config.security.acme.certs."segfault.rodeo".directory + "/*.pem")
+        ];
+
+        acl = {
+          admin = [
+            { user = "qbit@segfault.rodeo"; }
+          ];
+          loopback = {
+            ip = [
+              "127.0.0.0/8"
+              "::1/128"
+            ];
+          };
+        };
+
+        access_rules = {
+          configure = {
+            allow = "admin";
+          };
+          local = {
+            allow = "local";
+          };
+          announce = {
+            allow = "admin";
+          };
+          trusted_network = {
+            allow = "loopback";
+          };
+
+          s2s = {
+            allow = "all";
+          };
+          c2s = {
+            deny = "blocked";
+            allow = "all";
+          };
+        };
+
+        include_config_file = config.sops.secrets."ejabberd_matrix_key.yaml".path;
+
+        # https://docs.ejabberd.im/admin/configuration/modules
+        modules = {
+          mod_adhoc = { };
+          mod_admin_extra = { };
+          mod_announce.access = "admin";
+          mod_avatar = { };
+          mod_blocking = { };
+          mod_caps = { };
+          mod_carboncopy = { };
+          mod_client_state = { };
+          mod_configure = { };
+          mod_disco = { };
+          mod_last = { };
+          mod_mam = { };
+          mod_mqtt = { };
+          mod_muc = {
+            host = "conference.@HOST@";
+          };
+          mod_muc_admin = { };
+          mod_muc_log = { };
+          mod_offline = { };
+          mod_ping = { };
+          mod_pres_counter = { };
+          mod_privacy = { };
+          mod_private = { };
+          mod_pubsub = {
+            access_createnode = "pubsub_createnode";
+            plugins = [
+              "flat"
+              "pep"
+            ];
+            force_node_config = {
+              "stoarge:bookmarks" = {
+                access_model = "whitelist";
+              };
+            };
+          };
+          mod_push = { };
+          mod_roster = { };
+          mod_shared_roster = { };
+          mod_stream_mgmt = { };
+          mod_vcard = { };
+          mod_vcard_xupdate = { };
+        };
+
+        s2s_use_starttls = "required";
+        s2s_access = "s2s";
+
+        default_db = "sql";
+        sql_type = "sqlite";
+        sql_database = "${config.services.ejabberd.spoolDir}/ejabberd.db";
+
+        host_config = {
+          "segfault.rodeo" = {
+            auth_method = [ "internal" ];
+          };
+        };
+
+        listen = [
+          {
+            port = 5222;
+            module = "ejabberd_c2s";
+            starttls = true;
+            ip = "::";
+          }
+          {
+            port = 5269;
+            module = "ejabberd_s2s_in";
+            ip = "::";
+          }
+          {
+            port = 5443;
+            ip = "127.0.0.1";
+            module = "ejabberd_http";
+            tls = false;
+            request_handlers = { "/admin" = "ejabberd_web_admin"; };
+          }
+          {
+            port = 8833;
+            module = "mod_mqtt";
+            tls = true;
+            backlog = 1000;
+          }
+          {
+            port = 8448;
+            module = "ejabberd_http";
+            tls = true;
+            request_handlers = {
+              "/_matrix" = "mod_matrix_gw";
+            };
+            ip = "::";
+          }
+        ];
+      });
+    };
+    prosody = {
+      enable = false;
 
       extraConfig = ''
         c2s_direct_tls_ports = { 5223 }
@@ -577,7 +731,8 @@ in
           "/var/lib/kogs"
           "/var/vmail"
           "/var/dkim"
-          config.services.prosody.dataDir
+          # config.services.prosody.dataDir
+          config.services.ejabberd.spoolDir
         ];
 
         timerConfig = { OnCalendar = "00:05"; };
@@ -852,6 +1007,10 @@ in
           forceSSL = true;
           enableACME = true;
           root = "/var/www/segfault.rodeo";
+          locations = {
+            "/.well-known/matrix/server".extraConfig =
+              mkMatrixWellKnown { "m.server" = "segfault.rodeo:8448"; };
+          };
         };
         "mammothcirc.us" = {
           forceSSL = true;
