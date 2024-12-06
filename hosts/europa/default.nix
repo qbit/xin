@@ -356,6 +356,7 @@ in
       jan
       jujutsu
       klavaro
+      gajim
       koreader
       linphone
       ltunify

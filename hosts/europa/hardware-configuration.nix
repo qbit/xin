@@ -63,9 +63,9 @@
       options = [
         "_netdev"
         "x-systemd.automount"
-        # "reconnect"
-        # "cache=yes"
-        # "auto_cache"
+        "reconnect"
+        "cache=yes"
+        "auto_cache"
         "rw"
       ];
       neededForBoot = false;
