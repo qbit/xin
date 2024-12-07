@@ -310,6 +310,7 @@ in
     "plugdev"
     "cdrom"
     "davfs2"
+    "input"
   ];
 
   environment = {
