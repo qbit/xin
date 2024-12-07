@@ -1200,7 +1200,7 @@ in
         enable_registration = false;
         registration_shared_secret_path = "${config.sops.secrets.synapse_shared_secret.path}";
         media_store_path = "/var/lib/synapse/media_store";
-        presence.enabled = true;
+        presence.enabled = false;
         public_baseurl = "https://tapenet.org";
         server_name = "tapenet.org";
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
