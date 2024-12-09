@@ -63,6 +63,7 @@ let
           startpage = "127.0.0.1";
           tsns = "100.73.115.100";
           tv = "100.118.196.38";
+          printy = "100.82.59.95";
         };
 
         tagOwners = {
@@ -88,6 +89,11 @@ let
             action = "accept";
             src = [ "europa" ];
             dst = [ "tsns:443" ];
+          }
+          {
+            action = "accept";
+            src = [ "box" ];
+            dst = [ "printy:443" ];
           }
           {
             action = "accept";
