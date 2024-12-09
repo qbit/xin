@@ -57,7 +57,7 @@
       # label = "backup";
       neededForBoot = false;
     };
-    "/home/qbit/TailDrive" = {
+    "/run/media/qbit/TailDrive" = {
       device = "http://100.100.100.100:8080/tapenet.org/box/media";
       fsType = "davfs";
       options = [
