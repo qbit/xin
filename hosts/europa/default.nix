@@ -332,7 +332,6 @@ in
       calibre
       chirp # stable
       davfs2
-      deadbeef-with-plugins
       deluge
       dino
       direwolf
@@ -348,13 +347,13 @@ in
       fossil
       gh
       gimp
-      git-annex
       gqrx
       hackrf
       inkscape
       intiface-central
       isync
       jan
+      joplin-desktop
       jujutsu
       klavaro
       gajim
@@ -382,7 +381,6 @@ in
       # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       #
       rex
-      rsibreak
       rtl-sdr
       sdrpp
       signal-desktop
@@ -393,10 +391,7 @@ in
       unzip
       veilid
       virt-manager
-      w3m
-      workrave
       yt-dlp
-      zig
 
       (callPackage ../../pkgs/ttfs.nix { })
       (python3Packages.callPackage ../../pkgs/kobuddy.nix { })
