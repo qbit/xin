@@ -189,7 +189,6 @@ in
       fzf
       google-chrome
       ispell
-      keychain
       libreoffice
       mattermost-desktop
       mosh

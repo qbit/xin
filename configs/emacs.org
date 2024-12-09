@@ -206,18 +206,6 @@ This is a nice theme that resembles acme in plan9. Minimal.
   :config (load-theme 'parchment t))
 #+end_src
 
-** keychain-environment
-
-I make heavy use of ~ssh-agent~ this lets emacs pickup / use the existing
-agents I have running.
-
-#+begin_src emacs-lisp
-(use-package keychain-environment
-  ;;:pin "melpa"
-  :init
-  (keychain-refresh-environment))
-#+end_src
-
 ** ivy
 
 ~ivy~ is fantastic. It gives me nice visual search for buffers,
