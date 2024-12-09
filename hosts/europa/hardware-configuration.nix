@@ -54,7 +54,7 @@
     "/run/media/qbit/backup" = {
       device = "/dev/disk/by-uuid/6e71eeea-6437-46f4-88d0-126c92af42ef";
       fsType = "ext4";
-      label = "backup";
+      # label = "backup";
       neededForBoot = false;
     };
     "/home/qbit/TailDrive" = {
