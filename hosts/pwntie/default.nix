@@ -78,6 +78,12 @@ in
   };
 
   services = {
+    guix = {
+      enable = true;
+      gc = {
+        enable = true;
+      };
+    };
     ts-reverse-proxy = {
       servers = {
         "ollama-reverse" = {
