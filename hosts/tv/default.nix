@@ -51,6 +51,9 @@ in
       allowedTCPPorts = [ 22 ];
       checkReversePath = "loose";
     };
+    interfaces."enp0s13f0u4" = {
+      wakeOnLan.enable = true;
+    };
   };
 
   environment.sessionVariables = {
