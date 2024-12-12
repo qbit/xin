@@ -38,7 +38,7 @@ in
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [ 22 10300 10200 10400 ];
       checkReversePath = "loose";
     };
   };
@@ -68,6 +68,11 @@ in
 
   systemd = {
     services = {
+      esphome = {
+        environment = {
+          GIT_CONFIG_SYSTEM = "/dev/null";
+        };
+      };
       ollama = {
         environment = {
           OLLAMA_ORIGINS = "*";
@@ -78,6 +83,30 @@ in
   };
 
   services = {
+    wyoming = {
+      openwakeword = {
+        enable = true;
+        uri = "tcp://0.0.0.0:10400";
+      };
+      faster-whisper = {
+        servers.ha = {
+          enable = true;
+          uri = "tcp://0.0.0.0:10300";
+          language = "en";
+        };
+      };
+      piper.servers.ha = {
+        enable = true;
+        uri = "tcp://0.0.0.0:10200";
+        voice = "en-us-ryan-medium";
+      };
+    };
+    esphome = {
+      enable = true;
+      address = "0.0.0.0";
+      port = 6053;
+      openFirewall = true;
+    };
     guix = {
       enable = true;
       gc = {
@@ -113,7 +142,7 @@ in
       };
     };
     rtlamr2mqtt = {
-      enable = true;
+      enable = false;
       configuration = {
         general = {
           device_ids_path = "${config.services.rtlamr2mqtt.package}/sdl_ids.txt";

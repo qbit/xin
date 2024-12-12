@@ -317,7 +317,6 @@ in
         }
       ];
     };
-
     avahi = {
       enable = true;
       openFirewall = true;
@@ -333,6 +332,8 @@ in
           pymetno
           ical
           grpcio
+          isal
+          zlib-ng
         ];
       customComponents = [
         (pkgs.python312Packages.callPackage ../../pkgs/openevse.nix { inherit (pkgs.home-assistant) pkgs; })
@@ -342,8 +343,8 @@ in
         "airthings_ble"
         "airvisual"
         "airvisual_pro"
+        "api"
         "apple_tv"
-        #"aprs"
         "brother"
         "ecobee"
         "esphome"
@@ -356,17 +357,24 @@ in
         "matter"
         "met"
         "mqtt"
-        "nextdns"
         "octoprint"
+        "piper"
         "prometheus"
         "pushover"
         "rest"
         "snmp"
+        "wake_on_lan"
+        "wake_word"
+        "websocket_api"
+        "whisper"
+        "wyoming"
         "zeroconf"
       ];
       config = {
+        api = { };
         sensor = [
         ];
+        "scene ui" = "!include scenes.yaml";
         mqtt.sensor = [
           {
             name = "Greenhouse Temperature";
@@ -384,7 +392,7 @@ in
         logger = {
           default = "warning";
           logs = {
-            #"homeassistant.components.starlink" = "debug";
+            # "homeassistant.components.esphome" = "debug";
           };
         };
         "automation manual" = [
@@ -444,7 +452,7 @@ in
       database = {
         createLocally = true;
       };
-      sig-helper.enable = true;
+      sig-helper.enable = false;
       extraSettingsFile = "/run/secrets/invidious_extra";
       address = "127.0.0.1";
       port = 1538;
