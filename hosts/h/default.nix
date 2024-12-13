@@ -1094,6 +1094,9 @@ in
 
             "/_matrix" = mkMatrixLoc;
             "/_synapse/client" = mkMatrixLoc;
+            "/_heisenbridge/media" = {
+              proxyPass = "http://127.0.0.1:9898";
+            };
           };
         };
       };

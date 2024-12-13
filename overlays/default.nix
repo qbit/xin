@@ -26,7 +26,9 @@ in
   ] ++
   (if isUnstable
   then [
+    heisenbridge
   ]
   else [
+    heisenbridge
   ]);
 }
