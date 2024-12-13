@@ -6,6 +6,7 @@
 let
   tsAddr = "100.84.170.57";
   oLlamaPort = 11434;
+  esphomePort = 6053;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -103,9 +104,8 @@ in
     };
     esphome = {
       enable = true;
-      address = "0.0.0.0";
-      port = 6053;
-      openFirewall = true;
+      address = "127.0.0.1";
+      port = esphomePort;
     };
     guix = {
       enable = true;
@@ -119,6 +119,11 @@ in
           enable = true;
           reverseName = "ollama";
           reversePort = oLlamaPort;
+        };
+        "esphome-reverse" = {
+          enable = true;
+          reverseName = "esphome";
+          reversePort = esphomePort;
         };
       };
     };
