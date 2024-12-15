@@ -374,7 +374,6 @@ in
         api = { };
         sensor = [
         ];
-        "scene ui" = "!include scenes.yaml";
         mqtt.sensor = [
           {
             name = "Greenhouse Temperature";
@@ -398,7 +397,8 @@ in
         "automation manual" = [
         ];
         "automation ui" = "!include automations.yaml";
-        "scripts ui" = "!include scripts.yaml";
+        "scene ui" = "!include scenes.yaml";
+        "script ui" = "!include scripts.yaml";
         rest = [
           {
             resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
