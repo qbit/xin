@@ -681,6 +681,7 @@ Custom agenda commands for various things.
     :after org
     :custom
     (org-roam-directory (file-truename "~/org-roam/"))
+    (org-roam-db-autosync-enable)
     (org-roam-capture-templates
      '(("d" "default" plain
         "%?"
