@@ -10,7 +10,7 @@ cmd("set t_Co=256");
 -- Theme / overrides
 cmd("colorscheme vacme");
 
-require("compe").setup {
+require("cmp").setup {
     enabled = true,
     autocomplete = true,
     source = {
@@ -61,7 +61,7 @@ lspc.lua_ls.setup {settings = {Lua = {diagnostics = {globals = {'vim'}}}}};
 lspc.nil_ls.setup {};
 lspc.perlpls.setup {};
 lspc.solargraph.setup {};
-lspc.tsserver.setup {};
+lspc.ts_ls.setup {};
 lspc.zls.setup {};
 lspc.htmx.setup {};
 
