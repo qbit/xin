@@ -106,6 +106,9 @@ in
       allowedUDPPorts = if testingMode then [ syslogPort ] else [ ];
       checkReversePath = "loose";
     };
+    interfaces."enp133s0" = {
+      wakeOnLan.enable = true;
+    };
   };
 
 
