@@ -270,6 +270,9 @@ in
   };
 
   services = {
+    tailscale.extraDaemonFlags = [
+      "--accept-dns=true"
+    ];
     avahi.enable = true;
     rkvm.client = {
       enable = true;
