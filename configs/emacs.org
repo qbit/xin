@@ -762,3 +762,31 @@ mail for some things and having to sync state between two sources is a pita.
         smtpmail-default-smtp-server   "smtp.fastmail.com"
         smtpmail-stream-type           'ssl)
 #+end_src
+
+** IRC
+
+#+begin_src emacs-lisp
+        (setq
+         rcirc-fill-column 'frame-width
+         rcirc-default-nick "qbit"
+         rcirc-default-port 6697
+         rcirc-default-full-name "Qbit"
+         rcirc-server-alist
+         '(("bounce.bold.daemon"
+            :server-alias "bLibera"
+            :encryption tls
+            :user-name "qbit@rcirc.europa/Libera")
+           ("bounce.bold.daemon"
+            :server-alias "bOFTC"
+            :encryption tls
+            :channels ("#cat-v")
+            :user-name "qbit@rcirc.europa/OFTC")))
+        (add-hook 'rcirc-mode-hook #'rcirc-track-minor-mode)
+        (add-hook 'rcirc-mode-hook #'flyspell-mode)
+        (setopt
+         rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
+         rcirc-bridge-bot-alist
+         '(("tapebot" . "<\\(.+?\\)>[[:space:]]+")
+           ("ijchain" . "<\\(.+?\\)>[[:space:]]+")
+  	 ("ischain" . "<\\(.+?\\)>[[:space:]]+")))
+#+end_src
