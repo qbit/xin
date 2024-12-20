@@ -157,6 +157,20 @@ in
       mode = "400";
       neededForUsers = true;
     };
+    xin_store_pub = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "root";
+      group = "wheel";
+      mode = "440";
+      neededForUsers = true;
+    };
+    xin_store_key = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "root";
+      group = "wheel";
+      mode = "440";
+      neededForUsers = true;
+    };
   };
 
   users = {
@@ -273,8 +287,21 @@ in
     git.config.safe.directory = "/home/abieber/aef100";
     dconf.enable = true;
     zsh.enable = true;
-    ssh.knownHosts = {
-      "[192.168.122.249]:7022".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
+    ssh = {
+      knownHosts = {
+        "[192.168.122.249]:7022".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
+      };
+      extraConfig =
+        ''
+          Match host "xin-store" exec "${pkgs.netcat}/bin/nc -z nix-binary-cache.otter-alligator.ts.net 22"
+            Hostname nix-binary-cache.otter-alligator.ts.net
+            IdentityFile ${config.sops.secrets.xin_store_key.path}
+            User nix-ssh
+          Match host xin-store exec "${pkgs.netcat}/bin/nc -z 10.6.0.110 22"
+            IdentityFile ${config.sops.secrets.xin_store_key.path}
+            User nix-ssh
+            Hostname 10.6.0.110
+        '';
     };
   };
 
