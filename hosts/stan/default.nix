@@ -162,14 +162,12 @@ in
       owner = "root";
       group = "wheel";
       mode = "440";
-      neededForUsers = true;
     };
     xin_store_key = {
       sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
       group = "wheel";
       mode = "440";
-      neededForUsers = true;
     };
   };
 
