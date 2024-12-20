@@ -71,6 +71,10 @@ with lib; {
         mode = "400";
         owner = config.services.ts-reverse-proxy.servers."nix-binary-cache".user;
       };
+      nix_ssh_passwd = {
+        mode = "400";
+        owner = "root";
+      };
     };
     environment.systemPackages = with pkgs; [
       inputs.po.packages.${pkgs.system}.po
@@ -94,12 +98,24 @@ with lib; {
     };
 
     nix = {
-      settings.allowed-users = [ "root" config.xinCI.user "harmonia" ];
+      settings.allowed-users = [ "root" config.xinCI.user "harmonia" "nix-ssh" ];
       gc = {
         automatic = true;
         dates = "daily";
         options = "--delete-older-than 60d";
       };
+      sshServe = {
+        enable = true;
+        keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrLpxf8YDbofwtgIp9wSykkiEkB1JEU4qw1qtCLfvUY stan"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrKLKzJQcecdPXUm5xCfinLKDStNP3MawaXy06krcK5 abieber@litr"
+        ];
+      };
+    };
+
+    users = {
+      users."nix-ssh".hashedPasswordFile = config.sops.secrets.nix_ssh_passwd.path;
     };
 
     systemd = {

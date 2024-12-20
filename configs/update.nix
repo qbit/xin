@@ -1,5 +1,6 @@
 { config
 , lib
+, pkgs
 , ...
 }:
 with lib; {
@@ -37,6 +38,14 @@ with lib; {
     (mkIf config.needsDeploy.enable {
       programs.ssh.extraConfig =
         ''
+          Match host "xin-store" exec "${pkgs.netcat}/bin/nc -z nix-binary-cache.otter-alligator.ts.net 22"
+            Hostname nix-binary-cache.otter-alligator.ts.net
+            IdentityFile ${config.sops.secrets.xin_secrets_deploy_key.path}
+            User nix-ssh
+          Match host xin-store exec "${pkgs.netcat}/bin/nc -z 10.6.0.110 22"
+            IdentityFile ${config.sops.secrets.xin_secrets_deploy_key.path}
+            User nix-ssh
+            Hostname 10.6.0.110
           Host xin-secrets-ro
             IdentityFile ${config.sops.secrets.xin_secrets_deploy_key.path}
             User gitea

@@ -176,6 +176,15 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  nix = {
+    settings = {
+      substituters = [
+        "https://cache.nixos.org"
+        "ssh://nix-ssh@xin-store"
+      ];
+    };
+  };
+
   environment = {
     etc = {
       "vscode-settings.json".text = builtins.toJSON {
