@@ -109,7 +109,6 @@ with lib; {
         keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJhIeKYMLpGttqY+MZo87BJf41yVMdF6kIwJnTiNHWvU xin-store"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhHkjVK726VMQcuiWJobYQURS4v31vnLgCBrJstu4+O xin-store-user"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpAhTO2PV+VEpmPteiazdBz4iCIl2XM+wLCFxwQhqMF"
         ];
       };
     };
