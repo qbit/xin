@@ -107,9 +107,9 @@ with lib; {
       sshServe = {
         enable = true;
         keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrLpxf8YDbofwtgIp9wSykkiEkB1JEU4qw1qtCLfvUY stan"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrKLKzJQcecdPXUm5xCfinLKDStNP3MawaXy06krcK5 abieber@litr"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJhIeKYMLpGttqY+MZo87BJf41yVMdF6kIwJnTiNHWvU xin-store"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhHkjVK726VMQcuiWJobYQURS4v31vnLgCBrJstu4+O xin-store-user"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpAhTO2PV+VEpmPteiazdBz4iCIl2XM+wLCFxwQhqMF"
         ];
       };
     };
