@@ -336,7 +336,6 @@ in
       dino
       direwolf
       element-desktop
-      element-desktop-wayland
       elmPackages.elm
       elmPackages.elm-format
       elmPackages.elm-language-server
