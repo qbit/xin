@@ -62,7 +62,6 @@ in
 
       displayManager.lightdm.enable = true;
 
-      videoDrivers = [ "intel" ];
       deviceSection = ''
         Option "DRI" "2"
         Option "TearFree" "true"
