@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "8eabd2ae2ca1d7756417a1ee5b41f09c5d997634",
-  "hash": "sha256-sdGdWulAM9+EIf816DQ0Y7edJDJrH0EHTr87qy7prAI=",
-  "version": "2024-11-27",
-  "comment": "upstream: fix argument of &quot;Compression&quot; directive in ssh -G config"
+  "rev": "826483d51a9fee60703298bbf839d9ce37943474",
+  "hash": "sha256-yPyucPB6N/n2LXBrfzg411Z3/Kr3pCIXvJCxFhEHDdM=",
+  "version": "2024-12-16",
+  "comment": "fix old typo (s/SYSVINITSTOPT/SYSVINITSTOP/)"
 }
