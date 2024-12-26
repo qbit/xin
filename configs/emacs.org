@@ -780,13 +780,23 @@ mail for some things and having to sync state between two sources is a pita.
       :server-alias "bOFTC"
       :encryption tls
       :channels ("#cat-v")
-      :user-name "qbit@rcirc.europa/OFTC")))
+      :user-name "qbit@rcirc.europa/OFTC")
+     ("bounce.bold.daemon"
+      :server-alias "bHackers"
+      :nick "abieber"
+      :encryption tls
+      :user-name "qbit@rcirc.europa/hackers")
+     ("bounce.bold.daemon"
+      :server-alias "bPorters"
+      :nick "abieber"
+      :encryption tls
+      :user-name "qbit@rcirc.europa/porters")))
   (add-hook 'rcirc-mode-hook #'rcirc-track-minor-mode)
   (add-hook 'rcirc-mode-hook #'flyspell-mode)
   (setopt
    rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
    rcirc-bridge-bot-alist
-   '(("tapebot" . "^<\\([^>]+\\)> \\(.*\\)$")
-     ("ijchain" . "^<\\([^>]+\\)> \\(.*\\)$")
-     ("ischain" . "^<\\([^>]+\\)> \\(.*\\)$")))
-#+end_src
+   '(("tapebot" . "<\\(.+?\\)>[[:space:]]+")
+     ("ijchain" . "<\\(.+?\\)>[[:space:]]+")
+     ("ischain" . "<\\(.+?\\)>[[:space:]]+")))
+#+end_
