@@ -11,6 +11,7 @@ let
   inherit (inputs.fynado.packages.${pkgs.system}) fynado;
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   inherit (inputs.calnow.packages.${pkgs.system}) calnow;
+  inherit (inputs.ghostty.packages.${pkgs.system}) ghostty;
   firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr =
@@ -113,6 +114,8 @@ with lib; {
           calnow
           drawterm-wayland
           exiftool
+          fynado
+          ghostty
           go-font
           govulncheck
           hpi
@@ -125,7 +128,6 @@ with lib; {
           recoll
           rpr
           traygent
-          fynado
           trayscale
           vlc
           zeal
