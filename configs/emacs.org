@@ -798,5 +798,5 @@ mail for some things and having to sync state between two sources is a pita.
    rcirc-bridge-bot-alist
    '(("tapebot" . "<\\(.+?\\)>[[:space:]]+")
      ("ijchain" . "<\\(.+?\\)>[[:space:]]+")
-     ("ischain" . "<\\(.+?\\)>[[:space:]]+")))
-#+end_
+     ("ischain" . "<\\(.+?\\)>[[:space:]]+")))  
+#+end_src
