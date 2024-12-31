@@ -379,7 +379,6 @@ in
       quodlibet-full #stable
       # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       #
-      rex
       rtl-sdr
       sdrpp
       signal-desktop

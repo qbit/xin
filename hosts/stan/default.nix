@@ -235,7 +235,6 @@ in
       obs-studio
       openvpn
       remmina
-      rex
       #rustdesk
       snmpcheck
       sshfs
