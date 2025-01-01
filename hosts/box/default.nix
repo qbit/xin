@@ -453,7 +453,7 @@ in
       database = {
         createLocally = true;
       };
-      sig-helper.enable = false;
+      sig-helper.enable = true;
       extraSettingsFile = "/run/secrets/invidious_extra";
       address = "127.0.0.1";
       port = 1538;
