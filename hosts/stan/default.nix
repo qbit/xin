@@ -286,7 +286,6 @@ in
         ];
       })
       wireshark
-      zeek
     ];
   };
 
