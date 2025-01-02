@@ -60,9 +60,9 @@ in
             ];
           }
           {
-            name = "btop";
+            name = "top";
             commands = [
-              "btop"
+              "top"
             ];
           }
           {
