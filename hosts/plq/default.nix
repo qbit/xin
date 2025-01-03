@@ -74,6 +74,7 @@ in
     direnv
     exiftool
     gh
+    gnupg
     go
     mosh
     nb
