@@ -1,22 +1,19 @@
 { buildPythonPackage
 , buildHomeAssistantComponent
-, setuptools-scm
-, setuptools
 , fetchFromGitHub
 , fetchPypi
-, aiohttp
-, requests
+, home-assistant
 , ...
 }:
 let
-  my-python-openevse-http = buildPythonPackage rec {
+  my-python-openevse-http = home-assistant.python.pkgs.buildPythonPackage rec {
     pname = "python-openevse-http";
     version = "0.1.61";
 
     pyproject = true;
 
-    nativeBuildInputs = [ setuptools ];
-    propagatedBuildInputs = [
+    nativeBuildInputs = with home-assistant.python.pkgs; [ setuptools-scm setuptools ];
+    propagatedBuildInputs = with home-assistant.python.pkgs; [
       requests
       aiohttp
     ];
@@ -32,15 +29,14 @@ buildHomeAssistantComponent rec {
   domain = "openevse";
   version = "2.1.45";
 
-  nativeBuildInputs = [
+  nativeBuildInputs = with home-assistant.python.pkgs; [
     setuptools-scm
+    setuptools
   ];
 
   propagatedBuildInputs = [
     my-python-openevse-http
   ];
-
-  buildInputs = [ setuptools-scm ];
 
   src = fetchFromGitHub {
     inherit owner;
