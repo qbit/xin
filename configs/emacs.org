@@ -771,6 +771,8 @@ mail for some things and having to sync state between two sources is a pita.
    rcirc-default-nick "qbit"
    rcirc-default-port 6697
    rcirc-default-full-name "Qbit"
+   rcirc-reconnect-delay 10
+   rcirc-reconnect-attempts 5
    rcirc-server-alist
    '(("bounce.bold.daemon"
       :server-alias "bLibera"
@@ -798,5 +800,5 @@ mail for some things and having to sync state between two sources is a pita.
    rcirc-bridge-bot-alist
    '(("tapebot" . "<\\(.+?\\)>[[:space:]]+")
      ("ijchain" . "<\\(.+?\\)>[[:space:]]+")
-     ("ischain" . "<\\(.+?\\)>[[:space:]]+")))  
+     ("ischain" . "<\\(.+?\\)>[[:space:]]+")))
 #+end_src
