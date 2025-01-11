@@ -31,6 +31,8 @@ in
         (aspellWithDicts (dicts: with dicts; [ en en-computers es de ]))
         go-font
 
+        racket
+        guile
         graphviz
         ghostscript
         mermaid-cli

@@ -306,6 +306,14 @@ easier for me to treat it like a regular shell.
 
 * Language Configurations
 
+** scheme
+
+#+begin_src emacs-lisp
+  (use-package geiser)
+  (use-package geiser-guile)
+  (use-package geiser-racket)
+#+end_src
+
 ** OCaml
 
 #+begin_src emacs-lisp
