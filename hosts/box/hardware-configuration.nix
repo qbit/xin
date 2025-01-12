@@ -56,6 +56,11 @@
       fsType = "zfs";
     };
 
+    "/media/naughty" = {
+      device = "rpool/media/naughty";
+      fsType = "zfs";
+    };
+
     "/media/git" = {
       device = "rpool/git";
       fsType = "zfs";

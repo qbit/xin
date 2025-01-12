@@ -833,6 +833,9 @@ in
         backup_exec	date "+ backup of /var started at %c"
         backup	/var/	var/
         backup_exec	date "+ backup of /var ended at %c"
+        backup_exec	date "+ backup of /backups started at %c"
+        backup	/backups/ backups/
+        backup_exec	date "+ backup of /backups ended at %c"
       '';
       cronIntervals = { daily = "50 21 * * *"; };
     };
