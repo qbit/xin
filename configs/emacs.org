@@ -732,28 +732,26 @@ Extending org with the ability to transclude makes for a powerhouse!
 mail for some things and having to sync state between two sources is a pita.
 
 #+begin_src emacs-lisp
-  (use-package gnus
-    :custom
-    (gnus-use-cache t)
-    (gnus-use-full-window nil)
-    (gnus-suppress-duplicates t)
-    (gnus-inhibit-startup-message t)
-    (gnus-asynchronous t)
-    (gnus-sum-thread-tree-false-root "")
-    (gnus-sum-thread-tree-indent " ")
-    (gnus-sum-thread-tree-leaf-with-other "├► ")
-    (gnus-sum-thread-tree-root "")
-    (gnus-sum-thread-tree-single-leaf "╰► ")
-    (gnus-sum-thread-tree-vertical "│")
-    (gnus-summary-line-format "%U%R%z %(%&user-date>;  %-15,15f  %B%s%)\n")
-    (gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
-    (gnus-thread-sort-functions '(gnus-thread-sort-by-date))
-    (gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M")))
-    (gnus-select-method '(nnimap "imap.fastmail.com"
-                                 (nnimap-server-port "imaps")
-                                 (nnimap-stream ssl)
-                                 (nnimap-expunge 'on-exit)))
-    (gnus-secondary-select-methods '((nntp "news.gmane.io"))))
+  (setq gnus-use-cache t
+        gnus-use-full-window nil
+        gnus-suppress-duplicates t
+        gnus-inhibit-startup-message t
+        gnus-asynchronous t
+        gnus-sum-thread-tree-false-root ""
+        gnus-sum-thread-tree-indent " "
+        gnus-sum-thread-tree-leaf-with-other "├► "
+        gnus-sum-thread-tree-root ""
+        gnus-sum-thread-tree-single-leaf "╰► "
+        gnus-sum-thread-tree-vertical "│"
+        gnus-summary-line-format "%U%R%z %(%&user-date>;  %-15,15f  %B%s%)\n"
+        gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
+        gnus-thread-sort-functions '(gnus-thread-sort-by-date)
+        gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
+        gnus-select-method '(nnimap "imap.fastmail.com"
+  				  (nnimap-server-port "imaps")
+  				  (nnimap-stream ssl)
+  				  (nnimap-expunge 'on-exit))
+        gnus-secondary-select-methods '((nntp "news.gmane.io")))
 #+end_src
 
 ** SMTP
