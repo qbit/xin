@@ -534,6 +534,15 @@ in
         monthly = 3;
         weekly = 2;
       };
+      autoReplication = {
+        enable = true;
+        host = "10.6.0.245";
+        identityFilePath = "/etc/ssh/ssh_host_ed25519_key";
+        localFilesystem = "rpool";
+        recursive = true;
+        remoteFilesystem = "tank/backups/box";
+        username = "root";
+      };
     };
 
     jellyfin = {
