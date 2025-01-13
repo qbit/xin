@@ -193,8 +193,7 @@ in
   nixpkgs = {
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = todo "figure out what is using openssl-1.1.1w" [
-        "openssl-1.1.1w"
+      permittedInsecurePackages = todo "remove asp/dotnet core stuff" [
         "aspnetcore-runtime-wrapped-6.0.36"
         "aspnetcore-runtime-6.0.36"
         "dotnet-sdk-wrapped-6.0.428"
