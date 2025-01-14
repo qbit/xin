@@ -73,6 +73,14 @@ I know I am in emacs, don't need to see the startup screen.
   (setq transient-history-file (expand-file-name "~/.emacs.d/transient"))
 #+end_src
 
+*** Common functionality
+
+#+begin_src emacs-lisp
+  (defun xin-no-check ()
+    (interactive)
+    (setenv "SKIP_CHECK" "1"))
+#+end_src
+
 *** Behavior
 
 Switch various defaults to be more comfortable for myself.
