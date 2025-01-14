@@ -332,6 +332,7 @@ in
         };
       };
       matrix-synapse.after = [ "icbirc.service" ];
+      soju.after = [ "icbirc.service" ];
       icb-tunnel = {
         wants =
           [ "network-online.target" "multi-user.target" ];
