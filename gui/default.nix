@@ -105,8 +105,9 @@ with lib; {
         etc."traygent.json" = { text = traygentCmds; };
         sessionVariables = {
           SSH_AUTH_SOCK = "$HOME/.traygent";
+        } // (if config.networking.hostName != "stan" then { } else {
           OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
-        };
+        });
         systemPackages = with pkgs; (xinlib.filterList [
           bc
           beyt
