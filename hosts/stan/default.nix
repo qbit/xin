@@ -314,6 +314,9 @@ in
   };
 
   services = {
+    ollama = {
+      enable = true;
+    };
     avahi.enable = true;
     rkvm.client = {
       enable = true;
