@@ -39,7 +39,7 @@ in
       }
     ];
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_6;
     kernelParams = [
       "fbcon=rotate:1"
       "gpd-pocket-fan.speed_on_ac=0"

@@ -1,0 +1,13 @@
+diff --git a/heisenbridge/plumbed_room.py b/heisenbridge/plumbed_room.py
+index 869e43e..c91b151 100644
+--- a/heisenbridge/plumbed_room.py
++++ b/heisenbridge/plumbed_room.py
+@@ -46,7 +46,7 @@ def sanitize_irc_nick(nick):
+ class PlumbedRoom(ChannelRoom):
+     max_lines = 5
+     use_pastebin = True
+-    use_reacts = True
++    use_reacts = False
+     use_displaynames = True
+     use_disambiguation = True
+     use_zwsp = False

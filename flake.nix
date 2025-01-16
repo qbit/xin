@@ -5,12 +5,16 @@
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    stable.url = "github:NixOS/nixpkgs/nixos-23.11-small";
+    stable.url = "github:NixOS/nixpkgs/nixos-24.11-small";
+
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-2.tar.gz";
+      inputs.nixpkgs.follows = "unstable";
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
-        nixpkgs-stable.follows = "stable";
         nixpkgs.follows = "unstable";
       };
     };
@@ -32,16 +36,19 @@
       };
     };
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "unstableSmall";
     };
 
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs = {
         nixpkgs.follows = "stable";
-        nixpkgs-23_11.follows = "stable";
       };
     };
 
@@ -87,7 +94,11 @@
       url = "github:qbit/po";
       inputs.nixpkgs.follows = "unstable";
     };
-    tsRevProx = {
+    tsns = {
+      url = "github:qbit/tsns";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    ts-reverse-proxy = {
       url = "github:qbit/ts-reverse-proxy";
       inputs.nixpkgs.follows = "unstable";
     };
@@ -95,7 +106,14 @@
       url = "github:qbit/traygent";
       inputs.nixpkgs.follows = "unstable";
     };
-
+    fynado = {
+      url = "github:qbit/fynado";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    calnow = {
+      url = "github:qbit/calnow";
+      inputs.nixpkgs.follows = "unstable";
+    };
     gqrss = {
       url = "github:qbit/gqrss";
       flake = false;
@@ -104,35 +122,43 @@
 
   outputs =
     { self
+    , beyt
+    , calnow
     , darwin
+    , emacs-overlay
     , gostart
-    , mcchunkie
     , kogs
+    , lix-module
+    , mcchunkie
+    , microca
+    , nixos-hardware
     , po
     , pots
     , pr-status
+    , simple-nixos-mailserver
     , stable
-    , tsRevProx
     , traygent
+    , fynado
+    , ts-reverse-proxy
+    , tsns
     , tsvnstat
     , unstable
     , unstableSmall
     , xin-secrets
     , xintray
-    , simple-nixos-mailserver
-    , nixos-hardware
-    , beyt
     , ...
     } @ inputs:
     let
-      xinlib = import ./lib { inherit (unstable) lib; };
+      xinlib = import ./lib {
+        inherit (unstable) lib;
+        inherit inputs;
+      };
       supportedSystems = [ "x86_64-linux" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
       unstablePkgsFor = forAllSystems (system:
         import unstable {
           inherit system;
-          #imports = [ ./overlays ];
         });
       stablePkgsFor = forAllSystems (system:
         import stable {
@@ -146,18 +172,22 @@
 
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
+          lix-module.nixosModules.default
+          ts-reverse-proxy.nixosModule
+          tsns.nixosModule
         ];
       };
 
       overlays = [
-        inputs.emacs-overlay.overlay
-        inputs.gostart.overlay
-        inputs.mcchunkie.overlay
-        inputs.kogs.overlay
-        inputs.microca.overlay
-        inputs.pots.overlay
-        inputs.pr-status.overlay
-        inputs.tsRevProx.overlay
+        emacs-overlay.overlay
+        gostart.overlay
+        kogs.overlay
+        mcchunkie.overlay
+        microca.overlay
+        pots.overlay
+        pr-status.overlay
+        ts-reverse-proxy.overlay
+        tsns.overlay
       ];
 
       buildSys = sys: sysBase: extraMods: name:
@@ -195,6 +225,7 @@
           specialArgs = { inherit xinlib; };
           modules = [
             ./overlays
+            lix-module.nixosModules.default
 
             ./hosts/plq
           ];
@@ -231,12 +262,16 @@
           nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
         clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
+        tv = buildSys "x86_64-linux" unstable [
+          nixos-hardware.nixosModules.framework-11th-gen-intel
+        ] "tv";
         orcim = buildSys "x86_64-linux" unstable [ ] "orcim";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
         stan = buildSys "x86_64-linux" unstable [
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "stan";
         weather = buildSys "aarch64-linux" stable [ ] "weather";
+        retic = buildSys "aarch64-linux" stable [ ] "retic";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
         box = buildSys "x86_64-linux" unstable [ ./configs/hardened.nix ] "box";
@@ -298,10 +333,12 @@
             inherit spkgs;
             isUnstable = true;
           };
+          irken = upkgs.tclPackages.callPackage ./pkgs/irken.nix { };
+          krha = upkgs.callPackage ./pkgs/krunner-krha.nix { };
           ttfs = upkgs.callPackage ./pkgs/ttfs.nix { };
+          intiface-engine = upkgs.callPackage ./pkgs/intiface-engine.nix { };
           flake-warn =
             spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
-          #kurinto = spkgs.callPackage ./pkgs/kurinto.nix {};
           gen-patches =
             spkgs.callPackage ./bins/gen-patches.nix { inherit spkgs; };
           yarr = spkgs.callPackage ./pkgs/yarr.nix {
@@ -311,20 +348,33 @@
           precursorupdater = spkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
             inherit spkgs;
           };
+          watchmap = spkgs.python3Packages.callPackage ./pkgs/watchmap.nix {
+            inherit spkgs;
+          };
           rtlamr2mqtt = spkgs.python3Packages.callPackage ./pkgs/rtlamr2mqtt.nix {
             inherit spkgs;
           };
+          kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
+            inherit upkgs;
+          };
+          ghexport = upkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
+            inherit upkgs;
+          };
+          hpi =
+            upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
           openevse =
-            upkgs.python312Packages.callPackage ./pkgs/openevse.nix { inherit upkgs; };
-          starlink-grpc-core =
-            upkgs.python312Packages.callPackage ./pkgs/starlink-grpc.nix { inherit upkgs; };
-          sliding-sync =
-            spkgs.callPackage ./pkgs/sliding-sync.nix { inherit spkgs; };
+            upkgs.python3Packages.callPackage ./pkgs/openevse.nix { inherit upkgs; };
+          ble-serial =
+            upkgs.python3Packages.callPackage ./pkgs/ble-serial.nix { inherit upkgs; };
+          promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
+            inherit upkgs;
+          };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
-          gotosocial =
-            spkgs.callPackage ./pkgs/gotosocial.nix { inherit spkgs; };
           zutty = upkgs.callPackage ./pkgs/zutty.nix {
+            inherit upkgs;
+          };
+          mvoice = upkgs.callPackage ./pkgs/mvoice.nix {
             inherit upkgs;
           };
           inherit (xintray.packages.${system}) xintray;
@@ -332,13 +382,24 @@
           inherit (tsvnstat.packages.${system}) tsvnstat;
           inherit (pots.packages.${system}) pots;
           inherit (po.packages.${system}) po;
-          inherit (tsRevProx.packages.${system}) ts-reverse-proxy;
+          inherit (ts-reverse-proxy.packages.${system}) ts-reverse-proxy;
+          inherit (tsns.packages.${system}) tsns;
           inherit (traygent.packages.${system}) traygent;
+          inherit (fynado.packages.${system}) fynado;
+          inherit (calnow.packages.${system}) calnow;
 
           inherit (spkgs) matrix-synapse;
+
+          xin = upkgs.callPackage ./bins/xin { inherit upkgs; };
+          openssh = upkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit upkgs; };
+          matrix = self.nixosConfigurations.h.pkgs.matrix-synapse;
         });
 
       templates = {
+        "shell" = {
+          path = ./templates/shell;
+          description = "A bare bones shell template.";
+        };
         "ada" = {
           path = ./templates/ada;
           description = "Ada template.";
@@ -349,7 +410,11 @@
         };
         "go-fyne" = {
           path = ./templates/go-fyne;
-          description = "Go template.";
+          description = "Go + fyne template.";
+        };
+        "go-fyne-shell" = {
+          path = ./templates/go-fyne;
+          description = "Go + fyne template for shell usage.";
         };
         "perl" = {
           path = ./templates/perl;
@@ -367,7 +432,7 @@
 
       checks =
         let
-          buildList = [ "europa" "stan" "h" "box" "faf" "weather" "clunk" "orcim" ];
+          buildList = [ "europa" "stan" "h" "box" "orcim" "tv" "retic" ];
         in
         with unstable.lib;
         foldl' recursiveUpdate { } (mapAttrsToList

@@ -31,8 +31,14 @@ with lib; {
 
   config = mkMerge [
     (mkIf config.tailscale.enable {
-      services = { tailscale = { enable = mkDefault true; }; };
-      systemd.services.tailscaled.serviceConfig.Environment = [ "TS_NO_LOGS_NO_SUPPORT=true" ];
+      services = {
+        tailscale = {
+          enable = mkDefault true;
+          extraDaemonFlags = [
+            "--no-logs-no-support"
+          ];
+        };
+      };
       networking.firewall.checkReversePath = mkDefault "loose";
     })
     (mkIf (config.tailscale.enable && config.tailscale.sshOnly) {

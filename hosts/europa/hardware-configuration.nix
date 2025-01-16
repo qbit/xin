@@ -16,6 +16,32 @@
     extraModulePackages = [ ];
   };
 
+  environment.etc."davfs2/secrets" = {
+    text = ''
+'';
+    user = "root";
+    group = "root";
+    mode = "600";
+  };
+
+  services.davfs2 = {
+    enable = true;
+    davUser = "qbit";
+    settings = {
+      globalSection = {
+        ask_auth = false;
+      };
+      sections = {
+        "/run/media/qbit/TailDrive" = {
+          gui_optimize = true;
+        };
+        "/run/media/qbit/keestore" = {
+          gui_optimize = true;
+        };
+      };
+    };
+  };
+
   fileSystems = {
     "/" =
       {
@@ -32,7 +58,37 @@
     "/run/media/qbit/backup" = {
       device = "/dev/disk/by-uuid/6e71eeea-6437-46f4-88d0-126c92af42ef";
       fsType = "ext4";
-      label = "backup";
+      neededForBoot = false;
+    };
+
+    "/run/media/qbit/keestore" = {
+      device = "http://100.100.100.100:8080/tapenet.org/box/keestore";
+      fsType = "davfs";
+      options = [
+        "_netdev"
+        "x-systemd.automount"
+        "reconnect"
+        "auto_cache"
+        "rw"
+        "user"
+        "uid=1000"
+        "gid=1000"
+      ];
+      neededForBoot = false;
+    };
+    "/run/media/qbit/TailDrive" = {
+      device = "http://100.100.100.100:8080/tapenet.org/box/media";
+      fsType = "davfs";
+      options = [
+        "_netdev"
+        "x-systemd.automount"
+        "reconnect"
+        "auto_cache"
+        "rw"
+        "user"
+        "uid=1000"
+        "gid=1000"
+      ];
       neededForBoot = false;
     };
   };
@@ -45,8 +101,13 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   hardware = {
+    framework = {
+      laptop13 = {
+        audioEnhancement.enable = true;
+      };
+    };
     bluetooth.enable = true;
     rtl-sdr.enable = true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
-}
+} 

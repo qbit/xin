@@ -10,26 +10,9 @@ rebuild() {
 	host="$(resolveAlias $1)"
 	skip_check=$2
 
-	msg "Rebuilding: ${host}"
-
-	if ! tsAlive $host; then
-		msg "can't reach ${1}.. skipping.."
-		return
-	else
-		host="${host}.otter-alligator.ts.net"
-	fi
-
-	hostVersion=$(${SSH} root@${host} 'nixos-version --json | jq -r .configurationRevision')
-	if [ $? != 0 ]; then
-		return $?
-	fi
-
-	if [ "$hostVersion" = "$CurrentVersion" ] && [ $skip_check = false ]; then
-		msg "Up-to-date: ${host}"
-		return 0
-	fi
-
-	nixos-rebuild ${TRACE} --flake .#${1} --build-host root@${host} --target-host root@${host} switch 2>&1 | nom
+	build_host=${BUILD_HOST:-$host}
+	msg "Rebuilding: ${host} using ${build_host}"
+	nixos-rebuild ${TRACE} --flake .#${1} --build-host "root@${build_host}" --target-host "root@${host}" switch 2>&1 | nom
 	return $?
 }
 
@@ -64,63 +47,6 @@ if [ "$1" = "watch" ]; then
 	exit 0
 fi
 
-if [ "$1" = "status" ]; then
-	rev=$(git rev-parse HEAD)
-	msg "Currently at: ${rev}\t($(git log --format=%B -n 1 $rev | head -n1))"
-	for h in $(listNixOSHosts); do
-		host="$(resolveAlias $h)"
-		if ! tsAlive $host; then
-			msg "can't reach ${h}.. skipping.."
-			continue
-		fi
-		echo -n "===> $h: "
-		host_data="$(${SSH} root@${host} 'xin-status')"
-		remote_rev=$(echo $host_data | jq -r .configurationRevision)
-		remote_ver=$(echo $host_data | jq -r .nixosVersion)
-		needs_reboot=$(echo $host_data | jq -r .needs_restart)
-		rev_msg="DIRTY"
-		rev_status="✓"
-		if [ "$remote_rev" != "DIRTY" ]; then
-			rev_msg=$(git log --format=%B -n1 $remote_rev | head -n1)
-			if [ "${remote_rev}" != "${rev}" ]; then
-				rev_status="×"
-			fi
-		fi
-		echo -en "\t\t${remote_ver}\t${rev_status}\t(${rev_msg})"
-		if [ "$needs_reboot" == "false" ]; then
-			echo -e "\tOK"
-		else
-			echo -e "\tREBOOT"
-		fi
-	done
-	exit 0
-fi
-
-if [ "$1" = "install" ]; then
-	h="$2"
-	host="$(resolveAlias $2)"
-	dest="${3:-/nix/store}"
-	shift
-	shift
-
-	if [ ! -d hosts/${h} ]; then
-		msg "No config found for $h"
-		exit 1
-	fi
-
-	set -eu
-	set -x
-	mkdir -p .gcroots
-	out=$(nix build -o .gcroots/${h} --json .#nixosConfigurations.${h}.config.system.build.toplevel | jq -r '.[0].outputs.out')
-
-	nix copy -s --to "ssh://root@${host}?remote-store=${dest}" "$out"
-	nix copy -s --derivation --to "ssh://root@${host}?remote-store=${dest}" "$out"
-
-	${SSH} "root@${host}" NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root "$dest" -- nix --extra-experimental-features nix-command build --profile /nix/var/nix/profiles/system "$out"
-	${SSH} "root@${host}" NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root "$dest" -- /run/current-system/bin/switch-to-configuration switch
-	exit 0
-fi
-
 if [ "$1" = "local" ]; then
 	sudo nixos-rebuild ${TRACE} --option eval-cache false --flake .#$(uname -n) switch 2>&1 | nom
 	exit $?
@@ -134,21 +60,17 @@ if [ "$1" = "update" ]; then
 	done
 
 	# TODO: capture commit message and wrap it with what is being updated.
-	if [ $can_sign = 1 ]; then
-		if [ "$single" != "" ]; then
-			nix flake update --commit-lock-file "$single"
-		else
-			nix flake update --commit-lock-file
-		fi
-		exit
-	else
+	if [ $can_sign != 1 ]; then
 		echo "Can't find signing key."
 		exit 1
 	fi
-fi
 
-if [ "$1" = "installer" ]; then
-	nix build .#nixosConfigurations.isoInstall.config.system.build.isoImage
+	if [ "$single" != "" ]; then
+		nix flake update --commit-lock-file "$single"
+	else
+		nix flake update --commit-lock-file
+	fi
+	nix flake archive
 	exit $?
 fi
 

@@ -16,7 +16,7 @@ in
     defaultUsers = {
       enable = mkOption {
         description = "Enable regular set of users";
-        default = true;
+        default = if (builtins.hasAttr "${config.networking.hostName}" config.xin-secrets) then true else false;
         example = true;
         type = lib.types.bool;
       };
@@ -26,14 +26,15 @@ in
   config =
     let
       inherit (config.networking) hostName;
-      secretAttrs = config.xin-secrets.${hostName}.user_passwords;
       hasQbit =
-        if builtins.hasAttr "qbit" secretAttrs then
-          true
-        else false;
+        if (builtins.hasAttr hostName config.xin-secrets) &&
+          (builtins.hasAttr "qbit" config.xin-secrets.${hostName}.user_passwords) then true else false;
     in
     mkIf config.defaultUsers.enable {
       sops =
+        let
+          secretAttrs = config.xin-secrets.${hostName}.user_passwords;
+        in
         {
           age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
           secrets = mkMerge [

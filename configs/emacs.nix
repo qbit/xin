@@ -1,78 +1,46 @@
-{ runCommand
-, emacsWithPackagesFromUsePackage
-, pkgs
-, makeWrapper
-, writeTextDir
-, emacs
-, emacsPkg ? pkgs.emacs-gtk
+{ pkgs
 , isUnstable
+, lib
+, config
 , ...
 }:
 let
-  # Generate a .el file from our emacs.org.
-  emacsConfig = runCommand "emacsConfig" { } ''
-    mkdir -p $out
-    cp -v ${./emacs.org} $out/emacs.org
-    cd $out
-    ${emacs}/bin/emacs --batch -Q -q \
-                       --debug-init \
-                       -l org emacs.org \
-                       -f org-babel-tangle
-    if [ $? != 0 ]; then
-      echo "Generating failed!"
-      exit 1;
+  myEmacs = pkgs.callPackage ../pkgs/emacs.nix { inherit isUnstable; };
+  cfg = config.myEmacs;
+  editorScript = pkgs.writeShellScriptBin "emacseditor" ''
+    if [ -z "$1" ]; then
+      exec ${myEmacs}/bin/emacsclient --create-frame --alternate-editor ${myEmacs}/bin/emacs
     else
-      echo "Generated org config!"
+      exec ${myEmacs}/bin/emacsclient --alternate-editor ${myEmacs}/bin/emacs "$@"
     fi
   '';
-
-  # init.el to load my config and other dependencies.
-  emacsInit = writeTextDir "share/emacs/site-lisp/init.el" ''
-    (message "Loading my 'emacs.org' config from: ${emacsConfig}")
-    (load "${emacsConfig}/emacs.el")
-  '';
-  emacsInitDir = "${emacsInit}/share/emacs/site-lisp";
-
-  unstablePkgs = if isUnstable then with pkgs; [ htmx-lsp ] else [ ];
-
-  # Binaries that are needed in emacs
-  emacsDepList = with pkgs; [
-    elmPackages.elm
-    elmPackages.elm-format
-    elmPackages.elm-language-server
-    go-font
-    gopls
-    gotools
-    graphviz
-    haskellPackages.lsp
-    ispell
-    isync
-    nil
-    nixpkgs-fmt
-    nodePackages.prettier
-    nodePackages.typescript-language-server
-    nodejs
-    perlPackages.PLS
-    rubyPackages.solargraph
-    sleek
-    texlive.combined.scheme-full
-    tree-sitter
-    typescript
-  ] ++ unstablePkgs;
 in
-emacsWithPackagesFromUsePackage {
-  config = ./emacs.org;
+{
+  options = {
+    myEmacs = {
+      enable = lib.mkOption {
+        description = "Enable my emacs stuff";
+        default = true;
+      };
+    };
+  };
+  config = lib.mkIf cfg.enable {
+    environment = {
+      variables.EDITOR = lib.mkOverride 900 "emacseditor";
+      systemPackages = with pkgs; [
+        (aspellWithDicts (dicts: with dicts; [ en en-computers es de ]))
+        go-font
 
-  alwaysEnsure = true;
-  alwaysTangle = true;
+        racket
+        guile
+        graphviz
+        ghostscript
+        mermaid-cli
 
-  package = emacsPkg.overrideAttrs (oa: {
-    nativeBuildInputs = oa.nativeBuildInputs ++ [ makeWrapper emacsConfig ];
-    postInstall = ''
-      ${oa.postInstall}
-      wrapProgram $out/bin/emacs \
-        --prefix PATH : ${pkgs.lib.makeBinPath emacsDepList} \
-        --add-flags '--init-directory ${emacsInitDir}'
-    '';
-  });
+        myEmacs
+        editorScript
+      ]
+      ++ lib.optionals (pkgs.system == "x86_64-linux") [ texlive.combined.scheme-full ];
+    };
+  };
 }

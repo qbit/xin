@@ -20,7 +20,7 @@ buildGoModule rec {
   meta = {
     description = "rtl-sdr receiver for Itron ETR meters";
     homepage = "https://github.com/bemasher/rtlamr";
-    license = licenses.agpl3;
+    license = licenses.agpl3Only;
     maintainers = with maintainers; [ qbit ];
   };
 }

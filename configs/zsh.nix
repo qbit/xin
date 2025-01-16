@@ -53,6 +53,13 @@
         nix shell $opts
       }
 
+      go_safe_update_deps() {
+        for i in $(go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all); do
+          go get -u=patch $i
+        done
+        go mod tidy
+      }
+
       go_update_deps() {
         for i in $(go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all); do
           go get -u $i

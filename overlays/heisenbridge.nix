@@ -1,8 +1,8 @@
 let
-  hash = "sha256-OmAmgHM+EmJ3mUY4lPBxIv2rAq8j2QEeTUMux7ZBfRE=";
+  hash = "sha256-4K6Sffu/yKHkcoNENbgpci2dbJVAH3vVkogcw/IYpnw=";
   heisenbridge = _: super: {
     heisenbridge = super.heisenbridge.overrideAttrs (_: rec {
-      version = "1.14.5";
+      version = "1.15.0";
       pname = "heisenbridge";
 
       src = super.fetchFromGitHub {
@@ -11,6 +11,14 @@ let
         rev = "refs/tags/v${version}";
         inherit hash;
       };
+
+      patches = [
+        ./heisen-plumb-no-react.diff
+      ];
+
+      postPatch = ''
+        echo "${version}" > heisenbridge/version.txt
+      '';
     });
   };
 in

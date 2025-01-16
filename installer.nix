@@ -103,7 +103,16 @@ in
     boot.tmp.cleanOnBoot = true;
 
     environment = {
-      systemPackages = with pkgs; [ apg inetutils ];
+      etc."configuration-template.nix" = {
+        source = ./install_template.nix;
+        mode = "0644";
+      };
+      systemPackages = with pkgs; [
+        apg
+        inetutils
+        jq
+        jo
+      ];
 
       interactiveShellInit = ''
         alias vi=nvim
@@ -116,7 +125,10 @@ in
       if pkgs.system == "aarch64-linux"
       then {
         description = "Set date on boot";
-        wantedBy = [ "network-online.target" ];
+        wants =
+          [ "network-online.target" "multi-user.target" ];
+        before = [ "matrix-synapse.service" ];
+        wantedBy = [ "multi-user.target" ];
         after = [ "network-online.target" ];
         script = ''
           . /etc/profile;
@@ -138,10 +150,7 @@ in
       openssh.authorizedKeys.keys = config.myconf.hwPubKeys;
     };
 
-    environment.etc."configuration-template.nix" = {
-      source = ./install_template.nix;
-      mode = "0644";
-    };
+    environment = { };
 
     services = {
       openntpd.enable = true;

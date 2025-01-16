@@ -6,13 +6,13 @@
 with lib;
 buildGoModule rec {
   pname = "yarr";
-  version = "2.4";
+  version = "unstable-2024-11-28";
 
   src = fetchFromGitHub {
     owner = "nkanaev";
     repo = pname;
-    rev = "v${version}";
-    sha256 = "sha256-ZMQ+IX8dZuxyxQhD/eWAe4bGGCVcaCeVgF+Wqs79G+k=";
+    rev = "321ad7608fbb3368b6c89b2e9bfa07a4eb3bdc40";
+    sha256 = "sha256-ZX9qs8zAbEiFcq0YVwM3TiUWTcx+N63HV83JI8iGdrA=";
   };
 
   vendorHash = null;
@@ -24,12 +24,6 @@ buildGoModule rec {
   proxyVendor = true;
 
   doCheck = false;
-
-  subPackages = [ "./src/main.go" ];
-
-  postInstall = ''
-    mv $out/bin/main $out/bin/yarr
-  '';
 
   meta = {
     description = "Yet Another RSS Reader";

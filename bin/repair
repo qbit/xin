@@ -1,8 +1,8 @@
-#!/bin/sh
-
-
+#!/usr/bin/env bash
+sudo date
 while nix flake check --no-build |& grep "is not valid" >/tmp/invalid; do
 	path=$(cat /tmp/invalid | awk -F\' '{print $2}')
 	echo "Repairing $path"
 	sudo nix-store --repair-path $path >/dev/null
 done
+date

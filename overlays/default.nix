@@ -3,44 +3,32 @@
 , ...
 }:
 let
-  inherit (xinlib) prIsOpen todo;
-  matrix-synapse-unwrapped = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
+  inherit (xinlib) prIsOpen;
   heisenbridge = prIsOpen.overlay 0 (import ./heisenbridge.nix);
+  #  matrix-synapse = prIsOpen.overlay 0 (import ./matrix-synapse.nix);
 in
 {
   nixpkgs.overlays = [
     heisenbridge
-    matrix-synapse-unwrapped
+    #   matrix-synapse
     (_: super: {
-      libressl = super.libressl.overrideAttrs (_: {
-        doCheck = todo "libressl tests disabled when building with musl" false;
-      });
-    })
-    (_: super: {
-      neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (_: rec {
-        version = "0.9.5";
+      smug = super.smug.overrideAttrs (_: rec {
+        version = "0.3.3";
+
         src = super.fetchFromGitHub {
-          owner = "neovim";
-          repo = "neovim";
+          owner = "ivaaaan";
+          repo = "smug";
           rev = "v${version}";
-          hash = "sha256-CcaBqA0yFCffNPmXOJTo8c9v1jrEBiqAl8CG5Dj5YxE=";
+          sha256 = "sha256-dQp9Ov8Si9DfziVtX3dXsJg+BNKYOoL9/WwdalQ5TVw=";
         };
       });
     })
   ] ++
   (if isUnstable
   then [
-    (_: super: {
-      drawterm-wayland = super.drawterm-wayland.overrideAttrs (_: rec {
-        patches = [
-          (super.fetchpatch {
-            url = "http://okturing.com/src/19729/body";
-            sha256 = "sha256-DKmxC2HA/PlhZFd0P54CzPufURDyx4bA04OmFess974=";
-          })
-        ];
-      });
-    })
+    heisenbridge
   ]
   else [
+    heisenbridge
   ]);
 }

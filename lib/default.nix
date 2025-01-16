@@ -82,7 +82,6 @@ let
     pkgs.mkShell {
       shellHook = ''
         PS1='\u@\h:\w; '
-        ( . ./common.sh; start ) || true;
       '';
       nativeBuildInputs = with pkgs; [
         curl
@@ -101,6 +100,8 @@ let
         ssh-to-age
         ssh-to-pgp
         statix
+        treefmt2
+        perlPackages.PerlTidy
       ];
     };
 

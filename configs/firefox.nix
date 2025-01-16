@@ -2,7 +2,6 @@
   programs = {
     firefox = {
       enable = true;
-      #package = pkgs.firefox-esr;
       policies = {
         DisableFirefoxStudies = true;
         DisableFormHistory = true;
@@ -26,13 +25,13 @@
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/simple-tab-groups/latest.xpi";
           };
+          "{07c6b8e1-94f7-4bbf-8e91-26c0a8992ab5}" = {
+            "installation_mode" = "force_installed";
+            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/promnesia/latest.xpi";
+          };
           "7esoorv3@alefvanoon.anonaddy.me" = {
             "installation_mode" = "force_installed";
             "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
-          };
-          "{b86e4813-687a-43e6-ab65-0bde4ab75758}" = {
-            "installation_mode" = "force_installed";
-            "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/localcdn-fork-of-decentraleyes/latest.xpi";
           };
           "uBlock0@raymondhill.net" = {
             "installation_mode" = "force_installed";
@@ -144,6 +143,8 @@
         "browser.vpn_promo.enabled" = false;
         "datareporting.healthreport.uploadEnabled" = false;
         "devtools.cache.disabled" = true;
+        "dom.block_download_insecure" = false;
+        "dom.private-attribution.submission.enabled" = false;
         "extensions.pocket.enabled" = false;
         "extensions.screenshots.disabled" = true;
         "geo.enabled" = false;

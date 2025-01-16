@@ -6,7 +6,6 @@
 }:
 let
   inherit (xinlib) todo;
-  #photoPrismTag = "220901-bullseye";
   httpCacheTime = "720m";
   httpAllow = ''
     allow	10.6.0.0/24;
@@ -61,7 +60,6 @@ in
     #  owner = config.users.users.nextcloud.name;
     #  sopsFile = config.xin-secrets.box.secrets.services;
     #};
-    #photoprism_admin_password = {sopsFile = config.xin-secrets.box.secrets.services;};
     gitea_db_pass = {
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.secrets.services;
@@ -79,6 +77,11 @@ in
     restic_key = {
       owner = config.users.users.restic.name;
       sopsFile = config.xin-secrets.box.secrets.certs;
+    };
+    invidious_extra = {
+      owner = "root";
+      mode = "444";
+      sopsFile = config.xin-secrets.box.secrets.services;
     };
 
     books_cert = mkNginxSecret;
@@ -101,8 +104,6 @@ in
     graph_key = mkNginxSecret;
     bw_cert = mkNginxSecret;
     bw_key = mkNginxSecret;
-    invidious_cert = mkNginxSecret;
-    invidious_key = mkNginxSecret;
     readarr_cert = mkNginxSecret;
     readarr_key = mkNginxSecret;
     home_cert = mkNginxSecret;
@@ -128,6 +129,7 @@ in
     enableIPv6 = false;
 
     hosts = {
+      "10.6.0.1" = [ "router.bold.daemon" ];
       "127.0.0.1" = [ "git.tapenet.org" ];
       "10.6.0.15" = [ "jelly.bold.daemon" ];
       "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
@@ -191,8 +193,11 @@ in
   nixpkgs = {
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = todo "figure out what is using openssl-1.1.1w" [
-        "openssl-1.1.1w"
+      permittedInsecurePackages = todo "remove asp/dotnet core stuff" [
+        "aspnetcore-runtime-wrapped-6.0.36"
+        "aspnetcore-runtime-6.0.36"
+        "dotnet-sdk-wrapped-6.0.428"
+        "dotnet-sdk-6.0.428"
       ];
     };
     #overlays = [
@@ -234,28 +239,56 @@ in
         name = "photos";
         members = [ "qbit" ];
       };
-
-      photoprism = {
-        name = "photoprism";
-        gid = 986;
-      };
-    };
-    users = {
-      photoprism = {
-        uid = 991;
-        name = "photoprism";
-        isSystemUser = true;
-        hashedPassword = null;
-        group = "photoprism";
-        shell = "/bin/sh";
-        openssh.authorizedKeys.keys = pubKeys;
-      };
     };
   };
 
   hardware.rtl-sdr.enable = true;
 
   services = {
+    immich = {
+      enable = true;
+      port = 3301;
+      mediaLocation = "/media/pictures/immich";
+      machine-learning.enable = true;
+    };
+    tsns = {
+      enable = true;
+    };
+    rimgo = {
+      enable = true;
+      settings = {
+        PORT = 3001;
+        ADDRESS = "127.0.0.1";
+      };
+    };
+    ts-reverse-proxy = {
+      servers = {
+        "invidious-service" = {
+          enable = true;
+          reverseName = "invidious";
+          reversePort = config.services.invidious.port;
+          reverseIP = config.services.invidious.address;
+        };
+        "rimgo-service" = {
+          enable = true;
+          reverseName = "rimgo";
+          reversePort = config.services.rimgo.settings.PORT;
+          reverseIP = config.services.rimgo.settings.ADDRESS;
+        };
+        "evse-service" = {
+          enable = true;
+          reverseName = "evse";
+          reversePort = 80;
+          reverseIP = "10.6.0.166";
+        };
+        "immich-service" = {
+          enable = true;
+          reverseName = "immich";
+          reversePort = config.services.immich.port;
+          reverseIP = config.services.immich.host;
+        };
+      };
+    };
     restic = {
       server = {
         enable = true;
@@ -283,10 +316,12 @@ in
         }
       ];
     };
-
     avahi = {
       enable = true;
       openFirewall = true;
+    };
+    matter-server = {
+      enable = true;
     };
     home-assistant = {
       enable = true;
@@ -295,19 +330,20 @@ in
           pyipp
           pymetno
           ical
-          (pkgs.python312Packages.callPackage ../../pkgs/starlink-grpc.nix { inherit (pkgs.home-assistant) pkgs; })
           grpcio
+          isal
+          zlib-ng
         ];
       customComponents = [
-        (pkgs.python312Packages.callPackage ../../pkgs/openevse.nix { inherit (pkgs.home-assistant) pkgs; })
+        (pkgs.python3Packages.callPackage ../../pkgs/openevse.nix { inherit (pkgs.home-assistant) pkgs; })
       ];
       extraComponents = [
         "airthings"
         "airthings_ble"
         "airvisual"
         "airvisual_pro"
+        "api"
         "apple_tv"
-        #"aprs"
         "brother"
         "ecobee"
         "esphome"
@@ -315,20 +351,26 @@ in
         "homekit"
         "homekit_controller"
         "icloud"
-        "jellyfin"
+        "kodi"
         "logger"
+        "matter"
         "met"
         "mqtt"
-        "nextdns"
         "octoprint"
+        "piper"
         "prometheus"
         "pushover"
         "rest"
         "snmp"
-        "starlink"
+        "wake_on_lan"
+        "wake_word"
+        "websocket_api"
+        "whisper"
+        "wyoming"
         "zeroconf"
       ];
       config = {
+        api = { };
         sensor = [
         ];
         mqtt.sensor = [
@@ -348,12 +390,14 @@ in
         logger = {
           default = "warning";
           logs = {
-            #"homeassistant.components.starlink" = "debug";
+            # "homeassistant.components.esphome" = "debug";
           };
         };
         "automation manual" = [
         ];
         "automation ui" = "!include automations.yaml";
+        "scene ui" = "!include scenes.yaml";
+        "script ui" = "!include scripts.yaml";
         rest = [
           {
             resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
@@ -396,58 +440,20 @@ in
           name = "Home";
           time_zone = "America/Denver";
           temperature_unit = "C";
-          unit_system = "imperial";
+          # unit_system = "us_customary";
           longitude = -104.72;
           latitude = 38.35;
         };
       };
     };
-    #photoprism = {
-    #  enable = true;
-    #  port = 2343;
-    #  storagePath = "/media/pictures/photoprism/storage";
-    #  originalsPath = "/media/pictures/photoprism/originals";
-    #  importPath = "/media/pictures/photoprism/import";
-    #  settings = {
-    #    PHOTOPRISM_UPLOAD_NSFW = "true";
-    #    PHOTOPRISM_DETECT_NSFW = "false";
-    #    PHOTOPRISM_SITE_URL = "https://box.otter-alligator.ts.net/photos";
-    #    PHOTOPRISM_SETTINGS_HIDDEN = "false";
-    #    PHOTOPRISM_DATABASE_DRIVER = "sqlite";
-    #  };
-    #};
-    #nextcloud = {
-    #  enable = true;
-    #  enableBrokenCiphersForSSE = false;
-    #  hostName = "box.otter-alligator.ts.net";
-    #  home = "/media/nextcloud";
-    #  https = true;
 
-    #  package = pkgs.nextcloud27;
-    #  extraApps = with config.services.nextcloud.package.packages.apps; {
-    #    inherit bookmarks calendar contacts notes tasks twofactor_webauthn;
-    #  };
-
-    #  extraAppsEnable = true;
-
-    #  config = {
-    #    overwriteProtocol = "https";
-
-    #    dbtype = "pgsql";
-    #    dbuser = "nextcloud";
-    #    dbhost = "/run/postgresql";
-    #    dbname = "nextcloud";
-    #    dbpassFile = "${config.sops.secrets.nextcloud_db_pass.path}";
-
-    #    adminpassFile = "${config.sops.secrets.nextcloud_admin_pass.path}";
-    #    adminuser = "admin";
-    #  };
-    #};
     invidious = {
       enable = true;
       database = {
         createLocally = true;
       };
+      sig-helper.enable = true;
+      extraSettingsFile = "/run/secrets/invidious_extra";
       address = "127.0.0.1";
       port = 1538;
       settings = {
@@ -458,7 +464,7 @@ in
           host = lib.mkForce "127.0.0.1";
           port = 5432;
         };
-        domain = "invidious.bold.daemon";
+        domain = "invidious.otter-alligator.ts.net";
         https_only = true;
         popular_enabled = false;
         statistics_enabled = false;
@@ -808,8 +814,10 @@ in
           START_SSH_SERVER = true;
           SSH_SERVER_HOST_KEYS = "ssh/gitea-ed25519";
           SSH_PORT = 2222;
-          DISABLE_REGISTRATION = true;
           COOKIE_SECURE = true;
+        };
+        service = {
+          DISABLE_REGISTRATION = true;
         };
       };
 
@@ -821,29 +829,26 @@ in
     };
 
     rsnapshot = {
-      enable = false;
+      enable = true;
       enableManualRsnapshot = true;
       extraConfig = ''
-        snapshot_root	/backups/snapshots/
+        snapshot_root	/external/snapshots/
         retain	daily	7
         retain	manual	3
-        backup_exec	date "+ backup of suah.dev started at %c"
-        backup	root@suah.dev:/home/	suah.dev/
-        backup	root@suah.dev:/etc/	suah.dev/
-        backup	root@suah.dev:/var/synapse/	suah.dev/
-        backup	root@suah.dev:/var/dendrite/	suah.dev/
-        backup	root@suah.dev:/var/hammer/	suah.dev/
-        backup	root@suah.dev:/var/go-ipfs/	suah.dev/
-        backup	root@suah.dev:/var/gopher/	suah.dev/
-        backup	root@suah.dev:/var/honk/	suah.dev/
-        backup	root@suah.dev:/var/mcchunkie/	suah.dev/
-        backup	root@suah.dev:/var/www/	suah.dev/
-        backup_exec	date "+ backup of suah.dev ended at %c"
+        backup_exec	date "+ backup of /media started at %c"
+        backup	/media/	media/
+        backup_exec	date "+ backup of /media ended at %c"
+        backup_exec	date "+ backup of /var started at %c"
+        backup	/var/	var/
+        backup_exec	date "+ backup of /var ended at %c"
+        backup_exec	date "+ backup of /backups started at %c"
+        backup	/backups/ backups/
+        backup_exec	date "+ backup of /backups ended at %c"
       '';
       cronIntervals = { daily = "50 21 * * *"; };
     };
 
-    libreddit = {
+    redlib = {
       enable = true;
       port = 8482;
     };
@@ -875,17 +880,6 @@ in
           '';
           locations."/" = {
             proxyPass = "http://127.0.0.1:8123";
-            proxyWebsockets = true;
-          };
-        };
-        "invidious.bold.daemon" = {
-          forceSSL = true;
-          sslCertificateKey = "${config.sops.secrets.invidious_key.path}";
-          sslCertificate = "${config.sops.secrets.invidious_cert.path}";
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${
-              toString config.services.invidious.port
-            }";
             proxyWebsockets = true;
           };
         };
@@ -933,7 +927,7 @@ in
           sslCertificate = "${config.sops.secrets.reddit_cert.path}";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://localhost:${toString config.services.libreddit.port}";
+            proxyPass = "http://localhost:${toString config.services.redlib.port}";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
@@ -1074,7 +1068,7 @@ in
       enable = true;
       #dataDir = "/db/postgres";
 
-      package = pkgs.postgresql_15;
+      package = pkgs.postgresql_16;
 
       enableTCPIP = true;
       authentication = pkgs.lib.mkOverride 14 ''
@@ -1103,13 +1097,12 @@ in
 
   systemd = {
     services = {
-      photoprism = {
+      tsns = {
         serviceConfig = {
-          WorkingDirectory = lib.mkForce "/media/pictures/photoprism";
+          Restart = "always";
+          RestartSecs = 15;
         };
-        preStart = lib.mkForce "";
       };
-
       nginx.serviceConfig = {
         ReadWritePaths = [ "/backups/nginx_cache" ];
         ReadOnlyPaths = [ "/etc/nixos/secrets" ];

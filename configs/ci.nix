@@ -6,13 +6,12 @@
 , ...
 }:
 let
-  #inherit (xinlib) prIsOpen;
   jobs = [
     {
       name = "xin-ci-update";
       user = "qbit";
       script = "cd ~/src/xin && ./bin/ci update";
-      startAt = "Sun 23:00";
+      startAt = "Sun,Wed 23:00";
       path = [ ];
     }
     {
@@ -39,11 +38,9 @@ with lib; {
     };
   };
 
-  imports = [ ../modules/ts-rev-prox.nix ];
   config = mkIf config.xinCI.enable {
     sops.defaultSopsFile = config.xin-secrets.ci;
     sops.secrets = {
-      po_env = { owner = config.xinCI.user; };
       ci_ed25519_key = {
         mode = "400";
         owner = config.xinCI.user;
@@ -72,7 +69,11 @@ with lib; {
       };
       ts_proxy_env = {
         mode = "400";
-        owner = config.services.tsrevprox.user;
+        owner = config.services.ts-reverse-proxy.servers."nix-binary-cache".user;
+      };
+      nix_ssh_passwd = {
+        mode = "400";
+        owner = "root";
       };
     };
     environment.systemPackages = with pkgs; [
@@ -97,21 +98,38 @@ with lib; {
     };
 
     nix = {
-      #settings.allowed-users = [ "root" config.xinCI.user "nix-serve" ];
-      settings.allowed-users = [ "root" config.xinCI.user "harmonia" ];
+      settings.allowed-users = [ "root" config.xinCI.user "harmonia" "nix-ssh" ];
       gc = {
         automatic = true;
         dates = "daily";
         options = "--delete-older-than 60d";
       };
+      sshServe = {
+        enable = true;
+        keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJhIeKYMLpGttqY+MZo87BJf41yVMdF6kIwJnTiNHWvU xin-store"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhHkjVK726VMQcuiWJobYQURS4v31vnLgCBrJstu4+O xin-store-user"
+        ];
+      };
     };
 
-    systemd.services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+    users = {
+      users."nix-ssh".hashedPasswordFile = config.sops.secrets.nix_ssh_passwd.path;
+    };
+
+    systemd = {
+      services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
+      oomd = {
+        extraConfig = {
+          DefaultMemoryPressureLimit = "80%";
+          DefaultMemoryPressureDurationSec = "60";
+        };
+      };
+    };
 
     services = {
-      tsrevprox = {
+      ts-reverse-proxy.servers."nix-binary-cache" = {
         enable = true;
-        reverseName = "nix-binary-cache";
       };
       harmonia = {
         enable = true;

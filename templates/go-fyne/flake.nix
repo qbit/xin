@@ -1,7 +1,7 @@
 {
   description = "thing: stuff and things";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-23.11";
+  inputs.nixpkgs.url = "nixpkgs/nixos-24.11";
 
   outputs =
     { self
@@ -64,7 +64,7 @@
           default = pkgs.mkShell {
             shellHook = ''
               PS1='\u@\h:\@; '
-              nix flake run github:qbit/xin#flake-warn
+              nix run github:qbit/xin#flake-warn
               echo "Go `${pkgs.go}/bin/go version`"
             '';
             buildInputs = with pkgs; [

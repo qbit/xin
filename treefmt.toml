@@ -1,0 +1,31 @@
+[formatter.statix]
+#command = "statix"
+#options = ["check"]
+command = "sh"
+options = ["-euc", "for file in \"$@\"; do statix check \"$file\"; done"]
+includes = [ "*.nix" ]
+priority = 1
+
+[formatter.deadnix]
+command = "deadnix"
+options = ["-f"]
+includes = [ "*.nix" ]
+priority = 2
+
+[formatter.nix]
+command = "nix"
+options = ["fmt"]
+includes = ["*.nix"]
+priority = 3
+
+[formatter.shfmt]
+command = "shfmt"
+options = ["-w"]
+includes = ["*.sh", "bin/*"]
+priority = 1
+
+[formatter.perltidy]
+command = "perltidy"
+options = ["-b"]
+includes = ["*.pl", "*.PL"]
+priority = 1

@@ -5,9 +5,10 @@
 , ...
 }:
 with pkgs; let
+  sojuUser = "soju";
+  maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
-  slidingSyncPkg = callPackage ../../pkgs/sliding-sync.nix { };
   weepushover =
     python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
@@ -43,13 +44,6 @@ with pkgs; let
   mkMatrixWellKnown = p: ''
     return 200 '${builtins.toJSON p}';
   '';
-
-  mkMatrixSliderLoc = {
-    proxyWebsockets = true;
-    proxyPass = "http://${config.services.sliding-sync.address}:${
-      toString config.services.sliding-sync.port
-    }";
-  };
   mkMatrixLoc = {
     proxyWebsockets = true;
     proxyPass = "http://${mtxCfg.address}:${toString mtxCfg.port}";
@@ -141,14 +135,9 @@ in
       mode = "400";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
-    sliding_sync_env = {
-      owner = config.services.sliding-sync.user;
-      mode = "400";
-      sopsFile = config.xin-secrets.h.secrets.services;
-    };
     pr_status_env = {
       mode = "400";
-      owner = config.services.tsrevprox.user;
+      owner = config.services.ts-reverse-proxy.servers."pr-status-reverse".user;
       sopsFile = config.xin-secrets.h.secrets.services;
     };
     qbit_at_suah_pass_file = {
@@ -156,17 +145,26 @@ in
       owner = "root";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
-    golink = {
+    mcchunkie_at_suah_pass_file = {
       mode = "400";
-      owner = config.services.golink.user;
+      owner = "root";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
-
-    #wallabag_secret = {
-    #  mode = "400";
-    #  owner = "wallabag";
-    #  sopsFile = config.xin-secrets.h.secrets.services;
-    #};
+    bounce_cert = {
+      mode = "400";
+      owner = sojuUser;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
+    bounce_key = {
+      mode = "400";
+      owner = sojuUser;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
+    "ejabberd_matrix_key.yaml" = {
+      mode = "400";
+      owner = config.services.ejabberd.user;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
   };
 
   networking = {
@@ -213,8 +211,28 @@ in
     };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 9002 config.services.shiori.port ]; }; };
-      allowedTCPPorts = [ 22 80 443 2222 53589 ];
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 9002 config.services.shiori.port 6697 ];
+        };
+      };
+      allowedTCPPorts = [
+        22
+        80
+        443
+
+        #gitea
+        2222
+
+        # 53589
+
+        #xmpp
+        5222
+        5269
+        5223
+        5270
+        8448
+      ];
       allowedUDPPorts = [ 7122 ];
       allowedUDPPortRanges = [
         {
@@ -251,17 +269,51 @@ in
   security.acme = {
     acceptTerms = true;
     defaults.email = "aaron@bolddaemon.com";
+    certs = {
+      "segfault.rodeo" = {
+        group = "prognx";
+        extraDomainNames = [
+          "upload.segfault.rodeo"
+          "conference.segfault.rodeo"
+          "pubsub.segfault.rodeo"
+          "matrix.segfault.rodeo"
+          "xmpp.segfault.rodeo"
+        ];
+        reloadServices = [ "ejabberd.services" "nginx.service" ];
+      };
+    };
   };
 
   users = {
+    groups = {
+      ${sojuUser} = { };
+      prognx = {
+        members = [
+          # config.services.prosody.user
+          config.services.nginx.user
+          config.services.ejabberd.user
+        ];
+      };
+    };
     users = {
       root = userBase;
       qbit = userBase;
+      "${sojuUser}" = {
+        isSystemUser = true;
+        group = sojuUser;
+      };
     };
   };
 
   systemd = {
     services = {
+      soju = {
+        serviceConfig = {
+          User = sojuUser;
+          Group = sojuUser;
+          after = [ "network-online.target" "tailscaled.service" ];
+        };
+      };
       mcchunkie = {
         serviceConfig = {
           ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
@@ -270,6 +322,7 @@ in
       nomadnet = {
         description = "nomadnet";
         after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           User = "qbit";
@@ -279,9 +332,13 @@ in
         };
       };
       matrix-synapse.after = [ "icbirc.service" ];
+      soju.after = [ "icbirc.service" ];
       icb-tunnel = {
-        wantedBy = [ "network.target" ];
-        after = [ "network.target" "multi-user.target" ];
+        wants =
+          [ "network-online.target" "multi-user.target" ];
+        before = [ "matrix-synapse.service" ];
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network-online.target" ];
         serviceConfig = {
           User = "qbit";
           WorkingDirectory = "/home/qbit";
@@ -305,6 +362,9 @@ in
         hashedPasswordFile = "${config.sops.secrets.qbit_at_suah_pass_file.path}";
         aliases = [ "postmaster@suah.dev" "aaron@suah.dev" ];
       };
+      "mcchunkie@suah.dev" = {
+        hashedPasswordFile = "${config.sops.secrets.mcchunkie_at_suah_pass_file.path}";
+      };
     };
 
     fullTextSearch = {
@@ -316,17 +376,201 @@ in
   };
 
   services = {
-    golink = {
+    ejabberd = {
       enable = true;
-      envFile = config.sops.secrets.golink.path;
+      package = pkgs.ejabberd.override {
+        withSqlite = true;
+      };
+      configFile = pkgs.writeText "ejabberd.yaml" (builtins.toJSON {
+        hosts = [ "segfault.rodeo" ];
+        certfiles = [
+          (config.security.acme.certs."segfault.rodeo".directory + "/*.pem")
+        ];
+
+        acl = {
+          admin = [
+            { user = "qbit@segfault.rodeo"; }
+          ];
+          loopback = {
+            ip = [
+              "127.0.0.0/8"
+              "::1/128"
+            ];
+          };
+        };
+
+        access_rules = {
+          configure = {
+            allow = "admin";
+          };
+          local = {
+            allow = "local";
+          };
+          announce = {
+            allow = "admin";
+          };
+          trusted_network = {
+            allow = "loopback";
+          };
+
+          s2s = {
+            allow = "all";
+          };
+          c2s = {
+            deny = "blocked";
+            allow = "all";
+          };
+        };
+
+        include_config_file = config.sops.secrets."ejabberd_matrix_key.yaml".path;
+
+        # https://docs.ejabberd.im/admin/configuration/modules
+        modules = {
+          mod_adhoc = { };
+          mod_admin_extra = { };
+          mod_announce.access = "admin";
+          mod_avatar = { };
+          mod_blocking = { };
+          mod_caps = { };
+          mod_carboncopy = { };
+          mod_client_state = { };
+          mod_configure = { };
+          mod_disco = { };
+          mod_last = { };
+          mod_mam = { };
+          mod_mqtt = { };
+          mod_muc = {
+            host = "conference.@HOST@";
+          };
+          mod_muc_admin = { };
+          mod_muc_log = { };
+          mod_offline = { };
+          mod_ping = { };
+          mod_pres_counter = { };
+          mod_privacy = { };
+          mod_private = { };
+          mod_pubsub = {
+            access_createnode = "pubsub_createnode";
+            plugins = [
+              "flat"
+              "pep"
+            ];
+            force_node_config = {
+              "stoarge:bookmarks" = {
+                access_model = "whitelist";
+              };
+            };
+          };
+          mod_push = { };
+          mod_roster = { };
+          mod_shared_roster = { };
+          mod_stream_mgmt = { };
+          mod_vcard = { };
+          mod_vcard_xupdate = { };
+        };
+
+        s2s_use_starttls = "required";
+        s2s_access = "s2s";
+
+        default_db = "sql";
+        sql_type = "sqlite";
+        sql_database = "${config.services.ejabberd.spoolDir}/ejabberd.db";
+
+        host_config = {
+          "segfault.rodeo" = {
+            auth_method = [ "internal" ];
+          };
+        };
+
+        listen = [
+          {
+            port = 5222;
+            module = "ejabberd_c2s";
+            starttls = true;
+            ip = "::";
+          }
+          {
+            port = 5269;
+            module = "ejabberd_s2s_in";
+            ip = "::";
+          }
+          {
+            port = 5443;
+            ip = "127.0.0.1";
+            module = "ejabberd_http";
+            tls = false;
+            request_handlers = { "/admin" = "ejabberd_web_admin"; };
+          }
+          {
+            port = 8833;
+            module = "mod_mqtt";
+            tls = true;
+            backlog = 1000;
+          }
+          {
+            port = 8448;
+            module = "ejabberd_http";
+            tls = true;
+            request_handlers = {
+              "/_matrix" = "mod_matrix_gw";
+            };
+            ip = "::";
+          }
+        ];
+      });
     };
+    prosody = {
+      enable = false;
+
+      extraConfig = ''
+        c2s_direct_tls_ports = { 5223 }
+        s2s_direct_tls_ports = { 5270 }
+      '';
+
+      ssl = {
+        cert = "/var/lib/acme/segfault.rodeo/fullchain.pem";
+        key = "/var/lib/acme/segfault.rodeo/key.pem";
+      };
+
+      virtualHosts."segfault.rodeo" = {
+        enabled = true;
+        domain = "segfault.rodeo";
+        ssl = {
+          cert = "/var/lib/acme/segfault.rodeo/fullchain.pem";
+          key = "/var/lib/acme/segfault.rodeo/key.pem";
+        };
+      };
+
+      uploadHttp = {
+        domain = "upload.segfault.rodeo";
+        uploadExpireAfter = "60 * 60 * 24 * 7 * 4";
+      };
+
+      muc = [
+        {
+          domain = "conference.segfault.rodeo";
+          maxHistoryMessages = 2048;
+        }
+      ];
+
+      allowRegistration = false;
+
+      admins = [
+        "qbit@segfault.rodeo"
+      ];
+    };
+    soju = {
+      enable = true;
+      listen = [ "100.83.77.133:6697" ];
+      hostName = "bounce.bold.daemon";
+      tlsCertificate = config.sops.secrets.bounce_cert.path;
+      tlsCertificateKey = config.sops.secrets.bounce_key.path;
+    };
+    postfix.extraConfig = ''
+      smtputf8_enable = no
+    '';
     smartd.enable = false;
     mcchunkie.enable = true;
-    wallabag = {
-      enable = false;
-      secretPath = config.sops.secrets.wallabag_secret.path;
-      domain = "bookmarks.tapenet.org";
-    };
     navidrome = {
       enable = true;
       settings = {
@@ -361,16 +605,14 @@ in
         rooms = [ ];
       };
     };
-    tsrevprox = {
-      enable = true;
-      reverseName = "pr-status";
-      reversePort = 3003;
-      #envFile = config.sops.secrets.pr_status_env.path;
-    };
-    sliding-sync = {
-      enable = true;
-      server = "https://tapenet.org";
-      package = slidingSyncPkg;
+    ts-reverse-proxy = {
+      servers = {
+        "pr-status-reverse" = {
+          enable = true;
+          reverseName = "pr-status";
+          reversePort = 3003;
+        };
+      };
     };
     pots = {
       enable = true;
@@ -394,7 +636,7 @@ in
     gotosocial = {
       enable = true;
       # https://github.com/superseriousbusiness/gotosocial/blob/v0.5.2/example/config.yaml
-      configuration = {
+      settings = {
         account-domain = "mammothcirc.us";
         accounts-approval-required = false;
         accounts-reason-required = false;
@@ -417,8 +659,7 @@ in
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial";
         trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
-        web-template-base-dir = "${config.services.gotosocial.package}/assets/web/template/";
-        web-asset-base-dir = "${config.services.gotosocial.package}/assets/web/assets/";
+        landing-page-user = "qbit";
       };
     };
     promtail = {
@@ -471,33 +712,33 @@ in
       ];
     };
 
-    restic = {
-      backups = {
-        b2 = {
-          initialize = true;
-          repository = "b2:cyaspanJicyeemJedMarlEjcasOmos";
-          environmentFile = "${config.sops.secrets.restic_env_file.path}";
-          passwordFile = "${config.sops.secrets.restic_password_file.path}";
+    backups = {
+      b2 = {
+        enable = true;
+        repository = "b2:cyaspanJicyeemJedMarlEjcasOmos";
+        environmentFile = "${config.sops.secrets.restic_env_file.path}";
+        passwordFile = "${config.sops.secrets.restic_password_file.path}";
 
-          paths = [
-            pgBackupDir
-            "/var/lib/synapse/media_store"
-            "/var/www"
-            "/home"
-            "/var/lib/yarr"
-            "/var/lib/shiori"
-            "/var/lib/gotosocial"
-            "/var/lib/mcchunkie"
-            "/var/lib/heisenbridge"
-            "/var/lib/kogs"
-            "/var/vmail"
-            "/var/dkim"
-          ];
+        paths = [
+          pgBackupDir
+          "/var/lib/synapse/media_store"
+          "/var/www"
+          "/home"
+          "/var/lib/yarr"
+          "/var/lib/shiori"
+          "/var/lib/gotosocial"
+          "/var/lib/mcchunkie"
+          "/var/lib/heisenbridge"
+          "/var/lib/kogs"
+          "/var/vmail"
+          "/var/dkim"
+          # config.services.prosody.dataDir
+          config.services.ejabberd.spoolDir
+        ];
 
-          timerConfig = { OnCalendar = "00:05"; };
+        timerConfig = { OnCalendar = "00:05"; };
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
-        };
+        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
       };
     };
 
@@ -511,7 +752,7 @@ in
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
 
-      clientMaxBodySize = "50M";
+      clientMaxBodySize = maxUploadSize;
 
       commonHttpConfig = ''
         # Add HSTS header with preloading to HTTPS requests.
@@ -566,6 +807,11 @@ in
           root = "/var/www/bolddaemon.com";
 
         };
+        "paste.suah.dev" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/paste";
+        };
         "sync.suah.dev" = {
           forceSSL = true;
           enableACME = true;
@@ -591,6 +837,11 @@ in
               proxy_ssl_server_name on;
             }
           '';
+        };
+        "exo.suah.dev" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/exo.suah.dev";
         };
 
         "music.tapenet.org" = {
@@ -753,6 +1004,15 @@ in
           enableACME = true;
           root = "/var/www/qbit.io";
         };
+        "segfault.rodeo" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/segfault.rodeo";
+          locations = {
+            "/.well-known/matrix/server".extraConfig =
+              mkMatrixWellKnown { "m.server" = "segfault.rodeo:8448"; };
+          };
+        };
         "mammothcirc.us" = {
           forceSSL = true;
           enableACME = true;
@@ -771,7 +1031,7 @@ in
           locations."/" = {
             extraConfig = ''
                       proxy_pass http://127.0.0.1:${
-              toString config.services.gotosocial.configuration.port
+              toString config.services.gotosocial.settings.port
               };
                       proxy_set_header Host $host;
                       proxy_set_header Upgrade $http_upgrade;
@@ -827,22 +1087,7 @@ in
                 }
               '';
             };
-          }
-          // (if config.services.sliding-sync.enable
-          then {
-            "/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            "/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
 
-            "/client" = mkMatrixSliderLoc;
-            "/_matrix/client/unstable/org.matrix.msc3575/sync" =
-              mkMatrixSliderLoc;
-
-            "/_matrix" = mkMatrixLoc;
-            "/_synapse/client" = mkMatrixLoc;
-          }
-          else {
             "/.well-known/matrix/client".extraConfig =
               mkMatrixWellKnown matrixClientConfig;
             "/.well-known/matrix/server".extraConfig =
@@ -850,7 +1095,10 @@ in
 
             "/_matrix" = mkMatrixLoc;
             "/_synapse/client" = mkMatrixLoc;
-          });
+            "/_heisenbridge/media" = {
+              proxyPass = "http://127.0.0.1:9898";
+            };
+          };
         };
       };
     };
@@ -917,6 +1165,10 @@ in
         "https://matrix.to/#/#devious:tapenet.org"
         "https://matrix.to/#/#gotk4:matrix.org"
         "https://matrix.to/#/#aerc:matrix.org"
+        "https://matrix.to/#/#pueblo-nerds:tapenet.org"
+
+        "https://matrix.to/#/#nixhub-home:matrix.org"
+        "https://matrix.to/#/#nixhub-devnull:matrix.org"
       ];
       settings = {
         verboseLogging = false;
@@ -952,11 +1204,12 @@ in
         enable_registration = false;
         registration_shared_secret_path = "${config.sops.secrets.synapse_shared_secret.path}";
         media_store_path = "/var/lib/synapse/media_store";
-        presence.enabled = true;
+        presence.enabled = false;
         public_baseurl = "https://tapenet.org";
         server_name = "tapenet.org";
         signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
         url_preview_enabled = false;
+        max_upload_size = maxUploadSize;
         plugins = with config.services.matrix-synapse.package.plugins; [ matrix-synapse-mjolnir-antispam ];
         app_service_config_files = [
           "/var/lib/heisenbridge/registration.yml"

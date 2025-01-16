@@ -6,9 +6,9 @@
 , ...
 }:
 let
-  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets;
-  inherit (inputs.unstableSmall.legacyPackages.${pkgs.system}) quodlibet-full;
+  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
+  thunderbird = import ../../configs/thunderbird.nix { inherit pkgs; };
   jobs = [
     {
       name = "brain";
@@ -19,6 +19,12 @@ let
     {
       name = "org";
       script = "(cd ~/org && git sync)";
+      startAt = "*:0/5";
+      path = [ pkgs.git pkgs.git-sync ];
+    }
+    {
+      name = "org-roam";
+      script = "(cd ~/org-roam && git sync)";
       startAt = "*:0/5";
       path = [ pkgs.git pkgs.git-sync ];
     }
@@ -91,6 +97,11 @@ in
       owner = "root";
       mode = "400";
     };
+    krha_env_file = {
+      sopsFile = config.xin-secrets.europa.secrets.services;
+      owner = "qbit";
+      mode = "400";
+    };
   };
 
   nixpkgs.config = {
@@ -113,11 +124,11 @@ in
     };
     kernelParams = [
       "boot.shell_on_fail"
+      # https://gitlab.freedesktop.org/upower/power-profiles-daemon#panel-power-savings
+      "amdgpu.abmlevel=0"
     ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
-
-  sshFidoAgent.enable = lib.mkDefault true;
 
   nixManager = {
     enable = lib.mkDefault true;
@@ -127,7 +138,10 @@ in
   kde.enable = lib.mkDefault true;
   kdeConnect.enable = true;
 
-  virtualisation.libvirtd.enable = lib.mkDefault true;
+  virtualisation = {
+    libvirtd.enable = lib.mkDefault true;
+    podman.enable = true;
+  };
 
   networking = {
     hostName = "europa";
@@ -141,16 +155,11 @@ in
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
-      interfaces = {
-        "tailscale0" =
-          {
-            allowedTCPPorts = [ 8384 ];
-          };
-      };
     };
   };
 
   programs = {
+    nix-ld.enable = lib.mkIf config.programs.ladybird.enable true;
     steam.enable = true;
     _1password.enable = true;
     _1password-gui = {
@@ -164,13 +173,13 @@ in
       '';
       shellAliases = {
         "gh" = "op plugin run -- gh";
-        "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token) nixpkgs-review";
+        "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token --reveal) nixpkgs-review";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "sync-music" = "rsync -av --progress --delete ~/Music/ suah.dev:/var/lib/music/";
         "load-agent" = ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
       };
     };
-  };
+  } // thunderbird.programs;
 
   services.xinCA = { enable = false; };
 
@@ -203,13 +212,6 @@ in
         IdleActionSec=300
       '';
     };
-    rimgo = {
-      enable = true;
-      settings = {
-        PORT = 3001;
-        ADDRESS = "127.0.0.1";
-      };
-    };
     fprintd = {
       enable = true;
     };
@@ -218,33 +220,32 @@ in
       openFirewall = true;
     };
     printing.enable = true;
-    restic = {
-      backups =
-        let
-          paths = [ "/home/qbit" "/var/lib/libvirt" "/etc" ];
-        in
-        {
-          remote = {
-            initialize = true;
-            passwordFile = "${config.sops.secrets.restic_remote_password_file.path}";
-            repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
+    backups =
+      let
+        paths = [ "/home/qbit" "/etc" ];
+        pruneOpts = [ "--keep-hourly 12" "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
+        timerConfig = { OnCalendar = "*-*-* 00:30:00"; };
+      in
+      {
+        remote = {
+          enable = true;
+          passwordFile = "${config.sops.secrets.restic_remote_password_file.path}";
+          repositoryFile = "${config.sops.secrets.restic_remote_repo_file.path}";
 
-            inherit paths;
-
-            pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
-          };
-          local = {
-            initialize = true;
-            repository = "/run/media/qbit/backup/${config.networking.hostName}";
-            environmentFile = "${config.sops.secrets.restic_env_file.path}";
-            passwordFile = "${config.sops.secrets.restic_password_file.path}";
-
-            inherit paths;
-
-            pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 5" ];
-          };
+          # Don't send libvirt over the air-wire
+          inherit paths pruneOpts timerConfig;
         };
-    };
+        local = {
+          enable = true;
+          repository = "/run/media/qbit/backup/${config.networking.hostName}";
+          environmentFile = "${config.sops.secrets.restic_env_file.path}";
+          passwordFile = "${config.sops.secrets.restic_password_file.path}";
+
+          paths = paths ++ [ "/var/lib/libvirt" ];
+          inherit pruneOpts;
+          timerConfig = { OnCalendar = "hourly"; };
+        };
+      };
     pcscd.enable = true;
     vnstat.enable = true;
     clamav.updater.enable = true;
@@ -258,6 +259,7 @@ in
 
     udev.extraRules = ''
       SUBSYSTEM=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="5bf0", GROUP="users", TAG+="uaccess"
+      ACTION=="add", SUBSYSTEM=="thunderbolt", ATTRS{iommu_dma_protection}=="1", ATTR{authorized}=="0", ATTR{authorized}="1"
     '';
   };
 
@@ -308,12 +310,13 @@ in
     };
   };
 
-  virtualisation.docker.enable = false;
   users.users.qbit.extraGroups = [
     "dialout"
     "libvirtd"
     "plugdev"
-    #"docker"
+    "cdrom"
+    "davfs2"
+    "input"
   ];
 
   environment = {
@@ -329,11 +332,14 @@ in
     };
 
     systemPackages = with pkgs; [
+      #deltachat-desktop
       arduino
       beets # stable
       calibre
       chirp # stable
+      davfs2
       deluge
+      dino
       direwolf
       element-desktop
       elmPackages.elm
@@ -342,24 +348,27 @@ in
       elmPackages.elm-live
       elmPackages.elm-test
       entr
+      ferdium
       fossil
       gh
       gimp
-      git-annex
       gqrx
       hackrf
       inkscape
+      intiface-central
       isync
       jan
+      joplin-desktop
       jujutsu
       klavaro
+      gajim
       koreader
+      linphone
+      ltunify
       minicom
       mu
-      nheko
       nix-index
       nixpkgs-review
-      nix-top
       nmap
       obsidian
       ollama
@@ -368,35 +377,34 @@ in
       proton-caller
       protonup-ng
       prusa-slicer
-      python3Packages.meshtastic
       python3Packages.nomadnet
       python3Packages.rns
       qdmr
-      quodlibet-full # unstableSmall
-      deadbeef-with-plugins
-      rex
-      rofi
-      rsibreak
+      # Don't do it, don't switch to another music player. They all suck!
+      # this one works the least sucky!
+      quodlibet-full #stable
+      # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      #
       rtl-sdr
       sdrpp
       signal-desktop
-      signal-desktop-beta
       tcpdump
       tea
-      thunderbird
       tigervnc
       tncattach
       unzip
       veilid
       virt-manager
-      w3m
-      workrave
       yt-dlp
-      zig
 
       (callPackage ../../pkgs/ttfs.nix { })
+      (python3Packages.callPackage ../../pkgs/kobuddy.nix { })
       (callPackage ../../pkgs/gokrazy.nix { })
+      (callPackage ../../pkgs/mvoice.nix { })
       (callPackage ../../pkgs/zutty.nix { })
+      (python3Packages.callPackage ../../pkgs/watchmap.nix { })
+      (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
+      (tclPackages.callPackage ../../pkgs/irken.nix { })
 
       restic
     ];

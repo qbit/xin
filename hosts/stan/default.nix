@@ -106,6 +106,9 @@ in
       allowedUDPPorts = if testingMode then [ syslogPort ] else [ ];
       checkReversePath = "loose";
     };
+    interfaces."enp133s0" = {
+      wakeOnLan.enable = true;
+    };
   };
 
 
@@ -113,7 +116,6 @@ in
 
   kde.enable = true;
   defaultUsers.enable = false;
-  sshFidoAgent.enable = true;
 
   sops.secrets = {
     rkvm_cert = {
@@ -155,6 +157,30 @@ in
       mode = "400";
       neededForUsers = true;
     };
+    xin_store_pub = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "root";
+      group = "wheel";
+      mode = "440";
+    };
+    xin_store_key = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "root";
+      group = "wheel";
+      mode = "400";
+    };
+    xin_store_pub_user = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "abieber";
+      group = "wheel";
+      mode = "440";
+    };
+    xin_store_key_user = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "abieber";
+      group = "wheel";
+      mode = "400";
+    };
   };
 
   users = {
@@ -174,6 +200,15 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  nix = {
+    settings = {
+      substituters = [
+        "https://cache.nixos.org"
+        "ssh://nix-ssh@xin-store"
+      ];
+    };
+  };
+
   environment = {
     etc = {
       "vscode-settings.json".text = builtins.toJSON {
@@ -190,7 +225,6 @@ in
       fzf
       google-chrome
       ispell
-      keychain
       libreoffice
       mattermost-desktop
       mosh
@@ -201,14 +235,14 @@ in
       obs-studio
       openvpn
       remmina
-      rex
-      rustdesk
+      #rustdesk
       snmpcheck
       sshfs
       #step-cli
       tcpdump
       unzip
       virt-manager
+      virt-viewer
       (vscode-with-extensions.override {
         vscodeExtensions = with vscode-extensions; [
           golang.go
@@ -252,7 +286,6 @@ in
         ];
       })
       wireshark
-      zig
     ];
   };
 
@@ -262,12 +295,29 @@ in
     git.config.safe.directory = "/home/abieber/aef100";
     dconf.enable = true;
     zsh.enable = true;
-    ssh.knownHosts = {
-      "[192.168.122.249]:7022".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
+    ssh = {
+      knownHosts = {
+        "[192.168.122.249]:7022".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
+      };
+      extraConfig =
+        ''
+          Match host "xin-store" exec "${pkgs.netcat}/bin/nc -z nix-binary-cache.otter-alligator.ts.net 22"
+            Hostname nix-binary-cache.otter-alligator.ts.net
+            IdentityFile ${config.sops.secrets.xin_store_key.path}
+            User nix-ssh
+          Match host xin-store exec "${pkgs.netcat}/bin/nc -z 10.6.0.110 22"
+            IdentityFile ${config.sops.secrets.xin_store_key.path}
+            User nix-ssh
+            Hostname 10.6.0.110
+        '';
     };
   };
 
   services = {
+    ollama = {
+      enable = true;
+    };
+    avahi.enable = true;
     rkvm.client = {
       enable = true;
       settings = {
@@ -276,18 +326,16 @@ in
         server = "127.0.0.1:24800";
       };
     };
-    restic = {
-      backups = {
-        remote = {
-          initialize = true;
-          environmentFile = "${config.sops.secrets.restic_env_file.path}";
-          passwordFile = "${config.sops.secrets.restic_password_file.path}";
-          repositoryFile = "${config.sops.secrets.restic_repo_file.path}";
+    backups = {
+      remote = {
+        enable = true;
+        environmentFile = "${config.sops.secrets.restic_env_file.path}";
+        passwordFile = "${config.sops.secrets.restic_password_file.path}";
+        repositoryFile = "${config.sops.secrets.restic_repo_file.path}";
 
-          paths = [ "/home/abieber" ];
+        paths = [ "/home/abieber" ];
 
-          pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
-        };
+        pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
       };
     };
     rsyslogd = {

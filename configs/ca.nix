@@ -21,7 +21,7 @@ with lib; {
     };
   };
 
-  imports = [ ../modules/ts-rev-prox.nix ];
+  imports = [ ];
   config = mkIf cfg.enable {
     sops.secrets = {
       ca_password = {

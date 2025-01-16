@@ -74,6 +74,7 @@ in
     direnv
     exiftool
     gh
+    gnupg
     go
     mosh
     nb
@@ -84,4 +85,5 @@ in
     rage
     statix
   ];
+  system.stateVersion = 5;
 }

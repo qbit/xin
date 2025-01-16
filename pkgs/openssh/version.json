@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "fc5dc092830de23767c6ef67baa18310a64ee533",
-  "hash": "sha256-rXMrutir6pI11y84a4KAKwSd7HFifkJ/s8sVlZ7e63A=",
-  "version": "2024-05-22",
-  "comment": "upstream: this test has been broken since 2014, and has been"
+  "rev": "826483d51a9fee60703298bbf839d9ce37943474",
+  "hash": "sha256-yPyucPB6N/n2LXBrfzg411Z3/Kr3pCIXvJCxFhEHDdM=",
+  "version": "2024-12-16",
+  "comment": "fix old typo (s/SYSVINITSTOPT/SYSVINITSTOP/)"
 }

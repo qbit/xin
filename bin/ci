@@ -47,7 +47,7 @@ if [ "${1}" = "update" ]; then
 		git add pull_requests
 		git commit -m 'watched: update watched pull requests'
 	fi
-	
+
 	for inp in $(nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[] as $k | $k'); do
 		if ! git checkout -b "${ci_branch}_${inp}"; then
 			handle_co_fail "${ci_branch}_${inp}"
@@ -87,7 +87,6 @@ if [ "${1}" = "update" ]; then
 		handle_update_check_fail "$ci_branch"
 		exit 1
 	fi
-
 
 	if ! git checkout main; then
 		handle_co_fail

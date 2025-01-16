@@ -35,7 +35,7 @@ let
     haskell-vim
     neoformat
     neogit
-    nvim-compe
+    nvim-cmp
     nvim-lspconfig
     nvim-tree-lua
     nvim-treesitter.withAllGrammars
@@ -95,7 +95,6 @@ in
 
   programs.neovim = {
     enable = true;
-    defaultEditor = true;
     configure = {
       packages.myVimPackage = { start = myVimPackages; };
       customRC = ''

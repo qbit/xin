@@ -66,8 +66,7 @@ in
     systemd.services.golink = {
       enable = true;
       description = "golink server";
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
 
       path = [ pkgs.vnstat ];
 

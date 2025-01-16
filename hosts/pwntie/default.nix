@@ -1,10 +1,12 @@
 { pkgs
 , config
+, lib
 , ...
 }:
 let
   tsAddr = "100.84.170.57";
-  #myEmacs = pkgs.callPackage ../../configs/emacs.nix { };
+  oLlamaPort = 11434;
+  esphomePort = 6053;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -37,14 +39,8 @@ in
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [ 22 10300 10200 10400 ];
       checkReversePath = "loose";
-      interfaces = {
-        "tailscale0" =
-          {
-            allowedTCPPorts = [ 11434 ];
-          };
-      };
     };
   };
 
@@ -60,22 +56,11 @@ in
     PATH = [ "\${XDG_BIN_HOME}" ];
   };
 
-  #nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     rtl-sdr
     direwolf
     (callPackage ../../pkgs/rtlamr.nix { })
   ];
-
-  #programs = {
-  #  steam.enable = true;
-  #  _1password.enable = true;
-  #  _1password-gui = {
-  #    enable = true;
-  #    polkitPolicyOwners = [ "qbit" ];
-  #  };
-  #  dconf.enable = true;
-  #};
 
   xinCI = {
     user = "qbit";
@@ -84,19 +69,69 @@ in
 
   systemd = {
     services = {
+      esphome = {
+        environment = {
+          GIT_CONFIG_SYSTEM = "/dev/null";
+        };
+      };
       ollama = {
         environment = {
           OLLAMA_ORIGINS = "*";
+          OLLAMA_HOST = lib.mkForce "0.0.0.0";
         };
       };
     };
   };
 
   services = {
+    wyoming = {
+      openwakeword = {
+        enable = true;
+        uri = "tcp://0.0.0.0:10400";
+      };
+      faster-whisper = {
+        servers.ha = {
+          enable = true;
+          uri = "tcp://0.0.0.0:10300";
+          language = "en";
+        };
+      };
+      piper.servers.ha = {
+        enable = true;
+        uri = "tcp://0.0.0.0:10200";
+        voice = "en-us-ryan-medium";
+      };
+    };
+    esphome = {
+      enable = true;
+      address = "127.0.0.1";
+      port = esphomePort;
+    };
+    guix = {
+      enable = true;
+      gc = {
+        enable = true;
+      };
+    };
+    ts-reverse-proxy = {
+      servers = {
+        "ollama-reverse" = {
+          enable = true;
+          reverseName = "ollama";
+          reversePort = oLlamaPort;
+        };
+        "esphome-reverse" = {
+          enable = true;
+          reverseName = "esphome";
+          reversePort = esphomePort;
+        };
+      };
+    };
     ollama = {
       enable = true;
       acceleration = "rocm";
-      listenAddress = "${tsAddr}:11434";
+      host = "localhost";
+      port = oLlamaPort;
     };
     prometheus = {
       enable = true;
@@ -112,7 +147,7 @@ in
       };
     };
     rtlamr2mqtt = {
-      enable = true;
+      enable = false;
       configuration = {
         general = {
           device_ids_path = "${config.services.rtlamr2mqtt.package}/sdl_ids.txt";
@@ -145,11 +180,6 @@ in
         ];
       };
     };
-    #emacs = {
-    #  enable = true;
-    #  package = myEmacs;
-    #  install = true;
-    #};
     fwupd = {
       enable = true;
     };
