@@ -107,8 +107,7 @@ with lib; {
           SSH_AUTH_SOCK = "$HOME/.traygent";
         } // (if config.networking.hostName != "stan" then {
           OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
-        } else {
-        });
+        } else { });
         systemPackages = with pkgs; (xinlib.filterList [
           bc
           beyt
