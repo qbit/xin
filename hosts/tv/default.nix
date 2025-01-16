@@ -26,7 +26,7 @@ in
     ../../configs/ssh.nix
   ];
 
-  needsDeploy.enable = false;
+  needsDeploy.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = todo "tv using insecure youtube-dl!" [
     "python3.12-youtube-dl-2021.12.17"
