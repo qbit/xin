@@ -440,7 +440,7 @@ in
           name = "Home";
           time_zone = "America/Denver";
           temperature_unit = "C";
-          unit_system = "imperial";
+          # unit_system = "us_customary";
           longitude = -104.72;
           latitude = 38.35;
         };
