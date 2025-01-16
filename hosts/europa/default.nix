@@ -97,6 +97,11 @@ in
       owner = "root";
       mode = "400";
     };
+    krha_env_file = {
+      sopsFile = config.xin-secrets.europa.secrets.services;
+      owner = "qbit";
+      mode = "400";
+    };
   };
 
   nixpkgs.config = {

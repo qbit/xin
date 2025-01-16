@@ -20,8 +20,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "qbit";
     repo = "krha";
-    rev = "46146d547e154c8ecce0eb6b59b52866cb7f5dfd";
-    hash = "sha256-gLRYQFF6CK9ZSKqBc3ladc1/9bTYatkYmtwGJUNIT1c=";
+    rev = "8eec95fd64e44155aac6818d6a17d288da1ae030";
+    hash = "sha256-/QQZLQMsff6KwBv3UQiHaOQJw4DJdbrehj4YQ+5Mis4=";
   };
 
   nativeBuildInputs = [
@@ -38,6 +38,7 @@ stdenv.mkDerivation {
 
     echo "[D-BUS Service]" > krha.service
     echo "Name=dev.suah.krha" >> krha.service
+    echo "EnvironmentFile=/run/secrets/krha_env_file" >> krha.service
     echo "Exec=$out/libexec/krha.py" >> krha.service
 
     install -D krha.service $out/share/dbus-1/services/dev.suah.krha.service
