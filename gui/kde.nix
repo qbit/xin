@@ -66,6 +66,7 @@ with pkgs;
         korganizer
         kzones
         merkuro
+        (pkgs.callPackage ../pkgs/krunner-krha.nix { })
       ];
     };
   };

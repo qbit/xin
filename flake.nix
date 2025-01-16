@@ -334,6 +334,7 @@
             isUnstable = true;
           };
           irken = upkgs.tclPackages.callPackage ./pkgs/irken.nix { };
+          krha = upkgs.callPackage ./pkgs/krunner-krha.nix { };
           ttfs = upkgs.callPackage ./pkgs/ttfs.nix { };
           intiface-engine = upkgs.callPackage ./pkgs/intiface-engine.nix { };
           flake-warn =
