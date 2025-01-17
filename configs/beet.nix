@@ -5,7 +5,7 @@ let
     directory = "/home/qbit/Music";
     "import" = {
       write = true;
-      move = true;
+      copy = true;
       autotag = true;
       timid = false;
       resume = "ask";
@@ -117,10 +117,6 @@ let
       whitelist = "~/.config/beets/genres.txt";
       canonical = "~/.config/beets/genres-tree.yaml";
     };
-    mpd = {
-      host = "localhost";
-      port = 6600;
-    };
     smartplaylist = {
       relative_to = "/home/qbit/Music";
       playlist_dir = "/home/qbit/Playlists/";
@@ -148,18 +144,6 @@ let
         {
           name = "bluegrass.m3u";
           query = "genre:bluegrass";
-        }
-        {
-          name = "tcm.m3u";
-          query = "artist:The Crystal Method year+";
-        }
-        {
-          name = "ctd.m3u";
-          query = "artist:Crash Test Dummies year+";
-        }
-        {
-          name = "jonhopkins.m3u";
-          query = "artist:Jon Hopkins year+";
         }
         {
           query = [ "genre+" ];
