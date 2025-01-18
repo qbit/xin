@@ -271,7 +271,7 @@
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "stan";
         weather = buildSys "aarch64-linux" stable [ ] "weather";
-        retic = buildSys "aarch64-linux" stable [ ] "retic";
+        # retic = buildSys "aarch64-linux" stable [ ] "retic";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
         box = buildSys "x86_64-linux" unstable [ ./configs/hardened.nix ] "box";
@@ -432,7 +432,7 @@
 
       checks =
         let
-          buildList = [ "europa" "stan" "h" "box" "orcim" "tv" "retic" ];
+          buildList = [ "europa" "stan" "h" "box" "orcim" "tv" ];
         in
         with unstable.lib;
         foldl' recursiveUpdate { } (mapAttrsToList
