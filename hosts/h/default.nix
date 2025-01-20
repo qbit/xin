@@ -587,7 +587,7 @@ in
       package = inputs.unstable.legacyPackages.${pkgs.system}.shiori;
     };
     veilid-server = {
-      enable = true;
+      enable = false;
       package = inputs.unstable.legacyPackages.${pkgs.system}.veilid;
     };
     heisenbridge = {
