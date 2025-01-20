@@ -301,7 +301,7 @@ in
       };
       extraConfig =
         ''
-          Match host "xin-store" exec "${pkgs.netcat}/bin/nc -z nix-binary-cache.otter-alligator.ts.net 22"
+          Match host "xin-store" exec "${pkgs.netcat}/bin/nc -z nix-binary-cache.otter-alligator.ts.net 443"
             Hostname nix-binary-cache.otter-alligator.ts.net
             IdentityFile ${config.sops.secrets.xin_store_key.path}
             User nix-ssh
