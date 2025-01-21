@@ -341,6 +341,7 @@ in
       deluge
       dino
       direwolf
+      beeper
       element-desktop
       elmPackages.elm
       elmPackages.elm-format
