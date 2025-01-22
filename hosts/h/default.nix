@@ -2,9 +2,11 @@
 , pkgs
 , isUnstable
 , inputs
+, xinlib
 , ...
 }:
 with pkgs; let
+  inherit (xinlib) todo;
   sojuUser = "soju";
   maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
@@ -331,6 +333,7 @@ in
           ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t NomadNet";
         };
       };
+      navidrome.serviceConfig.BindReadOnlyPaths = todo "navidrome dns issue: https://github.com/NixOS/nixpkgs/issues/151550" [ "/run/systemd/resolve/stub-resolv.conf" ];
       matrix-synapse.after = [ "icbirc.service" ];
       soju.after = [ "icbirc.service" ];
       icb-tunnel = {
