@@ -133,7 +133,7 @@ with lib; {
       };
       harmonia = {
         enable = true;
-        signKeyPath = config.sops.secrets.bin_cache_priv_key.path;
+        signKeyPaths = [ config.sops.secrets.bin_cache_priv_key.path ];
         settings = { bind = "127.0.0.1:5000"; };
       };
     };
