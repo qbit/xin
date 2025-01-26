@@ -37,7 +37,6 @@ git checkout main || handle_co_fail "main"
 git pull || handle_pull_fail
 
 if [ "${1}" = "update" ]; then
-
 	if ! git checkout -b "${ci_branch}"; then
 		handle_co_fail "${ci_branch}"
 		exit 1
