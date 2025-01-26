@@ -48,7 +48,7 @@ if [ "${1}" = "update" ]; then
 		git commit -m 'watched: update watched pull requests'
 	fi
 
-	if [ -z "$2" ]; then
+	if [ ! -z "$2" ]; then
 		inp="${2}"
 		if ! git checkout -b "${ci_branch}_${inp}"; then
 			handle_co_fail "${ci_branch}_${inp}"
