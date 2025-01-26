@@ -173,7 +173,7 @@ Simple wrapper for ~ollama~ that lets me pipe regions and what not into various 
     (setopt
      ollama:endpoint "https://ollama.otter-alligator.ts.net/api/generate"
      ollama:language "English"
-     ollama:model "llama3.1"))
+     ollama:model "deepseek-coder-v2"))
 #+end_src
 
 ** web-mode
