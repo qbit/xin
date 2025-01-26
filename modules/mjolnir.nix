@@ -167,7 +167,7 @@ in
 
     settings = lib.mkOption {
       default = { };
-      inherit (pkgs.formats.yaml) type;
+      type = (pkgs.formats.yaml { }).type;
       example = lib.literalExpression ''
         {
           autojoinOnlyIfManager = true;
