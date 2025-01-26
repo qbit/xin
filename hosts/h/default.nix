@@ -53,8 +53,14 @@ with pkgs; let
 in
 {
   _module.args.isUnstable = false;
+
+  disabledModules = [
+    "services/matrix/mjolnir.nix"
+  ];
+
   imports = [
     ./hardware-configuration.nix
+    ../../modules/mjolnir.nix
   ];
 
   boot = {
@@ -1153,6 +1159,7 @@ in
 
     mjolnir = {
       enable = true;
+      package = inputs.unstable.legacyPackages.${pkgs.system}.mjolnir;
       pantalaimon.enable = false;
       pantalaimon.username = "hammer";
       accessTokenFile = "${config.sops.secrets.hammer_access_token.path}";
