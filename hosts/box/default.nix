@@ -156,6 +156,7 @@ in
           21063 #homekit
           21064 #homekit
           1883 # mosquitto
+          8123 # home-assistant
           8484 # restic-rest server
         ];
       allowedUDPPorts = [
@@ -433,7 +434,7 @@ in
         default_config = { };
         http = {
           use_x_forwarded_for = true;
-          server_host = "127.0.0.1";
+          server_host = [ "127.0.0.1" "10.6.0.15" ];
           trusted_proxies = "127.0.0.1";
         };
         homeassistant = {
