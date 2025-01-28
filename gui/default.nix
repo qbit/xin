@@ -64,7 +64,17 @@ let
   ];
 in
 with lib; {
-  imports = [ ./gnome.nix ./kde.nix ./xfce.nix ];
+  imports = [
+    ../configs/polybar.nix
+    ../configs/smug.nix
+    ../configs/beet.nix
+    ../configs/emacs.nix
+    ../configs/konsole.nix
+    ../configs/chromium.nix
+    ./gnome.nix
+    ./kde.nix
+    ./xfce.nix
+  ];
 
   options = {
     pulse = {
