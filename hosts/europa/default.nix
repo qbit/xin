@@ -403,7 +403,7 @@ in
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/mvoice.nix { })
       (callPackage ../../pkgs/zutty.nix { })
-      (python3Packages.callPackage ../../pkgs/watchmap.nix { })
+      # (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
       (tclPackages.callPackage ../../pkgs/irken.nix { })
 

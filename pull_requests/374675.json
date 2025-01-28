@@ -1,0 +1,30 @@
+{
+  "branches": [
+    "master",
+    "nixos-unstable",
+    "nixos-unstable-small",
+    "nixpkgs-unstable",
+    "staging",
+    "staging-next"
+  ],
+  "error": "",
+  "pull_request": 374675,
+  "release": "unstable",
+  "searches": [
+    {
+      "epoch": 1738023592.01645,
+      "pull_request": 374675,
+      "title": "esphome: 2024.12.2 -> 2024.12.4"
+    }
+  ],
+  "status": "complete",
+  "status_info": {
+    "master": true,
+    "nixos-unstable": true,
+    "nixos-unstable-small": true,
+    "nixpkgs-unstable": true,
+    "staging": true,
+    "staging-next": true
+  },
+  "title": "esphome: 2024.12.2 -> 2024.12.4"
+}
