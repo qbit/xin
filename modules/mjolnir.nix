@@ -165,19 +165,21 @@ in
       '';
     };
 
-    settings = lib.mkOption {
-      default = { };
-      type = (pkgs.formats.yaml { }).type;
-      example = lib.literalExpression ''
-        {
-          autojoinOnlyIfManager = true;
-          automaticallyRedactForReasons = [ "spam" "advertising" ];
-        }
-      '';
-      description = ''
-        Additional settings (see [mjolnir default config](https://github.com/matrix-org/mjolnir/blob/main/config/default.yaml) for available settings). These settings will override settings made by the module config.
-      '';
-    };
+    settings =
+      let ymlType = pkgs.formats.yaml { };
+      in lib.mkOption {
+        default = { };
+        inherit (ymlType) type;
+        example = lib.literalExpression ''
+          {
+            autojoinOnlyIfManager = true;
+            automaticallyRedactForReasons = [ "spam" "advertising" ];
+          }
+        '';
+        description = ''
+          Additional settings (see [mjolnir default config](https://github.com/matrix-org/mjolnir/blob/main/config/default.yaml) for available settings). These settings will override settings made by the module config.
+        '';
+      };
   };
 
   config = lib.mkIf config.services.mjolnir.enable {
