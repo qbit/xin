@@ -40,7 +40,7 @@ with pkgs; let
   matrixServer = "tapenet.org";
   matrixClientConfig = {
     "m.homeserver".base_url = "https://${matrixServer}:443";
-    "org.matrix.msc3575.proxy" = { url = "https://${matrixServer}"; };
+    # "org.matrix.msc3575.proxy" = { url = "https://${matrixServer}"; };
   };
   matrixServerConfig = { "m.server" = "${matrixServer}:443"; };
   mkMatrixWellKnown = p: ''
