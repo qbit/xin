@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, inputs
 , ...
 }:
 let
@@ -105,6 +106,7 @@ in
     esphome = {
       enable = true;
       address = "127.0.0.1";
+      package = inputs.unstable.legacyPackages.${pkgs.system}.esphome;
       port = esphomePort;
     };
     guix = {
