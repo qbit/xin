@@ -363,6 +363,7 @@ in
         "pushover"
         "rest"
         "snmp"
+        "tasmota"
         "wake_on_lan"
         "wake_word"
         "websocket_api"
