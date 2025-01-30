@@ -389,6 +389,8 @@ in
       rtl-sdr
       sdrpp
       signal-desktop
+      tangara-cli
+      tangara-companion
       tcpdump
       tea
       tigervnc
