@@ -255,6 +255,7 @@ auto-completion stuff.
     (add-hook 'elm-mode-hook 'eglot-ensure)
     (add-hook 'go-mode-hook 'eglot-ensure)
     (add-hook 'haskell-mode-hook 'eglot-ensure)
+    (add-hook 'lua-mode 'eglot-ensure)
     (add-hook 'nix-mode-hook 'eglot-ensure)
     (add-hook 'perl-mode-hook 'eglot-ensure)
     (add-hook 'ruby-mode-hook 'eglot-ensure)
@@ -313,6 +314,12 @@ easier for me to treat it like a regular shell.
 #+end_src
 
 * Language Configurations
+
+** Lua
+
+#+begin_src emacs-lisp
+  (use-package lua-mode)
+#+end_src
 
 ** scheme
 
