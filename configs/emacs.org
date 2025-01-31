@@ -420,6 +420,11 @@ can't quit!
 
 ** Config
 #+begin_src emacs-lisp
+  (require 'org-crypt)
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance '("crypt"))
+  (setq org-crypt-key "35863350BFEAC101DB1A4AF01F81112D62A9ADCE")
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((plantuml . t)
