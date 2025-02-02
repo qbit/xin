@@ -374,6 +374,7 @@ in
       obsidian
       ollama
       openscad
+      picard
       picocom
       proton-caller
       protonup-ng
