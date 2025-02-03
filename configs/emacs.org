@@ -769,7 +769,7 @@ mail for some things and having to sync state between two sources is a pita.
         gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
         gnus-thread-sort-functions '(gnus-thread-sort-by-date)
         gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
-        gnus-select-methods '((nntp "news.gmane.io")))
+        gnus-select-method '(nntp "news.gmane.io"))
 #+end_src
 
 * mu4e
