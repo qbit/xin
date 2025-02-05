@@ -1,5 +1,4 @@
-{ buildPythonPackage
-, buildHomeAssistantComponent
+{ buildHomeAssistantComponent
 , fetchFromGitHub
 , fetchPypi
 , home-assistant
