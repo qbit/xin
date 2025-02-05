@@ -246,6 +246,32 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    syncthing = {
+      enable = true;
+      user = "qbit";
+      dataDir = "/home/qbit";
+      settings = {
+        options = {
+          urAccepted = -1;
+        };
+        devices = config.syncthingDevices;
+        folders = {
+          "home/qbit/sync" = {
+            path = "~/sync";
+            id = "main_sync";
+            devices = lib.attrNames config.syncthingDevices;
+            versioning = {
+              type = "staggered";
+              fsPath = "~/syncthing/backup";
+              params = {
+                cleanInterval = "3600";
+                maxAge = "31536000";
+              };
+            };
+          };
+        };
+      };
+    };
     immich = {
       enable = true;
       port = 3301;

@@ -40,24 +40,54 @@ in
   #   "services/web-apps/gotosocial.nix"
   # ];
 
-  options.myconf = {
-    managementPubKeys = lib.mkOption rec {
-      type = lib.types.listOf lib.types.str;
-      default = [ managementKey statusKey breakGlassKey storeKey ];
-      example = default;
-      description = "List of management public keys to use";
+  options = {
+    syncthingDevices = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.submodule {
+        options = {
+          id = lib.mkOption {
+            type = lib.types.str;
+            description = "Unique identifier for this item";
+            example = "my-unique-id";
+          };
+        };
+      });
+      default = {
+        box = {
+          id = "P4PPRLS-3ZTXEKS-MWRM2J5-A6XI36L-TNVSZNE-RUIPMQE-TQJFVNK-2D4LRAB";
+        };
+        europa = {
+          id = "X5COHAJ-6NGF6HB-YZZAKZ4-SJILL7F-4UYPC74-SIFTLFD-JKEG7DW-HEFHPQH";
+        };
+        graphy = {
+          id = "AGSJRQ5-FYPP347-LM5RJK7-7SVCW24-SDXD33M-NEGMLMV-OGBMD4V-L5KP3Q7";
+        };
+        chunk = {
+          id = "YNUY6S6-EEY4NUB-XIZA2MC-WXRNPQK-HZRTTPX-FSG2JLH-7WUA7P7-RDNQ7AV";
+        };
+        plq = {
+          id = "RUTFVOM-IOER2YI-G5ZYORX-2VRWWPO-DGLT277-57MNPHD-OWS6LY5-TX4EKQ6";
+        };
+      };
     };
-    hwPubKeys = lib.mkOption rec {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB1cBO17AFcS2NtIT+rIxR2Fhdu3HD4de4+IsFyKKuGQAAAACnNzaDpsZXNzZXI="
-        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIDEKElNAm/BhLnk4Tlo00eHN5bO131daqt2DIeikw0b2AAAABHNzaDo="
-        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0="
-        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHrYWbbgBkGcOntDqdMaWVZ9xn+dHM+Ap6s1HSAalL28AAAACHNzaDptYWlu"
-        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOyQpDBHjHb3tWnPO6QAjh6KzWYqpabzfjpuwfEUzmUiHpPiU+f4ejNgRFDf9p84SQDz3EXxUMsW/kJ1crAkwOg= surf"
-      ];
-      example = default;
-      description = "List of hardware public keys to use";
+    myconf = {
+      managementPubKeys = lib.mkOption rec {
+        type = lib.types.listOf lib.types.str;
+        default = [ managementKey statusKey breakGlassKey storeKey ];
+        example = default;
+        description = "List of management public keys to use";
+      };
+      hwPubKeys = lib.mkOption rec {
+        type = lib.types.listOf lib.types.str;
+        default = [
+          "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB1cBO17AFcS2NtIT+rIxR2Fhdu3HD4de4+IsFyKKuGQAAAACnNzaDpsZXNzZXI="
+          "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIDEKElNAm/BhLnk4Tlo00eHN5bO131daqt2DIeikw0b2AAAABHNzaDo="
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBB/V8N5fqlSGgRCtLJMLDJ8Hd3JcJcY8skI0l+byLNRgQLZfTQRxlZ1yymRs36rXj+ASTnyw5ZDv+q2aXP7Lj0="
+          "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHrYWbbgBkGcOntDqdMaWVZ9xn+dHM+Ap6s1HSAalL28AAAACHNzaDptYWlu"
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOyQpDBHjHb3tWnPO6QAjh6KzWYqpabzfjpuwfEUzmUiHpPiU+f4ejNgRFDf9p84SQDz3EXxUMsW/kJ1crAkwOg= surf"
+        ];
+        example = default;
+        description = "List of hardware public keys to use";
+      };
     };
   };
 
