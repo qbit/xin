@@ -192,7 +192,7 @@ in
       abieber = userBase // {
         isNormalUser = true;
         description = "Aaron Bieber";
-        extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+        extraGroups = [ "networkmanager" "wheel" "libvirtd" "podman" ];
         hashedPasswordFile = config.sops.secrets.abieber_hash.path;
       };
     };
@@ -222,6 +222,7 @@ in
       };
     };
     systemPackages = with pkgs; [
+      distrobox
       fzf
       google-chrome
       ispell
@@ -289,7 +290,13 @@ in
     ];
   };
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation = {
+    libvirtd.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+    };
+  };
 
   programs = {
     git.config.safe.directory = "/home/abieber/aef100";
