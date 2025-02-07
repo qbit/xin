@@ -23,7 +23,7 @@
             pname = "thing";
             version = "v0.0.0";
             src = ./.;
-            buildInputs = with pkgs; [ gnat12 gprbuild ];
+            buildInputs = with pkgs; [ gnat gprbuild ];
 
             buildPhase = ''
               gprbuild thing
@@ -46,9 +46,9 @@
             shellHook = ''
               PS1='\u@\h:\@; '
               nix run github:qbit/xin#flake-warn
-              echo "Ada `${pkgs.gnat12}/bin/gnatmake --version`"
+              echo "Ada `${pkgs.gnat}/bin/gnatmake --version`"
             '';
-            nativeBuildInputs = with pkgs; [ gnat12 gprbuild ];
+            nativeBuildInputs = with pkgs; [ gnat gprbuild ];
           };
         });
     };
