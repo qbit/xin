@@ -358,16 +358,16 @@ in
     };
 
     systemPackages = with pkgs; [
-      #deltachat-desktop
       arduino
+      beeper
       beets # stable
       calibre
       chirp # stable
       davfs2
+      deltachat-desktop
       deluge
       dino
       direwolf
-      beeper
       element-desktop
       elmPackages.elm
       elmPackages.elm-format
@@ -377,6 +377,7 @@ in
       entr
       ferdium
       fossil
+      gajim
       gh
       gimp
       git-credential-keepassxc
@@ -389,7 +390,6 @@ in
       joplin-desktop
       jujutsu
       klavaro
-      gajim
       koreader
       linphone
       ltunify
