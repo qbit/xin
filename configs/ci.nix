@@ -18,7 +18,7 @@ let
       name = "xin-ci-update-stable";
       user = "qbit";
       script = "cd ~/src/xin && ./bin/ci update stable";
-      startAt = "23:00";
+      startAt = "20:00";
       path = [ ];
     }
     {
