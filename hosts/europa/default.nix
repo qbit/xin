@@ -140,7 +140,10 @@ in
 
   virtualisation = {
     libvirtd.enable = lib.mkDefault true;
-    podman.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+    };
   };
 
   networking = {
@@ -337,12 +340,13 @@ in
   };
 
   users.users.qbit.extraGroups = [
-    "dialout"
-    "libvirtd"
-    "plugdev"
     "cdrom"
     "davfs2"
+    "dialout"
     "input"
+    "libvirtd"
+    "plugdev"
+    "podmap"
   ];
 
   environment = {
@@ -368,6 +372,7 @@ in
       deluge
       dino
       direwolf
+      distrobox
       element-desktop
       elmPackages.elm
       elmPackages.elm-format
