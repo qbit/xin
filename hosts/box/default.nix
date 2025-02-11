@@ -195,6 +195,7 @@ in
     config = {
       allowUnfree = true;
       permittedInsecurePackages = todo "remove asp/dotnet core stuff" [
+        "python3.12-django-3.1.14"
         "aspnetcore-runtime-wrapped-6.0.36"
         "aspnetcore-runtime-6.0.36"
         "dotnet-sdk-wrapped-6.0.428"
@@ -214,6 +215,7 @@ in
 
   environment = {
     systemPackages = with pkgs; [
+      archivebox
       tmux
       mosh
       apg
@@ -1125,6 +1127,18 @@ in
 
   systemd = {
     services = {
+      archivebox = {
+        description = "archivebox";
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          User = "qbit";
+          Type = "forking";
+          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s ArchiveBox -d '${pkgs.archivebox}/bin/archivebox serve'";
+          ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t ArchiveBox";
+        };
+      };
       tsns = {
         serviceConfig = {
           Restart = "always";
