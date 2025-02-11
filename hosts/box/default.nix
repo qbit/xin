@@ -316,6 +316,12 @@ in
           reversePort = config.services.immich.port;
           reverseIP = config.services.immich.host;
         };
+        "archive-service" = {
+          enable = true;
+          reverseName = "archive";
+          reversePort = 8000;
+          reverseIP = "127.0.0.1";
+        };
       };
     };
     restic = {
@@ -1135,7 +1141,7 @@ in
         serviceConfig = {
           User = "qbit";
           Type = "forking";
-          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s ArchiveBox -d '${pkgs.archivebox}/bin/archivebox serve'";
+          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s ArchiveBox -d 'cd /home/qbit/archive && ${pkgs.archivebox}/bin/archivebox server'";
           ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t ArchiveBox";
         };
       };
