@@ -5,9 +5,9 @@
 let
   emacsPkg =
     if (pkgs.system == "x86_64-linux") then
-      pkgs.emacs-pgtk
+      pkgs.pkgsMusl.emacs-pgtk
     else
-      pkgs.emacs;
+      pkgs.pkgsMusl.emacs;
 in
 emacsWithPackagesFromUsePackage {
   config = ../configs/emacs.org;
