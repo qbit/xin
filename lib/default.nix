@@ -114,7 +114,8 @@ let
     in
     {
       system.configurationRevision = state;
-      system.autoUpgrade.enable = lib.mkDefault (state != "DIRTY");
+      # system.autoUpgrade.enable = lib.mkDefault (state != "DIRTY");
+      system.autoUpgrade.enable = lib.mkDefault false;
     };
 
   xinlib = {

@@ -25,7 +25,7 @@ with lib; {
   config = mkMerge [
     (mkIf config.autoUpdate.enable {
       system.autoUpgrade = {
-        # enable is set in flake depending on the state of the tree
+        # enable is set in lib/default.nix depending on the state of the tree
         # DIRTY means disabled, git revision means enabled
         allowReboot = mkDefault true;
         flake = "github:qbit/xin";
