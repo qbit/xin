@@ -5,7 +5,7 @@
 let
   emacsPkg =
     if (pkgs.system == "x86_64-linux") then
-      pkgs.emacs-pgtk
+      pkgs.emacs # TODO, switch back to pgtk when it stops crashing
     else
       pkgs.emacs;
 in
