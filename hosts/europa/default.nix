@@ -378,7 +378,6 @@ in
       elmPackages.elm-format
       elmPackages.elm-language-server
       elmPackages.elm-live
-      elmPackages.elm-test
       entr
       ferdium
       fossil
