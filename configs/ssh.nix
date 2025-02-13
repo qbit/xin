@@ -43,7 +43,7 @@ in
           TrustedUserCAKeys = /etc/ssh/ca.pub
         '';
         settings = {
-          UsePAM = false;
+          UsePAM = lib.mkDefault false;
           PrintMotd = true;
           PermitRootLogin = "prohibit-password";
           PasswordAuthentication = false;

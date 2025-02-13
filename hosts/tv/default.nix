@@ -62,9 +62,13 @@ in
 
   pipewire.enable = true;
 
-  programs.zsh.enable = true;
+  programs = {
+    zsh.enable = true;
+    ssh.package = pkgs.openssh;
+  };
 
   services = {
+    openssh.settings.UsePAM = true;
     avahi.enable = true;
     openssh.settings.X11Forwarding = true;
     fwupd = {
@@ -98,13 +102,14 @@ in
         openssh.authorizedKeys.keys = pubKeys;
         shell = pkgs.zsh;
         isNormalUser = true;
-        extraGroups = [ "dialout" "plugdev" ];
+        extraGroups = [ "dialout" "plugdev" "audio" ];
       };
     };
   };
 
   environment.systemPackages = with pkgs; [
     pavucontrol
+    alsa-utils
   ];
 
   hardware.firmware = with pkgs; [
