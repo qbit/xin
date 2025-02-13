@@ -381,6 +381,7 @@ in
       entr
       ferdium
       fossil
+      freetube
       gajim
       gh
       gimp
