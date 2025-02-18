@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "38f6000e9851a00e2e4b8e1eb4ea6a243ef7e6a3",
-  "hash": "sha256-JdWuqenUaNhT5q0O1NqwnBcL5X0DE8anJ+6ORy7GIcU=",
-  "version": "2025-02-10",
-  "comment": "depend"
+  "rev": "0cbeedba81b57c56379e1d202b9ccd3b72af7ddc",
+  "hash": "sha256-fef8O7+95a6prgmJN1MCrFKTQj2ulaLhbdICppHVGjQ=",
+  "version": "2025-02-18",
+  "comment": "openssh-9.9p2"
 }
