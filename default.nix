@@ -164,18 +164,19 @@ in
     };
 
     nix = {
-      settings =
-        if config.xinCI.enable
-        then { }
-        else {
-          substituters = lib.mkOverride 2 [
-            "https://cache.nixos.org"
-            "https://nix-binary-cache.otter-alligator.ts.net/"
-          ];
-          trusted-public-keys = [
-            "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
-          ];
-        };
+      settings = {
+        trusted-public-keys = [
+          "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
+        ];
+      } //
+      (if config.xinCI.enable
+      then { }
+      else {
+        substituters = lib.mkOverride 2 [
+          "https://cache.nixos.org"
+          "https://nix-binary-cache.otter-alligator.ts.net/"
+        ];
+      });
     };
 
     system.nixos = {
