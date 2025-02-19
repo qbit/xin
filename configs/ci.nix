@@ -121,7 +121,11 @@ with lib; {
     };
 
     users = {
-      users."nix-ssh".hashedPasswordFile = config.sops.secrets.nix_ssh_passwd.path;
+      users."nix-ssh" = {
+        isNormalUser = true;
+        isSystemUser = lib.mkForce false;
+        hashedPasswordFile = config.sops.secrets.nix_ssh_passwd.path;
+      };
     };
 
     systemd = {
