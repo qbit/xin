@@ -1,5 +1,6 @@
 { config
 , pkgs
+, lib
 , ...
 }:
 let
@@ -202,7 +203,7 @@ in
 
   nix = {
     settings = {
-      substituters = [
+      substituters = lib.mkOverride 1 [
         "https://cache.nixos.org"
         "ssh://nix-ssh@xin-store"
       ];

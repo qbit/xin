@@ -168,7 +168,7 @@ in
         if config.xinCI.enable
         then { }
         else {
-          substituters = lib.mkDefault [
+          substituters = lib.mkOverride 2 [
             "https://cache.nixos.org"
             "https://nix-binary-cache.otter-alligator.ts.net/"
           ];
