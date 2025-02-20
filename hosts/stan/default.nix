@@ -168,7 +168,7 @@ in
       sopsFile = config.xin-secrets.stan.secrets.main;
       owner = "root";
       group = "wheel";
-      mode = "440";
+      mode = "400";
     };
     xin_store_pub_user = {
       sopsFile = config.xin-secrets.stan.secrets.main;
