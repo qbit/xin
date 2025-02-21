@@ -12,7 +12,6 @@ let
   ];
   breakGlassKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6CO4aa8ymIgPgHRMwVLPnkUXwFQRKJa66R3wGXrAS0 BreakGlass";
   managementKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
-  storeKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQAGLPWFv6f/0Lr0ikgoFP/vUGgd2pQzQOZs3dGMrZg store@pwntie";
   statusKey = ''
     command="/run/current-system/sw/bin/xin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE9PIhQ+yWfBM2tEG+W8W8HXJXqISXif8BcPZHakKvLM xin-status
   '';
@@ -72,7 +71,7 @@ in
     myconf = {
       managementPubKeys = lib.mkOption rec {
         type = lib.types.listOf lib.types.str;
-        default = [ managementKey statusKey breakGlassKey storeKey ];
+        default = [ managementKey statusKey breakGlassKey ];
         example = default;
         description = "List of management public keys to use";
       };
