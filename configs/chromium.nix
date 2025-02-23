@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 let
   defaultProfile = lib.filterAttrs (_: v: v != null) {
     DefaultSearchProviderEnabled = true;
@@ -27,7 +27,7 @@ let
   };
 in
 {
-  config = {
+  config = lib.mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
     environment = {
       systemPackages = [ pkgs.ungoogled-chromium ];
       etc = {

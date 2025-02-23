@@ -262,7 +262,7 @@
           nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
         clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
-        tv = buildSys "x86_64-linux" unstable [
+        tv = buildSys "x86_64-linux" stable [
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ] "tv";
         orcim = buildSys "x86_64-linux" unstable [ ] "orcim";

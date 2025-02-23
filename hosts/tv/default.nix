@@ -19,7 +19,7 @@ let
   ]);
 in
 {
-  _module.args.isUnstable = true;
+  _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
     ../../configs/zsh.nix
@@ -41,6 +41,8 @@ in
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "snd-intel-dspcfg.dsp_driver=3" ];
   };
+
+  myEmacs.enable = false;
 
   networking = {
     hostName = "tv";
