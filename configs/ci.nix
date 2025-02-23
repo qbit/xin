@@ -25,7 +25,8 @@ let
       name = "xin-ci";
       user = "qbit";
       script = "cd ~/src/xin && ./bin/ci";
-      startAt = "*:30:00";
+      # systemd-analyze calendar --iterations=3 '$cronlike'
+      startAt = "0/2:30:00";
       path = [ ];
     }
   ];
