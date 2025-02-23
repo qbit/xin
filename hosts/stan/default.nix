@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (pkgs.vscode-utils) buildVscodeMarketplaceExtension;
+  # inherit (pkgs.vscode-utils) buildVscodeMarketplaceExtension;
   testingMode = true;
   syslogPort = 514;
   pubKeys = [
