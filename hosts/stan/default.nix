@@ -245,48 +245,48 @@ in
       unzip
       virt-manager
       virt-viewer
-      (vscode-with-extensions.override {
-        vscodeExtensions = with vscode-extensions; [
-          golang.go
-          ms-vscode-remote.remote-ssh
-          rust-lang.rust-analyzer
-          streetsidesoftware.code-spell-checker
-          vscodevim.vim
+      # (vscode-with-extensions.override {
+      #   vscodeExtensions = with vscode-extensions; [
+      #     golang.go
+      #     ms-vscode-remote.remote-ssh
+      #     rust-lang.rust-analyzer
+      #     streetsidesoftware.code-spell-checker
+      #     vscodevim.vim
 
-          (buildVscodeMarketplaceExtension {
-            mktplcRef = {
-              name = "lit-html";
-              publisher = "bierner";
-              version = "1.11.1";
-              sha256 = "sha256-bN786jjTKkcrF0UUOG/J1/k1wqM7JfUO1pQomWLu8+I=";
-            };
-          })
-          (buildVscodeMarketplaceExtension {
-            mktplcRef = {
-              name = "lit-plugin";
-              publisher = "runem";
-              version = "1.4.3";
-              sha256 = "sha256-jhGqtBFkpOChVocv+5zLqA/EtoITbdftI+tMTjjBqs0=";
-            };
-          })
-          (buildVscodeMarketplaceExtension {
-            mktplcRef = {
-              name = "solargraph";
-              publisher = "castwide";
-              version = "0.24.1";
-              sha256 = "sha256-M96kGuCKo232rIwLovDU+C/rhEgZWT4s/zsR7CUYPnk=";
-            };
-          })
-          (buildVscodeMarketplaceExtension {
-            mktplcRef = {
-              name = "vscode-todo-highlight";
-              publisher = "wayou";
-              version = "1.0.5";
-              sha256 = "sha256-CQVtMdt/fZcNIbH/KybJixnLqCsz5iF1U0k+GfL65Ok=";
-            };
-          })
-        ];
-      })
+      #     (buildVscodeMarketplaceExtension {
+      #       mktplcRef = {
+      #         name = "lit-html";
+      #         publisher = "bierner";
+      #         version = "1.11.1";
+      #         sha256 = "sha256-bN786jjTKkcrF0UUOG/J1/k1wqM7JfUO1pQomWLu8+I=";
+      #       };
+      #     })
+      #     (buildVscodeMarketplaceExtension {
+      #       mktplcRef = {
+      #         name = "lit-plugin";
+      #         publisher = "runem";
+      #         version = "1.4.3";
+      #         sha256 = "sha256-jhGqtBFkpOChVocv+5zLqA/EtoITbdftI+tMTjjBqs0=";
+      #       };
+      #     })
+      #     (buildVscodeMarketplaceExtension {
+      #       mktplcRef = {
+      #         name = "solargraph";
+      #         publisher = "castwide";
+      #         version = "0.24.1";
+      #         sha256 = "sha256-M96kGuCKo232rIwLovDU+C/rhEgZWT4s/zsR7CUYPnk=";
+      #       };
+      #     })
+      #     (buildVscodeMarketplaceExtension {
+      #       mktplcRef = {
+      #         name = "vscode-todo-highlight";
+      #         publisher = "wayou";
+      #         version = "1.0.5";
+      #         sha256 = "sha256-CQVtMdt/fZcNIbH/KybJixnLqCsz5iF1U0k+GfL65Ok=";
+      #       };
+      #     })
+      #   ];
+      # })
       wireshark
     ];
   };
