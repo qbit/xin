@@ -258,6 +258,11 @@ in
         };
         devices = config.syncthingDevices;
         folders = {
+          "calibre-library" = {
+            path = "~/Calibre Library";
+            id = "calibre_library";
+            devices = [ "box" ];
+          };
           "home/qbit/sync" = {
             path = "~/sync";
             id = "main_sync";
