@@ -127,6 +127,7 @@ with lib; {
           exiftool
           fynado
           ghostty
+          glamoroustoolkit
           go-font
           govulncheck
           hpi
