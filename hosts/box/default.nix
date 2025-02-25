@@ -259,9 +259,17 @@ in
         devices = config.syncthingDevices;
         folders = {
           "calibre-library" = {
-            path = "~/Calibre Library";
+            path = "~/Calibre_Library";
             id = "calibre_library";
             devices = [ "box" ];
+            versioning = {
+              type = "staggered";
+              fsPath = "~/syncthing/calibre-backup";
+              params = {
+                cleanInterval = "3600";
+                maxAge = "31536000";
+              };
+            };
           };
           "home/qbit/sync" = {
             path = "~/sync";
@@ -590,8 +598,18 @@ in
       openFirewall = true;
     };
 
-    calibre-web = {
+    calibre-server = {
       enable = true;
+      user = "qbit";
+      port = 8909;
+      host = "127.0.0.1";
+      libraries = [
+        "/home/qbit/Calibre_Library/"
+      ];
+    };
+
+    calibre-web = {
+      enable = false;
       group = "media";
       options = { enableBookUploading = true; };
       listen.port = 8909;
