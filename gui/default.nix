@@ -52,12 +52,12 @@ let
       exit_code = 0;
     }
     {
-      command_path = "${pkgs.kdialog}/bin/kdialog";
+      command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
       command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Added" "5" ];
       event = "added";
     }
     {
-      command_path = "${pkgs.kdialog}/bin/kdialog";
+      command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
       command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Removed" "5" ];
       event = "removed";
     }
