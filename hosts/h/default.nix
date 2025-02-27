@@ -601,6 +601,7 @@ in
     };
     heisenbridge = {
       enable = true;
+      package = inputs.unstable.legacyPackages.${pkgs.system}.heisenbridge;
       homeserver = "http://${mtxCfg.address}:${toString mtxCfg.port}";
       owner = "@qbit:tapenet.org";
       namespaces = {
@@ -1105,7 +1106,7 @@ in
             "/_matrix" = mkMatrixLoc;
             "/_synapse/client" = mkMatrixLoc;
             "/_heisenbridge/media" = {
-              proxyPass = "http://127.0.0.1:9898";
+              proxyPass = "http://${config.services.heisenbridge.address}:${toString config.services.heisenbridge.port}";
             };
           };
         };
