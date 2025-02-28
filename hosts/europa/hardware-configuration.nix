@@ -99,11 +99,6 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   hardware = {
-    framework = {
-      laptop13 = {
-        audioEnhancement.enable = true;
-      };
-    };
     bluetooth.enable = true;
     rtl-sdr.enable = true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
