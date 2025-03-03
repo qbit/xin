@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "0cbeedba81b57c56379e1d202b9ccd3b72af7ddc",
-  "hash": "sha256-fef8O7+95a6prgmJN1MCrFKTQj2ulaLhbdICppHVGjQ=",
-  "version": "2025-02-18",
-  "comment": "openssh-9.9p2"
+  "rev": "6575859d7acb110acf408707f98ed9744ca7d692",
+  "hash": "sha256-8LLrk26mwLIhAHb71/5a0hUQ5DkamLcWhYrk7VYshUo=",
+  "version": "2025-03-03",
+  "comment": "upstream: Test for %-token and env var expansion in SetEnv."
 }
