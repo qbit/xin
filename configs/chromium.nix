@@ -14,7 +14,7 @@ let
     SyncDisabled = true;
     PasswordManagerEnabled = false;
     SpellcheckEnabled = true;
-    ScreenCaptureAllowed = false;
+    # ScreenCaptureAllowed = false;
     CloudReportingEnabled = false;
     CloudProfileReportingEnabled = false;
     CloudExtensionRequestEnabled = false;
