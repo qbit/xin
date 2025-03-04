@@ -850,7 +850,7 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
                    :query "list:gameoftrees.openbsd.org AND NOT flag:trashed"
                    :key ?g))))
   (add-to-list 'display-buffer-alist
-             `(,(regexp-quote mu4e-main-buffer-name)
+             `((regexp-quote mu4e-main-buffer-name)
                display-buffer-same-window))
   (define-key mu4e-headers-mode-map (kbd "C-c c") 'mu4e-org-store-and-capture)
   (define-key mu4e-view-mode-map    (kbd "C-c c") 'mu4e-org-store-and-capture)
@@ -912,4 +912,6 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
      ("ijchain" . "<\\(.+?\\)>[[:space:]]+")
      ("matrix_bridge" . "<\\(.+?\\)>[[:space:]]+")
      ("ischain" . "<\\(.+?\\)>[[:space:]]+")))
+  (add-to-list 'display-buffer-alist
+  	     '((major-mode . rcirc-mode) display-buffer-same-window))
 #+end_src
