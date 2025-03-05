@@ -153,6 +153,11 @@ in
       owner = "root";
       sopsFile = config.xin-secrets.h.secrets.services;
     };
+    qbit_at_segfault_pass_file = {
+      mode = "400";
+      owner = "root";
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
     mcchunkie_at_suah_pass_file = {
       mode = "400";
       owner = "root";
@@ -360,13 +365,17 @@ in
   mailserver = {
     enable = true;
     fqdn = "mail.suah.dev";
-    domains = [ "suah.dev" ];
+    domains = [ "suah.dev" "segfault.rodeo" ];
 
     certificateScheme = "acme-nginx";
 
     localDnsResolver = false;
 
     loginAccounts = {
+      "qbit@segfault.rodeo" = {
+        aliases = [ "postmaster@segfault.rodeo" "aaron@segfault.rodeo" ];
+        hashedPasswordFile = "${config.sops.secrets.qbit_at_segfault_pass_file.path}";
+      };
       "qbit@suah.dev" = {
         hashedPasswordFile = "${config.sops.secrets.qbit_at_suah_pass_file.path}";
         aliases = [ "postmaster@suah.dev" "aaron@suah.dev" ];
