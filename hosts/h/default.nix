@@ -270,7 +270,7 @@ in
 
       # matrix things
       matrix-synapse-tools.synadm
-      matrix-synapse-tools.rust-synapse-compress-state
+      rust-synapse-compress-state
 
       zonemaster-cli
       sqlite
