@@ -1,7 +1,8 @@
-{ ... }: {
+{ pkgs, ... }: {
   programs = {
     firefox = {
       enable = true;
+      package = pkgs.librewolf;
       policies = {
         DisableFirefoxStudies = true;
         DisableFormHistory = true;
