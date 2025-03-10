@@ -369,6 +369,9 @@
           promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
             inherit upkgs;
           };
+          pywebscrapbook = upkgs.python3Packages.callPackage ./pkgs/pywebscrapbook.nix {
+            inherit upkgs;
+          };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
           zutty = upkgs.callPackage ./pkgs/zutty.nix {

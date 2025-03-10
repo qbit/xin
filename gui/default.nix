@@ -19,6 +19,8 @@ let
       (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
   promnesia =
     pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
+  pywebscrapbook =
+    pkgs.python3Packages.callPackage ../pkgs/pywebscrapbook.nix { inherit pkgs; };
   hpi = pkgs.python3Packages.callPackage ../pkgs/hpi.nix { inherit pkgs; };
   promnesiaService = {
     promnesia = {
@@ -136,6 +138,7 @@ with lib; {
           pcsctools
           plan9port
           promnesia
+          pywebscrapbook
           rage
           recoll
           rpr
