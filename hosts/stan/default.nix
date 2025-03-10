@@ -224,6 +224,7 @@ in
     };
     systemPackages = with pkgs; [
       distrobox
+      firefox
       fzf
       google-chrome
       ispell
