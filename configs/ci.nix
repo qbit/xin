@@ -7,20 +7,20 @@
 }:
 let
   jobs = [
-    {
-      name = "xin-ci-update";
-      user = "qbit";
-      script = "cd ~/src/xin && ./bin/ci update";
-      startAt = "Sun,Wed 23:00";
-      path = [ ];
-    }
-    {
-      name = "xin-ci-update-stable";
-      user = "qbit";
-      script = "cd ~/src/xin && ./bin/ci update stable";
-      startAt = "20:00";
-      path = [ ];
-    }
+    #{
+    #  name = "xin-ci-update";
+    #  user = "qbit";
+    #  script = "cd ~/src/xin && ./bin/ci update";
+    #  startAt = "Sun,Wed 23:00";
+    #  path = [ ];
+    #}
+    #{
+    #  name = "xin-ci-update-stable";
+    #  user = "qbit";
+    #  script = "cd ~/src/xin && ./bin/ci update stable";
+    #  startAt = "20:00";
+    #  path = [ ];
+    #}
     {
       name = "xin-ci";
       user = "qbit";
