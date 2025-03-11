@@ -11,6 +11,10 @@ let
       acls = {
         nodeAttrs = [
           {
+            target = [ "immich" ];
+            attr = [ "funnel" ];
+          }
+          {
             target = [ "tag:laptop" "tag:mobile" ];
             attr = [
               "drive:access"
@@ -42,6 +46,7 @@ let
           }
         ];
         hosts = {
+          immich = "100.90.44.82";
           box = "100.115.16.150";
           console = "100.83.166.33";
           display = "100.77.35.34";

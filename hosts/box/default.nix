@@ -325,6 +325,7 @@ in
         };
         "immich-service" = {
           enable = true;
+          funnel = true;
           reverseName = "immich";
           reversePort = config.services.immich.port;
           reverseIP = config.services.immich.host;
