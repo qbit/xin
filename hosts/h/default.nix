@@ -308,7 +308,12 @@ in
     };
     users = {
       root = userBase;
-      qbit = userBase;
+      qbit = {
+        packages = [
+          inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.nomadnet
+          inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.rns
+        ];
+      } // userBase;
       "${sojuUser}" = {
         isSystemUser = true;
         group = sojuUser;
@@ -392,6 +397,17 @@ in
   };
 
   services = {
+    i2pd = {
+      enable = true;
+      address = "127.0.0.1";
+      proto = {
+        http = {
+          enable = true;
+          port = 7071;
+        };
+        sam.enable = true;
+      };
+    };
     ejabberd = {
       enable = true;
       package = pkgs.ejabberd.override {

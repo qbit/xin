@@ -187,6 +187,19 @@ in
   services.xinCA = { enable = false; };
 
   services = {
+    i2pd = {
+      enable = true;
+      address = "127.0.0.1";
+      proto = {
+        http = {
+          enable = true;
+          port = 7070;
+        };
+        socksProxy.enable = true;
+        httpProxy.enable = true;
+        sam.enable = true;
+      };
+    };
     syncthing = {
       enable = true;
       user = "qbit";
