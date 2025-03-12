@@ -4,6 +4,7 @@
 , soundcard
 , numpy
 , codec2
+, pyogg
 , cython
 , rns
 , ffmpeg
@@ -31,6 +32,7 @@ let
     propagatedBuildInputs = [
       cython
       numpy
+      pyogg
     ];
     buildInputs = [
       codec2
