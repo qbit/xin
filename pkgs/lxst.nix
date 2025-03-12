@@ -6,6 +6,7 @@
 , codec2
 , cython
 , rns
+, ffmpeg
 , setuptools
 , setuptools-scm
 , ...
@@ -66,6 +67,7 @@ buildPythonPackage rec {
     soundcard
     numpy
     pycodec2
+    ffmpeg
     rns
   ];
 
