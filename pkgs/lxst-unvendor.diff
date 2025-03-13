@@ -1,0 +1,58 @@
+diff --git a/LXST/Codecs/Codec.py b/LXST/Codecs/Codec.py
+index 911d7f5..9a41398 100644
+--- a/LXST/Codecs/Codec.py
++++ b/LXST/Codecs/Codec.py
+@@ -1,5 +1,5 @@
+ import numpy as np
+-from .libs.pydub import AudioSegment
++from pydub import AudioSegment
+ 
+ TYPE_MAP_FACTOR = np.iinfo("int16").max
+ 
+@@ -59,4 +59,4 @@ def resample(input_samples, bitdepth, channels, input_rate, output_rate, normali
+     output_samples = output_samples.reshape(output_samples.shape[0]//channels, channels)
+     output_samples = output_samples.astype(np.float32)
+ 
+-    return output_samples
+\ No newline at end of file
++    return output_samples
+diff --git a/LXST/Codecs/Opus.py b/LXST/Codecs/Opus.py
+index f85defc..38aadee 100644
+--- a/LXST/Codecs/Opus.py
++++ b/LXST/Codecs/Opus.py
+@@ -4,7 +4,7 @@ import time
+ import math
+ import numpy as np
+ from .Codec import Codec, CodecError, resample_bytes
+-from .libs.pyogg import OpusEncoder, OpusDecoder
++from pyogg import OpusEncoder, OpusDecoder
+ 
+ class Opus(Codec):
+     FRAME_QUANTA_MS = 2.5
+@@ -176,4 +176,4 @@ class Opus(Codec):
+         decoded_samples = np.frombuffer(decoded_frame_bytes, dtype="int16")/self.TYPE_MAP_FACTOR
+         frame_samples = decoded_samples.reshape(len(decoded_samples)//self.channels, self.channels)
+ 
+-        return frame_samples
+\ No newline at end of file
++        return frame_samples
+diff --git a/LXST/Sources.py b/LXST/Sources.py
+index 2fe6d2c..3f311e6 100644
+--- a/LXST/Sources.py
++++ b/LXST/Sources.py
+@@ -7,7 +7,7 @@ import numpy as np
+ from collections import deque
+ from .Sinks import LocalSink
+ from .Codecs import Codec, CodecError
+-from .Codecs.libs.pyogg import OpusFile
++from pyogg import OpusFile
+ 
+ RNS.loglevel = RNS.LOG_DEBUG
+ 
+@@ -323,4 +323,4 @@ class OpusFileSource(LocalSource):
+                     time.sleep(self.frame_time*0.1)
+ 
+ class PacketSource(RemoteSource):
+-    pass
+\ No newline at end of file
++    pass

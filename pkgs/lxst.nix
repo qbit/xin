@@ -1,20 +1,49 @@
 { lib
 , buildPythonPackage
 , fetchFromGitHub
-, soundcard
-, numpy
-, pyogg
 , codec2
 , cython
-, rns
 , ffmpeg
-, setuptools
 , libopus
-, setuptools-scm
+, numpy
+, pydub
 , pytestCheckHook
+, rns
+, setuptools
+, setuptools-scm
+, soundcard
+, python3Packages
+, pkgs
 , ...
 }:
 let
+  pyogg = python3Packages.pyogg.overridePythonAttrs (_: {
+    version = "unstable-2024-09-13";
+    patchFlags = [
+      "--binary"
+      "-p1"
+      "--ignore-whitespace"
+    ];
+    patches = with pkgs; [
+      (substituteAll {
+        src = ./pyogg-paths.patch;
+        flacLibPath = "${flac.out}/lib/libFLAC${stdenv.hostPlatform.extensions.sharedLibrary}";
+        oggLibPath = "${libogg}/lib/libogg${stdenv.hostPlatform.extensions.sharedLibrary}";
+        vorbisLibPath = "${libvorbis}/lib/libvorbis${stdenv.hostPlatform.extensions.sharedLibrary}";
+        vorbisFileLibPath = "${libvorbis}/lib/libvorbisfile${stdenv.hostPlatform.extensions.sharedLibrary}";
+        vorbisEncLibPath = "${libvorbis}/lib/libvorbisenc${stdenv.hostPlatform.extensions.sharedLibrary}";
+        opusLibPath = "${libopus}/lib/libopus${stdenv.hostPlatform.extensions.sharedLibrary}";
+        opusFileLibPath = "${opusfile}/lib/libopusfile${stdenv.hostPlatform.extensions.sharedLibrary}";
+      })
+    ];
+    src = pkgs.fetchFromGitHub {
+      owner = "TeamPyOgg";
+      repo = "PyOgg";
+      rev = "4118fc40067eb475468726c6bccf1242abfc24fc";
+      hash = "sha256-th+qHKcDur9u4DBDD37WY62o5LR9ZUDVEFl+m7aXzNY=";
+    };
+  });
+
   pycodec2 = buildPythonPackage rec {
     pname = "pycodec2";
     version = "4.0.0";
@@ -41,7 +70,6 @@ let
 
     dependencies = [
       numpy
-      pyogg
     ];
 
     pythonImportsCheck = [ "pycodec2" ];
@@ -83,12 +111,22 @@ buildPythonPackage rec {
     setuptools
   ];
 
-  propagatedBuildInputs = [
-    soundcard
+  patches = [
+    ./lxst-unvendor.diff
+    ./lxst-deps.diff
+  ];
+
+  buildInputs = [
+    ffmpeg
+  ];
+
+  dependencies = [
     numpy
     pycodec2
-    ffmpeg
+    pydub
+    pyogg
     rns
+    soundcard
   ];
 
 
