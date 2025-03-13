@@ -3,6 +3,7 @@
 , fetchFromGitHub
 , soundcard
 , numpy
+, pyogg
 , codec2
 , cython
 , rns
@@ -40,6 +41,7 @@ let
 
     dependencies = [
       numpy
+      pyogg
     ];
 
     pythonImportsCheck = [ "pycodec2" ];
