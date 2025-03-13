@@ -146,7 +146,7 @@ buildPythonPackage rec {
   meta = with lib; {
     homepage = "https://github.com/markqvist/LXST";
     description = "lxst";
-    license = licenses.mit;
+    mainProgram = "rnphone";
     maintainers = with maintainers; [ qbit ];
   };
 }
