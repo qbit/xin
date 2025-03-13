@@ -4,13 +4,13 @@
 , soundcard
 , numpy
 , codec2
-, pyogg
 , cython
 , rns
 , ffmpeg
 , setuptools
 , libopus
 , setuptools-scm
+, pytestCheckHook
 , ...
 }:
 let
@@ -26,19 +26,33 @@ let
       rev = "v${version}";
       hash = "sha256-5BEJ8q+Onh3eITSmEk2PoNrVViVISULZsiI2cCl24b0=";
     };
-    nativeBuildInputs = [
-      setuptools-scm
-      setuptools
-    ];
-    propagatedBuildInputs = [
+
+    build-system = [
       cython
       numpy
-      pyogg
+      setuptools
     ];
+
     buildInputs = [
       codec2
       libopus
     ];
+
+    dependencies = [
+      numpy
+    ];
+
+    pythonImportsCheck = [ "pycodec2" ];
+
+    nativeCheckInputs = [
+      pytestCheckHook
+    ];
+
+    preCheck = ''
+      rm -rf pycodec2
+    '';
+    doCheck = false;
+
     postPatch = ''
       substituteInPlace pyproject.toml \
         --replace-fail "numpy==2.1.*" "numpy"
