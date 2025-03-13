@@ -9,6 +9,7 @@
 , rns
 , ffmpeg
 , setuptools
+, libopus
 , setuptools-scm
 , ...
 }:
@@ -36,6 +37,7 @@ let
     ];
     buildInputs = [
       codec2
+      libopus
     ];
     postPatch = ''
       substituteInPlace pyproject.toml \
