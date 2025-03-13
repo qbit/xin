@@ -44,6 +44,19 @@ let
     };
   });
 
+  myrns =
+    if python3Packages.rns.version == "0.9.2" then
+      python3Packages.rns.overridePythonAttrs
+        (_: {
+          version = "0.9.3";
+          src = fetchFromGitHub {
+            owner = "markqvist";
+            repo = "Reticulum";
+            tag = "0.9.3";
+            hash = "sha256-50L+5WVsYaidz71rkGZny2KlCR3ZfPEQJEPI38MOBWA=";
+          };
+        }) else python3Packages.rns;
+
   pycodec2 = buildPythonPackage rec {
     pname = "pycodec2";
     version = "4.0.0";
@@ -98,8 +111,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "markqvist";
     repo = pname;
-    rev = "94814f1c31f743da7381e73dc1d7463c9882fae7";
-    hash = "sha256-D33OYbTa5iuJo9s/NYr5oYc+UlRjhANyKUK6g998P08=";
+    rev = "846c7487a1313a3033a3dc2abd5b7056e809866a";
+    hash = "sha256-XX1l1PNg97deB06FtJ/QBzQM/xPLWQPAyycRvIE28B0=";
   };
 
   #SETUPTOOLS_SCM_PRETEND_VERSION = version;
@@ -116,7 +129,7 @@ buildPythonPackage rec {
     ./lxst-deps.diff
   ];
 
-  buildInputs = [
+  propagatedBuildInputs = [
     ffmpeg
   ];
 
@@ -125,7 +138,7 @@ buildPythonPackage rec {
     pycodec2
     pydub
     pyogg
-    rns
+    myrns
     soundcard
   ];
 
