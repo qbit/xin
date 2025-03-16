@@ -50,37 +50,72 @@ if [ "${1}" = "update" ]; then
 
 	if [ ! -z "$2" ]; then
 		inp="${2}"
-		if ! git checkout -b "${ci_branch}_${inp}"; then
-			handle_co_fail "${ci_branch}_${inp}"
-			continue
-		fi
+		if [ "${inp}" = "all" ]; then
+			if ! git checkout -b "${ci_branch}_${inp}"; then
+				handle_co_fail "${ci_branch}_${inp}"
+				continue
+			fi
 
-		current_hash="$(git rev-parse HEAD)"
+			current_hash="$(git rev-parse HEAD)"
 
-		if ! nix flake update --commit-lock-file "$inp"; then
-			handle_update_fail "$inp"
-			continue
-		fi
+			if ! nix flake update --commit-lock-file; then
+				handle_update_fail "$inp"
+				continue
+			fi
 
-		maybe_new_hash="$(git rev-parse HEAD)"
+			maybe_new_hash="$(git rev-parse HEAD)"
 
-		if [ "${current_hash}" != "${maybe_new_hash}" ]; then
-			if ! nix flake check --print-build-logs; then
-				handle_update_check_fail "$inp"
+			if [ "${current_hash}" != "${maybe_new_hash}" ]; then
+				if ! nix flake check --print-build-logs; then
+					handle_update_check_fail "$inp"
+					continue
+				fi
+			else
+				msg "No change in input, skipping checks."
+			fi
+
+			if ! git checkout "${ci_branch}"; then
+				handle_co_fail "${ci_branch}"
+				continue
+			fi
+
+			if ! git merge "${ci_branch}_${inp}"; then
+				handle_merge_fail "${ci_branch}_${inp}" "${ci_branch}"
 				continue
 			fi
 		else
-			msg "No change in input, skipping checks."
-		fi
+			if ! git checkout -b "${ci_branch}_${inp}"; then
+				handle_co_fail "${ci_branch}_${inp}"
+				continue
+			fi
 
-		if ! git checkout "${ci_branch}"; then
-			handle_co_fail "${ci_branch}"
-			continue
-		fi
+			current_hash="$(git rev-parse HEAD)"
 
-		if ! git merge "${ci_branch}_${inp}"; then
-			handle_merge_fail "${ci_branch}_${inp}" "${ci_branch}"
-			continue
+			if ! nix flake update --commit-lock-file "$inp"; then
+				handle_update_fail "$inp"
+				continue
+			fi
+
+			maybe_new_hash="$(git rev-parse HEAD)"
+
+			if [ "${current_hash}" != "${maybe_new_hash}" ]; then
+				if ! nix flake check --print-build-logs; then
+					handle_update_check_fail "$inp"
+					continue
+				fi
+			else
+				msg "No change in input, skipping checks."
+			fi
+
+			if ! git checkout "${ci_branch}"; then
+				handle_co_fail "${ci_branch}"
+				continue
+			fi
+
+			if ! git merge "${ci_branch}_${inp}"; then
+				handle_merge_fail "${ci_branch}_${inp}" "${ci_branch}"
+				continue
+			fi
 		fi
 	else
 		for inp in $(nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[] as $k | $k'); do
