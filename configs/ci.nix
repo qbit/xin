@@ -8,11 +8,11 @@
 let
   jobs = [
     {
-     name = "xin-ci-update";
-     user = "qbit";
-     script = "cd ~/src/xin && ./bin/ci update all";
-     startAt = "*-*-01 00:00:00";
-     path = [ ];
+      name = "xin-ci-update";
+      user = "qbit";
+      script = "cd ~/src/xin && ./bin/ci update all";
+      startAt = "*-*-01 00:00:00";
+      path = [ ];
     }
     #{
     #  name = "xin-ci-update-stable";
