@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "6575859d7acb110acf408707f98ed9744ca7d692",
-  "hash": "sha256-8LLrk26mwLIhAHb71/5a0hUQ5DkamLcWhYrk7VYshUo=",
-  "version": "2025-03-03",
-  "comment": "upstream: Test for %-token and env var expansion in SetEnv."
+  "rev": "2e81100763d5885e500f065b04c16ed87ce74318",
+  "hash": "sha256-ndh5GXx/ix6uAZwgazedxHsYLpKJ0mWgnbbxW4pi9mo=",
+  "version": "2025-03-17",
+  "comment": "Fix debug log path."
 }
