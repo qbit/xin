@@ -9,6 +9,8 @@ let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
   thunderbird = import ../../configs/thunderbird.nix { inherit pkgs; };
+  pywebscrapbook =
+    pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
   jobs = [
     {
       name = "brain";
@@ -341,8 +343,19 @@ in
   ];
 
   systemd = {
-    user.services =
-      lib.listToAttrs (builtins.map jobToUserService jobs);
+    user.services = lib.listToAttrs (builtins.map jobToUserService jobs) //
+      {
+        wsb = {
+          description = "web scrap book";
+          after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            WorkingDirectory = "/home/qbit/web-scrap";
+            ExecStart = "${pywebscrapbook}/bin/wsb serve";
+          };
+        };
+      };
     services = {
       ollama = {
         environment = {
