@@ -6,13 +6,13 @@
 with lib;
 buildGoModule rec {
   pname = "yarr";
-  version = "unstable-2024-11-28";
+  version = "unstable-2025-03-19";
 
   src = fetchFromGitHub {
     owner = "nkanaev";
     repo = pname;
-    rev = "321ad7608fbb3368b6c89b2e9bfa07a4eb3bdc40";
-    sha256 = "sha256-ZX9qs8zAbEiFcq0YVwM3TiUWTcx+N63HV83JI8iGdrA=";
+    rev = "35850d6310d0bb4e1e71f6b1aa92d0acb33d057c";
+    sha256 = "sha256-BqcgN56zYle/861j8R8j1cLOm/9R3YbQR6lRL2zGge4=";
   };
 
   vendorHash = null;
