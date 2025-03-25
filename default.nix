@@ -219,7 +219,7 @@ in
 
           inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.nomadnet
           inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.rns
-          (inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.callPackage ../../pkgs/rnsh.nix { inherit (inputs.unstable.legacyPackages.${pkgs.system}) pkgs; })
+          (inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.callPackage ./pkgs/rnsh.nix { inherit (inputs.unstable.legacyPackages.${pkgs.system}) pkgs; })
         ]
         ++ (
           if isUnstable
