@@ -308,12 +308,7 @@ in
     };
     users = {
       root = userBase;
-      qbit = {
-        packages = [
-          inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.nomadnet
-          inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.rns
-        ];
-      } // userBase;
+      qbit = { } // userBase;
       "${sojuUser}" = {
         isSystemUser = true;
         group = sojuUser;
