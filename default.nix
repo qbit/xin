@@ -3,6 +3,7 @@
 , options
 , pkgs
 , isUnstable
+, inputs
 , ...
 }:
 let
