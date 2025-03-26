@@ -313,6 +313,12 @@ easier for me to treat it like a regular shell.
     (kill-buffer))
 #+end_src
 
+
+vterm is handy for running things that spit out a lot of escape codes (nom.. etc)
+#+begin_src emacs-lisp
+  (use-package vterm)
+#+end_src
+
 * Language Configurations
 
 ** Ada
@@ -749,7 +755,10 @@ Custom agenda commands for various things.
 Extending org with the ability to transclude makes for a powerhouse!
 #+begin_src emacs-lisp
   (use-package org-transclusion
-    :after org)
+    :after org
+    :bind ("C-c t" . org-transclusion-add)
+    :config
+    (setq org-transclusion-exclude-elements '(keyword property-drawer)))
 #+end_src
 
 * Mail
