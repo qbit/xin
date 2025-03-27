@@ -761,6 +761,27 @@ Extending org with the ability to transclude makes for a powerhouse!
     (setq org-transclusion-exclude-elements '(keyword property-drawer)))
 #+end_src
 
+* RSS
+
+#+begin_src emacs-lisp
+  (use-package elfeed)
+  (use-package elfeed-protocol
+    :after elfeed
+    :config
+    (setq elfeed-protocol-feeds '(("fever+https://qbit@rss.bolddaemon.com"
+  			    :password (auth-info-password
+  				       (nth 0 (auth-source-search :max 1 :host "rss.bolddaemon.com" :require '(:secret))))
+  			    :api-url "https://rss.bolddaemon.com/fever/")))
+    (setq elfeed-protocol-enabled-protocols '(fever))
+    (setq elfeed-protocol-fever-update-unread-only nil)
+    (elfeed-protocol-enable))
+  (defun xin-elfeed-update ()
+    (interactive)
+    (elfeed-search-update--force)
+    (elfeed-protocol-fever-reinit "https://qbit@rss.bolddaemon.com")
+    (switch-to-buffer "*elfeed-search*"))
+#+end_src
+
 * Mail
 
 ** gnus
