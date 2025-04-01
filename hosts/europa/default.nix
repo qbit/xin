@@ -440,6 +440,7 @@ in
       nixpkgs-review
       nmap
       obsidian
+      signal-cli
       ollama
       openscad
       picard
