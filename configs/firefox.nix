@@ -1,8 +1,22 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let defaultBrowser = pkgs.librewolf; in
+{
+  environment = {
+    etc = {
+      "1password/custom_allowed_browsers" = {
+        user = "root";
+        group = "root";
+        mode = "0755";
+        text = ''
+          ${defaultBrowser.meta.mainProgram}
+        '';
+      };
+    };
+  };
   programs = {
     firefox = {
       enable = true;
-      package = pkgs.librewolf;
+      package = defaultBrowser;
       policies = {
         DisableFirefoxStudies = true;
         DisableFormHistory = true;

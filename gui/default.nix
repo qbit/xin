@@ -67,6 +67,7 @@ let
 in
 with lib; {
   imports = [
+    firefox
     ../configs/polybar.nix
     ../configs/smug.nix
     ../configs/beet.nix
@@ -116,14 +117,6 @@ with lib; {
       environment = {
         etc = {
           "traygent.json" = { text = traygentCmds; };
-          "1password/custom_allowed_browsers" = {
-            user = "root";
-            group = "root";
-            mode = "0755";
-            text = ''
-              ${pkgs.librewolf.meta.mainProgram}
-            '';
-          };
         };
         sessionVariables = {
           SSH_AUTH_SOCK = "$HOME/.traygent";
@@ -161,7 +154,7 @@ with lib; {
 
       programs = {
         ladybird.enable = true;
-      } // firefox.programs;
+      };
 
       systemd.user.services =
         (lib.listToAttrs (builtins.map xinlib.jobToUserService jobs))
