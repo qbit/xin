@@ -326,6 +326,10 @@ in
         };
       };
       mcchunkie = {
+        path = with pkgs; [
+          mcchunkie
+          signal-cli
+        ];
         serviceConfig = {
           ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
         };
