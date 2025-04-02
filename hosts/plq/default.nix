@@ -31,8 +31,7 @@ in
     };
   };
   services = {
-    nix-daemon.enable = true;
-    emacs.package = pkgs.emacsUnstable;
+    emacs.package = pkgs.callPackage ../pkgs/emacs.nix { inherit isUnstable; };
   };
 
   system = {

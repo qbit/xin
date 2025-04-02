@@ -153,7 +153,7 @@
         inherit (unstable) lib;
         inherit inputs;
       };
-      supportedSystems = [ "x86_64-linux" ];
+      supportedSystems = [ "x86_64-linux" "aarch64-darwin" ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
       unstablePkgsFor = forAllSystems (system:
