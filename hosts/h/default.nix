@@ -178,6 +178,11 @@ in
       owner = config.services.ejabberd.user;
       sopsFile = config.xin-secrets.h.secrets.services;
     };
+    signal-cli-env = {
+      mode = "400";
+      owner = config.services.signal-cli.user;
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
   };
 
   networking = {
@@ -313,25 +318,40 @@ in
         isSystemUser = true;
         group = sojuUser;
       };
+      ${config.services.mcchunkie.user} = {
+        extraGroups = [ "signal-cli" ];
+      };
     };
   };
 
   systemd = {
     services = {
       soju = {
+        after = [ "network-online.target" "tailscaled.service" "icpirc.service" ];
         serviceConfig = {
           User = sojuUser;
           Group = sojuUser;
-          after = [ "network-online.target" "tailscaled.service" ];
         };
       };
       mcchunkie = {
-        path = with pkgs; [
-          mcchunkie
-          signal-cli
-        ];
+        after = [ "network-online.target" "signal-cli.service" "tailscaled.service" ];
         serviceConfig = {
           ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
+        };
+      };
+      mcchunkie-perms-fix = {
+        after = [ "mcchunkie.service" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart =
+            let
+              permFixScript = pkgs.writeShellScript "permFix" ''
+                ${pkgs.coreutils}/bin/chmod g+rx ${config.services.signal-cli.dataDir};
+                ${pkgs.coreutils}/bin/chmod g+rw ${config.services.signal-cli.socketPath};
+              '';
+            in
+            permFixScript;
         };
       };
       nomadnet = {
@@ -347,8 +367,6 @@ in
         };
       };
       navidrome.serviceConfig.BindReadOnlyPaths = todo "navidrome dns issue: https://github.com/NixOS/nixpkgs/issues/151550" [ "/run/systemd/resolve/stub-resolv.conf" ];
-      matrix-synapse.after = [ "icbirc.service" ];
-      soju.after = [ "icbirc.service" ];
       icb-tunnel = {
         wants =
           [ "network-online.target" "multi-user.target" ];
@@ -396,6 +414,10 @@ in
   };
 
   services = {
+    signal-cli = {
+      enable = true;
+      envFile = config.sops.secrets.signal-cli-env.path;
+    };
     i2pd = {
       enable = true;
       address = "127.0.0.1";

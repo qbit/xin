@@ -323,11 +323,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743186637,
-        "narHash": "sha256-IfX0wftiCVVBCFq3TdlFVBCnzDP5QlaYCAaa2CttUMk=",
+        "lastModified": 1743611423,
+        "narHash": "sha256-5rALPF1XEebGoKAbSSt9d3YkusABIkTsjUkIHz4vgFw=",
         "owner": "qbit",
         "repo": "mcchunkie",
-        "rev": "2f9e6a59bf2def560fdfe64a9d1c85c5348059f9",
+        "rev": "8428c2bbaf50ea42420a5a8c832cf82a5ff6dcb2",
         "type": "github"
       },
       "original": {
@@ -746,11 +746,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743004227,
-        "narHash": "sha256-kho9yJ6JymE9dCyAUofB0p2O9/t4nrccgSVhFkM/ZCE=",
+        "lastModified": 1743610359,
+        "narHash": "sha256-I5oV6R/ZDrrtelQZvPvtLmJkXci6Cy9KVL21UTrXKzM=",
         "ref": "main",
-        "rev": "ad49ce07d2630ad11bbcb5412c80b6f0ec38b0e1",
-        "revCount": 185,
+        "rev": "49564975f552af3da2049f94947683f8c8c0d8b1",
+        "revCount": 186,
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
