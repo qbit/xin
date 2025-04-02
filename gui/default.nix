@@ -114,7 +114,17 @@ with lib; {
         packages = fontSet;
       };
       environment = {
-        etc."traygent.json" = { text = traygentCmds; };
+        etc = {
+          "traygent.json" = { text = traygentCmds; };
+          "1password/custom_allowed_browsers" = {
+            user = "root";
+            group = "root";
+            mode = "0755";
+            text = ''
+              ${pkgs.librewolf.meta.mainProgram}
+            '';
+          };
+        };
         sessionVariables = {
           SSH_AUTH_SOCK = "$HOME/.traygent";
         } // (if config.networking.hostName != "stan" then {
