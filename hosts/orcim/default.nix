@@ -14,6 +14,13 @@ in
 
   hardware = {
     rtl-sdr.enable = true;
+    bluetooth.enable = true;
+    enableAllFirmware = true;
+  };
+
+  nixpkgs.config = {
+    allowUnsupportedSystem = true;
+    allowUnfree = true;
   };
 
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
@@ -71,8 +78,6 @@ in
     };
 
   };
-
-  nixpkgs.config.allowUnsupportedSystem = true;
 
   networking = {
     hostName = "orcim";
