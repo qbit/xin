@@ -36,10 +36,6 @@
       };
     };
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
-
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "unstableSmall";
