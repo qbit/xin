@@ -73,6 +73,16 @@ I know I am in emacs, don't need to see the startup screen.
   (setq transient-history-file (expand-file-name "~/.emacs.d/transient"))
 #+end_src
 
+**** eww
+
+[2025-04-02 Wed] Since switching to rcirc and elfeed.. it's nice to be able to
+view links directly in emacs. This sets the default to be eww.. I can use ~&~ to
+open in the external browser.
+
+#+begin_src emacs-lisp
+  (setq browse-url-browser-function 'eww-browse-url)
+#+end_src
+
 *** Common functionality
 
 #+begin_src emacs-lisp
