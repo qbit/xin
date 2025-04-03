@@ -546,7 +546,7 @@ in
     tor.enable = true;
 
     transmission = {
-      enable = true;
+      enable = false;
       group = "media";
       downloadDirPermissions = "770";
       settings = {
