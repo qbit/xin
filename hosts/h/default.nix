@@ -1210,20 +1210,24 @@ in
       accessTokenFile = "${config.sops.secrets.hammer_access_token.path}";
       homeserverUrl = "https://tapenet.org";
       protectedRooms = [
-        "https://matrix.to/#/#openbsd:matrix.org"
-        "https://matrix.to/#/#go-lang:matrix.org"
-        "https://matrix.to/#/#plan9:matrix.org"
-        "https://matrix.to/#/#nix-openbsd:tapenet.org"
-        "https://matrix.to/#/#cobug:tapenet.org"
-        "https://matrix.to/#/#gosec:tapenet.org"
-        "https://matrix.to/#/#gophers-offtopic:matrix.org"
-        "https://matrix.to/#/#devious:tapenet.org"
-        "https://matrix.to/#/#gotk4:matrix.org"
         "https://matrix.to/#/#aerc:matrix.org"
-        "https://matrix.to/#/#pueblo-nerds:tapenet.org"
-
-        "https://matrix.to/#/#nixhub-home:matrix.org"
+        "https://matrix.to/#/#cobug:tapenet.org"
+        "https://matrix.to/#/#cyphrmepub:matrix.org"
+        "https://matrix.to/#/#devious:tapenet.org"
+        "https://matrix.to/#/#fyne:matrix.org"
+        "https://matrix.to/#/#gameoftrees:matrix.org"
+        "https://matrix.to/#/#go-lang:matrix.org"
+        "https://matrix.to/#/#gofr:matrix.org"
+        "https://matrix.to/#/#gophers-offtopic:matrix.org"
+        "https://matrix.to/#/#gosec:tapenet.org"
+        "https://matrix.to/#/#gothub:zettaport.com"
+        "https://matrix.to/#/#gotk4:matrix.org"
+        "https://matrix.to/#/#nix-openbsd:tapenet.org"
         "https://matrix.to/#/#nixhub-devnull:matrix.org"
+        "https://matrix.to/#/#nixhub-home:matrix.org"
+        "https://matrix.to/#/#openbsd:matrix.org"
+        "https://matrix.to/#/#plan9:matrix.org"
+        "https://matrix.to/#/#pueblo-nerds:tapenet.org"
       ];
       settings = {
         verboseLogging = false;
