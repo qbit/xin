@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "1b311b6b17be81577514c38e8be4f5740d7df496",
-  "hash": "sha256-Fgalf5g8rp3pe0XUGTUQ7coyi/p1vSp8Y9r+fA6vEHY=",
-  "version": "2025-03-19",
-  "comment": "upstream: Prevent theoretical NULL deref in throughlocal_sftp."
+  "rev": "f80fb819e5521e13f167edbcc3eed66e22ad0c2a",
+  "hash": "sha256-rFGX8EBpS23l+vSHkE12zGgpRoGzTzzkNtn8rdv/xbM=",
+  "version": "2025-04-02",
+  "comment": "remove all instances of -pie from LDFLAGS"
 }
