@@ -9,6 +9,7 @@
 
   boot = {
     initrd = {
+      luks.devices."luks-035a7fbe-a187-47cb-90c0-ac4d0fea9b41".device = "/dev/disk/by-uuid/035a7fbe-a187-47cb-90c0-ac4d0fea9b41";
       availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_acpi" ];
       kernelModules = [ ];
     };
@@ -18,18 +19,23 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/aa1b622f-2bce-4c7d-b344-8d11a73d738a";
+      device = "/dev/disk/by-uuid/3705945c-a767-4380-a594-1f69fc463b26";
       fsType = "ext4";
     };
 
+
+
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/03B6-6D57";
+      device = "/dev/disk/by-uuid/C8DA-716C";
       fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/34eac254-010b-4759-a868-08e68d22a69c"; }];
+    [
+      { device = "/dev/disk/by-uuid/e729e069-f9ce-4a76-8710-b8dd16164e8f"; }
+    ];
 
   networking.useDHCP = lib.mkDefault true;
 

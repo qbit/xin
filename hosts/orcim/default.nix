@@ -90,20 +90,16 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    alacritty
-    direwolf
-    polybar
-    python3
     python3Packages.nomadnet
     python3Packages.rns
-    rofi
     rtl-sdr
-    tncattach
+    signal-desktop
   ];
 
   kde.enable = true;
 
   services = {
+    smartd.enable = false;
     xserver = {
       dpi = 200;
       xrandrHeads = [{
@@ -114,9 +110,8 @@ in
         '';
       }];
     };
-    power-profiles-daemon.enable = false;
     tlp = {
-      enable = true;
+      enable = false;
       settings = {
         DISK_DEVICES = "mmcblk0";
         DISK_IOSCHED = "deadline";
