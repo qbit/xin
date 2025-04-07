@@ -82,6 +82,7 @@ in
   networking = {
     hostName = "orcim";
     networkmanager.enable = true;
+    wireless.userControlled.enable = true;
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
@@ -100,16 +101,6 @@ in
 
   services = {
     smartd.enable = false;
-    xserver = {
-      dpi = 200;
-      xrandrHeads = [{
-        output = "DSI-1";
-        primary = true;
-        monitorConfig = ''
-          Option  "Rotate"  "right"
-        '';
-      }];
-    };
     tlp = {
       enable = false;
       settings = {
