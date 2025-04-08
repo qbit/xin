@@ -12,12 +12,11 @@
 , setuptools
 , setuptools-scm
 , soundcard
-, python3Packages
 , pkgs
 , ...
 }:
 let
-  pyogg = python3Packages.pyogg.overridePythonAttrs (_: {
+  pyogg = pkgs.python3Packages.pyogg.overridePythonAttrs (_: {
     version = "unstable-2024-09-13";
     patchFlags = [
       "--binary"
@@ -45,8 +44,8 @@ let
   });
 
   myrns =
-    if python3Packages.rns.version == "0.9.2" then
-      python3Packages.rns.overridePythonAttrs
+    if pkgs.python3Packages.rns.version == "0.9.2" then
+      pkgs.python3Packages.rns.overridePythonAttrs
         (_: {
           version = "0.9.3";
           src = fetchFromGitHub {
@@ -55,7 +54,7 @@ let
             tag = "0.9.3";
             hash = "sha256-50L+5WVsYaidz71rkGZny2KlCR3ZfPEQJEPI38MOBWA=";
           };
-        }) else python3Packages.rns;
+        }) else pkgs.python3Packages.rns;
 
   pycodec2 = buildPythonPackage rec {
     pname = "pycodec2";
