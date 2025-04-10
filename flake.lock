@@ -438,7 +438,7 @@
         "unstable": "unstable",
         "unstableSmall": "unstableSmall",
         "xin-secrets": "xin-secrets",
-        "xintray": "xintray"
+        "xin-status": "xin-status"
       }
     },
     "simple-nixos-mailserver": {
@@ -655,23 +655,23 @@
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       }
     },
-    "xintray": {
+    "xin-status": {
       "inputs": {
         "nixpkgs": [
           "unstable"
         ]
       },
       "locked": {
-        "lastModified": 1742590472,
-        "narHash": "sha256-YHF+zk3mHOM/IePiEX971oGCMdaGuGrI8NyueoDGATU=",
+        "lastModified": 1744284726,
+        "narHash": "sha256-tDEMjEy1P2ra6k2y3I4IS+h6Q6fGCXFraBQXxqPnVlA=",
         "owner": "qbit",
-        "repo": "xintray",
-        "rev": "853344d941a2341dbbcabb53ea8322a8a03f232a",
+        "repo": "xin-status",
+        "rev": "ddbfeeb67a8f8c4ad277a66c0900f88363fe4b9f",
         "type": "github"
       },
       "original": {
         "owner": "qbit",
-        "repo": "xintray",
+        "repo": "xin-status",
         "type": "github"
       }
     }

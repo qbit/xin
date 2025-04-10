@@ -10,6 +10,7 @@ let
     #!/usr/bin/env sh
     ${microcaBin} -ca-key /run/secrets/ca_key -ca-cert /run/secrets/ca_cert $@
   '';
+  mkXinHost = hostList: map (host: { inherit host; }) hostList;
 in
 with lib; {
   options = {
@@ -28,6 +29,25 @@ with lib; {
   imports = [ ./tailnet.nix ];
 
   config = mkIf config.nixManager.enable {
+    programs.xin-status = {
+      enable = true;
+      settings = {
+        repository = "/home/qbit/src/xin";
+        privKeyPath = "/run/secrets/xin_status_key";
+        flakeRss = "https://github.com/qbit/xin/commits/main.atom";
+        statuses = [
+          {
+            host = "tv";
+            mac = "9c:bf:0d:00:04:e7";
+          }
+          {
+            name = "stan";
+            host = "10.6.0.224";
+          }
+        ] ++ (mkXinHost [ "europa" "h" "orcim" "box" "pwntie" ]);
+        ciHost = "pwntie";
+      };
+    };
     sops.defaultSopsFile = config.xin-secrets.manager;
     sops.secrets = {
       xin_status_key = { owner = config.nixManager.user; };
@@ -40,7 +60,7 @@ with lib; {
 
     environment.systemPackages = [
       microca
-      inputs.xintray.packages.${pkgs.system}.xintray
+      # inputs.xintray.packages.${pkgs.system}.xintray
       inputs.po.packages.${pkgs.system}.po
     ];
 

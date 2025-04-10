@@ -70,8 +70,8 @@
       url = "github:qbit/pr-status-pl";
       inputs.nixpkgs.follows = "stable";
     };
-    xintray = {
-      url = "github:qbit/xintray";
+    xin-status = {
+      url = "github:qbit/xin-status";
       inputs.nixpkgs.follows = "unstable";
     };
     beyt = {
@@ -141,7 +141,7 @@
     , unstable
     , unstableSmall
     , xin-secrets
-    , xintray
+    , xin-status
     , ...
     } @ inputs:
     let
@@ -166,6 +166,7 @@
           # Common config stuffs
           (import ./default.nix)
 
+          xin-status.nixosModules.default
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
           lix-module.nixosModules.default
@@ -184,6 +185,7 @@
         pr-status.overlay
         ts-reverse-proxy.overlay
         tsns.overlay
+        xin-status.overlays.default
       ];
 
       buildSys = sys: sysBase: extraMods: name:
@@ -382,7 +384,6 @@
           mvoice = upkgs.callPackage ./pkgs/mvoice.nix {
             inherit upkgs;
           };
-          inherit (xintray.packages.${system}) xintray;
           inherit (beyt.packages.${system}) beyt;
           inherit (tsvnstat.packages.${system}) tsvnstat;
           inherit (pots.packages.${system}) pots;
@@ -395,7 +396,6 @@
 
           inherit (spkgs) matrix-synapse;
 
-          xin = upkgs.callPackage ./bins/xin { inherit upkgs; };
           openssh = upkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit upkgs; };
           matrix = self.nixosConfigurations.h.pkgs.matrix-synapse;
         });
