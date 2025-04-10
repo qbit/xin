@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "f80fb819e5521e13f167edbcc3eed66e22ad0c2a",
-  "hash": "sha256-rFGX8EBpS23l+vSHkE12zGgpRoGzTzzkNtn8rdv/xbM=",
-  "version": "2025-04-02",
-  "comment": "remove all instances of -pie from LDFLAGS"
+  "rev": "8725dbc5b5fcc3e326fc71189ef8dba4333362cc",
+  "hash": "sha256-h6NSfG+NrpQTFWwb8Fge7gfqEDi7fxEgS0EGu6Lc5MA=",
+  "version": "2025-04-09",
+  "comment": "update version numbers"
 }
