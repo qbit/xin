@@ -19,7 +19,7 @@ in
 
   for login in $(${teaBin} logins list -o simple | awk '{print $1}'); do
     tea logins default "$login"
-    tea repos create -name "$proj" || echo "error creating '$proj' on '$login'"
+    tea repos create --private --name "$proj" || echo "error creating '$proj' on '$login'"
   done
 
   # ${ghBin}
