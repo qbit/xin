@@ -83,6 +83,12 @@ open in the external browser.
   (setq browse-url-browser-function 'eww-browse-url)
 #+end_src
 
+**** scrolly scroll scroll
+
+#+begin_src emacs-lisp
+  (pixel-scroll-precision-mode)
+#+end_src
+
 *** Common functionality
 
 #+begin_src emacs-lisp

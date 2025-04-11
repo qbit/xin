@@ -67,6 +67,7 @@ with pkgs;
         kzones
         merkuro
         (pkgs.callPackage ../pkgs/krunner-krha.nix { })
+        wl-clipboard
       ];
     };
   };
