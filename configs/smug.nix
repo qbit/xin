@@ -73,6 +73,7 @@ in
           }
           {
             name = "admin";
+            root = "~/src/xin";
           }
         ];
       })
