@@ -115,6 +115,13 @@ in
     };
   };
 
+  security.pam.u2f = {
+    enable = true;
+    settings = {
+      origin = "pam://xin";
+    };
+  };
+
   users = {
     users = {
       root = { openssh.authorizedKeys.keys = pubKeys; };
