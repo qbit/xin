@@ -115,6 +115,7 @@ in
     };
   };
 
+  # pamu2fcfg -u qbit -opam://xin -ipam://orcim
   security.pam.u2f = {
     enable = true;
     settings = {
