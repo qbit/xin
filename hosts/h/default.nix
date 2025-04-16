@@ -249,6 +249,7 @@ in
         5269
         5223
         5270
+        5443
         8448
       ];
       allowedUDPPorts = [ 7122 ];
@@ -444,6 +445,9 @@ in
           admin = [
             { user = "qbit@segfault.rodeo"; }
           ];
+          local = {
+            server = "segfault.rodeo";
+          };
           loopback = {
             ip = [
               "127.0.0.0/8"
@@ -465,7 +469,6 @@ in
           trusted_network = {
             allow = "loopback";
           };
-
           s2s = {
             allow = "all";
           };
@@ -491,6 +494,10 @@ in
           mod_disco = { };
           mod_last = { };
           mod_mam = { };
+          mod_http_upload = {
+            docroot = "/var/lib/ejabberd/upload/@HOST@";
+            put_url = "https://@HOST@:5443/upload";
+          };
           mod_mqtt = { };
           mod_muc = {
             host = "conference.@HOST@";
@@ -548,11 +555,20 @@ in
             ip = "::";
           }
           {
-            port = 5443;
+            port = 4443;
             ip = "127.0.0.1";
             module = "ejabberd_http";
             tls = false;
             request_handlers = { "/admin" = "ejabberd_web_admin"; };
+          }
+          {
+            port = 5443;
+            ip = "::";
+            module = "ejabberd_http";
+            tls = true;
+            request_handlers = {
+              "/upload" = "mod_http_upload";
+            };
           }
           {
             port = 8833;
