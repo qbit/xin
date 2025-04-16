@@ -785,11 +785,16 @@ Extending org with the ability to transclude makes for a powerhouse!
     :after elfeed
     :config
     (setq elfeed-protocol-feeds '(("fever+https://qbit@rss.bolddaemon.com"
-  			    :password (auth-info-password
-  				       (nth 0 (auth-source-search :max 1 :host "rss.bolddaemon.com" :require '(:secret))))
-  			    :api-url "https://rss.bolddaemon.com/fever/")))
+  				 :password (auth-info-password
+  					    (nth 0 (auth-source-search :max 1 :host "rss.bolddaemon.com" :require '(:secret))))
+  				 :api-url "https://rss.bolddaemon.com/fever/")))
     (setq elfeed-protocol-enabled-protocols '(fever))
-    (elfeed-protocol-enable))
+    (elfeed-protocol-enable)
+    (defun elfeed-update-feeds ()
+      (interactive)
+      (elfeed-protocol-fever-reinit "https://qbit@rss.bolddaemon.com")
+      (elfeed-update))
+    (define-key elfeed-search-mode-map (kbd "U") 'elfeed-update-feeds))
 #+end_src
 
 * Mail
