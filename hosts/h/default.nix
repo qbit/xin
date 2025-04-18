@@ -293,7 +293,6 @@ in
           "upload.segfault.rodeo"
           "conference.segfault.rodeo"
           "pubsub.segfault.rodeo"
-          "matrix.segfault.rodeo"
           "xmpp.segfault.rodeo"
         ];
         reloadServices = [ "ejabberd.services" "nginx.service" ];
@@ -432,13 +431,18 @@ in
     };
     ejabberd = {
       enable = true;
-      package = pkgs.ejabberd.override {
+      package = inputs.unstable.legacyPackages.${system}.pkgs.ejabberd.override {
         withSqlite = true;
       };
       configFile = pkgs.writeText "ejabberd.yaml" (builtins.toJSON {
         hosts = [ "segfault.rodeo" ];
         certfiles = [
           (config.security.acme.certs."segfault.rodeo".directory + "/*.pem")
+        ];
+
+        # loglevel = "error";
+        log_modules_fully = [
+          "mod_matrix_gw"
         ];
 
         acl = {
