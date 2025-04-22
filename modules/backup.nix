@@ -62,42 +62,63 @@ in
     };
   };
   config = mkIf (enabledBackups != { }) {
-    services.restic.backups = mapAttrs'
-      (name: conf: nameValuePair
-        name
-        {
-          initialize = true;
-          inherit (conf) passwordFile repository repositoryFile paths pruneOpts timerConfig environmentFile;
-        })
-      enabledBackups;
+    services.restic.backups =
 
-    systemd.services = mkMerge [
-      (mapAttrs'
-        (name: _: nameValuePair
-          "restic-backups-${name}-failed"
+      mapAttrs'
+        (name: conf: nameValuePair
+          name
           {
-            enable = true;
-            description = "Notification service for ${name}";
-            serviceConfig = {
-              Type = "oneshot";
-            };
-            script = ''
-              . ${config.sops.secrets.po_env.path}
+            initialize = true;
+            inherit (conf) passwordFile repository repositoryFile paths pruneOpts timerConfig environmentFile;
+          })
+        enabledBackups;
+
+    systemd.services =
+      let
+        powerCheck = pkgs.writeShellScriptBin "power-check" ''
+          if ${pkgs.pmutils}/bin/on_ac_power; then
+             echo "ON AC, continuing backup"
+          else
+            echo "NOT on AC, skipping backup"
+            exit 1
+          fi
+        '';
+      in
+      mkMerge [
+        (mapAttrs'
+          (name: _: nameValuePair
+            "restic-backups-${name}-failed"
+            {
+              enable = true;
+              description = "Notification service for ${name}";
+              serviceConfig = {
+                Type = "oneshot";
+              };
+              script = ''
+                . ${config.sops.secrets.po_env.path}
             
-              PO=${inputs.po.packages.${pkgs.system}.po}/bin/po
-              $PO -title "restic-${name} backup failed!" -body "Please check the ${name} backup on ${config.networking.hostName}."
-            '';
+                PO=${inputs.po.packages.${pkgs.system}.po}/bin/po
+                if ${pkgs.pmutils}/bin/on_ac_power; then
+                  $PO -title "restic-${name} backup failed!" -body "Please check the ${name} backup on ${config.networking.hostName}."
+                fi
+              '';
 
-          })
-        enabledBackups)
-      (mapAttrs'
-        (name: _: nameValuePair
-          "restic-backups-${name}"
-          {
-            unitConfig.OnFailure = "restic-backups-${name}-failed.service";
-          })
-        enabledBackups)
-    ];
+            })
+          enabledBackups)
+        (mapAttrs'
+          (name: _: nameValuePair
+            "restic-backups-${name}"
+            {
+              serviceConfig =
+
+                {
+                  ExecStartPre = "${powerCheck}/bin/power-check";
+                };
+              unitConfig = {
+                OnFailure = "restic-backups-${name}-failed.service";
+              };
+            })
+          enabledBackups)
+      ];
   };
 }
-    
