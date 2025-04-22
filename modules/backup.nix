@@ -109,11 +109,9 @@ in
           (name: _: nameValuePair
             "restic-backups-${name}"
             {
-              serviceConfig =
-
-                {
-                  ExecStartPre = "${powerCheck}/bin/power-check";
-                };
+              serviceConfig = {
+                ExecStartPre = "${powerCheck}/bin/power-check";
+              };
               unitConfig = {
                 OnFailure = "restic-backups-${name}-failed.service";
               };
