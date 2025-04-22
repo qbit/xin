@@ -1,13 +1,12 @@
 { buildHomeAssistantComponent
 , fetchFromGitHub
-, fetchPypi
 , home-assistant
 , ...
 }:
 let
   my-python-openevse-http = home-assistant.python.pkgs.buildPythonPackage rec {
     pname = "python-openevse-http";
-    version = "0.1.61";
+    version = "0.1.83";
 
     pyproject = true;
 
@@ -17,16 +16,18 @@ let
       aiohttp
     ];
 
-    src = fetchPypi {
-      inherit pname version;
-      hash = "sha256-wwo5D2kaPb4LfI8N3k0L+4FFZBlq2qG+d3sk/OpoExA=";
+    src = fetchFromGitHub {
+      owner = "firstof9";
+      repo = pname;
+      rev = version;
+      hash = "sha256-u6WFOJjr+GlPrkA2/fjuWglOl0JDg0frvFgbXyr0El4=";
     };
   };
 in
 buildHomeAssistantComponent rec {
-  owner = "firstof9";
   domain = "openevse";
-  version = "2.1.45";
+  owner = "firtof9";
+  version = "2.1.48";
 
   nativeBuildInputs = with home-assistant.python.pkgs; [
     setuptools-scm
@@ -41,6 +42,6 @@ buildHomeAssistantComponent rec {
     inherit owner;
     repo = domain;
     rev = version;
-    hash = "sha256-Z+YX9JdfmcZPrD6KHg5ZjLJY9vtR4VQM0l1Vu5SZ+m8=";
+    hash = "sha256-qBaI9bvtJl9q2md8QOz298rQfM7JlmzC00rBcMXmqfc=";
   };
 }
