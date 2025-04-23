@@ -26,7 +26,7 @@ let
 in
 buildHomeAssistantComponent rec {
   domain = "openevse";
-  owner = "firtof9";
+  owner = "firstof9";
   version = "2.1.48";
 
   nativeBuildInputs = with home-assistant.python.pkgs; [
