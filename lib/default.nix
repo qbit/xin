@@ -100,7 +100,7 @@ let
         ssh-to-age
         ssh-to-pgp
         statix
-        treefmt2
+        treefmt
         perlPackages.PerlTidy
       ];
     };
