@@ -365,6 +365,12 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 
 * Language Configurations
 
+** Forth
+
+#+begin_src emacs-lisp
+  (use-package forth-mode)
+#+end_src
+
 ** Ada
 
 #+begin_src emacs-lisp

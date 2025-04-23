@@ -419,6 +419,7 @@ in
       fossil
       freetube
       gajim
+      gforth
       gh
       gimp
       git-credential-keepassxc
