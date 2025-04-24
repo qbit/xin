@@ -25,6 +25,13 @@ let
       if prStatus.status == "open"
       then a
       else { };
+    list = pr: a:
+      let prStatus = getPrStatus pr;
+      in
+      if prStatus.status == "open"
+      then a
+      else [ ];
+
     pkg = pr: localPkg: upstreamPkg:
       let
         prStatus = getPrStatus pr;
