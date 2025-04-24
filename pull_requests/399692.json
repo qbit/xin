@@ -1,0 +1,16 @@
+{
+  "branches": [],
+  "error": "",
+  "pull_request": 399692,
+  "release": "stable",
+  "searches": [
+    {
+      "epoch": 1744997485.73502,
+      "pull_request": 399692,
+      "title": "nixos/restic-rest-server Fixed htpasswd-path when null."
+    }
+  ],
+  "status": "open",
+  "status_info": {},
+  "title": "nixos/restic-rest-server Fixed htpasswd-path when null."
+}
