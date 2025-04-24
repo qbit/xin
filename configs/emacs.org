@@ -98,23 +98,24 @@ copy / paste. It works initially - but after some time the buffers diverge.
 The [[https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4][wiki]] has some info on using ~wl-clipboard~ to fix things.
 
 #+begin_src emacs-lisp
- (when (getenv "WAYLAND_DISPLAY")
-  ;; Configure wl-clipboard for Wayland
-  (defun wl-copy (text)
-    (let ((process-connection-type nil))
-      (let ((proc (start-process "wl-copy" nil "wl-copy" "-f" "-n")))
-        (process-send-string proc text)
-        (process-send-eof proc))))
+  (when (getenv "WAYLAND_DISPLAY")
+    ;; Configure wl-clipboard for Wayland
+    (defun wl-copy (text)
+      (let ((process-connection-type nil))
+        (let ((proc (start-process "wl-copy" nil "wl-copy" "-f" "-n")))
+  	(process-send-string proc text)
+  	(process-send-eof proc))))
 
-  (defun wl-paste ()
-    (let ((process-connection-type nil))
-      (with-output-to-string
-        (with-current-buffer standard-output
-          (call-process "wl-paste" nil t nil)))))
+    (defun wl-paste ()
+      (let ((process-connection-type nil))
+        (with-output-to-string
+  	(with-temp-buffer standard-output
+  			  (call-process "wl-paste" nil t "-n")
+  			  (call-process-region nil nil "tr" "-d" "\\r")))))
 
-  ;; Set clipboard functions to use wl-clipboard
-  (setq interprogram-cut-function #'wl-copy)
-  (setq interprogram-paste-function #'wl-paste))
+    ;; Set clipboard functions to use wl-clipboard
+    (setq interprogram-cut-function #'wl-copy)
+    (setq interprogram-paste-function #'wl-paste))
 #+end_src
 
 *** Common functionality
