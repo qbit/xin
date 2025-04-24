@@ -32,9 +32,9 @@ in
     ./bins
   ];
 
-  # disabledModules = [
-  #   "services/web-apps/gotosocial.nix"
-  # ];
+  disabledModules = [
+    "services/misc/yarr.nix"
+  ];
 
   options = {
     syncthingDevices = lib.mkOption {
