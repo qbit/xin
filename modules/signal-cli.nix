@@ -71,6 +71,7 @@ with pkgs; {
       enable = true;
       description = "signal-cli server";
       wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
 
       environment = {
         HOME = cfg.dataDir;
@@ -88,7 +89,7 @@ with pkgs; {
 
         EnvironmentFile = cfg.envFile;
 
-        ExecStart = "${cfg.package}/bin/signal-cli -a $SIGNAL_NUMBER daemon --socket ${cfg.socketPath}";
+        ExecStart = "${cfg.package}/bin/signal-cli --scrub-log -a $SIGNAL_NUMBER daemon --socket ${cfg.socketPath}";
       };
     };
   };
