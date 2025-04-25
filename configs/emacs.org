@@ -969,6 +969,10 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
    rcirc-reconnect-attempts 5
    rcirc-server-alist
    '(("bounce.bold.daemon"
+      :server-alias "bTyrfingr"
+      :encryption tls
+      :user-name "qbit@rcirc.europa/Tyrfingr")
+     ("bounce.bold.daemon"
       :server-alias "bLibera"
       :encryption tls
       :user-name "qbit@rcirc.europa/Libera")
