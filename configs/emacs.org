@@ -734,7 +734,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
 
 #+end_src
 
-** Extra bits
+*** Extra bits
 #+begin_src emacs-lisp
 (use-package org-journal
   :defer t
@@ -768,12 +768,16 @@ Custom agenda commands for various things.
 	  (org-agenda-log-mode-items '(state))))))
 #+end_src
 
+**** org-roam
+
+It took me a few tries to get used to using org-roam. I think I was over
+complicating using it.
+
 #+begin_src emacs-lisp
   (use-package org-roam
     :after org
     :custom
     (org-roam-directory (file-truename "~/org-roam/"))
-    (org-roam-db-autosync-enable)
     (org-roam-capture-templates
      '(("d" "default" plain
         "%?"
@@ -794,6 +798,7 @@ Custom agenda commands for various things.
   	 ("C-c n c" . org-roam-capture)
   	 ("C-c n j" . org-roam-dailies-capture-today))
     :config
+    (org-roam-db-autosync-enable)
     (setq org-roam-completion-everywhere t)
     (setq org-roam-node-display-template
   	(concat "${title:40} "
