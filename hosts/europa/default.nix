@@ -399,7 +399,6 @@ in
 
     systemPackages = with pkgs; [
       arduino
-      beeper
       beets # stable
       calibre
       chirp # stable
