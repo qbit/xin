@@ -401,6 +401,7 @@ in
       arduino
       beets # stable
       calibre
+      cinny-desktop
       chirp # stable
       davfs2
       deltachat-desktop
