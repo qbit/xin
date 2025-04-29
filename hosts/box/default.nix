@@ -126,7 +126,6 @@ in
     hostId = "9a2d2563";
 
     useDHCP = false;
-    enableIPv6 = false;
 
     hosts = {
       "10.6.0.1" = [ "router.bold.daemon" ];
