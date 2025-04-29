@@ -811,7 +811,6 @@ Extending org with the ability to transclude makes for a powerhouse!
 #+begin_src emacs-lisp
   (use-package org-transclusion
     :after org
-    :bind ("C-c t" . org-transclusion-add)
     :config
     (setq org-transclusion-exclude-elements '(keyword property-drawer)))
 #+end_src
