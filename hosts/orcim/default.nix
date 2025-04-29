@@ -41,12 +41,11 @@ in
           PWM_LPSS m
           PWM_LPSS_PCI m
           PWM_LPSS_PLATFORM m
-          PWM_SYSFS y
         '';
       }
     ];
 
-    kernelPackages = pkgs.linuxPackages_6_6;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "fbcon=rotate:1"
       "gpd-pocket-fan.speed_on_ac=0"
