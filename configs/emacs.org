@@ -314,7 +314,9 @@ auto-completion stuff.
     (define-key eglot-mode-map (kbd "C-c f") 'eglot-format)
 
     :hook
-    (eglot-managed-mode . (lambda() (add-hook 'before-save-hook 'eglot-format-buffer nil 'local))))
+    (eglot-managed-mode . (lambda()
+  			  (add-hook 'before-save-hook 'eglot-format-buffer nil 'local)
+  			  (flyspell-prog-mode))))
 #+end_src
 
 ** company and friends
