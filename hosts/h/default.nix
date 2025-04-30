@@ -1223,7 +1223,7 @@ in
     };
 
     mjolnir = {
-      enable = true;
+      enable = false;
       package = inputs.unstable.legacyPackages.${pkgs.system}.mjolnir;
       pantalaimon.enable = false;
       pantalaimon.username = "hammer";
