@@ -62,6 +62,7 @@ with pkgs;
         kcolorchooser
         kconnect
         kontact
+        kcontacts
         konversation
         korganizer
         kzones
