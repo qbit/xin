@@ -104,9 +104,9 @@ in
       sopsFile = config.xin-secrets.h.secrets.services;
     };
     # hammer_access_token = {
-      # owner = config.users.users.mjolnir.name;
-      # mode = "600";
-      # sopsFile = config.xin-secrets.h.secrets.services;
+    # owner = config.users.users.mjolnir.name;
+    # mode = "600";
+    # sopsFile = config.xin-secrets.h.secrets.services;
     # };
     gqrss_token = {
       owner = config.users.users.qbit.name;

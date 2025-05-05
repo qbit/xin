@@ -347,9 +347,9 @@ in
       {
         wsb = {
           description = "web scrap book";
-          after = [ "network-online.target" ];
-          wants = [ "network-online.target" ];
-          wantedBy = [ "multi-user.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
           serviceConfig = {
             WorkingDirectory = "/home/qbit/web-scrap";
             ExecStart = "${pywebscrapbook}/bin/wsb serve";
