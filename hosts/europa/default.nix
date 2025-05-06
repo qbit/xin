@@ -8,7 +8,6 @@
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
-  thunderbird = import ../../configs/thunderbird.nix { inherit pkgs; };
   pywebscrapbook =
     pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
   jobs = [
@@ -184,7 +183,7 @@ in
         "load-agent" = ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
       };
     };
-  } // thunderbird.programs;
+  };
 
   services.xinCA = { enable = false; };
 
