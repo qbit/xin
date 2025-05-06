@@ -1,9 +1,7 @@
-{ pkgs, inputs, lib, ... }:
+{ lib, ... }:
 {
   nix =
-    let myPkgs = inputs.unstableSmall.legacyPackages.${pkgs.system};
-    in {
-      package = myPkgs.lix;
+    {
       gc = lib.mkDefault {
         automatic = true;
         dates = "daily";

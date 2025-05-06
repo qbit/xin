@@ -1,0 +1,19 @@
+#!/bin/sh
+
+. ./common.sh
+
+set -e
+
+if [ -z $SKIP_FMT ]; then
+	treefmt
+else
+	echo "Skipping formatting..."
+fi
+if [ -z $SKIP_CHECK ]; then
+	nix flake check --no-build |& nom
+else
+	echo "Skipping checks..."
+fi
+
+# Ensure the key is loaded after checks (sometimes they take longer than auto key removal)
+start

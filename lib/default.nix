@@ -98,6 +98,7 @@ let
         git-bug
         jo
         jq
+        lix
         nil
         nix-diff
         nix-output-monitor
