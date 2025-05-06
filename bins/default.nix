@@ -41,10 +41,16 @@ in
     [ upgrade-pg ]
   else [ ]);
   environment.etc =
+    (mkPubs 68) //
+    (mkPubs 69) //
+    (mkPubs 70) //
+    (mkPubs 71) //
     (mkPubs 72) //
     (mkPubs 73) //
     (mkPubs 74) //
     (mkPubs 75) //
     (mkPubs 76) //
-    (mkPubs 77);
+    (mkPubs 77) //
+    (mkPubs 78) //
+    (mkPubs 79);
 }
