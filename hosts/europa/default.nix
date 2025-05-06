@@ -502,6 +502,7 @@ in
 
   system = {
     autoUpgrade.allowReboot = false;
-    stateVersion = "21.11";
+    # 21.11
+    stateVersion = "23.11";
   };
 }
