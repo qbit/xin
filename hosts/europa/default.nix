@@ -36,74 +36,29 @@ in
 
   imports = [ ./hardware-configuration.nix ../../pkgs ];
 
-  sops.secrets = {
-    rkvm_cert = {
-      sopsFile = config.xin-secrets.europa.secrets.qbit;
-      owner = "root";
-      group = "wheel";
-      mode = "400";
+  sops.secrets =
+    let
+      mkEntry = file: owner: {
+        sopsFile = config.xin-secrets.europa.secrets.${file};
+        inherit owner;
+        mode = "400";
+        group = "wheel";
+      };
+    in
+    {
+      rkvm_cert = mkEntry "qbit" "root";
+      rkvm_key = mkEntry "qbit" "root";
+      fastmail = mkEntry "qbit" "qbit";
+      fastmail_user = mkEntry "qbit" "qbit";
+      nix_review = mkEntry "qbit" "qbit";
+      netrc = mkEntry "qbit" "qbit";
+      restic_password_file = mkEntry "services" "root";
+      restic_env_file = mkEntry "services" "root";
+      restic_remote_password_file = mkEntry "services" "root";
+      restic_remote_env_file = mkEntry "services" "root";
+      restic_remote_repo_file = mkEntry "services" "root";
+      krha_env_file = mkEntry "services" "qbit";
     };
-    rkvm_key = {
-      sopsFile = config.xin-secrets.europa.secrets.qbit;
-      owner = "root";
-      group = "wheel";
-      mode = "400";
-    };
-    fastmail = {
-      sopsFile = config.xin-secrets.europa.secrets.qbit;
-      owner = "qbit";
-      group = "wheel";
-      mode = "400";
-    };
-    fastmail_user = {
-      sopsFile = config.xin-secrets.europa.secrets.qbit;
-      owner = "qbit";
-      group = "wheel";
-      mode = "400";
-    };
-    nix_review = {
-      sopsFile = config.xin-secrets.europa.secrets.qbit;
-      owner = "qbit";
-      group = "wheel";
-      mode = "400";
-    };
-    netrc = {
-      sopsFile = config.xin-secrets.europa.secrets.qbit;
-      owner = "qbit";
-      group = "wheel";
-      mode = "400";
-    };
-    restic_password_file = {
-      sopsFile = config.xin-secrets.europa.secrets.services;
-      owner = "root";
-      mode = "400";
-    };
-    restic_env_file = {
-      sopsFile = config.xin-secrets.europa.secrets.services;
-      owner = "root";
-      mode = "400";
-    };
-    restic_remote_password_file = {
-      sopsFile = config.xin-secrets.europa.secrets.services;
-      owner = "root";
-      mode = "400";
-    };
-    restic_remote_env_file = {
-      sopsFile = config.xin-secrets.europa.secrets.services;
-      owner = "root";
-      mode = "400";
-    };
-    restic_remote_repo_file = {
-      sopsFile = config.xin-secrets.europa.secrets.services;
-      owner = "root";
-      mode = "400";
-    };
-    krha_env_file = {
-      sopsFile = config.xin-secrets.europa.secrets.services;
-      owner = "qbit";
-      mode = "400";
-    };
-  };
 
   nixpkgs.config = {
     allowUnfree = true;
