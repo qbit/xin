@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "8725dbc5b5fcc3e326fc71189ef8dba4333362cc",
-  "hash": "sha256-h6NSfG+NrpQTFWwb8Fge7gfqEDi7fxEgS0EGu6Lc5MA=",
-  "version": "2025-04-09",
-  "comment": "update version numbers"
+  "rev": "755c3d082e59e6884f28d30e6333a1444e9173d1",
+  "hash": "sha256-fCp2Hs1+InbyhANgABmlKmIsf3PeEKHd9eYLrgO58sQ=",
+  "version": "2025-05-07",
+  "comment": "Skip d_type check on platforms that don&apos;t have it."
 }
