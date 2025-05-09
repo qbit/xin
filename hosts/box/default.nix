@@ -130,7 +130,7 @@ in
     hosts = {
       "10.6.0.1" = [ "router.bold.daemon" ];
       "127.0.0.1" = [ "git.tapenet.org" ];
-      "10.6.0.15" = [ "jelly.bold.daemon" ];
+      "10.6.0.15" = [ "jelly.bold.daemon" "home.bold.daemon" ];
       "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
     };
     interfaces.enp7s0 = { useDHCP = true; };
@@ -247,6 +247,22 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    music-assistant = {
+      enable = true;
+      providers = [
+        "apple_music"
+        "hass"
+        "hass_players"
+        "jellyfin"
+        "radiobrowser"
+      ];
+      extraOptions = [
+        "--config"
+        "/var/lib/music-assistant"
+        "--log-level"
+        "DEBUG"
+      ];
+    };
     syncthing = {
       enable = true;
       user = "qbit";
@@ -403,6 +419,7 @@ in
         "logger"
         "matter"
         "mqtt"
+        "music_assistant"
         "octoprint"
         "open_meteo"
         "piper"
