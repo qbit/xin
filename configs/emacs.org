@@ -282,10 +282,13 @@ code.. etc. Combined with ~smex~ for sorting (shows last used things first) and
 Magit is a awesome. Not sure what else to say about it. :P
 
 #+begin_src emacs-lisp
-(use-package magit
-  :bind ("C-c m" . magit-status)
-  :init
-  (setq magit-completing-read-function 'ivy-completing-read))
+  (use-package magit
+    :bind ("C-c m" . magit-status)
+    :init
+    (setq magit-completing-read-function 'ivy-completing-read))
+
+  (use-package forge
+    :after magit)
 #+end_src
 
 ** lsp
