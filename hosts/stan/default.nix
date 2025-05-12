@@ -224,6 +224,12 @@ in
       group = "wheel";
       mode = "400";
     };
+    netrc = {
+      sopsFile = config.xin-secrets.stan.secrets.abieber;
+      owner = "abieber";
+      group = "wheel";
+      mode = "400";
+    };
   };
 
   users = {
@@ -312,7 +318,7 @@ in
             Hostname nix-binary-cache.otter-alligator.ts.net
             IdentityFile ${config.sops.secrets.xin_store_key.path}
             User nix-ssh
-          Match host xin-store exec "${pkgs.netcat}/bin/nc -z 10.6.0.110 22"
+          Match host "xin-store" exec "${pkgs.netcat}/bin/nc -z 10.6.0.110 22"
             IdentityFile ${config.sops.secrets.xin_store_key.path}
             User nix-ssh
             Hostname 10.6.0.110
