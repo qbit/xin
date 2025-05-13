@@ -141,6 +141,7 @@ in
       "127.0.0.1" = [ "borg.calyptix.dev" "localhost" ];
       "192.168.122.249" = [ "arst.arst" "vm" ];
       "192.168.8.194" = [ "router.arst" "router" ];
+      "10.6.0.110" = [ "store.bold.daemon" ];
     };
 
     networkmanager.enable = true;
@@ -253,7 +254,7 @@ in
     settings = {
       substituters = lib.mkOverride 1 [
         "https://cache.nixos.org"
-        "ssh://nix-ssh@xin-store"
+        "https://store.bold.daemon"
       ];
     };
   };

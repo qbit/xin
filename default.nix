@@ -173,6 +173,7 @@ in
       settings = {
         trusted-public-keys = [
           "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
+          "store.bold.daemon:YE3+K/UOM49xzQoMMn+QdJYxsIDjRfT/114BP1ieLag="
         ];
       } //
       (if config.xinCI.enable

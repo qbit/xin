@@ -83,6 +83,14 @@ with lib; {
         mode = "400";
         owner = "root";
       };
+      store_bold_daemon_cert = {
+        mode = "400";
+        owner = config.users.users.nginx.name;
+      };
+      store_bold_daemon_key = {
+        mode = "400";
+        owner = config.users.users.nginx.name;
+      };
     };
     environment.systemPackages = with pkgs; [
       inputs.po.packages.${pkgs.system}.po
@@ -93,6 +101,9 @@ with lib; {
     networking = {
       firewall = {
         interfaces = {
+          "enp10s0" = {
+            allowedTCPPorts = [ 443 ]; # lan binary cache @ store.bold.daemon
+          };
           "tailscale0" = {
             allowedUDPPortRanges = [
               {
@@ -112,21 +123,6 @@ with lib; {
         dates = "daily";
         options = "--delete-older-than 60d";
       };
-      sshServe = {
-        enable = true;
-        keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJhIeKYMLpGttqY+MZo87BJf41yVMdF6kIwJnTiNHWvU xin-store"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhHkjVK726VMQcuiWJobYQURS4v31vnLgCBrJstu4+O xin-store-user"
-        ];
-      };
-    };
-
-    users = {
-      users."nix-ssh" = {
-        isNormalUser = true;
-        isSystemUser = lib.mkForce false;
-        hashedPasswordFile = config.sops.secrets.nix_ssh_passwd.path;
-      };
     };
 
     systemd = {
@@ -142,6 +138,21 @@ with lib; {
     services = {
       ts-reverse-proxy.servers."nix-binary-cache" = {
         enable = true;
+      };
+      nginx = {
+        enable = true;
+        virtualHosts = {
+          "store.bold.daemon" = {
+            forceSSL = true;
+            sslCertificateKey = config.sops.secrets.store_bold_daemon_key.path;
+            sslCertificate = config.sops.secrets.store_bold_daemon_cert.path;
+            locations = {
+              "/" = {
+                proxyPass = "http://localhost:5000";
+              };
+            };
+          };
+        };
       };
       harmonia = {
         enable = true;
