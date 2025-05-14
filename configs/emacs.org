@@ -173,6 +173,17 @@ here.
 (setq custom-file (make-temp-file ""))
 #+end_src
 
+** Instance Specific
+
+Sometimes I need to execute some other things on different machines. This lets
+me include an extra file to extend things a bit.
+
+#+begin_src emacs-lisp
+  (if (file-exists-p "~/.emacs.d/xin-custom.el")
+      (progn
+        (load "~/.emacs.d/xin-custom.el")))
+#+end_src
+
 * Packages
 
 ** ob-mermaid
