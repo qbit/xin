@@ -51,67 +51,67 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     mcchunkie = {
-      url = "github:qbit/mcchunkie";
+      url = "git+https://codeberg.org/qbit/mcchunkie?ref=main";
       inputs.nixpkgs.follows = "unstable";
     };
     microca = {
-      url = "github:qbit/microca";
+      url = "git+https://codeberg.org/qbit/microca";
       inputs.nixpkgs.follows = "unstable";
     };
     gostart = {
-      url = "github:qbit/gostart";
+      url = "git+https://codeberg.org/qbit/gostart";
       inputs.nixpkgs.follows = "unstable";
     };
     kogs = {
-      url = "github:qbit/kogs";
+      url = "git+https://codeberg.org/qbit/kogs";
       inputs.nixpkgs.follows = "unstable";
     };
     pr-status = {
-      url = "github:qbit/pr-status-pl";
+      url = "git+https://codeberg.org/qbit/pr-status-pl";
       inputs.nixpkgs.follows = "stable";
     };
     xin-status = {
-      url = "github:qbit/xin-status";
+      url = "git+https://codeberg.org/qbit/xin-status";
       inputs.nixpkgs.follows = "unstable";
     };
     beyt = {
-      url = "github:qbit/beyt";
+      url = "git+https://codeberg.org/qbit/beyt";
       inputs.nixpkgs.follows = "unstable";
     };
     tsvnstat = {
-      url = "github:qbit/tsvnstat";
+      url = "git+https://codeberg.org/qbit/tsvnstat";
       inputs.nixpkgs.follows = "unstable";
     };
     pots = {
-      url = "github:qbit/pots";
+      url = "git+https://codeberg.org/qbit/pots";
       inputs.nixpkgs.follows = "unstable";
     };
     po = {
-      url = "github:qbit/po";
+      url = "git+https://codeberg.org/qbit/po";
       inputs.nixpkgs.follows = "unstable";
     };
     tsns = {
-      url = "github:qbit/tsns";
+      url = "git+https://codeberg.org/qbit/tsns";
       inputs.nixpkgs.follows = "unstable";
     };
     ts-reverse-proxy = {
-      url = "github:qbit/ts-reverse-proxy";
+      url = "git+https://codeberg.org/qbit/ts-reverse-proxy";
       inputs.nixpkgs.follows = "unstable";
     };
     traygent = {
-      url = "github:qbit/traygent";
+      url = "git+https://codeberg.org/qbit/traygent";
       inputs.nixpkgs.follows = "unstable";
     };
     fynado = {
-      url = "github:qbit/fynado";
+      url = "git+https://codeberg.org/qbit/fynado";
       inputs.nixpkgs.follows = "unstable";
     };
     calnow = {
-      url = "github:qbit/calnow";
+      url = "git+https://codeberg.org/qbit/calnow";
       inputs.nixpkgs.follows = "unstable";
     };
     gqrss = {
-      url = "github:qbit/gqrss";
+      url = "git+https://codeberg.org/qbit/gqrss";
       flake = false;
     };
   };

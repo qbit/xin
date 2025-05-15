@@ -9,15 +9,15 @@
       "locked": {
         "lastModified": 1713193165,
         "narHash": "sha256-uR8MeycEM4Via7H1rM6IwuCOzT/BPM4DlG9i4V95/M4=",
-        "owner": "qbit",
-        "repo": "beyt",
+        "ref": "refs/heads/main",
         "rev": "d11e54e7ade1981e004389f583d18d31f55ef15a",
-        "type": "github"
+        "revCount": 3,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/beyt"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "beyt",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/beyt"
       }
     },
     "blobs": {
@@ -45,15 +45,15 @@
       "locked": {
         "lastModified": 1732392602,
         "narHash": "sha256-KEU7yKYk+qBFjpkU66YUtQCWGL3bckB81Uos6JSbOM4=",
-        "owner": "qbit",
-        "repo": "calnow",
+        "ref": "refs/heads/main",
         "rev": "636dc7ac12a325806f9303ee5836cfb2ab1a574f",
-        "type": "github"
+        "revCount": 2,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/calnow"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "calnow",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/calnow"
       }
     },
     "darwin": {
@@ -157,15 +157,15 @@
       "locked": {
         "lastModified": 1742603025,
         "narHash": "sha256-xzxmODBV825m5pl33AQ0T5cJSddPe8EOfGj0dU61znI=",
-        "owner": "qbit",
-        "repo": "fynado",
+        "ref": "refs/heads/main",
         "rev": "29ab3a080ee715bd12e4aef99e59102b0cb95f66",
-        "type": "github"
+        "revCount": 9,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/fynado"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "fynado",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/fynado"
       }
     },
     "gostart": {
@@ -177,15 +177,15 @@
       "locked": {
         "lastModified": 1721834365,
         "narHash": "sha256-f3SC8/tSz7xY8uTIkf1OsMo6I/NGxCqhmXH8YaMtIqs=",
-        "owner": "qbit",
-        "repo": "gostart",
+        "ref": "refs/heads/main",
         "rev": "719084455e020c28c8a48688a34849194f35de2b",
-        "type": "github"
+        "revCount": 108,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/gostart"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "gostart",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/gostart"
       }
     },
     "gqrss": {
@@ -193,15 +193,15 @@
       "locked": {
         "lastModified": 1695225347,
         "narHash": "sha256-PZZK4L4w+dQZDbVLLhC/YeVUJMRaxNdksUUdyKp3AEU=",
-        "owner": "qbit",
-        "repo": "gqrss",
+        "ref": "refs/heads/main",
         "rev": "029f2c59d3da4d080a340c4cfd834eeacbe1e738",
-        "type": "github"
+        "revCount": 4,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/gqrss"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "gqrss",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/gqrss"
       }
     },
     "kogs": {
@@ -213,15 +213,15 @@
       "locked": {
         "lastModified": 1720358464,
         "narHash": "sha256-aXFTOWF/ww62MeXGXZ8Jle/XDfEUoyskkV1i5Mhj8+A=",
-        "owner": "qbit",
-        "repo": "kogs",
+        "ref": "refs/heads/main",
         "rev": "b6629618e99d0ef72971b3d7b4decdc2622d8e36",
-        "type": "github"
+        "revCount": 15,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/kogs"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "kogs",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/kogs"
       }
     },
     "lix": {
@@ -270,15 +270,16 @@
       "locked": {
         "lastModified": 1743705637,
         "narHash": "sha256-EuPfTPRTIG4ACJwSmxBxgVsia2PHp0cSTaUIN/0WKa0=",
-        "owner": "qbit",
-        "repo": "mcchunkie",
+        "ref": "main",
         "rev": "32109e3b6c4850b24e4617bcc21dc77df7bad7fe",
-        "type": "github"
+        "revCount": 225,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/mcchunkie"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "mcchunkie",
-        "type": "github"
+        "ref": "main",
+        "type": "git",
+        "url": "https://codeberg.org/qbit/mcchunkie"
       }
     },
     "microca": {
@@ -290,15 +291,15 @@
       "locked": {
         "lastModified": 1709331966,
         "narHash": "sha256-kNUWf6Ka5bkKNQ1AUnKc4PbqTNlaWxXxeC7OsliqFXI=",
-        "owner": "qbit",
-        "repo": "microca",
+        "ref": "refs/heads/master",
         "rev": "111df20104e6aa45892625327692d17a5986c76d",
-        "type": "github"
+        "revCount": 44,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/microca"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "microca",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/microca"
       }
     },
     "microca_2": {
@@ -362,15 +363,15 @@
       "locked": {
         "lastModified": 1711196495,
         "narHash": "sha256-3xGPDie7R6yau2xC7Oju2EOEqYjvUaU27gTbyJrBwo4=",
-        "owner": "qbit",
-        "repo": "po",
+        "ref": "refs/heads/master",
         "rev": "4775ea1e304c3c12174022f2903e08693a1c6ae6",
-        "type": "github"
+        "revCount": 9,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/po"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "po",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/po"
       }
     },
     "pots": {
@@ -382,15 +383,15 @@
       "locked": {
         "lastModified": 1721833216,
         "narHash": "sha256-Gw93Sy95HLlF6oT/oK/W+UkRJlmTUgTjcysS8YGqKpY=",
-        "owner": "qbit",
-        "repo": "pots",
+        "ref": "refs/heads/main",
         "rev": "a11f254768d2197ee72becbfaab15f58ff678478",
-        "type": "github"
+        "revCount": 7,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/pots"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "pots",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/pots"
       }
     },
     "pr-status": {
@@ -402,15 +403,15 @@
       "locked": {
         "lastModified": 1727206534,
         "narHash": "sha256-1I+OwGV/fJoE6LzzOf3X6sJ/PaQ6NMS5ryhXZe3WGho=",
-        "owner": "qbit",
-        "repo": "pr-status-pl",
+        "ref": "refs/heads/main",
         "rev": "54210dcacd277b9a41e4aa688909748a8da661d6",
-        "type": "github"
+        "revCount": 42,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/pr-status-pl"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "pr-status-pl",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/pr-status-pl"
       }
     },
     "root": {
@@ -527,15 +528,15 @@
       "locked": {
         "lastModified": 1742602949,
         "narHash": "sha256-MPlZpZfBr4NTJMS6jWdlCfcTo+1nZjb5ccC5tyPv4sI=",
-        "owner": "qbit",
-        "repo": "traygent",
+        "ref": "refs/heads/main",
         "rev": "ab3cacd88dadc631e22bc7b6f68c6ec35086dc05",
-        "type": "github"
+        "revCount": 45,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/traygent"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "traygent",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/traygent"
       }
     },
     "ts-reverse-proxy": {
@@ -547,15 +548,15 @@
       "locked": {
         "lastModified": 1741726198,
         "narHash": "sha256-QvOEptS66gmTsRSbXlVglUuWjES9laKL+peF3VdiVtY=",
-        "owner": "qbit",
-        "repo": "ts-reverse-proxy",
+        "ref": "refs/heads/main",
         "rev": "42bbfd0dee11f2e4838c1b03025843985331590c",
-        "type": "github"
+        "revCount": 27,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/ts-reverse-proxy"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "ts-reverse-proxy",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/ts-reverse-proxy"
       }
     },
     "tsns": {
@@ -567,15 +568,15 @@
       "locked": {
         "lastModified": 1724466082,
         "narHash": "sha256-Tu3eKCQU7pMnB7jJG3faGhbs4ZL6UdqsRGm7PaO9YgM=",
-        "owner": "qbit",
-        "repo": "tsns",
+        "ref": "refs/heads/main",
         "rev": "88abecec0ec731cf6a54ee049822f95d38ce9eea",
-        "type": "github"
+        "revCount": 11,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/tsns"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "tsns",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/tsns"
       }
     },
     "tsvnstat": {
@@ -587,15 +588,15 @@
       "locked": {
         "lastModified": 1725478058,
         "narHash": "sha256-lvKvpmF1rBjuc0d8cGfkMvy+OVmYNclXfE8SJ97IM+8=",
-        "owner": "qbit",
-        "repo": "tsvnstat",
+        "ref": "refs/heads/main",
         "rev": "96609d1824d51f1789184bf4c8fc7ee0e2504602",
-        "type": "github"
+        "revCount": 19,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/tsvnstat"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "tsvnstat",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/tsvnstat"
       }
     },
     "unstable": {
@@ -666,15 +667,15 @@
       "locked": {
         "lastModified": 1744398711,
         "narHash": "sha256-IbPztL6O/0wW4IRaYpNTfiE81xQsMl+BX+CRI+BzFVI=",
-        "owner": "qbit",
-        "repo": "xin-status",
+        "ref": "refs/heads/main",
         "rev": "bd922b855a4b6d6a635e3f6be2888dbfdf945587",
-        "type": "github"
+        "revCount": 75,
+        "type": "git",
+        "url": "https://codeberg.org/qbit/xin-status"
       },
       "original": {
-        "owner": "qbit",
-        "repo": "xin-status",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/qbit/xin-status"
       }
     }
   },
