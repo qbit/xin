@@ -28,7 +28,7 @@ with lib; {
         # enable is set in lib/default.nix depending on the state of the tree
         # DIRTY means disabled, git revision means enabled
         allowReboot = mkDefault true;
-        flake = "github:qbit/xin";
+        flake = "git+https://codeberg.org/qbit/xin";
         dates = "*-*-* *:05:00";
       };
     })

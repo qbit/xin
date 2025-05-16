@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "script to warn when flake inputs are out of date";
-    homepage = "https://github.com/qbit/xin";
+    homepage = "https://codeberg.org/qbit/xin";
     license = lib.licenses.isc;
     maintainer = with lib.maintainers; [ qbit ];
     mainProgram = "flake-warn";
