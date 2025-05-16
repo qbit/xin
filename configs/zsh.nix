@@ -70,7 +70,7 @@
       xin-update() {
         SUDO_CMD=""
         [[ $(id -u) == 0 ]] || SUDO_CMD="sudo"
-        $SUDO_CMD nixos-rebuild switch --flake github:qbit/xin --refresh |& nom
+        $SUDO_CMD nixos-rebuild switch --flake git+https://codeberg.org/qbit/xin --refresh |& nom
       }
 
       mkhash() {
