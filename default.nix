@@ -227,7 +227,7 @@ in
           tcl
           tmux
           uxn
-          rns
+          python3Packages.rns
           python3Packages.nomadnet
           (python3Packages.callPackage ./pkgs/rnsh.nix { inherit pkgs; })
         ]
