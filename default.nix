@@ -193,6 +193,7 @@ in
       allowUnfree = true;
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "rns"
+        "python3Packages.rns"
       ];
     };
 
