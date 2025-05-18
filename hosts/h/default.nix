@@ -664,7 +664,7 @@ in
       package = inputs.unstable.legacyPackages.${pkgs.system}.veilid;
     };
     heisenbridge = {
-      enable = true;
+      enable = false;
       package = inputs.unstable.legacyPackages.${pkgs.system}.heisenbridge;
       homeserver = "http://${mtxCfg.address}:${toString mtxCfg.port}";
       owner = "@qbit:tapenet.org";
