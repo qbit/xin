@@ -362,7 +362,7 @@ in
         serviceConfig = {
           User = "qbit";
           Type = "forking";
-          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s NomadNet -d '${inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.nomadnet}/bin/nomadnet'";
+          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s NomadNet -d '${pkgs.python3Packages.nomadnet}/bin/nomadnet'";
           ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t NomadNet";
         };
       };
