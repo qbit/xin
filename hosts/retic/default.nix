@@ -47,10 +47,5 @@ in
 
   preDNS.enable = false;
 
-  environment.systemPackages = with pkgs; [
-    python3Packages.rns
-    python3Packages.nomadnet
-  ];
-
   system.stateVersion = "24.05";
 }

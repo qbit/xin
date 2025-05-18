@@ -39,9 +39,6 @@ in
     alacritty
     direwolf
     polybar
-    python3
-    python3Packages.nomadnet
-    python3Packages.rns
     rofi
     rtl-sdr
     tncattach

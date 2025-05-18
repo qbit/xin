@@ -3,7 +3,6 @@
 , options
 , pkgs
 , isUnstable
-, inputs
 , xinlib
 , ...
 }:
@@ -190,6 +189,13 @@ in
       distroName = "XinOS";
     };
 
+    nixpkgs.config = {
+      allowUnfree = true;
+      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+        "rns"
+      ];
+    };
+
     environment = {
       etc = {
         "ssh/ca.pub" = { text = caPubKeys; };
@@ -221,10 +227,9 @@ in
           tcl
           tmux
           uxn
-
-          inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.nomadnet
-          inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.rns
-          (inputs.unstable.legacyPackages.${pkgs.system}.python3Packages.callPackage ./pkgs/rnsh.nix { inherit (inputs.unstable.legacyPackages.${pkgs.system}) pkgs; })
+          rns
+          python3Packages.nomadnet
+          (python3Packages.callPackage ./pkgs/rnsh.nix { inherit pkgs; })
         ]
         ++ (
           if isUnstable

@@ -403,8 +403,6 @@ in
       proton-caller
       protonup-ng
       prusa-slicer
-      python3Packages.nomadnet
-      python3Packages.rns
       qdmr
       # Don't do it, don't switch to another music player. They all suck!
       # this one works the least sucky!

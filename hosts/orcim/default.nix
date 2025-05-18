@@ -90,8 +90,6 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    python3Packages.nomadnet
-    python3Packages.rns
     rtl-sdr
     signal-desktop
   ];
