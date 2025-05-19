@@ -370,9 +370,9 @@
           pywebscrapbook = upkgs.python3Packages.callPackage ./pkgs/pywebscrapbook.nix {
             inherit upkgs;
           };
-          lxst = upkgs.python3Packages.callPackage ./pkgs/lxst.nix {
-            inherit upkgs;
-          };
+          # lxst = upkgs.python3Packages.callPackage ./pkgs/lxst.nix {
+            # inherit upkgs;
+          # };
           rnsh = upkgs.python3Packages.callPackage ./pkgs/rnsh.nix {
             inherit upkgs;
           };
