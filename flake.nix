@@ -371,11 +371,11 @@
             inherit upkgs;
           };
           # lxst = upkgs.python3Packages.callPackage ./pkgs/lxst.nix {
-            # inherit upkgs;
+          # inherit upkgs;
           # };
-          rnsh = upkgs.python3Packages.callPackage ./pkgs/rnsh.nix {
-            inherit upkgs;
-          };
+          # rnsh = upkgs.python3Packages.callPackage ./pkgs/rnsh.nix {
+          # inherit upkgs;
+          # };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
           zutty = upkgs.callPackage ./pkgs/zutty.nix {
