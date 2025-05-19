@@ -230,7 +230,6 @@ in
           uxn
           python3Packages.rns
           python3Packages.nomadnet
-          (python3Packages.callPackage ./pkgs/rnsh.nix { inherit pkgs; })
         ]
         ++ (
           if isUnstable
