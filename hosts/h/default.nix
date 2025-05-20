@@ -419,7 +419,7 @@ in
       envFile = config.sops.secrets.signal-cli-env.path;
     };
     i2pd = {
-      enable = true;
+      enable = false;
       address = "127.0.0.1";
       proto = {
         http = {

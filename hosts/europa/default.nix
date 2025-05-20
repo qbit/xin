@@ -144,7 +144,7 @@ in
 
   services = {
     i2pd = {
-      enable = true;
+      enable = false;
       address = "127.0.0.1";
       proto = {
         http = {
