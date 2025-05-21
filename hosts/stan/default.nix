@@ -156,8 +156,6 @@ in
   };
 
 
-  i18n.defaultLocale = "en_US.utf8";
-
   kde.enable = true;
   defaultUsers.enable = false;
 

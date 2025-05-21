@@ -33,8 +33,6 @@ in
 
   time.timeZone = "America/Denver";
 
-  i18n.defaultLocale = "en_US.utf8";
-
   services.xserver = {
     layout = "us";
     xkbVariant = "colemak";
