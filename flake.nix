@@ -5,7 +5,7 @@
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
+    stable.url = "github:NixOS/nixpkgs/nixos-24.11-small";
 
     lix-module = {
       url = "git+https://git.lix.systems/lix-project/nixos-module";
