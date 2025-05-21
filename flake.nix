@@ -5,7 +5,7 @@
     unstable.url = "github:NixOS/nixpkgs";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    stable.url = "github:NixOS/nixpkgs/nixos-24.11-small";
+    stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
 
     lix-module = {
       url = "git+https://git.lix.systems/lix-project/nixos-module";
@@ -42,7 +42,7 @@
     };
 
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/?rev=f7a221bc69ef6e67a56e370cbaf031ca2b3c7aa7";
       inputs = {
         nixpkgs.follows = "stable";
       };
