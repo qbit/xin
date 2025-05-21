@@ -1,12 +1,8 @@
 { isUnstable
 , ...
 }:
-let
-  matrix-synapse = import ./matrix-synapse.nix;
-in
 {
   nixpkgs.overlays = [
-    matrix-synapse
     (_: super: {
       smug = super.smug.overrideAttrs (_: rec {
         version = "0.3.3";
@@ -22,9 +18,7 @@ in
   ] ++
   (if isUnstable
   then [
-    matrix-synapse
   ]
   else [
-    matrix-synapse
   ]);
 }
