@@ -408,7 +408,6 @@ in
     fullTextSearch = {
       enable = true;
       autoIndex = true;
-      indexAttachments = true;
       enforced = "body";
     };
   };
