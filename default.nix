@@ -121,8 +121,6 @@ in
       (readFile ./bold.daemon.pem)
     ];
 
-    i18n.defaultLocale = "en_US.UTF8";
-
     users.motd = ''
 
                                             .-
