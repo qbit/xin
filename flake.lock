@@ -316,11 +316,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743705637,
-        "narHash": "sha256-EuPfTPRTIG4ACJwSmxBxgVsia2PHp0cSTaUIN/0WKa0=",
+        "lastModified": 1747873480,
+        "narHash": "sha256-+1tH+qqSEC45kClAFF+9qUAsM3Th/V4eqeAfibegqFc=",
         "ref": "main",
-        "rev": "32109e3b6c4850b24e4617bcc21dc77df7bad7fe",
-        "revCount": 225,
+        "rev": "b1739b6f17dab09f5278b6805b841c6520ec180d",
+        "revCount": 226,
         "type": "git",
         "url": "https://codeberg.org/qbit/mcchunkie"
       },
