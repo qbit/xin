@@ -93,16 +93,16 @@ in
   ];
 
   sops.secrets = {
-    synapse_signing_key = {
-      owner = config.users.users.matrix-synapse.name;
-      mode = "600";
-      sopsFile = config.xin-secrets.h.secrets.services;
-    };
-    synapse_shared_secret = {
-      owner = config.users.users.matrix-synapse.name;
-      mode = "600";
-      sopsFile = config.xin-secrets.h.secrets.services;
-    };
+    # synapse_signing_key = {
+    # owner = config.users.users.matrix-synapse.name;
+    # mode = "600";
+    # sopsFile = config.xin-secrets.h.secrets.services;
+    # };
+    # synapse_shared_secret = {
+    # owner = config.users.users.matrix-synapse.name;
+    # mode = "600";
+    # sopsFile = config.xin-secrets.h.secrets.services;
+    # };
     # hammer_access_token = {
     # owner = config.users.users.mjolnir.name;
     # mode = "600";
@@ -1258,7 +1258,7 @@ in
     };
 
     matrix-synapse = {
-      enable = true;
+      enable = false;
       dataDir = "/var/lib/synapse";
       settings = {
         federation_client_minimum_tls_version = "1.2";
