@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "755c3d082e59e6884f28d30e6333a1444e9173d1",
-  "hash": "sha256-fCp2Hs1+InbyhANgABmlKmIsf3PeEKHd9eYLrgO58sQ=",
-  "version": "2025-05-07",
-  "comment": "Skip d_type check on platforms that don&apos;t have it."
+  "rev": "3e11478f585408888defa56fa47e8dc6567378d0",
+  "hash": "sha256-mu+adC/dhZ/qFVguJexzFGGrEFa4X4MTsHz456Pqhek=",
+  "version": "2025-05-23",
+  "comment": "upstream: Ensure args to nh_update() fit within uint32, which it"
 }
