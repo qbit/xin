@@ -136,7 +136,7 @@ in
     interfaces.enp7s0 = { useDHCP = true; };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 ]; }; };
+      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 9001 9002 ]; }; };
       interfaces = {
         "wg0" = {
           allowedTCPPorts = [
@@ -388,7 +388,7 @@ in
       enable = true;
     };
     home-assistant = {
-      enable = true;
+      enable = false;
       extraPackages = python3Packages:
         with python3Packages; [
           pyipp

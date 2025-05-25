@@ -71,7 +71,15 @@ in
 
   services = {
     openssh.settings.UsePAM = true;
-    avahi.enable = true;
+    avahi = {
+      enable = true;
+      publish = {
+        enable = true;
+        domain = true;
+        addresses = true;
+        workstation = true;
+      };
+    };
     openssh.settings.X11Forwarding = true;
     fwupd = {
       enable = true;

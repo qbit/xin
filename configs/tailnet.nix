@@ -46,6 +46,7 @@ let
           }
         ];
         hosts = {
+          homeassistant = "100.68.29.6";
           immich = "100.90.44.82";
           box = "100.115.16.150";
           console = "100.83.166.33";
@@ -97,7 +98,7 @@ let
           }
           {
             action = "accept";
-            src = [ "box" ];
+            src = [ "box" "homeassistant" ];
             dst = [ "printy:443" ];
           }
           {
@@ -135,8 +136,8 @@ let
           {
             # prometheus
             action = "accept";
-            src = [ "box" ];
-            dst = [ "h:9002" "pwntie:9002" ];
+            src = [ "box" "homeassistant" ];
+            dst = [ "h:9002" "pwntie:9002" "box:9001" ];
           }
           {
             # DNS
@@ -161,7 +162,7 @@ let
           }
           {
             action = "accept";
-            src = [ "box" ];
+            src = [ "box" "homeassistant" ];
             dst = [ "tv:8080" "tv:9090" ];
             proto = "tcp";
           }
