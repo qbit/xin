@@ -84,6 +84,11 @@ in
       sopsFile = config.xin-secrets.box.secrets.services;
     };
 
+    readeck_secret_key = {
+      mode = "444";
+      sopsFile = config.xin-secrets.box.secrets.services;
+    };
+
     books_cert = mkNginxSecret;
     books_key = mkNginxSecret;
     jelly_cert = mkNginxSecret;
@@ -247,8 +252,19 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
-    music-assistant = {
+    readeck = {
       enable = true;
+      environmentFile = config.sops.secrets.readeck_secret_key.path;
+      settings = {
+        server = {
+          base_url = "https://readeck.otter-alligator.ts.net";
+          host = "127.0.0.1";
+          port = 6784;
+        };
+      };
+    };
+    music-assistant = {
+      enable = false;
       providers = [
         "apple_music"
         "hass"
@@ -320,6 +336,12 @@ in
     };
     ts-reverse-proxy = {
       servers = {
+        "readeck-service" = {
+          enable = true;
+          reverseName = "readeck";
+          reversePort = config.services.readeck.settings.server.port;
+          reverseIP = "127.0.0.1";
+        };
         "invidious-service" = {
           enable = true;
           reverseName = "invidious";
