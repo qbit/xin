@@ -336,7 +336,7 @@ in
     "input"
     "libvirtd"
     "plugdev"
-    "podmap"
+    "podman"
   ];
 
   environment = {
