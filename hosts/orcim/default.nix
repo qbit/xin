@@ -98,15 +98,6 @@ in
 
   services = {
     smartd.enable = false;
-    tlp = {
-      enable = false;
-      settings = {
-        DISK_DEVICES = "mmcblk0";
-        DISK_IOSCHED = "deadline";
-        WIFI_PWR_ON_AC = false;
-        WIFI_PWR_ON_BAT = false;
-      };
-    };
     fwupd = {
       enable = true;
     };

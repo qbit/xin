@@ -264,22 +264,6 @@ in
         };
       };
     };
-    music-assistant = {
-      enable = false;
-      providers = [
-        "apple_music"
-        "hass"
-        "hass_players"
-        "jellyfin"
-        "radiobrowser"
-      ];
-      extraOptions = [
-        "--config"
-        "/var/lib/music-assistant"
-        "--log-level"
-        "DEBUG"
-      ];
-    };
     syncthing = {
       enable = true;
       user = "qbit";
@@ -407,135 +391,6 @@ in
       enable = true;
       openFirewall = true;
     };
-    matter-server = {
-      enable = true;
-    };
-    home-assistant = {
-      enable = false;
-      extraPackages = python3Packages:
-        with python3Packages; [
-          pyipp
-          pymetno
-          ical
-          grpcio
-          isal
-          zlib-ng
-        ];
-      customComponents = [
-        (pkgs.python3Packages.callPackage ../../pkgs/openevse.nix { inherit (pkgs.home-assistant) pkgs; })
-      ];
-      extraComponents = [
-        "airthings"
-        "airthings_ble"
-        "airvisual"
-        "airvisual_pro"
-        "api"
-        "apple_tv"
-        "brother"
-        "ecobee"
-        "esphome"
-        "ffmpeg"
-        "homekit"
-        "homekit_controller"
-        "icloud"
-        "kodi"
-        "logger"
-        "matter"
-        "mqtt"
-        "music_assistant"
-        "octoprint"
-        "open_meteo"
-        "piper"
-        "prometheus"
-        "pushover"
-        "rest"
-        "snmp"
-        "tasmota"
-        "wake_on_lan"
-        "wake_word"
-        "websocket_api"
-        "whisper"
-        "wyoming"
-        "zeroconf"
-      ];
-      config = {
-        api = { };
-        sensor = [
-        ];
-        mqtt.sensor = [
-          {
-            name = "Greenhouse Temperature";
-            unique_id = "greenhouse_temp_c";
-            state_topic = "greenhouse/temp";
-            unit_of_measurement = "°C";
-          }
-          {
-            name = "Greenhouse Humidity";
-            unique_id = "greenhouse_humidity_pct";
-            state_topic = "greenhouse/humidity";
-            unit_of_measurement = "%";
-          }
-        ];
-        logger = {
-          default = "warning";
-          logs = {
-            # "homeassistant.components.esphome" = "debug";
-          };
-        };
-        "automation manual" = [
-        ];
-        "automation ui" = "!include automations.yaml";
-        "scene ui" = "!include scenes.yaml";
-        "script ui" = "!include scripts.yaml";
-        rest = [
-          {
-            resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
-            sensor = {
-              name = "rtl_433_outside";
-              unique_id = "f36fc559-268f-489d-9454-56000d42ebf3";
-              value_template = ''
-                {% for entry in value_json.data.result %}
-                  {% if entry.metric.model == 'LaCrosse-TX141Bv3' %}
-                    {{ entry.value[1] }}
-                  {% endif %}
-                {% endfor %}
-              '';
-            };
-          }
-          {
-            resource = "http://127.0.0.1:9001/api/v1/query?query=rtl_433_temperature_celsius";
-            sensor = {
-              unique_id = "6720a3dc-658e-496f-b321-fc9c161e6620";
-              name = "rtl_433_greenhouse";
-              value_template = ''
-                {% for entry in value_json.data.result %}
-                  {% if entry.metric.model == 'Solight-TE44' %}
-                    {{ entry.value[1] }}
-                  {% endif %}
-                {% endfor %}
-              '';
-            };
-          }
-        ];
-        device_tracker = [
-        ];
-        default_config = { };
-        http = {
-          use_x_forwarded_for = true;
-          server_host = [ "127.0.0.1" "10.6.0.15" ];
-          trusted_proxies = "127.0.0.1";
-        };
-        homeassistant = {
-          name = "Home";
-          time_zone = "America/Denver";
-          temperature_unit = "C";
-          # unit_system = "us_customary";
-          longitude = -104.72;
-          latitude = 38.35;
-        };
-      };
-    };
-
     invidious = {
       enable = true;
       database = {
@@ -584,14 +439,6 @@ in
 
     tor.enable = true;
 
-    transmission = {
-      enable = false;
-      group = "media";
-      downloadDirPermissions = "770";
-      settings = {
-        download-dir = "/media/downloads/torrents";
-      };
-    };
     readarr = {
       enable = true;
       dataDir = "/media/books";
@@ -600,9 +447,7 @@ in
     sonarr.enable = true;
     radarr.enable = true;
     lidarr.enable = true;
-    jackett.enable = false;
     prowlarr.enable = true;
-    headphones.enable = false;
     nzbget = {
       enable = true;
       group = "media";
@@ -648,14 +493,6 @@ in
       ];
     };
 
-    calibre-web = {
-      enable = false;
-      group = "media";
-      options = { enableBookUploading = true; };
-      listen.port = 8909;
-      listen.ip = "127.0.0.1";
-    };
-
     grafana = {
       enable = true;
       settings = {
@@ -688,75 +525,6 @@ in
             }";
           }
         ];
-      };
-    };
-
-    loki = {
-      enable = false;
-      configuration = {
-        analytics.reporting_enabled = false;
-        server.http_listen_port = 3030;
-        server.http_listen_address = "0.0.0.0";
-        auth_enabled = false;
-
-        ingester = {
-          lifecycler = {
-            address = "127.0.0.1";
-            ring = {
-              kvstore = { store = "inmemory"; };
-              replication_factor = 1;
-            };
-          };
-          chunk_idle_period = "1h";
-          max_chunk_age = "1h";
-          chunk_target_size = 999999;
-          chunk_retain_period = "30s";
-          max_transfer_retries = 0;
-        };
-
-        schema_config = {
-          configs = [
-            {
-              from = "2022-06-06";
-              store = "boltdb-shipper";
-              object_store = "filesystem";
-              schema = "v11";
-              index = {
-                prefix = "index_";
-                period = "24h";
-              };
-            }
-          ];
-        };
-
-        storage_config = {
-          boltdb_shipper = {
-            active_index_directory = "/var/lib/loki/boltdb-shipper-active";
-            cache_location = "/var/lib/loki/boltdb-shipper-cache";
-            cache_ttl = "24h";
-            shared_store = "filesystem";
-          };
-
-          filesystem = { directory = "/var/lib/loki/chunks"; };
-        };
-
-        limits_config = {
-          reject_old_samples = true;
-          reject_old_samples_max_age = "168h";
-        };
-
-        chunk_store_config = { max_look_back_period = "0s"; };
-
-        table_manager = {
-          retention_deletes_enabled = false;
-          retention_period = "0s";
-        };
-
-        compactor = {
-          working_directory = "/var/lib/loki";
-          shared_store = "filesystem";
-          compactor_ring = { kvstore = { store = "inmemory"; }; };
-        };
       };
     };
 

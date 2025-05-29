@@ -53,59 +53,6 @@ in
         };
       };
     };
-    adguardhome = {
-      enable = false;
-      openFirewall = true;
-      settings = {
-        bind_port = 3000;
-        user_rules = [
-          "# Stuff from kyle"
-          "# some google stuff that wasn't being blocked"
-          "||googleadservices.com^"
-          "||imasdk.googleapis.com^"
-          "# some advertising stuff I saw on my network"
-          "||adjust.com^"
-          "||appsflyer.com^"
-          "||doubleclick.net^"
-          "||googleadservices.com^"
-          "||raygun.io^"
-          "||pizzaseo.com^"
-          "||scorecardresearch.com^"
-          "# annoying website 'features'"
-          "||drift.com^"
-          "||driftcdn.com^"
-          "||driftt.com^"
-          "||driftt.imgix.net^"
-          "||intercomcdn.com^"
-          "||intercom.io^"
-          "||salesforceliveagent.com^"
-          "||viafoura.co^"
-          "||viafoura.com^"
-        ];
-        filters = [
-          {
-            name = "AdGuard DNS filter";
-            url = "https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt";
-            enabled = true;
-          }
-          {
-            name = "AdaAway Default Blocklist";
-            url = "https://adaway.org/hosts.txt";
-            enabled = true;
-          }
-          {
-            name = "OISD";
-            url = "https://abp.oisd.nl";
-            enabled = true;
-          }
-        ];
-        dns = {
-          statistics_interval = 90;
-          bind_host = "10.6.0.245";
-          bootstrap_dns = "10.6.0.1";
-        };
-      };
-    };
     unbound = {
       enable = true;
       settings = {

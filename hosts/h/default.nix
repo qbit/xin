@@ -11,8 +11,6 @@ with pkgs; let
   maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
   icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
-  weepushover =
-    python3Packages.callPackage ../../pkgs/weepushover.nix { inherit pkgs; };
   pgBackupDir = "/var/backups/postgresql";
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
@@ -31,25 +29,6 @@ with pkgs; let
     allow	100.64.0.0/10;
     allow	10.20.30.1/32;
   '';
-
-  mtxCfg = {
-    port = 8009;
-    address = "127.0.0.1";
-  };
-
-  matrixServer = "tapenet.org";
-  matrixClientConfig = {
-    "m.homeserver".base_url = "https://${matrixServer}:443";
-    # "org.matrix.msc3575.proxy" = { url = "https://${matrixServer}"; };
-  };
-  matrixServerConfig = { "m.server" = "${matrixServer}:443"; };
-  mkMatrixWellKnown = p: ''
-    return 200 '${builtins.toJSON p}';
-  '';
-  mkMatrixLoc = {
-    proxyWebsockets = true;
-    proxyPass = "http://${mtxCfg.address}:${toString mtxCfg.port}";
-  };
 in
 {
   _module.args.isUnstable = false;
@@ -81,16 +60,6 @@ in
   };
 
   tailscale.sshOnly = true;
-
-  nixpkgs.overlays = [
-    (_: super: {
-      weechat = super.weechat.override {
-        configure = { ... }: {
-          scripts = with super.weechatScripts; [ highmon weepushover ];
-        };
-      };
-    })
-  ];
 
   sops.secrets = {
     # synapse_signing_key = {
@@ -231,7 +200,7 @@ in
     firewall = {
       interfaces = {
         "tailscale0" = {
-          allowedTCPPorts = [ 9002 config.services.shiori.port 6697 ];
+          allowedTCPPorts = [ 9002 6697 ];
         };
       };
       allowedTCPPorts = [
@@ -267,15 +236,9 @@ in
       inetutils
 
       # irc
-      weechat
-      weechatScripts.highmon
       aspell
       aspellDicts.en
       icbirc
-      irssi
-
-      # matrix things
-      matrix-synapse-tools.synadm
 
       zonemaster-cli
       sqlite
@@ -416,17 +379,6 @@ in
     signal-cli = {
       enable = true;
       envFile = config.sops.secrets.signal-cli-env.path;
-    };
-    i2pd = {
-      enable = false;
-      address = "127.0.0.1";
-      proto = {
-        http = {
-          enable = true;
-          port = 7071;
-        };
-        sam.enable = true;
-      };
     };
     ejabberd = {
       enable = true;
@@ -591,46 +543,6 @@ in
         ];
       });
     };
-    prosody = {
-      enable = false;
-
-      extraConfig = ''
-        c2s_direct_tls_ports = { 5223 }
-        s2s_direct_tls_ports = { 5270 }
-      '';
-
-      ssl = {
-        cert = "/var/lib/acme/segfault.rodeo/fullchain.pem";
-        key = "/var/lib/acme/segfault.rodeo/key.pem";
-      };
-
-      virtualHosts."segfault.rodeo" = {
-        enabled = true;
-        domain = "segfault.rodeo";
-        ssl = {
-          cert = "/var/lib/acme/segfault.rodeo/fullchain.pem";
-          key = "/var/lib/acme/segfault.rodeo/key.pem";
-        };
-      };
-
-      uploadHttp = {
-        domain = "upload.segfault.rodeo";
-        uploadExpireAfter = "60 * 60 * 24 * 7 * 4";
-      };
-
-      muc = [
-        {
-          domain = "conference.segfault.rodeo";
-          maxHistoryMessages = 2048;
-        }
-      ];
-
-      allowRegistration = false;
-
-      admins = [
-        "qbit@segfault.rodeo"
-      ];
-    };
     soju = {
       enable = true;
       listen = [ "100.83.77.133:6697" ];
@@ -650,32 +562,6 @@ in
         Port = 4533;
         MusicFolder = "/var/lib/music";
         PlaylistsPath = ".:**/**";
-      };
-    };
-    shiori = {
-      enable = true;
-      port = 8967;
-      address = "127.0.0.1";
-      package = inputs.unstable.legacyPackages.${pkgs.system}.shiori;
-    };
-    veilid-server = {
-      enable = false;
-      package = inputs.unstable.legacyPackages.${pkgs.system}.veilid;
-    };
-    heisenbridge = {
-      enable = false;
-      package = inputs.unstable.legacyPackages.${pkgs.system}.heisenbridge;
-      homeserver = "http://${mtxCfg.address}:${toString mtxCfg.port}";
-      owner = "@qbit:tapenet.org";
-      namespaces = {
-        users = [
-          {
-            regex = "@irc_.*";
-            exclusive = true;
-          }
-        ];
-        aliases = [ ];
-        rooms = [ ];
       };
     };
     ts-reverse-proxy = {
@@ -930,19 +816,6 @@ in
           };
         };
 
-        "bookmarks.tapenet.org" = {
-          forceSSL = true;
-          enableACME = true;
-
-          locations = {
-            "/" = {
-              proxyPass = "http://${config.services.shiori.address}:${toString config.services.shiori.port}";
-              proxyWebsockets = true;
-              priority = 1000;
-            };
-          };
-        };
-
         "git.tapenet.org" = {
           forceSSL = true;
           enableACME = true;
@@ -1160,17 +1033,6 @@ in
                 }
               '';
             };
-
-            "/.well-known/matrix/client".extraConfig =
-              mkMatrixWellKnown matrixClientConfig;
-            "/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown matrixServerConfig;
-
-            "/_matrix" = mkMatrixLoc;
-            "/_synapse/client" = mkMatrixLoc;
-            "/_heisenbridge/media" = {
-              proxyPass = "http://${config.services.heisenbridge.address}:${toString config.services.heisenbridge.port}";
-            };
           };
         };
       };
@@ -1219,89 +1081,6 @@ in
           ensureDBOwnership = true;
         }
       ];
-    };
-
-    mjolnir = {
-      enable = false;
-      package = inputs.unstable.legacyPackages.${pkgs.system}.mjolnir;
-      pantalaimon.enable = false;
-      pantalaimon.username = "hammer";
-      accessTokenFile = "${config.sops.secrets.hammer_access_token.path}";
-      homeserverUrl = "https://tapenet.org";
-      protectedRooms = [
-        "https://matrix.to/#/#gofr:matrix.org"
-      ];
-      settings = {
-        verboseLogging = false;
-        protections = {
-          wordlist = {
-            words = [
-              "^https://libera.chat <-- visit!$"
-              "^@.*@.*@.*@.*@.*@.*@.*@.*@.*@.*"
-            ];
-          };
-        };
-        managementRoom = "#moderation:tapenet.org";
-        automaticallyRedactForReasons = [
-          "spam"
-          "advertising"
-          "racism"
-          "nazi"
-          "nazism"
-          "trolling"
-          "porn"
-          "csam"
-        ];
-        aditionalPrefixes = [ "hammer" ];
-        confirmWildcardBan = false;
-      };
-    };
-
-    matrix-synapse = {
-      enable = false;
-      dataDir = "/var/lib/synapse";
-      settings = {
-        federation_client_minimum_tls_version = "1.2";
-        enable_registration = false;
-        registration_shared_secret_path = "${config.sops.secrets.synapse_shared_secret.path}";
-        media_store_path = "/var/lib/synapse/media_store";
-        presence.enabled = false;
-        public_baseurl = "https://tapenet.org";
-        server_name = "tapenet.org";
-        signing_key_path = "${config.sops.secrets.synapse_signing_key.path}";
-        url_preview_enabled = false;
-        max_upload_size = maxUploadSize;
-        plugins = with config.services.matrix-synapse.package.plugins; [ matrix-synapse-mjolnir-antispam ];
-        app_service_config_files = [
-          "/var/lib/heisenbridge/registration.yml"
-        ];
-        database = {
-          name = "psycopg2";
-          args = {
-            database = "synapse";
-            user = "synapse_user";
-          };
-        };
-        listeners = [
-          {
-            inherit (mtxCfg) port;
-            bind_addresses = [ mtxCfg.address ];
-            resources = [
-              {
-                compress = true;
-                names = [ "client" ];
-              }
-              {
-                compress = false;
-                names = [ "federation" ];
-              }
-            ];
-            tls = false;
-            type = "http";
-            x_forwarded = true;
-          }
-        ];
-      };
     };
   };
 
