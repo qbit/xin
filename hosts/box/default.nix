@@ -162,6 +162,7 @@ in
           1883 # mosquitto
           8123 # home-assistant
           8484 # restic-rest server
+          9001
         ];
       allowedUDPPorts = [
         5353 #homekit
