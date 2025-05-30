@@ -60,7 +60,6 @@ in
   environment.systemPackages = with pkgs; [
     rtl-sdr
     direwolf
-    (callPackage ../../pkgs/rtlamr.nix { })
   ];
 
   xinCI = {
@@ -146,40 +145,6 @@ in
           enabledCollectors = [ "systemd" ];
           port = 9002;
         };
-      };
-    };
-    rtlamr2mqtt = {
-      enable = false;
-      configuration = {
-        general = {
-          device_ids_path = "${config.services.rtlamr2mqtt.package}/sdl_ids.txt";
-          sleep_for = 0;
-          verbosity = "debug";
-          tickle_rtl_tcp = false;
-          device_id = "0bda:2838";
-        };
-        mqtt = {
-          host = "10.6.0.15";
-          port = 1883;
-          tls_enabled = false;
-          ha_autodiscovery = true;
-          base_topic = "rtlamr";
-        };
-        custom_parameters = {
-          rtltcp = "-s 2048000";
-          rtlamr = "-unique=true -symbollength=32";
-        };
-        meters = [
-          {
-            id = 48582066;
-            protocol = "scm";
-            name = "gas_meter";
-            unit_of_measurement = "ft³";
-            icon = "mdi:gas-burner";
-            device_class = "gas";
-            state_class = "total_increasing";
-          }
-        ];
       };
     };
     fwupd = {

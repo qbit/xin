@@ -322,7 +322,6 @@
           spkgs = stablePkgsFor.${system};
         in
         {
-          rtlamr = spkgs.callPackage ./pkgs/rtlamr.nix { inherit spkgs; };
           gqrss = spkgs.callPackage ./pkgs/gqrss.nix {
             inherit spkgs;
             isUnstable = true;
@@ -347,9 +346,6 @@
             inherit spkgs;
           };
           watchmap = spkgs.python3Packages.callPackage ./pkgs/watchmap.nix {
-            inherit spkgs;
-          };
-          rtlamr2mqtt = spkgs.python3Packages.callPackage ./pkgs/rtlamr2mqtt.nix {
             inherit spkgs;
           };
           kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
