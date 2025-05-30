@@ -905,8 +905,9 @@ in
           enableACME = true;
           root = "/var/www/segfault.rodeo";
           locations = {
-            "/.well-known/matrix/server".extraConfig =
-              mkMatrixWellKnown { "m.server" = "segfault.rodeo:8448"; };
+            "/.well-known/matrix/server".extraConfig = ''
+              return 200 '{"m.server": "segfault.rodeo:8448"}';
+            '';
           };
         };
         "mammothcirc.us" = {
