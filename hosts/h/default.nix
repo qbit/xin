@@ -33,13 +33,8 @@ in
 {
   _module.args.isUnstable = false;
 
-  disabledModules = [
-    "services/matrix/mjolnir.nix"
-  ];
-
   imports = [
     ./hardware-configuration.nix
-    ../../modules/mjolnir.nix
   ];
 
   boot = {
@@ -62,21 +57,6 @@ in
   tailscale.sshOnly = true;
 
   sops.secrets = {
-    # synapse_signing_key = {
-    # owner = config.users.users.matrix-synapse.name;
-    # mode = "600";
-    # sopsFile = config.xin-secrets.h.secrets.services;
-    # };
-    # synapse_shared_secret = {
-    # owner = config.users.users.matrix-synapse.name;
-    # mode = "600";
-    # sopsFile = config.xin-secrets.h.secrets.services;
-    # };
-    # hammer_access_token = {
-    # owner = config.users.users.mjolnir.name;
-    # mode = "600";
-    # sopsFile = config.xin-secrets.h.secrets.services;
-    # };
     gqrss_token = {
       owner = config.users.users.qbit.name;
       mode = "400";
@@ -333,7 +313,6 @@ in
       icb-tunnel = {
         wants =
           [ "network-online.target" "multi-user.target" ];
-        before = [ "matrix-synapse.service" ];
         wantedBy = [ "multi-user.target" ];
         after = [ "network-online.target" ];
         serviceConfig = {

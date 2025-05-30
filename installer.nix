@@ -127,7 +127,6 @@ in
         description = "Set date on boot";
         wants =
           [ "network-online.target" "multi-user.target" ];
-        before = [ "matrix-synapse.service" ];
         wantedBy = [ "multi-user.target" ];
         after = [ "network-online.target" ];
         script = ''

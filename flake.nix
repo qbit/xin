@@ -356,8 +356,6 @@
           };
           hpi =
             upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
-          openevse =
-            upkgs.python3Packages.callPackage ./pkgs/openevse.nix { inherit upkgs; };
           ble-serial =
             upkgs.python3Packages.callPackage ./pkgs/ble-serial.nix { inherit upkgs; };
           promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
@@ -377,9 +375,6 @@
           zutty = upkgs.callPackage ./pkgs/zutty.nix {
             inherit upkgs;
           };
-          mvoice = upkgs.callPackage ./pkgs/mvoice.nix {
-            inherit upkgs;
-          };
           inherit (beyt.packages.${system}) beyt;
           inherit (tsvnstat.packages.${system}) tsvnstat;
           inherit (pots.packages.${system}) pots;
@@ -389,11 +384,7 @@
           inherit (traygent.packages.${system}) traygent;
           inherit (fynado.packages.${system}) fynado;
           inherit (calnow.packages.${system}) calnow;
-
-          inherit (spkgs) matrix-synapse;
-
           openssh = upkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit upkgs; };
-          matrix = self.nixosConfigurations.h.pkgs.matrix-synapse;
         });
 
       templates = {
