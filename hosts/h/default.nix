@@ -913,18 +913,6 @@ in
         "mammothcirc.us" = {
           forceSSL = true;
           enableACME = true;
-          extraConfig =
-            if config.services.gotosocial.package.version == "0.7.1"
-            then ''
-              # TODO: This can be removed next release
-              # https://github.com/superseriousbusiness/gotosocial/issues/1419
-              # Workaround for missing API + Ice Cubes
-              location ~ ^/api/v1/accounts/[0-9A-Z]+/featured_tags {
-                  default_type application/json;
-                  return 200 '[]';
-              }
-            ''
-            else "";
           locations."/" = {
             extraConfig = ''
                       proxy_pass http://127.0.0.1:${
