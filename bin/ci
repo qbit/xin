@@ -170,12 +170,14 @@ if [ "${1}" = "update" ]; then
 		exit 1
 	fi
 
-	# Agent is configured to forget keys after X, if that happens we need to re-add before push
-	agentHasKey "$(cat /run/secrets/ci_ed25519_pub | awk '{print $2}')" ||
-		ssh-add /run/secrets/ci_ed25519_key
-	if ! git push; then
-		handle_push_fail
-		exit 1
+	if [ -f /run/secrets/ci_ed25519_pub ]; then
+		# Agent is configured to forget keys after X, if that happens we need to re-add before push
+		agentHasKey "$(cat /run/secrets/ci_ed25519_pub | awk '{print $2}')" ||
+			ssh-add /run/secrets/ci_ed25519_key
+		if ! git push; then
+			handle_push_fail
+			exit 1
+		fi
 	fi
 else
 	if ! nix flake check --print-build-logs; then
