@@ -10,7 +10,7 @@ let
     {
       name = "xin-ci-update";
       user = "qbit";
-      script = "cd ~/src/xin && ./bin/ci update all";
+      script = "cd ~/src/xin && env SKIP_FMT=1 ./bin/ci update all";
       startAt = "*-*-01 00:00:00";
       path = [ ];
     }

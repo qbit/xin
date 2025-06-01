@@ -15,5 +15,7 @@ else
 	echo "Skipping checks..."
 fi
 
-# Ensure the key is loaded after checks (sometimes they take longer than auto key removal)
-start
+if [ -f /run/secrets/manager_pubkey ]; then
+    # Ensure the key is loaded after checks (sometimes they take longer than auto key removal)
+    start
+fi
