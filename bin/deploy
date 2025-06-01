@@ -4,7 +4,9 @@
 
 trap error INT TERM
 
-start
+if [ -f /run/secrets/manager_pubkey ]; then
+	start
+fi
 
 rebuild() {
 	host="$(resolveAlias $1)"
