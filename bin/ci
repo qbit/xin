@@ -2,7 +2,7 @@
 
 . ./common.sh
 
-set -e
+set -ex
 
 if [ -f ./lock ]; then
 	msg "${SCRIPT_NAME} locked..."
