@@ -5,6 +5,16 @@
   "release": "stable",
   "searches": [
     {
+      "epoch": 1747920830.04803,
+      "pull_request": 409437,
+      "title": "python313Packages.nomadnet: 0.6.2 -> 0.7.0"
+    },
+    {
+      "epoch": 1747844398.73997,
+      "pull_request": 409054,
+      "title": "nixos/i18n: Remove special handling of LANGUAGE"
+    },
+    {
       "epoch": 1744997485.73502,
       "pull_request": 399692,
       "title": "nixos/restic-rest-server Fixed htpasswd-path when null."
