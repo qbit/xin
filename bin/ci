@@ -2,6 +2,8 @@
 
 . ./common.sh
 
+set -e
+
 if [ -f ./lock ]; then
 	msg "${SCRIPT_NAME} locked..."
 	exit 0
@@ -25,7 +27,7 @@ ci_branch=$(date +"%Y%m%dT%H%M%S%z")
 can_sign=0
 
 for i in $(ssh-add -L | awk '{print $NF}'); do
-	grep -q $i .allowed_signers && can_sign=1
+	grep -q $i .allowed_signers && can_sign=1 || echo "key not loaded.."
 done
 
 if [ $can_sign != 1 ]; then
