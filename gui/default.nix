@@ -12,7 +12,6 @@ let
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   inherit (inputs.calnow.packages.${pkgs.system}) calnow;
 
-  firefox = import ../configs/firefox.nix { inherit pkgs; };
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr =
     pkgs.writeScriptBin "rpr"
@@ -67,13 +66,13 @@ let
 in
 with lib; {
   imports = [
-    firefox
     ../configs/polybar.nix
     ../configs/smug.nix
     ../configs/beet.nix
     ../configs/emacs.nix
     ../configs/konsole.nix
     ../configs/chromium.nix
+    ../configs/firefox.nix
     ./gnome.nix
     ./kde.nix
     ./xfce.nix
