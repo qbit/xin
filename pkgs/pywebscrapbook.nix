@@ -12,7 +12,7 @@
 }:
 buildPythonPackage rec {
   pname = "PyWebScrapBook";
-  version = "2.2.0";
+  version = "2.6.0";
 
   pyproject = true;
 
@@ -20,7 +20,7 @@ buildPythonPackage rec {
     owner = "danny0838";
     repo = pname;
     rev = version;
-    hash = "sha256-VqoYvAda1TwqwzdDc8SqAGGJcOomGEp1K6bhb9jY+k8=";
+    hash = "sha256-0mzFSyvW3miKaEd1haaj9GMLZ39MzxBmdFr+vEHVw+o=";
   };
 
   SETUPTOOLS_SCM_PRETEND_VERSION = version;
