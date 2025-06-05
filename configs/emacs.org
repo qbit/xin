@@ -1,9 +1,78 @@
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 #+TITLE: Emacs Configuration
+* Extra Functionality
+
+** op commandline integration
+
+#+begin_src emacs-lisp
+(require 'auth-source)
+
+(defgroup auth-source-op nil
+  "op (1password command line tool) auth source."
+  :group 'auth-source
+  :tag "auth-source-op"
+  :prefix "op-")
+
+(defcustom auth-source-op-executable "op"
+  "op executable to use."
+  :type 'string
+  :group 'auth-source-op)
+
+(cl-defun auth-source-op-search (&rest spec
+                                       &key _backend _type host _user _port
+                                       &allow-other-keys)
+  "query 1password using the op command"
+  (if (executable-find auth-source-op-executable)
+      ;; TODO: handle errors :P
+      (let* ((op-result (string-trim
+			 (shell-command-to-string
+			  (format "%s item get %s --fields label=username,label=password --reveal --format json"
+				  auth-source-op-executable
+				  host))))
+	     (result (json-parse-string op-result :object-type 'alist :array-type 'list))
+	     (user (cdr (assoc 'value (nth 0 result))))
+	     (secret (cdr (assoc 'value (nth 1 result)))))
+	(list (list :user user
+		    :secret secret)))
+    (warn "`auth-source-op': Couldn't find 'op' executable")))
+
+(defun auth-source-op-enable ()
+  "Enable the op auth source."
+  (add-to-list 'auth-sources 'op)
+  (auth-source-forget-all-cached))
+
+(defvar auth-source-op-backend
+  (auth-source-backend
+   :source "."
+   :type 'password-store
+   :search-function #'auth-source-op-search))
+
+(defun auth-source-op-backend-parse (entry)
+  (when (eq entry 'op)
+    (auth-source-backend-parse-parameters entry auth-source-op-backend)))
+
+(if (boundp 'auth-source-backend-parser-functions)
+    (add-hook 'auth-source-backend-parser-functions #'auth-source-op-backend-parse)
+  (advice-add 'auth-source-backend-parse :before-until #'auth-source-op-backend-parse))
+
+(provide 'auth-source-op)
+#+end_src
+
 * Literate emacs configuration
 
 I can never rembember what various configs do. Jumping on this literate emacs
 config to see if it helps!
+
+** Instance Specific
+
+Sometimes I need to execute some other things on different machines. This lets
+me include an extra file to extend things a bit.
+
+#+begin_src emacs-lisp
+  (if (file-exists-p "~/.emacs.d/xin-custom.el")
+      (progn
+        (load "~/.emacs.d/xin-custom.el")))
+#+end_src
 
 ** Start the emacs server
 
@@ -152,6 +221,7 @@ Switch various defaults to be more comfortable for myself.
          auto-mode-alist))
   (setq auth-sources
         '("/run/secrets/netrc"))
+  (auth-source-op-enable)
 #+end_src
 
 Use spelling and auto-fill when we are in text mode.
@@ -171,17 +241,6 @@ The customization file mostly just causes churn in the SCM so we disable it
 here.
 #+begin_src emacs-lisp
 (setq custom-file (make-temp-file ""))
-#+end_src
-
-** Instance Specific
-
-Sometimes I need to execute some other things on different machines. This lets
-me include an extra file to extend things a bit.
-
-#+begin_src emacs-lisp
-  (if (file-exists-p "~/.emacs.d/xin-custom.el")
-      (progn
-        (load "~/.emacs.d/xin-custom.el")))
 #+end_src
 
 * Packages
@@ -905,7 +964,9 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
     :init
     (setq mail-user-agent 'mu4e-user-agent
           read-mail-command 'mu4e
-          mu4e-get-mail-command "mbsync fastmail"
+  	mu4e-maildir "~/Maildir"
+          mu4e-get-mail-command "mbsync -a"
+  	mu4e-change-filenames-when-moving t
           mu4e-update-interval 420
           mu4e-compose-context-policy nil
           mu4e-context-policy 'pick-first
@@ -915,7 +976,7 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
           mu4e-maildir-shortcuts
           '( ("/fastmail/Inbox"        . ?i)
              ("/fastmail/Archive"      . ?a)
-             ("/fastmail/Sent Items"   . ?s))
+             ("/segfault/Inbox"        . ?s))
           org-mu4e-link-query-in-headers-mode nil
           mu4e-attachment-dir
           (lambda (fname mtype)
@@ -924,46 +985,70 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
              ((and fname (string-match "\\.patch$" fname))  "~/patches")
              ((and fname (string-match "\\.diff.gz$" fname))  "~/patches")
              (t "~/Downloads")))
-          mu4e-bookmarks
-               `(( :name "Inbox"
-                   :query "maildir:/fastmail/Inbox AND NOT flag:trashed"
-                   :key ?i)
-                 ( :name "TODO"
-                   :query "maildir:/fastmail/TODO AND NOT flag:trashed"
-                   :key ?T)
-                 ( :name  "Unread messages"
-                   :query "flag:unread AND NOT flag:trashed AND NOT list:ports-changes.openbsd.org AND NOT list:source-changes.openbsd.org"
-                   :key ?u)
-                 ( :name  "Today's messages"
-                   :query "date:today..now"
-                   :key ?d)
-  	       ( :name  "Last 7 days"
-                   :query "date:6d..now AND NOT flag:trashed AND NOT list:ports-changes.openbsd.org AND NOT list:source-changes.openbsd.org"
-                   :key ?w)
-                 ( :name  "Hackers"
-                   :query "list:hackers.openbsd.org AND NOT flag:trashed"
-                   :key ?h)
-                 ( :name   "Bugs"
-                   :query  "list:bugs.openbsd.org AND NOT flag:trashed"
-                   :key ?b)
-                 ( :name  "Tech"
-                   :query "list:tech.openbsd.org AND NOT flag:trashed"
-                   :key ?t)
-                 ( :name  "Ports"
-                   :query "list:ports.openbsd.org AND NOT flag:trashed"
-                   :key ?p)
-                 ( :name "Misc"
-                   :query "list:misc.openbsd.org AND NOT flag:trashed"
-                   :key ?m)
-                 ( :name "9front"
-                   :query "list:9front.9front.org AND NOT flag:trashed"
-                   :key ?9)
-                 ( :name "GOT"
-                   :query "list:gameoftrees.openbsd.org AND NOT flag:trashed"
-                   :key ?g))))
+  	mu4e-contexts (list
+  		       (make-mu4e-context
+  			:name "Fastmail"
+  			:match-func
+  			(lambda (msg)
+  			  (when msg
+  			    (string-prefix-p "/fastmail" (mu4e-message-field msg :maildir))))
+  			:vars '((user-mail-address   . "aaron@bolddaemon.com")
+  				(mu4e-drafts-folder . "/fastmail/Drafts")
+  				(mu4e-sent-folder   . "/fastmail/Sent Items")
+  				(mu4e-refile-foldir . "/fastmail/Archive")))
+  		       (make-mu4e-context
+  			:name "Segfault"
+  			:match-func
+  			(lambda (msg)
+  			  (when msg
+  			    (string-prefix-p "/segfault" (mu4e-message-field msg :maildir))))
+  			:vars '((user-mail-address   . "qbit@segfault.rodeo")
+  				(mu4e-drafts-folder . "/segfault/Drafts")
+  				(mu4e-sent-folder   . "/segfault/Sent")
+  				(mu4e-refile-folder . "/segfault/Archive"))))
+
+          mu4e-bookmarks `(( :name "Fastmail Inbox"
+  			   :query "maildir:/fastmail/Inbox AND NOT flag:trashed"
+  			   :key ?f)
+  			 ( :name "Segfault Inbox"
+  			   :query "maildir:/segfault/Inbox AND NOT flag:trashed"
+  			   :key ?s)
+  			 ( :name "TODO"
+  			   :query "maildir:/fastmail/TODO AND NOT flag:trashed"
+  			   :key ?T)
+  			 ( :name  "Unread messages"
+  			   :query "flag:unread AND NOT flag:trashed AND NOT list:ports-changes.openbsd.org AND NOT list:source-changes.openbsd.org"
+  			   :key ?u)
+  			 ( :name  "Today's messages"
+  			   :query "date:today..now"
+  			   :key ?d)
+  			 ( :name  "Last 7 days"
+  			   :query "date:6d..now AND NOT flag:trashed AND NOT list:ports-changes.openbsd.org AND NOT list:source-changes.openbsd.org"
+  			   :key ?w)
+  			 ( :name  "Hackers"
+  			   :query "list:hackers.openbsd.org AND NOT flag:trashed"
+  			   :key ?h)
+  			 ( :name   "Bugs"
+  			   :query  "list:bugs.openbsd.org AND NOT flag:trashed"
+  			   :key ?b)
+  			 ( :name  "Tech"
+  			   :query "list:tech.openbsd.org AND NOT flag:trashed"
+  			   :key ?t)
+  			 ( :name  "Ports"
+  			   :query "list:ports.openbsd.org AND NOT flag:trashed"
+  			   :key ?p)
+  			 ( :name "Misc"
+  			   :query "list:misc.openbsd.org AND NOT flag:trashed"
+  			   :key ?m)
+  			 ( :name "9front"
+  			   :query "list:9front.9front.org AND NOT flag:trashed"
+  			   :key ?9)
+  			 ( :name "GOT"
+  			   :query "list:gameoftrees.openbsd.org AND NOT flag:trashed"
+  			   :key ?g))))
   (add-to-list 'display-buffer-alist
-             `(,(regexp-quote mu4e-main-buffer-name)
-               display-buffer-same-window))
+               `(,(regexp-quote mu4e-main-buffer-name)
+                 display-buffer-same-window))
   (define-key mu4e-headers-mode-map (kbd "C-c c") 'mu4e-org-store-and-capture)
   (define-key mu4e-view-mode-map    (kbd "C-c c") 'mu4e-org-store-and-capture)
 #+end_src
