@@ -20,11 +20,15 @@ let
   #};
   tailscale = _: super: {
     tailscale = super.callPackage "${super.path}/pkgs/servers/tailscale" {
-      buildGoModule = args:
-        super.buildGo121Module (args // {
-          src = super.fetchFromGitHub fetchArgs;
-          inherit vendorHash ldflags version;
-        });
+      buildGoModule =
+        args:
+        super.buildGo121Module (
+          args
+          // {
+            src = super.fetchFromGitHub fetchArgs;
+            inherit vendorHash ldflags version;
+          }
+        );
     };
   };
 in

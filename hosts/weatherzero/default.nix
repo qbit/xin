@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   pubKeys = [
@@ -35,7 +36,9 @@ in
 
   networking = {
     hostName = "wzero";
-    networkmanager = { enable = true; };
+    networkmanager = {
+      enable = true;
+    };
     wireless.userControlled.enable = true;
     hosts."100.120.151.126" = [ "graph.tapenet.org" ];
   };

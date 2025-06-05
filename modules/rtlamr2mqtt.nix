@@ -1,18 +1,19 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   cfg = config.services.rtlamr2mqtt;
   rtlamr2mqtt = pkgs.python3Packages.callPackage ../pkgs/rtlamr2mqtt.nix { };
   settingsFormat = pkgs.formats.json { };
   settingsType = settingsFormat.type;
-  prettyJSON = conf:
+  prettyJSON =
+    conf:
     pkgs.runCommandLocal "rtlamr2mqtt-config.json" { } ''
-      echo '${
-        builtins.toJSON conf
-      }' | ${pkgs.buildPackages.jq}/bin/jq 'del(._module)' > $out
+      echo '${builtins.toJSON conf}' | ${pkgs.buildPackages.jq}/bin/jq 'del(._module)' > $out
     '';
 in
 {
@@ -21,7 +22,12 @@ in
       enable = mkEnableOption "Enable rtlamr2mqtt";
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "rtlamr2mqtt";
         description = ''
           The user the service will use.
@@ -29,7 +35,12 @@ in
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "rtlamr2mqtt";
         description = ''
           The user the service will use.

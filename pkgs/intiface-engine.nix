@@ -1,4 +1,13 @@
-{ lib, rustPlatform, fetchFromGitHub, pkg-config, dbus, simpleDBus, openssl, libudev-zero }:
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  dbus,
+  simpleDBus,
+  openssl,
+  libudev-zero,
+}:
 rustPlatform.buildRustPackage rec {
   pname = "intiface-engine";
   version = "3.0.2";

@@ -37,20 +37,30 @@ in
     layout = "us";
     xkbVariant = "colemak";
   };
-  console = { keyMap = "colemak"; };
+  console = {
+    keyMap = "colemak";
+  };
 
   users.users = {
     qbit = {
       isNormalUser = true;
       description = "Aaron Bieber";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
       packages = [ ];
     };
-    root = { openssh.authorizedKeys.keys = pubKeys; };
+    root = {
+      openssh.authorizedKeys.keys = pubKeys;
+    };
   };
 
   # neovim will overwrite my neovim!!
-  environment.systemPackages = with pkgs; [ neovim jq ];
+  environment.systemPackages = with pkgs; [
+    neovim
+    jq
+  ];
 
   services.openssh = {
     enable = true;

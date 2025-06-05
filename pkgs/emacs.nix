@@ -1,13 +1,10 @@
-{ emacsWithPackagesFromUsePackage
-, pkgs
-, ...
+{
+  emacsWithPackagesFromUsePackage,
+  pkgs,
+  ...
 }:
 let
-  emacsPkg =
-    if (pkgs.system == "x86_64-linux") then
-      pkgs.emacs-git-pgtk
-    else
-      pkgs.emacs;
+  emacsPkg = if (pkgs.system == "x86_64-linux") then pkgs.emacs-git-pgtk else pkgs.emacs;
 in
 emacsWithPackagesFromUsePackage {
   config = ../configs/emacs.org;
@@ -18,10 +15,13 @@ emacsWithPackagesFromUsePackage {
   defaultInitFile = true;
   package = emacsPkg;
 
-  override = epkgs: epkgs // {
-    ollama = pkgs.callPackage ../pkgs/ollama-el.nix {
-      inherit (pkgs) fetchFromGitHub;
-      inherit (epkgs) trivialBuild;
+  override =
+    epkgs:
+    epkgs
+    // {
+      ollama = pkgs.callPackage ../pkgs/ollama-el.nix {
+        inherit (pkgs) fetchFromGitHub;
+        inherit (epkgs) trivialBuild;
+      };
     };
-  };
 }

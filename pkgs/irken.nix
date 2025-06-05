@@ -1,11 +1,12 @@
-{ lib
-, mkTclDerivation
-, fetchFromGitHub
-, bwidget
-, libnotify
-, tclcurl
-, tcltls
-, tk
+{
+  lib,
+  mkTclDerivation,
+  fetchFromGitHub,
+  bwidget,
+  libnotify,
+  tclcurl,
+  tcltls,
+  tk,
 }:
 
 mkTclDerivation {

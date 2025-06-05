@@ -1,9 +1,11 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with lib; {
+with lib;
+{
   options = {
     zerotier = {
       enable = mkOption {

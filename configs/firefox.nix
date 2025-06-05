@@ -1,5 +1,12 @@
-{ lib, pkgs, config, ... }:
-let defaultBrowser = pkgs.librewolf; in
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+let
+  defaultBrowser = pkgs.librewolf;
+in
 {
   config = lib.mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
     environment = {
@@ -31,11 +38,13 @@ let defaultBrowser = pkgs.librewolf; in
           ExtensionSettings = {
             "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
               "installation_mode" = "force_installed";
-              "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
+              "install_url" =
+                "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
             };
             "custom-new-tab-page@mint.as" = {
               "installation_mode" = "force_installed";
-              "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/custom-new-tab-page/latest.xpi";
+              "install_url" =
+                "https://addons.mozilla.org/firefox/downloads/latest/custom-new-tab-page/latest.xpi";
             };
             "simple-tab-groups@drive4ik" = {
               "installation_mode" = "force_installed";
@@ -55,7 +64,8 @@ let defaultBrowser = pkgs.librewolf; in
             };
             "@testpilot-containers" = {
               "installation_mode" = "force_installed";
-              "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
+              "install_url" =
+                "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
             };
             "jid1-MnnxcxisBPnSXQ@jetpack" = {
               "installation_mode" = "force_installed";
@@ -139,7 +149,8 @@ let defaultBrowser = pkgs.librewolf; in
           "browser.newtabpage.activity-stream.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.newtabpage.activity-stream.telemetry" = false;
-          "browser.newtabpage.activity-stream.telemetry.structuredIngestion.endpoint" = "http://127.0.0.1/null";
+          "browser.newtabpage.activity-stream.telemetry.structuredIngestion.endpoint" =
+            "http://127.0.0.1/null";
           "browser.newtabpage.enabled" = false;
           "browser.newtabpage.pinned" = false;
           "browser.promo.focus.enabled" = false;

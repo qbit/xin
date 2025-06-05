@@ -1,9 +1,10 @@
-{ config
-, pkgs
-, lib
-, inputs
-, xinlib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  xinlib,
+  ...
 }:
 let
   tailnetACLs =
@@ -15,7 +16,10 @@ let
             attr = [ "funnel" ];
           }
           {
-            target = [ "tag:laptop" "tag:mobile" ];
+            target = [
+              "tag:laptop"
+              "tag:mobile"
+            ];
             attr = [
               "drive:access"
             ];
@@ -35,13 +39,21 @@ let
         ];
         grants = [
           {
-            src = [ "europa" "sputnik" "skunk" "graphy" "plq" ];
+            src = [
+              "europa"
+              "sputnik"
+              "skunk"
+              "graphy"
+              "plq"
+            ];
             dst = [ "box" ];
             app = {
-              "tailscale.com/cap/drive" = [{
-                shares = [ "*" ];
-                access = "rw";
-              }];
+              "tailscale.com/cap/drive" = [
+                {
+                  shares = [ "*" ];
+                  access = "rw";
+                }
+              ];
             };
           }
         ];
@@ -88,7 +100,10 @@ let
         acls = [
           {
             action = "accept";
-            src = [ "tag:mobile" "tag:laptop" ];
+            src = [
+              "tag:mobile"
+              "tag:laptop"
+            ];
             dst = [ "h:6697" ];
           }
           {
@@ -98,7 +113,10 @@ let
           }
           {
             action = "accept";
-            src = [ "box" "homeassistant" ];
+            src = [
+              "box"
+              "homeassistant"
+            ];
             dst = [ "printy:443" ];
           }
           {
@@ -110,23 +128,39 @@ let
           {
             # Allow laptops and mobile devices to ssh to everything
             action = "accept";
-            src = [ "tag:mobile" "tag:laptop" ];
+            src = [
+              "tag:mobile"
+              "tag:laptop"
+            ];
             dst = [ "*:*" ];
           }
           {
             action = "accept";
-            src = [ "tag:internal-server" "tag:external-server" "tag:work" "tag:laptop" ];
+            src = [
+              "tag:internal-server"
+              "tag:external-server"
+              "tag:work"
+              "tag:laptop"
+            ];
             dst = [ "nbc:443" ];
           }
           {
             action = "accept";
-            src = [ "tag:untrusted" "tag:internal-server" ];
+            src = [
+              "tag:untrusted"
+              "tag:internal-server"
+            ];
             dst = [ "tag:ro-service:443" ];
           }
           {
             action = "accept";
             src = [ "tag:work" ];
-            dst = [ "console:2222" "startpage:443" "rimgo:443" "invidious:443" ];
+            dst = [
+              "console:2222"
+              "startpage:443"
+              "rimgo:443"
+              "invidious:443"
+            ];
           }
           {
             action = "accept";
@@ -136,8 +170,15 @@ let
           {
             # prometheus
             action = "accept";
-            src = [ "box" "homeassistant" ];
-            dst = [ "h:9002" "pwntie:9002" "box:9001" ];
+            src = [
+              "box"
+              "homeassistant"
+            ];
+            dst = [
+              "h:9002"
+              "pwntie:9002"
+              "box:9001"
+            ];
           }
           {
             # DNS
@@ -149,21 +190,34 @@ let
           {
             # ollama
             action = "accept";
-            src = [ "europa" "h" "tag:work" ];
+            src = [
+              "europa"
+              "h"
+              "tag:work"
+            ];
             dst = [ "ollama:443" ];
             proto = "tcp";
           }
           {
             # jellyfin for tv
             action = "accept";
-            src = [ "tv" "display" ];
+            src = [
+              "tv"
+              "display"
+            ];
             dst = [ "box:443" ];
             proto = "tcp";
           }
           {
             action = "accept";
-            src = [ "box" "homeassistant" ];
-            dst = [ "tv:8080" "tv:9090" ];
+            src = [
+              "box"
+              "homeassistant"
+            ];
+            dst = [
+              "tv:8080"
+              "tv:9090"
+            ];
             proto = "tcp";
           }
           {
@@ -187,7 +241,11 @@ let
           {
             # RO service can't access things
             src = "tag:ro-service";
-            deny = [ "tag:laptop:443" "tag:mobile:80" "tag:laptop:22" ];
+            deny = [
+              "tag:laptop:443"
+              "tag:mobile:80"
+              "tag:laptop:22"
+            ];
           }
           {
             src = "tag:external-server";
@@ -195,7 +253,11 @@ let
           }
           {
             src = "tag:laptop";
-            allow = [ "tag:ro-service:443" "tag:ro-service:80" "tag:external-server:22" ];
+            allow = [
+              "tag:ro-service:443"
+              "tag:ro-service:80"
+              "tag:external-server:22"
+            ];
           }
           {
             src = "tag:laptop";
@@ -208,7 +270,11 @@ let
           }
           {
             src = "tag:laptop";
-            allow = [ "tag:untrusted:22" "tag:untrusted:2222" "tag:work:22" ];
+            allow = [
+              "tag:untrusted:22"
+              "tag:untrusted:2222"
+              "tag:work:22"
+            ];
           }
           {
             src = "tag:work";
@@ -230,7 +296,10 @@ let
           }
           {
             src = "tag:internal-server";
-            allow = [ "nbc:443" "tag:ro-service:443" ];
+            allow = [
+              "nbc:443"
+              "tag:ro-service:443"
+            ];
           }
           {
             "src" = "tag:laptop";
@@ -278,30 +347,28 @@ let
       name = "tailnet-acls.json";
       text = builtins.toJSON acls;
     };
-  aclUpdateScript = pkgs.writeShellScriptBin
-    "tailnet-acl-updater"
-    ''
-      set -eu
+  aclUpdateScript = pkgs.writeShellScriptBin "tailnet-acl-updater" ''
+    set -eu
 
-      . ${config.sops.secrets.po_env.path}
+    . ${config.sops.secrets.po_env.path}
 
-      JQ=${pkgs.jq}/bin/jq
-      PO=${inputs.po.packages.${pkgs.system}.po}/bin/po
+    JQ=${pkgs.jq}/bin/jq
+    PO=${inputs.po.packages.${pkgs.system}.po}/bin/po
 
-      APIURL="https://api.tailscale.com/api/v2/tailnet/-/acl"
-      TOKEN="$(cat ${config.sops.secrets.tailnet_acl_manager.path}):"
+    APIURL="https://api.tailscale.com/api/v2/tailnet/-/acl"
+    TOKEN="$(cat ${config.sops.secrets.tailnet_acl_manager.path}):"
 
-      ERROR="$(${pkgs.curl}/bin/curl "$APIURL/validate" -s -u "$TOKEN" -d @${tailnetACLs} | $JQ -r .message)"
+    ERROR="$(${pkgs.curl}/bin/curl "$APIURL/validate" -s -u "$TOKEN" -d @${tailnetACLs} | $JQ -r .message)"
 
-      if [ "$ERROR" = "null" ]; then
-        RESP="$(${pkgs.curl}/bin/curl "$APIURL" -s -u "$TOKEN" -d @${tailnetACLs} | $JQ -r .message)"
-        if [ "$RESP" != "null" ]; then
-          $PO -title "Failed to update TailNet!" -body "$RESP"
-        fi
-      else
-        $PO -title "Failed to update TailNet!" -body "$ERROR"
+    if [ "$ERROR" = "null" ]; then
+      RESP="$(${pkgs.curl}/bin/curl "$APIURL" -s -u "$TOKEN" -d @${tailnetACLs} | $JQ -r .message)"
+      if [ "$RESP" != "null" ]; then
+        $PO -title "Failed to update TailNet!" -body "$RESP"
       fi
-    '';
+    else
+      $PO -title "Failed to update TailNet!" -body "$ERROR"
+    fi
+  '';
   jobs = [
     {
       name = "update-talenet-acls";
@@ -313,7 +380,8 @@ let
   ];
   enabled = config.nixManager.enable;
 in
-with lib; {
+with lib;
+{
   sops.secrets = mkIf enabled {
     tailnet_acl_manager = {
       owner = config.nixManager.user;

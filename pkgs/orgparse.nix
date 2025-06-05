@@ -1,8 +1,9 @@
-{ buildPythonPackage
-, setuptools-scm
-, pytest
-, fetchFromGitHub
-, ...
+{
+  buildPythonPackage,
+  setuptools-scm,
+  pytest,
+  fetchFromGitHub,
+  ...
 }:
 buildPythonPackage rec {
   pname = "orgparse";

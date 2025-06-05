@@ -1,7 +1,8 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, ...
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  ...
 }:
 with lib;
 buildGoModule rec {

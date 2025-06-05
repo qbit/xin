@@ -1,9 +1,10 @@
-{ config
-, lib
-, pkgs
-, xinlib
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  xinlib,
+  inputs,
+  ...
 }:
 let
   inherit (builtins) toJSON;
@@ -13,13 +14,9 @@ let
   inherit (inputs.calnow.packages.${pkgs.system}) calnow;
 
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
-  rpr =
-    pkgs.writeScriptBin "rpr"
-      (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
-  promnesia =
-    pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
-  pywebscrapbook =
-    pkgs.python3Packages.callPackage ../pkgs/pywebscrapbook.nix { inherit pkgs; };
+  rpr = pkgs.writeScriptBin "rpr" (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
+  promnesia = pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
+  pywebscrapbook = pkgs.python3Packages.callPackage ../pkgs/pywebscrapbook.nix { inherit pkgs; };
   hpi = pkgs.python3Packages.callPackage ../pkgs/hpi.nix { inherit pkgs; };
   promnesiaService = {
     promnesia = {
@@ -37,7 +34,10 @@ let
       name = "promnesia-index";
       script = "${promnesia}/bin/promnesia index";
       startAt = "*:0/5";
-      path = [ promnesia hpi ];
+      path = [
+        promnesia
+        hpi
+      ];
     }
   ];
   fontSet = with pkgs; [
@@ -54,17 +54,30 @@ let
     }
     {
       command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
-      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Added" "5" ];
+      command_args = [
+        "--title"
+        "traygent"
+        "--passivepopup"
+        "SSH Key Added"
+        "5"
+      ];
       event = "added";
     }
     {
       command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
-      command_args = [ "--title" "traygent" "--passivepopup" "SSH Key Removed" "5" ];
+      command_args = [
+        "--title"
+        "traygent"
+        "--passivepopup"
+        "SSH Key Removed"
+        "5"
+      ];
       event = "removed";
     }
   ];
 in
-with lib; {
+with lib;
+{
   imports = [
     ../configs/polybar.nix
     ../configs/smug.nix
@@ -108,47 +121,60 @@ with lib; {
       documentation.enable = true;
 
       # TODO: TEMP FIX
-      systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
-        lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+      systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = lib.mkForce [
+        ""
+        "${pkgs.networkmanager}/bin/nm-online -q"
+      ];
       fonts = {
         packages = fontSet;
       };
       environment = {
         etc = {
-          "traygent.json" = { text = traygentCmds; };
+          "traygent.json" = {
+            text = traygentCmds;
+          };
         };
-        sessionVariables = {
-          SSH_AUTH_SOCK = "$HOME/.traygent";
-        } // (if config.networking.hostName != "stan" then {
-          OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
-        } else { });
-        systemPackages = with pkgs; (xinlib.filterList [
-          bc
-          beyt
-          black
-          calnow
-          drawterm-wayland
-          exiftool
-          fynado
-          ghostty
-          glamoroustoolkit
-          go-font
-          govulncheck
-          hpi
-          keepassxc
-          mpv
-          pcsctools
-          plan9port
-          promnesia
-          pywebscrapbook
-          rage
-          recoll
-          rpr
-          traygent
-          trayscale
-          vlc
-          zeal
-        ]);
+        sessionVariables =
+          {
+            SSH_AUTH_SOCK = "$HOME/.traygent";
+          }
+          // (
+            if config.networking.hostName != "stan" then
+              {
+                OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
+              }
+            else
+              { }
+          );
+        systemPackages =
+          with pkgs;
+          (xinlib.filterList [
+            bc
+            beyt
+            black
+            calnow
+            drawterm-wayland
+            exiftool
+            fynado
+            ghostty
+            glamoroustoolkit
+            go-font
+            govulncheck
+            hpi
+            keepassxc
+            mpv
+            pcsctools
+            plan9port
+            promnesia
+            pywebscrapbook
+            rage
+            recoll
+            rpr
+            traygent
+            trayscale
+            vlc
+            zeal
+          ]);
       };
 
       programs = {
@@ -156,8 +182,7 @@ with lib; {
       };
 
       systemd.user.services =
-        (lib.listToAttrs (builtins.map xinlib.jobToUserService jobs))
-        // promnesiaService;
+        (lib.listToAttrs (builtins.map xinlib.jobToUserService jobs)) // promnesiaService;
       security.rtkit.enable = true;
     })
     (mkIf config.pipewire.enable {

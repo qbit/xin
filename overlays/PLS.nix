@@ -13,7 +13,10 @@ let
           propagatedBuildInputs = with super.perlPackages; [ Future ];
           meta = {
             description = "A FIFO queue of values that uses L<Future>s";
-            license = with super.lib.licenses; [ artistic1 gpl1Plus ];
+            license = with super.lib.licenses; [
+              artistic1
+              gpl1Plus
+            ];
           };
         };
       in

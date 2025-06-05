@@ -1,6 +1,7 @@
-{ pkgs
-, linkFarm
-, ...
+{
+  pkgs,
+  linkFarm,
+  ...
 }:
 let
   tomlFmt = pkgs.formats.toml { };
@@ -15,7 +16,9 @@ let
         normal = "block";
         select = "underline";
       };
-      lsp = { auto-signature-help = false; };
+      lsp = {
+        auto-signature-help = false;
+      };
     };
   };
 

@@ -1,16 +1,17 @@
-{ autoreconfHook
-, etcDir ? "/etc/ssh"
-, fetchFromGitHub
-, hostname
-, lib
-, libedit
-, libfido2
-, libredirect
-, libressl
-, pkg-config
-, stdenv
-, zlib
-, ...
+{
+  autoreconfHook,
+  etcDir ? "/etc/ssh",
+  fetchFromGitHub,
+  hostname,
+  lib,
+  libedit,
+  libfido2,
+  libredirect,
+  libressl,
+  pkg-config,
+  stdenv,
+  zlib,
+  ...
 }:
 let
   inherit (builtins) readFile fromJSON;
@@ -26,14 +27,13 @@ stdenv.mkDerivation {
     repo = "openssh-portable";
   };
 
-  patches =
-    [
-      ./openssh/locale_archive.patch
-      ./openssh/ssh-keysign-8.5.patch
+  patches = [
+    ./openssh/locale_archive.patch
+    ./openssh/ssh-keysign-8.5.patch
 
-      # See discussion in https://github.com/NixOS/nixpkgs/pull/16966
-      ./openssh/dont_create_privsep_path.patch
-    ];
+    # See discussion in https://github.com/NixOS/nixpkgs/pull/16966
+    ./openssh/dont_create_privsep_path.patch
+  ];
 
   postPatch =
     # On Hydra this makes installation fail (sometimes?),
@@ -43,10 +43,15 @@ stdenv.mkDerivation {
     '';
 
   strictDeps = true;
-  nativeBuildInputs =
-    [ autoreconfHook pkg-config ];
-  buildInputs =
-    [ zlib libedit libfido2 ];
+  nativeBuildInputs = [
+    autoreconfHook
+    pkg-config
+  ];
+  buildInputs = [
+    zlib
+    libedit
+    libfido2
+  ];
 
   preConfigure = ''
     # Setting LD causes `configure' and `make' to disagree about which linker
@@ -70,12 +75,7 @@ stdenv.mkDerivation {
     ++ lib.optional (etcDir != null) "--sysconfdir=${etcDir}"
     ++ lib.optional stdenv.isDarwin "--disable-libutil";
 
-  ${
-  if stdenv.hostPlatform.isStatic then
-    "NIX_LDFLAGS"
-  else
-    null
-  } = [ "-laudit" ];
+  ${if stdenv.hostPlatform.isStatic then "NIX_LDFLAGS" else null} = [ "-laudit" ];
 
   buildFlags = [ "SSH_KEYSIGN=ssh-keysign" ];
 
@@ -130,7 +130,12 @@ stdenv.mkDerivation {
     set -a; source ~/.ssh/environment.base; set +a
   '';
 
-  checkTarget = [ "t-exec" "unit" "file-tests" "interop-tests" ];
+  checkTarget = [
+    "t-exec"
+    "unit"
+    "file-tests"
+    "interop-tests"
+  ];
 
   installTargets = [ "install-nokeys" ];
   installFlags = [

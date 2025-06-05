@@ -1,11 +1,12 @@
-{ buildPythonPackage
-, fetchFromGitHub
-, setuptools-scm
-, appdirs
-, sqlalchemy
-, orjson
-, pytz
-, ...
+{
+  buildPythonPackage,
+  fetchFromGitHub,
+  setuptools-scm,
+  appdirs,
+  sqlalchemy,
+  orjson,
+  pytz,
+  ...
 }:
 buildPythonPackage rec {
   pname = "cachew";
@@ -17,7 +18,12 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  propagatedBuildInputs = [ appdirs sqlalchemy orjson pytz ];
+  propagatedBuildInputs = [
+    appdirs
+    sqlalchemy
+    orjson
+    pytz
+  ];
 
   src = fetchFromGitHub {
     owner = "karlicoss";

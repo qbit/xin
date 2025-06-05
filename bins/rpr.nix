@@ -1,7 +1,7 @@
-{ tea
-, gh
-, hut
-,
+{
+  tea,
+  gh,
+  hut,
 }:
 let
   teaBin = "${tea}/bin/tea";

@@ -1,8 +1,10 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
-with lib; {
+with lib;
+{
   options = {
     colemak = {
       enable = mkOption {
@@ -15,7 +17,9 @@ with lib; {
   };
 
   config = mkIf config.colemak.enable {
-    console = { keyMap = "colemak"; };
+    console = {
+      keyMap = "colemak";
+    };
     services.xserver = {
       xkb = {
         options = "ctrl:swapcaps,compose:ralt";

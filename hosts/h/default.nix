@@ -1,11 +1,13 @@
-{ config
-, pkgs
-, isUnstable
-, inputs
-, xinlib
-, ...
+{
+  config,
+  pkgs,
+  isUnstable,
+  inputs,
+  xinlib,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   inherit (xinlib) todo;
   sojuUser = "soju";
   maxUploadSize = "150M";
@@ -16,13 +18,15 @@ with pkgs; let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys; };
-  icbIrcTunnel =
-    pkgs.writeScriptBin "icb-irc-tunnel"
-      (import ../../bins/icb-irc-tunnel.nix {
-        inherit pkgs;
-        inherit icbirc;
-      });
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys;
+  };
+  icbIrcTunnel = pkgs.writeScriptBin "icb-irc-tunnel" (
+    import ../../bins/icb-irc-tunnel.nix {
+      inherit pkgs;
+      inherit icbirc;
+    }
+  );
   goModuleHost = "https://codeberg.org/qbit"; # "https://git.sr.ht/~qbit";
   httpAllow = ''
     allow	10.6.0.0/24;
@@ -86,7 +90,9 @@ in
       sopsFile = config.xin-secrets.h.secrets.services;
       owner = config.users.users.gostart.name;
     };
-    wireguard_private_key = { sopsFile = config.xin-secrets.h.secrets.services; };
+    wireguard_private_key = {
+      sopsFile = config.xin-secrets.h.secrets.services;
+    };
     pots_env_file = {
       owner = config.users.users.pots.name;
       mode = "400";
@@ -180,7 +186,10 @@ in
     firewall = {
       interfaces = {
         "tailscale0" = {
-          allowedTCPPorts = [ 9002 6697 ];
+          allowedTCPPorts = [
+            9002
+            6697
+          ];
         };
       };
       allowedTCPPorts = [
@@ -238,7 +247,10 @@ in
           "pubsub.segfault.rodeo"
           "xmpp.segfault.rodeo"
         ];
-        reloadServices = [ "ejabberd.services" "nginx.service" ];
+        reloadServices = [
+          "ejabberd.services"
+          "nginx.service"
+        ];
       };
     };
   };
@@ -270,14 +282,22 @@ in
   systemd = {
     services = {
       soju = {
-        after = [ "network-online.target" "tailscaled.service" "icpirc.service" ];
+        after = [
+          "network-online.target"
+          "tailscaled.service"
+          "icpirc.service"
+        ];
         serviceConfig = {
           User = sojuUser;
           Group = sojuUser;
         };
       };
       mcchunkie = {
-        after = [ "network-online.target" "signal-cli.service" "tailscaled.service" ];
+        after = [
+          "network-online.target"
+          "signal-cli.service"
+          "tailscaled.service"
+        ];
         serviceConfig = {
           ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
         };
@@ -309,10 +329,14 @@ in
           ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t NomadNet";
         };
       };
-      navidrome.serviceConfig.BindReadOnlyPaths = todo "navidrome dns issue: https://github.com/NixOS/nixpkgs/issues/151550" [ "/run/systemd/resolve/stub-resolv.conf" ];
+      navidrome.serviceConfig.BindReadOnlyPaths =
+        todo "navidrome dns issue: https://github.com/NixOS/nixpkgs/issues/151550"
+          [ "/run/systemd/resolve/stub-resolv.conf" ];
       icb-tunnel = {
-        wants =
-          [ "network-online.target" "multi-user.target" ];
+        wants = [
+          "network-online.target"
+          "multi-user.target"
+        ];
         wantedBy = [ "multi-user.target" ];
         after = [ "network-online.target" ];
         serviceConfig = {
@@ -327,7 +351,10 @@ in
   mailserver = {
     enable = true;
     fqdn = "mail.suah.dev";
-    domains = [ "suah.dev" "segfault.rodeo" ];
+    domains = [
+      "suah.dev"
+      "segfault.rodeo"
+    ];
 
     certificateScheme = "acme-nginx";
 
@@ -335,12 +362,18 @@ in
 
     loginAccounts = {
       "qbit@segfault.rodeo" = {
-        aliases = [ "postmaster@segfault.rodeo" "aaron@segfault.rodeo" ];
+        aliases = [
+          "postmaster@segfault.rodeo"
+          "aaron@segfault.rodeo"
+        ];
         hashedPasswordFile = "${config.sops.secrets.qbit_at_segfault_pass_file.path}";
       };
       "qbit@suah.dev" = {
         hashedPasswordFile = "${config.sops.secrets.qbit_at_suah_pass_file.path}";
-        aliases = [ "postmaster@suah.dev" "aaron@suah.dev" ];
+        aliases = [
+          "postmaster@suah.dev"
+          "aaron@suah.dev"
+        ];
       };
       "mcchunkie@suah.dev" = {
         hashedPasswordFile = "${config.sops.secrets.mcchunkie_at_suah_pass_file.path}";
@@ -364,163 +397,167 @@ in
       package = inputs.unstable.legacyPackages.${system}.pkgs.ejabberd.override {
         withSqlite = true;
       };
-      configFile = pkgs.writeText "ejabberd.yaml" (builtins.toJSON {
-        hosts = [ "segfault.rodeo" ];
-        certfiles = [
-          (config.security.acme.certs."segfault.rodeo".directory + "/*.pem")
-        ];
-
-        # loglevel = "error";
-        log_modules_fully = [
-          "mod_matrix_gw"
-        ];
-
-        acl = {
-          admin = [
-            { user = "qbit@segfault.rodeo"; }
+      configFile = pkgs.writeText "ejabberd.yaml" (
+        builtins.toJSON {
+          hosts = [ "segfault.rodeo" ];
+          certfiles = [
+            (config.security.acme.certs."segfault.rodeo".directory + "/*.pem")
           ];
-          local = {
-            server = "segfault.rodeo";
-          };
-          loopback = {
-            ip = [
-              "127.0.0.0/8"
-              "::1/128"
+
+          # loglevel = "error";
+          log_modules_fully = [
+            "mod_matrix_gw"
+          ];
+
+          acl = {
+            admin = [
+              { user = "qbit@segfault.rodeo"; }
             ];
+            local = {
+              server = "segfault.rodeo";
+            };
+            loopback = {
+              ip = [
+                "127.0.0.0/8"
+                "::1/128"
+              ];
+            };
           };
-        };
 
-        access_rules = {
-          configure = {
-            allow = "admin";
+          access_rules = {
+            configure = {
+              allow = "admin";
+            };
+            local = {
+              allow = "local";
+            };
+            announce = {
+              allow = "admin";
+            };
+            trusted_network = {
+              allow = "loopback";
+            };
+            s2s = {
+              allow = "all";
+            };
+            c2s = {
+              deny = "blocked";
+              allow = "all";
+            };
           };
-          local = {
-            allow = "local";
-          };
-          announce = {
-            allow = "admin";
-          };
-          trusted_network = {
-            allow = "loopback";
-          };
-          s2s = {
-            allow = "all";
-          };
-          c2s = {
-            deny = "blocked";
-            allow = "all";
-          };
-        };
 
-        include_config_file = config.sops.secrets."ejabberd_matrix_key.yaml".path;
+          include_config_file = config.sops.secrets."ejabberd_matrix_key.yaml".path;
 
-        # https://docs.ejabberd.im/admin/configuration/modules
-        modules = {
-          mod_adhoc = { };
-          mod_admin_extra = { };
-          mod_announce.access = "admin";
-          mod_avatar = { };
-          mod_blocking = { };
-          mod_caps = { };
-          mod_carboncopy = { };
-          mod_client_state = { };
-          mod_configure = { };
-          mod_disco = { };
-          mod_last = { };
-          mod_mam = { };
-          mod_http_upload = {
-            docroot = "/var/lib/ejabberd/upload/@HOST@";
-            put_url = "https://@HOST@:5443/upload";
-          };
-          mod_mqtt = { };
-          mod_muc = {
-            host = "conference.@HOST@";
-          };
-          mod_muc_admin = { };
-          mod_muc_log = { };
-          mod_offline = { };
-          mod_ping = { };
-          mod_pres_counter = { };
-          mod_privacy = { };
-          mod_private = { };
-          mod_pubsub = {
-            access_createnode = "pubsub_createnode";
-            plugins = [
-              "flat"
-              "pep"
-            ];
-            force_node_config = {
-              "stoarge:bookmarks" = {
-                access_model = "whitelist";
+          # https://docs.ejabberd.im/admin/configuration/modules
+          modules = {
+            mod_adhoc = { };
+            mod_admin_extra = { };
+            mod_announce.access = "admin";
+            mod_avatar = { };
+            mod_blocking = { };
+            mod_caps = { };
+            mod_carboncopy = { };
+            mod_client_state = { };
+            mod_configure = { };
+            mod_disco = { };
+            mod_last = { };
+            mod_mam = { };
+            mod_http_upload = {
+              docroot = "/var/lib/ejabberd/upload/@HOST@";
+              put_url = "https://@HOST@:5443/upload";
+            };
+            mod_mqtt = { };
+            mod_muc = {
+              host = "conference.@HOST@";
+            };
+            mod_muc_admin = { };
+            mod_muc_log = { };
+            mod_offline = { };
+            mod_ping = { };
+            mod_pres_counter = { };
+            mod_privacy = { };
+            mod_private = { };
+            mod_pubsub = {
+              access_createnode = "pubsub_createnode";
+              plugins = [
+                "flat"
+                "pep"
+              ];
+              force_node_config = {
+                "stoarge:bookmarks" = {
+                  access_model = "whitelist";
+                };
               };
             };
+            mod_push = { };
+            mod_roster = { };
+            mod_shared_roster = { };
+            mod_stream_mgmt = { };
+            mod_vcard = { };
+            mod_vcard_xupdate = { };
           };
-          mod_push = { };
-          mod_roster = { };
-          mod_shared_roster = { };
-          mod_stream_mgmt = { };
-          mod_vcard = { };
-          mod_vcard_xupdate = { };
-        };
 
-        s2s_use_starttls = "required";
-        s2s_access = "s2s";
+          s2s_use_starttls = "required";
+          s2s_access = "s2s";
 
-        default_db = "sql";
-        sql_type = "sqlite";
-        sql_database = "${config.services.ejabberd.spoolDir}/ejabberd.db";
+          default_db = "sql";
+          sql_type = "sqlite";
+          sql_database = "${config.services.ejabberd.spoolDir}/ejabberd.db";
 
-        host_config = {
-          "segfault.rodeo" = {
-            auth_method = [ "internal" ];
+          host_config = {
+            "segfault.rodeo" = {
+              auth_method = [ "internal" ];
+            };
           };
-        };
 
-        listen = [
-          {
-            port = 5222;
-            module = "ejabberd_c2s";
-            starttls = true;
-            ip = "::";
-          }
-          {
-            port = 5269;
-            module = "ejabberd_s2s_in";
-            ip = "::";
-          }
-          {
-            port = 4443;
-            ip = "127.0.0.1";
-            module = "ejabberd_http";
-            tls = false;
-            request_handlers = { "/admin" = "ejabberd_web_admin"; };
-          }
-          {
-            port = 5443;
-            ip = "::";
-            module = "ejabberd_http";
-            tls = true;
-            request_handlers = {
-              "/upload" = "mod_http_upload";
-            };
-          }
-          {
-            port = 8833;
-            module = "mod_mqtt";
-            tls = true;
-            backlog = 1000;
-          }
-          {
-            port = 8448;
-            module = "ejabberd_http";
-            tls = true;
-            request_handlers = {
-              "/_matrix" = "mod_matrix_gw";
-            };
-            ip = "::";
-          }
-        ];
-      });
+          listen = [
+            {
+              port = 5222;
+              module = "ejabberd_c2s";
+              starttls = true;
+              ip = "::";
+            }
+            {
+              port = 5269;
+              module = "ejabberd_s2s_in";
+              ip = "::";
+            }
+            {
+              port = 4443;
+              ip = "127.0.0.1";
+              module = "ejabberd_http";
+              tls = false;
+              request_handlers = {
+                "/admin" = "ejabberd_web_admin";
+              };
+            }
+            {
+              port = 5443;
+              ip = "::";
+              module = "ejabberd_http";
+              tls = true;
+              request_handlers = {
+                "/upload" = "mod_http_upload";
+              };
+            }
+            {
+              port = 8833;
+              module = "mod_mqtt";
+              tls = true;
+              backlog = 1000;
+            }
+            {
+              port = 8448;
+              module = "ejabberd_http";
+              tls = true;
+              request_handlers = {
+                "/_matrix" = "mod_matrix_gw";
+              };
+              ip = "::";
+            }
+          ];
+        }
+      );
     };
     soju = {
       enable = true;
@@ -556,7 +593,9 @@ in
       enable = true;
       envFile = "${config.sops.secrets.pots_env_file.path}";
     };
-    pr-status = { enable = true; };
+    pr-status = {
+      enable = true;
+    };
     gostart = {
       enable = true;
       keyPath = "${config.sops.secrets.gostart.path}";
@@ -596,7 +635,10 @@ in
         protocol = "https";
         storage-backend = "local";
         storage-local-base-path = "/var/lib/gotosocial";
-        trusted-proxies = [ "127.0.0.1/32" "23.29.118.0/24" ];
+        trusted-proxies = [
+          "127.0.0.1/32"
+          "23.29.118.0/24"
+        ];
         landing-page-user = "qbit";
       };
     };
@@ -616,8 +658,7 @@ in
     cron = {
       enable = true;
       systemCronJobs = [
-        ''
-          @hourly qbit  (export GH_AUTH_TOKEN=$(cat /run/secrets/gqrss_token); cd /var/www/suah.dev/rss; ${gqrss}/bin/gqrss ; ${gqrss}/bin/gqrss -search "LibreSSL" -prefix libressl_ ) >/dev/null 2>&1''
+        ''@hourly qbit  (export GH_AUTH_TOKEN=$(cat /run/secrets/gqrss_token); cd /var/www/suah.dev/rss; ${gqrss}/bin/gqrss ; ${gqrss}/bin/gqrss -search "LibreSSL" -prefix libressl_ ) >/dev/null 2>&1''
       ];
     };
 
@@ -645,9 +686,15 @@ in
           config.services.ejabberd.spoolDir
         ];
 
-        timerConfig = { OnCalendar = "00:05"; };
+        timerConfig = {
+          OnCalendar = "00:05";
+        };
 
-        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 10" ];
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-yearly 10"
+        ];
       };
     };
 
@@ -688,7 +735,11 @@ in
       '';
 
       upstreams = {
-        "ssh_gitea" = { servers = { "192.168.112.4:2222" = { }; }; };
+        "ssh_gitea" = {
+          servers = {
+            "192.168.112.4:2222" = { };
+          };
+        };
       };
 
       streamConfig = ''
@@ -915,14 +966,12 @@ in
           enableACME = true;
           locations."/" = {
             extraConfig = ''
-                      proxy_pass http://127.0.0.1:${
-              toString config.services.gotosocial.settings.port
-              };
-                      proxy_set_header Host $host;
-                      proxy_set_header Upgrade $http_upgrade;
-                      proxy_set_header Connection "upgrade";
-                      proxy_set_header X-Forwarded-For $remote_addr;
-                      proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_pass http://127.0.0.1:${toString config.services.gotosocial.settings.port};
+              proxy_set_header Host $host;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+              proxy_set_header X-Forwarded-For $remote_addr;
+              proxy_set_header X-Forwarded-Proto $scheme;
             '';
           };
         };
@@ -937,9 +986,7 @@ in
           root = "/var/www/rss.bolddaemon.com";
           locations."/" = {
             proxyWebsockets = true;
-            proxyPass = "http://${config.services.yarr.address}:${
-      toString config.services.yarr.port
-      }";
+            proxyPass = "http://${config.services.yarr.address}:${toString config.services.yarr.port}";
           };
         };
         "tapenet.org" = {
@@ -953,15 +1000,17 @@ in
 
                 content_by_lua_block {
                   local acct = ngx.unescape_uri(ngx.var.arg_resource)
-                  local json = '${builtins.toJSON {
-                    subject = "%s";
-                    links = [
-                      {
-                        rel = "http://openid.net/specs/connect/1.0/issuer";
-                        href = "https://git.tapenet.org/";
-                      }
-                    ];
-                  }}';
+                  local json = '${
+                    builtins.toJSON {
+                      subject = "%s";
+                      links = [
+                        {
+                          rel = "http://openid.net/specs/connect/1.0/issuer";
+                          href = "https://git.tapenet.org/";
+                        }
+                      ];
+                    }
+                  }';
                   local newjson, n, err = ngx.re.sub(json, "%s", acct)
                   if not err then
                     ngx.say(newjson)
@@ -1002,7 +1051,12 @@ in
           LC_COLLATE = "C"
           LC_CTYPE = "C";
       '';
-      ensureDatabases = [ "synapse" "gotosocial" "syncv3" "wallabag" ];
+      ensureDatabases = [
+        "synapse"
+        "gotosocial"
+        "syncv3"
+        "wallabag"
+      ];
       ensureUsers = [
         {
           name = "synapse_user";
@@ -1022,7 +1076,6 @@ in
       ];
     };
   };
-
 
   system.stateVersion = "22.11";
 }

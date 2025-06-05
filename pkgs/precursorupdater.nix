@@ -1,11 +1,12 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, pyusb
-, progressbar2
-, requests
-, pycryptodome
-, ...
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  pyusb,
+  progressbar2,
+  requests,
+  pycryptodome,
+  ...
 }:
 buildPythonPackage rec {
   pname = "precursorupdater";
@@ -16,7 +17,12 @@ buildPythonPackage rec {
     sha256 = "sha256-m2uqfwVH2ekmIPQAfS43CGXE20+v6W1tB9m8x2sYcK0=";
   };
 
-  propagatedBuildInputs = [ pyusb progressbar2 requests pycryptodome ];
+  propagatedBuildInputs = [
+    pyusb
+    progressbar2
+    requests
+    pycryptodome
+  ];
 
   doCheck = false;
 

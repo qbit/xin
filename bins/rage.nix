@@ -1,14 +1,8 @@
 { pkgs }:
 let
   oathPkg = pkgs.oath-toolkit or pkgs.oathToolkit;
-  wlclip =
-    if pkgs.system == "aarch64-darwin"
-    then ""
-    else "${pkgs.wl-clipboard}/bin/wl-copy";
-  xclip =
-    if pkgs.system == "aarch64-darwin"
-    then "pbcopy"
-    else "${pkgs.xclip}/bin/xclip";
+  wlclip = if pkgs.system == "aarch64-darwin" then "" else "${pkgs.wl-clipboard}/bin/wl-copy";
+  xclip = if pkgs.system == "aarch64-darwin" then "pbcopy" else "${pkgs.xclip}/bin/xclip";
 in
 ''
   #!${pkgs.yash}/bin/yash

@@ -1,10 +1,20 @@
-{ ... }: {
+{ ... }:
+{
   boot = {
     initrd = {
-      availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules = [
+        "ehci_pci"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-intel" "wireguard" ];
+    kernelModules = [
+      "kvm-intel"
+      "wireguard"
+    ];
     extraModulePackages = [ ];
   };
 
@@ -82,5 +92,5 @@
     };
   };
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/97d6ef56-ea18-493b-aac0-e58e773ced30"; }];
+  swapDevices = [ { device = "/dev/disk/by-uuid/97d6ef56-ea18-493b-aac0-e58e773ced30"; } ];
 }

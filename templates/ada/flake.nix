@@ -4,17 +4,23 @@
   inputs.nixpkgs.url = "nixpkgs/nixos-24.11";
 
   outputs =
-    { self
-    , nixpkgs
-    ,
+    {
+      self,
+      nixpkgs,
     }:
     let
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
     in
     {
-      packages = forAllSystems (system:
+      packages = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
@@ -23,7 +29,10 @@
             pname = "thing";
             version = "v0.0.0";
             src = ./.;
-            buildInputs = with pkgs; [ gnat gprbuild ];
+            buildInputs = with pkgs; [
+              gnat
+              gprbuild
+            ];
 
             buildPhase = ''
               gprbuild thing
@@ -34,10 +43,12 @@
               mv thing $out/bin
             '';
           };
-        });
+        }
+      );
 
       defaultPackage = forAllSystems (system: self.packages.${system}.thing);
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
@@ -48,8 +59,12 @@
               nix run github:qbit/xin#flake-warn
               echo "Ada `${pkgs.gnat}/bin/gnatmake --version`"
             '';
-            nativeBuildInputs = with pkgs; [ gnat gprbuild ];
+            nativeBuildInputs = with pkgs; [
+              gnat
+              gprbuild
+            ];
           };
-        });
+        }
+      );
     };
 }

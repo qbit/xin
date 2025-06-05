@@ -117,50 +117,58 @@
   };
 
   outputs =
-    { self
-    , beyt
-    , calnow
-    , darwin
-    , emacs-overlay
-    , gostart
-    , kogs
-    , lix-module
-    , mcchunkie
-    , microca
-    , nixos-hardware
-    , po
-    , pots
-    , pr-status
-    , simple-nixos-mailserver
-    , stable
-    , traygent
-    , fynado
-    , ts-reverse-proxy
-    , tsns
-    , tsvnstat
-    , unstable
-    , unstableSmall
-    , xin-secrets
-    , xin-status
-    , ...
-    } @ inputs:
+    {
+      self,
+      beyt,
+      calnow,
+      darwin,
+      emacs-overlay,
+      gostart,
+      kogs,
+      lix-module,
+      mcchunkie,
+      microca,
+      nixos-hardware,
+      po,
+      pots,
+      pr-status,
+      simple-nixos-mailserver,
+      stable,
+      traygent,
+      fynado,
+      ts-reverse-proxy,
+      tsns,
+      tsvnstat,
+      unstable,
+      unstableSmall,
+      xin-secrets,
+      xin-status,
+      ...
+    }@inputs:
     let
       xinlib = import ./lib {
         inherit (unstable) lib;
         inherit inputs;
       };
-      supportedSystems = [ "x86_64-linux" "aarch64-darwin" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = unstable.lib.genAttrs supportedSystems;
-      unstablePkgsFor = forAllSystems (system:
+      unstablePkgsFor = forAllSystems (
+        system:
         import unstable {
           inherit system;
-        });
-      stablePkgsFor = forAllSystems (system:
+        }
+      );
+      stablePkgsFor = forAllSystems (
+        system:
         import stable {
           inherit system;
           #imports = [ ./overlays ];
-        });
+        }
+      );
       hostBase = {
         modules = [
           # Common config stuffs
@@ -188,7 +196,8 @@
         xin-status.overlays.default
       ];
 
-      buildSys = sys: sysBase: extraMods: name:
+      buildSys =
+        sys: sysBase: extraMods: name:
         sysBase.lib.nixosSystem {
           system = sys;
           specialArgs = {
@@ -210,8 +219,11 @@
                 };
               }
             ]
-            ++ [ (xinlib.buildVer self) (./. + "/hosts/${name}") ]
-            ++ [{ nixpkgs.overlays = overlays; }];
+            ++ [
+              (xinlib.buildVer self)
+              (./. + "/hosts/${name}")
+            ]
+            ++ [ { nixpkgs.overlays = overlays; } ];
         };
       lpkgs = unstable.legacyPackages.x86_64-linux;
       darwinPkgs = unstableSmall.legacyPackages.aarch64-darwin;
@@ -249,8 +261,8 @@
           stableList.nixpkgs.overlays ++ unstableList.nixpkgs.overlays;
       };
 
-      formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.nixpkgs-fmt;
-      formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.nixpkgs-fmt;
+      formatter.x86_64-linux = stable.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+      formatter.aarch64-darwin = stable.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
 
       devShells.x86_64-linux.default = xinlib.buildShell lpkgs;
       devShells.aarch64-darwin.default = xinlib.buildShell darwinPkgs;
@@ -316,7 +328,8 @@
         };
       };
 
-      packages = forAllSystems (system:
+      packages = forAllSystems (
+        system:
         let
           upkgs = unstablePkgsFor.${system};
           spkgs = stablePkgsFor.${system};
@@ -334,10 +347,8 @@
           krha = upkgs.callPackage ./pkgs/krunner-krha.nix { };
           ttfs = upkgs.callPackage ./pkgs/ttfs.nix { };
           intiface-engine = upkgs.callPackage ./pkgs/intiface-engine.nix { };
-          flake-warn =
-            spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
-          gen-patches =
-            spkgs.callPackage ./bins/gen-patches.nix { inherit spkgs; };
+          flake-warn = spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
+          gen-patches = spkgs.callPackage ./bins/gen-patches.nix { inherit spkgs; };
           yarr = spkgs.callPackage ./pkgs/yarr.nix {
             inherit spkgs;
             isUnstable = true;
@@ -354,10 +365,8 @@
           ghexport = upkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
             inherit upkgs;
           };
-          hpi =
-            upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
-          ble-serial =
-            upkgs.python3Packages.callPackage ./pkgs/ble-serial.nix { inherit upkgs; };
+          hpi = upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
+          ble-serial = upkgs.python3Packages.callPackage ./pkgs/ble-serial.nix { inherit upkgs; };
           promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
             inherit upkgs;
           };
@@ -385,7 +394,8 @@
           inherit (fynado.packages.${system}) fynado;
           inherit (calnow.packages.${system}) calnow;
           openssh = upkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit upkgs; };
-        });
+        }
+      );
 
       templates = {
         "shell" = {
@@ -424,15 +434,20 @@
 
       checks =
         let
-          buildList = [ "europa" "stan" "h" "box" "orcim" "tv" ];
+          buildList = [
+            "europa"
+            "stan"
+            "h"
+            "box"
+            "orcim"
+            "tv"
+          ];
         in
         with unstable.lib;
-        foldl' recursiveUpdate { } (mapAttrsToList
-          (name: system: {
-            "${system.pkgs.stdenv.hostPlatform.system}"."${name}" =
-              system.config.system.build.toplevel;
-          })
-          (filterAttrs (n: _: (builtins.elem n buildList))
-            self.nixosConfigurations));
+        foldl' recursiveUpdate { } (
+          mapAttrsToList (name: system: {
+            "${system.pkgs.stdenv.hostPlatform.system}"."${name}" = system.config.system.build.toplevel;
+          }) (filterAttrs (n: _: (builtins.elem n buildList)) self.nixosConfigurations)
+        );
     };
 }

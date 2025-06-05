@@ -1,8 +1,9 @@
-{ pkgs
-, isUnstable
-, lib
-, config
-, ...
+{
+  pkgs,
+  isUnstable,
+  lib,
+  config,
+  ...
 }:
 let
   myEmacs = pkgs.callPackage ../pkgs/emacs.nix { inherit isUnstable; };
@@ -27,20 +28,29 @@ in
   config = lib.mkIf cfg.enable {
     environment = {
       variables.EDITOR = lib.mkOverride 900 "emacseditor";
-      systemPackages = with pkgs; [
-        (aspellWithDicts (dicts: with dicts; [ en en-computers es de ]))
-        go-font
+      systemPackages =
+        with pkgs;
+        [
+          (aspellWithDicts (
+            dicts: with dicts; [
+              en
+              en-computers
+              es
+              de
+            ]
+          ))
+          go-font
 
-        racket
-        guile
-        graphviz
-        ghostscript
-        mermaid-cli
+          racket
+          guile
+          graphviz
+          ghostscript
+          mermaid-cli
 
-        myEmacs
-        editorScript
-      ]
-      ++ lib.optionals (pkgs.system == "x86_64-linux") [ texlive.combined.scheme-full ];
+          myEmacs
+          editorScript
+        ]
+        ++ lib.optionals (pkgs.system == "x86_64-linux") [ texlive.combined.scheme-full ];
     };
   };
 }

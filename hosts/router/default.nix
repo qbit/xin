@@ -1,17 +1,17 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
-  inherit
-    (builtins)
+  inherit (builtins)
     head
     concatStringsSep
     attrValues
     mapAttrs
     attrNames
-    ;# hasAttr;
+    ; # hasAttr;
   inherit (lib.attrsets) filterAttrsRecursive filterAttrs;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
@@ -22,9 +22,14 @@ let
 
   wan = "enp5s0f0";
   trunk = "enp5s0f1";
-  dnsServers = [ "45.90.28.147" "45.90.30.147" ];
+  dnsServers = [
+    "45.90.28.147"
+    "45.90.30.147"
+  ];
   interfaces = {
-    "${wan}" = { useDHCP = true; };
+    "${wan}" = {
+      useDHCP = true;
+    };
     "${trunk}" = rec {
       ipv4.addresses = [
         {
@@ -302,7 +307,10 @@ let
 in
 {
   _module.args.isUnstable = false;
-  imports = [ ./hardware-configuration.nix ../../modules/tsvnstat.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/tsvnstat.nix
+  ];
 
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
@@ -464,7 +472,7 @@ in
           {
             name = "common";
             advertise = true;
-            prefix = [{ prefix = "::/64"; }];
+            prefix = [ { prefix = "::/64"; } ];
           }
         ];
       };
@@ -478,9 +486,7 @@ in
       extraOptions = [
         "--verbose=9"
         "--trace"
-        "--bind-address ${
-          (head config.networking.interfaces.lab.ipv4.addresses).address
-        }"
+        "--bind-address ${(head config.networking.interfaces.lab.ipv4.addresses).address}"
       ];
     };
 
@@ -490,32 +496,39 @@ in
         option subnet-mask 255.255.255.0;
         option domain-name-servers ${concatStringsSep ", " dnsServers};
 
-        ${concatStringsSep "\n" (attrValues (mapAttrs (intf: val: ''
-          # ${intf} : ${val.info.description}
-          subnet ${val.info.net} netmask ${val.info.netmask} {
-            option routers ${val.info.router};
-            range ${val.info.dhcp.start} ${val.info.dhcp.end};
+        ${concatStringsSep "\n" (
+          attrValues (
+            mapAttrs (intf: val: ''
+              # ${intf} : ${val.info.description}
+              subnet ${val.info.net} netmask ${val.info.netmask} {
+                option routers ${val.info.router};
+                range ${val.info.dhcp.start} ${val.info.dhcp.end};
 
-            ${
-            concatStringsSep "\n" (map (e: ''
-                host ${e.name} {
-                    hardware ethernet ${e.mac};
-                    fixed-address ${e.address};
-                }
-              '')
-              val.info.dhcp.staticIPs)
-          }
-          }
-        '') (filterAttrsRecursive (n: _: n != "${wan}") interfaces)))}
+                ${concatStringsSep "\n" (
+                  map (e: ''
+                    host ${e.name} {
+                        hardware ethernet ${e.mac};
+                        fixed-address ${e.address};
+                    }
+                  '') val.info.dhcp.staticIPs
+                )}
+              }
+            '') (filterAttrsRecursive (n: _: n != "${wan}") interfaces)
+          )
+        )}
       '';
-      interfaces =
-        attrNames (filterAttrs (_: v: v.info.dhcp.enable)
-          (filterAttrsRecursive (n: _: n != "${wan}") interfaces));
+      interfaces = attrNames (
+        filterAttrs (_: v: v.info.dhcp.enable) (filterAttrsRecursive (n: _: n != "${wan}") interfaces)
+      );
       # TODO: Probably a better way to pre-filter the interfaces set
     };
   };
 
-  environment.systemPackages = with pkgs; [ bmon termshark tcpdump ];
+  environment.systemPackages = with pkgs; [
+    bmon
+    termshark
+    tcpdump
+  ];
 
   users.users.root = userBase;
   users.users.qbit = userBase;

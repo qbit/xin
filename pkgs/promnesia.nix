@@ -1,36 +1,39 @@
-{ lib
-, beautifulsoup4
-, buildPythonPackage
-, fastapi
-, fetchFromGitHub
-, httptools
-, logzero
-, lxml
-, mistletoe
-, more-itertools
-, mypy
-, pkgs
-, python-dotenv
-, python-magic
-, pytz
-, setuptools
-, setuptools-scm
-, sqlitebrowser
-, starlette
-, tzlocal
-, urlextract
-, uvicorn
-, uvloop
-, watchfiles
-, websockets
-, ...
+{
+  lib,
+  beautifulsoup4,
+  buildPythonPackage,
+  fastapi,
+  fetchFromGitHub,
+  httptools,
+  logzero,
+  lxml,
+  mistletoe,
+  more-itertools,
+  mypy,
+  pkgs,
+  python-dotenv,
+  python-magic,
+  pytz,
+  setuptools,
+  setuptools-scm,
+  sqlitebrowser,
+  starlette,
+  tzlocal,
+  urlextract,
+  uvicorn,
+  uvloop,
+  watchfiles,
+  websockets,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   hpi = pkgs.python3Packages.callPackage ./hpi.nix { inherit pkgs; };
-  sqlcipher3 =
-    pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
+  sqlcipher3 = pkgs.python3Packages.callPackage ./sqlcipher3.nix { inherit pkgs; };
   cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };
-  google_takeout_parser = pkgs.python3Packages.callPackage ./google-takeout-parser.nix { inherit pkgs; };
+  google_takeout_parser = pkgs.python3Packages.callPackage ./google-takeout-parser.nix {
+    inherit pkgs;
+  };
 in
 buildPythonPackage rec {
   pname = "promnesia";

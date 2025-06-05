@@ -62,41 +62,46 @@ let
   myVimPackages = baseVimPackages;
 in
 {
-  environment.systemPackages = with pkgs; [
-    djlint
-    elmPackages.elm
-    elmPackages.elm-format
-    elmPackages.elm-language-server
-    fd
-    fzf
-    go
-    gopls
-    gotools
-    haskellPackages.haskell-language-server
-    haskellPackages.hindent
-    luaformatter
-    luajitPackages.lua-lsp
-    manix
-    nixpkgs-fmt
-    nodejs
-    nodePackages.prettier
-    nodePackages.typescript-language-server
-    perl
-    perlPackages.NeovimExt
-    perlPackages.PerlCritic
-    perlPackages.PLS
-    ripgrep
-    rubyPackages.solargraph
-    sleek
-    sumneko-lua-language-server
-    tree-sitter
-    zls
-  ] ++ unstablePkgs;
+  environment.systemPackages =
+    with pkgs;
+    [
+      djlint
+      elmPackages.elm
+      elmPackages.elm-format
+      elmPackages.elm-language-server
+      fd
+      fzf
+      go
+      gopls
+      gotools
+      haskellPackages.haskell-language-server
+      haskellPackages.hindent
+      luaformatter
+      luajitPackages.lua-lsp
+      manix
+      nixpkgs-fmt
+      nodejs
+      nodePackages.prettier
+      nodePackages.typescript-language-server
+      perl
+      perlPackages.NeovimExt
+      perlPackages.PerlCritic
+      perlPackages.PLS
+      ripgrep
+      rubyPackages.solargraph
+      sleek
+      sumneko-lua-language-server
+      tree-sitter
+      zls
+    ]
+    ++ unstablePkgs;
 
   programs.neovim = {
     enable = true;
     configure = {
-      packages.myVimPackage = { start = myVimPackages; };
+      packages.myVimPackage = {
+        start = myVimPackages;
+      };
       customRC = ''
         " Restore cursor position
         autocmd BufReadPost *

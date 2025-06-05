@@ -1,13 +1,13 @@
-{ lib
-, buildPythonPackage
-, click
-, fetchPypi
-, ipython
-, mock
-, pytestCheckHook
-, pythonOlder
-, sh
-,
+{
+  lib,
+  buildPythonPackage,
+  click,
+  fetchPypi,
+  ipython,
+  mock,
+  pytestCheckHook,
+  pythonOlder,
+  sh,
 }:
 buildPythonPackage rec {
   pname = "python-dotenv";
@@ -21,7 +21,12 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [ click ];
 
-  nativeCheckInputs = [ ipython mock pytestCheckHook sh ];
+  nativeCheckInputs = [
+    ipython
+    mock
+    pytestCheckHook
+    sh
+  ];
 
   disabledTests = [ "cli" ];
 

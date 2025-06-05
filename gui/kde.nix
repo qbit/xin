@@ -1,21 +1,27 @@
-{ config
-, lib
-, pkgs
-, isUnstable
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  isUnstable,
+  ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
-  kconnect = mkIf config.kdeConnect.enable
-    (if isUnstable then
-      pkgs.kdePackages.kdeconnect-kde
-    else
-      pkgs.plasma5Packages.kdeconnect-kde);
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
+  kconnect = mkIf config.kdeConnect.enable (
+    if isUnstable then pkgs.kdePackages.kdeconnect-kde else pkgs.plasma5Packages.kdeconnect-kde
+  );
 in
 with pkgs;
 {
   options = {
-    kde = { enable = mkEnableOption "Enable KDE desktop."; };
+    kde = {
+      enable = mkEnableOption "Enable KDE desktop.";
+    };
     kdeConnect = {
       enable = mkEnableOption {
         description = "Enable KDE Connect";

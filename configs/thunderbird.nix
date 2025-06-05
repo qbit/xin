@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs = {
     thunderbird = {
       enable = true;
@@ -17,17 +18,22 @@
         ExtensionSettings = {
           "*" = {
             blocked_install_message = "Only install extensions via nix.";
-            install_sources = [ "about:addons" "https://addons.thunderbird.net/" ];
+            install_sources = [
+              "about:addons"
+              "https://addons.thunderbird.net/"
+            ];
             installation_mode = "blocked";
             allowed_types = [ "extension" ];
           };
           "uBlock0@raymondhill.net" = {
             "installation_mode" = "force_installed";
-            "install_url" = "https://addons.thunderbird.net/thunderbird/downloads/latest/ublock-origin/latest.xpi";
+            "install_url" =
+              "https://addons.thunderbird.net/thunderbird/downloads/latest/ublock-origin/latest.xpi";
           };
           "{532269cf-a10e-4396-8613-b5d9a9a516d4}" = {
             "installation_mode" = "forced_installed";
-            "install_url" = "https://addons.thunderbird.net/thunderbird/downloads/latest/allow-html-temp/latest.xpi";
+            "install_url" =
+              "https://addons.thunderbird.net/thunderbird/downloads/latest/allow-html-temp/latest.xpi";
           };
         };
         NetworkPrediction = true;

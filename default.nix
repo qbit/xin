@@ -1,10 +1,11 @@
-{ config
-, lib
-, options
-, pkgs
-, isUnstable
-, xinlib
-, ...
+{
+  config,
+  lib,
+  options,
+  pkgs,
+  isUnstable,
+  xinlib,
+  ...
 }:
 let
   inherit (builtins) readFile;
@@ -33,23 +34,27 @@ in
     ./bins
   ];
 
-  disabledModules = [
-    "services/misc/yarr.nix"
-  ] ++ prIsOpen.list 399692 [
-    "services/backup/restic-rest-server.nix"
-  ];
+  disabledModules =
+    [
+      "services/misc/yarr.nix"
+    ]
+    ++ prIsOpen.list 399692 [
+      "services/backup/restic-rest-server.nix"
+    ];
 
   options = {
     syncthingDevices = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.submodule {
-        options = {
-          id = lib.mkOption {
-            type = lib.types.str;
-            description = "Unique identifier for this item";
-            example = "my-unique-id";
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          options = {
+            id = lib.mkOption {
+              type = lib.types.str;
+              description = "Unique identifier for this item";
+              example = "my-unique-id";
+            };
           };
-        };
-      });
+        }
+      );
       default = {
         box = {
           id = "P4PPRLS-3ZTXEKS-MWRM2J5-A6XI36L-TNVSZNE-RUIPMQE-TQJFVNK-2D4LRAB";
@@ -71,7 +76,10 @@ in
     myconf = {
       managementPubKeys = lib.mkOption rec {
         type = lib.types.listOf lib.types.str;
-        default = [ managementKey breakGlassKey ];
+        default = [
+          managementKey
+          breakGlassKey
+        ];
         example = default;
         description = "List of management public keys to use";
       };
@@ -101,21 +109,23 @@ in
       age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
       secrets =
-        if config.needsDeploy.enable then {
-          po_env = {
-            sopsFile = config.xin-secrets.deploy;
-            owner = "root";
-            mode = "444";
-          };
-          xin_secrets_deploy_key = {
-            sopsFile = config.xin-secrets.deploy;
-            owner = "root";
-            group = "wheel";
-            mode = "400";
-          };
-        } else { };
+        if config.needsDeploy.enable then
+          {
+            po_env = {
+              sopsFile = config.xin-secrets.deploy;
+              owner = "root";
+              mode = "444";
+            };
+            xin_secrets_deploy_key = {
+              sopsFile = config.xin-secrets.deploy;
+              owner = "root";
+              group = "wheel";
+              mode = "400";
+            };
+          }
+        else
+          { };
     };
-
 
     security.pki.certificates = [
       (readFile ./bold.daemon.pem)
@@ -157,7 +167,9 @@ in
     '';
 
     boot = {
-      loader = { systemd-boot.configurationLimit = 15; };
+      loader = {
+        systemd-boot.configurationLimit = 15;
+      };
       kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
       kernel.sysctl = {
         "net.ipv4.tcp_keepalive_time" = 60;
@@ -167,20 +179,24 @@ in
     };
 
     nix = {
-      settings = {
-        trusted-public-keys = [
-          "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
-          "store.bold.daemon:YE3+K/UOM49xzQoMMn+QdJYxsIDjRfT/114BP1ieLag="
-        ];
-      } //
-      (if config.xinCI.enable
-      then { }
-      else {
-        substituters = lib.mkOverride 2 [
-          "https://cache.nixos.org"
-          "https://nix-binary-cache.otter-alligator.ts.net/"
-        ];
-      });
+      settings =
+        {
+          trusted-public-keys = [
+            "nix-binary-cache.otter-alligator.ts.net:XzgdqR79WNOzcvSHlgh4FDeFNUYR8U2m9dZGI7whuco="
+            "store.bold.daemon:YE3+K/UOM49xzQoMMn+QdJYxsIDjRfT/114BP1ieLag="
+          ];
+        }
+        // (
+          if config.xinCI.enable then
+            { }
+          else
+            {
+              substituters = lib.mkOverride 2 [
+                "https://cache.nixos.org"
+                "https://nix-binary-cache.otter-alligator.ts.net/"
+              ];
+            }
+        );
     };
 
     system.nixos = {
@@ -189,19 +205,26 @@ in
 
     nixpkgs.config = {
       allowUnfree = true;
-      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "rns"
-        "python3Packages.rns"
-      ];
+      allowUnfreePredicate =
+        pkg:
+        builtins.elem (lib.getName pkg) [
+          "rns"
+          "python3Packages.rns"
+        ];
     };
 
     environment = {
       etc = {
-        "ssh/ca.pub" = { text = caPubKeys; };
-        motd = { text = config.users.motd; };
+        "ssh/ca.pub" = {
+          text = caPubKeys;
+        };
+        motd = {
+          text = config.users.motd;
+        };
       };
 
-      systemPackages = with pkgs;
+      systemPackages =
+        with pkgs;
         [
           age
           apg
@@ -229,11 +252,7 @@ in
           python3Packages.rns
           python3Packages.nomadnet
         ]
-        ++ (
-          if isUnstable
-          then [ nil ]
-          else [ ]
-        );
+        ++ (if isUnstable then [ nil ] else [ ]);
 
       interactiveShellInit = ''
         alias vi='emacsclient -ct'

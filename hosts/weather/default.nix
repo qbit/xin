@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   pubKeys = [
@@ -22,9 +23,19 @@ in
   programs = { } // firefox.programs;
 
   boot = {
-    initrd.availableKernelModules = [ "usbhid" "usb_storage" "vc4" "rtc-ds3232" "rtc-ds1307" ];
+    initrd.availableKernelModules = [
+      "usbhid"
+      "usb_storage"
+      "vc4"
+      "rtc-ds3232"
+      "rtc-ds1307"
+    ];
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "raspberrypi_ts" "rtc-ds3232" "rtc-ds1307" ];
+    kernelModules = [
+      "raspberrypi_ts"
+      "rtc-ds3232"
+      "rtc-ds1307"
+    ];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
@@ -33,7 +44,9 @@ in
 
   networking = {
     hostName = "weather";
-    networkmanager = { enable = true; };
+    networkmanager = {
+      enable = true;
+    };
     wireless.userControlled.enable = true;
     hosts."100.120.151.126" = [ "graph.tapenet.org" ];
   };
@@ -46,8 +59,10 @@ in
   };
 
   preDNS.enable = false;
-  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
-    lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = lib.mkForce [
+    ""
+    "${pkgs.networkmanager}/bin/nm-online -q"
+  ];
   services = {
     libinput.enable = true;
     displayManager.autoLogin = {

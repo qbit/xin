@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 let
   microcaBin = "${pkgs.microca}/bin/microca";
@@ -12,7 +13,8 @@ let
   '';
   mkXinHost = hostList: map (host: { inherit host; }) hostList;
 in
-with lib; {
+with lib;
+{
   options = {
     nixManager = {
       enable = mkEnableOption "Configure host as nix-conf manager.";
@@ -35,27 +37,47 @@ with lib; {
         repository = "/home/qbit/src/xin";
         privKeyPath = "/run/secrets/xin_status_key";
         flakeRss = "https://github.com/qbit/xin/commits/main.atom";
-        statuses = [
-          {
-            host = "tv";
-            mac = "9c:bf:0d:00:04:e7";
-          }
-          {
-            name = "stan";
-            host = "10.6.0.224";
-          }
-        ] ++ (mkXinHost [ "europa" "h" "orcim" "box" "pwntie" ]);
+        statuses =
+          [
+            {
+              host = "tv";
+              mac = "9c:bf:0d:00:04:e7";
+            }
+            {
+              name = "stan";
+              host = "10.6.0.224";
+            }
+          ]
+          ++ (mkXinHost [
+            "europa"
+            "h"
+            "orcim"
+            "box"
+            "pwntie"
+          ]);
         ciHost = "pwntie";
       };
     };
     sops.defaultSopsFile = config.xin-secrets.manager;
     sops.secrets = {
-      xin_status_key = { owner = config.nixManager.user; };
-      xin_status_pubkey = { owner = config.nixManager.user; };
-      manager_key = { owner = config.nixManager.user; };
-      manager_pubkey = { owner = config.nixManager.user; };
-      ca_key = { owner = config.nixManager.user; };
-      ca_cert = { owner = config.nixManager.user; };
+      xin_status_key = {
+        owner = config.nixManager.user;
+      };
+      xin_status_pubkey = {
+        owner = config.nixManager.user;
+      };
+      manager_key = {
+        owner = config.nixManager.user;
+      };
+      manager_pubkey = {
+        owner = config.nixManager.user;
+      };
+      ca_key = {
+        owner = config.nixManager.user;
+      };
+      ca_cert = {
+        owner = config.nixManager.user;
+      };
     };
 
     environment.systemPackages = [

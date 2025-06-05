@@ -1,14 +1,15 @@
-{ pkgs
-, buildPythonPackage
-, fetchFromGitHub
-, setuptools-scm
-, beautifulsoup4
-, click
-, ipython
-, logzero
-, lxml
-, platformdirs
-, pytz
+{
+  pkgs,
+  buildPythonPackage,
+  fetchFromGitHub,
+  setuptools-scm,
+  beautifulsoup4,
+  click,
+  ipython,
+  logzero,
+  lxml,
+  platformdirs,
+  pytz,
 }:
 let
   cachew = pkgs.python3Packages.callPackage ./cachew.nix { inherit pkgs; };

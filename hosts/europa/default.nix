@@ -1,40 +1,52 @@
-{ inputs
-, config
-, pkgs
-, lib
-, xinlib
-, ...
+{
+  inputs,
+  config,
+  pkgs,
+  lib,
+  xinlib,
+  ...
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
-  pywebscrapbook =
-    pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
+  pywebscrapbook = pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
   jobs = [
     {
       name = "brain";
       script = "cd ~/Brain && git sync";
       startAt = "*:0/2";
-      path = [ pkgs.git pkgs.git-sync ];
+      path = [
+        pkgs.git
+        pkgs.git-sync
+      ];
     }
     {
       name = "org";
       script = "(cd ~/org && git sync)";
       startAt = "*:0/5";
-      path = [ pkgs.git pkgs.git-sync ];
+      path = [
+        pkgs.git
+        pkgs.git-sync
+      ];
     }
     {
       name = "org-roam";
       script = "(cd ~/org-roam && git sync)";
       startAt = "*:0/5";
-      path = [ pkgs.git pkgs.git-sync ];
+      path = [
+        pkgs.git
+        pkgs.git-sync
+      ];
     }
   ];
 in
 {
   _module.args.isUnstable = true;
 
-  imports = [ ./hardware-configuration.nix ../../pkgs ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../pkgs
+  ];
 
   sops.secrets =
     let
@@ -66,9 +78,13 @@ in
   };
 
   boot = {
-    binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "riscv64-linux"
+    ];
     initrd.systemd.enable = true;
-    initrd.luks.devices."luks-4d7bf115-cdfd-486b-a2fd-ee620d81060c".device = "/dev/disk/by-uuid/4d7bf115-cdfd-486b-a2fd-ee620d81060c";
+    initrd.luks.devices."luks-4d7bf115-cdfd-486b-a2fd-ee620d81060c".device =
+      "/dev/disk/by-uuid/4d7bf115-cdfd-486b-a2fd-ee620d81060c";
     loader = {
       systemd-boot = {
         enable = true;
@@ -132,15 +148,19 @@ in
       '';
       shellAliases = {
         "gh" = "op plugin run -- gh";
-        "nixpkgs-review" = "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token --reveal) nixpkgs-review";
+        "nixpkgs-review" =
+          "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token --reveal) nixpkgs-review";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "sync-music" = "rsync -av --progress --delete ~/Music/ suah.dev:/var/lib/music/";
-        "load-agent" = ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
+        "load-agent" =
+          ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
       };
     };
   };
 
-  services.xinCA = { enable = false; };
+  services.xinCA = {
+    enable = false;
+  };
 
   services = {
     i2pd = {
@@ -230,9 +250,19 @@ in
     printing.enable = true;
     backups =
       let
-        paths = [ "/home/qbit" "/etc" ];
-        pruneOpts = [ "--keep-hourly 12" "--keep-daily 7" "--keep-weekly 5" "--keep-yearly 4" ];
-        timerConfig = { OnCalendar = "*-*-* 00:30:00"; };
+        paths = [
+          "/home/qbit"
+          "/etc"
+        ];
+        pruneOpts = [
+          "--keep-hourly 12"
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-yearly 4"
+        ];
+        timerConfig = {
+          OnCalendar = "*-*-* 00:30:00";
+        };
       in
       {
         remote = {
@@ -251,7 +281,9 @@ in
 
           paths = paths ++ [ "/var/lib/libvirt" ];
           inherit pruneOpts;
-          timerConfig = { OnCalendar = "hourly"; };
+          timerConfig = {
+            OnCalendar = "hourly";
+          };
         };
       };
     pcscd.enable = true;
@@ -297,19 +329,18 @@ in
   ];
 
   systemd = {
-    user.services = lib.listToAttrs (builtins.map jobToUserService jobs) //
-      {
-        wsb = {
-          description = "web scrap book";
-          wantedBy = [ "graphical-session.target" ];
-          partOf = [ "graphical-session.target" ];
-          after = [ "graphical-session.target" ];
-          serviceConfig = {
-            WorkingDirectory = "/home/qbit/web-scrap";
-            ExecStart = "${pywebscrapbook}/bin/wsb serve";
-          };
+    user.services = lib.listToAttrs (builtins.map jobToUserService jobs) // {
+      wsb = {
+        description = "web scrap book";
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        serviceConfig = {
+          WorkingDirectory = "/home/qbit/web-scrap";
+          ExecStart = "${pywebscrapbook}/bin/wsb serve";
         };
       };
+    };
     services = {
       ollama = {
         environment = {
@@ -406,7 +437,7 @@ in
       qdmr
       # Don't do it, don't switch to another music player. They all suck!
       # this one works the least sucky!
-      quodlibet-full #stable
+      quodlibet-full # stable
       # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       #
       rtl-sdr

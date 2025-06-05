@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   # inherit (pkgs.vscode-utils) buildVscodeMarketplaceExtension;
@@ -72,9 +73,12 @@ in
     };
 
     initrd = {
-      luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".device = "/dev/disk/by-uuid/23b20980-eb1e-4390-b706-f0f42a623ddf";
+      luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".device =
+        "/dev/disk/by-uuid/23b20980-eb1e-4390-b706-f0f42a623ddf";
       luks.devices."luks-23b20980-eb1e-4390-b706-f0f42a623ddf".keyFile = "/crypto_keyfile.bin";
-      secrets = { "/crypto_keyfile.bin" = null; };
+      secrets = {
+        "/crypto_keyfile.bin" = null;
+      };
     };
     kernelParams = [ "intel_idle.max_cstate=4" ];
     kernelPackages = pkgs.linuxPackages;
@@ -138,9 +142,18 @@ in
 
     hosts = {
       "172.16.30.253" = [ "proxmox-02.vm.calyptix.local" ];
-      "127.0.0.1" = [ "borg.calyptix.dev" "localhost" ];
-      "192.168.122.249" = [ "arst.arst" "vm" ];
-      "192.168.8.194" = [ "router.arst" "router" ];
+      "127.0.0.1" = [
+        "borg.calyptix.dev"
+        "localhost"
+      ];
+      "192.168.122.249" = [
+        "arst.arst"
+        "vm"
+      ];
+      "192.168.8.194" = [
+        "router.arst"
+        "router"
+      ];
       "10.6.0.110" = [ "store.bold.daemon" ];
     };
 
@@ -154,7 +167,6 @@ in
       wakeOnLan.enable = true;
     };
   };
-
 
   kde.enable = true;
   defaultUsers.enable = false;
@@ -240,7 +252,12 @@ in
       abieber = userBase // {
         isNormalUser = true;
         description = "Aaron Bieber";
-        extraGroups = [ "networkmanager" "wheel" "libvirtd" "podman" ];
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "libvirtd"
+          "podman"
+        ];
         hashedPasswordFile = config.sops.secrets.abieber_hash.path;
       };
     };
@@ -309,7 +326,8 @@ in
     zsh.enable = true;
     ssh = {
       knownHosts = {
-        "[192.168.122.249]:7022".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
+        "[192.168.122.249]:7022".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
       };
     };
   };
@@ -336,7 +354,11 @@ in
 
         paths = [ "/home/abieber" ];
 
-        pruneOpts = [ "--keep-daily 7" "--keep-weekly 2" "--keep-monthly 2" ];
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 2"
+          "--keep-monthly 2"
+        ];
       };
     };
     rsyslogd = {
@@ -358,7 +380,6 @@ in
       dnssec = "allow-downgrade";
     };
   };
-
 
   system = {
     autoUpgrade.allowReboot = false;

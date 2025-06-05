@@ -1,10 +1,12 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   inherit (inputs.unstable.legacyPackages.${pkgs.system}) golink;
   cfg = config.services.golink;
 in
@@ -14,7 +16,12 @@ in
       enable = mkEnableOption "Enable golink";
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "golink";
         description = ''
           The user the service will use.
@@ -38,7 +45,12 @@ in
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "golink";
         description = ''
           The user the service will use.

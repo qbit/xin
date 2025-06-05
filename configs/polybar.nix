@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   inherit (lib) mkIf;
   barBase = {
@@ -121,6 +126,8 @@ in
         "xdg/polybar/config.ini".text = builtins.readFile settingsFile;
       };
     };
-    fonts = { packages = [ pkgs.go-font ]; };
+    fonts = {
+      packages = [ pkgs.go-font ];
+    };
   };
 }

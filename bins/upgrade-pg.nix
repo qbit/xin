@@ -20,7 +20,7 @@ in
     echo "Nothing to upgrade!"
     exit 1;
   fi
-  
+
   export NEWBIN="${newPostgres}/bin"
   export OLDBIN="${config.services.postgresql.package}/bin"
 

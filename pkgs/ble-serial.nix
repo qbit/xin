@@ -1,10 +1,11 @@
-{ buildPythonPackage
-, setuptools-scm
-, fetchFromGitHub
-, pyserial
-, coloredlogs
-, bleak
-, ...
+{
+  buildPythonPackage,
+  setuptools-scm,
+  fetchFromGitHub,
+  pyserial,
+  coloredlogs,
+  bleak,
+  ...
 }:
 buildPythonPackage rec {
   pname = "ble-serial";

@@ -1,5 +1,6 @@
-{ pkgs
-, ...
+{
+  pkgs,
+  ...
 }:
 let
   pubKeys = [
@@ -52,7 +53,13 @@ in
       "video=DSI-1:panel_orientation=right_side_up"
     ];
 
-    kernelModules = [ "btusb" "kvm-intel" "i915" "pwm-lpss" "pwm-lpss-platform" ];
+    kernelModules = [
+      "btusb"
+      "kvm-intel"
+      "i915"
+      "pwm-lpss"
+      "pwm-lpss-platform"
+    ];
 
     initrd = {
       kernelModules = [
@@ -113,10 +120,16 @@ in
 
   users = {
     users = {
-      root = { openssh.authorizedKeys.keys = pubKeys; };
+      root = {
+        openssh.authorizedKeys.keys = pubKeys;
+      };
       qbit = {
         openssh.authorizedKeys.keys = pubKeys;
-        extraGroups = [ "dialout" "libvirtd" "plugdev" ];
+        extraGroups = [
+          "dialout"
+          "libvirtd"
+          "plugdev"
+        ];
       };
     };
   };

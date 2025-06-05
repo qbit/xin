@@ -1,16 +1,20 @@
-{ pkgs
-, lib
-, isUnstable
-, ...
+{
+  pkgs,
+  lib,
+  isUnstable,
+  ...
 }:
 let
   secretAgent = "Contents/Library/LoginItems/SecretAgent.app/Contents/MacOS/SecretAgent";
-  rage =
-    pkgs.writeScriptBin "rage" (import ../../bins/rage.nix { inherit pkgs; });
+  rage = pkgs.writeScriptBin "rage" (import ../../bins/rage.nix { inherit pkgs; });
 in
 {
   _module.args.isUnstable = false;
-  imports = [ ../../configs/tmux.nix ../../configs/zsh.nix ../../bins ];
+  imports = [
+    ../../configs/tmux.nix
+    ../../configs/zsh.nix
+    ../../bins
+  ];
 
   networking.hostName = "plq";
 
@@ -56,7 +60,8 @@ in
 
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = pkg:
+    allowUnfreePredicate =
+      pkg:
       builtins.elm (lib.getName pkg) [
         "obsidian"
       ];

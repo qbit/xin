@@ -1,11 +1,12 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, rns
-, setuptools
-, setuptools-scm
-, poetry-core
-, ...
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  rns,
+  setuptools,
+  setuptools-scm,
+  poetry-core,
+  ...
 }:
 
 buildPythonPackage rec {

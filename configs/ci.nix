@@ -1,9 +1,10 @@
-{ config
-, lib
-, pkgs
-, inputs
-, xinlib
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  xinlib,
+  ...
 }:
 let
   jobs = [
@@ -31,7 +32,8 @@ let
     }
   ];
 in
-with lib; {
+with lib;
+{
   options = {
     xinCI = {
       enable = mkEnableOption "Configure host as a xin CI host.";
@@ -117,7 +119,12 @@ with lib; {
     };
 
     nix = {
-      settings.allowed-users = [ "root" config.xinCI.user "harmonia" "nix-ssh" ];
+      settings.allowed-users = [
+        "root"
+        config.xinCI.user
+        "harmonia"
+        "nix-ssh"
+      ];
       gc = {
         automatic = true;
         dates = "daily";
@@ -157,10 +164,15 @@ with lib; {
       harmonia = {
         enable = true;
         signKeyPaths = [ config.sops.secrets.bin_cache_priv_key.path ];
-        settings = { bind = "127.0.0.1:5000"; };
+        settings = {
+          bind = "127.0.0.1:5000";
+        };
       };
     };
 
-    boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
+    boot.binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "armv6l-linux"
+    ];
   };
 }

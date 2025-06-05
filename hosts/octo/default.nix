@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   pubKeys = [
@@ -17,7 +18,10 @@ in
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
-    initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
+    initrd.availableKernelModules = [
+      "usbhid"
+      "usb_storage"
+    ];
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "raspberrypi_ts" ];
     loader = {
@@ -28,13 +32,17 @@ in
 
   networking = {
     hostName = "octo";
-    networkmanager = { enable = true; };
+    networkmanager = {
+      enable = true;
+    };
     wireless.userControlled.enable = true;
   };
 
   preDNS.enable = false;
-  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart =
-    lib.mkForce [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = lib.mkForce [
+    ""
+    "${pkgs.networkmanager}/bin/nm-online -q"
+  ];
 
   users.users = {
     root = userBase;

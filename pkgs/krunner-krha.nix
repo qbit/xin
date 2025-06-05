@@ -1,8 +1,9 @@
-{ stdenv
-, fetchFromGitHub
-, python3
-, wrapGAppsHook
-, gobject-introspection
+{
+  stdenv,
+  fetchFromGitHub,
+  python3,
+  wrapGAppsHook,
+  gobject-introspection,
 }:
 let
   pythonEnv = python3.withPackages (

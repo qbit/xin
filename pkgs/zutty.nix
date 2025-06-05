@@ -1,9 +1,10 @@
-{ lib
-, stdenv
-, fetchurl
-, pkgs
-, go-font
-, ...
+{
+  lib,
+  stdenv,
+  fetchurl,
+  pkgs,
+  go-font,
+  ...
 }:
 stdenv.mkDerivation rec {
   pname = "zutty";
@@ -26,7 +27,10 @@ stdenv.mkDerivation rec {
     libGL
   ];
 
-  buildInputs = with pkgs; [ freetype fontconfig ];
+  buildInputs = with pkgs; [
+    freetype
+    fontconfig
+  ];
 
   prePatch = ''
     substituteInPlace src/options.h \

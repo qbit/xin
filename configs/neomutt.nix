@@ -1,5 +1,9 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ neomutt urlview ];
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    neomutt
+    urlview
+  ];
   environment.etc."neomuttrc" = {
     text = ''
       ignore *

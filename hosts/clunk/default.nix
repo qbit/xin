@@ -1,5 +1,6 @@
-{ pkgs
-, ...
+{
+  pkgs,
+  ...
 }:
 let
   pubKeys = [
@@ -64,10 +65,13 @@ in
         Option "TearFree" "true"
       '';
 
-
       windowManager.xmonad = {
         enable = true;
-        extraPackages = haskellPackages: with haskellPackages; [ xmonad-contrib hostname ];
+        extraPackages =
+          haskellPackages: with haskellPackages; [
+            xmonad-contrib
+            hostname
+          ];
         config = builtins.readFile ./xmonad.hs;
       };
     };
@@ -75,10 +79,16 @@ in
 
   users = {
     users = {
-      root = { openssh.authorizedKeys.keys = pubKeys; };
+      root = {
+        openssh.authorizedKeys.keys = pubKeys;
+      };
       qbit = {
         openssh.authorizedKeys.keys = pubKeys;
-        extraGroups = [ "dialout" "libvirtd" "plugdev" ];
+        extraGroups = [
+          "dialout"
+          "libvirtd"
+          "plugdev"
+        ];
       };
     };
   };

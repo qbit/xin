@@ -1,11 +1,12 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.services.xin-monitoring;
-  inherit
-    (builtins)
+  inherit (builtins)
     readFile
     concatStringsSep
     attrValues
@@ -14,34 +15,39 @@ with lib; let
     ;
 
   nginxCfg = config.services.nginx;
-  buildFSChecker = fsList: (concatStringsSep "\n" (attrValues (mapAttrs
-    (f: v:
-      if v.fsType != "sshfs"
-      then ''
-        check filesystem ${replaceStrings ["/"] ["_"] f} with path ${f}
-           if space usage > 90% then alert
-           if inode usage > 90% then alert
-      ''
-      else "")
-    fsList)));
-  buildNginxChecker = vhostList: (concatStringsSep "\n" (attrValues (mapAttrs
-    (f: v: ''
-      check host ${f} with address ${f}
-          if failed port 80 protocol http then alert
-          ${
-        if v.enableACME
-        then "if failed port 443 protocol https then alert"
-        else ""
-      }
-    '')
-    vhostList)));
+  buildFSChecker =
+    fsList:
+    (concatStringsSep "\n" (
+      attrValues (
+        mapAttrs (
+          f: v:
+          if v.fsType != "sshfs" then
+            ''
+              check filesystem ${replaceStrings [ "/" ] [ "_" ] f} with path ${f}
+                 if space usage > 90% then alert
+                 if inode usage > 90% then alert
+            ''
+          else
+            ""
+        ) fsList
+      )
+    ));
+  buildNginxChecker =
+    vhostList:
+    (concatStringsSep "\n" (
+      attrValues (
+        mapAttrs (f: v: ''
+          check host ${f} with address ${f}
+              if failed port 80 protocol http then alert
+              ${if v.enableACME then "if failed port 443 protocol https then alert" else ""}
+        '') vhostList
+      )
+    ));
   nginxChecks =
-    if nginxCfg.enable
-    then
-      if config.networking.hostName == "h"
-      then (buildNginxChecker nginxCfg.virtualHosts)
-      else ""
-    else "";
+    if nginxCfg.enable then
+      if config.networking.hostName == "h" then (buildNginxChecker nginxCfg.virtualHosts) else ""
+    else
+      "";
 in
 {
   options = {

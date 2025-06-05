@@ -4,17 +4,23 @@
   inputs.nixpkgs.url = "nixpkgs/nixos-24.11";
 
   outputs =
-    { self
-    , nixpkgs
-    ,
+    {
+      self,
+      nixpkgs,
     }:
     let
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
     in
     {
-      packages = forAllSystems (system:
+      packages = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
@@ -31,10 +37,12 @@
               install -t $out/bin thing.pl
             '';
           };
-        });
+        }
+      );
 
       defaultPackage = forAllSystems (system: self.packages.${system}.thing);
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
@@ -48,6 +56,7 @@
             buildInputs = with pkgs.perlPackages; [ PerlTidy ];
             nativeBuildInputs = with pkgs.perlPackages; [ perl ];
           };
-        });
+        }
+      );
     };
 }

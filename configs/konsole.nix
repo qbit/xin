@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   inherit (lib) mkIf;
   profile = {
@@ -57,6 +62,8 @@ in
         "xdg/konsolerc".text = builtins.readFile settingsFile;
       };
     };
-    fonts = { packages = [ pkgs.go-font ]; };
+    fonts = {
+      packages = [ pkgs.go-font ];
+    };
   };
 }

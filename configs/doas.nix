@@ -1,10 +1,14 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
-with lib; {
+with lib;
+{
   options = {
-    doas = { enable = mkEnableOption "Enable doas for priv-escie"; };
+    doas = {
+      enable = mkEnableOption "Enable doas for priv-escie";
+    };
   };
 
   config = mkIf config.doas.enable {

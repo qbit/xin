@@ -1,10 +1,11 @@
-{ stdenv
-, lib
-, substituteAll
-, jq
-, nix
-, coreutils
-, ...
+{
+  stdenv,
+  lib,
+  substituteAll,
+  jq,
+  nix,
+  coreutils,
+  ...
 }:
 stdenv.mkDerivation rec {
   pname = "flake-warn";

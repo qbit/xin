@@ -1,7 +1,8 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, ...
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  ...
 }:
 with lib;
 buildGoModule rec {
@@ -19,7 +20,10 @@ buildGoModule rec {
 
   ldflags = [ "-X main.Version=${version}" ];
 
-  tags = [ "sqlite_foreign_keys" "release" ];
+  tags = [
+    "sqlite_foreign_keys"
+    "release"
+  ];
 
   proxyVendor = true;
 

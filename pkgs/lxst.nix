@@ -1,19 +1,20 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, codec2
-, cython
-, ffmpeg
-, libopus
-, numpy
-, pydub
-, pytestCheckHook
-, rns
-, setuptools
-, setuptools-scm
-, soundcard
-, pkgs
-, ...
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  codec2,
+  cython,
+  ffmpeg,
+  libopus,
+  numpy,
+  pydub,
+  pytestCheckHook,
+  rns,
+  setuptools,
+  setuptools-scm,
+  soundcard,
+  pkgs,
+  ...
 }:
 let
   pyogg = pkgs.python3Packages.pyogg.overridePythonAttrs (_: {
@@ -45,16 +46,17 @@ let
 
   myrns =
     if pkgs.python3Packages.rns.version == "0.9.2" then
-      pkgs.python3Packages.rns.overridePythonAttrs
-        (_: {
-          version = "0.9.3";
-          src = fetchFromGitHub {
-            owner = "markqvist";
-            repo = "Reticulum";
-            tag = "0.9.3";
-            hash = "sha256-50L+5WVsYaidz71rkGZny2KlCR3ZfPEQJEPI38MOBWA=";
-          };
-        }) else pkgs.python3Packages.rns;
+      pkgs.python3Packages.rns.overridePythonAttrs (_: {
+        version = "0.9.3";
+        src = fetchFromGitHub {
+          owner = "markqvist";
+          repo = "Reticulum";
+          tag = "0.9.3";
+          hash = "sha256-50L+5WVsYaidz71rkGZny2KlCR3ZfPEQJEPI38MOBWA=";
+        };
+      })
+    else
+      pkgs.python3Packages.rns;
 
   pycodec2 = buildPythonPackage rec {
     pname = "pycodec2";
@@ -140,7 +142,6 @@ buildPythonPackage rec {
     myrns
     soundcard
   ];
-
 
   meta = with lib; {
     homepage = "https://github.com/markqvist/LXST";

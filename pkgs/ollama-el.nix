@@ -1,6 +1,7 @@
-{ trivialBuild
-, fetchFromGitHub
-, ...
+{
+  trivialBuild,
+  fetchFromGitHub,
+  ...
 }:
 trivialBuild {
   pname = "ollama";

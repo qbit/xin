@@ -1,12 +1,14 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   cfg = config.services.xinCA;
 in
-with lib; {
+with lib;
+{
   options = {
     services.xinCA = {
       enable = mkEnableOption "Configure host as a xin certificate authority.";
@@ -67,9 +69,13 @@ with lib; {
       };
     };
 
-    networking.hosts = { "127.0.0.1" = [ "ca.bolddaemon.com" ]; };
+    networking.hosts = {
+      "127.0.0.1" = [ "ca.bolddaemon.com" ];
+    };
 
-    environment.sessionVariables = { STEPPATH = "/var/lib/step-ca"; };
+    environment.sessionVariables = {
+      STEPPATH = "/var/lib/step-ca";
+    };
     environment.systemPackages = with pkgs; [
       #step-cli
       step-kms-plugin
@@ -87,7 +93,9 @@ with lib; {
         crt = config.sops.secrets."intermediate_ca.crt".path;
         key = config.sops.secrets.intermediate_ca_key.path;
         dnsNames = [ "ca.bolddaemon.com" ];
-        logger = { format = "text"; };
+        logger = {
+          format = "text";
+        };
         db = {
           type = "badgerv2";
           dataSource = "/var/lib/step-ca/db";
@@ -98,7 +106,9 @@ with lib; {
             {
               type = "SSHPOP";
               name = "sshpop";
-              claims = { enableSSHCA = true; };
+              claims = {
+                enableSSHCA = true;
+              };
             }
           ];
         };

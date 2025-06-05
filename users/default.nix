@@ -1,14 +1,14 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with lib; let
+with lib;
+let
   userBase = {
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys =
-      config.myconf.hwPubKeys
-      ++ config.myconf.managementPubKeys;
+    openssh.authorizedKeys.keys = config.myconf.hwPubKeys ++ config.myconf.managementPubKeys;
   };
 in
 {
@@ -16,7 +16,8 @@ in
     defaultUsers = {
       enable = mkOption {
         description = "Enable regular set of users";
-        default = if (builtins.hasAttr "${config.networking.hostName}" config.xin-secrets) then true else false;
+        default =
+          if (builtins.hasAttr "${config.networking.hostName}" config.xin-secrets) then true else false;
         example = true;
         type = lib.types.bool;
       };
@@ -27,8 +28,13 @@ in
     let
       inherit (config.networking) hostName;
       hasQbit =
-        if (builtins.hasAttr hostName config.xin-secrets) &&
-          (builtins.hasAttr "qbit" config.xin-secrets.${hostName}.user_passwords) then true else false;
+        if
+          (builtins.hasAttr hostName config.xin-secrets)
+          && (builtins.hasAttr "qbit" config.xin-secrets.${hostName}.user_passwords)
+        then
+          true
+        else
+          false;
     in
     mkIf config.defaultUsers.enable {
       sops =
@@ -39,14 +45,13 @@ in
           age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
           secrets = mkMerge [
             {
-              root_hash =
-                {
-                  name = "hash";
-                  sopsFile = secretAttrs.root;
-                  owner = "root";
-                  mode = "400";
-                  neededForUsers = true;
-                };
+              root_hash = {
+                name = "hash";
+                sopsFile = secretAttrs.root;
+                owner = "root";
+                mode = "400";
+                neededForUsers = true;
+              };
             }
             (mkIf hasQbit {
               qbit_hash = {

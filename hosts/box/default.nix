@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, xinlib
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  xinlib,
+  ...
 }:
 let
   inherit (xinlib) todo;
@@ -37,7 +38,9 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
-  userBase = { openssh.authorizedKeys.keys = pubKeys; };
+  userBase = {
+    openssh.authorizedKeys.keys = pubKeys;
+  };
   mkNginxSecret = {
     sopsFile = config.xin-secrets.box.secrets.certs;
     owner = config.users.users.nginx.name;
@@ -64,8 +67,12 @@ in
       owner = config.users.users.gitea.name;
       sopsFile = config.xin-secrets.box.secrets.services;
     };
-    "bitwarden_rs.env" = { sopsFile = config.xin-secrets.box.secrets.services; };
-    "wireguard_private_key" = { sopsFile = config.xin-secrets.box.secrets.services; };
+    "bitwarden_rs.env" = {
+      sopsFile = config.xin-secrets.box.secrets.services;
+    };
+    "wireguard_private_key" = {
+      sopsFile = config.xin-secrets.box.secrets.services;
+    };
     "restic_htpasswd" = {
       owner = config.users.users.restic.name;
       sopsFile = config.xin-secrets.box.secrets.services;
@@ -135,13 +142,26 @@ in
     hosts = {
       "10.6.0.1" = [ "router.bold.daemon" ];
       "127.0.0.1" = [ "git.tapenet.org" ];
-      "10.6.0.15" = [ "jelly.bold.daemon" "home.bold.daemon" ];
+      "10.6.0.15" = [
+        "jelly.bold.daemon"
+        "home.bold.daemon"
+      ];
       "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
     };
-    interfaces.enp7s0 = { useDHCP = true; };
+    interfaces.enp7s0 = {
+      useDHCP = true;
+    };
 
     firewall = {
-      interfaces = { "tailscale0" = { allowedTCPPorts = [ 3030 9001 9002 ]; }; };
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [
+            3030
+            9001
+            9002
+          ];
+        };
+      };
       interfaces = {
         "wg0" = {
           allowedTCPPorts = [
@@ -151,21 +171,19 @@ in
           ];
         };
       };
-      allowedTCPPorts =
-        config.services.openssh.ports
-        ++ [
-          80
-          443
-          config.services.gitea.settings.server.SSH_PORT
-          21063 #homekit
-          21064 #homekit
-          1883 # mosquitto
-          8123 # home-assistant
-          8484 # restic-rest server
-          9001
-        ];
+      allowedTCPPorts = config.services.openssh.ports ++ [
+        80
+        443
+        config.services.gitea.settings.server.SSH_PORT
+        21063 # homekit
+        21064 # homekit
+        1883 # mosquitto
+        8123 # home-assistant
+        8484 # restic-rest server
+        9001
+      ];
       allowedUDPPorts = [
-        5353 #homekit
+        5353 # homekit
       ];
       allowedUDPPortRanges = [
         {
@@ -240,7 +258,17 @@ in
     groups = {
       media = {
         name = "media";
-        members = [ "qbit" "sonarr" "radarr" "lidarr" "nzbget" "jellyfin" "headphones" "rtorrent" "readarr" ];
+        members = [
+          "qbit"
+          "sonarr"
+          "radarr"
+          "lidarr"
+          "nzbget"
+          "jellyfin"
+          "headphones"
+          "rtorrent"
+          "readarr"
+        ];
       };
 
       photos = {
@@ -435,7 +463,9 @@ in
         in
         [ "@daily root ${tsCertsScript}/bin/ts-certs.sh" ];
     };
-    openssh = { settings.X11Forwarding = true; };
+    openssh = {
+      settings.X11Forwarding = true;
+    };
 
     tor.enable = true;
 
@@ -451,7 +481,9 @@ in
     nzbget = {
       enable = true;
       group = "media";
-      settings = { MainDir = "/media/downloads"; };
+      settings = {
+        MainDir = "/media/downloads";
+      };
     };
     sabnzbd = {
       enable = true;
@@ -526,7 +558,9 @@ in
           http_listen_port = 3031;
           grpc_listen_port = 0;
         };
-        positions = { filename = "/tmp/positions.yaml"; };
+        positions = {
+          filename = "/tmp/positions.yaml";
+        };
         scrape_configs = [
           {
             job_name = "journal";
@@ -559,7 +593,9 @@ in
           port = 9002;
         };
 
-        nginx = { enable = true; };
+        nginx = {
+          enable = true;
+        };
 
         rtl_433 = {
           enable = true;
@@ -585,9 +621,7 @@ in
           static_configs = [
             {
               targets = [
-                "127.0.0.1:${
-                  toString config.services.prometheus.exporters.rtl_433.port
-                }"
+                "127.0.0.1:${toString config.services.prometheus.exporters.rtl_433.port}"
               ];
             }
           ];
@@ -597,37 +631,33 @@ in
           static_configs = [
             {
               targets = [
-                "127.0.0.1:${
-                  toString config.services.prometheus.exporters.node.port
-                }"
+                "127.0.0.1:${toString config.services.prometheus.exporters.node.port}"
               ];
             }
           ];
         }
         {
           job_name = "faf";
-          static_configs = [{ targets = [ "10.6.0.245:9002" ]; }];
+          static_configs = [ { targets = [ "10.6.0.245:9002" ]; } ];
         }
         {
           job_name = "h";
-          static_configs = [{ targets = [ "100.83.77.133:9002" ]; }];
+          static_configs = [ { targets = [ "100.83.77.133:9002" ]; } ];
         }
         {
           job_name = "pwntie";
-          static_configs = [{ targets = [ "100.84.170.57:9002" ]; }];
+          static_configs = [ { targets = [ "100.84.170.57:9002" ]; } ];
         }
         {
           job_name = "namish";
-          static_configs = [{ targets = [ "10.200.0.100:9100" ]; }];
+          static_configs = [ { targets = [ "10.200.0.100:9100" ]; } ];
         }
         {
           job_name = "nginx";
           static_configs = [
             {
               targets = [
-                "127.0.0.1:${
-                  toString config.services.prometheus.exporters.nginx.port
-                }"
+                "127.0.0.1:${toString config.services.prometheus.exporters.nginx.port}"
               ];
             }
           ];
@@ -695,7 +725,9 @@ in
         backup	/backups/ backups/
         backup_exec	date "+ backup of /backups ended at %c"
       '';
-      cronIntervals = { daily = "50 21 * * *"; };
+      cronIntervals = {
+        daily = "50 21 * * *";
+      };
     };
 
     redlib = {
@@ -791,9 +823,7 @@ in
           sslCertificate = "${config.sops.secrets.books_cert.path}";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://localhost:${
-              toString config.services.calibre-web.listen.port
-            }";
+            proxyPass = "http://localhost:${toString config.services.calibre-web.listen.port}";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
@@ -897,9 +927,7 @@ in
           forceSSL = true;
 
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${
-              toString config.services.grafana.settings.server.http_port
-            }";
+            proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
@@ -927,7 +955,11 @@ in
         host all all ::1/128 trust
       '';
 
-      ensureDatabases = [ "nextcloud" "gitea" "invidious" ];
+      ensureDatabases = [
+        "nextcloud"
+        "gitea"
+        "invidious"
+      ];
       ensureUsers = [
         {
           name = "nextcloud";

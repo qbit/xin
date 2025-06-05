@@ -1,17 +1,25 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-let cfg = config.services.signal-cli;
+let
+  cfg = config.services.signal-cli;
 in
-with pkgs; {
+with pkgs;
+{
   options = with lib; {
     services.signal-cli = {
       enable = mkEnableOption "Enable signal-cli";
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "signal-cli";
         description = ''
           The user the service will use.
@@ -41,7 +49,12 @@ with pkgs; {
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "signal-cli";
         description = ''
           The user the service will use.

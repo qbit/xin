@@ -1,7 +1,8 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, ...
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  ...
 }:
 let
   vendorHash = "sha256-1zBZREClt8jy0TUXJ1FuBEAJEPQoUcl4DZZ6U2LtRzg=";

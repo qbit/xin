@@ -1,9 +1,10 @@
-{ buildPythonPackage
-, setuptools-scm
-, fetchFromGitHub
-, PyGithub
-, pytz
-, ...
+{
+  buildPythonPackage,
+  setuptools-scm,
+  fetchFromGitHub,
+  PyGithub,
+  pytz,
+  ...
 }:
 buildPythonPackage rec {
   pname = "ghexport";
@@ -12,7 +13,10 @@ buildPythonPackage rec {
   pyproject = true;
 
   nativeBuildInputs = [ setuptools-scm ];
-  propagatedBuildInputs = [ PyGithub pytz ];
+  propagatedBuildInputs = [
+    PyGithub
+    pytz
+  ];
 
   doCheck = true;
 

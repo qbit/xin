@@ -30,10 +30,16 @@ in
     interfaces.enp2s0.useDHCP = true;
 
     firewall = {
-      allowedTCPPorts = [ 22 53 config.services.prometheus.exporters.node.port ];
+      allowedTCPPorts = [
+        22
+        53
+        config.services.prometheus.exporters.node.port
+      ];
       allowedUDPPorts = [ 53 ];
     };
-    hosts = { "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ]; };
+    hosts = {
+      "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
+    };
   };
 
   users.users = {

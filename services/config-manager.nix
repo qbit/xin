@@ -1,9 +1,11 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfgMgr = config.configManager;
   cfgRouter = config.configManager.router;
   pfConf = pkgs.writeTextFile {
@@ -63,12 +65,12 @@ with lib; let
 
   interfaceOptions = mkOptionType { name = "interface text"; };
 
-  interfaceFiles = mapAttrs'
-    (name: value:
-      nameValuePair "configManager/router/hostname.${name}" {
-        text = value.text + "\n";
-      })
-    cfgRouter.interfaces;
+  interfaceFiles = mapAttrs' (
+    name: value:
+    nameValuePair "configManager/router/hostname.${name}" {
+      text = value.text + "\n";
+    }
+  ) cfgRouter.interfaces;
 in
 {
   options = {
@@ -95,7 +97,10 @@ in
         services = mkOption {
           type = types.listOf types.str;
           default = [ ];
-          example = [ "dhcpd" "unbound" ];
+          example = [
+            "dhcpd"
+            "unbound"
+          ];
           description = ''
             Services to run on the router (rcctl enable XXX, rcctl start XXX).
           '';
@@ -140,14 +145,13 @@ in
   };
 
   config = lib.mkIf cfgMgr.enable {
-    environment.etc =
-      {
-        "configManager/router/pf.conf".text = builtins.readFile pfConf;
-        "configManager/router/managed_interfaces".text =
-          (concatMapStringsSep "\n") (h: "hostname.${h}")
-            (builtins.attrNames config.configManager.router.interfaces)
-          + "\n";
-      }
-      // interfaceFiles;
+    environment.etc = {
+      "configManager/router/pf.conf".text = builtins.readFile pfConf;
+      "configManager/router/managed_interfaces".text =
+        (concatMapStringsSep "\n") (h: "hostname.${h}") (
+          builtins.attrNames config.configManager.router.interfaces
+        )
+        + "\n";
+    } // interfaceFiles;
   };
 }

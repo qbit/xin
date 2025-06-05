@@ -1,22 +1,25 @@
-{ pkgs
-, config
-, xinlib
-, ...
+{
+  pkgs,
+  config,
+  xinlib,
+  ...
 }:
 let
   inherit (xinlib) todo;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ] ++ config.myconf.managementPubKeys;
-  myKodi = pkgs.kodi.withPackages (kp: with kp; [
-    certifi
-    infotagger
-    invidious
-    jellyfin
-    keymap
-    sendtokodi
-    somafm
-  ]);
+  myKodi = pkgs.kodi.withPackages (
+    kp: with kp; [
+      certifi
+      infotagger
+      invidious
+      jellyfin
+      keymap
+      sendtokodi
+      somafm
+    ]
+  );
 in
 {
   _module.args.isUnstable = false;
@@ -112,7 +115,11 @@ in
         openssh.authorizedKeys.keys = pubKeys;
         shell = pkgs.zsh;
         isNormalUser = true;
-        extraGroups = [ "dialout" "plugdev" "audio" ];
+        extraGroups = [
+          "dialout"
+          "plugdev"
+          "audio"
+        ];
       };
     };
   };

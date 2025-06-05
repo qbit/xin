@@ -1,11 +1,12 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, matplotlib
-, folium
-, datetime
-, gpsbabel
-, ...
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  matplotlib,
+  folium,
+  datetime,
+  gpsbabel,
+  ...
 }:
 buildPythonPackage {
   pname = "watchmap";

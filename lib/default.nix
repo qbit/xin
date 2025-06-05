@@ -1,59 +1,60 @@
 { lib, ... }:
 let
-  inherit (builtins) toString readFile fromJSON filter;
-  getPrStatus = pr:
+  inherit (builtins)
+    toString
+    readFile
+    fromJSON
+    filter
+    ;
+  getPrStatus =
+    pr:
     let
       prstr = toString pr;
       prStatus = fromJSON (readFile ../pull_requests/${prstr}.json);
     in
     prStatus;
   prIsOpen = {
-    str = pr: a:
+    str =
+      pr: a:
       let
         prStatus = getPrStatus pr;
       in
-      if prStatus.status == "open"
-      then
-        lib.warn
-          "PR: ${toString pr} (${prStatus.title}) is open.. disabling option"
-          null
-      else a;
-    option = pr: a:
-      let
-        prStatus = getPrStatus pr;
-      in
-      if prStatus.status == "open"
-      then a
-      else { };
-    list = pr: a:
-      let prStatus = getPrStatus pr;
-      in
-      if prStatus.status == "open"
-      then a
-      else [ ];
-
-    pkg = pr: localPkg: upstreamPkg:
-      let
-        prStatus = getPrStatus pr;
-      in
-      if prStatus.status == "open"
-      then localPkg
+      if prStatus.status == "open" then
+        lib.warn "PR: ${toString pr} (${prStatus.title}) is open.. disabling option" null
       else
-        lib.warn
-          "PR: ${toString pr} (${prStatus.title}) is complete, ignoring pkg..."
-          upstreamPkg;
-
-    overlay = pr: overlay:
+        a;
+    option =
+      pr: a:
       let
         prStatus = getPrStatus pr;
       in
-      if pr == 0 || prStatus.status == "open"
-      then overlay
+      if prStatus.status == "open" then a else { };
+    list =
+      pr: a:
+      let
+        prStatus = getPrStatus pr;
+      in
+      if prStatus.status == "open" then a else [ ];
+
+    pkg =
+      pr: localPkg: upstreamPkg:
+      let
+        prStatus = getPrStatus pr;
+      in
+      if prStatus.status == "open" then
+        localPkg
       else
-        lib.warn "PR: ${
-          toString pr
-        } (${prStatus.title}) is complete, ignoring overlay..."
-          (_: _: { });
+        lib.warn "PR: ${toString pr} (${prStatus.title}) is complete, ignoring pkg..." upstreamPkg;
+
+    overlay =
+      pr: overlay:
+      let
+        prStatus = getPrStatus pr;
+      in
+      if pr == 0 || prStatus.status == "open" then
+        overlay
+      else
+        lib.warn "PR: ${toString pr} (${prStatus.title}) is complete, ignoring overlay..." (_: _: { });
   };
 
   todo = msg: lib.warn "TODO: ${msg}";
@@ -71,7 +72,9 @@ let
     value = {
       script = mkCronScript "${job.name}_script" job.script;
       inherit (job) startAt path;
-      serviceConfig = { Type = "oneshot"; };
+      serviceConfig = {
+        Type = "oneshot";
+      };
     };
   };
   jobToService = job: {
@@ -85,7 +88,8 @@ let
       };
     };
   };
-  buildShell = pkgs:
+  buildShell =
+    pkgs:
     pkgs.mkShell {
       shellHook = ''
         PS1='\u@\h:\w; '
@@ -116,7 +120,8 @@ let
   # Set our configurationRevison based on the status of our git repo.
   # If the repo is dirty, disable autoUpgrade as it means we are
   # testing something.
-  buildVer = self:
+  buildVer =
+    self:
     let
       state = self.rev or "DIRTY";
     in

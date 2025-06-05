@@ -1,8 +1,10 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
-with lib; {
+with lib;
+{
   options = {
     autoUpdate = {
       enable = mkOption {
@@ -35,14 +37,13 @@ with lib; {
 
     # Always add our host alias or we run into a bootstrap issue
     (mkIf config.needsDeploy.enable {
-      programs.ssh.extraConfig =
-        ''
-          Host xin-secrets-ro
-            IdentityFile ${config.sops.secrets.xin_secrets_deploy_key.path}
-            User gitea
-            Port 2222
-            Hostname git.tapenet.org
-        '';
+      programs.ssh.extraConfig = ''
+        Host xin-secrets-ro
+          IdentityFile ${config.sops.secrets.xin_secrets_deploy_key.path}
+          User gitea
+          Port 2222
+          Hostname git.tapenet.org
+      '';
     })
   ];
 }

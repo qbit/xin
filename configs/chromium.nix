@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   defaultProfile = lib.filterAttrs (_: v: v != null) {
     DefaultSearchProviderEnabled = true;

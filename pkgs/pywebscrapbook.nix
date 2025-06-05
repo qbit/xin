@@ -1,14 +1,15 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, lxml
-, flask
-, werkzeug
-, jinja2
-, commonmark
-, setuptools
-, setuptools-scm
-, ...
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  lxml,
+  flask,
+  werkzeug,
+  jinja2,
+  commonmark,
+  setuptools,
+  setuptools-scm,
+  ...
 }:
 buildPythonPackage rec {
   pname = "PyWebScrapBook";
@@ -39,7 +40,6 @@ buildPythonPackage rec {
     jinja2
     commonmark
   ];
-
 
   meta = with lib; {
     homepage = "https://github.com/danny0838/PyWebScrapBook";

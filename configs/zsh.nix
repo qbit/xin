@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   config = {
     programs.zsh.interactiveShellInit = ''
       export NO_COLOR=1

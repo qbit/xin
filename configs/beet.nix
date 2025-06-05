@@ -22,8 +22,18 @@ let
     };
     original_date = true;
     per_disc_numbering = "no";
-    clutter = [ "Thumbs.DB" ".DS_Store" "*.m3u" ".pls" "*.jpg" ];
-    ignore = [ ".*" "*~" "System Volume Information" ];
+    clutter = [
+      "Thumbs.DB"
+      ".DS_Store"
+      "*.m3u"
+      ".pls"
+      "*.jpg"
+    ];
+    ignore = [
+      ".*"
+      "*~"
+      "System Volume Information"
+    ];
     threaded = true;
     timeout = 5;
     verbose = 0;
@@ -112,7 +122,9 @@ let
       overwrite = true;
       albumgain = true;
     };
-    scrub = { auto = true; };
+    scrub = {
+      auto = true;
+    };
     lastgenre = {
       whitelist = "~/.config/beets/genres.txt";
       canonical = "~/.config/beets/genres-tree.yaml";

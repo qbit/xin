@@ -1,8 +1,9 @@
-{ pkgs
-, config
-, lib
-, inputs
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
 }:
 let
   tsAddr = "100.84.170.57";
@@ -31,7 +32,10 @@ in
     };
     kernelPackages = pkgs.linuxPackages_latest;
 
-    binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "riscv64-linux"
+    ];
   };
   nixpkgs.config.allowUnsupportedSystem = true;
 
@@ -40,7 +44,12 @@ in
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 10300 10200 10400 ];
+      allowedTCPPorts = [
+        22
+        10300
+        10200
+        10400
+      ];
       checkReversePath = "loose";
     };
   };
@@ -154,10 +163,17 @@ in
 
   users = {
     users = {
-      root = { openssh.authorizedKeys.keys = pubKeys; };
+      root = {
+        openssh.authorizedKeys.keys = pubKeys;
+      };
       qbit = {
         openssh.authorizedKeys.keys = pubKeys;
-        extraGroups = [ "dialout" "libvirtd" "docker" "plugdev" ];
+        extraGroups = [
+          "dialout"
+          "libvirtd"
+          "docker"
+          "plugdev"
+        ];
       };
     };
   };

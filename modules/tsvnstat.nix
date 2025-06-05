@@ -1,10 +1,12 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
-with pkgs; let
+with pkgs;
+let
   cfg = config.services.tsvnstat;
   inherit (inputs.tsvnstat.packages.${pkgs.system}) tsvnstat;
 in
@@ -14,7 +16,12 @@ in
       enable = mkEnableOption "Enable tsvnstat";
 
       user = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "tsvnstat";
         description = ''
           The user the service will use.
@@ -22,7 +29,12 @@ in
       };
 
       keyPath = mkOption {
-        type = with types; oneOf [ path str ];
+        type =
+          with types;
+          oneOf [
+            path
+            str
+          ];
         default = "";
         description = ''
           Path to the TS API key file
@@ -38,7 +50,12 @@ in
       };
 
       group = mkOption {
-        type = with types; oneOf [ str int ];
+        type =
+          with types;
+          oneOf [
+            str
+            int
+          ];
         default = "tsvnstat";
         description = ''
           The user the service will use.
@@ -87,7 +104,9 @@ in
         CacheDirectoryMode = "0755";
 
         ExecStart = ''
-          ${cfg.package}/bin/tsvnstat -vnstati ${pkgs.vnstat}/bin/vnstati -name ${cfg.nodeName} ${lib.optionalString (cfg.keyPath != "") "-key ${cfg.keyPath}"}
+          ${cfg.package}/bin/tsvnstat -vnstati ${pkgs.vnstat}/bin/vnstati -name ${cfg.nodeName} ${
+            lib.optionalString (cfg.keyPath != "") "-key ${cfg.keyPath}"
+          }
         '';
       };
     };
