@@ -1,7 +1,7 @@
 {
   description = "thing: stuff and things";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-24.11";
+  inputs.nixpkgs.url = "nixpkgs/nixos-25.05";
 
   outputs =
     {
