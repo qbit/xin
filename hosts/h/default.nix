@@ -58,8 +58,6 @@ in
     };
   };
 
-  tailscale.sshOnly = true;
-
   sops.secrets = {
     gqrss_token = {
       owner = config.users.users.qbit.name;
