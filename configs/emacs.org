@@ -221,7 +221,6 @@ Switch various defaults to be more comfortable for myself.
          auto-mode-alist))
   (setq auth-sources
         '("/run/secrets/netrc"))
-  (auth-source-op-enable)
 #+end_src
 
 Use spelling and auto-fill when we are in text mode.
