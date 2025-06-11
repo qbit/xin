@@ -134,8 +134,7 @@ in
           "dom.event.clipboardevents.enabled" = false;
           "dom.serviceWorkers.enabled" = false;
 
-          # This causes some issues with a few things I use
-          #"media.peerconnection.enabled" = false;
+          "media.peerconnection.enabled" = false;
 
           "browser.aboutConfig.showWarning" = false;
           "browser.contentblocking.category" = "strict";
