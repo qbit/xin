@@ -72,6 +72,12 @@ in
           name = "admin";
           root = "~/src/xin";
         }
+        {
+          name = "IRC";
+          commands = [
+            "irssi"
+          ];
+        }
       ];
     })
     (mkSmugEntry "tstart" {

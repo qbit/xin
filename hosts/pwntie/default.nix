@@ -69,6 +69,7 @@ in
   environment.systemPackages = with pkgs; [
     rtl-sdr
     direwolf
+    irssi
   ];
 
   xinCI = {

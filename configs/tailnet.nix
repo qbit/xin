@@ -101,6 +101,7 @@ let
           {
             action = "accept";
             src = [
+              "pwntie"
               "tag:mobile"
               "tag:laptop"
             ];
