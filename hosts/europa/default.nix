@@ -20,6 +20,14 @@ let
       ];
     }
     {
+      name = "fynado-stopper";
+      script = "echo disable | nc -U ~/.fynado.sock";
+      startAt = "Mon..Fri 15:00";
+      path = with pkgs; [
+        netcat
+      ];
+    }
+    {
       name = "brain";
       script = "cd ~/Brain && git sync";
       startAt = "*:0/2";
