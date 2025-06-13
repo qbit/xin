@@ -12,6 +12,14 @@ let
   pywebscrapbook = pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
   jobs = [
     {
+      name = "fynado-starter";
+      script = "echo enable | nc -U ~/.fynado.sock";
+      startAt = "Mon..Fri 07:00";
+      path = with pkgs; [
+        netcat
+      ];
+    }
+    {
       name = "brain";
       script = "cd ~/Brain && git sync";
       startAt = "*:0/2";
