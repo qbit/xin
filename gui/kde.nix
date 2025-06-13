@@ -64,16 +64,27 @@ with pkgs;
         NIXOS_OZONE_WL = 1;
       };
       systemPackages = with kdePackages; [
+        (pkgs.callPackage ../pkgs/krunner-krha.nix { })
+        evolutionWithPlugins
+        evolution-ews
         akonadi-calendar-tools
+        discover
+        haruna
+        kcalc
         kcolorchooser
         kconnect
-        kontact
         kcontacts
+        kmail
+        kmail-account-wizard
+        kolourpaint
+        kontact
         konversation
         korganizer
         kzones
         merkuro
-        (pkgs.callPackage ../pkgs/krunner-krha.nix { })
+        partitionmanager
+        sddm-kcm
+        wayland-utils
         wl-clipboard
       ];
     };
