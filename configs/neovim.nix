@@ -31,7 +31,6 @@ let
     elm-vim
     fugitive
     fzf-vim
-    gleam-vim
     haskell-vim
     neoformat
     neogit
