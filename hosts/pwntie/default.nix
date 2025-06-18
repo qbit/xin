@@ -42,6 +42,11 @@ in
   networking = {
     hostName = "pwntie";
     networkmanager.enable = true;
+    hosts = {
+      "100.83.77.133" = [
+        "bounce.bold.daemon"
+      ];
+    };
     firewall = {
       enable = true;
       allowedTCPPorts = [
