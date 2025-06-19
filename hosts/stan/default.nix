@@ -333,6 +333,9 @@ in
   };
 
   services = {
+    tailscale = {
+      extraDaemonFlags = [ ];
+    };
     ollama = {
       enable = true;
     };

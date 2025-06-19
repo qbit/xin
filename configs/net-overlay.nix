@@ -30,7 +30,7 @@ with lib;
       services = {
         tailscale = {
           enable = mkDefault true;
-          extraDaemonFlags = [
+          extraDaemonFlags = mkDefault [
             "--no-logs-no-support"
           ];
         };
