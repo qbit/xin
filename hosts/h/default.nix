@@ -293,27 +293,8 @@ in
       mcchunkie = {
         after = [
           "network-online.target"
-          "signal-cli.service"
           "tailscaled.service"
         ];
-        serviceConfig = {
-          ExecStart = lib.mkForce "${pkgs.mcchunkie}/bin/mcchunkie -db /var/lib/mcchunkie/db";
-        };
-      };
-      mcchunkie-perms-fix = {
-        after = [ "mcchunkie.service" ];
-        serviceConfig = {
-          Type = "oneshot";
-          User = "root";
-          ExecStart =
-            let
-              permFixScript = pkgs.writeShellScript "permFix" ''
-                ${pkgs.coreutils}/bin/chmod g+rx ${config.services.signal-cli.dataDir};
-                ${pkgs.coreutils}/bin/chmod g+rw ${config.services.signal-cli.socketPath};
-              '';
-            in
-            permFixScript;
-        };
       };
       nomadnet = {
         description = "nomadnet";
@@ -568,7 +549,13 @@ in
       smtputf8_enable = no
     '';
     smartd.enable = false;
-    mcchunkie.enable = true;
+    mcchunkie = {
+      enable = true;
+      disabledChats = [
+        "Signal"
+        "Matrix"
+      ];
+    };
     navidrome = {
       enable = true;
       settings = {
