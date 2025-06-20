@@ -238,7 +238,6 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-      archivebox
       tmux
       mosh
       apg
@@ -379,12 +378,6 @@ in
           reverseName = "immich";
           reversePort = config.services.immich.port;
           reverseIP = config.services.immich.host;
-        };
-        "archive-service" = {
-          enable = true;
-          reverseName = "archive";
-          reversePort = 8000;
-          reverseIP = "127.0.0.1";
         };
       };
     };
@@ -979,18 +972,6 @@ in
 
   systemd = {
     services = {
-      archivebox = {
-        description = "archivebox";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          User = "qbit";
-          Type = "forking";
-          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s ArchiveBox -d 'cd /home/qbit/archive && ${pkgs.archivebox}/bin/archivebox server'";
-          ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t ArchiveBox";
-        };
-      };
       tsns = {
         serviceConfig = {
           Restart = "always";
