@@ -434,7 +434,6 @@ in
       jujutsu
       klavaro
       koreader
-      linphone
       ltunify
       minicom
       mu
