@@ -9,13 +9,13 @@
 
     lix-module = {
       url = "git+https://git.lix.systems/lix-project/nixos-module";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
-        nixpkgs.follows = "unstable";
+        nixpkgs.follows = "unstableSmall";
       };
     };
 
@@ -52,19 +52,19 @@
 
     mcchunkie = {
       url = "git+https://codeberg.org/qbit/mcchunkie?ref=main";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     microca = {
       url = "git+https://codeberg.org/qbit/microca";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     gostart = {
       url = "git+https://codeberg.org/qbit/gostart";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     kogs = {
       url = "git+https://codeberg.org/qbit/kogs";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     pr-status = {
       url = "git+https://codeberg.org/qbit/pr-status-pl";
@@ -72,43 +72,43 @@
     };
     xin-status = {
       url = "git+https://codeberg.org/qbit/xin-status";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     beyt = {
       url = "git+https://codeberg.org/qbit/beyt";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     tsvnstat = {
       url = "git+https://codeberg.org/qbit/tsvnstat";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     pots = {
       url = "git+https://codeberg.org/qbit/pots";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     po = {
       url = "git+https://codeberg.org/qbit/po";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     tsns = {
       url = "git+https://codeberg.org/qbit/tsns";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     ts-reverse-proxy = {
       url = "git+https://codeberg.org/qbit/ts-reverse-proxy";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     traygent = {
       url = "git+https://codeberg.org/qbit/traygent";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     fynado = {
       url = "git+https://codeberg.org/qbit/fynado";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     calnow = {
       url = "git+https://codeberg.org/qbit/calnow";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstableSmall";
     };
     gqrss = {
       url = "git+https://codeberg.org/qbit/gqrss";
@@ -323,7 +323,7 @@
             (import ./installer.nix)
             xin-secrets.nixosModules.sops
 
-            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
+            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
           ];
         };
       };
@@ -359,17 +359,7 @@
           watchmap = spkgs.python3Packages.callPackage ./pkgs/watchmap.nix {
             inherit spkgs;
           };
-          kobuddy = upkgs.python3Packages.callPackage ./pkgs/kobuddy.nix {
-            inherit upkgs;
-          };
-          ghexport = upkgs.python3Packages.callPackage ./pkgs/ghexport.nix {
-            inherit upkgs;
-          };
-          hpi = upkgs.python3Packages.callPackage ./pkgs/hpi.nix { inherit upkgs; };
           ble-serial = upkgs.python3Packages.callPackage ./pkgs/ble-serial.nix { inherit upkgs; };
-          promnesia = upkgs.python3Packages.callPackage ./pkgs/promnesia.nix {
-            inherit upkgs;
-          };
           pywebscrapbook = upkgs.python3Packages.callPackage ./pkgs/pywebscrapbook.nix {
             inherit upkgs;
           };

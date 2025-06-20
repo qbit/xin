@@ -3,7 +3,7 @@
     "beyt": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -39,7 +39,7 @@
     "calnow": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -151,7 +151,7 @@
     "fynado": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -219,7 +219,7 @@
     "gostart": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -255,7 +255,7 @@
     "kogs": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -292,7 +292,7 @@
         "flakey-profile": "flakey-profile",
         "lix": "lix",
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -312,7 +312,7 @@
     "mcchunkie": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -333,7 +333,7 @@
     "microca": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -406,7 +406,7 @@
     "po": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -426,7 +426,7 @@
     "pots": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -521,7 +521,7 @@
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -540,11 +540,11 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1750128813,
-        "narHash": "sha256-qe8/YMENFnJ/AQaiAdQ0E8GMntTHa2Zf93B3Ub2T4Uk=",
+        "lastModified": 1750308872,
+        "narHash": "sha256-sq3hDhpaMFb3owb5W5G7tJCsnL8pG/OdJGV4xd/4qGA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b1a13f5afee14b4f417e8137733ccecb2de6475e",
+        "rev": "c49ea660769a56e0909e60b85ecd3e31cb64daf1",
         "type": "github"
       },
       "original": {
@@ -572,7 +572,7 @@
     "traygent": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -592,7 +592,7 @@
     "ts-reverse-proxy": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -612,7 +612,7 @@
     "tsns": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -632,7 +632,7 @@
     "tsvnstat": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
@@ -651,11 +651,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1750165643,
-        "narHash": "sha256-4EoO3zmA0B3qLKkIcLHZR5JIopODXCC2fdqZ5BHSABA=",
+        "lastModified": 1750362864,
+        "narHash": "sha256-VxqpvWrEVSrY0PLe93blYiTBsTbR1kYIbyDLJY88sTg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "239b64f3c5035cbc691a8a4c1aa92990d421733e",
+        "rev": "b43f9aaebca9ddfce8d5d93c5e7df1ead80cff71",
         "type": "github"
       },
       "original": {
@@ -711,7 +711,7 @@
     "xin-status": {
       "inputs": {
         "nixpkgs": [
-          "unstable"
+          "unstableSmall"
         ]
       },
       "locked": {
