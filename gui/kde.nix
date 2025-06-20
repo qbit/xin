@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  isUnstable,
   ...
 }:
 let
@@ -12,9 +11,6 @@ let
     mkOption
     types
     ;
-  kconnect = mkIf config.kdeConnect.enable (
-    if isUnstable then pkgs.kdePackages.kdeconnect-kde else pkgs.plasma5Packages.kdeconnect-kde
-  );
 in
 with pkgs;
 {
@@ -72,7 +68,7 @@ with pkgs;
         haruna
         kcalc
         kcolorchooser
-        kconnect
+        kdeconnect-kde
         kcontacts
         kmail
         kmail-account-wizard

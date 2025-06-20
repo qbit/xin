@@ -15,34 +15,9 @@ let
 
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr = pkgs.writeScriptBin "rpr" (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });
-  promnesia = pkgs.python3Packages.callPackage ../pkgs/promnesia.nix { inherit pkgs; };
   pywebscrapbook = pkgs.python3Packages.callPackage ../pkgs/pywebscrapbook.nix { inherit pkgs; };
-  hpi = pkgs.python3Packages.callPackage ../pkgs/hpi.nix { inherit pkgs; };
-  promnesiaService = {
-    promnesia = {
-      description = "Service for promnesia.server";
-      wantedBy = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      script = ''
-        ${promnesia}/bin/promnesia serve
-      '';
-    };
-  };
-  jobs = [
-    {
-      name = "promnesia-index";
-      script = "${promnesia}/bin/promnesia index";
-      startAt = "*:0/5";
-      path = [
-        promnesia
-        hpi
-      ];
-    }
-  ];
   fontSet = with pkgs; [
     go-font
-    #(callPackage ../pkgs/kurinto.nix {})
   ];
   traygentCmds = toJSON [
     {
@@ -160,12 +135,10 @@ with lib;
             glamoroustoolkit
             go-font
             govulncheck
-            hpi
             keepassxc
             mpv
             pcsctools
             plan9port
-            promnesia
             pywebscrapbook
             rage
             recoll
@@ -180,9 +153,6 @@ with lib;
       programs = {
         ladybird.enable = true;
       };
-
-      systemd.user.services =
-        (lib.listToAttrs (builtins.map xinlib.jobToUserService jobs)) // promnesiaService;
       security.rtkit.enable = true;
     })
     (mkIf config.pipewire.enable {

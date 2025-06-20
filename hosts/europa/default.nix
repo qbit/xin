@@ -471,7 +471,6 @@ in
       yt-dlp
 
       (callPackage ../../pkgs/ttfs.nix { })
-      (python3Packages.callPackage ../../pkgs/kobuddy.nix { })
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/zutty.nix { })
       (python3Packages.callPackage ../../pkgs/watchmap.nix { })

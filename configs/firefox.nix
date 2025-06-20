@@ -38,10 +38,6 @@ let
         "installation_mode" = "force_installed";
         "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/simple-tab-groups/latest.xpi";
       };
-      "{07c6b8e1-94f7-4bbf-8e91-26c0a8992ab5}" = {
-        "installation_mode" = "force_installed";
-        "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/promnesia/latest.xpi";
-      };
       "7esoorv3@alefvanoon.anonaddy.me" = {
         "installation_mode" = "force_installed";
         "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
@@ -175,30 +171,26 @@ let
     # Not yet working:
     "beacon.enabled" = false;
   };
-  defaultBrowser = (
-    pkgs.librewolf.override {
-      extraPolicies = policies;
-      extraPrefs = (
-        concatStringsSep "\n" (
-          attrValues (
-            mapAttrs (
-              key: val:
-              let
-                formattedVal =
-                  if isBool val then
-                    if val then "true" else "false"
-                  else if isString val then
-                    "'${val}'"
-                  else
-                    toString val;
-              in
-              "defaultPref('${key}', ${formattedVal});"
-            ) preferences
-          )
-        )
-      );
-    }
-  );
+  defaultBrowser = pkgs.librewolf.override {
+    extraPolicies = policies;
+    extraPrefs = concatStringsSep "\n" (
+      attrValues (
+        mapAttrs (
+          key: val:
+          let
+            formattedVal =
+              if isBool val then
+                if val then "true" else "false"
+              else if isString val then
+                "'${val}'"
+              else
+                toString val;
+          in
+          "defaultPref('${key}', ${formattedVal});"
+        ) preferences
+      )
+    );
+  };
 in
 {
   config = lib.mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
