@@ -350,6 +350,7 @@ in
       servers = {
         "readeck-service" = {
           enable = true;
+          funnel = true;
           reverseName = "readeck";
           reversePort = config.services.readeck.settings.server.port;
           reverseIP = "127.0.0.1";
