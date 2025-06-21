@@ -12,7 +12,10 @@ let
       acls = {
         nodeAttrs = [
           {
-            target = [ "immich" ];
+            target = [
+              "immich"
+              "readeck"
+            ];
             attr = [ "funnel" ];
           }
           {
@@ -82,6 +85,7 @@ let
           tsns = "100.73.115.100";
           tv = "100.118.196.38";
           printy = "100.82.59.95";
+          readeck = "100.106.16.7";
         };
 
         tagOwners = {
