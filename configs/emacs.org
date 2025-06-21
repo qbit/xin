@@ -448,7 +448,7 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 ** Ada
 
 #+begin_src emacs-lisp
-  (use-package ada-mode)
+  ;; (use-package ada-mode)
 #+end_src
 
 ** Lua
