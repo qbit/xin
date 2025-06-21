@@ -21,7 +21,7 @@ in
     myEmacs = {
       enable = lib.mkOption {
         description = "Enable my emacs stuff";
-        default = true;
+        default = false;
       };
     };
   };

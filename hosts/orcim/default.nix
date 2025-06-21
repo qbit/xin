@@ -103,7 +103,7 @@ in
     signal-desktop
   ];
 
-  kde.enable = true;
+  kdeMobile.enable = true;
   kdeConnect.enable = true;
 
   programs = {

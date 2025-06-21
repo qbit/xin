@@ -45,8 +45,6 @@ in
     kernelParams = [ "snd-intel-dspcfg.dsp_driver=3" ];
   };
 
-  myEmacs.enable = false;
-
   networking = {
     hostName = "tv";
     networkmanager.enable = true;

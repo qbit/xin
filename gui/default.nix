@@ -95,6 +95,8 @@ with lib;
 
       documentation.enable = true;
 
+      myEmacs.enable = true;
+
       # TODO: TEMP FIX
       systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = lib.mkForce [
         ""

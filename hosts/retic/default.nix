@@ -35,8 +35,6 @@ in
     (checkKill "elfutils")
   ];
 
-  myEmacs.enable = false;
-
   boot = {
     initrd.availableKernelModules = [
       "usbhid"
