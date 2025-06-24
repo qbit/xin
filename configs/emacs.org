@@ -1,8 +1,17 @@
+:PROPERTIES:
+:ID:       b9359672-0126-4fcd-a3bf-8b0c0dcd4d73
+:END:
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 #+TITLE: Emacs Configuration
 * Extra Functionality
+:PROPERTIES:
+:ID:       2dc993e7-cb89-4ba8-a418-b51464807b6e
+:END:
 
 ** op commandline integration
+:PROPERTIES:
+:ID:       77e5b779-e31e-4b1c-a864-76f2c4c1a8d0
+:END:
 
 #+begin_src emacs-lisp
 (require 'auth-source)
@@ -59,11 +68,17 @@
 #+end_src
 
 * Literate emacs configuration
+:PROPERTIES:
+:ID:       63e8f578-4726-47ea-84ee-31146bad6fd2
+:END:
 
 I can never rembember what various configs do. Jumping on this literate emacs
 config to see if it helps!
 
 ** Instance Specific
+:PROPERTIES:
+:ID:       2b0c380e-411a-4c7a-b4a9-892b0f5f3742
+:END:
 
 Sometimes I need to execute some other things on different machines. This lets
 me include an extra file to extend things a bit.
@@ -75,6 +90,9 @@ me include an extra file to extend things a bit.
 #+end_src
 
 ** Start the emacs server
+:PROPERTIES:
+:ID:       fd3e2824-e62c-4812-9919-6b7ed9af0942
+:END:
 
 Starting as a server lets me connect externally to do things like change
 themes, save buffers via cron and other such dumbary!
@@ -86,7 +104,13 @@ themes, save buffers via cron and other such dumbary!
 #+end_src
 
 ** Interface and Behavior
+:PROPERTIES:
+:ID:       c3ba44d8-5c91-454f-98bf-803290f5e2a1
+:END:
 *** Interface
+:PROPERTIES:
+:ID:       7ba540d9-275f-4267-9d86-46db134d2c01
+:END:
 
 Global font
 #+begin_src emacs-lisp
@@ -106,6 +130,9 @@ I know I am in emacs, don't need to see the startup screen.
 #+end_src
 
 **** Use UTF8 where ever possible
+:PROPERTIES:
+:ID:       84a57366-d670-4656-a65b-bb65d0aafd4c
+:END:
 #+begin_src emacs-lisp
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -114,6 +141,9 @@ I know I am in emacs, don't need to see the startup screen.
 #+end_src
 
 **** Change various UI bits
+:PROPERTIES:
+:ID:       87e81f85-c239-4381-ba8f-36fbeba9f32f
+:END:
 #+begin_src emacs-lisp
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -123,6 +153,9 @@ I know I am in emacs, don't need to see the startup screen.
 #+end_src
 
 **** direnv
+:PROPERTIES:
+:ID:       dfde4ab6-2bfd-4fa1-8e2f-f943dce10c0e
+:END:
 
 #+begin_src emacs-lisp
   (use-package direnv
@@ -131,18 +164,27 @@ I know I am in emacs, don't need to see the startup screen.
 #+end_src
 
 **** project.el
+:PROPERTIES:
+:ID:       194d6c86-cb31-4563-820c-efbf72853313
+:END:
 
 #+begin_src emacs-lisp
   (setq project-list-file (expand-file-name "~/.emacs.d/projects"))
 #+end_src
 
 **** transient
+:PROPERTIES:
+:ID:       fff55527-096f-41bd-8aa2-535c089aa06d
+:END:
 
 #+begin_src emacs-lisp
   (setq transient-history-file (expand-file-name "~/.emacs.d/transient"))
 #+end_src
 
 **** eww
+:PROPERTIES:
+:ID:       7a31ea70-4a38-444f-9fbc-e72330d293a9
+:END:
 
 [2025-04-02 Wed] Since switching to rcirc and elfeed.. it's nice to be able to
 view links directly in emacs. This sets the default to be eww.. I can use ~&~ to
@@ -153,6 +195,9 @@ open in the external browser.
 #+end_src
 
 **** scrolly scroll scroll
+:PROPERTIES:
+:ID:       2daea08b-1cba-4bc8-96ec-0c590f2cf690
+:END:
 
 #+begin_src emacs-lisp
   (pixel-scroll-precision-mode)
@@ -160,6 +205,9 @@ open in the external browser.
 
 
 **** wayland copy / paste issues
+:PROPERTIES:
+:ID:       a17c42f7-e91c-4fb8-9491-88c97d55a0e1
+:END:
 
 [2025-04-18 Fri] it seems I have recently started having issues with wayland and
 copy / paste. It works initially - but after some time the buffers diverge.
@@ -187,6 +235,9 @@ The [[https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4][wiki]] has some info o
 #+end_src
 
 *** Common functionality
+:PROPERTIES:
+:ID:       837a6def-b743-40f0-8753-9b16bd8416d5
+:END:
 
 #+begin_src emacs-lisp
   (defun xin-no-check ()
@@ -195,6 +246,9 @@ The [[https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4][wiki]] has some info o
 #+end_src
 
 *** Behavior
+:PROPERTIES:
+:ID:       9100298b-44d4-4ddc-9d32-b4ce3a04a134
+:END:
 
 Switch various defaults to be more comfortable for myself.
 
@@ -235,6 +289,9 @@ Use spelling and auto-fill when we are in text mode.
   (setq eshell-history-file-name (expand-file-name "~/.emacs.d/eshell/history"))
 #+end_src
 ** Unset custom-file
+:PROPERTIES:
+:ID:       9f381acd-3889-4808-b1c3-96b502c5cfb5
+:END:
 
 The customization file mostly just causes churn in the SCM so we disable it
 here.
@@ -243,8 +300,14 @@ here.
 #+end_src
 
 * Packages
+:PROPERTIES:
+:ID:       ab08313d-8258-478b-ba7c-f131dc7f56a7
+:END:
 
 ** ob-mermaid
+:PROPERTIES:
+:ID:       867fa1c6-ce4d-4f1e-a60d-4e99c885cd91
+:END:
 
 #+begin_src emacs-lisp
   (use-package ob-mermaid)
@@ -252,23 +315,35 @@ here.
 #+end_src
 
 ** yaml
+:PROPERTIES:
+:ID:       0ea42ef6-f505-4ec5-af59-db8556920f48
+:END:
 
 #+begin_src emacs-lisp
   (use-package yaml-mode)
 #+end_src
 
 ** rust-mode
+:PROPERTIES:
+:ID:       002b3f67-4bbb-40c3-9bc3-1ca9c809b094
+:END:
 #+begin_src emacs-lisp
   (use-package rust-mode)
 #+end_src
 
 ** uxntal
+:PROPERTIES:
+:ID:       05ac40fb-f95d-45d0-82b0-a94367653bd9
+:END:
 
 #+begin_src emacs-lisp
   (use-package uxntal-mode)
 #+end_src
 
 ** breadcrumb
+:PROPERTIES:
+:ID:       a271e79c-010a-4418-a12d-e7d65c14e085
+:END:
 
 Handy breadcrumbs for seeing where things are in the LSP.
 
@@ -277,6 +352,9 @@ Handy breadcrumbs for seeing where things are in the LSP.
 #+end_src
 
 ** ollama
+:PROPERTIES:
+:ID:       8ce83826-c270-4ca1-b1e7-c013a747a975
+:END:
 
 Simple wrapper for ~ollama~ that lets me pipe regions and what not into various buffers.
 
@@ -290,6 +368,9 @@ Simple wrapper for ~ollama~ that lets me pipe regions and what not into various 
 #+end_src
 
 ** web-mode
+:PROPERTIES:
+:ID:       96f95d47-78fb-4fa2-88e1-c9e998b163c1
+:END:
 
 #+begin_src emacs-lisp
   (use-package web-mode
@@ -302,6 +383,9 @@ Simple wrapper for ~ollama~ that lets me pipe regions and what not into various 
 #+end_src
 
 ** scpaste
+:PROPERTIES:
+:ID:       cb5d91f6-352e-48cf-8304-3cc47c857977
+:END:
 
 Post pastes to https://paste.suah.dev
 
@@ -312,6 +396,9 @@ Post pastes to https://paste.suah.dev
 #+end_src
 
 ** htmlize
+:PROPERTIES:
+:ID:       0975c7dc-bdd1-4358-8a35-65ce1354b3f7
+:END:
 
 This is needed for publishing org stuff
 
@@ -320,6 +407,9 @@ This is needed for publishing org stuff
 #+end_src
 
 ** parchment-theme
+:PROPERTIES:
+:ID:       75dc99d8-4790-47e2-8a91-7e497406de6c
+:END:
 This is a nice theme that resembles acme in plan9. Minimal.
 
 #+begin_src emacs-lisp
@@ -328,6 +418,9 @@ This is a nice theme that resembles acme in plan9. Minimal.
 #+end_src
 
 ** ivy
+:PROPERTIES:
+:ID:       587ef327-b68d-423b-842c-3a14a12f07bf
+:END:
 
 ~ivy~ is fantastic. It gives me nice visual search for buffers,
 code.. etc. Combined with ~smex~ for sorting (shows last used things first) and
@@ -347,6 +440,9 @@ code.. etc. Combined with ~smex~ for sorting (shows last used things first) and
 #+end_src
 
 ** magit
+:PROPERTIES:
+:ID:       87a444d1-b786-4e2d-8a9d-8e5e43c63206
+:END:
 
 Magit is a awesome. Not sure what else to say about it. :P
 
@@ -361,6 +457,9 @@ Magit is a awesome. Not sure what else to say about it. :P
 #+end_src
 
 ** lsp
+:PROPERTIES:
+:ID:       7619e01c-121b-497e-8b43-5f548626cfc6
+:END:
 
 Use ~eglot~ for lsp stuff. It's built in and shows a bit more information for
 auto-completion stuff.
@@ -392,6 +491,9 @@ auto-completion stuff.
 #+end_src
 
 ** company and friends
+:PROPERTIES:
+:ID:       7327dc57-0f1d-4cff-80c3-fac203aa2626
+:END:
 
 ~company~ allows for auto-completion of various things. It can interface with ~lsp-mode~ to complete
 things like Go.
@@ -407,6 +509,9 @@ things like Go.
 #+end_src
 
 ** gitgutter
+:PROPERTIES:
+:ID:       bd3213fa-acb4-49ef-8f8a-a7710ce4984a
+:END:
 This gives me a nice in-ui way to see modifications and what not.
 
 #+begin_src emacs-lisp
@@ -420,6 +525,9 @@ This gives me a nice in-ui way to see modifications and what not.
 #+end_src
 
 ** shell
+:PROPERTIES:
+:ID:       45907b9c-125c-4c73-ac4c-2bb2c199a76a
+:END:
 
 I don't often use the shell from emacs, but when I do these bits make it
 easier for me to treat it like a regular shell.
@@ -438,26 +546,41 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 #+end_src
 
 * Language Configurations
+:PROPERTIES:
+:ID:       4d31b983-3fd6-408f-9488-b2215c005c63
+:END:
 
 ** Forth
+:PROPERTIES:
+:ID:       75ab5012-b901-43ca-aaac-421ff542763c
+:END:
 
 #+begin_src emacs-lisp
   (use-package forth-mode)
 #+end_src
 
 ** Ada
+:PROPERTIES:
+:ID:       0847485a-c6a3-4098-b096-f2dab861a65b
+:END:
 
 #+begin_src emacs-lisp
   ;; (use-package ada-mode)
 #+end_src
 
 ** Lua
+:PROPERTIES:
+:ID:       5bbf0216-a279-419d-a420-9131ed0d56f0
+:END:
 
 #+begin_src emacs-lisp
   (use-package lua-mode)
 #+end_src
 
 ** scheme
+:PROPERTIES:
+:ID:       92990292-8fce-4c3f-92f8-e48b43979cda
+:END:
 
 #+begin_src emacs-lisp
   (use-package geiser)
@@ -466,6 +589,9 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 #+end_src
 
 ** OCaml
+:PROPERTIES:
+:ID:       d4bee8fb-db63-4ac9-91b7-ab8b3be5e57b
+:END:
 
 #+begin_src emacs-lisp
   (use-package ocamlformat
@@ -481,14 +607,23 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 #+end_src
 
 ** firewall stuff
+:PROPERTIES:
+:ID:       b9af3ace-8fef-4239-adc4-24dce2ea04b1
+:END:
 
 *** nftables
+:PROPERTIES:
+:ID:       7fce62a2-f105-46a6-a001-800e665abf4f
+:END:
 
 #+begin_src emacs-lisp
   (use-package nftables-mode)
 #+end_src
 
 ** Shell
+:PROPERTIES:
+:ID:       a12d920c-d93a-4bee-a643-9e32d796134e
+:END:
 
 #+begin_src emacs-lisp
   (use-package shfmt)
@@ -496,12 +631,18 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 #+end_src
 
 ** Typescript
+:PROPERTIES:
+:ID:       bf197863-f739-4f67-80a3-e1e583ebb93d
+:END:
 
 #+begin_src emacs-lisp
   (use-package typescript-mode)
 #+end_src
 
 ** Nix
+:PROPERTIES:
+:ID:       b2222546-8d4d-4e6b-8905-0988028e77c2
+:END:
 
 #+begin_src emacs-lisp
   (use-package nix-mode
@@ -509,20 +650,32 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 #+end_src
 
 ** Elm
+:PROPERTIES:
+:ID:       405c6f22-53fc-40c6-8513-334df1c16a39
+:END:
 
 #+begin_src emacs-lisp
   (use-package elm-mode)
 #+end_src
 
 ** Haskell
+:PROPERTIES:
+:ID:       8e14edd0-7e70-42a2-b69c-ffe19a69930e
+:END:
 
 #+begin_src emacs-lisp
   (use-package haskell-mode)
 #+end_src
 
 ** Go
+:PROPERTIES:
+:ID:       ff95f843-b8cd-4e07-985a-c2a4ee3896bb
+:END:
 
 *** go-add-tags
+:PROPERTIES:
+:ID:       3e152be1-4c73-4d67-a4ea-386ae537d3c4
+:END:
 
 This lets one select a ~struct~ or similar and auto add the ~`json:"NAME"`~ bits.
 
@@ -531,6 +684,9 @@ This lets one select a ~struct~ or similar and auto add the ~`json:"NAME"`~ bits
 #+end_src
 
 *** go-mode
+:PROPERTIES:
+:ID:       72c1f87f-1c69-470f-b7a9-5a3642eaa4a2
+:END:
 
 This allows for things like ~gofmt~ and auto adding / removing of imports.
 
@@ -546,6 +702,9 @@ This allows for things like ~gofmt~ and auto adding / removing of imports.
 #+end_src
 
 *** go-eldoc
+:PROPERTIES:
+:ID:       88db5063-f22c-4b0d-b6e1-e1fb3c64bced
+:END:
 
 This extends eldoc to be able to speak Go - quite handy for quickly looking
 up what things do.
@@ -557,16 +716,28 @@ up what things do.
 #+end_src
 
 * org-mode
+:PROPERTIES:
+:ID:       9609380e-e2d0-48f6-a240-f67acca87d15
+:END:
 
 Oh ~org-mode~. It's the reason I started using emacs.. and it's the reason I
 can't quit!
 
 ** Config
+:PROPERTIES:
+:ID:       b8cfd8d3-1422-4cf8-b284-aea6ae701bdd
+:END:
 #+begin_src emacs-lisp
   (require 'org-crypt)
+  (require 'org-id)
   (org-crypt-use-before-save-magic)
   (setq org-tags-exclude-from-inheritance '("crypt"))
   (setq org-crypt-key "35863350BFEAC101DB1A4AF01F81112D62A9ADCE")
+
+  (defun xin-org-add-ids ()
+    "Add ID properties to org files"
+    (interactive)
+    (org-map-entries 'org-id-get-create))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -576,6 +747,9 @@ can't quit!
      (latex    . t)))
 #+end_src
 ** Publish bits
+:PROPERTIES:
+:ID:       792ab95b-b796-4c25-a675-4845ffae1462
+:END:
 
 I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some recipes.
 
@@ -724,6 +898,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
   	 :section-numbers nil
   	 :html-link-home "http://bolddaemon.com"
   	 :html-link-up "../"
+  	 :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />"
   	 :style-include-default nil
   	 :with-title t
   	 :author-info nil
@@ -739,6 +914,9 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
 #+end_src
 
 ** Capture templates
+:PROPERTIES:
+:ID:       da112c38-c9c6-4579-ba42-8ea6dc4ce0b7
+:END:
 
 #+begin_src emacs-lisp
   (setq my-org-capture-templates
@@ -783,6 +961,9 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
 #+end_src
 
 ** org
+:PROPERTIES:
+:ID:       8ca36457-ab66-4ffc-bd18-903efcc63f1a
+:END:
 
 #+begin_src emacs-lisp
   (use-package org
@@ -812,13 +993,17 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
                               (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
                               (sequence "|" "CANCELED(c)")))
     (setq org-publish-project-alist my-org-publish-alist)
-    (setq org-capture-templates my-org-capture-templates))
+    (setq org-capture-templates my-org-capture-templates)
+    (add-hook 'org-mode-hook (lambda ()
+  			     (add-hook 'before-save-hook 'xin-org-add-ids nil 'local))))
   (use-package org-contrib)
   (use-package ox-rss)
-
 #+end_src
 
 *** Extra bits
+:PROPERTIES:
+:ID:       98e84516-59ad-4441-b541-baa174ffdf24
+:END:
 #+begin_src emacs-lisp
 (use-package org-journal
   :defer t
@@ -856,6 +1041,9 @@ Custom agenda commands for various things.
 #+end_src
 
 **** org-roam
+:PROPERTIES:
+:ID:       6af98b92-9562-46ac-8f14-0a5792ebb620
+:END:
 
 It took me a few tries to get used to using org-roam. I think I was over
 complicating using it.
@@ -903,6 +1091,9 @@ Extending org with the ability to transclude makes for a powerhouse!
 #+end_src
 
 * RSS
+:PROPERTIES:
+:ID:       842027db-4e8a-4d9b-80c9-b8fb7825a078
+:END:
 
 #+begin_src emacs-lisp
   (use-package elfeed)
@@ -923,8 +1114,14 @@ Extending org with the ability to transclude makes for a powerhouse!
 #+end_src
 
 * Mail
+:PROPERTIES:
+:ID:       428ef069-6c97-4fb9-83c2-f5f2bcea69c5
+:END:
 
 ** gnus
+:PROPERTIES:
+:ID:       01bfd3e1-9b66-43e0-806a-850cf14e791d
+:END:
 
 [2024-08-22 Thu] Might need to switch go gnus. mu4e has been not showing new
 mail for some things and having to sync state between two sources is a pita.
@@ -949,8 +1146,14 @@ mail for some things and having to sync state between two sources is a pita.
 #+end_src
 
 * mu4e
+:PROPERTIES:
+:ID:       eb029614-075a-4f8d-8f64-583667bbaccc
+:END:
 ~mu~ has been the best mail client for me on emacs.
 ** Initializing mu
+:PROPERTIES:
+:ID:       1d7e1d28-0577-47c2-b066-486ec34c1051
+:END:
 The defaults ~mu~ uses make no sense. ~~/.cache~ is for .. caching data, not
 persistent databases.. So we init things with sane defaults:
 #+begin_src shell
@@ -958,6 +1161,9 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
 #+end_src
 
 ** mu4e specific configs
+:PROPERTIES:
+:ID:       92d0499c-592e-4992-b67a-d1c8646e2b6b
+:END:
 #+begin_src emacs-lisp
   (use-package mu4e
     :init
@@ -1053,6 +1259,9 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
 #+end_src
 
 ** SMTP
+:PROPERTIES:
+:ID:       5b48d1b9-2fcd-475c-a9c8-51e4fcc5f454
+:END:
 
 #+begin_src emacs-lisp
   (require 'smtpmail)
@@ -1068,8 +1277,14 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
 #+end_src
 
 * Chat
+:PROPERTIES:
+:ID:       056f6b1e-0174-49c7-97ae-3e691a077a4c
+:END:
 
 ** IRC
+:PROPERTIES:
+:ID:       088a5a76-c22e-419b-a6b5-f514f6e2ddc5
+:END:
 
 #+begin_src emacs-lisp
   (setq
