@@ -8,7 +8,7 @@
     stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
 
     lix-module = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.1.tar.gz";
       inputs.nixpkgs.follows = "unstableSmall";
     };
 
