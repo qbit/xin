@@ -2,6 +2,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 
@@ -120,6 +121,10 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   hardware = {
+    amdgpu.opencl.enable = true;
+    graphics.extraPackages = with pkgs; [
+      rocmPackages.clr
+    ];
     bluetooth.enable = true;
     rtl-sdr.enable = true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
