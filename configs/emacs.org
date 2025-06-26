@@ -465,6 +465,7 @@ Use ~eglot~ for lsp stuff. It's built in and shows a bit more information for
 auto-completion stuff.
 
 #+begin_src emacs-lisp
+  (use-package paredit)
   (use-package eglot
     :config
     (add-hook 'elm-mode-hook 'eglot-ensure)
@@ -487,6 +488,7 @@ auto-completion stuff.
     :hook
     (eglot-managed-mode . (lambda()
   			  (add-hook 'before-save-hook 'eglot-format-buffer nil 'local)
+  			  (paredit-mode)
   			  (flyspell-prog-mode))))
 #+end_src
 
@@ -1019,7 +1021,7 @@ Add in some org-mode helpers:
 - ~org-checklist~ lets me reset checklists for reoccurring tasks.
   - This requires one to ~pkg_add a2ps~.
   - ~RESET_CHECK_BOXES~ property to be set to ~t~ on a task
-    headline. (properties can be set via ~C-c C-x d~
+    headline. properties can be set via ~C-c C-x d~
 #+begin_src emacs-lisp
     (require 'org-habit)
     (require 'org-checklist)
