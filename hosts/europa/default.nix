@@ -238,7 +238,7 @@ in
         listen = "127.0.0.1:24800";
         switch-keys = [
           "caps-lock"
-          "left-alt"
+          "0"
         ];
         certificate = "${config.sops.secrets.rkvm_cert.path}";
         key = "${config.sops.secrets.rkvm_key.path}";
