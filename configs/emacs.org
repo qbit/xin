@@ -785,7 +785,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
   	("org-roam-static"
   	 :base-directory "~/org-roam"
   	 :recursive t
-  	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
+  	 :publishing-directory "/rsync:suah.dev:/var/www/exo.suah.dev/"
   	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|svg"
   	 :publishing-function org-publish-attachment)
   	("org-roam-rss"
