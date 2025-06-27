@@ -47,6 +47,7 @@ let
               "sputnik"
               "skunk"
               "graphy"
+              "surf"
               "plq"
             ];
             dst = [ "box" ];
@@ -86,6 +87,7 @@ let
           tv = "100.118.196.38";
           printy = "100.82.59.95";
           readeck = "100.106.16.7";
+          surf = "100.66.209.133";
         };
 
         tagOwners = {
