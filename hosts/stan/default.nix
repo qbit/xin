@@ -333,6 +333,11 @@ in
   };
 
   services = {
+    unifi = {
+      enable = true;
+      unifiPackage = pkgs.unifi;
+      mongodbPackage = pkgs.mongodb-7_0;
+    };
     tailscale = {
       extraDaemonFlags = [ ];
     };
@@ -376,7 +381,6 @@ in
     };
     printing.enable = true;
     fwupd.enable = true;
-    unifi.enable = false;
     openntpd.enable = true;
     resolved = {
       enable = true;
