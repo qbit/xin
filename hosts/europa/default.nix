@@ -179,6 +179,12 @@ in
   };
 
   services = {
+    guix = {
+      enable = true;
+      gc = {
+        enable = true;
+      };
+    };
     i2pd = {
       enable = false;
       address = "127.0.0.1";
@@ -405,7 +411,7 @@ in
       cinny-desktop
       chirp # stable
       davfs2
-      deltachat-desktop
+      # deltachat-desktop
       deluge
       dino
       direwolf

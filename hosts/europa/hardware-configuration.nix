@@ -121,7 +121,7 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   hardware = {
-    amdgpu.opencl.enable = true;
+    # amdgpu.opencl.enable = true;
     graphics.extraPackages = with pkgs; [
       rocmPackages.clr
     ];
