@@ -465,7 +465,11 @@ Use ~eglot~ for lsp stuff. It's built in and shows a bit more information for
 auto-completion stuff.
 
 #+begin_src emacs-lisp
-  (use-package paredit)
+  (use-package paredit
+    :hook ((scheme-mode
+  	  elisp-mode
+            geiser-repl-mode
+        . paredit-mode)))
   (use-package eglot
     :config
     (add-hook 'elm-mode-hook 'eglot-ensure)
@@ -488,7 +492,6 @@ auto-completion stuff.
     :hook
     (eglot-managed-mode . (lambda()
   			  (add-hook 'before-save-hook 'eglot-format-buffer nil 'local)
-  			  (paredit-mode)
   			  (flyspell-prog-mode))))
 #+end_src
 
