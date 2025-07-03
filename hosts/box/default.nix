@@ -85,12 +85,6 @@ in
       owner = config.users.users.restic.name;
       sopsFile = config.xin-secrets.box.secrets.certs;
     };
-    invidious_extra = {
-      owner = "root";
-      mode = "444";
-      sopsFile = config.xin-secrets.box.secrets.services;
-    };
-
     readeck_secret_key = {
       mode = "444";
       sopsFile = config.xin-secrets.box.secrets.services;
@@ -355,12 +349,6 @@ in
           reversePort = config.services.readeck.settings.server.port;
           reverseIP = "127.0.0.1";
         };
-        "invidious-service" = {
-          enable = true;
-          reverseName = "invidious";
-          reversePort = config.services.invidious.port;
-          reverseIP = config.services.invidious.address;
-        };
         "rimgo-service" = {
           enable = true;
           reverseName = "rimgo";
@@ -412,30 +400,6 @@ in
     avahi = {
       enable = true;
       openFirewall = true;
-    };
-    invidious = {
-      enable = true;
-      database = {
-        createLocally = true;
-      };
-      sig-helper.enable = true;
-      extraSettingsFile = "/run/secrets/invidious_extra";
-      address = "127.0.0.1";
-      port = 1538;
-      settings = {
-        db = {
-          user = "invidious";
-          password = lib.mkForce "invidious";
-          dbname = "invidious";
-          host = lib.mkForce "127.0.0.1";
-          port = 5432;
-        };
-        domain = "invidious.otter-alligator.ts.net";
-        https_only = true;
-        popular_enabled = false;
-        statistics_enabled = false;
-        default_home = "Subscriptions";
-      };
     };
     cron = {
       enable = true;
