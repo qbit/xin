@@ -11,6 +11,8 @@ buildPythonPackage rec {
   pname = "ble-serial";
   version = "2.8.0";
 
+  pyproject = true;
+
   nativeBuildInputs = [
     setuptools-scm
   ];
