@@ -136,7 +136,6 @@
       mcchunkie,
       microca,
       nixos-hardware,
-      ghostty,
       po,
       pots,
       pr-status,
