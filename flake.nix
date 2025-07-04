@@ -48,6 +48,13 @@
       };
     };
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+      inputs = {
+        nixpkgs.follows = "unstableSmall";
+      };
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     mcchunkie = {
@@ -129,6 +136,7 @@
       mcchunkie,
       microca,
       nixos-hardware,
+      ghostty,
       po,
       pots,
       pr-status,
