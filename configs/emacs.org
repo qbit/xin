@@ -783,6 +783,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
   	("org-roam-org"
   	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
   	 :publishing-function org-org-publish-to-org
+  	 :exclude ,(rx (seq line-start "private/"))
   	 :recursive t
   	 :base-directory "~/org-roam")
   	("org-roam-static"

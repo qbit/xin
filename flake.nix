@@ -376,6 +376,9 @@
           # rnsh = upkgs.python3Packages.callPackage ./pkgs/rnsh.nix {
           # inherit upkgs;
           # };
+          obsidian-to-org = upkgs.python3Packages.callPackage ./pkgs/obsidian-to-org.nix {
+            inherit upkgs;
+          };
           gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
           gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
           zutty = upkgs.callPackage ./pkgs/zutty.nix {

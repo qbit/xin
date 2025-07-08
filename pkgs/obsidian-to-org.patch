@@ -1,0 +1,13 @@
+diff --git a/src/obsidian_to_org/__main__.py b/src/obsidian_to_org/__main__.py
+index e73c2d0..3098e07 100644
+--- a/src/obsidian_to_org/__main__.py
++++ b/src/obsidian_to_org/__main__.py
+@@ -117,7 +117,7 @@ def single_file():
+         "markdown_file", type=pathlib.Path, help="The Markdown file to convert"
+     )
+     args = parser.parse_args()
+-
++    md_file = args.markdown_file.resolve()
+     # TODO: Make this an argument.
+     output_dir = pathlib.Path("out")
+     if not output_dir.is_dir():
