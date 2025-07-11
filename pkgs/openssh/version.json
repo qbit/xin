@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "3e11478f585408888defa56fa47e8dc6567378d0",
-  "hash": "sha256-mu+adC/dhZ/qFVguJexzFGGrEFa4X4MTsHz456Pqhek=",
-  "version": "2025-05-23",
-  "comment": "upstream: Ensure args to nh_update() fit within uint32, which it"
+  "rev": "eddd1d2daa64a6ab1a915ca88436fa41aede44d4",
+  "hash": "sha256-5goZYiWiQZ/rrjQ0DB19hy6ioHPORt8+Sq3kj4siRcg=",
+  "version": "2025-07-09",
+  "comment": "upstream: Fix mistracking of MaxStartups process exits in some"
 }
