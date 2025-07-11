@@ -136,6 +136,7 @@ with lib;
             fynado
             ghostty
             glamoroustoolkit
+            gnome-pomodoro
             go-font
             govulncheck
             keepassxc

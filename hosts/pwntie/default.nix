@@ -54,6 +54,7 @@ in
         10300
         10200
         10400
+        config.services.guix.publish.port
       ];
       checkReversePath = "loose";
     };
@@ -125,12 +126,22 @@ in
     };
     guix = {
       enable = true;
+      publish = {
+        enable = true;
+        generateKeyPair = true;
+      };
       gc = {
         enable = true;
+        dates = "weekly";
       };
     };
     ts-reverse-proxy = {
       servers = {
+        "guix-reverse" = {
+          enable = true;
+          reverseName = "guix";
+          reversePort = config.services.guix.publish.port;
+        };
         "ollama-reverse" = {
           enable = true;
           reverseName = "ollama";
