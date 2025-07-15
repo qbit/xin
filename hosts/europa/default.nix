@@ -281,7 +281,6 @@ in
     };
     avahi = {
       enable = true;
-      openFirewall = true;
     };
     printing.enable = true;
     backups =
