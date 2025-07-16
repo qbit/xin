@@ -58,8 +58,8 @@ in
         };
       }
       {
-        commit = {
-          gpgsign = true;
+        tag = {
+          forceSignAnnotated = true;
         };
       }
 
@@ -70,12 +70,6 @@ in
           log = false;
           status = false;
           ui = false;
-        };
-      }
-
-      {
-        safe = {
-          directory = "/home/qbit/src/nix-conf";
         };
       }
 
