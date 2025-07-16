@@ -231,7 +231,6 @@ in
           bind
           btop
           direnv
-          git-annex
           git-bug
           git-sync
           gosignify

@@ -237,7 +237,6 @@ in
       apg
       git
       signify
-      git-annex
       rtl_433
     ];
   };
