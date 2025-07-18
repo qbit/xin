@@ -242,14 +242,15 @@ in
           nix-index
           nix-output-monitor
           pass
+          python3Packages.nomadnet
+          python3Packages.rns
+          radicle-node
           ripgrep
           socat
           sshfs
           tcl
           tmux
           uxn
-          python3Packages.rns
-          python3Packages.nomadnet
         ]
         ++ (if isUnstable then [ nil ] else [ ]);
 
