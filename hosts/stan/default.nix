@@ -170,6 +170,7 @@ in
 
   kde.enable = true;
   defaultUsers.enable = false;
+  defaultUserName = "abieber";
 
   sops.secrets = {
     rkvm_cert = {

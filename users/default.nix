@@ -10,9 +10,16 @@ let
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = config.myconf.hwPubKeys ++ config.myconf.managementPubKeys;
   };
+  cfg = config;
 in
 {
   options = {
+    defaultUserName = mkOption {
+      description = "Default user for a system";
+      default = "qbit";
+      example = "qbit";
+      type = lib.types.str;
+    };
     defaultUsers = {
       enable = mkOption {
         description = "Enable regular set of users";
@@ -27,10 +34,10 @@ in
   config =
     let
       inherit (config.networking) hostName;
-      hasQbit =
+      hasDefault =
         if
           (builtins.hasAttr hostName config.xin-secrets)
-          && (builtins.hasAttr "qbit" config.xin-secrets.${hostName}.user_passwords)
+          && (builtins.hasAttr cfg.defaultUserName config.xin-secrets.${hostName}.user_passwords)
         then
           true
         else
@@ -53,9 +60,9 @@ in
                 neededForUsers = true;
               };
             }
-            (mkIf hasQbit {
-              qbit_hash = {
-                sopsFile = secretAttrs.qbit;
+            (mkIf hasDefault {
+              "${cfg.defaultUserName}_hash" = {
+                sopsFile = secretAttrs."${cfg.defaultUserName}";
                 owner = "root";
                 mode = "400";
                 neededForUsers = true;
@@ -71,13 +78,13 @@ in
               hashedPasswordFile = config.sops.secrets.root_hash.path;
             };
           }
-          (mkIf hasQbit {
-            qbit = userBase // {
+          (mkIf hasDefault {
+            "${cfg.defaultUserName}" = userBase // {
               isNormalUser = true;
               description = "Aaron Bieber";
-              home = "/home/qbit";
+              home = "/home/${cfg.defaultUserName}";
               extraGroups = [ "wheel" ];
-              hashedPasswordFile = config.sops.secrets.qbit_hash.path;
+              hashedPasswordFile = config.sops.secrets."${cfg.defaultUserName}_hash".path;
             };
           })
         ];

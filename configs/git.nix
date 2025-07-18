@@ -110,7 +110,11 @@ in
       }
       {
         include = {
-          path = "~/work/git/gitconfig";
+          path =
+            let
+              homeDir = config.users.users."${config.defaultUserName}".home;
+            in
+            "${homeDir}/work/git/gitconfig";
         };
       }
     ];
