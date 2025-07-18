@@ -112,7 +112,11 @@ in
         include = {
           path =
             let
-              homeDir = config.users.users."${config.defaultUserName}".home;
+              homeDir =
+                if (builtins.hasAttr config.defaultUserName config.users.users) then
+                  config.users.users."${config.defaultUserName}".home
+                else
+                  "~";
             in
             "${homeDir}/work/git/gitconfig";
         };
