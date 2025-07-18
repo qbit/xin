@@ -131,11 +131,6 @@ in
       owner = config.services.ejabberd.user;
       sopsFile = config.xin-secrets.h.secrets.services;
     };
-    signal-cli-env = {
-      mode = "400";
-      owner = config.services.signal-cli.user;
-      sopsFile = config.xin-secrets.h.secrets.services;
-    };
   };
 
   networking = {
@@ -271,9 +266,6 @@ in
         isSystemUser = true;
         group = sojuUser;
       };
-      ${config.services.mcchunkie.user} = {
-        extraGroups = [ "signal-cli" ];
-      };
     };
   };
 
@@ -367,10 +359,6 @@ in
   };
 
   services = {
-    signal-cli = {
-      enable = true;
-      envFile = config.sops.secrets.signal-cli-env.path;
-    };
     ejabberd = {
       enable = true;
       package = inputs.unstable.legacyPackages.${system}.pkgs.ejabberd.override {
