@@ -40,7 +40,7 @@ with lib;
       programs.ssh.extraConfig = ''
         Host xin-secrets-ro
           IdentityFile ${config.sops.secrets.xin_secrets_deploy_key.path}
-          User gitea
+          User forgejo
           Port 2222
           Hostname git.tapenet.org
       '';

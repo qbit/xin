@@ -63,10 +63,6 @@ in
     #  owner = config.users.users.nextcloud.name;
     #  sopsFile = config.xin-secrets.box.secrets.services;
     #};
-    gitea_db_pass = {
-      owner = config.users.users.gitea.name;
-      sopsFile = config.xin-secrets.box.secrets.services;
-    };
     "bitwarden_rs.env" = {
       sopsFile = config.xin-secrets.box.secrets.services;
     };
@@ -159,8 +155,8 @@ in
       interfaces = {
         "wg0" = {
           allowedTCPPorts = [
-            config.services.gitea.settings.server.SSH_PORT
-            config.services.gitea.settings.server.HTTP_PORT
+            config.services.forgejo.settings.server.SSH_PORT
+            config.services.forgejo.settings.server.HTTP_PORT
             config.services.vaultwarden.config.rocketPort
           ];
         };
@@ -168,7 +164,7 @@ in
       allowedTCPPorts = config.services.openssh.ports ++ [
         80
         443
-        config.services.gitea.settings.server.SSH_PORT
+        config.services.forgejo.settings.server.SSH_PORT
         21063 # homekit
         21064 # homekit
         1883 # mosquitto
@@ -509,7 +505,7 @@ in
     };
 
     promtail = {
-      enable = true;
+      enable = false;
       configuration = {
         server = {
           http_listen_port = 3031;
@@ -635,33 +631,26 @@ in
       environmentFile = config.sops.secrets."bitwarden_rs.env".path;
     };
 
-    gitea = {
+    forgejo = {
       enable = true;
-      stateDir = "/media/git/gitea";
-      appName = "Tape:neT";
-
-      #package = inputs.unstable.legacyPackages.${pkgs.system}.gitea;
-
+      repositoryRoot = "/media/git/repositories";
       lfs.enable = true;
 
       settings = {
+        DEFAULT.APP_NAME = "Tape:neT";
         server = {
           DOMAIN = "git.tapenet.org";
           ROOT_URL = "https://git.tapenet.org";
           START_SSH_SERVER = true;
           SSH_SERVER_HOST_KEYS = "ssh/gitea-ed25519";
           SSH_PORT = 2222;
+        };
+        session = {
           COOKIE_SECURE = true;
         };
         service = {
           DISABLE_REGISTRATION = true;
         };
-      };
-
-      database = {
-        type = "postgres";
-        passwordFile = "${config.sops.secrets.gitea_db_pass.path}";
-        socket = "/run/postgresql";
       };
     };
 
@@ -947,7 +936,7 @@ in
         ReadOnlyPaths = [ "/etc/nixos/secrets" ];
       };
 
-      gitea.environment = {
+      forgejo.environment = {
         GIT_CONFIG_NOGLOBAL = "true";
         GIT_CONFIG_NOSYSTEM = "true";
       };

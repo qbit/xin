@@ -29,7 +29,7 @@ in
   ${htBin} git create "$proj" || echo "error creating '$proj' on 'sr.ht'"
 
   git config --unset-all remote.origin.url || echo "no remote defined..."
-  for repo in "git@codeberg.org:qbit/%s.git" "git@git.sr.ht:~qbit/%s" "git@github.com:qbit/%s.git" "git@gitle.otter-alligator.ts.net:%s" "ssh://gitea@git.tapenet.org:2222/qbit/%s.git"; do
+  for repo in "git@codeberg.org:qbit/%s.git" "git@git.sr.ht:~qbit/%s" "git@github.com:qbit/%s.git" "git@gitle.otter-alligator.ts.net:%s" "ssh://forgejo@git.tapenet.org:2222/qbit/%s.git"; do
     echo "Adding remote: $(printf $repo $proj)"
     git config --add remote.origin.url "$(printf $repo $proj)"
   done
