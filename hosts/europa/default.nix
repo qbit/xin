@@ -164,6 +164,7 @@ in
       '';
       shellAliases = {
         "gh" = "op plugin run -- gh";
+        "rad-auth" = "op item get radicle-git --field password --reveal | rad auth --stdin";
         "nixpkgs-review" =
           "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token --reveal) nixpkgs-review";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
