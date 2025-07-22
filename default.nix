@@ -4,12 +4,10 @@
   options,
   pkgs,
   isUnstable,
-  xinlib,
   ...
 }:
 let
   inherit (builtins) readFile;
-  inherit (xinlib) prIsOpen;
   caPubKeys = builtins.concatStringsSep "\n" [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5xMSYMwu6rjjLe2UYs1YGCIBVs35E9db2qAjNltCVPG5UoctxCDXxIz0PMOJrBbfqZzP/6qPU1WAhdGNTZ5eXq/ftnhI+2xFfMg1uzpXZ9vjy8lUCfXIObtoEdZ9h/7OUCN/BnL0ySqsamkcUo8SAj6wXoNCdwk6oncfyTmhPnoW5tCWCS9p7Q/LuWpYGsvW5nFDSxteP7re6SUe10eftIkFAPNhKA2lsrvzMgjxhnXqwIr1qJeY0otcuYA4V5V09FmElbnOWVuy4Pt8SqV4N9ykkAUXZN1Pi7Q4JnCUifRJVWpKHLoJe0mqwMDJbGtt2Akn3EwiGhyaVjq2FFgBKAb7w8UAE8gob8n4+DOx4TQAXlmWviYij2Xh6CvepbamxlJMvVdWgqk53+u4e+/oOQQ9QTmQvAuecg9dSO3m7+hNHEf+0TXjuTNlk9KHRg4s7ZAI+2Stfo1tBrvEeE2fAF//Mw7zaLPKmEbMiXdbDs816gvYtG6Y36fTGyzhowDQAMNm+zbg8YPz7xFukLdSCPt7RcpPnP1iJs/hGBnog5UaG/Cm4ftkm9zKvOaQKIoA/GQ3yQSyltczA+2h5fur6VQQGrQeVhAcXm9a6GaLPWxgvJX/og76CHps0rYzFM3QBlsiJ+Z0sstk5TtBex9nTjwRZ1U9+4DQes2TB4/uxnQ== SUAH CA"
   ];
@@ -34,13 +32,9 @@ in
     ./bins
   ];
 
-  disabledModules =
-    [
-      "services/misc/yarr.nix"
-    ]
-    ++ prIsOpen.list 399692 [
-      "services/backup/restic-rest-server.nix"
-    ];
+  disabledModules = [
+    "services/misc/yarr.nix"
+  ];
 
   options = {
     syncthingDevices = lib.mkOption {

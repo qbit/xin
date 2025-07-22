@@ -1,7 +1,4 @@
-{ xinlib, ... }:
-let
-  inherit (xinlib) prIsOpen;
-in
+{ ... }:
 {
   imports = [
     ./backup.nix
@@ -12,5 +9,5 @@ in
     ./tsvnstat.nix
     ./veilid-server.nix
     ./yarr.nix
-  ] ++ prIsOpen.list 399692 [ ./restic-rest-server.nix ];
+  ];
 }
