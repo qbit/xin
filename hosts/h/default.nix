@@ -551,6 +551,7 @@ in
         Port = 4533;
         MusicFolder = "/var/lib/music";
         PlaylistsPath = ".:**/**";
+        EnableSharing = true;
       };
     };
     ts-reverse-proxy = {
