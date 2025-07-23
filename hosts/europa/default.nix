@@ -422,49 +422,31 @@ in
       arduino
       beets # stable
       calibre
-      cinny-desktop
       chirp # stable
       davfs2
-      # deltachat-desktop
-      deluge
-      dino
-      direwolf
       distrobox
-      element-desktop
       elmPackages.elm
       elmPackages.elm-format
       elmPackages.elm-language-server
       elmPackages.elm-live
-      entr
       ferdium
-      fossil
       freetube
       gajim
       gforth
       gh
       gimp
-      git-credential-keepassxc
       gqrx
-      hackrf
       inkscape
-      intiface-central
       isync
-      jan
       joplin-desktop
-      jujutsu
-      klavaro
-      koreader
-      ltunify
       minicom
       mu
       nix-index
       nixpkgs-review
       nmap
       obsidian
-      signal-cli
       ollama
       openscad
-      picard
       picocom
       proton-caller
       protonup-ng
@@ -475,6 +457,7 @@ in
       quodlibet-full # stable
       # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       #
+      restic
       rtl-sdr
       sdrpp
       signal-desktop
@@ -485,9 +468,9 @@ in
       tigervnc
       tncattach
       unzip
-      veilid
       virt-manager
       yt-dlp
+      zip
 
       (callPackage ../../pkgs/ttfs.nix { })
       (callPackage ../../pkgs/gokrazy.nix { })
@@ -495,8 +478,6 @@ in
       (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
       (tclPackages.callPackage ../../pkgs/irken.nix { })
-
-      restic
     ];
   };
 
