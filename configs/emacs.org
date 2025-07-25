@@ -287,6 +287,9 @@ Use spelling and auto-fill when we are in text mode.
 
 #+begin_src emacs-lisp
   (setq eshell-history-file-name (expand-file-name "~/.emacs.d/eshell/history"))
+  (use-package eat
+    :config
+    (add-hook 'eshell-load-hook #'eat-eshell-mode))
 #+end_src
 ** Unset custom-file
 :PROPERTIES:

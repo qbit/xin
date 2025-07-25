@@ -39,6 +39,8 @@
 
       PROMPT='%n@%m[%(?.%{$fg[default]%}.%{$fg[red]%})%?%{$reset_color%}]:%~$vcs_info_msg_0_$(prompt_char) '
 
+      [ -n "$EAT_SHELL_INTEGRATION_DIR" ] &&  source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+
       ni() {
         if [ "$#" -eq 0 ]; then
           echo "please specify packages to install"
