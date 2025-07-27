@@ -944,16 +944,6 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
   	   ":LOGGING: TODO(!) WAIT(!) DONE(!) CANCELED(!)\n"
   	   ":END:\n"
   	   "%i\n  %a") :prepend t)
-  	("c" "Contact" entry (file+headline "~/org/contacts.org" "Contacts")
-  	 ,(concat
-  	   "* %(org-contacts-template-name)\n"
-  	   ":PROPERTIES:\n"
-  	   ":ADDRESS: %^{1234 e west st}\n"
-  	   ":PHONE: %^{1-111-111-11111}\n"
-  	   ":BIRTHDAY: %^{yyyy-mm-dd}\n"
-  	   ":EMAIL: %(org-contacts-template-email)\n"
-  	   ":NOTE: %^{NOTE}\n"
-  	   ":END:") :prepend t)
   	("b" "Bug"
   	 entry (file+olp+datetree "~/org/bugs.org" "Bugs")
   	 "* BUG %?\nEntered on %U\n  :PROPERTIES:\n  :FILE: %a\n  :END:\n" :prepend t)
@@ -1030,11 +1020,8 @@ Add in some org-mode helpers:
   - ~RESET_CHECK_BOXES~ property to be set to ~t~ on a task
     headline. properties can be set via ~C-c C-x d~
 #+begin_src emacs-lisp
-    (require 'org-habit)
-    (require 'org-checklist)
-    (use-package org-contacts
-      :after org
-      :custom (org-contacts-files '("~/org/contacts.org")))
+  (require 'org-habit)
+  (require 'org-checklist)
 #+end_src
 
 Custom agenda commands for various things.
