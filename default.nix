@@ -232,6 +232,7 @@ in
           lz4
           minisign
           mosh
+          nettools
           nix-diff
           nix-index
           nix-output-monitor
