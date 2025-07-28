@@ -2,13 +2,11 @@
   pkgs,
   config,
   lib,
-  inputs,
   ...
 }:
 let
   tsAddr = "100.84.170.57";
   oLlamaPort = 11434;
-  esphomePort = 6053;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -85,11 +83,6 @@ in
 
   systemd = {
     services = {
-      esphome = {
-        environment = {
-          GIT_CONFIG_SYSTEM = "/dev/null";
-        };
-      };
       ollama = {
         environment = {
           OLLAMA_ORIGINS = "*";
@@ -118,12 +111,6 @@ in
         voice = "en-us-ryan-medium";
       };
     };
-    esphome = {
-      enable = true;
-      address = "127.0.0.1";
-      package = inputs.unstable.legacyPackages.${pkgs.system}.esphome;
-      port = esphomePort;
-    };
     guix = {
       enable = true;
       publish = {
@@ -146,11 +133,6 @@ in
           enable = true;
           reverseName = "ollama";
           reversePort = oLlamaPort;
-        };
-        "esphome-reverse" = {
-          enable = true;
-          reverseName = "esphome";
-          reversePort = esphomePort;
         };
       };
     };
