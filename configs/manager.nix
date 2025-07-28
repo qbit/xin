@@ -37,24 +37,23 @@ with lib;
         repository = "/home/qbit/src/xin";
         privKeyPath = "/run/secrets/xin_status_key";
         flakeRss = "https://github.com/qbit/xin/commits/main.atom";
-        statuses =
-          [
-            {
-              host = "tv";
-              mac = "9c:bf:0d:00:04:e7";
-            }
-            {
-              name = "stan";
-              host = "10.6.0.224";
-            }
-          ]
-          ++ (mkXinHost [
-            "europa"
-            "h"
-            "orcim"
-            "box"
-            "pwntie"
-          ]);
+        statuses = [
+          {
+            host = "tv";
+            mac = "9c:bf:0d:00:04:e7";
+          }
+          {
+            name = "stan";
+            host = "10.6.0.224";
+          }
+        ]
+        ++ (mkXinHost [
+          "europa"
+          "h"
+          "orcim"
+          "box"
+          "pwntie"
+        ]);
         ciHost = "pwntie";
       };
     };

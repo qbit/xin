@@ -8,7 +8,8 @@ let
   inherit (xinlib) todo;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
-  ] ++ config.myconf.managementPubKeys;
+  ]
+  ++ config.myconf.managementPubKeys;
   myKodi = pkgs.kodi.withPackages (
     kp: with kp; [
       certifi

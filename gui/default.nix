@@ -112,18 +112,17 @@ with lib;
             text = traygentCmds;
           };
         };
-        sessionVariables =
-          {
-            SSH_AUTH_SOCK = "$HOME/.traygent";
-          }
-          // (
-            if config.networking.hostName != "stan" then
-              {
-                OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
-              }
-            else
-              { }
-          );
+        sessionVariables = {
+          SSH_AUTH_SOCK = "$HOME/.traygent";
+        }
+        // (
+          if config.networking.hostName != "stan" then
+            {
+              OLLAMA_HOST = "https://ollama.otter-alligator.ts.net";
+            }
+          else
+            { }
+        );
         systemPackages =
           with pkgs;
           (xinlib.filterList [

@@ -152,6 +152,7 @@ in
           builtins.attrNames config.configManager.router.interfaces
         )
         + "\n";
-    } // interfaceFiles;
+    }
+    // interfaceFiles;
   };
 }

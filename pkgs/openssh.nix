@@ -61,19 +61,18 @@ stdenv.mkDerivation {
 
   # I set --disable-strip because later we strip anyway. And it fails to strip
   # properly when cross building.
-  configureFlags =
-    [
-      "--sbindir=\${out}/bin"
-      "--localstatedir=/var"
-      "--with-pid-dir=/run"
-      "--with-mantype=man"
-      "--with-libedit=yes"
-      "--disable-strip"
-      "--disable-dsa-keys"
-      "--with-security-key-builtin=yes"
-    ]
-    ++ lib.optional (etcDir != null) "--sysconfdir=${etcDir}"
-    ++ lib.optional stdenv.isDarwin "--disable-libutil";
+  configureFlags = [
+    "--sbindir=\${out}/bin"
+    "--localstatedir=/var"
+    "--with-pid-dir=/run"
+    "--with-mantype=man"
+    "--with-libedit=yes"
+    "--disable-strip"
+    "--disable-dsa-keys"
+    "--with-security-key-builtin=yes"
+  ]
+  ++ lib.optional (etcDir != null) "--sysconfdir=${etcDir}"
+  ++ lib.optional stdenv.isDarwin "--disable-libutil";
 
   ${if stdenv.hostPlatform.isStatic then "NIX_LDFLAGS" else null} = [ "-laudit" ];
 
