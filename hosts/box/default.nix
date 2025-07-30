@@ -465,7 +465,6 @@ in
 
     jellyfin = {
       enable = true;
-      openFirewall = true;
     };
 
     calibre-server = {
