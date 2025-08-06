@@ -1166,6 +1166,16 @@ persistent databases.. So we init things with sane defaults:
 mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aaron@bolddaemon.com"
 #+end_src
 
+** OpenBSD specific bits
+:PROPERTIES:
+:ID:       f9677956-15c6-42e9-aa62-524ea043a90e
+:END:
+
+#+begin_src emacs-lisp
+    (if (file-exists-p "/usr/local/share/emacs/site-lisp/mu4e/mu4e.el")
+        (load "/usr/local/share/emacs/site-lisp/mu4e/mu4e.el"))
+#+end_src
+
 ** mu4e specific configs
 :PROPERTIES:
 :ID:       92d0499c-592e-4992-b67a-d1c8646e2b6b
