@@ -289,6 +289,7 @@ Use spelling and auto-fill when we are in text mode.
   (setq eshell-history-file-name (expand-file-name "~/.emacs.d/eshell/history"))
   (use-package eat
     :config
+    (setq eat-kill-buffer-on-exit t)
     (add-hook 'eshell-load-hook #'eat-eshell-mode))
 #+end_src
 ** Unset custom-file
