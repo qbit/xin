@@ -240,7 +240,7 @@ The [[https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4][wiki]] has some info o
 :END:
 
 #+begin_src emacs-lisp
-  (defun xin-no-check ()
+  (defun xin/no-check ()
     (interactive)
     (setenv "SKIP_CHECK" "1"))
 #+end_src
@@ -711,11 +711,11 @@ This allows for things like ~gofmt~ and auto adding / removing of imports.
   (use-package go-mode
     :bind
     ("C-c t" . go-add-tags))
-  (defun xin-eglot-organize-imports () (interactive)
+  (defun xin/eglot-organize-imports () (interactive)
          (eglot-code-actions nil nil "source.organizeImports" t))
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook 'xin-eglot-organize-imports nil t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (defun xin/lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook 'xin/eglot-organize-imports nil t))
+  (add-hook 'go-mode-hook #'xin/lsp-go-install-save-hooks)
 #+end_src
 
 *** go-eldoc
@@ -751,7 +751,7 @@ can't quit!
   (setq org-tags-exclude-from-inheritance '("crypt"))
   (setq org-crypt-key "35863350BFEAC101DB1A4AF01F81112D62A9ADCE")
 
-  (defun xin-org-add-ids ()
+  (defun xin/org-add-ids ()
     "Add ID properties to org files"
     (interactive)
     (org-map-entries 'org-id-get-create))
@@ -773,7 +773,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
 #+begin_src emacs-lisp
   (setq org-export-with-broken-links t)
 
-  (defun exo-touch-and-publish (plist filename dir)
+  (defun xin/exo-touch-and-publish (plist filename dir)
     (progn
       (set-file-times "~/org-roam/index.org")
       (org-html-publish-to-html plist filename dir)))
@@ -790,7 +790,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
   	 :html-link-home "http://exo.suah.dev/"
   	 :html-link-up "../"
   	 :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
-  	 :publishing-function exo-touch-and-publish
+  	 :publishing-function xin/exo-touch-and-publish
   	 :base-directory "~/org-roam")
   	("org-roam-org"
   	 :publishing-directory "/ssh:suah.dev:/var/www/exo.suah.dev/"
@@ -1003,7 +1003,7 @@ I publish some of my notes [[https://suah.dev/p][on suah.dev/p]]. Also some reci
     (setq org-publish-project-alist my-org-publish-alist)
     (setq org-capture-templates my-org-capture-templates)
     (add-hook 'org-mode-hook (lambda ()
-  			     (add-hook 'before-save-hook 'xin-org-add-ids nil 'local))))
+  			     (add-hook 'before-save-hook 'xin/org-add-ids nil 'local))))
   (use-package org-contrib)
   (use-package ox-rss)
 #+end_src
@@ -1111,11 +1111,11 @@ Extending org with the ability to transclude makes for a powerhouse!
   				 :api-url "https://rss.bolddaemon.com/fever/")))
     (setq elfeed-protocol-enabled-protocols '(fever))
     (elfeed-protocol-enable)
-    (defun elfeed-update-feeds ()
+    (defun xin/elfeed-update-feeds ()
       (interactive)
       (elfeed-protocol-fever-reinit "https://qbit@rss.bolddaemon.com")
       (elfeed-update))
-    (define-key elfeed-search-mode-map (kbd "U") 'elfeed-update-feeds))
+    (define-key elfeed-search-mode-map (kbd "U") 'xin/elfeed-update-feeds))
 #+end_src
 
 * Mail
