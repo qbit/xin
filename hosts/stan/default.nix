@@ -159,6 +159,7 @@ in
 
     networkmanager.enable = true;
     firewall = {
+      trustedInterfaces = [ "virbr0" ];
       allowedTCPPorts = [ 22 ] ++ (if testingMode then [ 8080 ] else [ ]);
       allowedUDPPorts = if testingMode then [ syslogPort ] else [ ];
       checkReversePath = "loose";
