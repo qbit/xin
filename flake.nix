@@ -7,9 +7,20 @@
 
     stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
 
+    # lix-module = {
+    # url = "git+https://git.lix.systems/lix-project/nixos-module?ref=release-2.93";
+    # inputs.nixpkgs.follows = "unstableSmall";
+    # };
+
+    lix = {
+      url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
+      flake = false;
+    };
+
     lix-module = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=release-2.93";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
       inputs.nixpkgs.follows = "unstableSmall";
+      inputs.lix.follows = "lix";
     };
 
     sops-nix = {
