@@ -169,6 +169,7 @@ in
           "env GITHUB_TOKEN=$(op item get nixpkgs-review --field token --reveal) nixpkgs-review";
         "godeps" = "go list -m -f '{{if not (or .Indirect .Main)}}{{.Path}}{{end}}' all";
         "sync-music" = "rsync -av --progress --delete ~/Music/ suah.dev:/var/lib/music/";
+        "sync-tangara" = "rsync -rtcvP ~/Music/ /run/media/qbit/MUSIC/Music/";
         "load-agent" =
           ''op item get signer --field 'private key' --reveal | sed '/"/d; s/\r//' | ssh-add -'';
       };
