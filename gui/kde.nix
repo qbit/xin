@@ -66,21 +66,22 @@ with pkgs;
         with kdePackages;
         [
           (pkgs.callPackage ../pkgs/krunner-krha.nix { })
-          evolutionWithPlugins
-          evolution-ews
           akonadi-calendar-tools
           discover
+          evolution-ews
+          evolutionWithPlugins
           haruna
           kcalc
           kcolorchooser
-          kdeconnect-kde
           kcontacts
+          kdeconnect-kde
           kmail
           kmail-account-wizard
           kolourpaint
           kontact
           konversation
           korganizer
+          krita
           kzones
           merkuro
           partitionmanager
