@@ -214,13 +214,14 @@ copy / paste. It works initially - but after some time the buffers diverge.
 
 The [[https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4][wiki]] has some info on using ~wl-clipboard~ to fix things.
 
+[2025-08-12 Tue] Update to the what the latest wiki has.. if this doesn't work I
+will try setting ~save-interprogram-paste-before-kill~.
+
 #+begin_src emacs-lisp
-  (use-package xclip
-    :config
-    (setq xclip-method (quote wl-copy))
-    (setq xclip-mode t)
-    (setq xclip-program "wl-copy")
-    (setq xclip-select-enable-clipboard t))
+  (setopt select-active-regions nil)
+  (setopt select-enable-clipboard 't)
+  (setopt select-enable-primary nil)
+  (setopt interprogram-cut-function #'gui-select-text)
 #+end_src
 
 *** Common functionality
