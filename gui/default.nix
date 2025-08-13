@@ -146,6 +146,7 @@ with lib;
             rage
             recoll
             rpr
+            supersonic
             traygent
             trayscale
             vlc
