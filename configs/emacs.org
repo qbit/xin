@@ -1085,6 +1085,11 @@ Extending org with the ability to transclude makes for a powerhouse!
     (setq org-transclusion-exclude-elements '(keyword property-drawer)))
 #+end_src
 
+
+#+begin_src emacs-lisp
+  (use-package request)
+  ;; (use-package org-social)
+#+end_src
 * RSS
 :PROPERTIES:
 :ID:       842027db-4e8a-4d9b-80c9-b8fb7825a078
