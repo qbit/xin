@@ -1,15 +1,11 @@
 {
   lib,
-  buildPythonPackage,
   fetchFromGitHub,
-  rns,
-  setuptools,
-  setuptools-scm,
-  poetry-core,
-  ...
+  pkgs,
+  nix-update-script,
 }:
 
-buildPythonPackage rec {
+pkgs.python3.pkgs.buildPythonApplication rec {
   pname = "rnsh";
   version = "0.1.5";
 
@@ -18,26 +14,27 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "acehoss";
     repo = pname;
-    rev = "release/v${version}";
+    tag = "release/v${version}";
     hash = "sha256-Dog5InfCRCxqe9pXpCAPdqGbEz2SvNOGq4BvR8oM05o=";
   };
 
   doCheck = true;
 
-  nativeBuildInputs = [
+  nativeBuildInputs = with pkgs.python3.pkgs; [
     setuptools-scm
-    setuptools
     poetry-core
   ];
 
-  dependencies = [
-    rns
-  ];
+  dependencies = with pkgs.python3.pkgs; [ rns ];
 
-  meta = with lib; {
+  passthru.updateScript = nix-update-script { };
+
+  meta = {
     homepage = "https://github.com/acehoss/rnsh";
-    description = "rnsh";
+    changelog = "https://github.com/acehoss/rnsh/releases/tag/${src.tag}";
+    description = "Command-line utility that facilitates shell sessions over Reticulum";
     mainProgram = "rnsh";
-    maintainers = with maintainers; [ qbit ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ qbit ];
   };
 }

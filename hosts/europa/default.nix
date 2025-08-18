@@ -482,6 +482,7 @@ in
       (callPackage ../../pkgs/zutty.nix { })
       (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
+      (python3Packages.callPackage ../../pkgs/rnsh.nix { })
       (tclPackages.callPackage ../../pkgs/irken.nix { })
     ];
   };
