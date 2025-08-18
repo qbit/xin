@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "eddd1d2daa64a6ab1a915ca88436fa41aede44d4",
-  "hash": "sha256-5goZYiWiQZ/rrjQ0DB19hy6ioHPORt8+Sq3kj4siRcg=",
-  "version": "2025-07-09",
-  "comment": "upstream: Fix mistracking of MaxStartups process exits in some"
+  "rev": "3ef1a87d0a29eac94f32371af628e81eb2e2d817",
+  "hash": "sha256-1RdhmhSHD4/ShflGmGkbgD5i0UquS53xs1eebdfkfmA=",
+  "version": "2025-08-18",
+  "comment": "Fix pledge(2) special casing"
 }
