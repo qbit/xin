@@ -354,22 +354,6 @@ Handy breadcrumbs for seeing where things are in the LSP.
   (use-package breadcrumb)
 #+end_src
 
-** ollama
-:PROPERTIES:
-:ID:       8ce83826-c270-4ca1-b1e7-c013a747a975
-:END:
-
-Simple wrapper for ~ollama~ that lets me pipe regions and what not into various buffers.
-
-#+begin_src emacs-lisp
-  (use-package ollama
-    :init
-    (setopt
-     ollama:endpoint "https://ollama.otter-alligator.ts.net/api/generate"
-     ollama:language "English"
-     ollama:model "deepseek-coder-v2"))
-#+end_src
-
 ** web-mode
 :PROPERTIES:
 :ID:       96f95d47-78fb-4fa2-88e1-c9e998b163c1
