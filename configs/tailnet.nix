@@ -66,7 +66,6 @@ let
           immich = "100.90.44.82";
           box = "100.115.16.150";
           console = "100.83.166.33";
-          display = "100.77.35.34";
           europa = "100.64.26.122";
           faf = "100.80.94.131";
           gitle = "100.111.162.87";
@@ -83,7 +82,6 @@ let
           sputnik = "100.78.154.31";
           startpage = "127.0.0.1";
           tsns = "100.73.115.100";
-          tv = "100.118.196.38";
           printy = "100.82.59.95";
           readeck = "100.106.16.7";
           surf = "100.66.209.133";
@@ -204,28 +202,6 @@ let
             proto = "tcp";
           }
           {
-            # jellyfin for tv
-            action = "accept";
-            src = [
-              "tv"
-              "display"
-            ];
-            dst = [ "box:443" ];
-            proto = "tcp";
-          }
-          {
-            action = "accept";
-            src = [
-              "box"
-              "homeassistant"
-            ];
-            dst = [
-              "tv:8080"
-              "tv:9090"
-            ];
-            proto = "tcp";
-          }
-          {
             action = "accept";
             src = [ "h" ];
             dst = [ "ollama:443" ];
@@ -334,11 +310,6 @@ let
             src = "europa";
             proto = "tcp";
             allow = [ "ollama:443" ];
-          }
-          {
-            src = "tv";
-            proto = "tcp";
-            allow = [ "box:443" ];
           }
           {
             src = "display";

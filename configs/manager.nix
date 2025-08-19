@@ -39,10 +39,6 @@ with lib;
         flakeRss = "https://github.com/qbit/xin/commits/main.atom";
         statuses = [
           {
-            host = "tv";
-            mac = "9c:bf:0d:00:04:e7";
-          }
-          {
             name = "stan";
             host = "10.6.0.224";
           }
