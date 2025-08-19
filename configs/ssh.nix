@@ -52,6 +52,8 @@ in
           PermitRootLogin = "prohibit-password";
           PasswordAuthentication = false;
           KexAlgorithms = [
+            "sntrup761x25519-sha512"
+            "mlkem768x25519-sha256"
             "curve25519-sha256"
             "curve25519-sha256@libssh.org"
           ];
