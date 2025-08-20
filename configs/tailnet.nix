@@ -311,11 +311,6 @@ let
             proto = "tcp";
             allow = [ "ollama:443" ];
           }
-          {
-            src = "display";
-            proto = "tcp";
-            allow = [ "box:443" ];
-          }
         ];
       };
     in
