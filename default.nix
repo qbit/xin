@@ -245,6 +245,7 @@ in
           tcl
           tmux
           uxn
+          yt-dlp
         ]
         ++ (if isUnstable then [ nil ] else [ ]);
 
