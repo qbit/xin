@@ -237,6 +237,17 @@ in
       group = "wheel";
       mode = "400";
     };
+    calyptix_ssh_config = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "root";
+      group = "wheel";
+      mode = "440";
+    };
+    calyptix_tmp_ssh = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "root";
+      mode = "400";
+    };
     netrc = {
       sopsFile = config.xin-secrets.stan.secrets.abieber;
       owner = "abieber";
@@ -327,6 +338,9 @@ in
     dconf.enable = true;
     zsh.enable = true;
     ssh = {
+      extraConfig = ''
+        Include ${config.sops.secrets.calyptix_ssh_config.path}
+      '';
       knownHosts = {
         "[192.168.122.249]:7022".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOzf2Rv6FZYuH758TlNBcq4CXAHTPJxe5qoQTRM3nRc";
