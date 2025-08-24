@@ -152,6 +152,10 @@ in
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
+      allowedUDPPorts = [
+        29716
+        42671
+      ];
     };
   };
 
