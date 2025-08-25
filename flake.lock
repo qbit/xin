@@ -189,11 +189,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751049540,
-        "narHash": "sha256-peW/LvNFkLjMCnl6PWR01tKQDWWoARo/UyQtupUKVMw=",
+        "lastModified": 1756134053,
+        "narHash": "sha256-lo/epG/F8jKrQukA6QojBwJ+zN6JS+4TFCONe/wWAuk=",
         "ref": "refs/heads/main",
-        "rev": "b6b9b154d8c1eeb88599c6071d5deb055afd7330",
-        "revCount": 12,
+        "rev": "70dd72c8a2812ae9347ae62238133b2251f0d448",
+        "revCount": 13,
         "type": "git",
         "url": "https://codeberg.org/qbit/fynado"
       },
