@@ -386,6 +386,18 @@ in
           ExecStart = "${pywebscrapbook}/bin/wsb serve";
         };
       };
+      rnsd = {
+        description = "Reticulum Network Stack Daemon";
+        wants = [
+          "network-online.target"
+          "multi-user.target"
+        ];
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network-online.target" ];
+        serviceConfig = {
+          ExecStart = "${pkgs.rns}/bin/rnsd -v -s";
+        };
+      };
     };
     services = {
       ollama = {
