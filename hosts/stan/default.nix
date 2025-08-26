@@ -248,6 +248,11 @@ in
       owner = "root";
       mode = "400";
     };
+    "calyptix_tmp_ssh_pub" = {
+      sopsFile = config.xin-secrets.stan.secrets.main;
+      owner = "root";
+      mode = "400";
+    };
     netrc = {
       sopsFile = config.xin-secrets.stan.secrets.abieber;
       owner = "abieber";
