@@ -445,6 +445,7 @@ in
       calibre
       chirp # stable
       davfs2
+      deluge
       distrobox
       elmPackages.elm
       elmPackages.elm-format
