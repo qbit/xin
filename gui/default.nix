@@ -87,7 +87,7 @@ with lib;
   };
 
   config = mkMerge [
-    (mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
+    (mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable || config.kdeMobile.enable) {
       services = {
         xserver.enable = true;
         lock-action.enable = true;

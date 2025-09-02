@@ -39,9 +39,12 @@ with pkgs;
   config = mkIf (config.kde.enable || config.kdeMobile.enable) {
     services = {
       desktopManager.plasma6.enable = true;
-      displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
+      displayManager = {
+        sessionPackages = lib.mkIf config.kdeMobile.enable [ kdePackages.plasma-mobile ];
+        sddm = {
+          enable = true;
+          wayland.enable = true;
+        };
       };
     };
     # Listen for KDE Connect connections on the tailnet
@@ -89,7 +92,24 @@ with pkgs;
           wayland-utils
           wl-clipboard
         ]
-        ++ (if config.kdeMobile.enable then [ plasma-mobile ] else [ ]);
+        ++ (
+          if config.kdeMobile.enable then
+            [
+              angelfish
+              calindori
+              kalk
+              kasts
+              kclock
+              koko
+              krecorder
+              kweather
+              plasma-mobile
+              plasma-nano
+              spacebar
+            ]
+          else
+            [ ]
+        );
     };
   };
 }
