@@ -289,6 +289,9 @@
         europa = buildSys "x86_64-linux" unstable [
           nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
+        slab = buildSys "x86_64-linux" unstable [
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
+        ] "slab";
         clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
         orcim = buildSys "x86_64-linux" unstable [ ] "orcim";
         pwntie = buildSys "x86_64-linux" stable [ ] "pwntie";
