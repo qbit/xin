@@ -47,9 +47,6 @@
     mu
     rtl-sdr
     signal-desktop
-    calamares-nixos
-    calamares-nixos-extensions
-    gparted
   ];
 
   kdeMobile.enable = true;
