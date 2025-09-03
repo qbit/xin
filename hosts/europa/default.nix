@@ -277,15 +277,14 @@ in
       };
     };
     logind = {
-      lidSwitch = "suspend-then-hibernate";
-      lidSwitchExternalPower = "lock";
-
-      extraConfig = ''
-        HandlePowerKey=suspend-then-hibernate
-        HandlePowerKeyLongPress=poweroff
-        IdleAction=suspend-then-hibernate
-        IdleActionSec=300
-      '';
+      settings.Login = {
+        HandleLidSwitchExternalPower = "lock";
+        HandleLidSwitch = "suspend-then-hibernate";
+        HandlePowerKey = "suspend-then-hibernate";
+        HandlePowerKeyLongPress = "poweroff";
+        IdleAction = "suspend-then-hibernate";
+        IdleActionSec = 300;
+      };
     };
     fprintd = {
       enable = true;
