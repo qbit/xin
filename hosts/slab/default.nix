@@ -11,6 +11,7 @@
   hardware = {
     rtl-sdr.enable = true;
     bluetooth.enable = true;
+    sensor.iio.enable = true;
     enableAllFirmware = true;
   };
 
@@ -75,6 +76,7 @@
   };
 
   services = {
+    libinput.enable = true;
     smartd.enable = false;
     fwupd = {
       enable = true;

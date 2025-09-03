@@ -37,14 +37,26 @@ with pkgs;
   };
 
   config = mkIf (config.kde.enable || config.kdeMobile.enable) {
+
+    environment.variables = {
+      QT_IM_MODULE = "maliit";
+    };
+
     services = {
       desktopManager.plasma6.enable = true;
       displayManager = {
-        sessionPackages = lib.mkIf config.kdeMobile.enable [ kdePackages.plasma-mobile ];
         sddm = {
           enable = true;
           wayland.enable = true;
+          settings = {
+            General = {
+              InputMethod = "maliit-keyboard";
+            };
+          };
         };
+        sessionPackages = lib.mkIf config.kdeMobile.enable [
+          kdePackages.plasma-mobile
+        ];
       };
     };
     # Listen for KDE Connect connections on the tailnet
@@ -91,6 +103,10 @@ with pkgs;
           sddm-kcm
           wayland-utils
           wl-clipboard
+          qtvirtualkeyboard
+          maliit-keyboard
+          maliit-framework
+          squeekboard
         ]
         ++ (
           if config.kdeMobile.enable then
