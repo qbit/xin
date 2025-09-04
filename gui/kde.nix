@@ -107,6 +107,9 @@ with pkgs;
           maliit-keyboard
           maliit-framework
           squeekboard
+          ibus
+          ibus-with-plugins
+          xwayland
         ]
         ++ (
           if config.kdeMobile.enable then
