@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "3ef1a87d0a29eac94f32371af628e81eb2e2d817",
-  "hash": "sha256-1RdhmhSHD4/ShflGmGkbgD5i0UquS53xs1eebdfkfmA=",
-  "version": "2025-08-18",
-  "comment": "Fix pledge(2) special casing"
+  "rev": "f64701ca25795548a61614d0b13391d6dfa7f38c",
+  "hash": "sha256-LsUSLx2HmkUbynhWEZC7mAEc038PfexaLHOE7jaMaFY=",
+  "version": "2025-09-04",
+  "comment": "upstream: repair test after changes to percent expansion of usernames"
 }
