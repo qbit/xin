@@ -147,7 +147,14 @@ in
       "192.168.122.6" = [ "chubs" ];
     };
     wireless.userControlled.enable = true;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      settings = {
+        connection = {
+          "ipv6.addr-gen-mode" = "stable-privacy";
+        };
+      };
+    };
 
     firewall = {
       enable = true;
