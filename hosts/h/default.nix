@@ -645,14 +645,12 @@ in
 
         paths = [
           pgBackupDir
-          "/var/lib/synapse/media_store"
           "/var/www"
           "/home"
           "/var/lib/yarr"
           "/var/lib/shiori"
           "/var/lib/gotosocial"
           "/var/lib/mcchunkie"
-          "/var/lib/heisenbridge"
           "/var/lib/kogs"
           "/var/vmail"
           "/var/dkim"
