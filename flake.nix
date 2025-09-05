@@ -289,7 +289,7 @@
         europa = buildSys "x86_64-linux" unstable [
           nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
-        slab = buildSys "x86_64-linux" unstable [
+        slab = buildSys "x86_64-linux" stable [
           nixos-hardware.nixosModules.microsoft-surface-pro-intel
         ] "slab";
         clunk = buildSys "x86_64-linux" unstable [ ] "clunk";
@@ -446,11 +446,12 @@
       checks =
         let
           buildList = [
-            "europa"
-            "stan"
-            "h"
             "box"
+            "europa"
+            "h"
             "orcim"
+            "slab"
+            "stan"
           ];
         in
         with unstable.lib;
