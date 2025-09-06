@@ -139,8 +139,12 @@ in
     useDHCP = false;
     defaultGateway = "23.29.118.1";
     defaultGateway6 = "2602:ff16:3::1";
-    nameservers = [ "9.9.9.9" ];
-
+    nameservers = [
+      "45.90.28.147"
+      "2a07:a8c0::84:36c6"
+      "45.90.30.147"
+      "2a07:a8c1::84:36c6"
+    ];
     interfaces.eth0 = {
       ipv4.addresses = [
         {
