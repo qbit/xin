@@ -422,6 +422,17 @@ in
         '';
         serviceConfig.Type = "oneshot";
       };
+      # rnsd seems to not be able to re-connect to the various interfaces upon resume
+      "rnsd-reload" = {
+        description = "restart rnsd on resume";
+        wantedBy = [ "post-resume.target" ];
+        after = [ "post-resume.target" ];
+        script = ''
+          . /etc/profile;
+          ${pkgs.systemd}/bin/systemctl restart --user rnsd.service
+        '';
+        serviceConfig.Type = "oneshot";
+      };
     };
   };
 
