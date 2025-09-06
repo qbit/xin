@@ -81,7 +81,6 @@ let
           skunk = "100.79.26.78";
           sputnik = "100.78.154.31";
           startpage = "127.0.0.1";
-          tsns = "100.73.115.100";
           printy = "100.82.59.95";
           readeck = "100.106.16.7";
           surf = "100.66.209.133";
@@ -112,22 +111,11 @@ let
           }
           {
             action = "accept";
-            src = [ "europa" ];
-            dst = [ "tsns:443" ];
-          }
-          {
-            action = "accept";
             src = [
               "box"
               "homeassistant"
             ];
             dst = [ "printy:443" ];
-          }
-          {
-            action = "accept";
-            src = [ "*" ];
-            dst = [ "tsns:53" ];
-            proto = "udp";
           }
           {
             # Allow laptops and mobile devices to ssh to everything
@@ -210,15 +198,6 @@ let
         ];
 
         tests = [
-          {
-            src = "gitle";
-            deny = [ "tsns:443" ];
-          }
-          {
-            src = "gitle";
-            allow = [ "tsns:53" ];
-            proto = "udp";
-          }
           {
             # RO service can't access things
             src = "tag:ro-service";
