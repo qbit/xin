@@ -283,17 +283,6 @@ in
         password = "fake";
       };
     };
-    logind = {
-      lidSwitch = "suspend-then-hibernate";
-      lidSwitchExternalPower = "lock";
-
-      extraConfig = ''
-        HandlePowerKey=suspend-then-hibernate
-        HandlePowerKeyLongPress=poweroff
-        IdleAction=suspend-then-hibernate
-        IdleActionSec=300
-      '';
-    };
     fprintd = {
       enable = true;
     };
