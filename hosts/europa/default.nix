@@ -402,7 +402,7 @@ in
         wantedBy = [ "multi-user.target" ];
         after = [ "network-online.target" ];
         serviceConfig = {
-          ExecStart = "${pkgs.rns}/bin/rnsd -v -s";
+          ExecStart = "${pkgs.rns}/bin/rnsd -vvv -s";
         };
       };
     };
