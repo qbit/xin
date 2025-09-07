@@ -133,6 +133,8 @@ in
     };
   };
 
+  preDNS.enable = false;
+
   networking = {
     hostName = "h";
     enableIPv6 = true;
