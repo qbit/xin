@@ -31,7 +31,7 @@ with lib;
         # DIRTY means disabled, git revision means enabled
         allowReboot = mkDefault true;
         flake = "git+https://codeberg.org/qbit/xin";
-        dates = "*-*-* *:05:00";
+        dates = "weekly";
       };
     })
 
