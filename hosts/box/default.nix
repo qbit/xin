@@ -81,6 +81,15 @@ in
       owner = config.users.users.restic.name;
       sopsFile = config.xin-secrets.box.secrets.certs;
     };
+    restic_password_file = {
+      owner = "root";
+      sopsFile = config.xin-secrets.box.secrets.services;
+    };
+
+    restic_env_file = {
+      owner = "root";
+      sopsFile = config.xin-secrets.box.secrets.services;
+    };
     readeck_secret_key = {
       mode = "444";
       sopsFile = config.xin-secrets.box.secrets.services;
@@ -269,6 +278,20 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    backups = {
+      b2 = {
+        enable = true;
+        repository = "b2:peuwribtyRuobant8Wrinociachgum";
+        environmentFile = config.sops.secrets.restic_env_file.path;
+        passwordFile = config.sops.secrets.restic_password_file.path;
+
+        paths = [
+          "/home"
+          "/var/lib/forgejo"
+          "/var/lib/readeck"
+        ];
+      };
+    };
     readeck = {
       enable = true;
       environmentFile = config.sops.secrets.readeck_secret_key.path;
