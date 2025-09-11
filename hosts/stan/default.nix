@@ -308,6 +308,7 @@ in
       distrobox
       firefox
       fzf
+      glab
       google-chrome
       ispell
       libreoffice
