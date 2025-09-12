@@ -308,7 +308,9 @@ in
       };
       navidrome.serviceConfig.BindReadOnlyPaths =
         todo "navidrome dns issue: https://github.com/NixOS/nixpkgs/issues/151550"
-          [ "/run/systemd/resolve/stub-resolv.conf" ];
+          [
+            "/etc/resolv.conf"
+          ];
       icb-tunnel = {
         wants = [
           "network-online.target"
