@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "f64701ca25795548a61614d0b13391d6dfa7f38c",
-  "hash": "sha256-LsUSLx2HmkUbynhWEZC7mAEc038PfexaLHOE7jaMaFY=",
-  "version": "2025-09-04",
-  "comment": "upstream: repair test after changes to percent expansion of usernames"
+  "rev": "edc601707b583a2c900e49621e048c26574edd3a",
+  "hash": "sha256-zxPw47kgLwZKIN0KMWb+cvGwVQPQtiS693ossZkfYZM=",
+  "version": "2025-09-11",
+  "comment": "upstream: disable ssh-add autoexpiry of certificates when testing"
 }
