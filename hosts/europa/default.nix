@@ -504,7 +504,7 @@ in
       (callPackage ../../pkgs/ttfs.nix { })
       (callPackage ../../pkgs/gokrazy.nix { })
       (callPackage ../../pkgs/zutty.nix { })
-      (python3Packages.callPackage ../../pkgs/watchmap.nix { })
+      # (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
       (python3Packages.callPackage ../../pkgs/rnsh.nix { })
       (python3Packages.callPackage ../../pkgs/lxst.nix { })
