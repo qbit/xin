@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "edc601707b583a2c900e49621e048c26574edd3a",
-  "hash": "sha256-zxPw47kgLwZKIN0KMWb+cvGwVQPQtiS693ossZkfYZM=",
-  "version": "2025-09-11",
-  "comment": "upstream: disable ssh-add autoexpiry of certificates when testing"
+  "rev": "80993390bed15bbd1c348f3352e55d0db01ca0fd",
+  "hash": "sha256-IeoZesbCXXUtySeYftojIdIOqIoylmMcdwjt8hnBNYo=",
+  "version": "2025-09-17",
+  "comment": "Whitespace."
 }
