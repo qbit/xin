@@ -453,6 +453,7 @@ in
       chirp # stable
       davfs2
       deluge
+      digikam
       distrobox
       elmPackages.elm
       elmPackages.elm-format
