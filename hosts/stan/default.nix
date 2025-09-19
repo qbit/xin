@@ -404,10 +404,6 @@ in
     printing.enable = true;
     fwupd.enable = true;
     openntpd.enable = true;
-    resolved = {
-      enable = true;
-      dnssec = "allow-downgrade";
-    };
   };
 
   system = {

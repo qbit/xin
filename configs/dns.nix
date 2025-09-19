@@ -19,19 +19,13 @@ with lib;
   config = mkIf config.preDNS.enable {
     services = {
       openntpd.enable = true;
-      resolved = {
+      dnscrypt-proxy2 = {
         enable = true;
-        dnssec = "allow-downgrade";
-        dnsovertls = "true";
-        fallbackDns = [ ];
-        extraConfig = ''
-          [Resolve]
-            DNS=45.90.28.0#8436c6.dns.nextdns.io
-            DNS=2a07:a8c0::#8436c6.dns.nextdns.io
-            DNS=45.90.30.0#8436c6.dns.nextdns.io
-            DNS=2a07:a8c1::#8436c6.dns.nextdns.io
-            DNSOverTLS=yes
-        '';
+        upstreamDefaults = false;
+        settings = {
+          server_names = [ "NextDNS-8436c6" ];
+          static."NextDNS-8436c6".stamp = "sdns://AgEAAAAAAAAAAAAOZG5zLm5leHRkbnMuaW8HLzg0MzZjNg";
+        };
       };
     };
   }; # tailscale and what not have no preDNS
