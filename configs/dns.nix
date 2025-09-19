@@ -41,6 +41,7 @@ with lib;
       avahi = {
         enable = true;
         nssmdns4 = true;
+        nssmdns6 = true;
       };
     };
   }; # tailscale and what not have no preDNS
