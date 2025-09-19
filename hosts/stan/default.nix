@@ -136,7 +136,6 @@ in
     ''
   ];
 
-  preDNS.enable = false;
   networking = {
     hostName = "stan";
 
