@@ -84,6 +84,7 @@ let
           printy = "100.82.59.95";
           readeck = "100.106.16.7";
           surf = "100.66.209.133";
+          lroom = "100.79.194.92";
         };
 
         tagOwners = {
@@ -155,7 +156,10 @@ let
           }
           {
             action = "accept";
-            src = [ "tag:openbsd" ];
+            src = [
+              "tag:openbsd"
+              "tag:internal-server"
+            ];
             dst = [ "box:443" ];
           }
           {
@@ -289,6 +293,11 @@ let
             src = "europa";
             proto = "tcp";
             allow = [ "ollama:443" ];
+          }
+          {
+            src = "lroom";
+            proto = "tcp";
+            allow = [ "box:443" ];
           }
         ];
       };

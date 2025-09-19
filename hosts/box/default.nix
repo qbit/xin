@@ -364,6 +364,12 @@ in
           reversePort = config.services.readeck.settings.server.port;
           reverseIP = "127.0.0.1";
         };
+        "jelly-service" = {
+          enable = true;
+          reverseName = "jelly";
+          reversePort = 8096;
+          reverseIP = "127.0.0.1";
+        };
         "rimgo-service" = {
           enable = true;
           reverseName = "rimgo";
