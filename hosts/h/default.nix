@@ -215,10 +215,12 @@ in
         8448
 
         4242 # rns
+        4343 # rns
       ];
       allowedUDPPorts = [
         7122
         4242
+        4343
       ];
       allowedUDPPortRanges = [
         {
