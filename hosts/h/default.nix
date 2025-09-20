@@ -208,8 +208,13 @@ in
         5270
         5443
         8448
+
+        4242 # rns
       ];
-      allowedUDPPorts = [ 7122 ];
+      allowedUDPPorts = [
+        7122
+        4242
+      ];
       allowedUDPPortRanges = [
         {
           from = 60000;
