@@ -33,6 +33,11 @@ let
     allow	100.64.0.0/10;
     allow	10.20.30.1/32;
   '';
+  upkgs = import inputs.unstable {
+    inherit system;
+    config.allowUnfree = true;
+  };
+  inherit (upkgs.python3Packages) nomadnet;
 in
 {
   _module.args.isUnstable = false;
@@ -307,7 +312,7 @@ in
         serviceConfig = {
           User = "qbit";
           Type = "forking";
-          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s NomadNet -d '${pkgs.python3Packages.nomadnet}/bin/nomadnet'";
+          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s NomadNet -d '${nomadnet}/bin/nomadnet'";
           ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t NomadNet";
         };
       };
