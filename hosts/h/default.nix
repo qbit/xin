@@ -308,14 +308,13 @@ in
       };
       nomadnet = {
         description = "nomadnet";
-        after = [ "network-online.target" ];
+        after = [ "i2pd.service" ];
         wants = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           User = "qbit";
-          Type = "forking";
-          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s NomadNet -d '${nomadnet}/bin/nomadnet'";
-          ExecStop = "${pkgs.tmux}/bin/tmux kill-session -t NomadNet";
+          Type = "simple";
+          ExecStart = "${nomadnet}/bin/nomadnet -d -c";
         };
       };
       navidrome.serviceConfig.BindReadOnlyPaths =
@@ -379,6 +378,17 @@ in
   };
 
   services = {
+    i2pd = {
+      enable = true;
+      address = "127.0.0.1";
+      proto = {
+        http = {
+          enable = true;
+          port = 7071;
+        };
+        sam.enable = true;
+      };
+    };
     ejabberd = {
       enable = true;
       package = inputs.unstable.legacyPackages.${system}.pkgs.ejabberd.override {
