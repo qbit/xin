@@ -250,7 +250,10 @@
       darwinConfigurations = {
         plq = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = { inherit xinlib; };
+          specialArgs = {
+            inherit xinlib;
+            inherit inputs;
+          };
           modules = [
             ./overlays
             lix-module.nixosModules.default

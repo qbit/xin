@@ -41,7 +41,6 @@ in
           ))
           go-font
 
-          racket
           guile
           graphviz
           ghostscript
@@ -49,6 +48,10 @@ in
 
           myEmacs
           editorScript
+        ]
+        ++ lib.optionals (pkgs.system == "x86_64-linux") [
+          texlive.combined.scheme-full
+          racket
         ]
         ++ lib.optionals (pkgs.system == "x86_64-linux") [ texlive.combined.scheme-full ];
     };

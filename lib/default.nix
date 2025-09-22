@@ -98,6 +98,7 @@ let
         curl
         dasel
         deadnix
+        direnv
         git
         git-bug
         jo

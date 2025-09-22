@@ -14,7 +14,18 @@ rebuild() {
 
 	build_host=${BUILD_HOST:-$host}
 	msg "Rebuilding: ${host} using ${build_host}"
-	nixos-rebuild ${TRACE} --flake .#${1} --build-host "root@${build_host}" --target-host "root@${host}" switch 2>&1 | nom
+	case "$(uname -s)" in
+	Darwin)
+		darwin-rebuild ${TRACE} --flake .#${1} --build-host "root@${build_host}" --target-host "root@${host}" switch 2>&1 | nom
+		;;
+	Linux)
+		nixos-rebuild ${TRACE} --flake .#${1} --build-host "root@${build_host}" --target-host "root@${host}" switch 2>&1 | nom
+		;;
+	*)
+		echo "Unknown system: $(uname -s)"
+		exit 1
+		;;
+	esac
 	return $?
 }
 
@@ -50,7 +61,14 @@ if [ "$1" = "watch" ]; then
 fi
 
 if [ "$1" = "local" ]; then
-	sudo nixos-rebuild ${TRACE} --option eval-cache false --flake .#$(uname -n) switch 2>&1 | nom
+	case "$(uname -s)" in
+	Darwin)
+		sudo darwin-rebuild ${TRACE} --option eval-cache false --flake .#$(uname -n) switch 2>&1 | nom
+		;;
+	Linux)
+		sudo nixos-rebuild ${TRACE} --option eval-cache false --flake .#$(uname -n) switch 2>&1 | nom
+		;;
+	esac
 	exit $?
 fi
 

@@ -1,5 +1,8 @@
 . /etc/profile
-. /run/secrets/po_env
+
+if [[ -f /run/secrets/po_env ]]; then
+	. /run/secrets/po_env
+fi
 
 SCRIPT_NAME="${0##*/}"
 SCRIPT_PID=$$

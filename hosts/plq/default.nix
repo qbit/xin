@@ -2,10 +2,10 @@
   pkgs,
   lib,
   isUnstable,
+  inputs,
   ...
 }:
 let
-  secretAgent = "Contents/Library/LoginItems/SecretAgent.app/Contents/MacOS/SecretAgent";
   rage = pkgs.writeScriptBin "rage" (import ../../bins/rage.nix { inherit pkgs; });
 in
 {
@@ -13,8 +13,15 @@ in
   imports = [
     ../../configs/tmux.nix
     ../../configs/zsh.nix
+    ../../configs/emacs.nix
     ../../bins
   ];
+
+  nixpkgs.overlays = [
+    inputs.emacs-overlay.overlay
+  ];
+
+  myEmacs.enable = true;
 
   networking.hostName = "plq";
 
@@ -34,11 +41,9 @@ in
       sandbox = true;
     };
   };
-  services = {
-    emacs.package = pkgs.callPackage ../pkgs/emacs.nix { inherit isUnstable; };
-  };
 
   system = {
+    primaryUser = "qbit";
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToControl = true;
@@ -49,32 +54,15 @@ in
     };
   };
 
-  launchd.user.agents."SecretAgent" = {
-    command = ''"/Users/qbit/Applications/Nix Apps/Secretive.app/${secretAgent}"'';
-    serviceConfig = rec {
-      KeepAlive = true;
-      StandardErrorPath = StandardOutPath;
-      StandardOutPath = "/Users/qbit/Library/Logs/SecretAgent.log";
-    };
-  };
-
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate =
       pkg:
       builtins.elm (lib.getName pkg) [
-        "obsidian"
       ];
   };
 
-  environment.variables = {
-    SSH_AUTH_SOCK = "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
-  };
-
   environment.systemPackages = with pkgs; [
-    (callPackage ../../pkgs/secretive.nix { inherit isUnstable; })
-    (callPackage ../../pkgs/hammerspoon.nix { inherit isUnstable; })
-
     direnv
     exiftool
     gh
@@ -85,9 +73,11 @@ in
     neovim
     nixpkgs-review
     nmap
-    obsidian
     rage
     statix
   ];
+
+  ids.gids.nixbld = 30000;
+
   system.stateVersion = 5;
 }
