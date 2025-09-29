@@ -290,6 +290,7 @@ in
           "/var/lib/forgejo"
           "/var/lib/readeck"
           config.services.immich.mediaLocation
+          config.services.vaultwarden.backupDir
         ];
       };
     };
