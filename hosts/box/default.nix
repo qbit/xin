@@ -289,6 +289,7 @@ in
           "/home"
           "/var/lib/forgejo"
           "/var/lib/readeck"
+          config.services.immich.mediaLocation
         ];
       };
     };
