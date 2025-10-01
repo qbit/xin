@@ -449,6 +449,7 @@
       checks =
         let
           buildList = [
+            "pwntie"
             "box"
             "europa"
             "h"
