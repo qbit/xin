@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "80993390bed15bbd1c348f3352e55d0db01ca0fd",
-  "hash": "sha256-IeoZesbCXXUtySeYftojIdIOqIoylmMcdwjt8hnBNYo=",
-  "version": "2025-09-17",
-  "comment": "Whitespace."
+  "rev": "047e0221eaf9815775e8ea78c6d6add5ab0f68c7",
+  "hash": "sha256-LmLg4QH0oeCm+cA8uD8YRAsLYJoWyYBbl8XjLanU9zk=",
+  "version": "2025-10-01",
+  "comment": "Pass new &quot;compat includes&quot; path via AC_SUBST."
 }
