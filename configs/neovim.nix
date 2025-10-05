@@ -46,7 +46,6 @@ let
     vimagit
     vim-gitgutter
     vim-go
-    vim-hindent
     vim-lua
     vim-markdown
     vim-nix
@@ -74,7 +73,6 @@ in
       gopls
       gotools
       haskellPackages.haskell-language-server
-      haskellPackages.hindent
       luaformatter
       luajitPackages.lua-lsp
       manix
