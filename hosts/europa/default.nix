@@ -129,10 +129,6 @@ in
   virtualisation = {
     libvirtd = {
       enable = lib.mkDefault true;
-      qemu.ovmf.packages = [
-        pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd
-        pkgs.OVMF.fd
-      ];
     };
     podman = {
       enable = true;
