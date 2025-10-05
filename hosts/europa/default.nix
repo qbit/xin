@@ -474,7 +474,6 @@ in
       ollama
       openscad
       picocom
-      proton-caller
       protonup-ng
       prusa-slicer
       qdmr
