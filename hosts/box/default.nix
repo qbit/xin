@@ -278,6 +278,13 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    gotify = {
+      enable = true;
+      environment = {
+        GOTIFY_DATABASE_DIALECT = "sqlite3";
+        GOTIFY_SERVER_PORT = 8071;
+      };
+    };
     backups = {
       b2 = {
         enable = true;
@@ -359,6 +366,13 @@ in
     };
     ts-reverse-proxy = {
       servers = {
+        "gotify-service" = {
+          enable = true;
+          # funnel = true;
+          reverseName = "notify";
+          reversePort = config.services.gotify.environment.GOTIFY_SERVER_PORT;
+          reverseIP = "127.0.0.1";
+        };
         "readeck-service" = {
           enable = true;
           funnel = true;
