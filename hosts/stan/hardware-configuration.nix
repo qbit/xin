@@ -54,6 +54,25 @@
         "IdentityFile=/home/abieber/.ssh/vm"
       ];
     };
+    "/home/abieber/cxos-1211" = {
+      device = "cxos:src/";
+      fsType = "sshfs";
+      options = [
+        "_netdev"
+        "x-systemd.automount"
+
+        (builtins.replaceStrings [ " " ] [ "\\040" ]
+          "ssh_command=${pkgs.openssh}/bin/ssh -F /home/abieber/.ssh/config"
+        )
+        "reconnect"
+        "allow_other"
+        "cache=yes"
+        "auto_cache"
+
+        "ServerAliveInterval=15"
+        "IdentityFile=/home/abieber/.ssh/vm"
+      ];
+    };
   };
 
   swapDevices = [ { device = "/dev/disk/by-uuid/85a3b559-0c0f-485d-9107-9f6ba5ad31da"; } ];
