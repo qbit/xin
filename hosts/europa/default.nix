@@ -461,7 +461,6 @@ in
       gforth
       gh
       gimp
-      gqrx
       inkscape
       isync
       joplin-desktop
@@ -476,7 +475,6 @@ in
       picocom
       protonup-ng
       prusa-slicer
-      qdmr
       # Don't do it, don't switch to another music player. They all suck!
       # this one works the least sucky!
       quodlibet-full # stable
