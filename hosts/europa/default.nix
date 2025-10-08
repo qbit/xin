@@ -484,7 +484,6 @@ in
       #
       restic
       rtl-sdr
-      sdrpp
       signal-desktop
       tangara-cli
       tangara-companion
