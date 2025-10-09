@@ -368,7 +368,7 @@ in
       servers = {
         "gotify-service" = {
           enable = true;
-          # funnel = true;
+          funnel = true;
           reverseName = "notify";
           reversePort = config.services.gotify.environment.GOTIFY_SERVER_PORT;
           reverseIP = "127.0.0.1";

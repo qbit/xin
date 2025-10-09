@@ -15,6 +15,7 @@ let
             target = [
               "immich"
               "readeck"
+              "notify"
             ];
             attr = [ "funnel" ];
           }
@@ -85,6 +86,7 @@ let
           readeck = "100.106.16.7";
           surf = "100.66.209.133";
           lroom = "100.79.194.92";
+          notify = "100.79.229.34";
         };
 
         tagOwners = {
