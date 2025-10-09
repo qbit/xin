@@ -2,7 +2,7 @@
   description = "xin";
 
   inputs = {
-    unstable.url = "github:NixOS/nixpkgs";
+    unstable.url = "github:NixOS/nixpkgs?ref=f90d1371e480d98bdf8ea1b00cb210fcc074c9d0";
     unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
