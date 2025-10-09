@@ -73,7 +73,6 @@ in
       gopls
       gotools
       haskellPackages.haskell-language-server
-      luaformatter
       luajitPackages.lua-lsp
       manix
       nixpkgs-fmt
