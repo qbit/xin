@@ -684,11 +684,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741726198,
-        "narHash": "sha256-QvOEptS66gmTsRSbXlVglUuWjES9laKL+peF3VdiVtY=",
+        "lastModified": 1760108184,
+        "narHash": "sha256-c273tcoZCE8xafPVqdN/yMWpW1hVpOe0dXYrpwzpfuk=",
         "ref": "refs/heads/main",
-        "rev": "42bbfd0dee11f2e4838c1b03025843985331590c",
-        "revCount": 27,
+        "rev": "4e289f0cdd8e456e61ce6645c2e558ba7f014e98",
+        "revCount": 31,
         "type": "git",
         "url": "https://codeberg.org/qbit/ts-reverse-proxy"
       },
