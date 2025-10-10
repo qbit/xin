@@ -198,12 +198,21 @@ let
           {
             action = "accept";
             src = [ "h" ];
-            dst = [ "ollama:443" ];
+            dst = [
+              "ollama:443"
+              "notify:433"
+            ];
             proto = "tcp";
           }
         ];
 
         tests = [
+          {
+            src = "h";
+            allow = [
+              "notify:433"
+            ];
+          }
           {
             # RO service can't access things
             src = "tag:ro-service";
