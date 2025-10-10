@@ -8,7 +8,6 @@
     ./doas.nix
     ./git.nix
     ./manager.nix
-    ./neovim.nix
     ./net-overlay.nix
     ./nix.nix
     ./ssh.nix

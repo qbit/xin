@@ -11,7 +11,6 @@ in
   imports = [
     ./configs/colemak.nix
     ./configs/tmux.nix
-    ./configs/neovim.nix
   ];
 
   options.myconf = {

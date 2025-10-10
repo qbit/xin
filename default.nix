@@ -235,6 +235,7 @@ in
           nix-diff
           nix-index
           nix-output-monitor
+          openvi
           pass
           python3Packages.nomadnet
           python3Packages.rns
@@ -250,7 +251,8 @@ in
         ++ (if isUnstable then [ nil ] else [ ]);
 
       interactiveShellInit = ''
-        alias vi='emacsclient -ct'
+        alias vi='ovi'
+        alias ee='emacsclient -ct'
       '';
     };
 
