@@ -200,7 +200,7 @@ let
             src = [ "h" ];
             dst = [
               "ollama:443"
-              "notify:433"
+              "notify:443"
             ];
             proto = "tcp";
           }
@@ -210,7 +210,7 @@ let
           {
             src = "h";
             allow = [
-              "notify:433"
+              "notify:443"
             ];
           }
           {
