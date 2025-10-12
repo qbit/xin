@@ -7,11 +7,6 @@
 
     stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
 
-    # lix-module = {
-    # url = "git+https://git.lix.systems/lix-project/nixos-module?ref=release-2.93";
-    # inputs.nixpkgs.follows = "unstableSmall";
-    # };
-
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
       flake = false;
@@ -305,7 +300,7 @@
         #retic = buildSys "aarch64-linux" stable [ ] "retic";
 
         faf = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "faf";
-        box = buildSys "x86_64-linux" unstable [ ./configs/hardened.nix ] "box";
+        box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModule

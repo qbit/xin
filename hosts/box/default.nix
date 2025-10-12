@@ -48,7 +48,7 @@ let
   };
 in
 {
-  _module.args.isUnstable = true;
+  _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
     #"${inputs.unstable}/nixos/modules/services/home-automation/home-assistant.nix"
