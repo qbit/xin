@@ -68,6 +68,9 @@ in
         plq = {
           id = "RUTFVOM-IOER2YI-G5ZYORX-2VRWWPO-DGLT277-57MNPHD-OWS6LY5-TX4EKQ6";
         };
+        pwntie = {
+          id = "3QZVEXO-DG3U6R2-JMXMNRK-HBZ5OJS-PHWIS6D-JE2BSGU-BEP2RNQ-FCSJ7A7";
+        };
       };
     };
     myconf = {
