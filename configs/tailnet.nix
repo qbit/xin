@@ -44,12 +44,8 @@ let
         grants = [
           {
             src = [
-              "europa"
-              "sputnik"
-              "skunk"
-              "graphy"
-              "surf"
-              "plq"
+              "tag:mobile"
+              "tag:laptop"
             ];
             dst = [ "box" ];
             app = {
