@@ -92,6 +92,48 @@ in
   };
 
   services = {
+    syncthing = {
+      enable = true;
+      user = "qbit";
+      dataDir = "/home/qbit";
+      settings = {
+        options = {
+          urAccepted = -1;
+        };
+        devices = config.syncthingDevices;
+        folders = {
+          "calibre-library" = {
+            path = "~/Calibre_Library";
+            id = "calibre_library";
+            devices = [
+              "box"
+              "europa"
+            ];
+            versioning = {
+              type = "staggered";
+              fsPath = "~/syncthing/calibre-backup";
+              params = {
+                cleanInterval = "3600";
+                maxAge = "31536000";
+              };
+            };
+          };
+          "home/qbit/sync" = {
+            path = "~/sync";
+            id = "main_sync";
+            devices = lib.attrNames config.syncthingDevices;
+            versioning = {
+              type = "staggered";
+              fsPath = "~/syncthing/backup";
+              params = {
+                cleanInterval = "3600";
+                maxAge = "31536000";
+              };
+            };
+          };
+        };
+      };
+    };
     wyoming = {
       openwakeword = {
         enable = true;

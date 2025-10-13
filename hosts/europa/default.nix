@@ -244,7 +244,10 @@ in
           "calibre-library" = {
             path = "~/Calibre Library";
             id = "calibre_library";
-            devices = [ "box" ];
+            devices = [
+              "box"
+              "pwntie"
+            ];
           };
           "home/qbit/sync" = {
             path = "~/sync";
