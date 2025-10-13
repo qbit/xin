@@ -85,6 +85,7 @@ in
       enable = true;
       description = "tsvnstat server";
       wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
 
       path = [ pkgs.vnstat ];
 

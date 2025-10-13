@@ -278,6 +278,9 @@ in
   hardware.rtl-sdr.enable = true;
 
   services = {
+    tsvnstat = {
+      enable = true;
+    };
     gotify = {
       enable = true;
       environment = {
