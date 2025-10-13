@@ -281,11 +281,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752685651,
-        "narHash": "sha256-D9IiIKuk1kiG5rtIv9Xk8bh0ULk0BH5ps0fol7Ggjvo=",
+        "lastModified": 1760362286,
+        "narHash": "sha256-R42Qf58Wixh0SiLEqP5g+pjFtn06xTEV72Nsz52Telw=",
         "ref": "refs/heads/main",
-        "rev": "109a38201afb4b9e8b70f19ca180d66e49972acb",
-        "revCount": 113,
+        "rev": "ca1f36cf7cc155bb503d152bda0a2480168e07c5",
+        "revCount": 117,
         "type": "git",
         "url": "https://codeberg.org/qbit/gostart"
       },
