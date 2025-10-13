@@ -724,11 +724,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1725478058,
-        "narHash": "sha256-lvKvpmF1rBjuc0d8cGfkMvy+OVmYNclXfE8SJ97IM+8=",
+        "lastModified": 1760317630,
+        "narHash": "sha256-Kmodght1dHZ4HCBJA9JQdXGBpKzOLDhJCdPNB6j7K3Y=",
         "ref": "refs/heads/main",
-        "rev": "96609d1824d51f1789184bf4c8fc7ee0e2504602",
-        "revCount": 19,
+        "rev": "7ea0c319bd3756fc69411ed64abf43a281cd20d2",
+        "revCount": 22,
         "type": "git",
         "url": "https://codeberg.org/qbit/tsvnstat"
       },
