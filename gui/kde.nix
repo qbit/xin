@@ -106,6 +106,7 @@ with pkgs;
           qtvirtualkeyboard
           maliit-keyboard
           maliit-framework
+          supersonic-wayland
           squeekboard
           ibus
           ibus-with-plugins
