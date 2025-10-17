@@ -134,6 +134,7 @@ with lib;
             exiftool
             fynado
             ghostty
+            git-credential-keepassxc
             glamoroustoolkit
             gnome-pomodoro
             go-font
