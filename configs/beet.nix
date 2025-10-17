@@ -2,7 +2,7 @@
 let
   yamlFmt = pkgs.formats.yaml { };
   beetConfig = {
-    directory = "/home/qbit/Music";
+    directory = "~/Music";
     "import" = {
       write = true;
       copy = true;
@@ -130,8 +130,8 @@ let
       canonical = "~/.config/beets/genres-tree.yaml";
     };
     smartplaylist = {
-      relative_to = "/home/qbit/Music";
-      playlist_dir = "/home/qbit/Playlists/";
+      relative_to = "~/Music";
+      playlist_dir = "~/Playlists/";
       playlists = [
         {
           name = "all.m3u";

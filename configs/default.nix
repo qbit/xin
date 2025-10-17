@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./beet.nix
     ./ca.nix
     ./ci.nix
     ./colemak.nix
