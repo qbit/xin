@@ -441,8 +441,6 @@
             "box"
             "europa"
             "h"
-            "orcim"
-            "slab"
             "stan"
           ];
         in
