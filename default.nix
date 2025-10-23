@@ -227,11 +227,13 @@ in
         [
           age
           apg
+          bc
           bind
           btop
           direnv
           git-bug
           git-sync
+          go-font
           gosignify
           jq
           lz4
@@ -243,6 +245,7 @@ in
           nix-output-monitor
           openvi
           pass
+          pcsctools
           python3Packages.nomadnet
           python3Packages.rns
           radicle-node

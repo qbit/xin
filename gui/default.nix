@@ -10,7 +10,6 @@ let
   inherit (builtins) toJSON;
   inherit (inputs.traygent.packages.${pkgs.system}) traygent;
   inherit (inputs.fynado.packages.${pkgs.system}) fynado;
-  inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   inherit (inputs.calnow.packages.${pkgs.system}) calnow;
 
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
@@ -125,31 +124,21 @@ with lib;
         systemPackages =
           with pkgs;
           (xinlib.filterList [
-            bc
-            beyt
-            black
             calnow
-            drawterm-wayland
             exiftool
+            feh
             fynado
             ghostty
             git-credential-keepassxc
             glamoroustoolkit
-            gnome-pomodoro
-            go-font
-            govulncheck
             keepassxc
             mpv
-            pcsctools
-            plan9port
             pywebscrapbook
             rage
             recoll
             rpr
             traygent
             trayscale
-            vlc
-            zeal
           ]);
       };
 
