@@ -12,7 +12,6 @@ let
   inherit (inputs.fynado.packages.${pkgs.system}) fynado;
   inherit (inputs.beyt.packages.${pkgs.system}) beyt;
   inherit (inputs.calnow.packages.${pkgs.system}) calnow;
-  ghostty = inputs.ghostty.packages.${pkgs.system}.default;
 
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr = pkgs.writeScriptBin "rpr" (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });

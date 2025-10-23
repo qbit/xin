@@ -54,13 +54,6 @@
       };
     };
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty?ref=3b2ef4c216c2f720330aeb50c51f942fccac5156";
-      inputs = {
-        nixpkgs.follows = "unstableSmall";
-      };
-    };
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     mcchunkie = {
