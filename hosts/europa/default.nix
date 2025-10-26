@@ -379,19 +379,18 @@ in
           ExecStart = "${pywebscrapbook}/bin/wsb serve";
         };
       };
-      rnsd = {
-        enabled = false;
-        description = "Reticulum Network Stack Daemon";
-        wants = [
-          "network-online.target"
-          "multi-user.target"
-        ];
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network-online.target" ];
-        serviceConfig = {
-          ExecStart = "${pkgs.rns}/bin/rnsd -vvv -s";
-        };
-      };
+      #rnsd = {
+      #  description = "Reticulum Network Stack Daemon";
+      #  wants = [
+      #    "network-online.target"
+      #    "multi-user.target"
+      #  ];
+      #  wantedBy = [ "multi-user.target" ];
+      #  after = [ "network-online.target" ];
+      #  serviceConfig = {
+      #    ExecStart = "${pkgs.rns}/bin/rnsd -vvv -s";
+      #  };
+      #};
     };
     services = {
       ollama = {
@@ -410,17 +409,16 @@ in
         serviceConfig.Type = "oneshot";
       };
       # rnsd seems to not be able to re-connect to the various interfaces upon resume
-      "rnsd-reload" = {
-        enabled = false;
-        description = "restart rnsd on resume";
-        wantedBy = [ "post-resume.target" ];
-        after = [ "post-resume.target" ];
-        script = ''
-          . /etc/profile;
-          ${pkgs.systemd}/bin/systemctl restart --user rnsd.service
-        '';
-        serviceConfig.Type = "oneshot";
-      };
+      #"rnsd-reload" = {
+      #  description = "restart rnsd on resume";
+      #  wantedBy = [ "post-resume.target" ];
+      #  after = [ "post-resume.target" ];
+      #  script = ''
+      #    . /etc/profile;
+      #    ${pkgs.systemd}/bin/systemctl restart --user rnsd.service
+      #  '';
+      #  serviceConfig.Type = "oneshot";
+      #};
     };
   };
 
@@ -501,7 +499,7 @@ in
       (callPackage ../../pkgs/zutty.nix { })
       # (python3Packages.callPackage ../../pkgs/watchmap.nix { })
       (python3Packages.callPackage ../../pkgs/ble-serial.nix { })
-      (python3Packages.callPackage ../../pkgs/rnsh.nix { })
+      # (python3Packages.callPackage ../../pkgs/rnsh.nix { })
       (python3Packages.callPackage ../../pkgs/lxst.nix { })
       (tclPackages.callPackage ../../pkgs/irken.nix { })
     ];
