@@ -64,7 +64,7 @@
     };
     gostart = {
       url = "git+https://codeberg.org/qbit/gostart";
-      inputs.nixpkgs.follows = "stable";
+      inputs.nixpkgs.follows = "unstable";
     };
     kogs = {
       url = "git+https://codeberg.org/qbit/kogs";
@@ -84,7 +84,7 @@
     };
     tsvnstat = {
       url = "git+https://codeberg.org/qbit/tsvnstat";
-      inputs.nixpkgs.follows = "stable";
+      inputs.nixpkgs.follows = "unstable";
     };
     pots = {
       url = "git+https://codeberg.org/qbit/pots";
@@ -100,7 +100,7 @@
     };
     ts-reverse-proxy = {
       url = "git+https://codeberg.org/qbit/ts-reverse-proxy";
-      inputs.nixpkgs.follows = "stable";
+      inputs.nixpkgs.follows = "unstable";
     };
     traygent = {
       url = "git+https://codeberg.org/qbit/traygent";
