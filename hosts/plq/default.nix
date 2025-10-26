@@ -8,7 +8,6 @@ let
   rage = pkgs.writeScriptBin "rage" (import ../../bins/rage.nix { inherit pkgs; });
 in
 {
-  _module.args.isUnstable = false;
   imports = [
     ../../configs/tmux.nix
     ../../configs/zsh.nix

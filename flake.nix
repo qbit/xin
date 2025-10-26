@@ -2,10 +2,8 @@
   description = "xin";
 
   inputs = {
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    unstableSmall.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-
     stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
@@ -14,14 +12,14 @@
 
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
       inputs.lix.follows = "lix";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
-        nixpkgs.follows = "unstableSmall";
+        nixpkgs.follows = "stable";
       };
     };
 
@@ -30,21 +28,19 @@
       inputs = {
         sops-nix.follows = "sops-nix";
         stable.follows = "stable";
-        unstable.follows = "unstable";
       };
     };
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs = {
-        nixpkgs.follows = "unstable";
         nixpkgs-stable.follows = "stable";
       };
     };
 
     darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
 
     simple-nixos-mailserver = {
@@ -54,23 +50,25 @@
       };
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+    };
 
     mcchunkie = {
       url = "git+https://codeberg.org/qbit/mcchunkie?ref=main";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     microca = {
       url = "git+https://codeberg.org/qbit/microca";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     gostart = {
       url = "git+https://codeberg.org/qbit/gostart";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     kogs = {
       url = "git+https://codeberg.org/qbit/kogs";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     pr-status = {
       url = "git+https://codeberg.org/qbit/pr-status-pl";
@@ -78,43 +76,43 @@
     };
     xin-status = {
       url = "git+https://codeberg.org/qbit/xin-status";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     beyt = {
       url = "git+https://codeberg.org/qbit/beyt";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     tsvnstat = {
       url = "git+https://codeberg.org/qbit/tsvnstat";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     pots = {
       url = "git+https://codeberg.org/qbit/pots";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     po = {
       url = "git+https://codeberg.org/qbit/po";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     tsns = {
       url = "git+https://codeberg.org/qbit/tsns";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     ts-reverse-proxy = {
       url = "git+https://codeberg.org/qbit/ts-reverse-proxy";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     traygent = {
       url = "git+https://codeberg.org/qbit/traygent";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     fynado = {
       url = "git+https://codeberg.org/qbit/fynado";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     calnow = {
       url = "git+https://codeberg.org/qbit/calnow";
-      inputs.nixpkgs.follows = "unstableSmall";
+      inputs.nixpkgs.follows = "stable";
     };
     gqrss = {
       url = "git+https://codeberg.org/qbit/gqrss";
@@ -139,21 +137,20 @@
       pots,
       pr-status,
       simple-nixos-mailserver,
-      stable,
       traygent,
       fynado,
       ts-reverse-proxy,
       tsns,
       tsvnstat,
+      stable,
       unstable,
-      unstableSmall,
       xin-secrets,
       xin-status,
       ...
     }@inputs:
     let
       xinlib = import ./lib {
-        inherit (unstable) lib;
+        inherit (stable) lib;
         inherit inputs;
       };
       supportedSystems = [
@@ -161,18 +158,11 @@
         "aarch64-darwin"
       ];
       #[ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-      forAllSystems = unstable.lib.genAttrs supportedSystems;
-      unstablePkgsFor = forAllSystems (
-        system:
-        import unstable {
-          inherit system;
-        }
-      );
+      forAllSystems = stable.lib.genAttrs supportedSystems;
       stablePkgsFor = forAllSystems (
         system:
         import stable {
           inherit system;
-          #imports = [ ./overlays ];
         }
       );
       hostBase = {
@@ -232,7 +222,7 @@
             ++ [ { nixpkgs.overlays = overlays; } ];
         };
       lpkgs = unstable.legacyPackages.x86_64-linux;
-      darwinPkgs = unstableSmall.legacyPackages.aarch64-darwin;
+      darwinPkgs = stable.legacyPackages.aarch64-darwin;
     in
     {
       darwinConfigurations = {
@@ -259,11 +249,9 @@
           let
             overlayFn = import ./overlays;
             stableList = overlayFn {
-              isUnstable = true;
               inherit xinlib;
             };
             unstableList = overlayFn {
-              isUnstable = false;
               inherit xinlib;
             };
           in
@@ -310,10 +298,6 @@
           system = "aarch64-linux";
 
           modules = [
-            {
-              _module.args.isUnstable = false;
-            }
-
             (import ./installer.nix)
             xin-secrets.nixosModules.sops
 
@@ -325,10 +309,7 @@
           system = "x86_64-linux";
 
           modules = [
-            {
-              _module.args.isUnstable = false;
-            }
-            (xinlib.buildVer self)
+            (xinlib.buildVeor self)
             (import ./installer.nix)
             xin-secrets.nixosModules.sops
 
@@ -340,51 +321,47 @@
       packages = forAllSystems (
         system:
         let
-          upkgs = unstablePkgsFor.${system};
-          spkgs = stablePkgsFor.${system};
+          pkgs = stablePkgsFor.${system};
         in
         {
-          gqrss = spkgs.callPackage ./pkgs/gqrss.nix {
-            inherit spkgs;
-            isUnstable = true;
+          gqrss = pkgs.callPackage ./pkgs/gqrss.nix {
+            inherit pkgs;
           };
-          icbirc = spkgs.callPackage ./pkgs/icbirc.nix {
-            inherit spkgs;
-            isUnstable = true;
+          icbirc = pkgs.callPackage ./pkgs/icbirc.nix {
+            inherit pkgs;
           };
-          irken = upkgs.tclPackages.callPackage ./pkgs/irken.nix { };
-          krha = upkgs.callPackage ./pkgs/krunner-krha.nix { };
-          ttfs = upkgs.callPackage ./pkgs/ttfs.nix { };
-          intiface-engine = upkgs.callPackage ./pkgs/intiface-engine.nix { };
-          flake-warn = spkgs.callPackage ./pkgs/flake-warn.nix { inherit spkgs; };
-          gen-patches = spkgs.callPackage ./bins/gen-patches.nix { inherit spkgs; };
-          yarr = spkgs.callPackage ./pkgs/yarr.nix {
-            inherit spkgs;
-            isUnstable = true;
+          irken = pkgs.tclPackages.callPackage ./pkgs/irken.nix { };
+          krha = pkgs.callPackage ./pkgs/krunner-krha.nix { };
+          ttfs = pkgs.callPackage ./pkgs/ttfs.nix { };
+          intiface-engine = pkgs.callPackage ./pkgs/intiface-engine.nix { };
+          flake-warn = pkgs.callPackage ./pkgs/flake-warn.nix { inherit pkgs; };
+          gen-patches = pkgs.callPackage ./bins/gen-patches.nix { inherit pkgs; };
+          yarr = pkgs.callPackage ./pkgs/yarr.nix {
+            inherit pkgs;
           };
-          precursorupdater = spkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
-            inherit spkgs;
+          precursorupdater = pkgs.python3Packages.callPackage ./pkgs/precursorupdater.nix {
+            inherit pkgs;
           };
-          watchmap = spkgs.python3Packages.callPackage ./pkgs/watchmap.nix {
-            inherit spkgs;
+          watchmap = pkgs.python3Packages.callPackage ./pkgs/watchmap.nix {
+            inherit pkgs;
           };
-          ble-serial = upkgs.python3Packages.callPackage ./pkgs/ble-serial.nix { inherit upkgs; };
-          pywebscrapbook = upkgs.python3Packages.callPackage ./pkgs/pywebscrapbook.nix {
-            inherit upkgs;
+          ble-serial = pkgs.python3Packages.callPackage ./pkgs/ble-serial.nix { inherit pkgs; };
+          pywebscrapbook = pkgs.python3Packages.callPackage ./pkgs/pywebscrapbook.nix {
+            inherit pkgs;
           };
-          # lxst = upkgs.python3Packages.callPackage ./pkgs/lxst.nix {
-          # inherit upkgs;
+          # lxst = pkgs.python3Packages.callPackage ./pkgs/lxst.nix {
+          # inherit pkgs;
           # };
-          # rnsh = upkgs.python3Packages.callPackage ./pkgs/rnsh.nix {
-          # inherit upkgs;
+          # rnsh = pkgs.python3Packages.callPackage ./pkgs/rnsh.nix {
+          # inherit pkgs;
           # };
-          obsidian-to-org = upkgs.python3Packages.callPackage ./pkgs/obsidian-to-org.nix {
-            inherit upkgs;
+          obsidian-to-org = pkgs.python3Packages.callPackage ./pkgs/obsidian-to-org.nix {
+            inherit pkgs;
           };
-          gokrazy = upkgs.callPackage ./pkgs/gokrazy.nix { inherit upkgs; };
-          gosignify = spkgs.callPackage ./pkgs/gosignify.nix { inherit spkgs; };
-          zutty = upkgs.callPackage ./pkgs/zutty.nix {
-            inherit upkgs;
+          gokrazy = pkgs.callPackage ./pkgs/gokrazy.nix { inherit pkgs; };
+          gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit pkgs; };
+          zutty = pkgs.callPackage ./pkgs/zutty.nix {
+            inherit pkgs;
           };
           inherit (beyt.packages.${system}) beyt;
           inherit (tsvnstat.packages.${system}) tsvnstat;
@@ -395,7 +372,7 @@
           inherit (traygent.packages.${system}) traygent;
           inherit (fynado.packages.${system}) fynado;
           inherit (calnow.packages.${system}) calnow;
-          openssh = upkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit upkgs; };
+          openssh = pkgs.pkgsMusl.callPackage ./pkgs/openssh.nix { inherit pkgs; };
         }
       );
 

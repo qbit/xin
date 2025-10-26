@@ -8,7 +8,6 @@ let
   ];
 in
 {
-  _module.args.isUnstable = true;
   imports = [
     ./hardware-configuration.nix
   ];

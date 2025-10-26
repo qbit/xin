@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  isUnstable,
   inputs,
   xinlib,
   ...
@@ -11,8 +10,8 @@ let
   inherit (xinlib) todo;
   sojuUser = "soju";
   maxUploadSize = "150M";
-  gqrss = callPackage ../../pkgs/gqrss.nix { inherit isUnstable; };
-  icbirc = callPackage ../../pkgs/icbirc.nix { inherit isUnstable; };
+  gqrss = callPackage ../../pkgs/gqrss.nix { };
+  icbirc = callPackage ../../pkgs/icbirc.nix { };
   pgBackupDir = "/var/backups/postgresql";
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnaC1v+VoVNnK04D32H+euiCyWPXU8nX6w+4UoFfjA3 qbit@plq"
@@ -40,8 +39,6 @@ let
   inherit (upkgs.python3Packages) nomadnet;
 in
 {
-  _module.args.isUnstable = false;
-
   imports = [
     ./hardware-configuration.nix
   ];

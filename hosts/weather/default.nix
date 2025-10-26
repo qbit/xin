@@ -15,7 +15,6 @@ let
   firefox = import ../../configs/firefox.nix { inherit pkgs; };
 in
 {
-  _module.args.isUnstable = false;
   imports = [ ./hardware-configuration.nix ];
 
   defaultUsers.enable = false;

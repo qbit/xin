@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  isUnstable,
   ...
 }:
 let
@@ -15,7 +14,7 @@ let
     "signify/openbsd-${toString ver}-syspatch.pub".text =
       builtins.readFile ./pubs/openbsd-${toString ver}-syspatch.pub;
   };
-  gosignify = pkgs.callPackage ../pkgs/gosignify.nix { inherit isUnstable; };
+  gosignify = pkgs.callPackage ../pkgs/gosignify.nix { };
 
   ix = pkgs.writeScriptBin "ix" (import ./ix.nix { inherit (pkgs) perl; });
   checkRestart = pkgs.writeScriptBin "check-restart" (

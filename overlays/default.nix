@@ -1,5 +1,4 @@
 {
-  isUnstable,
   ...
 }:
 {
@@ -16,13 +15,5 @@
         };
       });
     })
-  ]
-  ++ (
-    if isUnstable then
-      [
-      ]
-    else
-      [
-      ]
-  );
+  ];
 }

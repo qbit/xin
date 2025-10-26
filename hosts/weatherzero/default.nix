@@ -14,7 +14,6 @@ let
   };
 in
 {
-  _module.args.isUnstable = false;
   imports = [
     ./hardware-configuration.nix
   ];

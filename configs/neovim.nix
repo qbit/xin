@@ -1,4 +1,4 @@
-{ pkgs, isUnstable, ... }:
+{ pkgs, ... }:
 with pkgs;
 let
   vimBuildTool = pkgs.vimUtils.buildVimPlugin;
@@ -26,7 +26,6 @@ let
     };
   };
 
-  unstablePkgs = if isUnstable then [ htmx-lsp ] else [ ];
   baseVimPackages = with vimPlugins; [
     elm-vim
     fugitive
@@ -60,37 +59,35 @@ let
   myVimPackages = baseVimPackages;
 in
 {
-  environment.systemPackages =
-    with pkgs;
-    [
-      djlint
-      elmPackages.elm
-      elmPackages.elm-format
-      elmPackages.elm-language-server
-      fd
-      fzf
-      go
-      gopls
-      gotools
-      haskellPackages.haskell-language-server
-      luajitPackages.lua-lsp
-      manix
-      nixpkgs-fmt
-      nodejs
-      nodePackages.prettier
-      nodePackages.typescript-language-server
-      perl
-      perlPackages.NeovimExt
-      perlPackages.PerlCritic
-      perlPackages.PLS
-      ripgrep
-      rubyPackages.solargraph
-      sleek
-      sumneko-lua-language-server
-      tree-sitter
-      zls
-    ]
-    ++ unstablePkgs;
+  environment.systemPackages = with pkgs; [
+    djlint
+    elmPackages.elm
+    elmPackages.elm-format
+    elmPackages.elm-language-server
+    fd
+    fzf
+    go
+    gopls
+    gotools
+    haskellPackages.haskell-language-server
+    htmx-lsp
+    luajitPackages.lua-lsp
+    manix
+    nixpkgs-fmt
+    nodejs
+    nodePackages.prettier
+    nodePackages.typescript-language-server
+    perl
+    perlPackages.NeovimExt
+    perlPackages.PerlCritic
+    perlPackages.PLS
+    ripgrep
+    rubyPackages.solargraph
+    sleek
+    sumneko-lua-language-server
+    tree-sitter
+    zls
+  ];
 
   programs.neovim = {
     enable = true;

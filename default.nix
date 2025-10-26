@@ -3,7 +3,6 @@
   lib,
   options,
   pkgs,
-  isUnstable,
   ...
 }:
 let
@@ -13,7 +12,7 @@ let
   ];
   breakGlassKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6CO4aa8ymIgPgHRMwVLPnkUXwFQRKJa66R3wGXrAS0 BreakGlass";
   managementKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDM2k2C6Ufx5RNf4qWA9BdQHJfAkskOaqEWf8yjpySwH Nix Manager";
-  gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit isUnstable; };
+  gosignify = pkgs.callPackage ./pkgs/gosignify.nix { };
 
 in
 {
@@ -222,42 +221,40 @@ in
         };
       };
 
-      systemPackages =
-        with pkgs;
-        [
-          age
-          apg
-          bc
-          bind
-          btop
-          direnv
-          git-bug
-          git-sync
-          go-font
-          gosignify
-          jq
-          lz4
-          minisign
-          mosh
-          nettools
-          nix-diff
-          nix-index
-          nix-output-monitor
-          openvi
-          pass
-          pcsctools
-          python3Packages.nomadnet
-          python3Packages.rns
-          radicle-node
-          ripgrep
-          socat
-          sshfs
-          tcl
-          tmux
-          uxn
-          yt-dlp
-        ]
-        ++ (if isUnstable then [ nil ] else [ ]);
+      systemPackages = with pkgs; [
+        age
+        apg
+        bc
+        bind
+        btop
+        direnv
+        git-bug
+        git-sync
+        go-font
+        gosignify
+        jq
+        lz4
+        minisign
+        mosh
+        nettools
+        nil
+        nix-diff
+        nix-index
+        nix-output-monitor
+        openvi
+        pass
+        pcsctools
+        python3Packages.nomadnet
+        python3Packages.rns
+        radicle-node
+        ripgrep
+        socat
+        sshfs
+        tcl
+        tmux
+        uxn
+        yt-dlp
+      ];
 
       interactiveShellInit = ''
         alias vi='ovi'

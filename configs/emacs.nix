@@ -1,12 +1,11 @@
 {
   pkgs,
-  isUnstable,
   lib,
   config,
   ...
 }:
 let
-  myEmacs = pkgs.callPackage ../pkgs/emacs.nix { inherit isUnstable; };
+  myEmacs = pkgs.callPackage ../pkgs/emacs.nix { };
   cfg = config.myEmacs;
   editorScript = pkgs.writeShellScriptBin "emacseditor" ''
     if [ -z "$1" ]; then
