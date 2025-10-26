@@ -380,6 +380,7 @@ in
         };
       };
       rnsd = {
+        enabled = false;
         description = "Reticulum Network Stack Daemon";
         wants = [
           "network-online.target"
@@ -410,6 +411,7 @@ in
       };
       # rnsd seems to not be able to re-connect to the various interfaces upon resume
       "rnsd-reload" = {
+        enabled = false;
         description = "restart rnsd on resume";
         wantedBy = [ "post-resume.target" ];
         after = [ "post-resume.target" ];

@@ -244,8 +244,8 @@ in
         openvi
         pass
         pcsctools
-        python3Packages.nomadnet
-        python3Packages.rns
+        # python3Packages.nomadnet
+        # python3Packages.rns
         radicle-node
         ripgrep
         socat
