@@ -309,7 +309,7 @@
           system = "x86_64-linux";
 
           modules = [
-            (xinlib.buildVeor self)
+            (xinlib.buildVer self)
             (import ./installer.nix)
             xin-secrets.nixosModules.sops
 
