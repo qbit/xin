@@ -81,6 +81,11 @@
       fsType = "zfs";
     };
 
+    "/media/drop" = {
+      device = "rpool/drop";
+      fsType = "zfs";
+    };
+
     "/db/postgres" = {
       device = "rpool/db/postgres";
       fsType = "zfs";
