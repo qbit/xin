@@ -449,6 +449,7 @@ in
       calibre
       chirp # stable
       davfs2
+      deltachat-desktop
       deluge
       digikam
       distrobox
