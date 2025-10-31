@@ -10,7 +10,16 @@ let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
   inherit (xinlib) jobToUserService prIsOpen;
   pywebscrapbook = pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
+  blurp = pkgs.python3Packages.callPackage ../../pkgs/blurp.nix { inherit pkgs; };
   jobs = [
+    {
+      name = "blurp-purge";
+      script = "cd ~/Documents/mammothcirc.us_archive && blurp archive && blurp delete";
+      startAt = "daily";
+      path = [
+        blurp
+      ];
+    }
     {
       name = "fynado-starter";
       script = "echo enable | nc -U ~/.fynado.sock";
