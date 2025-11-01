@@ -2,7 +2,7 @@
   stdenv,
   fetchFromGitHub,
   python3,
-  wrapGAppsHook,
+  wrapGAppsHook3,
   gobject-introspection,
 }:
 let
@@ -27,7 +27,7 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     pythonEnv
-    wrapGAppsHook
+    wrapGAppsHook3
     gobject-introspection
   ];
 
