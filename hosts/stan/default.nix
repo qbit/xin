@@ -322,7 +322,6 @@ in
       mupdf
       nmap
       oath-toolkit
-      oathToolkit
       obs-studio
       openvpn
       remmina
