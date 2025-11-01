@@ -243,7 +243,7 @@ in
         nix-output-monitor
         openvi
         pass
-        pcsctools
+        pcsc-tools
         # python3Packages.nomadnet
         # python3Packages.rns
         radicle-node
