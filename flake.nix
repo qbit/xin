@@ -349,6 +349,7 @@
           pywebscrapbook = pkgs.python3Packages.callPackage ./pkgs/pywebscrapbook.nix {
             inherit pkgs;
           };
+          vcardtools = pkgs.python3Packages.callPackage ./pkgs/vcardtools.nix { inherit pkgs; };
           # lxst = pkgs.python3Packages.callPackage ./pkgs/lxst.nix {
           # inherit pkgs;
           # };
