@@ -137,8 +137,8 @@ with lib;
             rage
             recoll
             rpr
+            tor-browser
             traygent
-            trayscale
           ]);
       };
 
