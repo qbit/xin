@@ -7,6 +7,7 @@
     ./colemak.nix
     ./dns.nix
     ./doas.nix
+    ./foot.nix
     ./git.nix
     ./manager.nix
     ./net-overlay.nix
