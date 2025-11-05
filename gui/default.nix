@@ -60,6 +60,7 @@ with lib;
     ../configs/konsole.nix
     ../configs/chromium.nix
     ../configs/firefox.nix
+    ../configs/foot.nix
     ./gnome.nix
     ./kde.nix
     ./xfce.nix
