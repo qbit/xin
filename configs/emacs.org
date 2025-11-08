@@ -220,7 +220,7 @@ will try setting ~save-interprogram-paste-before-kill~.
 #+begin_src emacs-lisp
   (setopt select-active-regions nil)
   (setopt select-enable-clipboard 't)
-  (setopt select-enable-primary 't)
+  (setopt select-enable-primary nil)
   (setopt interprogram-cut-function #'gui-select-text)
 #+end_src
 
