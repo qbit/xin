@@ -74,12 +74,6 @@
         ];
       };
 
-      "/run/media/qbit/backup" = {
-        device = "/dev/disk/by-uuid/6e71eeea-6437-46f4-88d0-126c92af42ef";
-        fsType = "ext4";
-        neededForBoot = false;
-      };
-
       "/run/media/qbit/keestore" = {
         device = "http://100.100.100.100:8080/tapenet.org/box/keestore";
         fsType = "davfs";
@@ -113,8 +107,6 @@
         neededForBoot = false;
       };
     };
-
-  swapDevices = [ { device = "/dev/disk/by-uuid/1c2bb5e0-7ca8-4943-8e0f-527497ce2d61"; } ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
