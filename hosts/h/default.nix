@@ -139,6 +139,9 @@ in
 
   networking = {
     hostName = "h";
+    hosts = {
+      "100.83.77.133" = [ "bounce.bold.daemon" ];
+    };
     enableIPv6 = true;
     useDHCP = false;
     defaultGateway = "23.29.118.1";
@@ -236,6 +239,7 @@ in
       aspell
       aspellDicts.en
       icbirc
+      irssi
 
       zonemaster-cli
       sqlite
