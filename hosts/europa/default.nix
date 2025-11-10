@@ -435,6 +435,7 @@ in
     systemPackages = with pkgs; [
       arduino
       beets # stable
+      bitwarden-desktop
       calibre
       chirp # stable
       davfs2
