@@ -302,7 +302,7 @@ in
           inherit paths pruneOpts timerConfig;
         };
         local = {
-          enable = true;
+          enable = false;
           repository = "/run/media/qbit/backup/${config.networking.hostName}";
           environmentFile = "${config.sops.secrets.restic_env_file.path}";
           passwordFile = "${config.sops.secrets.restic_password_file.path}";
