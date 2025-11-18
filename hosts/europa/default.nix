@@ -479,6 +479,7 @@ in
       tea
       tigervnc
       tncattach
+      tuba
       unzip
       virt-manager
       yt-dlp
