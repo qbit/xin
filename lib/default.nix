@@ -103,7 +103,7 @@ let
         git-bug
         jo
         jq
-        lix
+        lixPackageSets.stable.lix
         nil
         nix-diff
         nix-output-monitor

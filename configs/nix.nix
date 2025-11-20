@@ -1,6 +1,7 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   nix = {
+    package = pkgs.lixPackageSets.stable.lix;
     gc = lib.mkDefault {
       automatic = true;
       dates = "daily";
