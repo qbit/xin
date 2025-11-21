@@ -105,7 +105,11 @@ in
       "aarch64-linux"
       "riscv64-linux"
     ];
-    initrd.systemd.enable = true;
+    initrd = {
+      systemd.enable = true;
+      luks.devices."luks-86c45d30-d262-4b98-aef4-1407c6403a06".device =
+        "/dev/disk/by-uuid/86c45d30-d262-4b98-aef4-1407c6403a06";
+    };
     loader = {
       systemd-boot = {
         enable = true;
