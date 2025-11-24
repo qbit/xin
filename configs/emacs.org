@@ -542,6 +542,15 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 :ID:       4d31b983-3fd6-408f-9488-b2215c005c63
 :END:
 
+** zig
+:PROPERTIES:
+:ID:       3185af97-f0b5-4d8f-80b2-85ba2dff8af2
+:END:
+
+#+begin_src emacs-lisp
+  (use-package zig-mode)
+#+end_src
+
 ** Forth
 :PROPERTIES:
 :ID:       75ab5012-b901-43ca-aaac-421ff542763c
