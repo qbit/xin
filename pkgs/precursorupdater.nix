@@ -2,6 +2,7 @@
   lib,
   buildPythonPackage,
   fetchPypi,
+  setuptools,
   pyusb,
   progressbar2,
   requests,
@@ -12,10 +13,14 @@ buildPythonPackage rec {
   pname = "precursorupdater";
   version = "0.1.5";
 
+  pyproject = true;
+
   src = fetchPypi {
     inherit pname version;
     sha256 = "sha256-m2uqfwVH2ekmIPQAfS43CGXE20+v6W1tB9m8x2sYcK0=";
   };
+
+  build-system = [ setuptools ];
 
   propagatedBuildInputs = [
     pyusb
