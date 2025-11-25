@@ -376,6 +376,8 @@ in
       autoIndex = true;
       enforced = "body";
     };
+
+    stateVersion = 3;
   };
 
   services = {
@@ -564,9 +566,9 @@ in
       tlsCertificate = config.sops.secrets.bounce_cert.path;
       tlsCertificateKey = config.sops.secrets.bounce_key.path;
     };
-    postfix.extraConfig = ''
-      smtputf8_enable = no
-    '';
+    postfix.settings.main = {
+      smtputf8_enable = "no";
+    };
     smartd.enable = false;
     mcchunkie = {
       enable = true;
@@ -683,7 +685,7 @@ in
           "/var/lib/gotosocial"
           "/var/lib/mcchunkie"
           "/var/lib/kogs"
-          "/var/vmail"
+          config.mailserver.mailDerictory
           "/var/dkim"
           # config.services.prosody.dataDir
           config.services.ejabberd.spoolDir
