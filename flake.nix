@@ -2,7 +2,7 @@
   description = "xin";
 
   inputs = {
-    stable.url = "github:NixOS/nixpkgs/nixos-25.05-small";
+    stable.url = "github:NixOS/nixpkgs/nixos-25.11-small";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     sops-nix = {
@@ -33,7 +33,7 @@
     };
 
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
       inputs = {
         nixpkgs.follows = "stable";
       };
