@@ -685,7 +685,7 @@ in
           "/var/lib/gotosocial"
           "/var/lib/mcchunkie"
           "/var/lib/kogs"
-          config.mailserver.mailDerictory
+          config.mailserver.mailDirectory
           "/var/dkim"
           # config.services.prosody.dataDir
           config.services.ejabberd.spoolDir
