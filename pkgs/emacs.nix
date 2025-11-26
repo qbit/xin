@@ -14,14 +14,4 @@ emacsWithPackagesFromUsePackage {
 
   defaultInitFile = true;
   package = emacsPkg;
-
-  override =
-    epkgs:
-    epkgs
-    // {
-      ollama = pkgs.callPackage ../pkgs/ollama-el.nix {
-        inherit (pkgs) fetchFromGitHub;
-        inherit (epkgs) trivialBuild;
-      };
-    };
 }

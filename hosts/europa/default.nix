@@ -8,7 +8,7 @@
 }:
 let
   inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
-  inherit (xinlib) jobToUserService prIsOpen;
+  inherit (xinlib) jobToUserService;
   pywebscrapbook = pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
   blurp = pkgs.python3Packages.callPackage ../../pkgs/blurp.nix { inherit pkgs; };
   jobs = [
@@ -254,10 +254,6 @@ in
         };
       };
     };
-    ollama = {
-      enable = false;
-      acceleration = prIsOpen.str 306375 "rocm";
-    };
     rkvm.server = {
       enable = true;
       settings = {
@@ -383,11 +379,6 @@ in
       #};
     };
     services = {
-      ollama = {
-        environment = {
-          OLLAMA_ORIGINS = "*";
-        };
-      };
       "whytailscalewhy" = {
         description = "Tailscale restart on resume";
         wantedBy = [ "post-resume.target" ];
@@ -462,7 +453,6 @@ in
       nixpkgs-review
       nmap
       obsidian
-      ollama
       openscad
       picocom
       protonup-ng

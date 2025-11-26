@@ -6,7 +6,6 @@
 }:
 let
   tsAddr = "100.84.170.57";
-  oLlamaPort = 11434;
   pubKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7v+/xS8832iMqJHCWsxUZ8zYoMWoZhjj++e26g1fLT europa"
   ];
@@ -78,17 +77,6 @@ in
     enable = true;
   };
 
-  systemd = {
-    services = {
-      ollama = {
-        environment = {
-          OLLAMA_ORIGINS = "*";
-          OLLAMA_HOST = lib.mkForce "0.0.0.0";
-        };
-      };
-    };
-  };
-
   services = {
     syncthing = {
       enable = true;
@@ -149,21 +137,6 @@ in
         uri = "tcp://0.0.0.0:10200";
         voice = "en-us-ryan-medium";
       };
-    };
-    ts-reverse-proxy = {
-      servers = {
-        "ollama-reverse" = {
-          enable = true;
-          reverseName = "ollama";
-          reversePort = oLlamaPort;
-        };
-      };
-    };
-    ollama = {
-      enable = true;
-      acceleration = "rocm";
-      host = "localhost";
-      port = oLlamaPort;
     };
     prometheus = {
       enable = true;
