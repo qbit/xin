@@ -144,7 +144,6 @@ in
         "jelly.bold.daemon"
         "home.bold.daemon"
       ];
-      "100.74.8.55" = [ "nix-binary-cache.otter-alligator.ts.net" ];
     };
     interfaces.enp7s0 = {
       useDHCP = true;
