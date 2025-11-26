@@ -311,7 +311,7 @@ let
     APIURL="https://api.tailscale.com/api/v2/tailnet/-/acl"
     TOKEN="$(cat ${config.sops.secrets.tailnet_acl_manager.path}):"
 
-    ERROR="$(${pkgs.curl}/bin/curl "$APIURL/validate" -s -u "$TOKEN" -d @${tailnetACLs} | $JQ -r .message)"
+    ERROR="$(${pkgs.curl}/bin/curl "$APIURL/validate" -s -u "$TOKEN" -d @${tailnetACLs} | $JQ -r .data)"
 
     if [ "$ERROR" = "null" ]; then
       RESP="$(${pkgs.curl}/bin/curl "$APIURL" -s -u "$TOKEN" -d @${tailnetACLs} | $JQ -r .message)"
