@@ -426,6 +426,7 @@ in
 
     systemPackages = with pkgs; [
       arduino
+      audacity
       beets # stable
       bitwarden-desktop
       calibre
