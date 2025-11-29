@@ -157,7 +157,7 @@ let
               src = [
                 "tag:kdeconnect"
               ];
-              dst = (mkRange 1714 1764 "tag:kdeconnect");
+              dst = mkRange 1714 1764 "tag:kdeconnect";
             }
             {
               # Mosh
