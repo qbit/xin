@@ -50,6 +50,7 @@ in
         10300
         10200
         10400
+        config.services.guix.publish.port
       ];
       checkReversePath = "loose";
     };
@@ -136,6 +137,26 @@ in
         enable = true;
         uri = "tcp://0.0.0.0:10200";
         voice = "en-us-ryan-medium";
+      };
+    };
+    guix = {
+      enable = true;
+      publish = {
+        enable = true;
+        generateKeyPair = true;
+      };
+      gc = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
+    ts-reverse-proxy = {
+      servers = {
+        "guix-reverse" = {
+          enable = true;
+          reverseName = "guix";
+          reversePort = config.services.guix.publish.port;
+        };
       };
     };
     prometheus = {

@@ -202,6 +202,26 @@ in
   };
 
   services = {
+    guix = {
+      enable = true;
+      substituters = {
+        urls = [
+          "https://guix.otter-alligator.ts.net"
+          # "https://ci.guix.gnu.org"
+          # "https://bordeaux.guix.gnu.org"
+          # "https://berlin.guix.gnu.org"
+        ];
+        authorizedKeys = [
+          ../../guix.pub
+          # "${pkgs.guix}/share/guix/ci.guix.gnu.org.pub"
+          # "${pkgs.guix}/share/guix/bordeaux.guix.gnu.org.pub"
+          # "${pkgs.guix}/share/guix/berlin.guix.gnu.org.pub"
+        ];
+      };
+      gc = {
+        enable = true;
+      };
+    };
     i2pd = {
       enable = false;
       address = "127.0.0.1";

@@ -1334,3 +1334,11 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
   	     '((major-mode . rcirc-mode) display-buffer-same-window))
 #+end_src
 
+* Experiments
+:PROPERTIES:
+:ID:       99dc81c2-b0bc-4aa0-99c3-4ea32cb2e6fe
+:END:
+
+#+begin_src emacs-lisp
+  (use-package guix)
+#+end_src
