@@ -1083,6 +1083,15 @@ Extending org with the ability to transclude makes for a powerhouse!
   (use-package request)
   ;; (use-package org-social)
 #+end_src
+
+**** Presentations in plain old org-mode \o/
+:PROPERTIES:
+:ID:       d90bf8e9-da87-4794-826a-f0d291f3955c
+:END:
+
+#+begin_src emacs-lisp
+(use-package epresent)
+  #+end_src
 * RSS
 :PROPERTIES:
 :ID:       842027db-4e8a-4d9b-80c9-b8fb7825a078
