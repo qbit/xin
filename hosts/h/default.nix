@@ -897,7 +897,7 @@ in
             }
 
             location ~ ^/_matrix/|^/_synapse/ {
-                return 404;
+                return 410;
             }
 
             location ~* .(xml)$ {
