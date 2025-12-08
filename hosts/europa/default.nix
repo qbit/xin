@@ -461,6 +461,7 @@ in
       elmPackages.elm-language-server
       elmPackages.elm-live
       ferdium
+      freetube
       gajim
       gforth
       gh
