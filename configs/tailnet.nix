@@ -95,6 +95,8 @@ let
           "tag:dns-server" = [ "qbit@tapenet.org" ];
           "tag:openbsd" = [ "qbit@tapenet.org" ];
           "tag:kdeconnect" = [ "qbit@tapenet.org" ];
+          "tag:media-client" = [ "qbit@tapenet.org" ];
+          "tag:media-server" = [ "qbit@tapenet.org" ];
         };
 
         acls =
@@ -215,9 +217,22 @@ let
 
               proto = "tcp";
             }
+            {
+              # Allow media things to talk
+              action = "accept";
+              src = [ "tag:media-client" ];
+              dst = [ "tag:media-server:443" ];
+            }
           ];
 
         tests = [
+          {
+            # Let media clients get to media servers
+            src = "tag:media-client";
+            allow = [
+              "tag:media-server:443"
+            ];
+          }
           {
             # h can get to notification stuff, hole for dns and nbc for updates
             src = "h";
