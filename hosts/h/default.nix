@@ -664,9 +664,13 @@ in
     };
     cron = {
       enable = true;
-      systemCronJobs = [
-        ''@hourly qbit  (export GH_AUTH_TOKEN=$(cat /run/secrets/gqrss_token); cd /var/www/suah.dev/rss; ${gqrss}/bin/gqrss ; ${gqrss}/bin/gqrss -search "LibreSSL" -prefix libressl_ ) >/dev/null 2>&1''
-      ];
+      systemCronJobs =
+        let
+          gqCmd = "${gqrss}/bin/gqrss";
+        in
+        [
+          ''@hourly qbit  (export GH_AUTH_TOKEN=$(cat /run/secrets/gqrss_token); cd /var/www/suah.dev/rss; ${gqCmd} ; ${gqCmd} -search "LibreSSL" -prefix libressl_ ; ${gqCmd} -search "deflock" -prefix deflock_ ) >/dev/null 2>&1''
+        ];
     };
 
     backups = {
