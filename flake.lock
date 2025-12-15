@@ -224,11 +224,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1720358464,
-        "narHash": "sha256-aXFTOWF/ww62MeXGXZ8Jle/XDfEUoyskkV1i5Mhj8+A=",
+        "lastModified": 1765833166,
+        "narHash": "sha256-ogODmSASsDmgVuHTL+Q9fQwZaVAriUcIJgEtn9VUwUE=",
         "ref": "refs/heads/main",
-        "rev": "b6629618e99d0ef72971b3d7b4decdc2622d8e36",
-        "revCount": 15,
+        "rev": "f3f42d694c5e54484292492a98d4446f365f19a2",
+        "revCount": 17,
         "type": "git",
         "url": "https://codeberg.org/qbit/kogs"
       },
