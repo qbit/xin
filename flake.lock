@@ -265,11 +265,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765830929,
-        "narHash": "sha256-HE4nIo82Gm0sxaqnxuDxzJ7wQ9CcJP5vX7MHRLuDTfk=",
+        "lastModified": 1765831276,
+        "narHash": "sha256-CLUxAkhF6qpq7BXR5Kpe3SY8KwH3sGK/bNLndVvqFTc=",
         "ref": "refs/heads/master",
-        "rev": "dadcc0de2e45c0dcac44014856feeb8b45c3c760",
-        "revCount": 46,
+        "rev": "a1fa214a7e5c5b0603331998039cd24b8ca111d1",
+        "revCount": 47,
         "type": "git",
         "url": "https://codeberg.org/qbit/microca"
       },
