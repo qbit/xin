@@ -378,11 +378,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1727206534,
-        "narHash": "sha256-1I+OwGV/fJoE6LzzOf3X6sJ/PaQ6NMS5ryhXZe3WGho=",
+        "lastModified": 1765834615,
+        "narHash": "sha256-I0rzyOYXP0zvsX3TgdXzAiPOaaWf8oMuoFcOcKARV20=",
         "ref": "refs/heads/main",
-        "rev": "54210dcacd277b9a41e4aa688909748a8da661d6",
-        "revCount": 42,
+        "rev": "77ecd552c5c0c5d7f43e86f4efd4fd5c3b501219",
+        "revCount": 44,
         "type": "git",
         "url": "https://codeberg.org/qbit/pr-status-pl"
       },
