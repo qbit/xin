@@ -358,11 +358,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760378177,
-        "narHash": "sha256-Xtr8F5yoCWjYwiE2YRlIOvb656WpEvh/dOGC8HH2gfc=",
+        "lastModified": 1765834280,
+        "narHash": "sha256-sAaGJuqYiyIzFZCy6tN15EjwPqB94z6gH1LmdGFziL0=",
         "ref": "refs/heads/main",
-        "rev": "daa7dde36002815b6c61b8accf59dbbad1e6173e",
-        "revCount": 10,
+        "rev": "2cfc92ae874c9015950b50dc3a31a2969533e09d",
+        "revCount": 11,
         "type": "git",
         "url": "https://codeberg.org/qbit/pots"
       },
