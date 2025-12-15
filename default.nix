@@ -244,6 +244,7 @@ in
         openvi
         pass
         pcsc-tools
+        python3
         # python3Packages.nomadnet
         # python3Packages.rns
         radicle-node

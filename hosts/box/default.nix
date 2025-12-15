@@ -3,6 +3,7 @@
   lib,
   pkgs,
   xinlib,
+  inputs,
   ...
 }:
 let
@@ -721,6 +722,7 @@ in
     redlib = {
       enable = true;
       port = 8482;
+      package = inputs.unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.redlib;
     };
 
     nginx = {
