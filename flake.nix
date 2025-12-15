@@ -163,11 +163,11 @@
       overlays = [
         emacs-overlay.overlay
         gostart.overlays.default
-        kogs.overlay
-        mcchunkie.overlay
+        kogs.overlays.default
+        mcchunkie.overlays.default
         microca.overlays.default
-        pots.overlay
-        pr-status.overlay
+        pots.overlays.default
+        pr-status.overlays.default
         ts-reverse-proxy.overlays.default
         xin-status.overlays.default
       ];
@@ -264,10 +264,10 @@
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
           gostart.nixosModules.default
-          mcchunkie.nixosModule
-          kogs.nixosModule
-          pots.nixosModule
-          pr-status.nixosModule
+          mcchunkie.nixosModules.default
+          kogs.nixosModules.default
+          pots.nixosModules.default
+          pr-status.nixosModules.default
           simple-nixos-mailserver.nixosModule
         ] "h";
         #router =

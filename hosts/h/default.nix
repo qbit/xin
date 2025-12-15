@@ -2,12 +2,10 @@
   config,
   pkgs,
   inputs,
-  xinlib,
   ...
 }:
 with pkgs;
 let
-  inherit (xinlib) todo;
   sojuUser = "soju";
   maxUploadSize = "150M";
   gqrss = callPackage ../../pkgs/gqrss.nix { };
@@ -318,11 +316,9 @@ in
           ExecStart = "${nomadnet}/bin/nomadnet -d -c";
         };
       };
-      navidrome.serviceConfig.BindReadOnlyPaths =
-        todo "navidrome dns issue: https://github.com/NixOS/nixpkgs/issues/151550"
-          [
-            "/etc/resolv.conf"
-          ];
+      navidrome.serviceConfig.BindReadOnlyPaths = [
+        "/etc/resolv.conf"
+      ];
       icb-tunnel = {
         wants = [
           "network-online.target"
