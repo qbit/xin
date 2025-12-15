@@ -4,7 +4,8 @@
   ...
 }:
 let
-  emacsPkg = if (pkgs.system == "x86_64-linux") then pkgs.emacs-git-pgtk else pkgs.emacs;
+  emacsPkg =
+    if (pkgs.stdenv.hostPlatform.system == "x86_64-linux") then pkgs.emacs-git-pgtk else pkgs.emacs;
 in
 emacsWithPackagesFromUsePackage {
   config = ../configs/emacs.org;

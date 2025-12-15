@@ -7,7 +7,7 @@
 }:
 with pkgs;
 let
-  inherit (inputs.unstable.legacyPackages.${pkgs.system}) golink;
+  inherit (inputs.unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}) golink;
   cfg = config.services.golink;
 in
 {

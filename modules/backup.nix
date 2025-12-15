@@ -122,7 +122,7 @@ in
             script = ''
               . ${config.sops.secrets.po_env.path}
 
-              PO=${inputs.po.packages.${pkgs.system}.po}/bin/po
+              PO=${inputs.po.packages.${pkgs.stdenv.hostPlatform.system}.po}/bin/po
               if ${pkgs.pmutils}/bin/on_ac_power; then
                 $PO -title "restic-${name} backup failed!" -body "Please check the ${name} backup on ${config.networking.hostName}."
               fi

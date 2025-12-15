@@ -8,7 +8,7 @@
 with pkgs;
 let
   cfg = config.services.tsvnstat;
-  inherit (inputs.tsvnstat.packages.${pkgs.system}) tsvnstat;
+  inherit (inputs.tsvnstat.packages.${pkgs.stdenv.hostPlatform.system}) tsvnstat;
 in
 {
   options = with lib; {

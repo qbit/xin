@@ -321,7 +321,7 @@ let
     . ${config.sops.secrets.po_env.path}
 
     JQ=${pkgs.jq}/bin/jq
-    PO=${inputs.po.packages.${pkgs.system}.po}/bin/po
+    PO=${inputs.po.packages.${pkgs.stdenv.hostPlatform.system}.po}/bin/po
 
     APIURL="https://api.tailscale.com/api/v2/tailnet/-/acl"
     TOKEN="$(cat ${config.sops.secrets.tailnet_acl_manager.path}):"

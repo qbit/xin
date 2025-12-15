@@ -80,8 +80,6 @@ stdenv.mkDerivation {
 
   enableParallelBuilding = true;
 
-  hardeningEnable = [ "pie" ];
-
   enableParallelChecking = false;
   nativeCheckInputs = [ libressl ] ++ lib.optional (!stdenv.isDarwin) hostname;
   preCheck = lib.optionalString (stdenv.hostPlatform == stdenv.buildPlatform) ''

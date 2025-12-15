@@ -29,7 +29,7 @@ with lib;
 
     services = {
       openntpd.enable = true;
-      dnscrypt-proxy2 = {
+      dnscrypt-proxy = {
         enable = true;
         upstreamDefaults = false;
         settings = {

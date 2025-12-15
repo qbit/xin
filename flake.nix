@@ -83,10 +83,6 @@
       url = "git+https://codeberg.org/qbit/po";
       inputs.nixpkgs.follows = "stable";
     };
-    tsns = {
-      url = "git+https://codeberg.org/qbit/tsns";
-      inputs.nixpkgs.follows = "stable";
-    };
     ts-reverse-proxy = {
       url = "git+https://codeberg.org/qbit/ts-reverse-proxy";
       inputs.nixpkgs.follows = "unstable";
@@ -128,7 +124,6 @@
       traygent,
       fynado,
       ts-reverse-proxy,
-      tsns,
       tsvnstat,
       stable,
       unstable,
@@ -162,7 +157,6 @@
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
           ts-reverse-proxy.nixosModule
-          tsns.nixosModule
         ];
       };
 
@@ -175,7 +169,6 @@
         pots.overlay
         pr-status.overlay
         ts-reverse-proxy.overlay
-        tsns.overlay
         xin-status.overlays.default
       ];
 
@@ -356,7 +349,6 @@
           inherit (pots.packages.${system}) pots;
           inherit (po.packages.${system}) po;
           inherit (ts-reverse-proxy.packages.${system}) ts-reverse-proxy;
-          inherit (tsns.packages.${system}) tsns;
           inherit (traygent.packages.${system}) traygent;
           inherit (fynado.packages.${system}) fynado;
           inherit (calnow.packages.${system}) calnow;

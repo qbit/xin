@@ -223,16 +223,7 @@ in
         "dotnet-sdk-6.0.428"
       ];
     };
-    #overlays = [
-    #  (_: _: {
-    #    inherit (inputs.unstable.legacyPackages.${pkgs.system}) home-assistant;
-    #  })
-    #];
   };
-
-  #disabledModules = [
-  #  "services/home-automation/home-assistant.nix"
-  #];
 
   environment = {
     systemPackages = with pkgs; [

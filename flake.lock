@@ -412,7 +412,6 @@
         "stable": "stable",
         "traygent": "traygent",
         "ts-reverse-proxy": "ts-reverse-proxy",
-        "tsns": "tsns",
         "tsvnstat": "tsvnstat",
         "unstable": "unstable",
         "xin-secrets": "xin-secrets",
@@ -517,26 +516,6 @@
       "original": {
         "type": "git",
         "url": "https://codeberg.org/qbit/ts-reverse-proxy"
-      }
-    },
-    "tsns": {
-      "inputs": {
-        "nixpkgs": [
-          "stable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1724466082,
-        "narHash": "sha256-Tu3eKCQU7pMnB7jJG3faGhbs4ZL6UdqsRGm7PaO9YgM=",
-        "ref": "refs/heads/main",
-        "rev": "88abecec0ec731cf6a54ee049822f95d38ce9eea",
-        "revCount": 11,
-        "type": "git",
-        "url": "https://codeberg.org/qbit/tsns"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/qbit/tsns"
       }
     },
     "tsvnstat": {

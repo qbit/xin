@@ -126,7 +126,7 @@ in
     time.timeZone = "US/Mountain";
 
     systemd.services."setdate" =
-      if pkgs.system == "aarch64-linux" then
+      if pkgs.stdenv.hostPlatform.system == "aarch64-linux" then
         {
           description = "Set date on boot";
           wants = [

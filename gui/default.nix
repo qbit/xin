@@ -8,9 +8,10 @@
 }:
 let
   inherit (builtins) toJSON;
-  inherit (inputs.traygent.packages.${pkgs.system}) traygent;
-  inherit (inputs.fynado.packages.${pkgs.system}) fynado;
-  inherit (inputs.calnow.packages.${pkgs.system}) calnow;
+  mySys = pkgs.stdenv.hostPlatform.system;
+  inherit (inputs.traygent.packages.${mySys}) traygent;
+  inherit (inputs.fynado.packages.${mySys}) fynado;
+  inherit (inputs.calnow.packages.${mySys}) calnow;
 
   rage = pkgs.writeScriptBin "rage" (import ../bins/rage.nix { inherit pkgs; });
   rpr = pkgs.writeScriptBin "rpr" (import ../bins/rpr.nix { inherit (pkgs) hut gh tea; });

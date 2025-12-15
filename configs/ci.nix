@@ -95,7 +95,7 @@ with lib;
       };
     };
     environment.systemPackages = with pkgs; [
-      inputs.po.packages.${pkgs.system}.po
+      inputs.po.packages.${pkgs.stdenv.hostPlatform.system}.po
       keychain
       mosh
     ];
@@ -134,11 +134,9 @@ with lib;
 
     systemd = {
       services = lib.listToAttrs (builtins.map xinlib.jobToService jobs);
-      oomd = {
-        extraConfig = {
-          DefaultMemoryPressureLimit = "80%";
-          DefaultMemoryPressureDurationSec = "60";
-        };
+      oomd.settings.OOM = {
+        DefaultMemoryPressureLimit = "80%";
+        DefaultMemoryPressureDurationSec = "60";
       };
     };
 

@@ -14,6 +14,7 @@ let
       exec ${myEmacs}/bin/emacsclient --alternate-editor ${myEmacs}/bin/emacs "$@"
     fi
   '';
+  mySys = pkgs.stdenv.hostPlatform.system;
 in
 {
   options = {
@@ -48,11 +49,11 @@ in
           myEmacs
           editorScript
         ]
-        ++ lib.optionals (pkgs.system == "x86_64-linux") [
+        ++ lib.optionals (mySys == "x86_64-linux") [
           texlive.combined.scheme-full
           racket
         ]
-        ++ lib.optionals (pkgs.system == "x86_64-linux") [ texlive.combined.scheme-full ];
+        ++ lib.optionals (mySys == "x86_64-linux") [ texlive.combined.scheme-full ];
     };
   };
 }

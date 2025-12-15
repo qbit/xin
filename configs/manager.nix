@@ -77,8 +77,7 @@ with lib;
 
     environment.systemPackages = [
       microca
-      # inputs.xintray.packages.${pkgs.system}.xintray
-      inputs.po.packages.${pkgs.system}.po
+      inputs.po.packages.${pkgs.stdenv.hostPlatform.system}.po
     ];
 
     networking = {

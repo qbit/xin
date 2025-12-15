@@ -7,7 +7,8 @@
   ...
 }:
 let
-  inherit (inputs.stable.legacyPackages.${pkgs.system}) chirp beets quodlibet-full;
+  mySys = pkgs.stdenv.hostPlatform.system;
+  inherit (inputs.stable.legacyPackages.${mySys}) chirp beets quodlibet-full;
   inherit (xinlib) jobToUserService;
   pywebscrapbook = pkgs.python3Packages.callPackage ../../pkgs/pywebscrapbook.nix { inherit pkgs; };
   blurp = pkgs.python3Packages.callPackage ../../pkgs/blurp.nix { inherit pkgs; };
