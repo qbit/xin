@@ -31,7 +31,7 @@ let
     allow	10.20.30.1/32;
   '';
   upkgs = import inputs.unstable {
-    inherit system;
+    inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
   };
   inherit (upkgs.python3Packages) nomadnet;
