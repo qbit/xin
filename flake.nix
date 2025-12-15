@@ -156,19 +156,19 @@
           xin-status.nixosModules.default
           xin-secrets.nixosModules.sops
           xin-secrets.nixosModules.xin-secrets
-          ts-reverse-proxy.nixosModule
+          ts-reverse-proxy.nixosModules.default
         ];
       };
 
       overlays = [
         emacs-overlay.overlay
-        gostart.overlay
+        gostart.overlays.default
         kogs.overlay
         mcchunkie.overlay
-        microca.overlay
+        microca.overlays.default
         pots.overlay
         pr-status.overlay
-        ts-reverse-proxy.overlay
+        ts-reverse-proxy.overlays.default
         xin-status.overlays.default
       ];
 
@@ -263,7 +263,7 @@
         box = buildSys "x86_64-linux" stable [ ./configs/hardened.nix ] "box";
         h = buildSys "x86_64-linux" stable [
           ./configs/hardened.nix
-          gostart.nixosModule
+          gostart.nixosModules.default
           mcchunkie.nixosModule
           kogs.nixosModule
           pots.nixosModule

@@ -394,7 +394,7 @@ in
     };
     ejabberd = {
       enable = true;
-      package = inputs.unstable.legacyPackages.${system}.pkgs.ejabberd.override {
+      package = inputs.unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgs.ejabberd.override {
         withSqlite = true;
       };
       configFile = pkgs.writeText "ejabberd.yaml" (
