@@ -602,11 +602,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765830563,
-        "narHash": "sha256-pYKy1rgY23e1GVdGRmIutBkSz7Orqi+NKiRkUFDYiIY=",
+        "lastModified": 1765905398,
+        "narHash": "sha256-qUDYpUyzyAdqrMg0eVoBDeXQ+xYbZ3nXhNT4ylvgaa8=",
         "ref": "refs/heads/main",
-        "rev": "83973c8d4c27f090a0a019dbe9f6b6908410915e",
-        "revCount": 82,
+        "rev": "25c2b0934c8e6b177798c054e2aa337f783adbe5",
+        "revCount": 83,
         "type": "git",
         "url": "https://codeberg.org/qbit/xin-status"
       },
