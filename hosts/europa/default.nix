@@ -475,8 +475,8 @@ in
       nix-index
       nixpkgs-review
       nmap
-      obsidian
       openscad
+      picard
       picocom
       protonup-ng
       prusa-slicer
