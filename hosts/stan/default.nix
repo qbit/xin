@@ -310,6 +310,7 @@ in
       };
     };
     systemPackages = with pkgs; [
+      bitwarden-desktop
       distrobox
       firefox
       fzf
