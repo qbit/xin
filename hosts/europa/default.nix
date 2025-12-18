@@ -173,6 +173,7 @@ in
   };
 
   programs = {
+    talon.enable = true;
     nix-ld.enable = lib.mkIf config.programs.ladybird.enable true;
     _1password.enable = true;
     _1password-gui = {

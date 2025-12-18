@@ -43,6 +43,11 @@
       url = "github:NixOS/nixos-hardware/master";
     };
 
+    talon = {
+      url = "github:nix-community/talon-nix";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
     mcchunkie = {
       url = "git+https://codeberg.org/qbit/mcchunkie?ref=main";
       inputs.nixpkgs.follows = "stable";
@@ -129,6 +134,7 @@
       unstable,
       xin-secrets,
       xin-status,
+      talon,
       ...
     }@inputs:
     let
@@ -245,6 +251,7 @@
 
       nixosConfigurations = {
         europa = buildSys "x86_64-linux" unstable [
+          talon.nixosModules.talon
           nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
         slab = buildSys "x86_64-linux" stable [

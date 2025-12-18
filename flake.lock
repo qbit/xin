@@ -299,6 +299,27 @@
         "type": "github"
       }
     },
+    "nix-github-actions": {
+      "inputs": {
+        "nixpkgs": [
+          "talon",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1693660503,
+        "narHash": "sha256-B/g2V4v6gjirFmy+I5mwB2bCYc0l3j5scVfwgl6WOl8=",
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
+        "rev": "bd5bdbb52350e145c526108f4ef192eb8e554fa0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1764440730,
@@ -410,6 +431,7 @@
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "stable": "stable",
+        "talon": "talon",
         "traygent": "traygent",
         "ts-reverse-proxy": "ts-reverse-proxy",
         "tsvnstat": "tsvnstat",
@@ -475,6 +497,27 @@
         "owner": "NixOS",
         "ref": "nixos-25.11-small",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "talon": {
+      "inputs": {
+        "nix-github-actions": "nix-github-actions",
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1746431176,
+        "narHash": "sha256-bwXLFy2pDpNE60EkVltrmiRgwNWLo4eYBesP997p8mg=",
+        "owner": "nix-community",
+        "repo": "talon-nix",
+        "rev": "cc110629c5f0be12e839b2aea6a16880f1822706",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "talon-nix",
         "type": "github"
       }
     },
