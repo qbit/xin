@@ -22,14 +22,14 @@ let
     #  startAt = "20:00";
     #  path = [ ];
     #}
-    #{
-    #  name = "xin-ci";
-    #  user = "qbit";
-    #  script = "cd ~/src/xin && ./bin/ci";
-    #  # systemd-analyze calendar --iterations=3 '$cronlike'
-    #  startAt = "0/2:30:00";
-    #  path = [ ];
-    #}
+    {
+      name = "xin-ci";
+      user = "qbit";
+      script = "cd ~/src/xin && ./bin/ci";
+      # systemd-analyze calendar --iterations=3 '$cronlike'
+      startAt = "daily";
+      path = [ ];
+    }
   ];
 in
 with lib;
