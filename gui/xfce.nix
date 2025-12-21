@@ -14,22 +14,38 @@ with lib;
 
   config = mkIf config.xfce.enable {
     security.pam.services = {
-      gdm.enableKwallet = true;
-      kdm.enableKwallet = true;
-      lightdm.enableKwallet = true;
-      sddm.enableKwallet = true;
-      slim.enableKwallet = true;
+      sddm = {
+        kwallet = {
+          enable = true;
+          forceRun = true;
+        };
+      };
+      kwallet = {
+        name = "kwallet";
+        enableKwallet = true;
+      };
     };
 
-    environment.systemPackages = with pkgs.libsForQt5; [
-      kwallet
-      kwallet-pam
-      kwalletmanager
-    ];
+    environment.systemPackages =
+      let
+        kdePkgs = with pkgs.kdePackages; [
+          konversation
+          kwallet
+          kwallet-pam
+          kwalletmanager
+        ];
+      in
+      with pkgs;
+      [
+        supersonic
+      ]
+      ++ kdePkgs;
 
-    services.xserver.displayManager.sddm.enable = true;
-    services.xserver.desktopManager.xfce = {
-      enable = true;
+    services = {
+      displayManager.sddm.enable = true;
+      xserver.desktopManager.xfce = {
+        enable = true;
+      };
     };
   };
 }
