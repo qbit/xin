@@ -35,11 +35,7 @@ with lib;
           kwalletmanager
         ];
       in
-      with pkgs;
-      [
-        supersonic
-      ]
-      ++ kdePkgs;
+      kdePkgs;
 
     services = {
       displayManager.sddm.enable = true;

@@ -131,6 +131,7 @@ with lib;
             rage
             recoll
             rpr
+            supersonic
             tor-browser
             traygent
           ]);
