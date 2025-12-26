@@ -624,11 +624,11 @@
         "unstable": "unstable_2"
       },
       "locked": {
-        "lastModified": 1766607580,
-        "narHash": "sha256-9v3yjrt09uAuU6WQECK929PP8+AhG5PvIL3fOgRNsK0=",
+        "lastModified": 1766778916,
+        "narHash": "sha256-tR5L7JPD88HqBPygTjPlar7+xbsuLLMh6Ak36Lnmc5Q=",
         "ref": "main",
-        "rev": "8e56e5fd3aef8de56c95f79366b3421e1da38271",
-        "revCount": 237,
+        "rev": "b2b6279da15753dfa0cf7fac0b96228e916f0f3b",
+        "revCount": 238,
         "type": "git",
         "url": "ssh://xin-secrets-ro/qbit/xin-secrets.git"
       },
