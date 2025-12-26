@@ -17,9 +17,6 @@ with lib;
       let
         kdePkgs = with pkgs.kdePackages; [
           konversation
-          kwallet
-          kwallet-pam
-          kwalletmanager
         ];
       in
       kdePkgs;

@@ -13,26 +13,10 @@ with lib;
   };
 
   config = mkIf config.xfce.enable {
-    security.pam.services = {
-      sddm = {
-        kwallet = {
-          enable = true;
-          forceRun = true;
-        };
-      };
-      kwallet = {
-        name = "kwallet";
-        enableKwallet = true;
-      };
-    };
-
     environment.systemPackages =
       let
         kdePkgs = with pkgs.kdePackages; [
           konversation
-          kwallet
-          kwallet-pam
-          kwalletmanager
         ];
       in
       kdePkgs;
