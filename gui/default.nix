@@ -119,6 +119,7 @@ with lib;
           with pkgs;
           (xinlib.filterList [
             calnow
+            dillo
             exiftool
             feh
             fynado
