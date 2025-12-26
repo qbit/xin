@@ -137,9 +137,6 @@ with lib;
           ]);
       };
 
-      programs = {
-        ladybird.enable = true;
-      };
       security.rtkit.enable = true;
     })
     (mkIf config.pipewire.enable {
