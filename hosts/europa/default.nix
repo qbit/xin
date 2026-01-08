@@ -251,14 +251,6 @@ in
             id = "pixel_8_5a6k-photos";
             devices = [ "graphy" ];
           };
-          "calibre-library" = {
-            path = "~/Calibre Library";
-            id = "calibre_library";
-            devices = [
-              "box"
-              "pwntie"
-            ];
-          };
           "home/qbit/sync" = {
             path = "~/sync";
             id = "main_sync";

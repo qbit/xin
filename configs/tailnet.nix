@@ -16,6 +16,7 @@ let
               "immich"
               "readeck"
               "notify"
+              "books"
             ];
             attr = [ "funnel" ];
           }
@@ -59,6 +60,7 @@ let
           }
         ];
         hosts = {
+          books = "100.112.73.99";
           homeassistant = "100.68.29.6";
           immich = "100.90.44.82";
           box = "100.115.16.150";

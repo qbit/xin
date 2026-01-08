@@ -315,19 +315,6 @@ in
         };
         devices = config.syncthingDevices;
         folders = {
-          "calibre-library" = {
-            path = "~/Calibre_Library";
-            id = "calibre_library";
-            devices = [ "box" ];
-            versioning = {
-              type = "staggered";
-              fsPath = "~/syncthing/calibre-backup";
-              params = {
-                cleanInterval = "3600";
-                maxAge = "31536000";
-              };
-            };
-          };
           "home/qbit/sync" = {
             path = "~/sync";
             id = "main_sync";
@@ -397,6 +384,13 @@ in
           reverseName = "immich";
           reversePort = config.services.immich.port;
           reverseIP = config.services.immich.host;
+        };
+        "books-service" = {
+          enable = true;
+          funnel = true;
+          reverseName = "books";
+          reversePort = config.services.calibre-web.listen.port;
+          reverseIP = "127.0.0.1";
         };
       };
     };
@@ -502,14 +496,18 @@ in
       enable = true;
     };
 
-    calibre-server = {
+    calibre-web = {
       enable = true;
-      user = "qbit";
-      port = 8909;
-      host = "127.0.0.1";
-      libraries = [
-        "/home/qbit/Calibre_Library/"
-      ];
+      group = "media";
+      listen = {
+        ip = "127.0.0.1";
+        port = 8909;
+      };
+      dataDir = "/media/books/calibre-web";
+      options = {
+        enableBookConversion = true;
+        enableBookUploading = true;
+      };
     };
 
     grafana = {
@@ -522,8 +520,6 @@ in
           http_addr = "127.0.0.1";
         };
       };
-
-      #declarativePlugins = with pkgs; [ grafana-image-renderer ];
 
       provision = {
         enable = true;
