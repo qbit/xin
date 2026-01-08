@@ -586,7 +586,6 @@ vterm is handy for running things that spit out a lot of escape codes (nom.. etc
 #+begin_src emacs-lisp
   (use-package geiser)
   (use-package geiser-guile)
-  (use-package geiser-racket)
 #+end_src
 
 ** OCaml
