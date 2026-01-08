@@ -115,8 +115,6 @@ in
     graph_key = mkNginxSecret;
     bw_cert = mkNginxSecret;
     bw_key = mkNginxSecret;
-    readarr_cert = mkNginxSecret;
-    readarr_key = mkNginxSecret;
     home_cert = mkNginxSecret;
     home_key = mkNginxSecret;
   };
@@ -254,7 +252,6 @@ in
           "jellyfin"
           "headphones"
           "rtorrent"
-          "readarr"
         ];
       };
 
@@ -451,11 +448,6 @@ in
 
     tor.enable = true;
 
-    readarr = {
-      enable = true;
-      dataDir = "/media/books";
-      group = "media";
-    };
     sonarr.enable = true;
     radarr.enable = true;
     lidarr.enable = true;
@@ -877,19 +869,6 @@ in
           forceSSL = true;
           locations."/" = {
             proxyPass = "http://localhost:8686";
-            proxyWebsockets = true;
-            extraConfig = ''
-              ${httpAllow}
-               deny	all;
-            '';
-          };
-        };
-        "readarr.bold.daemon" = {
-          sslCertificateKey = "${config.sops.secrets.readarr_key.path}";
-          sslCertificate = "${config.sops.secrets.readarr_cert.path}";
-          forceSSL = true;
-          locations."/" = {
-            proxyPass = "http://localhost:8787";
             proxyWebsockets = true;
             extraConfig = ''
               ${httpAllow}
