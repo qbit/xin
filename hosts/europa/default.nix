@@ -203,6 +203,7 @@ in
   };
 
   services = {
+    flatpak.enable = true;
     guix = {
       enable = true;
       substituters = {
@@ -417,15 +418,18 @@ in
     };
   };
 
-  users.users.qbit.extraGroups = [
-    "cdrom"
-    "davfs2"
-    "dialout"
-    "input"
-    "libvirtd"
-    "plugdev"
-    "podman"
-  ];
+  users.users.qbit = {
+    packages = with pkgs; [ flatpak ];
+    extraGroups = [
+      "cdrom"
+      "davfs2"
+      "dialout"
+      "input"
+      "libvirtd"
+      "plugdev"
+      "podman"
+    ];
+  };
 
   environment = {
     sessionVariables = {
