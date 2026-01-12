@@ -446,6 +446,7 @@ in
       arduino
       audacity
       beets # stable
+      bitwarden-cli
       bitwarden-desktop
       calibre
       chirp # stable
