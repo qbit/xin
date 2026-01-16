@@ -126,6 +126,7 @@ with lib;
             ghostty
             git-credential-keepassxc
             glamoroustoolkit
+            joplin-desktop
             keepassxc
             mpv
             pywebscrapbook
