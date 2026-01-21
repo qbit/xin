@@ -118,6 +118,7 @@ with lib;
         systemPackages =
           with pkgs;
           (xinlib.filterList [
+            arcan-all-wrapped
             calnow
             dillo
             exiftool
