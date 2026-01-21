@@ -137,6 +137,10 @@ in
   kdeConnect.enable = true;
 
   virtualisation = {
+    waydroid = {
+      enable = true;
+      package = pkgs.waydroid-nftables;
+    };
     libvirtd = {
       enable = lib.mkDefault true;
     };
