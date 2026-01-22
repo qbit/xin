@@ -121,11 +121,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756145949,
-        "narHash": "sha256-VhHitvhiEk1qpBHp/KElS36drE7tzStn0uUUekNomX8=",
+        "lastModified": 1769092275,
+        "narHash": "sha256-pCieZYL7sDAYf25a29PJFJQSjCk/AiH8LhZyf1d0N9M=",
         "ref": "refs/heads/main",
-        "rev": "cd5971f0ae7b39d157540ed1cc58ae732c087199",
-        "revCount": 14,
+        "rev": "63019a7bbcca206991ea64302cb29e559ff9ad23",
+        "revCount": 17,
         "type": "git",
         "url": "https://codeberg.org/qbit/fynado"
       },
@@ -323,11 +323,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1768397375,
-        "narHash": "sha256-7QqbFi3ERvKjEdAzEYPv7iSGwpUKSrQW5wPLMFq45AQ=",
+        "lastModified": 1769086393,
+        "narHash": "sha256-3ymIZ8s3+hu7sDl/Y48o6bwMxorfKrmn97KuWiw1vjY=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "efe2094529d69a3f54892771b6be8ee4a0ebef0f",
+        "rev": "9f7ba891ea5fc3ededd7804f1a23fafadbcb26ca",
         "type": "github"
       },
       "original": {
@@ -487,11 +487,11 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1768332487,
-        "narHash": "sha256-Q0bSMhDIhb/S7r+XRyuPy58kEXa0rmpw5j99ubJzovg=",
+        "lastModified": 1769078606,
+        "narHash": "sha256-+kagqEu8V7FaEpCdpO93br091zwZfOxUPNVUsjEVvj4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6b0609442afc4ce51ff1466e7db555c2e2fc28d4",
+        "rev": "e9c37a8d3d3e5b7dcdbdc36bad30e8558caabad7",
         "type": "github"
       },
       "original": {
