@@ -35,6 +35,7 @@ let
     config.allowUnfree = true;
   };
   inherit (upkgs.python3Packages) nomadnet;
+  inherit (upkgs.python3Packages) rns;
 in
 {
   imports = [
@@ -242,6 +243,7 @@ in
       zonemaster-cli
       sqlite
       python3
+      rns
     ];
   };
 
