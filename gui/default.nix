@@ -117,27 +117,41 @@ with lib;
         };
         systemPackages =
           with pkgs;
-          (xinlib.filterList [
-            arcan-all-wrapped
-            calnow
-            dillo
-            exiftool
-            feh
-            fynado
-            ghostty
-            git-credential-keepassxc
-            glamoroustoolkit
-            joplin-desktop
-            keepassxc
-            mpv
-            pywebscrapbook
-            rage
-            recoll
-            rpr
-            supersonic
-            tor-browser
-            traygent
-          ]);
+          let
+            goPkgs = [
+              go
+              gopls
+              gcc
+              pkg-config
+            ];
+          in
+          (
+            xinlib.filterList [
+              arcan-all-wrapped
+              calnow
+              dillo
+              exiftool
+              feh
+              fynado
+              go
+              gopls
+              gcc
+              ghostty
+              git-credential-keepassxc
+              glamoroustoolkit
+              joplin-desktop
+              keepassxc
+              mpv
+              pywebscrapbook
+              rage
+              recoll
+              rpr
+              supersonic
+              tor-browser
+              traygent
+            ]
+            ++ goPkgs
+          );
       };
 
       security.rtkit.enable = true;
