@@ -29,7 +29,7 @@
   };
 
   environment.etc."davfs2/secrets" = {
-    text = '''';
+    text = "";
     user = "root";
     group = "root";
     mode = "600";
