@@ -1,8 +1,8 @@
 {
   "owner": "openssh",
   "repo": "openssh-portable",
-  "rev": "b6fd0e6d085ef519982c968b57fbaa9e509e1a3a",
-  "hash": "sha256-mqukqf7CjSNvoI4TjzIQwKuA9rqUCmAWCjdKlKXdPus=",
-  "version": "2025-10-10",
-  "comment": "depend"
+  "rev": "832a77000abe61f61bddb9e595f45c7131c0269d",
+  "hash": "sha256-C0MZ3GnH8SXwfB4rDs4Uzwh9qCqUo9AZmWKn5Deah9Q=",
+  "version": "2026-01-27",
+  "comment": "upstream: Implement &quot;query&quot; extension from"
 }
