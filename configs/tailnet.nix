@@ -295,16 +295,20 @@ let
             proto = "tcp";
             allow = [ "box:443" ];
           }
+
+          # Make sure kdeconnect works
           {
-            src = "sputnik";
+            src = "tag:kdeconnect";
             proto = "tcp";
-            allow = [ "europa:1714" ];
+            allow = [ "tag:kdeconnect:1714" ];
           }
           {
-            src = "sputnik";
+            src = "tag:kdeconnect";
             proto = "udp";
-            allow = [ "europa:1714" ];
+            allow = [ "tag:kdeconnect:1714" ];
           }
+
+          # lroom should be able to get to box
           {
             src = "lroom";
             proto = "tcp";
