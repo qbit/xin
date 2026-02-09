@@ -53,25 +53,30 @@ with lib;
         ciHost = "pwntie";
       };
     };
-    sops.defaultSopsFile = config.xin-secrets.manager;
     sops.secrets = {
       xin_status_key = {
         owner = config.nixManager.user;
+        sopsFile = config.xin-secrets.manager;
       };
       xin_status_pubkey = {
         owner = config.nixManager.user;
+        sopsFile = config.xin-secrets.manager;
       };
       manager_key = {
         owner = config.nixManager.user;
+        sopsFile = config.xin-secrets.manager;
       };
       manager_pubkey = {
         owner = config.nixManager.user;
+        sopsFile = config.xin-secrets.manager;
       };
       ca_key = {
         owner = config.nixManager.user;
+        sopsFile = config.xin-secrets.manager;
       };
       ca_cert = {
         owner = config.nixManager.user;
+        sopsFile = config.xin-secrets.manager;
       };
     };
 

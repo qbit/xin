@@ -78,6 +78,11 @@ in
     enable = true;
   };
 
+  nixManager = {
+    enable = lib.mkDefault true;
+    user = "qbit";
+  };
+
   services = {
     syncthing = {
       enable = true;
