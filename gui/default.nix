@@ -132,14 +132,15 @@ with lib;
             exiftool
             feh
             fynado
-            go
-            gopls
             gcc
             ghostty
             git-credential-keepassxc
             glamoroustoolkit
+            go
+            gopls
             joplin-desktop
             keepassxc
+            lagrange
             mpv
             pywebscrapbook
             rage
