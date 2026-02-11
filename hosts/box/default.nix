@@ -642,6 +642,7 @@ in
 
     vaultwarden = {
       enable = true;
+      package = inputs.unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgs.vaultwarden;
       backupDir = "/backups/bitwarden_rs";
       config = {
         domain = "https://bw.tapenet.org";
