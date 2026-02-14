@@ -110,6 +110,14 @@ with lib;
         wdisplays
         wofi
         xdg-desktop-portal
+        (signal-desktop.overrideAttrs (oldAttrs: {
+          postFixup = (oldAttrs.postFixup or "") + ''
+            wrapProgram $out/bin/signal-desktop \
+              --add-flags "--password-store=kwallet6" \
+              --add-flags "--enable-features=UseOzonePlatform" \
+              --add-flags "--ozone-platform=wayland"
+          '';
+        }))
       ];
     };
 
