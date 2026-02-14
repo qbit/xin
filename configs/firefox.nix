@@ -193,25 +193,34 @@ let
   };
 in
 {
-  config = lib.mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
-    environment = {
-      etc = {
-        "1password/custom_allowed_browsers" = {
-          user = "root";
-          group = "root";
-          mode = "0755";
-          text = ''
-            ${defaultBrowser.meta.mainProgram}
-          '';
+  config =
+    lib.mkIf
+      (
+        config.kde.enable
+        || config.gnome.enable
+        || config.xfce.enable
+        || config.kdeMobile.enable
+        || config.sway.enable
+      )
+      {
+        environment = {
+          etc = {
+            "1password/custom_allowed_browsers" = {
+              user = "root";
+              group = "root";
+              mode = "0755";
+              text = ''
+                ${defaultBrowser.meta.mainProgram}
+              '';
+            };
+          };
+        };
+        programs = {
+          firefox = {
+            enable = true;
+            package = defaultBrowser;
+            inherit policies preferences;
+          };
         };
       };
-    };
-    programs = {
-      firefox = {
-        enable = true;
-        package = defaultBrowser;
-        inherit policies preferences;
-      };
-    };
-  };
 }

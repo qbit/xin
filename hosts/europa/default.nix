@@ -133,7 +133,7 @@ in
     user = "qbit";
   };
 
-  kde.enable = lib.mkDefault true;
+  sway.enable = lib.mkDefault true;
   kdeConnect.enable = true;
 
   virtualisation = {
@@ -286,7 +286,7 @@ in
       };
     };
     fprintd = {
-      enable = true;
+      enable = false;
     };
     avahi = {
       enable = true;

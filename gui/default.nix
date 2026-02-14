@@ -65,6 +65,7 @@ with lib;
     ./gnome.nix
     ./kde.nix
     ./xfce.nix
+    ./sway.nix
   ];
 
   options = {
@@ -87,74 +88,93 @@ with lib;
   };
 
   config = mkMerge [
-    (mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable || config.kdeMobile.enable) {
-      services = {
-        xserver.enable = true;
-        lock-action.enable = true;
-        pcscd.enable = true;
-      };
+    (mkIf
+      (
+        config.kde.enable
+        || config.gnome.enable
+        || config.xfce.enable
+        || config.kdeMobile.enable
+        || config.sway.enable
+      )
+      {
+        services = {
+          xserver.enable = true;
+          lock-action.enable = true;
+          pcscd.enable = true;
+        };
 
-      documentation.enable = true;
+        documentation.enable = true;
 
-      myEmacs.enable = true;
+        myEmacs.enable = true;
 
-      # TODO: TEMP FIX
-      systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = lib.mkForce [
-        ""
-        "${pkgs.networkmanager}/bin/nm-online -q"
-      ];
-      fonts = {
-        packages = fontSet;
-      };
-      environment = {
-        etc = {
-          "traygent.json" = {
-            text = traygentCmds;
+        # TODO: TEMP FIX
+        systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = lib.mkForce [
+          ""
+          "${pkgs.networkmanager}/bin/nm-online -q"
+        ];
+        fonts = {
+          packages = fontSet;
+        };
+        environment = {
+          etc = {
+            "traygent.json" = {
+              text = traygentCmds;
+            };
           };
-        };
-        sessionVariables = {
-          SSH_AUTH_SOCK = "$HOME/.traygent";
-        };
-        systemPackages =
-          with pkgs;
-          let
-            goPkgs = [
+          sessionVariables = {
+            # SSH_AUTH_SOCK = "$HOME/.traygent";
+          };
+          systemPackages =
+            with pkgs;
+            let
+              goPkgs = [
+                go
+                gopls
+                gcc
+                pkg-config
+              ];
+              kdePkgs = with kdePackages; [
+                konversation
+                ksshaskpass
+                kwallet
+                kwalletmanager
+              ];
+            in
+            xinlib.filterList [
+              arcan-all-wrapped
+              calnow
+              dbus
+              dillo
+              exiftool
+              feh
+              fynado
+              gcc
+              ghostty
+              git-credential-keepassxc
+              glamoroustoolkit
               go
               gopls
-              gcc
-              pkg-config
-            ];
-          in
-          xinlib.filterList [
-            arcan-all-wrapped
-            calnow
-            dillo
-            exiftool
-            feh
-            fynado
-            gcc
-            ghostty
-            git-credential-keepassxc
-            glamoroustoolkit
-            go
-            gopls
-            joplin-desktop
-            keepassxc
-            lagrange
-            mpv
-            pywebscrapbook
-            rage
-            recoll
-            rpr
-            supersonic
-            tor-browser
-            traygent
-          ]
-          ++ goPkgs;
-      };
+              joplin-desktop
+              keepassxc
+              lagrange
+              mpv
+              networkmanagerapplet
+              playerctl
+              pywebscrapbook
+              rage
+              recoll
+              rpr
+              supersonic-wayland
+              tor-browser
+              traygent
+            ]
+            ++ kdePkgs
+            ++ goPkgs;
+        };
 
-      security.rtkit.enable = true;
-    })
+        security.rtkit.enable = true;
+      }
+    )
     (mkIf config.pipewire.enable {
       services.pipewire = {
         enable = true;

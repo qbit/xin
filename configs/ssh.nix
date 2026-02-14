@@ -32,10 +32,9 @@ in
           Host *
             controlmaster         auto
             controlpath           /tmp/ssh-%r@%h:%p
-
-          VerifyHostKeyDNS        yes
-          AddKeysToAgent          yes
-          CanonicalizeHostname    always
+            VerifyHostKeyDNS        yes
+            AddKeysToAgent          confirm
+            CanonicalizeHostname    always
         '';
       };
     };

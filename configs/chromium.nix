@@ -32,15 +32,24 @@ let
   };
 in
 {
-  config = lib.mkIf (config.kde.enable || config.gnome.enable || config.xfce.enable) {
-    environment = {
-      systemPackages = [ pkgs.ungoogled-chromium ];
-      etc = {
-        "chromium/policies/managed/default.json".text = builtins.toJSON defaultProfile;
-        "chromium/policies/managed/extra.json".text = builtins.toJSON extraOpts;
-        "opt/chrome/policies/managed/default.json".text = builtins.toJSON defaultProfile;
-        "opt/chrome/policies/managed/extra.json".text = builtins.toJSON extraOpts;
+  config =
+    lib.mkIf
+      (
+        config.kde.enable
+        || config.gnome.enable
+        || config.xfce.enable
+        || config.kdeMobile.enable
+        || config.sway.enable
+      )
+      {
+        environment = {
+          systemPackages = [ pkgs.ungoogled-chromium ];
+          etc = {
+            "chromium/policies/managed/default.json".text = builtins.toJSON defaultProfile;
+            "chromium/policies/managed/extra.json".text = builtins.toJSON extraOpts;
+            "opt/chrome/policies/managed/default.json".text = builtins.toJSON defaultProfile;
+            "opt/chrome/policies/managed/extra.json".text = builtins.toJSON extraOpts;
+          };
+        };
       };
-    };
-  };
 }
