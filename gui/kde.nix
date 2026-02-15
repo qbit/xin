@@ -59,20 +59,6 @@ with pkgs;
         ];
       };
     };
-    # Listen for KDE Connect connections on the tailnet
-    networking.firewall.interfaces = mkIf config.kdeConnect.enable {
-      "${config.kdeConnect.interface}" =
-        let
-          range = {
-            from = 1714;
-            to = 1764;
-          };
-        in
-        {
-          allowedUDPPortRanges = [ range ];
-          allowedTCPPortRanges = [ range ];
-        };
-    };
     environment = {
       sessionVariables = {
         NIXOS_OZONE_WL = 1;
