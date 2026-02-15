@@ -88,6 +88,9 @@ with lib;
             bindsym $mod+w layout tabbed
             bindsym $mod+e layout toggle split
 
+            bindsym $mod+Shift+minus move scratchpad
+            bindsym $mod+minus scratchpad show
+
             bindsym --locked XF86AudioPlay exec playerctl play-pause
             bindsym --locked XF86AudioNext exec playerctl next
             bindsym --locked XF86AudioPrev exec playerctl previous
