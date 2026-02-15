@@ -51,14 +51,16 @@ with lib;
 
             exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
             exec nm-applet
+            exec blueman-applet
             exec kwalletd6
+            exec kdeconnectd
             #exec rm -f "$HOME/.fynado.socket"; fynado
 
             exec swayidle -w \
               timeout 300 'swaylock -f -c 000000' \
               timeout 600 'brightnessctl --save; brightnessctl set 0' \
               resume 'brightnessctl --restore' \
-              before-sleep 'swaylock -f -c 000000'
+              before-sleep 'env SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent ssh-add -D; swaylock -f -c 000000'
 
             bindsym $mod+1 workspace 1
             bindsym $mod+2 workspace 2
@@ -106,10 +108,12 @@ with lib;
             for_window [window_type = "menu"] floating enable
             for_window [app_id = "floating"] floating enable
 
+            ${lib.optionalString (config.networking.hostName == "europa") "output eDP-1 scale 1.0"}
           '';
         };
       };
       systemPackages = with pkgs; [
+        blueman
         wdisplays
         wofi
         xdg-desktop-portal
