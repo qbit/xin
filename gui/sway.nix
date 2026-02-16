@@ -58,7 +58,7 @@ with lib;
 
             exec swayidle -w \
               timeout 300 'swaylock -f -c 000000' \
-              timeout 600 'brightnessctl --save; brightnessctl set 0' \
+              timeout 360 'brightnessctl --save; brightnessctl set 0' \
               resume 'brightnessctl --restore' \
               before-sleep 'env SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent ssh-add -D; swaylock -f -c 000000'
 
