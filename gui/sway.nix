@@ -109,6 +109,8 @@ with lib;
             for_window [app_id = "floating"] floating enable
 
             ${lib.optionalString (config.networking.hostName == "europa") "output eDP-1 scale 1.0"}
+
+            include ${config.users.users.${config.defaultUserName}.home}/.config/sway/config.d/*
           '';
         };
       };
