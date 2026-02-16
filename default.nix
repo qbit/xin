@@ -119,7 +119,8 @@ in
               sopsFile = config.xin-secrets.deploy;
               owner = "root";
               group = "wheel";
-              mode = "440";
+              # not 440 because ssh doesn't like it!
+              mode = "400";
             };
           }
         else
