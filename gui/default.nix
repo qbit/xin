@@ -137,7 +137,7 @@ with lib;
             };
           };
           sessionVariables = {
-            # SSH_AUTH_SOCK = "$HOME/.traygent";
+            SSH_AUTH_SOCK = "$HOME/.traygent";
           };
           systemPackages =
             with pkgs;
