@@ -131,7 +131,8 @@ in
     };
   };
 
-  kde.enable = true;
+  # kde.enable = true;
+  sway.enable = true;
   defaultUsers.enable = false;
   defaultUserName = "abieber";
 
@@ -307,7 +308,7 @@ in
 
   services = {
     unifi = {
-      enable = true;
+      enable = false;
       unifiPackage = pkgs.unifi;
       mongodbPackage = pkgs.mongodb-7_0;
     };
