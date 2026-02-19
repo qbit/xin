@@ -186,9 +186,5 @@ with lib;
         xdg-desktop-portal-gtk
       ];
     };
-
-    services = {
-      displayManager.sddm.enable = true;
-    };
   };
 }
