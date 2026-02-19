@@ -132,6 +132,7 @@ in
   };
 
   kde.enable = true;
+  sway.enable = true;
   defaultUsers.enable = false;
   defaultUserName = "abieber";
 
