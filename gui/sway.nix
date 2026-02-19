@@ -157,6 +157,10 @@ with lib;
       light.enable = true;
       sway = {
         enable = true;
+        extraOptions = [
+          "-c"
+          "/etc/sway/config"
+        ];
         xwayland.enable = true;
         wrapperFeatures.gtk = true;
       };
