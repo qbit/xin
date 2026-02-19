@@ -74,6 +74,7 @@ with lib;
               exec kdeconnectd
               #exec rm -f "$HOME/.fynado.socket"; fynado
 
+              bindswitch lid:on exec ${lockBin} lidshut
               exec swayidle -w \
                 timeout 180 '${lockBin} lock' \
                 timeout 300 '${lockBin} suspend' \

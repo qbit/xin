@@ -8,6 +8,10 @@ ssh-add -D
 sudo -K
 
 case "$1" in
+lidshut)
+	swaylock -f -c 000000
+	systemctl sleep
+	;;
 lock)
 	swaylock -f -c 000000
 	;;
