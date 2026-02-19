@@ -40,7 +40,7 @@ with lib;
               set $down down
               set $up up
               set $right right
-              set $menu pkill -x wofi || wofi --show drun --prompt=Search --no-actions --insensitive --allow-images --width="66%" --height="66%" --style="$HOME/.config/wofi.css"
+              set $menu pkill -x rofi || rofi -show combi -show-icons --no-startup-id
 
               input type:keyboard {
                 xkb_layout ${config.services.xserver.xkb.layout}
@@ -135,7 +135,7 @@ with lib;
           blueman
           wdisplays
           wlsunset
-          wofi
+          rofi
           xdg-desktop-portal
           waybar
           swaynotificationcenter
