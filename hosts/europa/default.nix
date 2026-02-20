@@ -134,7 +134,7 @@ in
   };
 
   sway.enable = lib.mkDefault true;
-  kdeConnect.enable = true;
+  kdeconnect.enable = true;
 
   virtualisation = {
     waydroid = {

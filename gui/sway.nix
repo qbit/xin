@@ -72,7 +72,7 @@ with lib;
               exec nm-applet
               exec blueman-applet
               exec kwalletd6
-              exec kdeconnectd
+              exec kdeconnect-indicator
               #exec rm -f "$HOME/.fynado.socket"; fynado
 
               bindswitch lid:on exec ${lockBin} lidshut

@@ -103,7 +103,7 @@ in
   ];
 
   kdeMobile.enable = true;
-  kdeConnect.enable = true;
+  kdeconnect.enable = true;
 
   programs = {
     _1password.enable = true;

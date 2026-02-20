@@ -103,21 +103,6 @@ with lib;
           pcscd.enable = true;
         };
 
-        # Listen for KDE Connect connections on the tailnet
-        networking.firewall.interfaces = mkIf config.kdeConnect.enable {
-          "${config.kdeConnect.interface}" =
-            let
-              range = {
-                from = 1714;
-                to = 1764;
-              };
-            in
-            {
-              allowedUDPPortRanges = [ range ];
-              allowedTCPPortRanges = [ range ];
-            };
-        };
-
         documentation.enable = true;
 
         myEmacs.enable = true;
@@ -148,23 +133,12 @@ with lib;
                 gcc
                 pkg-config
               ];
-              kdePkgs =
-                with kdePackages;
-                [
-                  konversation
-                  ksshaskpass
-                  kwallet
-                  kwalletmanager
-
-                ]
-                ++ (
-                  if config.kdeConnect.enable then
-                    [
-                      kdePackages.kdeconnect-kde
-                    ]
-                  else
-                    [ ]
-                );
+              kdePkgs = with kdePackages; [
+                konversation
+                ksshaskpass
+                kwallet
+                kwalletmanager
+              ];
             in
             xinlib.filterList [
               arcan-all-wrapped

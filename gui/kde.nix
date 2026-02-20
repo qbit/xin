@@ -8,8 +8,6 @@ let
   inherit (lib)
     mkIf
     mkEnableOption
-    mkOption
-    types
     ;
 in
 with pkgs;
@@ -20,19 +18,6 @@ with pkgs;
     };
     kdeMobile = {
       enable = mkEnableOption "Enable KDE Mobile.";
-    };
-    kdeConnect = {
-      enable = mkEnableOption {
-        description = "Enable KDE Connect";
-        default = false;
-        example = true;
-      };
-
-      interface = mkOption {
-        description = "listen interface for kde connect";
-        default = "tailscale0";
-        type = types.str;
-      };
     };
   };
 
