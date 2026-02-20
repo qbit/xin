@@ -140,7 +140,7 @@ with lib;
           wdisplays
           wl-clipboard
           wlsunset
-          xdg-desktop-portal
+          xdg-utils
 
           (signal-desktop.overrideAttrs (oldAttrs: {
             postFixup = (oldAttrs.postFixup or "") + ''
@@ -181,16 +181,6 @@ with lib;
           };
         };
       };
-    };
-
-    xdg.portal = {
-      enable = true;
-      wlr.enable = true;
-      xdgOpenUsePortal = true;
-      extraPortals = with pkgs; [
-        kdePackages.xdg-desktop-portal-kde
-        xdg-desktop-portal-gtk
-      ];
     };
   };
 }
