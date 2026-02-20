@@ -10,7 +10,7 @@ sudo -K
 case "$1" in
 lidshut)
 	swaylock -f -c 000000
-	systemctl sleep
+	systemctl suspend-then-hibernate
 	;;
 lock)
 	swaylock -f -c 000000
@@ -21,7 +21,7 @@ suspend)
 	if on_ac_power; then
 		echo "on power, not suspending"
 	else
-		systemctl suspend
+		systemctl suspend-then-hibernate
 	fi
 	;;
 resume)
