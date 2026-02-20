@@ -154,6 +154,7 @@ with lib;
               glamoroustoolkit
               go
               gopls
+              halloy
               joplin-desktop
               keepassxc
               lagrange
