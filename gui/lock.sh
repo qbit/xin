@@ -6,6 +6,8 @@ fi
 
 ssh-add -D
 sudo -K
+wl-copy --clear
+wl-copy --primary --clear
 
 case "$1" in
 lidshut)

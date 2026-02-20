@@ -19,10 +19,11 @@ with lib;
           name = "sway-lock";
           text = builtins.readFile ./lock.sh;
           runtimeInputs = with pkgs; [
-            swaylock
             brightnessctl
-            systemd
             pmutils
+            swaylock
+            systemd
+            wl-clipboard
           ];
         };
         lockBin = lib.getExe lock;
@@ -134,12 +135,13 @@ with lib;
         };
         systemPackages = with pkgs; [
           blueman
-          wdisplays
-          wlsunset
           rofi
-          xdg-desktop-portal
-          waybar
           swaynotificationcenter
+          waybar
+          wdisplays
+          wl-clipboard
+          wlsunset
+          xdg-desktop-portal
 
           (signal-desktop.overrideAttrs (oldAttrs: {
             postFixup = (oldAttrs.postFixup or "") + ''
