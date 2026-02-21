@@ -111,9 +111,13 @@ in
       luks.devices."luks-86c45d30-d262-4b98-aef4-1407c6403a06".device =
         "/dev/disk/by-uuid/86c45d30-d262-4b98-aef4-1407c6403a06";
     };
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
     loader = {
       systemd-boot = {
-        enable = true;
+        enable = lib.mkForce false;
         memtest86.enable = true;
       };
       efi = {

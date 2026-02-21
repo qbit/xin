@@ -5,6 +5,11 @@
     stable.url = "github:NixOS/nixpkgs/nixos-25.11-small";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
@@ -135,6 +140,7 @@
       xin-secrets,
       xin-status,
       talon,
+      lanzaboote,
       ...
     }@inputs:
     let
@@ -252,6 +258,7 @@
       nixosConfigurations = {
         europa = buildSys "x86_64-linux" unstable [
           talon.nixosModules.talon
+          lanzaboote.nixosModules.lanzaboote
           nixos-hardware.nixosModules.framework-13-7040-amd
         ] "europa";
         slab = buildSys "x86_64-linux" stable [

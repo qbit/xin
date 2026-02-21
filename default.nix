@@ -250,6 +250,7 @@ in
         # python3Packages.rns
         radicle-node
         ripgrep
+        sbctl
         socat
         sshfs
         tcl
