@@ -167,6 +167,8 @@ with lib;
       };
     };
 
+    xdg.portal.extraPortals = with pkgs; [ kdePackages.xdg-desktop-portal-kde ];
+
     users.users."${config.defaultUserName}".extraGroups = [ "video" ];
 
     security = {
