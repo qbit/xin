@@ -651,11 +651,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747920457,
-        "narHash": "sha256-oHaH01+T7SvFlSV1IKps4TkCLBeqQ+Prf1PRa3k92Sw=",
+        "lastModified": 1771865264,
+        "narHash": "sha256-jni2c6VkXqWvOjHTrjJRdiTAJiZYxV7axyjXICVSTwk=",
         "ref": "refs/heads/main",
-        "rev": "73ab0796d66bd5d0537976c241dcc3d915a9f59a",
-        "revCount": 46,
+        "rev": "5671353bb19f43c0dddfdf71bdc49ef211e2530d",
+        "revCount": 48,
         "type": "git",
         "url": "https://codeberg.org/qbit/traygent"
       },
