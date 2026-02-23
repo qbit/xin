@@ -19,37 +19,43 @@ let
   fontSet = with pkgs; [
     go-font
   ];
-  traygentCmds = toJSON [
-    {
-      command_path = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
-      #command_path = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
-      event = "sign";
-      msg_format = "Allow access to key %q?";
-      exit_code = 0;
-    }
-    {
-      command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
-      command_args = [
-        "--title"
-        "traygent"
-        "--passivepopup"
-        "SSH Key Added"
-        "5"
-      ];
-      event = "added";
-    }
-    {
-      command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
-      command_args = [
-        "--title"
-        "traygent"
-        "--passivepopup"
-        "SSH Key Removed"
-        "5"
-      ];
-      event = "removed";
-    }
-  ];
+  traygentCmds = toJSON {
+    extra_agents = [
+      "/run/user/1000/ssh-agent"
+      "/home/${config.defaultUserName}/.bitwarden-ssh-agent.sock"
+    ];
+    commands = [
+      {
+        command_path = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+        #command_path = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
+        event = "sign";
+        msg_format = "Allow access to key %q?";
+        exit_code = 0;
+      }
+      {
+        command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
+        command_args = [
+          "--title"
+          "traygent"
+          "--passivepopup"
+          "SSH Key Added"
+          "5"
+        ];
+        event = "added";
+      }
+      {
+        command_path = "${pkgs.kdePackages.kdialog}/bin/kdialog";
+        command_args = [
+          "--title"
+          "traygent"
+          "--passivepopup"
+          "SSH Key Removed"
+          "5"
+        ];
+        event = "removed";
+      }
+    ];
+  };
 in
 with lib;
 {
