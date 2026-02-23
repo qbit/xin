@@ -353,6 +353,7 @@
             inherit pkgs;
           };
           gokrazy = pkgs.callPackage ./pkgs/gokrazy.nix { inherit pkgs; };
+          hister = pkgs.callPackage ./pkgs/hister.nix { inherit pkgs; };
           blurp = pkgs.callPackage ./pkgs/blurp.nix { inherit pkgs; };
           gosignify = pkgs.callPackage ./pkgs/gosignify.nix { inherit pkgs; };
           zutty = pkgs.callPackage ./pkgs/zutty.nix {

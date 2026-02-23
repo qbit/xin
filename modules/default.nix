@@ -3,6 +3,7 @@
   imports = [
     ./backup.nix
     ./golink.nix
+    ./hister.nix
     ./kdeconnect.nix
     ./lock-action.nix
     ./signal-cli.nix

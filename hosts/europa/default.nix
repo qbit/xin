@@ -211,6 +211,10 @@ in
   };
 
   services = {
+    hister = {
+      enable = true;
+      package = pkgs.callPackage ../../pkgs/hister.nix { };
+    };
     flatpak.enable = true;
     guix = {
       enable = true;
