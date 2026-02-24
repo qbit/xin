@@ -3,7 +3,8 @@
 
   inputs = {
     stable.url = "github:NixOS/nixpkgs/nixos-25.11-small";
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    #unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    unstable.url = "github:NixOS/nixpkgs?ref=4100faef51d187e69cfaefe2605db78015d2c22e";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
