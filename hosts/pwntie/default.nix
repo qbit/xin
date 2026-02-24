@@ -85,7 +85,7 @@ in
 
   services = {
     syncthing = {
-      enable = true;
+      enable = false;
       user = "qbit";
       dataDir = "/home/qbit";
       settings = {
