@@ -255,6 +255,7 @@ in
         sshfs
         tcl
         tmux
+        unison
         uxn
         yt-dlp
       ];
