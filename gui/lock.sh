@@ -4,10 +4,10 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
 	SSH_AUTH_SOCK=/run/user/1000/ssh-agent
 fi
 
-ssh-add -D
-sudo -K
-wl-copy --clear
-wl-copy --primary --clear
+ssh-add -D || echo "can't remove ssh keys"
+sudo -K || echo "can't remove sudo cookie"
+wl-copy --clear || echo "can't clearn clipboard"
+wl-copy --primary --clear || echo "can't clear primary clipboard"
 
 case "$1" in
 lidshut)
