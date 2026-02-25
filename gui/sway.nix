@@ -134,6 +134,7 @@ with lib;
         };
         systemPackages = with pkgs; [
           blueman
+          nemo
           rofi
           swaynotificationcenter
           waybar
