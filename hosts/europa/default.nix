@@ -343,6 +343,7 @@ in
     clamav.updater.enable = true;
     tor = {
       enable = true;
+      torsocks.enable = true;
       client.enable = true;
     };
     fwupd = {
