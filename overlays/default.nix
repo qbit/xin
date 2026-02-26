@@ -4,6 +4,11 @@
 {
   nixpkgs.overlays = [
     (_: super: {
+      navidrome = super.navidrome.overrideDerivation (_: {
+        CGO_CFLAGS_ALLOW = "--define-prefix";
+      });
+    })
+    (_: super: {
       smug = super.smug.overrideAttrs (_: rec {
         version = "0.3.3";
 
