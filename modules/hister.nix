@@ -36,6 +36,7 @@ in
       description = "hister daemon";
       wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${cfg.package}/bin/hister listen";
