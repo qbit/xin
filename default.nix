@@ -251,6 +251,7 @@ in
         radicle-node
         ripgrep
         sbctl
+        senpai
         socat
         sshfs
         tcl
