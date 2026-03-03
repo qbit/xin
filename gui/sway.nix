@@ -114,6 +114,12 @@ with lib;
               bindsym --locked XF86AudioPlay exec playerctl play-pause
               bindsym --locked XF86AudioNext exec playerctl next
               bindsym --locked XF86AudioPrev exec playerctl previous
+              bindsym --locked XF86AudioRaiseVolume exec 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ -l 1.0'
+              bindsym --locked XF86AudioLowerVolume exec 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%- -l 1.0'
+              bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+              bindsym --locked XF86MonBrightnessDown exec light -U 10
+              bindsym --locked XF86MonBrightnessUp exec light -A 10
 
               bindsym $mod+space floating toggle
               bindsym $mod+Shift+space focus mode_toggle
@@ -134,6 +140,7 @@ with lib;
         };
         systemPackages = with pkgs; [
           blueman
+          light
           nemo
           rofi
           swaynotificationcenter
