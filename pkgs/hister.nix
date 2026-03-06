@@ -22,8 +22,8 @@ let
   frontend = buildNpmPackage {
     pname = "hister-frontend";
     inherit version src;
-    inherit importNpmLock npmConfigHook;
 
+    npmConfigHook = importNpmLock.npmConfigHook;
     npmWorkspace = "webui/app";
     npmDeps = importNpmLock { npmRoot = src; };
 
