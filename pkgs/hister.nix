@@ -1,67 +1,67 @@
 {
-  lib,
   buildGoModule,
+  buildNpmPackage,
   fetchFromGitHub,
-  fetchNpmDeps,
-  nodejs,
+  importNpmLock,
+  pkg-config,
   sqlite,
+  lib,
   ...
 }:
 with lib;
 let
-  version = "0.5.0";
+  version = "0.7.0";
+
   src = fetchFromGitHub {
     owner = "asciimoo";
     repo = "hister";
     rev = "v${version}";
-    sha256 = "sha256-99lFNE745cfHHh/wETbnf9LSUbDeF6hQWCtC2u43pds=";
+    sha256 = "sha256-beVyZLrpewxG3gWCQMRLI3UC4cZhob8GTW9XbfyWbU8=";
   };
 
-  npmDeps = fetchNpmDeps {
-    src = "${src}/server/static/js";
-    hash = "sha256-BupgGlAhzanFyjv43terHsUUjmAxFniwMSBLFi8shC0=";
+  frontend = buildNpmPackage {
+    pname = "hister-frontend";
+    inherit version src;
+    inherit importNpmLock npmConfigHook;
+
+    npmWorkspace = "webui/app";
+    npmDeps = importNpmLock { npmRoot = src; };
+
+    dontNpmBuild = false;
+
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out
+      cp -r webui/app/build/* $out/
+      runHook postInstall
+    '';
   };
 in
 buildGoModule (finalAttrs: {
   pname = "hister";
   inherit version src;
 
-  vendorHash = "sha256-KEuZ+jKG3fMYymZr9fvwlTzLFVcYfUAofe8DOIqHUDY=";
+  vendorHash = "sha256-u7ebtGWjtf0ELKe2xeoqxt633hg85JUPvvq134bhnmM=";
   proxyVendor = true;
 
-  nativeBuildInputs = [
-    nodejs
-  ];
-
+  nativeBuildInputs = [ pkg-config ];
   buildInputs = [ sqlite ];
 
+  tags = [ "libsqlite3" ];
+
   preBuild = ''
-    cd server/static/js
-
-    mkdir -p $TMPDIR/npm-cache
-    cp -r ${npmDeps}/* $TMPDIR/npm-cache/
-    export NPM_CONFIG_CACHE=$TMPDIR/npm-cache
-
-    npm ci --offline
-    node node_modules/.bin/vite build
-
-    cd ../..
-
-    export CGO_CFLAGS="-I${sqlite.dev}/include"
-    export CGO_LDFLAGS="-L${sqlite.out}/lib -lsqlite3"
+    mkdir -p server/static/app
+    cp -r ${frontend}/* server/static/app/
   '';
 
   ldflags = [
     "-s"
     "-w"
     "-X main.version=${finalAttrs.version}"
-    "-X main.commit=${histerRev}"
   ];
 
-  subPackages = [ "." ];
-
   passthru = {
-    inherit npmDeps;
+    inherit frontend;
   };
 
   meta = {
