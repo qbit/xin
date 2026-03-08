@@ -1306,29 +1306,11 @@ mu init --muhome=/home/qbit/.mu -m /home/qbit/Maildir/fastmail/ --my-address="aa
    rcirc-reconnect-delay 10
    rcirc-reconnect-attempts 5
    rcirc-server-alist
-   '(("bounce.bold.daemon"
-      :server-alias "bTyrfingr"
-      :encryption tls
-      :user-name "qbit@rcirc.europa/Tyrfingr")
-     ("bounce.bold.daemon"
-      :server-alias "bLibera"
-      :encryption tls
-      :user-name "qbit@rcirc.europa/Libera")
-     ("bounce.bold.daemon"
-      :server-alias "bOFTC"
-      :encryption tls
-      :channels ("#cat-v")
-      :user-name "qbit@rcirc.europa/OFTC")
-     ("bounce.bold.daemon"
-      :server-alias "bHackers"
-      :nick "abieber"
-      :encryption tls
-      :user-name "qbit@rcirc.europa/hackers")
-     ("bounce.bold.daemon"
-      :server-alias "bPorters"
-      :nick "abieber"
-      :encryption tls
-      :user-name "qbit@rcirc.europa/porters")))
+   '(;;("bounce.bold.daemon" :server-alias "bTyrfingr" :encryption tls :user-name "qbit@rcirc.europa/Tyrfingr")
+     ("bounce.bold.daemon" :server-alias "bLibera"   :encryption tls :user-name "qbit@rcirc.europa/Libera")
+     ("bounce.bold.daemon" :server-alias "bOFTC"     :encryption tls :user-name "qbit@rcirc.europa/OFTC")
+     ("bounce.bold.daemon" :server-alias "bHackers"  :nick "abieber" :encryption tls  :user-name "qbit@rcirc.europa/hackers")
+     ("bounce.bold.daemon" :server-alias "bPorters"  :nick "abieber" :encryption tls  :user-name "qbit@rcirc.europa/porters")))
   (add-hook 'rcirc-mode-hook #'rcirc-track-minor-mode)
   (add-hook 'rcirc-mode-hook #'flyspell-mode)
   (setopt
