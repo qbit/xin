@@ -268,6 +268,7 @@ in
       mattermost-desktop
       mosh
       mupdf
+      networkmanager-openvpn
       nmap
       oath-toolkit
       obs-studio
