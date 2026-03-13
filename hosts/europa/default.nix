@@ -494,6 +494,7 @@ in
       #
       restic
       rtl-sdr
+      safeeyes
       signal-desktop
       tangara-cli
       tangara-companion
