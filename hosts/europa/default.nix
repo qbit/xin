@@ -477,6 +477,7 @@ in
       inkscape
       isync
       joplin-desktop
+      libreoffice
       minicom
       mu
       nix-index
