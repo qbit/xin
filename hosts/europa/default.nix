@@ -137,7 +137,8 @@ in
     user = "qbit";
   };
 
-  sway.enable = lib.mkDefault true;
+  kde.enable = lib.mkDefault true;
+  sway.enable = true;
   kdeconnect.enable = true;
 
   virtualisation = {
@@ -452,6 +453,7 @@ in
     };
 
     systemPackages = with pkgs; [
+      android-tools
       arduino
       audacity
       beets # stable
@@ -486,6 +488,7 @@ in
       openscad
       picard
       picocom
+      pmbootstrap
       protonup-ng
       prusa-slicer
       # Don't do it, don't switch to another music player. They all suck!
