@@ -479,6 +479,7 @@ in
       inkscape
       isync
       joplin-desktop
+      kdePackages.tokodon
       libreoffice
       minicom
       mu
@@ -506,7 +507,6 @@ in
       tea
       tigervnc
       tncattach
-      tuba
       unzip
       virt-manager
       yt-dlp
