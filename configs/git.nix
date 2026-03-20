@@ -29,7 +29,7 @@ in
         user = {
           name = "Aaron Bieber";
           email = "aaron@bolddaemon.com";
-          signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOA5iEi4IxSIHXBMdrRlBWHbGtmMNnmBl4qiBPc+eJu9 signer";
+          signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHzj6Q1YtujxebE5F1Ny65Nkue6GhNtV6Mz/e/ASkWun signer";
         };
       }
 
