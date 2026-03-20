@@ -138,7 +138,6 @@ in
   };
 
   kde.enable = lib.mkDefault true;
-  sway.enable = true;
   kdeconnect.enable = true;
 
   virtualisation = {
@@ -497,6 +496,7 @@ in
       quodlibet-full # stable
       # Don't do it! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       #
+      radicle-desktop
       restic
       rtl-sdr
       safeeyes
